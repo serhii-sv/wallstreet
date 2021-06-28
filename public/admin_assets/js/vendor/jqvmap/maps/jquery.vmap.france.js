@@ -1,6 +1,6 @@
 /*
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 jQuery.fn.vectorMap('addMap', 'france_fr', {"width": 520, "height": 550, "pathes":{

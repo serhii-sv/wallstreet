@@ -1,6 +1,6 @@
 /*
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 /*jslint regexp: true, browser: true, jquery: true, white: true, nomen: false, plusplus: false, maxerr: 500, indent: 4 */

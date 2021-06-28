@@ -1,6 +1,6 @@
 /*
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 // `window.ParsleyExtend`, like `ParsleyAbstract`, is inherited by `ParsleyField` and `ParsleyForm`

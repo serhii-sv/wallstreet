@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Modules\SocialNetworks;
@@ -27,8 +27,6 @@ class VkModule
      * @param string $objectUrl
      * @return bool
      * @throws \Exception
-     *
-     * @example https://vk.com/hyipium
      */
     public static function checkPageSubscription(User $user, string $objectUrl)
     {

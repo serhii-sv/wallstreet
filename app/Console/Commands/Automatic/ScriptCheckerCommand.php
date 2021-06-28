@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Console\Commands\Automatic;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 class ScriptCheckerCommand extends Command
 {
     /** @var string $licenceServer */
-    private $licenceServer = 'https://licence.hyipium.com/active/';
+    private $licenceServer = 'LICENCE_SERVER_URL';
 
     /**
      * The name and signature of the console command.

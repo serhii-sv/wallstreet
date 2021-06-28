@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Console\Commands\Manual\Telegram;
@@ -50,7 +50,7 @@ class TelegramSetWebhookCommand extends Command
         $this->comment('Setting Telegram webhook');
         $this->line('');
 
-        $keyword = $this->ask('Enter BOT keyword for getting special "Hyipium" functionality (example: "admin_bot", "account_bot", "notification_bot").');
+        $keyword = $this->ask('Enter BOT keyword for getting special "NewGen" functionality (example: "admin_bot", "account_bot", "notification_bot").');
 
         if (false == in_array($keyword, TelegramBots::getExistsKeywords())) {
             $this->error('This keyword is not exists. Please, try again.');

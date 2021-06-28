@@ -78,7 +78,7 @@
             <div class="branding">
                 <a class="brand" href="{{ route('admin') }}">
                     <img src="/admin_assets/images/logo_no_title.png" align="center">
-                    <span>{{ config('app.name', 'Hyipium') }}</span>
+                    <span>{{ config('app.name', 'NewGen') }}</span>
                 </a>
                 <a role="button" tabindex="0" class="offcanvas-toggle visible-xs-inline"><i class="fa fa-bars"></i></a>
             </div>

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Http\Controllers\Telegram;
@@ -222,7 +222,7 @@ class TelegramWebhookController extends Controller
                         break;
                 }
 
-                // https://t.me/HyipiumDevelopBot?start=MY_ID
+                // https://t.me/BlaBla?start=MY_ID
                 if (preg_match('/\/start ([A-Za-z0-9]+)/', $eventData['text'], $ref)) {
                     if (config('app.env') == 'develop') {
                         \Log::info('Found referral '.print_r($ref,true));
