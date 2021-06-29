@@ -1,5 +1,5 @@
 <header class="header">
-  <a href="https://t.me/joinchat/KbehfRDwnET-NUGKaxjcJg"class="btn_tlg">Telegram Chat</a>
+  <a href="#"class="btn_tlg">Support</a>
     <div class="main-line container">
         <a class="main-line__logo" href="{{ route('customer.main') }}"><img src="{{ asset('img/logo/logo.png') }}" alt=""></a>
         <p class="main-line__slogan">Energy of Cryptocurrency</p>
