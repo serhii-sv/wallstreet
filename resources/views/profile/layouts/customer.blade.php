@@ -18,10 +18,6 @@
         <main class="lk page" role="main">
             @include('profile.layouts.navigation')
             <div class="lk__content">
-                <section class="lk-section">
-                    <h3 class="title">@yield('title')</h3>
-                @include('profile.layouts.balance')
-                </section>
                 @yield('content')
             </div>
         </main>
