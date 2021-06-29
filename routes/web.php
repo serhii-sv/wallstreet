@@ -32,7 +32,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/documents', 'Customer\DocumentsController@index')->name('customer.documents');
         Route::get('/investors', 'Customer\InvestorsController@index')->name('customer.investors');
         Route::get('/partners', 'Customer\PartnersController@index')->name('customer.partners');
-        Route::get('/representative', 'Customer\RepresentativeController@index')->name('customer.representative');
         Route::get('/contact', 'Customer\ContactController@index')->name('customer.contact');
         Route::get('/payout', 'Customer\PayoutController@index')->name('customer.payout');
 
