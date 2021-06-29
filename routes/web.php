@@ -28,7 +28,6 @@ Route::group(['middleware' => ['web']], function () {
         // Not authorized
         Route::get('/', 'Customer\MainController@index')->name('customer.main');
         Route::get('/aboutus', 'Customer\AboutUsController@index')->name('customer.aboutus');
-        Route::get('/calculator', 'Customer\CalculatorController@index')->name('customer.calculator');
         Route::get('/documents', 'Customer\DocumentsController@index')->name('customer.documents');
         Route::get('/investors', 'Customer\InvestorsController@index')->name('customer.investors');
         Route::get('/partners', 'Customer\PartnersController@index')->name('customer.partners');
