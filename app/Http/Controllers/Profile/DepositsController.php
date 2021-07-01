@@ -30,8 +30,11 @@ class DepositsController extends Controller
      */
     public function create(Request $request)
     {
-        $rate = Rate::with('currency')
-            ->first();
+        $rate = $request->has('rate_id')
+            ? Rate::with('currency')
+                ->where('id', $request->rate_id)
+                ->first()
+            : '';
 
         if (null !== $rate) {
             $rate = $rate->toArray();
