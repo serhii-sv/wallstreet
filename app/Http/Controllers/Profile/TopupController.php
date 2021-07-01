@@ -11,7 +11,7 @@ use App\Http\Requests\RequestTopup;
 use App\Models\PaymentSystem;
 use Illuminate\Http\Request;
 
-class TopUpController extends Controller
+class TopupController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
