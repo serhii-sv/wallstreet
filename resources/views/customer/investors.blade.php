@@ -144,7 +144,7 @@
                             <div class="calculate-block__bottom">
                                 <div class="calculate-block__bottom-content">
                                     <div class="calculate-block__bottom-text">
-                                        <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }} <br>{{ __('1.7% - your new interest rate!') }}</strong></p>
+                                        <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
                                     </div>
                                 </div>
                                 <svg viewBox="0 0 1151 50">

@@ -150,7 +150,7 @@ class Deposit extends Model
         /** @var Rate $rate */
         $rate     = Rate::findOrFail($field['rate_id']);
 
-        $field['wallet_id'] = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail();
+        $field['wallet_id'] = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail()->id;
 
         /** @var Wallet $wallet */
         $wallet   = $user->wallets()->where('id', $field['wallet_id'])->first();
@@ -171,15 +171,15 @@ class Deposit extends Model
         /**
          * LUMINEX SPECIAL
          */
-        $highPercent = 1.7;
+        $highPercent = 1.28;
 
         if ($amount >= 1000 && $currency->code == 'USD') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 0.16 && $currency->code == 'BTC') {
+        } elseif ($amount >= 0.02989986 && $currency->code == 'BTC') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 2.28 && $currency->code == 'BCH') {
+        } elseif ($amount >= 4033.97380466 && $currency->code == 'DOGE') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 4.99 && $currency->code == 'ETH') {
+        } elseif ($amount >= 0.47153994 && $currency->code == 'ETH') {
             $rate->daily = $highPercent;
         }
         // -------------------------------------------
