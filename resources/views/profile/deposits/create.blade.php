@@ -10,7 +10,7 @@
                     <div class="input-row white-shadow-select">
                         <label for="rate" class="input-row__name">{{ __('Rate') }}
                         </label>
-                        <select id="rate" name="rate_id" autofocus>
+                        <select id="rate" name="rate_id" class="select" autofocus>
                              @foreach(getTariffPlans() as $plan)
                                 <option value="{{ $plan['id'] }}"{{ isset($rate) && $rate['id'] == $plan['id'] ? ' selected' : '' }}>{{ $plan['name'] }}</option>
                              @endforeach
