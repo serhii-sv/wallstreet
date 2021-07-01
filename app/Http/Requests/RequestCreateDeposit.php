@@ -42,7 +42,7 @@ class RequestCreateDeposit extends FormRequest
     public function rules()
     {
         return [
-            'wallet_id' => ['required', new RuleWalletExist, new RuleUUIDEqual],
+//            'wallet_id' => ['required', new RuleWalletExist, new RuleUUIDEqual],
             'rate_id'   => ['required', 'exists:rates,id', new RuleCheckRate, new RuleRateCurrency, new RuleUUIDEqual],
             'amount'    => ['numeric', new RuleEnoughBalance, new RulePlanRange, 'min:0.00000001']
         ];
@@ -54,7 +54,7 @@ class RequestCreateDeposit extends FormRequest
     public function messages()
     {
         return [
-            'wallet_id.required' => __('Wallet is required'),
+//            'wallet_id.required' => __('Wallet is required'),
 
             'rate_id.required'   => __('Rate is required'),
             'rate_id.exists'     => __('Rate is not exists'),
