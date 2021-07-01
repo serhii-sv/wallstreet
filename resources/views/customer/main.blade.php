@@ -80,8 +80,8 @@
         <section class="mosaic">
             <div class="container">
                 <div class="mosaic__row mosaic__row--profit">
-                    <div class="mosaic__image">
-                        <div class="mosaic__image-block"><img src="/img/mosaic/profit.png" alt="">
+                    <div class="mosaic__image" style="margin-top:100px;">
+                        <div class="mosaic__image-block"><img src="/images/c1.png" alt="" style="max-width:290px;margin-left:120px;">
                         </div>
                     </div>
                     <div class="mosaic__text">
@@ -92,7 +92,7 @@
                         </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
                     </div>
                 </div>
-                <div class="mosaic__row mosaic__row--deposit reverse">
+                <div class="mosaic__row mosaic__row--deposit reverse" style="margin-top:100px;">
                     <div class="mosaic__text">
                         <h3 class="mosaic__title">{{ __('Minimum deposit') }} 0.002 BTC
                         </h3>
@@ -101,23 +101,23 @@
                         </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
                     </div>
                     <div class="mosaic__image">
-                        <div class="mosaic__image-block"><img src="/img/mosaic/deposit.png" alt="">
+                        <div class="mosaic__image-block"><img src="/images/c2.png" alt="" style="margin-right:200px;">
                         </div>
                     </div>
                 </div>
-                <div class="mosaic__row mosaic__row--withdrawl">
-                    <div class="mosaic__image">
-                        <div class="mosaic__image-block"><img src="/img/mosaic/widthdrawal.png" alt="">
-                        </div>
-                    </div>
-                    <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Minimum withdrawal') }} 0.0008 BTC
-                        </h3>
-                        <div class="mosaic__description">
-                            <p>{{ __('An investor is usually a person who, in exchange for the opportunity of increasing profits, assumes the risk of losing his or her funds. But Luminex proves on a daily basis that this approach is outdated. Our investors are not only taking no risks, but can withdraw money at any time.') }}</p>
-                        </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
-                    </div>
-                </div>
+{{--                <div class="mosaic__row mosaic__row--withdrawl">--}}
+{{--                    <div class="mosaic__image">--}}
+{{--                        <div class="mosaic__image-block"><img src="/img/mosaic/widthdrawal.png" alt="">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="mosaic__text">--}}
+{{--                        <h3 class="mosaic__title">{{ __('Minimum withdrawal') }} 0.0008 BTC--}}
+{{--                        </h3>--}}
+{{--                        <div class="mosaic__description">--}}
+{{--                            <p>{{ __('An investor is usually a person who, in exchange for the opportunity of increasing profits, assumes the risk of losing his or her funds. But Luminex proves on a daily basis that this approach is outdated. Our investors are not only taking no risks, but can withdraw money at any time.') }}</p>--}}
+{{--                        </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </section>
         <section class="calculate">
@@ -215,19 +215,53 @@
                 <h3 class="guarantees__title">{{ __('We provide guarantees') }}<span> {{ __('It’s safe with us') }}</span>
                 </h3>
                 <div class="guarantees__row">
-                    <div class="guarantees__content">
+                    <div style="line-height: 140%;">
                         <p><strong>{{ __('By accepting the agreement, you enter into an agreement with our company.') }}</strong></p>
-                        <p>{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. Regardless of the trading results, the investor makes a profit depending on the size of the deposit, without taking the bonus rates into account and at any possible outcome of the trades. The client will not lose funds in case of unsuccessful trading, but also his profit will not increase if they are very successful. At the same time, we offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to stop our cooperation.') }}</p><a class="btn btn--white-line" href="#regisration" data-fancybox="" data-modal="true">{{ __('Start earning!') }}</a>
-                    </div>
-                    <div class="guarantees__list-wrap">
-                        <ul class="guarantees__list">
-                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant.png" alt=""></a>
-                            </li>
-                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                            {{--</li>--}}
-                        </ul>
+                        <p style="margin-bottom: 30px;">{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. We offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to cease our cooperation.') }}</p><a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
                     </div>
                 </div>
+                <div>
+                    <div style="width:33%; float:left; height:300px; text-align: left;">
+                        <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
+                        <div style="margin-top:30px;">
+                            <div class="guarantees__list-wrap" style="width:100%;">
+                                <ul class="guarantees__list">
+                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc1.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc1.jpg" alt="" style="width:200px;"></a>
+                                    </li>
+                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                    {{--</li>--}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:33%; float:left; height:300px; text-align: center;">
+                        <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
+                        <div style="margin-top:30px;">
+                            <div class="guarantees__list-wrap" style="width:100%;">
+                                <ul class="guarantees__list" style="margin-left: 50px;">
+                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc3.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc3.jpg" alt="" style="width:250px; background:none;"></a>
+                                    </li>
+                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                    {{--</li>--}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:33%; float:left; height:300px; text-align: right;">
+                        <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
+                        <div style="margin-top:30px;">
+                            <div class="guarantees__list-wrap" style="width:100%; float:right;">
+                                <ul class="guarantees__list" style="margin-left:60px;">
+                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc2.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc2.jpg" alt="" style="width:200px;"></a>
+                                    </li>
+                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                    {{--</li>--}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both; margin-top:400px;"></div>
                 <div class="guarantees__bottom">
                     <h4 class="guarantees__bottom-title">{{ __('Do you have any questions?') }}
                     </h4><a class="btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
@@ -286,56 +320,56 @@
                 </ul>
             </div>
         </section>
-        <section class="representative">
-            <div class="container">
-                <div class="representative__content">
-                    <h3 class="representative__title"><span>{{ __('Representative') }}</span> {{ __('referral program') }}
-                    </h3>
-                    <ul class="levels-list">
-                        <li class="levels-list__item">
-                            <p class="levels-list__count">7<sup>%</sup>
-                            </p>
-                            <p class="levels-list__desc">1<sup>{{ __('st') }}</sup> {{ __('level') }}
-                            </p>
-                        </li>
-                        <li class="levels-list__item">
-                            <p class="levels-list__count">5<sup>%</sup>
-                            </p>
-                            <p class="levels-list__desc">2<sup>{{ __('nd') }}</sup> {{ __('level') }}
-                            </p>
-                        </li>
-                        <li class="levels-list__item">
-                            <p class="levels-list__count">3<sup>%</sup>
-                            </p>
-                            <p class="levels-list__desc">3<sup>{{ __('rd') }}</sup> {{ __('level') }}
-                            </p>
-                        </li>
-                        <li class="levels-list__item">
-                            <p class="levels-list__count">1<sup>%</sup>
-                            </p>
-                            <p class="levels-list__desc">4<sup>{{ __('th') }}</sup> {{ __('level') }}
-                            </p>
-                        </li>
-                        <li class="levels-list__item">
-                            <p class="levels-list__count">1<sup>%</sup>
-                            </p>
-                            <p class="levels-list__desc">5<sup>{{ __('th') }}</sup> {{ __('level') }}
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="representative__description">
-                        <p>{{ __('We offer a special referral program for major partners of our company. You can become our official representative and use your own audience or advertising company to receive profit from us.') }}</p>
-                    </div>
-                </div>
-                <div class="representative__right"><img class="representative__image-main" src="/img/representative.png" alt="" role="presentation"/>
-                    <div class="representative__text">
-                        <!-- <p>хз, что тут писать</p> -->
-                    </div>
-                </div>
-                <div class="representative__bottom"><a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>
-                </div>
-            </div>
-        </section>
+{{--        <section class="representative">--}}
+{{--            <div class="container">--}}
+{{--                <div class="representative__content">--}}
+{{--                    <h3 class="representative__title"><span>{{ __('Representative') }}</span> {{ __('referral program') }}--}}
+{{--                    </h3>--}}
+{{--                    <ul class="levels-list">--}}
+{{--                        <li class="levels-list__item">--}}
+{{--                            <p class="levels-list__count">7<sup>%</sup>--}}
+{{--                            </p>--}}
+{{--                            <p class="levels-list__desc">1<sup>{{ __('st') }}</sup> {{ __('level') }}--}}
+{{--                            </p>--}}
+{{--                        </li>--}}
+{{--                        <li class="levels-list__item">--}}
+{{--                            <p class="levels-list__count">5<sup>%</sup>--}}
+{{--                            </p>--}}
+{{--                            <p class="levels-list__desc">2<sup>{{ __('nd') }}</sup> {{ __('level') }}--}}
+{{--                            </p>--}}
+{{--                        </li>--}}
+{{--                        <li class="levels-list__item">--}}
+{{--                            <p class="levels-list__count">3<sup>%</sup>--}}
+{{--                            </p>--}}
+{{--                            <p class="levels-list__desc">3<sup>{{ __('rd') }}</sup> {{ __('level') }}--}}
+{{--                            </p>--}}
+{{--                        </li>--}}
+{{--                        <li class="levels-list__item">--}}
+{{--                            <p class="levels-list__count">1<sup>%</sup>--}}
+{{--                            </p>--}}
+{{--                            <p class="levels-list__desc">4<sup>{{ __('th') }}</sup> {{ __('level') }}--}}
+{{--                            </p>--}}
+{{--                        </li>--}}
+{{--                        <li class="levels-list__item">--}}
+{{--                            <p class="levels-list__count">1<sup>%</sup>--}}
+{{--                            </p>--}}
+{{--                            <p class="levels-list__desc">5<sup>{{ __('th') }}</sup> {{ __('level') }}--}}
+{{--                            </p>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                    <div class="representative__description">--}}
+{{--                        <p>{{ __('We offer a special referral program for major partners of our company. You can become our official representative and use your own audience or advertising company to receive profit from us.') }}</p>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="representative__right"><img class="representative__image-main" src="/img/representative.png" alt="" role="presentation"/>--}}
+{{--                    <div class="representative__text">--}}
+{{--                        <!-- <p>хз, что тут писать</p> -->--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="representative__bottom"><a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <section class="partners">
             @include('layouts.partnerlist')
         </section>
