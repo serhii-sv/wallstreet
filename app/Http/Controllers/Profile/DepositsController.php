@@ -34,7 +34,7 @@ class DepositsController extends Controller
             ? Rate::with('currency')
                 ->where('id', $request->rate_id)
                 ->first()
-            : '';
+            : null;
 
         if (null !== $rate) {
             $rate = $rate->toArray();
