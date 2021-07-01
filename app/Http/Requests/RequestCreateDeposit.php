@@ -44,7 +44,7 @@ class RequestCreateDeposit extends FormRequest
         return [
 //            'wallet_id' => ['required', new RuleWalletExist, new RuleUUIDEqual],
             'rate_id'   => ['required', 'exists:rates,id', new RuleCheckRate, new RuleRateCurrency, new RuleUUIDEqual],
-            'amount'    => ['numeric', new RuleEnoughBalance, new RulePlanRange, 'min:0.00000001']
+            'amount'    => ['numeric', new RulePlanRange, 'min:0.00000001']
         ];
     }
 

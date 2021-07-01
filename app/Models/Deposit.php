@@ -150,10 +150,8 @@ class Deposit extends Model
         /** @var Rate $rate */
         $rate     = Rate::findOrFail($field['rate_id']);
 
-        $field['wallet_id'] = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail()->id;
-
         /** @var Wallet $wallet */
-        $wallet   = $user->wallets()->where('id', $field['wallet_id'])->first();
+        $wallet   = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
 
@@ -163,6 +161,10 @@ class Deposit extends Model
 
         if ($amount < $rate->min || $amount > $rate->max) {
             throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
+        }
+
+        if (abs($amount) > abs($wallet->balance)) {
+            throw new \Exception('Not enough money at your balance.');
         }
 
         /** @var Currency $currency */
