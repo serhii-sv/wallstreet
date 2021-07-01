@@ -75,8 +75,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/withdraw', 'Profile\WithdrawController@index')->name('profile.withdraw');
             Route::post('/withdraw', 'Profile\WithdrawController@handle')->name('profile.withdraw');
 
-            Route::get('/topup', 'Profile\TopUpController@index')->name('profile.topup');
-            Route::post('/topup', 'Profile\TopUpController@handle')->name('profile.topup');
+            Route::get('/topup', 'Profile\TopupController@index')->name('profile.topup');
+            Route::post('/topup', 'Profile\TopupController@handle')->name('profile.topup');
 
             Route::get('/topup/advcash', 'Payment\AdvcashController@topUp')->name('profile.topup.advcash');
             Route::get('/topup/perfectmoney', 'Payment\PerfectMoneyController@topUp')->name('profile.topup.perfectmoney');
