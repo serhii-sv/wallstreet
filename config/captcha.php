@@ -6,7 +6,7 @@
 
 return [
 
-    'characters' => '2346789abcdefghjmnpqrtuxyz',
+    'characters' => '12346789',
 
     'default' => [
         'length' => 5,
