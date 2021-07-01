@@ -146,12 +146,16 @@ class Deposit extends Model
     {
         /** @var User $user */
         $user     = isset($field['user']) ? $field['user'] : Auth::user();
+
+        /** @var Rate $rate */
+        $rate     = Rate::findOrFail($field['rate_id']);
+
+        $field['wallet_id'] = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail();
+
         /** @var Wallet $wallet */
         $wallet   = $user->wallets()->where('id', $field['wallet_id'])->first();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
-        /** @var Rate $rate */
-        $rate     = Rate::find($field['rate_id']);
 
         if ($rate->currency_id != $wallet->currency_id) {
             throw new \Exception('Wrong currency ID');
