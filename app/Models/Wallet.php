@@ -125,7 +125,7 @@ class Wallet extends Model
      */
     public function removeAmount($amount)
     {
-        Transaction::penalty($this, $amount);
+//        Transaction::penalty($this, $amount);
         $this->update(['balance' => $this->balance - $amount]);
         return $this;
     }
