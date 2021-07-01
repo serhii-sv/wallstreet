@@ -89,19 +89,53 @@
                     <h3 class="guarantees__title">{{ __('We provide guarantees') }}<span> {{ __('It’s safe with us') }}</span>
                     </h3>
                     <div class="guarantees__row">
-                        <div class="guarantees__content">
+                        <div style="line-height: 140%;">
                             <p><strong>{{ __('By accepting the agreement, you enter into an agreement with our company.') }}</strong></p>
-                            <p>{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. We offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to cease our cooperation.') }}</p><a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
-                        </div>
-                        <div class="guarantees__list-wrap">
-                            <ul class="guarantees__list">
-                                <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant.png" alt=""></a>
-                                </li>
-                                {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                {{--</li>--}}
-                            </ul>
+                            <p style="margin-bottom: 30px;">{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. We offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to cease our cooperation.') }}</p><a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
                         </div>
                     </div>
+                    <div>
+                        <div style="width:33%; float:left; height:300px; text-align: left;">
+                            <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
+                            <div style="margin-top:30px;">
+                                <div class="guarantees__list-wrap" style="width:100%;">
+                                    <ul class="guarantees__list">
+                                        <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc1.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc1.jpg" alt="" style="width:200px;"></a>
+                                        </li>
+                                        {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                        {{--</li>--}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:33%; float:left; height:300px; text-align: center;">
+                            <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
+                            <div style="margin-top:30px;">
+                                <div class="guarantees__list-wrap" style="width:100%;">
+                                    <ul class="guarantees__list" style="margin-left: 50px;">
+                                        <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc3.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc3.jpg" alt="" style="width:250px; background:none;"></a>
+                                        </li>
+                                        {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                        {{--</li>--}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:33%; float:left; height:300px; text-align: right;">
+                            <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
+                            <div style="margin-top:30px;">
+                                <div class="guarantees__list-wrap" style="width:100%; float:right;">
+                                    <ul class="guarantees__list" style="margin-left:60px;">
+                                        <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc2.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc2.jpg" alt="" style="width:200px;"></a>
+                                        </li>
+                                        {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                        {{--</li>--}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both; margin-top:400px;"></div>
                     <div class="guarantees__bottom">
                         <h4 class="guarantees__bottom-title">{{ __('Do you have any questions?') }}
                         </h4><a class="btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
