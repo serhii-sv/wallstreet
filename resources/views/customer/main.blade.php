@@ -221,7 +221,7 @@
                     </div>
                 </div>
                 <div>
-                    <div style="width:33%; float:left; height:300px; text-align: left;">
+                    <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
                         <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
                         <div style="margin-top:30px;">
                             <div class="guarantees__list-wrap" style="width:100%;">
@@ -234,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width:33%; float:left; height:300px; text-align: center;">
+                    <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
                         <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
                         <div style="margin-top:30px;">
                             <div class="guarantees__list-wrap" style="width:100%;">
@@ -247,7 +247,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width:33%; float:left; height:300px; text-align: right;">
+                    <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
                         <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
                         <div style="margin-top:30px;">
                             <div class="guarantees__list-wrap" style="width:100%; float:right;">
