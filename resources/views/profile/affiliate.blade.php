@@ -2,6 +2,14 @@
 @section('title', __('Partners'))
 @section('content')
 <div class="lk__content">
+    <div class="referral-link">
+        <div class="referral-link__col">
+            <h3 class="title">{{ __('Your referral link') }}
+            </h3>
+            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ getUserReferralLink() }}" type="text"/>
+            </div>
+        </div>
+    </div>
 <div>
     @if(getUserReferrals(1))
         <style>

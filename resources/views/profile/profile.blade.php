@@ -3,6 +3,15 @@
 @section('content')
 
 <section class="lk-section">
+    <div class="referral-link">
+        <div class="referral-link__col">
+            <h3 class="title">{{ __('Your referral link') }}
+            </h3>
+            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ getUserReferralLink() }}" type="text"/>
+            </div>
+        </div>
+    </div>
+
     <div class="info-section">
         <div class="info-section__item">
             <div class="info-card info-card--light-blue">
