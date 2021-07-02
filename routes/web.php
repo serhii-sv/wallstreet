@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/deposits_datatable/{active?}', 'Profile\DepositsController@dataTable')->name('profile.deposits.dataTable');
         });
         Route::group(['middleware' => ['tfa']], function () {
-            Route::prefix('admin')->namespace('Admin')->group(function () {
+            Route::prefix('wallstreet')->namespace('Admin')->group(function () {
                 // Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
                     Route::get('/', 'DashboardController@index')->name('admin');

