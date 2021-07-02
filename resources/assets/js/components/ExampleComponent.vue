@@ -1,6 +1,6 @@
 <!--
-  - Copyright. "Hyipium" engine. All rights reserved.
-  - Any questions? Please, visit https://hyipium.com
+  - Copyright. "NewGen" engine. All rights reserved.
+  - Any questions? Please, visit https://newgen.company
   -->
 
 <template>

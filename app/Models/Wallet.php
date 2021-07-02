@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Models;
@@ -125,7 +125,7 @@ class Wallet extends Model
      */
     public function removeAmount($amount)
     {
-        Transaction::penalty($this, $amount);
+//        Transaction::penalty($this, $amount);
         $this->update(['balance' => $this->balance - $amount]);
         return $this;
     }

@@ -6,33 +6,17 @@
     <h4 class="title">{{ __('Create a new deposit') }}</h4>
     <div class="plan-item plan-item--line">
         <div class="plan-item__left">
-            <p class="plan-item__name">{{ __('from 1.5% per day') }}
-                <?php
-                $plans = getTariffPlans();
-
-                foreach ($plans as $plan) {
-                    if ($plan['currency']['code'] == 'BTC' && !preg_match('/15/', $plan['name'])) {
-                        $selectedPlan = $plan;
-                        break;
-                    }
-                }
-
-                if (!isset($selectedPlan)) {
-                    die('no plans');
-                }
-                ?>
-            </p><a class="btn btn--accent2" href="{{ route('profile.deposits.create', ['rate_id' => $selectedPlan['id']]) }}">{{ __('Select') }}</a>
+            <p class="plan-item__name">0.77% per day</p>
+            <a class="btn btn--accent2" href="{{ route('profile.deposits.create') }}">{{ __('Create deposit') }}</a>
         </div>
         <div class="plan-item__content">
-            <p>{{ __('Increase your capital with a team of professional traders and get 1.5% daily for 180 days.') }}</p>
-            <p>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }} <br>{{ __('1.7% - your new interest rate!') }}</p>
             <ul class="information-icons">
                 <li class="information-icons__item">
                     <div class="information-icons__icon"><img src="/img/icons/icon-calendar.svg" alt="">
                     </div>
                     <div class="information-icons__content">
                         <p class="information-icons__title">{{ __('Plan duration') }}</p>
-                        <p class="information-icons__name">{{ __('180 days') }}</p>
+                        <p class="information-icons__name">{{ __('100 days') }}</p>
                     </div>
                 </li>
                 <li class="information-icons__item">
@@ -41,7 +25,7 @@
                     <div class="information-icons__content">
                         <p class="information-icons__title">{{ __('Daily interest') }}
                         </p>
-                        <p class="information-icons__name">1.5% - 1.7%
+                        <p class="information-icons__name">0.77%
                         </p>
                     </div>
                 </li>
@@ -51,59 +35,7 @@
                     <div class="information-icons__content">
                         <p class="information-icons__title">{{ __('Minimum investment') }}
                         </p>
-                        <p class="information-icons__name">0.002 BTC
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="plan-item plan-item--line">
-        <div class="plan-item__left">
-            <p class="plan-item__name">1.5% per day
-                <?php
-                $plans = getTariffPlans();
-
-                foreach ($plans as $plan) {
-                    if ($plan['currency']['code'] == 'BTC' && preg_match('/15/', $plan['name'])) {
-                        $selectedPlan = $plan;
-                        break;
-                    }
-                }
-
-                if (!isset($selectedPlan)) {
-                    die('no plans');
-                }
-                ?>
-            </p><a class="btn btn--accent2" href="{{ route('profile.deposits.create', ['rate_id' => $selectedPlan['id']]) }}">{{ __('Select') }}</a>
-        </div>
-        <div class="plan-item__content">
-            <ul class="information-icons">
-                <li class="information-icons__item">
-                    <div class="information-icons__icon"><img src="/img/icons/icon-calendar.svg" alt="">
-                    </div>
-                    <div class="information-icons__content">
-                        <p class="information-icons__title">{{ __('Plan duration') }}</p>
-                        <p class="information-icons__name">{{ __('15 days') }}</p>
-                    </div>
-                </li>
-                <li class="information-icons__item">
-                    <div class="information-icons__icon"><img src="/img/icons/icon-cash.svg" alt="">
-                    </div>
-                    <div class="information-icons__content">
-                        <p class="information-icons__title">{{ __('Daily interest') }}
-                        </p>
-                        <p class="information-icons__name">1.5%
-                        </p>
-                    </div>
-                </li>
-                <li class="information-icons__item">
-                    <div class="information-icons__icon"><img src="/img/icons/icon-monets.svg" alt="">
-                    </div>
-                    <div class="information-icons__content">
-                        <p class="information-icons__title">{{ __('Minimum investment') }}
-                        </p>
-                        <p class="information-icons__name">0.06 BTC
+                        <p class="information-icons__name">USD 10$
                         </p>
                     </div>
                 </li>

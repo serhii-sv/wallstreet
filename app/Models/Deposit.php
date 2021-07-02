@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Models;
@@ -146,12 +146,14 @@ class Deposit extends Model
     {
         /** @var User $user */
         $user     = isset($field['user']) ? $field['user'] : Auth::user();
+
+        /** @var Rate $rate */
+        $rate     = Rate::findOrFail($field['rate_id']);
+
         /** @var Wallet $wallet */
-        $wallet   = $user->wallets()->where('id', $field['wallet_id'])->first();
+        $wallet   = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
-        /** @var Rate $rate */
-        $rate     = Rate::find($field['rate_id']);
 
         if ($rate->currency_id != $wallet->currency_id) {
             throw new \Exception('Wrong currency ID');
@@ -161,21 +163,25 @@ class Deposit extends Model
             throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
         }
 
+        if (abs($amount) > abs($wallet->balance)) {
+            throw new \Exception('Not enough money at your balance.');
+        }
+
         /** @var Currency $currency */
         $currency = $rate->currency()->first();
 
         /**
          * LUMINEX SPECIAL
          */
-        $highPercent = 1.7;
+        $highPercent = 1.28;
 
         if ($amount >= 1000 && $currency->code == 'USD') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 0.16 && $currency->code == 'BTC') {
+        } elseif ($amount >= 0.02989986 && $currency->code == 'BTC') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 2.28 && $currency->code == 'BCH') {
+        } elseif ($amount >= 4033.97380466 && $currency->code == 'DOGE') {
             $rate->daily = $highPercent;
-        } elseif ($amount >= 4.99 && $currency->code == 'ETH') {
+        } elseif ($amount >= 0.47153994 && $currency->code == 'ETH') {
             $rate->daily = $highPercent;
         }
         // -------------------------------------------

@@ -4,13 +4,9 @@
         </li>
         <li id="aboutUsPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.aboutus') }}">{{ __('About us') }}</a>
         </li>
-        <li id="calculatorPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.calculator') }}">{{ __('Calculator') }}</a>
-        </li>
         <li id="investorsPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.investors') }}">{{ __('For investors') }}</a>
         </li>
         <li id="partnersPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.partners') }}">{{ __('For partners') }}</a>
-        </li>
-        <li id="representativePageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.representative') }}">{{ __('For representative') }}</a>
         </li>
         <li id="contactPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.contact') }}">{{ __('Contacts') }}</a>
         </li>

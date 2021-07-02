@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 return [
 
-    'characters' => '2346789abcdefghjmnpqrtuxyz',
+    'characters' => '12346789',
 
     'default' => [
         'length' => 5,

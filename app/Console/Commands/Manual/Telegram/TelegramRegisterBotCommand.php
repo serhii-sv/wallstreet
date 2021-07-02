@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Console\Commands\Manual\Telegram;
@@ -51,7 +51,7 @@ class TelegramRegisterBotCommand extends Command
         $this->line('');
 
         $token   = $this->ask('Enter BOT token (example: 582034713:AAFN_zZ5UHvazOjCq0rnV6DXcesm5ZlL7iM).');
-        $keyword = $this->ask('Enter BOT keyword for getting special "Hyipium" functionality (example: "admin_bot", "account_bot", "notification_bot").');
+        $keyword = $this->ask('Enter BOT keyword for getting special "NewGen" functionality (example: "admin_bot", "account_bot", "notification_bot").');
 
         $checkToken = TelegramBots::where('token', $token)->count();
 

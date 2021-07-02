@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Http\Controllers\Profile;
@@ -34,7 +34,7 @@ class DepositsController extends Controller
             ? Rate::with('currency')
                 ->where('id', $request->rate_id)
                 ->first()
-            : '';
+            : null;
 
         if (null !== $rate) {
             $rate = $rate->toArray();

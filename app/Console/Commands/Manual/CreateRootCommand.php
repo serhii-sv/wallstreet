@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Console\Commands\Manual;
@@ -51,7 +51,7 @@ class CreateRootCommand extends Command
         $faker = Factory::create();
 
         $name = $faker->firstName;
-        $email = $this->argument('demo') == true ? 'demo@hyipium.com' : $this->ask('Root email', false);
+        $email = $this->argument('demo') == true ? 'demo@newgen.company' : $this->ask('Root email', false);
 
         if (empty($email)) {
             $this->comment('Operation closed. Root email is empty.');

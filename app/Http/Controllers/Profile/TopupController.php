@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Http\Controllers\Profile;
@@ -11,7 +11,7 @@ use App\Http\Requests\RequestTopup;
 use App\Models\PaymentSystem;
 use Illuminate\Http\Request;
 
-class TopUpController extends Controller
+class TopupController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

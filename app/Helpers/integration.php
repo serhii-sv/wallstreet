@@ -1,14 +1,12 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 /**
  * Check if user is authorized.
  * @return bool
- *
- * http://demo.hyipium.com/admin/see_integration_example/isUserAuthorized
  */
 function isUserAuthorized(): bool
 {
@@ -70,8 +68,6 @@ function mainWallet()
  *
  * @return int
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getRunningDays
  */
 function getRunningDays(): int
 {
@@ -88,8 +84,6 @@ function getRunningDays(): int
  * @param \Carbon\Carbon $date
  * @return int
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTotalAccounts
  */
 function getTotalAccounts(\Carbon\Carbon $date = null): int
 {
@@ -109,8 +103,6 @@ function getTotalAccounts(\Carbon\Carbon $date = null): int
  * @param \Carbon\Carbon $date
  * @return int
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getActiveAccounts
  */
 function getActiveAccounts(\Carbon\Carbon $date = null): int
 {
@@ -136,8 +128,6 @@ function getActiveAccounts(\Carbon\Carbon $date = null): int
  * @param boolean $useSymbols
  * @return array
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTotalDeposited
  */
 function getTotalDeposited($useSymbols = false)
 {
@@ -170,7 +160,7 @@ function getTotalDeposited($useSymbols = false)
  * @return array
  * @throws
  *
- * http://demo.hyipium.com/admin/see_integration_example/getTotalWithdrew
+ * 
  */
 function getTotalWithdrew($useSymbols = false)
 {
@@ -205,8 +195,6 @@ function getTotalWithdrew($useSymbols = false)
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getCurrencies
  */
 function getCurrencies()
 {
@@ -222,8 +210,6 @@ function getCurrencies()
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTariffPlans
  */
 function getTariffPlans()
 {
@@ -244,8 +230,6 @@ function getTariffPlans()
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTariffPlans
  */
 function getTariffPlansOrderByName()
 {
@@ -267,8 +251,6 @@ function getTariffPlansOrderByName()
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTariffPlans
  */
 function getUniqueTariffPlans()
 {
@@ -310,8 +292,6 @@ function getUniqueTariffPlans()
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTariffPlansOnMain
  */
 function getUniqueTariffPlansWithMinMax()
 {
@@ -361,8 +341,6 @@ function getUniqueTariffPlansWithMinMax()
  *
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getAffiliateLevels
  */
 function getAffiliateLevels()
 {
@@ -378,8 +356,6 @@ function getAffiliateLevels()
  *
  * @return int
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getVisitorsOnline
  */
 function getVisitorsOnline(): int
 {
@@ -397,8 +373,6 @@ function getVisitorsOnline(): int
  *
  * @return int
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getMembersOnline
  */
 function getMembersOnline(): int
 {
@@ -417,8 +391,6 @@ function getMembersOnline(): int
  *
  * @return \Carbon\Carbon
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLastUpdate
  */
 function getLastUpdate(): \Carbon\Carbon
 {
@@ -433,8 +405,6 @@ function getLastUpdate(): \Carbon\Carbon
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getAllNews
  */
 function getAllNews()
 {
@@ -455,8 +425,6 @@ function getAllNews()
  * @param int $limit
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLastEarnings
  */
 function getLastEarnings(int $limit = 10)
 {
@@ -485,8 +453,6 @@ function getLastEarnings(int $limit = 10)
  * @param int $limit
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLastWithdraws
  */
 function getLastWithdraws(int $limit = 10)
 {
@@ -516,8 +482,6 @@ function getLastWithdraws(int $limit = 10)
  * @param int $limit
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLastCreatedDeposits
  */
 function getLastCreatedDeposits(int $limit = 10)
 {
@@ -543,8 +507,6 @@ function getLastCreatedDeposits(int $limit = 10)
  * @param int $limit
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLastCreatedMembers
  */
 function getLastCreatedMembers(int $limit = 10)
 {
@@ -575,8 +537,6 @@ function getSupportEmail()
 /**
  * @return string
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getAdminEmail
  */
 function getAdminEmail(): string
 {
@@ -592,8 +552,6 @@ function getAdminEmail(): string
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getLanguagesArray
  */
 function getLanguagesArray()
 {
@@ -619,8 +577,6 @@ function calculateInvestment(\App\Models\Rate $plan, $amount=0, $duration=0)
 /**
  * @return string
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getDateOfLaunch
  */
 function getDateOfLaunch(): string
 {
@@ -740,8 +696,6 @@ function loginCaptchaCanBeShown(): bool
  * @param int $active
  * @return int
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getDepositsCount
  */
 function getDepositsCount($active = null, \Carbon\Carbon $date = null): int
 {
@@ -765,8 +719,6 @@ function getDepositsCount($active = null, \Carbon\Carbon $date = null): int
  * @param \Carbon\Carbon $date
  * @return int
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getActiveDepositsCount
  */
 function getActiveDepositsCount(\Carbon\Carbon $date = null): int
 {
@@ -777,8 +729,6 @@ function getActiveDepositsCount(\Carbon\Carbon $date = null): int
  * @param \Carbon\Carbon $date
  * @return int
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getClosedDepositsCount
  */
 function getClosedDepositsCount(\Carbon\Carbon $date = null): int
 {
@@ -788,8 +738,6 @@ function getClosedDepositsCount(\Carbon\Carbon $date = null): int
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTopPartner
  */
 function getTopPartner()
 {
@@ -807,8 +755,6 @@ function getTopPartner()
 /**
  * @return mixed
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getTopPartner
  */
 function getTelegramBots()
 {
@@ -825,8 +771,6 @@ function getTelegramBots()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserId
  */
 function getUserId()
 {
@@ -835,8 +779,6 @@ function getUserId()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserName
  */
 function getUserName()
 {
@@ -845,8 +787,6 @@ function getUserName()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserEmail
  */
 function getUserEmail(): string
 {
@@ -855,8 +795,6 @@ function getUserEmail(): string
 
 /**
  * @return int
- *
- * http://demo.hyipium.com/admin/see_integration_example/getPartnerId
  */
 function getPartnerId()
 {
@@ -866,8 +804,6 @@ function getPartnerId()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getPartnerArray
  */
 function getPartnerArray()
 {
@@ -883,8 +819,6 @@ function getPartnerArray()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserPhone
  */
 function getUserPhone()
 {
@@ -893,8 +827,6 @@ function getUserPhone()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserSkype
  */
 function getUserSkype()
 {
@@ -903,8 +835,6 @@ function getUserSkype()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserLogin
  */
 function getUserLogin()
 {
@@ -913,8 +843,6 @@ function getUserLogin()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserCreatedAt
  */
 function getUserCreatedAt(): string
 {
@@ -923,8 +851,6 @@ function getUserCreatedAt(): string
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserUpdatedAt
  */
 function getUserUpdatedAt(): string
 {
@@ -933,8 +859,6 @@ function getUserUpdatedAt(): string
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserTfaToken
  */
 function getUserTfaToken()
 {
@@ -943,8 +867,6 @@ function getUserTfaToken()
 
 /**
  * @return string
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserRememberToken
  */
 function getUserRememberToken()
 {
@@ -954,8 +876,6 @@ function getUserRememberToken()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserAllDeposits
  */
 function getUserAllDeposits()
 {
@@ -978,8 +898,6 @@ function getUserAllDeposits()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserActiveDeposits
  */
 function getUserActiveDeposits()
 {
@@ -1003,8 +921,6 @@ function getUserActiveDeposits()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserClosedDeposits
  */
 function getUserClosedDeposits()
 {
@@ -1030,8 +946,6 @@ function getUserClosedDeposits()
  * @param int $approved
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserAllOperations
  */
 function getUserAllOperations(string $type = null, int $approved = null)
 {
@@ -1112,8 +1026,6 @@ function getUserPartnerOperations()
  * @param string $currencyId
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserWallets
  */
 function getUserWallets($currencyId = null)
 {
@@ -1151,8 +1063,6 @@ function getUserWalletsBalancesInUSD()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserWithdrawRequests
  */
 function getUserWithdrawRequests()
 {
@@ -1162,8 +1072,6 @@ function getUserWithdrawRequests()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserIps
  */
 function getUserIps()
 {
@@ -1181,8 +1089,6 @@ function getUserIps()
 /**
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserPageViews
  */
 function getUserPageViews()
 {
@@ -1201,8 +1107,6 @@ function getUserPageViews()
  * @param bool $json
  * @return array|string
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserReferrals
  */
 function getUserReferrals(int $level = 1, bool $json = false)
 {
@@ -1216,8 +1120,6 @@ function getUserReferrals(int $level = 1, bool $json = false)
  * @param bool $json
  * @return array|string
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserReferrals
  */
 function getUserActiveReferrals(int $level = 1, bool $json = false)
 {
@@ -1230,8 +1132,6 @@ function getUserActiveReferrals(int $level = 1, bool $json = false)
  * @param bool $json
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserReferralsTree
  */
 function getUserReferralsTree(bool $json = false)
 {
@@ -1247,8 +1147,6 @@ function getUserReferralsTree(bool $json = false)
  * @param string $currencyId
  * @return array
  * @throws Exception
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserBalancesByCurrency
  */
 function getUserBalancesByCurrency($useSymbols = false, $currencyId = null)
 {
@@ -1293,8 +1191,6 @@ function getUserLevels24h(\App\Models\User $user, int $level=1)
  * @param boolean $useSymbols
  * @return array
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserTotalDeposited
  */
 function getUserTotalDeposited($useSymbols = false)
 {
@@ -1309,8 +1205,6 @@ function getUserTotalDeposited($useSymbols = false)
  * @param boolean $useSymbols
  * @return array
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserTotalWithdrawn
  */
 function getUserTotalWithdrawn($useSymbols = false)
 {
@@ -1325,8 +1219,6 @@ function getUserTotalWithdrawn($useSymbols = false)
  * @param boolean $useSymbols
  * @return array
  * @throws
- *
- * http://demo.hyipium.com/admin/see_integration_example/getUserTotalEarned
  */
 function getUserTotalEarned($useSymbols = false)
 {

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
@@ -28,11 +28,9 @@ Route::group(['middleware' => ['web']], function () {
         // Not authorized
         Route::get('/', 'Customer\MainController@index')->name('customer.main');
         Route::get('/aboutus', 'Customer\AboutUsController@index')->name('customer.aboutus');
-        Route::get('/calculator', 'Customer\CalculatorController@index')->name('customer.calculator');
         Route::get('/documents', 'Customer\DocumentsController@index')->name('customer.documents');
         Route::get('/investors', 'Customer\InvestorsController@index')->name('customer.investors');
         Route::get('/partners', 'Customer\PartnersController@index')->name('customer.partners');
-        Route::get('/representative', 'Customer\RepresentativeController@index')->name('customer.representative');
         Route::get('/contact', 'Customer\ContactController@index')->name('customer.contact');
         Route::get('/payout', 'Customer\PayoutController@index')->name('customer.payout');
 
@@ -77,8 +75,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/withdraw', 'Profile\WithdrawController@index')->name('profile.withdraw');
             Route::post('/withdraw', 'Profile\WithdrawController@handle')->name('profile.withdraw');
 
-            Route::get('/topup', 'Profile\TopUpController@index')->name('profile.topup');
-            Route::post('/topup', 'Profile\TopUpController@handle')->name('profile.topup');
+            Route::get('/topup', 'Profile\TopupController@index')->name('profile.topup');
+            Route::post('/topup', 'Profile\TopupController@handle')->name('profile.topup');
 
             Route::get('/topup/advcash', 'Payment\AdvcashController@topUp')->name('profile.topup.advcash');
             Route::get('/topup/perfectmoney', 'Payment\PerfectMoneyController@topUp')->name('profile.topup.perfectmoney');

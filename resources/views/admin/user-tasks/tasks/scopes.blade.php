@@ -92,7 +92,7 @@ if (isset($task)) {
     <label for="scope3" class="col-md-4 control-label">Подписки на группу (только группа добавленная в конфигурацию)</label>
 @if(!isset($existsScope3Info))
     <div class="col-md-6">
-        <input id="scope3" type="text" class="form-control" name="scope[vk_page_subscription]" value="" placeholder="https://vk.com/hyipium">
+        <input id="scope3" type="text" class="form-control" name="scope[vk_page_subscription]" value="" placeholder="https://vk.com/newgen">
     </div>
 @else
     <a href="{{ $existsScope3Info->source_address }}" target="_blank">{{ $existsScope3Info->source_address }}</a>
@@ -111,7 +111,7 @@ if (isset($task)) {
     <label for="scope4" class="col-md-4 control-label">Лайки постов (только для группы добавленной в конфигурацию)</label>
 @if(!isset($existsScope4Info))
     <div class="col-md-6">
-        <input id="scope4" type="text" class="form-control" name="scope[vk_post_like]" value="" placeholder="https://vk.com/hyipium?w=wall-170939008_1">
+        <input id="scope4" type="text" class="form-control" name="scope[vk_post_like]" value="" placeholder="https://vk.com/newgen?w=wall-170939008_1">
     </div>
 @else
     <a href="{{ $existsScope4Info->source_address }}" target="_blank">{{ $existsScope4Info->source_address }}</a>

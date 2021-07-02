@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright. "Hyipium" engine. All rights reserved.
- * Any questions? Please, visit https://hyipium.com
+ * Copyright. "NewGen" investment engine. All rights reserved.
+ * Any questions? Please, visit https://newgen.company
  */
 
 namespace App\Providers;
@@ -36,7 +36,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\\Instagram\\InstagramExtendSocialite@handle',
-            \Hyipium\SocialiteProviders\Odnoklassniki\OdnoklassnikiExtendSocialite::class
         ],
         'Illuminate\Mail\Events\MessageSent' => [
             'App\Listeners\LogSentEmail',
