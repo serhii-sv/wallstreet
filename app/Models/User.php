@@ -464,7 +464,7 @@ class User extends Authenticatable
         }
 
         $referrals = [];
-        $referrals['name'] = $user->email;
+        $referrals['name'] = $user->phone ?? $user->email;
 
         if (!$user->hasReferrals()) {
             return $referrals;

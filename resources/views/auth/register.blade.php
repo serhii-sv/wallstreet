@@ -53,6 +53,20 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <label for="phone" class="form__title"><span>{{ __('Phone number') }}</span></label>
+
+                        <div class="col-md-6">
+                            <input id="phone" type="text" name="phone"
+                                   value="{{ old('phone') }}">
+
+                            @if ($errors->has('phone'))
+                                <span class="help-block">
+                                    <span class="alert">{{ $errors->first('phone') }}</span>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group{{ $errors->has('partner_id') ? ' has-error' : '' }}">
                         <label for="partner_id" class="form__title"><span>{{ __('Partner ID') }}:</span></label>
                         <div class="col-md-6">
