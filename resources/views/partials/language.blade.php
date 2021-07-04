@@ -8,7 +8,7 @@
             <a href="{{ route('set.lang', ['locale' => 'ru']) }}"><button class="language__button">Russian</button></a>
         </li>
         <li class="language__item">
-            <a href="{{ route('set.lang', ['locale' => 'cn']) }}"><button class="language__button">Chinesse</button></a>
+            <a href="{{ route('set.lang', ['locale' => 'cn']) }}"><button class="language__button">Chinese</button></a>
         </li>
     </ul>
 </div>
