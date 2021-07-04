@@ -77,6 +77,24 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'    => 'Ł',
                 'precision' => 8,
             ],
+            'USDT.ERC20' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('USDT.ERC20" [yes|no]', 'yes'),
+                'name'      => 'USDT.ERC20',
+                'symbol'    => '$',
+                'precision' => 8,
+            ],
+            'USDT.TRC20' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('USDT.TRC20" [yes|no]', 'yes'),
+                'name'      => 'USDT.TRC20',
+                'symbol'    => '$',
+                'precision' => 8,
+            ],
+            'XRP' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('XRP" [yes|no]', 'yes'),
+                'name'      => 'XRP',
+                'symbol'    => '$',
+                'precision' => 8,
+            ],
             'BCH' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('BCH "Bitcoin Cash" [yes|no]', 'yes'),
                 'name'      => 'Bitcoin Cash',
