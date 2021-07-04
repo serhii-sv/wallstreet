@@ -10,6 +10,12 @@
             <div class="input-row"><input class="input-row__input input input--accent2" value="{{ getUserReferralLink() }}" type="text"/>
             </div>
         </div>
+        <div class="referral-link__col">
+            <h3 class="title">{{ __('Your upliner') }}
+            </h3>
+            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ !empty(getPartnerId()) ? getPartnerArray()['email'] ?? 'undefined' : __('you don\'t have upliner') }}" type="text"/>
+            </div>
+        </div>
     </div>
 
     <div class="info-section">
