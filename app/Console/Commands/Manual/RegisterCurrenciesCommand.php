@@ -95,13 +95,6 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'    => 'Ð',
                 'precision' => 8,
             ],
-            'hm1_testnet' => [
-                'answer'      => $this->argument('demo') == true ? 'yes' : $this->ask('hm1_testnet [yes|no]', 'yes'),
-                'name'        => 'hm1_testnet',
-                'symbol'      => 'HM',
-                'precision'   => 8,
-                'currency_id' => '4uSo7x1t35cgmuoneFzJCKAL9sshPQqZ8iTVy6gRRYAY',
-            ],
         ];
 
         foreach ($questions as $currencyKey => $data) {
