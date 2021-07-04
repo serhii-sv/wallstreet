@@ -86,7 +86,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/topup/enpay', 'Payment\EnpayController@topUp')->name('profile.topup.enpay');
             Route::get('/topup/nixmoney', 'Payment\NixmoneyController@topUp')->name('profile.topup.nixmoney');
 
-            Route::any('/topup/payment_message', 'Profile\TopUpController@paymentMessage')->name('profile.topup.payment_message');
+            Route::any('/topup/payment_message', 'Profile\TopupController@paymentMessage')->name('profile.topup.payment_message');
 
             Route::resource('/deposits', 'Profile\DepositsController', ['names' => [
                 'index' => 'profile.deposits',
