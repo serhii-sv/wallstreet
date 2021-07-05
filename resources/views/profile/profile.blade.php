@@ -21,6 +21,18 @@
     <div class="info-section">
         <div class="info-section__item">
             <div class="info-card info-card--light-blue">
+                <p class="info-card__title">{{ __('Balance') }}</p>
+                <ul class="info-card__list">
+                    @foreach(getUserBalancesByCurrency(true) as $symbol => $balance)
+                        <li class="info-card__count">
+                            <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($balance, 8) }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        <div class="info-section__item">
+            <div class="info-card info-card--light-blue">
                 <p class="info-card__title">{{ __('Invested') }}</p>
                 <ul class="info-card__list">
                     @foreach(getUserBalancesByCurrency(true) as $symbol => $balance)
