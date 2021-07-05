@@ -7,9 +7,9 @@
             <div class="container">
                 <div class="intro__content">
                     <h1 class="intro__title">
-                      {{ __('Investments in') }}<span> {{ __('cryptocurrency') }} <br>{{ __('and forex') }}</span>
+                      {{ __('Luminex') }}<span> {{ __('for Finance')  }}</span>
                     </h1>
-                    <p class="intro__description">{{ __('Energy of cryptocurrency') }}
+                    <p class="intro__description">{{ __('It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system.') }}
                     </p><a class="btn intro__btn" href="{{ route('register') }}">{{ __('Start now!') }}</a>
                 </div>
                 <div class="intro__image"><img src="/img/header-img.png" alt=""/>
@@ -70,10 +70,10 @@
         </section> -->
         <section class="intro-text">
             <div class="container">
-                <h2 class="page-title">{{ __('Let money work for you') }} <span>{{ __('while you are relaxing') }}</span>
+                <h2 class="page-title">{{ __('About the company') }}</span>
                 </h2>
                 <div class="intro-text__description">
-                    <p>{{ __('Technologies are developing at an enormous pace, human physical work is being used less and less with every passing year. Our future is fully automated technologies. This also applies to the cryptocurrency trade. Our company is an affordable, transparent and secure tool for automated trading in highly stable cryptocurrency markets, with the purpose to improve the well-being of each participant without need them to have in-depth knowledge of cryptocurrency, blockchain and neural networks.') }}</p>
+                    <p>{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
                 </div><a class="btn btn--yellow-line" href="{{ route('customer.aboutus') }}">{{ __('Find out more') }}</a>
             </div>
         </section>
@@ -85,16 +85,16 @@
                         </div>
                     </div>
                     <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Profit 1.5% per day') }}<br> {{ __('for 180 days') }}
+                        <h3 class="mosaic__title">{{ __('Profit 0.77% per day') }}<br> {{ __('for 100 days') }}
                         </h3>
                         <div class="mosaic__description">
-                            <p>{{ __('The best part about investing is that you don’t have to do anything to make money appear in your account. You are able to get more free time while increasing your income daily!') }}</p>
+                            <p>{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</p>
                         </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
                     </div>
                 </div>
                 <div class="mosaic__row mosaic__row--deposit reverse" style="margin-top:100px;">
                     <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Minimum deposit') }} 0.002 BTC
+                        <h3 class="mosaic__title">{{ __('Minimum deposit') }} USD 10$
                         </h3>
                         <div class="mosaic__description">
                             <p>{{ __('The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income.') }}</p>
@@ -129,13 +129,12 @@
                         </svg>
                         <div class="calculate-block__top-content">
                             <div class="calculate-block__bonus">
-                                <p>{{ __('Bonus') }} <strong>+0.2%</strong></p>
+                                <p style="margin-left:30px;margin-top:-15px;"><strong>+0.51%</strong> {{ __('to daily earnings') }}</p>
                             </div>
                             <div class="calculate-block__content">
-                                <h3 class="calculate-block__title"> <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 51% of income per month') }}
+                                <h3 class="calculate-block__title"> <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 38.4% of income per month') }}
                                 </h3>
-                                <p>{{ __('Register and open a deposit, and your funds will be handed over to the professional traders, you will receive 1.5% profit every day based on the amount of your deposit. You get a fixed profit, regardless of the results of the trades.') }}</p>
-                                <p><strong>{{ __('Withdraw your funds and reinvest. Thus, you can easily increase the percentage of your income from the initial deposit.') }}</strong></p><a class="btn btn--yellow-line" href="{{ route('register') }}">{{ __('Start now!') }}</a>
+                                <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
                             </div>
                             <div class="calculate-block__right">
                                 <div class="calc">
@@ -200,7 +199,7 @@
                     <div class="calculate-block__bottom">
                         <div class="calculate-block__bottom-content">
                             <div class="calculate-block__bottom-text">
-                                <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
+                                <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
                             </div>
                         </div>
                         <svg viewBox="0 0 1151 50">
@@ -216,52 +215,58 @@
                 </h3>
                 <div class="guarantees__row">
                     <div style="line-height: 140%;">
-                        <p><strong>{{ __('By accepting the agreement, you enter into an agreement with our company.') }}</strong></p>
-                        <p style="margin-bottom: 30px;">{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. We offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to cease our cooperation.') }}</p><a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
-                    </div>
-                </div>
-                <div>
-                    <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
-                        <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
-                        <div style="margin-top:30px;">
-                            <div class="guarantees__list-wrap" style="width:100%;">
-                                <ul class="guarantees__list">
-                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc1.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc1.jpg" alt="" style="width:200px;"></a>
-                                    </li>
-                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                    {{--</li>--}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
-                        <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
-                        <div style="margin-top:30px;">
-                            <div class="guarantees__list-wrap" style="width:100%;">
-                                <ul class="guarantees__list" style="margin-left: 50px;">
-                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc3.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc3.jpg" alt="" style="width:250px; background:none;"></a>
-                                    </li>
-                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                    {{--</li>--}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
-                        <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
-                        <div style="margin-top:30px;">
-                            <div class="guarantees__list-wrap" style="width:100%; float:right;">
-                                <ul class="guarantees__list" style="margin-left:60px;">
-                                    <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc2.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc2.jpg" alt="" style="width:200px;"></a>
-                                    </li>
-                                    {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                    {{--</li>--}}
-                                </ul>
-                            </div>
+                        <p style="margin-bottom: 30px;">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
+                        <div style="text-align: center;">
+                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
                         </div>
                     </div>
                 </div>
-                <div style="clear:both; margin-top:400px;"></div>
+                <table style="width:100%; clear:both;">
+                    <tr>
+                        <td>
+                            <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
+                                <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
+                                <div style="margin-top:30px;">
+                                    <div class="guarantees__list-wrap" style="width:100%;">
+                                        <ul class="guarantees__list">
+                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc1.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc1.jpg" alt="" style="width:200px;"></a>
+                                            </li>
+                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                            {{--</li>--}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
+                                <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
+                                <div style="margin-top:30px;">
+                                    <div class="guarantees__list-wrap" style="width:100%;">
+                                        <ul class="guarantees__list" style="margin-left: 50px;">
+                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc3.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc3.jpg" alt="" style="width:250px; background:none;"></a>
+                                            </li>
+                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                            {{--</li>--}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
+                                <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
+                                <div style="margin-top:30px;">
+                                    <div class="guarantees__list-wrap" style="width:100%; float:right;">
+                                        <ul class="guarantees__list" style="margin-left:60px;">
+                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc2.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc2.jpg" alt="" style="width:200px;"></a>
+                                            </li>
+                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
+                                            {{--</li>--}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div style="clear:both;"></div>
                 <div class="guarantees__bottom">
                     <h4 class="guarantees__bottom-title">{{ __('Do you have any questions?') }}
                     </h4><a class="btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
@@ -276,8 +281,7 @@
                     <h3 class="referral__title"><span>{{ __('4 level') }}</span> {{ __('referral program') }}
                     </h3>
                     <div class="referral__desription">
-                        <p><strong>{{ __('If you’re not used to just sitting and waiting, be sure to use our referral program!') }}</strong></p>
-                        <p>{{ __('How to increase profits and how to make it easier? With the help of our referral program, you can receive additional profit from each new investor invited with your personal link, provided that he or she open a deposit within our program. We pay interest for each invited participant. Thus, even without making a deposit of your own, you can still multiply your profit!') }}</p>
+                        <p>{{ __('We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.') }}</p>
                     </div><a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>
                 </div>
             </div>
