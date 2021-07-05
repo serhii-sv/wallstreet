@@ -35,7 +35,7 @@
             <div class="info-card info-card--light-blue">
                 <p class="info-card__title">{{ __('Invested') }}</p>
                 <ul class="info-card__list">
-                    @foreach(getUserBalancesByCurrency(false) as $symbol => $balance)
+                    @foreach(getTotalDeposited(false) as $symbol => $balance)
                         <li class="info-card__count">
                             <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($balance, 8) }}</span>
                         </li>
