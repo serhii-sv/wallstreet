@@ -61,7 +61,7 @@
                 <p class="info-card__title">{{ __('Earned') }}
                 </p>
                 <ul class="info-card__list">
-                    @foreach(getUserTotalEarned(true) as $symbol => $amount)
+                    @foreach(getUserTotalEarned(false) as $symbol => $amount)
                         <li class="info-card__count">
                             <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($amount, 8) }}</span>
                         </li>
