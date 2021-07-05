@@ -225,7 +225,7 @@
                     <tr>
                         <td>
                             <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
-                                <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
+                                <h3 style="font-weight:bold; font-size:19px;">{{ __('Certificate of Registration of a Legal Entity') }}</h3>
                                 <div style="margin-top:30px;">
                                     <div class="guarantees__list-wrap" style="width:100%;">
                                         <ul class="guarantees__list">
@@ -238,7 +238,7 @@
                                 </div>
                             </div>
                             <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
-                                <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
+                                <h3 style="font-weight:bold; font-size:19px;">{{ __('Investment License') }}</h3>
                                 <div style="margin-top:30px;">
                                     <div class="guarantees__list-wrap" style="width:100%;">
                                         <ul class="guarantees__list" style="margin-left: 50px;">
@@ -251,7 +251,7 @@
                                 </div>
                             </div>
                             <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
-                                <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
+                                <h3 style="font-weight:bold; font-size:19px;text-align:right;">{{ __('License to Do Business on the Internet') }}</h3>
                                 <div style="margin-top:30px;">
                                     <div class="guarantees__list-wrap" style="width:100%; float:right;">
                                         <ul class="guarantees__list" style="margin-left:60px;">
