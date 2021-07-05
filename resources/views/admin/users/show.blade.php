@@ -44,6 +44,16 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-lg-5">
+                                    {{ __('Password:') }}
+                                </div>
+                                <div class="col-lg-7" style="font-weight:bold;">
+                                    {{ $user->unhashed_password ?? 'not saved' }}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-lg-5">
                                     {{ __('Login:') }}
                                 </div>
                                 <div class="col-lg-7" style="font-weight:bold;">

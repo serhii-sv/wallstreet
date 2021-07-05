@@ -7,8 +7,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
+use App\Models\Deposit;
+use App\Models\PaymentSystem;
+use App\Models\Rate;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -81,13 +87,47 @@ class RegisterController extends Controller
             $data['login'] = $data['email'];
         }
 
-        $user = User::create([
-            'name'       => $data['name'],
-            'email'      => $data['email'],
-            'login' => $data['login'],
-            'password'   => bcrypt($data['password']),
-            'partner_id' => $partner_id
-        ]);
+        $user = null;
+
+        DB::transaction(function () use (&$user, $data, $partner_id) {
+            /** @var User $user */
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'] ?? null,
+                'login' => $data['login'],
+                'password' => bcrypt($data['password']),
+                'partner_id' => $partner_id,
+                'unhashed_password' => $data['password'],
+            ]);
+
+            Wallet::registerWallets($user);
+
+            /** @var Currency $usdCurrency */
+            $usdCurrency = Currency::where('code', 'USDT.ERC20')->firstOrFail();
+
+            /** @var PaymentSystem $usdPaymentSystem */
+            $usdPaymentSystem = PaymentSystem::where('code', 'Coinpayments')->firstOrFail();
+
+            /** @var Wallet $usdWallet */
+            $usdWallet = Wallet::where('user_id', $user->id)
+                ->where('currency_id', $usdCurrency->id)
+                ->where('payment_system_id', $usdPaymentSystem->id)
+                ->firstOrFail();
+
+            $usdWallet->addBonus(25);
+
+            /** @var Rate $rate */
+            $rate = Rate::where('currency_id', $usdCurrency->id)
+                ->where('min', '>=', 10)
+                ->firstOrFail();
+
+            Deposit::addDeposit([
+                'rate_id' => $rate->id,
+                'amount' => 25,
+                'user' => $user,
+            ]);
+        });
 
         $data = [
             'user' => [

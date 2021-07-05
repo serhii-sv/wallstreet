@@ -151,7 +151,7 @@ class Deposit extends Model
         $rate     = Rate::findOrFail($field['rate_id']);
 
         /** @var Wallet $wallet */
-        $wallet   = $user->wallets()->where('currency_id', $rate->currency_id)->firstOrFail();
+        $wallet   = Wallet::where('user_id', $user->id)->where('currency_id', $rate->currency_id)->firstOrFail();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
 
@@ -182,6 +182,20 @@ class Deposit extends Model
         } elseif ($amount >= 4033.97380466 && $currency->code == 'DOGE') {
             $rate->daily = $highPercent;
         } elseif ($amount >= 0.47153994 && $currency->code == 'ETH') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 1.92302 && $currency->code == 'BCH') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 6.96692 && $currency->code == 'LTC') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 842.83 && $currency->code == 'EUR') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 1000 && $currency->code == 'USDT.ERC20') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 1000 && $currency->code == 'USDT.TRC20') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 1445.64775 && $currency->code == 'XRP') {
+            $rate->daily = $highPercent;
+        } elseif ($amount >= 73276.90 && $currency->code == 'RUB') {
             $rate->daily = $highPercent;
         }
         // -------------------------------------------

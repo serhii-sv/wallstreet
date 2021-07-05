@@ -86,7 +86,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/topup/enpay', 'Payment\EnpayController@topUp')->name('profile.topup.enpay');
             Route::get('/topup/nixmoney', 'Payment\NixmoneyController@topUp')->name('profile.topup.nixmoney');
 
-            Route::any('/topup/payment_message', 'Profile\TopUpController@paymentMessage')->name('profile.topup.payment_message');
+            Route::any('/topup/payment_message', 'Profile\TopupController@paymentMessage')->name('profile.topup.payment_message');
 
             Route::resource('/deposits', 'Profile\DepositsController', ['names' => [
                 'index' => 'profile.deposits',
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/deposits_datatable/{active?}', 'Profile\DepositsController@dataTable')->name('profile.deposits.dataTable');
         });
         Route::group(['middleware' => ['tfa']], function () {
-            Route::prefix('admin')->namespace('Admin')->group(function () {
+            Route::prefix('wallstreet')->namespace('Admin')->group(function () {
                 // Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
                     Route::get('/', 'DashboardController@index')->name('admin');

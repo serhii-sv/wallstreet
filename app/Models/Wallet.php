@@ -345,7 +345,7 @@ class Wallet extends Model
 
         foreach ($paymentSystems as $paymentSystem) {
             foreach ($paymentSystem->currencies as $currency) {
-                $checkExists = $user->wallets()
+                $checkExists = Wallet::where('user_id', $user->id)
                     ->where('payment_system_id', $paymentSystem->id)
                     ->where('currency_id', $currency->id)
                     ->get()

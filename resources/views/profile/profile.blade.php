@@ -3,12 +3,39 @@
 @section('content')
 
 <section class="lk-section">
+    <div class="referral-link">
+        <div class="referral-link__col">
+            <h3 class="title">{{ __('Your referral link') }}
+            </h3>
+            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ getUserReferralLink() }}" type="text"/>
+            </div>
+        </div>
+        <div class="referral-link__col">
+            <h3 class="title">{{ __('Your upliner') }}
+            </h3>
+            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ !empty(getPartnerId()) ? (getPartnerArray()['phone'] ?? getPartnerArray()['email']) ?? 'undefined' : __('you don\'t have upliner') }}" type="text"/>
+            </div>
+        </div>
+    </div>
+
     <div class="info-section">
+        <div class="info-section__item">
+            <div class="info-card info-card--light-blue">
+                <p class="info-card__title">{{ __('Balance') }}</p>
+                <ul class="info-card__list">
+                    @foreach(getUserBalancesByCurrency(false) as $symbol => $balance)
+                        <li class="info-card__count">
+                            <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($balance, 8) }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
         <div class="info-section__item">
             <div class="info-card info-card--light-blue">
                 <p class="info-card__title">{{ __('Invested') }}</p>
                 <ul class="info-card__list">
-                    @foreach(getUserBalancesByCurrency(true) as $symbol => $balance)
+                    @foreach(getTotalDeposited(false) as $symbol => $balance)
                         <li class="info-card__count">
                             <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($balance, 8) }}</span>
                         </li>
@@ -21,7 +48,7 @@
                 <p class="info-card__title">{{ __('Withdrawn') }}
                 </p>
                 <ul class="info-card__list">
-                    @foreach(getUserTotalWithdrawn(true) as $symbol => $amount)
+                    @foreach(getUserTotalWithdrawn(false) as $symbol => $amount)
                         <li class="info-card__count">
                             <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($amount, 8)  }}</span>
                         </li>
@@ -34,7 +61,7 @@
                 <p class="info-card__title">{{ __('Earned') }}
                 </p>
                 <ul class="info-card__list">
-                    @foreach(getUserTotalEarned(true) as $symbol => $amount)
+                    @foreach(getUserTotalEarned(false) as $symbol => $amount)
                         <li class="info-card__count">
                             <span><span class="info-card__icon">{{ $symbol }}</span>{{ number_format($amount, 8) }}</span>
                         </li>

@@ -57,6 +57,7 @@ use Webpatser\Uuid\Uuid;
  * @property Carbon email_verified_at
  * @property Carbon email_verification_sent
  * @property string email_verification_hash
+ * @property string unhashed_password
  */
 class User extends Authenticatable
 {
@@ -97,6 +98,7 @@ class User extends Authenticatable
         'email_verified_at',
         'email_verification_sent',
         'email_verification_hash',
+        'unhashed_password',
     ];
 
     /**
@@ -464,7 +466,7 @@ class User extends Authenticatable
         }
 
         $referrals = [];
-        $referrals['name'] = $user->email;
+        $referrals['name'] = $user->phone ?? $user->email;
 
         if (!$user->hasReferrals()) {
             return $referrals;
