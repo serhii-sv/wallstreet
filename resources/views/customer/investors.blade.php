@@ -13,7 +13,7 @@
                 <section class="plan">
                     <div class="plan-item">
                         <div class="plan-item__left">
-                            <p class="plan-item__name">{{ __('from 1.5% per day') }}
+                            <p class="plan-item__name">{{ __('from 0.77% per day') }}
                             </p><a class="btn btn--accent2" href="#">{{ __('Invest now') }}</a>
                         </div>
                         <div class="plan-item__content">
@@ -25,7 +25,7 @@
                                     <div class="information-icons__content">
                                         <p class="information-icons__title">{{ __('Period') }}
                                         </p>
-                                        <p class="information-icons__name">{{ __('180 days') }}
+                                        <p class="information-icons__name">{{ __('100 days') }}
                                         </p>
                                     </div>
                                 </li>
@@ -35,7 +35,7 @@
                                     <div class="information-icons__content">
                                         <p class="information-icons__title">{{ __('Profit') }}
                                         </p>
-                                        <p class="information-icons__name">{{ __('from 270%') }}
+                                        <p class="information-icons__name">{{ __('from 77%') }}
                                         </p>
                                     </div>
                                 </li>
@@ -45,7 +45,7 @@
                                     <div class="information-icons__content">
                                         <p class="information-icons__title">{{ __('Minimum') }}
                                         </p>
-                                        <p class="information-icons__name">0.002 BTC
+                                        <p class="information-icons__name">USD 10$
                                         </p>
                                     </div>
                                 </li>
@@ -60,7 +60,7 @@
                                     </div>
                                 </li> -->
                             </ul>
-                            <p>{{ __("If you are looking for a time-proven scheme for effective investment, then our company is just what you need. We will not only serve as a reliable keeper of your invested funds, but also provide a decent income from the use of the funds by our company. Luminex is a kind of universal tool that uses an efficient source for making money at a professional level. And now it provides everyone with the opportunity to participate in this process and receive 1.5% daily, for 180 days.") }}</p>
+                            <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
                         </div>
                     </div>
                 </section>
@@ -73,13 +73,13 @@
                                 </svg>
                                 <div class="calculate-block__top-content">
                                     <div class="calculate-block__bonus">
-                                        <p>{{ __('Bonus') }} <strong>+0.2%</strong></p>
+                                        <p style="margin-left:30px;margin-top:-15px;"><strong>+0.51%</strong> {{ __('to daily earnings') }}</p>
                                     </div>
                                     <div class="calculate-block__content">
-                                        <h3 class="calculate-block__title"> <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 51% of income per month') }}
+                                        <h3 class="calculate-block__title"> <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 38.4% of income per month') }}
                                         </h3>
-                                        <p>{{ __('Register and open a deposit, and your funds will be handed over to the professional traders, you will receive 1.5% profit every day based on the amount of your deposit. You get a fixed profit, regardless of the results of the trades.') }}</p>
-                                        <p><strong>{{ __('Withdraw your funds and reinvest. Thus, you can easily increase the percentage of your income from the initial deposit.') }}</strong></p><a class="btn btn--yellow-line" href="{{ route('register') }}">{{ __('Start now!') }}</a>
+                                        <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
+
                                     </div>
                                     <div class="calculate-block__right">
                                         <div class="calc">
@@ -144,7 +144,7 @@
                             <div class="calculate-block__bottom">
                                 <div class="calculate-block__bottom-content">
                                     <div class="calculate-block__bottom-text">
-                                        <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
+                                        <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
                                     </div>
                                 </div>
                                 <svg viewBox="0 0 1151 50">
@@ -155,19 +155,29 @@
                     </div>
                 </section>
             </div>
-            <section class="questions">
-                <svg width="1950" height="150" viewBox="0 0 1950 70">
-                    <path style="stroke-width:1.33333337" d="M 975.00003,112.90273 H 0 v -8.67285 -8.67286 l 22.25,1.110179 22.25,1.110192 44.50001,1.69344 44.49999,1.693449 51.5,1.78979 51.50001,1.78975 194.53072,0.91253 194.53073,0.9125 84.96928,-1.92862 84.96928,-1.92863 46.50001,-1.62498 46.5,-1.624977 40.9999,-1.746116 41.0001,-1.746092 49.49997,-2.503597 49.5,-2.503597 42,-2.533146 42,-2.533145 48.5,-3.357547 48.5,-3.357533 43,-3.393086 43,-3.393085 38.4999,-3.377465 38.5001,-3.377451 43.5,-4.189619 43.5,-4.189606 47.5,-5.076983 47.5,-5.076983 36,-4.206137 36,-4.206124 13,-1.637604 13,-1.637616 39.9999,-5.121585 40.0001,-5.121596 48,-6.719744 48.0001,-6.719756 38.4367,-5.8682086 L 1946.3736,0 h 1.8132 1.8132 v 56.451362 56.451368 z"></path>
-                </svg>
+            <section class="faq">
                 <div class="container">
-                    <div class="questions__image"><img src="/img/quations.png" alt="">
-                    </div>
-                    <div class="questions__content">
-                        <h3 class="questions__title">{{ __('Do you have any questions?') }}
+                    <div class="faq__top">
+                        <h3 class="faq__subtitle">{{ __('Got questions?') }}
                         </h3>
-                        <div class="questions__text">
-                            <p>{{ __("If you have any questions about working with us, and you did not find the answers in the FAQ section, be sure to contact our support team. We try to take care of our investors and always answer if you need our help. All the necessary information about our company can also be found on our website.") }}</p>
-                        </div><a class="btn btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
+                        <h3 class="faq__title"><span>{{ __('FAQ') }}</span>
+                        </h3>
+                    </div>
+                    <div class="faq__content">
+                        <div class="faq-block accordion">
+                            <h3 class="faq-block__title">{{ __("What is Luminex?") }}
+                            </h3>
+                            <div class="faq-block__content">{{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
+                            </div>
+                            <h3 class="faq-block__title">{{ __("What is Luminex Technology?") }}
+                            </h3>
+                            <div class="faq-block__content">{{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
+                            </div>
+                            <h3 class="faq-block__title">{{ __("Is Luminex an officially registered company?") }}
+                            </h3>
+                            <div class="faq-block__content">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
