@@ -382,7 +382,7 @@
                 <div class="faq__top">
                     <h3 class="faq__subtitle">{{ __('Got questions?') }}
                     </h3>
-                    <h3 class="faq__title"><span>FAQ</span>
+                    <h3 class="faq__title"><span>{{ __('FAQ') }}</span>
                     </h3>
                 </div>
                 <div class="faq__content">

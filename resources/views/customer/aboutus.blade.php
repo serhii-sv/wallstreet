@@ -11,8 +11,8 @@
                 <h2 class="page-title page-title--line">{{ __('What can we do for you?') }} <span>{{ __('About our company') }}</span>
                 </h2>
                 <div class="text">
-                    <p><strong>{{ __('Luminex Technology is an innovative company that uses the latest technologies of artificial intelligence, which is able to self-learn using the history, analytics and experience of our traders, who improve their trading skills day by day. The mission of our company is to completely change the perception of ​​trading on exchanges and the use of machine technology. For the sake of the active development of our future, we have created an opportunity to attract a huge number of investors at once, who will be able to stand in the forefront of the emergence of a new era of technology. We give our investors a great opportunity to be the first to “change the game” of modern earnings.') }}</strong></p>
-                    <p>{{ __('Our traders are not engaged directly in trading on the cryptocurrency exchange, they work as controllers and make sure that there are no problems in the trading process. AI is the real future of mankind. Artificial intelligence does not get tired and does not make the same mistakes twice. Therefore, we have entrusted all the basic work to the self-learning technologies. The activities of our company are designed for the long term perspective, so we are interested in making it profitable for investors to cooperate with us. And also we are interested in regularly attracting new partners: pay attention to our referral program.') }}</p>
+                    <p>{{ __('The Company has all the legal documents, permits and certificates for conducting trading and investment activities.') }}</p>
+                    <p>{{ __('The company’s major source of income is trading on cryptocurrency exchanges. Currently, cryptocurrency trading is the most profitable and the most large-scale in earnings. The volatility of digital currencies is a direct source of income in the digital market. We use short-term and long-term positions, depending on the current market position. Our experienced specialists conduct a qualified market analysis and ensure top results in obtaining good profits. Our team is an active participant in the digital market: hundreds, thousands of transactions are conducted daily.') }}</p>
                 </div>
             </div>
             <!-- <section class="counts">
@@ -69,13 +69,13 @@
             </section> -->
             <div class="container">
                 <div class="text">
-                    <p>{{ __('Our company is an affordable, transparent and secure tool for automated trading in highly stable cryptocurrency markets, with the purpose to improve the well-being of each participant without need them to have in-depth knowledge of cryptocurrency, blockchain and neural networks.') }}</p>
+                    <p>{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</p>
                 </div>
             </div>
             <section class="up-to">
                 <div class="container">
                     <div class="up-to__content">
-                        <h3 class="up-to__title">{{ __('up to 51%') }}<span> {{ __('per month') }}</span>
+                        <h3 class="up-to__title">{{ __('up to 38.4%') }}<span> {{ __('per month') }}</span>
                         </h3>
                         <p class="up-to__description">{{ __('We care about you') }}
                         </p>
@@ -90,13 +90,13 @@
                     </h3>
                     <div class="guarantees__row">
                         <div style="line-height: 140%;">
-                            <p><strong>{{ __('By accepting the agreement, you enter into an agreement with our company.') }}</strong></p>
-                            <p style="margin-bottom: 30px;">{{ __('Our company offers its clients an opportunity to get rid of the existing risks in the cryptocurrency market by assuming full responsibility for trading on the exchanges. The investor (in this case, the Client) provides the funds to be securely managed by our company. Just like if the funds were borrowed by the company. In return, our company provides interest from the profits from these funds. We offer a 100% guarantee of daily profit for the whole lifetime of the deposit or until you yourself decide to cease our cooperation.') }}</p><a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
+                            <p style="margin-bottom: 30px;">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
+                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
                         </div>
                     </div>
                     <div>
                         <div style="width:33%; float:left; height:300px; text-align: left;">
-                            <h3 style="font-weight:bold; font-size:19px;">Certificate of Registration of a Legal Entity</h3>
+                            <h3 style="font-weight:bold; font-size:19px;">{{ __('Certificate of Registration of a Legal Entity') }}</h3>
                             <div style="margin-top:30px;">
                                 <div class="guarantees__list-wrap" style="width:100%;">
                                     <ul class="guarantees__list">
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div style="width:33%; float:left; height:300px; text-align: center;">
-                            <h3 style="font-weight:bold; font-size:19px;">Investment License</h3>
+                            <h3 style="font-weight:bold; font-size:19px;">{{ __('Investment License') }}</h3>
                             <div style="margin-top:30px;">
                                 <div class="guarantees__list-wrap" style="width:100%;">
                                     <ul class="guarantees__list" style="margin-left: 50px;">
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                         <div style="width:33%; float:left; height:300px; text-align: right;">
-                            <h3 style="font-weight:bold; font-size:19px;text-align:right;">License to Do Business on the Internet</h3>
+                            <h3 style="font-weight:bold; font-size:19px;text-align:right;">{{ __('License to Do Business on the Internet') }}</h3>
                             <div style="margin-top:30px;">
                                 <div class="guarantees__list-wrap" style="width:100%; float:right;">
                                     <ul class="guarantees__list" style="margin-left:60px;">
@@ -145,20 +145,20 @@
             <div class="section about-text">
                 <div class="container">
                     <div class="text">
-                        <p><strong>{{ __('The activity of our company is based on the exchange trading in cryptocurrencies. Previously, we constantly conducted analytical studies and developed strategies based on the volatility of the currency exchange rates. With the help of a large team of professional traders and analysts, our company has been successfully operating for more than six years. The founder of the company is the famous trader Danny Ivrin, who made his fortune long before the appearance of cryptocurrencies.') }}</strong></p>
-                        <p>{{ __("He has timely noticed the rapid development of cryptomarketing and decided to open his own platform that works on its own principles. He gathered a team of experienced professionals with whom he worked over the years. At some point, most of the company's income was channeled into the development of new technologies - investing in the creation of artificial intelligence, which the company is currently actively using to trade on cryptocurrency exchanges, analyzing dynamics and working with investors. Due to this, our company has changed dramatically - the number of employees in the company has diminished to less that a third, all inexperienced traders were taken away by competitors, we hired a large number of marketers, removed standard furniture from our office and arranged a comfortable, pleasant place for efficient and enjoyable work surrounded by technology. And all of this is a big leap forward.") }}</p>
-                        <p class="col-50">{{ __('After completing the work on AI for our company and its training using the experience of employees and our well-chosen database, the investment in this technology paid off in a matter of weeks. Costs have decreased, and wages have increased. Such success is associated with the quality of the original product introduced by the company. The neural network has reduced the number of cryptocurrency trading errors to a minimum.') }}</p>
-                        <div class="quote">
-                            <div class="quote__left">
-                                <p class="quote__text">{{ __('«Machines have to replace people, it is inevitable and right for the development of mankind»') }}
-                                </p>
-                                <p class="quote__author">{{ __('Danny Ivrin, CEO') }}
-                                </p>
-                            </div>
-                            <div class="quote__right"><img src="/img/quote.png" alt="">
-                            </div>
-                        </div>
-                        <p>{{ __('How is it possible to earn big money on cryptocurrencies? This is a completely unstable market, subject to multiple risks, dumping at large currency allocations, which can be organized only by a large company or a mass media (like ours, for example). If the economy seems a difficult science to you, and you perceive traders as the unique minds of humanity, you can forget about understanding of the working system of cryptocurrencies at its whole. But our technology has absorbed all the possible information that simply could not physically fit within the head of a living person. The neural network is the brain, which is free from any mistakes of nature, the brain, which is not aware of the concept of "feeling sick" or the need for anything (sleep, food, etc.), it has no self-serving motives - it just absorbs information based on the task and performs it perfectly.') }}</p>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 50%; vertical-align: top;">
+                                    <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
+                                    <p>
+                                        <strong>{{ __('No trading experience or knowledge required.') }}</strong>
+                                    </p>
+                                    <p>{{ __('A team of professional traders from Luminex works for you. Carefully selected methods of money management and the best trading strategies have allowed us to create a safe and effective source of passive income.') }}</p>
+                                </td>
+                                <td>
+                                    <img src="/img/quote.png" alt="">
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -171,11 +171,16 @@
                     </div>
                     <div class="image-text-about__col">
                         <div class="text">
-                            <p><strong>{{ __('Making money with Luminex Trading is easy. We are interested in unlimited investments, so we have created a system in which each and every person can receive passive income, despite their physical location. We are aiming at saving the precious time and benefiting from attracting new investors. The most important thing is that you don’t need to know anything about trading, cryptocurrencies, or to understand the complex modern technological innovations. Just join us and you will understand how easy it is to have a stable passive income.') }}</strong></p>
-                            <p>{{ __('In order to get started with us, you don’t need to dive into any new schemes or reinvent the wheel, everything has already been invented and simplified especially for you.') }}</p>
-                            <p>{{ __('1) Complete a simple registration and login into the system. Keep in mind that creating multi-accounts is a violation of our community rules. One individual has the right to register only one account.') }}</p>
-                            <p>{{ __('2) Open a deposit, i.e. replenish the balance in any convenient way. We cooperate with most well-known payment systems: Bitcoin, Etherium, Perfect Money, Payeer.') }}</p>
-                            <p>{{ __('Your work ends here :) You just have to wait for the payouts according to your investment  plan, but if you want to increase your profit rate, feel free to use our referral system and receive money from each invited participant. For many investors, our referral program is a real business, because they are professionally engaged in attracting investors to our project and receive professional interest on payments.') }}</p>
+                            <p><strong>{{ __('Professional investments') }}</strong></p>
+                            <p>{{ __('Creating an investment package on individual terms. You can choose the amount of the deposit, set the term of the deposit and choose the type of accrual of payments on the deposit, depending on your requirements.') }}</p>
+                        </div>
+                        <div class="text">
+                            <p><strong>{{ __('Profitable investment') }}</strong></p>
+                            <p>{{ __('The daily return on the deposit strictly depends on the type of accrual of payments on the deposit. The longer the funds remain on the trading platform, the greater their liquidity.') }}</p>
+                        </div>
+                        <div class="text">
+                            <p><strong>{{ __('Full control') }}</strong></p>
+                            <p>{{ __('If you need money before the end of the deposit, you can always get it by selling your investment package.') }}</p>
                         </div>
                     </div>
                     <div class="image-text-about__bottom">
