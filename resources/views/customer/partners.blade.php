@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+The best way to get rich is @extends('layouts.customer')
 @section('title', __('For partners'))
 @section('content')
     <main role="main" style="background: white">
@@ -123,7 +123,7 @@
                     <div class="image-text-representative__col">
                         <div class="image-text-representative__image"><img class="layer1" src="/img/representative1.svg" alt=""><img class="layer2" src="/img/representative2.svg" alt=""><img class="layer3" src="/img/representative3.svg" alt="">
                         </div>
-                        <h3 class="image-text-representative__image-title"><span>{{ __('Gain success with') }} </span>Luminex Technology
+                        <h3 class="image-text-representative__image-title"><span>{{ __('Gain success with') }} </span>{{ __('Luminex Technology') }}
                         </h3>
                     </div>
                     <div class="image-text-representative__col">
@@ -136,7 +136,7 @@
                     <div class="image-text-representative__bottom"><a class="btn btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
                     </div>
                     <div style="margin-top:100px;width:100%;">
-                        <h2 class="page-title page-title--line">Our representatives</h2>
+                        <h2 class="page-title page-title--line">{{ __('Our representatives') }}</h2>
                         <style>
                             .tttable {
                                 width:100% !important;
@@ -149,9 +149,9 @@
                         </style>
                         <table class="tttable">
                             <tr>
-                                <td style="color:grey;background: rgb(250,250,250);">Username</td>
-                                <td style="color:grey;background: rgb(250,250,250);">Country</td>
-                                <td style="color:grey;background: rgb(250,250,250);">Languages</td>
+                                <td style="color:grey;background: rgb(250,250,250);">{{ __('Username') }}</td>
+                                <td style="color:grey;background: rgb(250,250,250);">{{ __('Country') }}</td>
+                                <td style="color:grey;background: rgb(250,250,250);">{{ __('Languages') }}</td>
                                 <td style="color:grey;background: rgb(250,250,250);">E-mail</td>
                             </tr>
                             <tr>
