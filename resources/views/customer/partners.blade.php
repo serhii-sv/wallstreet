@@ -1,4 +1,4 @@
-The best way to get rich is @extends('layouts.customer')
+@extends('layouts.customer')
 @section('title', __('For partners'))
 @section('content')
     <main role="main" style="background: white">
