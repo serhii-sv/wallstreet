@@ -6,6 +6,7 @@
 
 namespace App\Observers;
 
+use App\Models\Currency;
 use App\Models\Transaction;
 
 /**
@@ -110,5 +111,25 @@ class TransactionObserver
     {
         clearCacheByArray($this->getCacheKeys($transaction));
         clearCacheByTags($this->getCacheTags($transaction));
+    }
+
+    /**
+     * @param Transaction $transaction
+     */
+    public function creating(Transaction $transaction)
+    {
+        $amount     = $transaction->amount;
+        $currency   = $transaction->currency;
+
+        /** @var Currency $mainCurrency */
+        $mainCurrency = Currency::where('code', 'USD')->first();
+
+        if (null !== $currency && null !== $mainCurrency && $amount > 0) {
+            if ($currency->code == $mainCurrency->code) {
+                $transaction->main_currency_amount = $amount;
+            } else {
+                $transaction->main_currency_amount = convertToCurrency($currency, $mainCurrency, $amount);
+            }
+        }
     }
 }

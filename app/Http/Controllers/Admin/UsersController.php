@@ -56,10 +56,27 @@ class UsersController extends Controller
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
+        $stat_deposits = 0;
+        $stat_withdraws = 0;
+        $stat_different = 0;
+        $stat_salary = 0;
+        $stat_accepted = 0;
+        $stat_left = 0;
+        $stat_additional = 0;
+
+        $user->stat_deposits    = $stat_deposits;
+        $user->stat_withdraws   = $stat_withdraws;
+        $user->stat_different   = $stat_different;
+        $user->stat_salary      = $stat_salary;
+        $user->stat_accepted    = $stat_accepted;
+        $user->stat_left        = $stat_left;
+        $user->stat_additional  = $stat_additional;
+        $user->save();
+
         return view('admin/users/show', [
-            'user' => $user,
-            'level' => $level,
-            'plevel' => $plevel,
+            'user'      => $user,
+            'level'     => $level,
+            'plevel'    => $plevel,
         ]);
     }
 

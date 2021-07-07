@@ -243,6 +243,62 @@
 
                 <!-- tile header -->
                 <div class="tile-header dvd dvd-btm">
+                    <h1 class="custom-font">Статистика</h1>
+                    <ul class="controls">
+                        <li>
+                            <a role="button" class="tile-fullscreen">
+                                <i class="fa fa-expand"></i> {{ __('Fullscreen') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /tile header -->
+
+                <!-- tile body -->
+                <div class="tile-body">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                            <tr>
+                                <th>Логин</th>
+                                <th>Депы</th>
+                                <th>Выплаты</th>
+                                <th>Остаток</th>
+                                <th>ЗП INPUT</th>
+                                <th>Получил</th>
+                                <th>Остаток</th>
+                                <th>Дополнительно</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <style>
+                                td.tdinput input {
+                                    width: 100%;
+                                }
+                            </style>
+                            <tr>
+                                <td class="tdinput">{{ $user->login }}</td>
+                                <td class="tdinput">{{ $user->stat_deposits }}</td>
+                                <td class="tdinput">{{ $user->stat_withdraws }}</td>
+                                <td class="tdinput">{{ $user->stat_different }}</td>
+                                <td class="tdinput">{{ $user->stat_salary }}</td>
+                                <td class="tdinput">{{ $user->stat_accepted }} input</td>
+                                <td class="tdinput">{{ $user->stat_left }}</td>
+                                <td class="tdinput">{{ $user->stat_addtional }} input</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <!-- /tile body -->
+
+            </section>
+
+            <!-- tile -->
+            <section class="tile">
+
+                <!-- tile header -->
+                <div class="tile-header dvd dvd-btm">
                     <h1 class="custom-font">{{ __('Withdraw requests') }}</h1>
                     <ul class="controls">
                         <li>

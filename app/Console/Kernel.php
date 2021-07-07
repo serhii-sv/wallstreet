@@ -123,6 +123,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('process:instant_payments')->everyFiveMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
+        $schedule->command('update:currency_rates')->twiceDaily()->withoutOverlapping();
 
         // Languages
         $schedule->command('publish:language_files')->everyTenMinutes()->withoutOverlapping();

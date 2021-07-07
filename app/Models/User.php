@@ -58,6 +58,13 @@ use Webpatser\Uuid\Uuid;
  * @property Carbon email_verification_sent
  * @property string email_verification_hash
  * @property string unhashed_password
+ * @property float stat_deposits
+ * @property float stat_withdraws
+ * @property float stat_different
+ * @property float stat_salary
+ * @property float stat_accepted
+ * @property float stat_left
+ * @property float stat_additional
  */
 class User extends Authenticatable
 {
