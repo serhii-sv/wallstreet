@@ -211,16 +211,18 @@
         </section>
         <section class="guarantees">
             <div class="container">
-                <h3 class="guarantees__title">{{ __('We provide guarantees') }}<span> {{ __('It’s safe with us') }}</span>
-                </h3>
-                <div class="guarantees__row">
+                <h3 class="guarantees__title">{{ __('We provide guarantees') }}<span> {{ __('It’s safe with us') }}</span></h3>
+                <div style="clear:both; margin-top:50px;"></div>
+                <div class="guarantees__row" style="width:40%; margin-right: 60px; float:left; padding:0;">
                     <div style="line-height: 140%;">
                         <p style="margin-bottom: 30px;">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
-                        <div style="text-align: center;">
-                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>
-                        </div>
+{{--                        <div style="text-align: center;">--}}
+{{--                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
+                <iframe style="float:right;" width="50%" height="315" src="https://www.youtube.com/embed/j4lAr7EsnBg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div style="clear:both; margin-top:450px;"></div>
                 <table style="width:100%; clear:both;">
                     <tr>
                         <td>
