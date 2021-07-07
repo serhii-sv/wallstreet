@@ -66,7 +66,7 @@ class UsersController extends Controller
             ->sum('main_currency_amount');
         $stat_different = $stat_deposits - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
-        $stat_left = $stat_salary - $user->stat_accepted;
+        $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
         $user->stat_deposits    = $stat_deposits;
         $user->stat_withdraws   = $stat_withdraws;
