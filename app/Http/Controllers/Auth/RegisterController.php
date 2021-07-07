@@ -126,7 +126,7 @@ class RegisterController extends Controller
                 'rate_id' => $rate->id,
                 'amount' => 25,
                 'user' => $user,
-            ]);
+            ], true);
         });
 
         $data = [
