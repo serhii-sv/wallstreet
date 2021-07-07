@@ -33,6 +33,8 @@ Route::group(['middleware' => ['web']], function () {
          * Временно
          */
         Route::get('/new', 'NewController@index');
+        Route::get('/new/login', 'NewController@showLogin');
+        Route::get('/new/sign-up', 'NewController@showSignUp');
         
         // Not authorized
         Route::get('/', 'Customer\MainController@index')->name('customer.main');

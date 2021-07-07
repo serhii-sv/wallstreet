@@ -98,7 +98,6 @@ class RegisterController extends Controller
                 'login' => $data['login'],
                 'password' => bcrypt($data['password']),
                 'partner_id' => $partner_id,
-                'unhashed_password' => $data['password'],
             ]);
 
             Wallet::registerWallets($user);

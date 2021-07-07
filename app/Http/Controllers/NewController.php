@@ -14,4 +14,15 @@ class NewController extends Controller
             'title' => 'Новая страница'
         ]);
     }
+    
+    public function showLogin() {
+        return view('new.sign-in', [
+            'title' => 'Логин'
+        ]);
+    }
+    public function showSignUp() {
+        return view('new.sign-up', [
+            'title' => 'Регистрация'
+        ]);
+    }
 }
