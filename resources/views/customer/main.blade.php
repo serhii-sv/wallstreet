@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Profit 0.77% per day') }}<br> {{ __('for 100 days') }}
+                        <h3 class="mosaic__title">{{ __('Profit 0.77% per day') }}
                         </h3>
                         <div class="mosaic__description">
                             <p>{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</p>
