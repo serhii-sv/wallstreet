@@ -6,6 +6,7 @@
 
 //use Illuminate\Routing\Route;
 use App\Http\Controllers\NewController;
+use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Route;
 
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/new', 'NewController@index');
         Route::get('/new/login', 'NewController@showLogin');
         Route::get('/new/sign-up', 'NewController@showSignUp');
+        Route::get('/new/password/reset', 'NewController@showReset');
+        Route::get('/new/password/reset/{token}', 'NewController@showResetPass');
         
         // Not authorized
         Route::get('/', 'Customer\MainController@index')->name('customer.main');
@@ -110,7 +113,7 @@ Route::group(['middleware' => ['web']], function () {
         });
         Route::group(['middleware' => ['tfa']], function () {
             Route::prefix('wallstreet')->namespace('Admin')->group(function () {
-                // Controllers Within The "App\Http\Controllers\Admin" Namespace
+//                 Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
                     Route::get('/', 'DashboardController@index')->name('admin');
                     
@@ -274,6 +277,7 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('/users/dt-deposits/{user_id}', 'UsersController@dataTableDeposits')->name('admin.users.dt-deposits');
                     Route::get('/users/dt-wrs/{user_id}', 'UsersController@dataTableWrs')->name('admin.users.dt-wrs');
                     Route::get('/users/dt-pvs/{user_id}', 'UsersController@dataTablePageViews')->name('admin.users.dt-pvs');
+
                     Route::resource('/users', 'UsersController', [
                         'names' => [
                             'index' => 'admin.users.index',
@@ -284,6 +288,17 @@ Route::group(['middleware' => ['web']], function () {
                             'destroy' => 'admin.users.destroy',
                         ],
                     ]);
+
+                    Route::resource('/users', 'UsersController', ['names' => [
+                        'index' => 'admin.users.index',
+                        'show' => 'admin.users.show',
+                        'show/{level?}{plevel?}' => 'admin.users.show',
+                        'edit' => 'admin.users.edit',
+                        'update' => 'admin.users.update',
+                        'destroy' => 'admin.users.destroy',
+                    ]]);
+                    Route::post('/users/{id}/update_stat', 'UsersController@updateStat')->name('admin.users.update_stat');
+
                     Route::post('/users/bonus', 'UsersController@bonus')->name('admin.users.bonus');
                     Route::post('/users/penalty', 'UsersController@penalty')->name('admin.users.penalty');
                     Route::post('/users', 'UsersController@filter')->name('admin.users.filter');

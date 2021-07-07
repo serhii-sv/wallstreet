@@ -1,5 +1,5 @@
 <header class="header">
-  <a href="#"class="btn_tlg">TELEGRAM SUPPORT</a>
+  <a href="https://t.me/luminex_asia" class="btn_tlg">TELEGRAM SUPPORT</a>
     <div class="main-line container">
         <a class="main-line__logo" href="{{ route('customer.main') }}"><img src="{{ asset('img/logo/logo.png') }}" alt=""></a>
         <p class="main-line__slogan">Energy of Cryptocurrency</p>

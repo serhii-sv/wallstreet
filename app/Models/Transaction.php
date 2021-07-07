@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string wallet_id
  * @property string payment_system_id
  * @property float amount
+ * @property float main_currency_amount
  * @property string source - кошелек реферала пользователя, если это партнерская транзакция.
  * @property string result - ответ платежной системы.
  * @property string batch_id - ИД операции в платежной системе.
@@ -47,6 +48,7 @@ class Transaction extends Model
         'wallet_id',
         'payment_system_id',
         'amount',
+        'main_currency_amount',
         'source',
         'result',
         'batch_id',

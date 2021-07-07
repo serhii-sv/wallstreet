@@ -17,3 +17,5 @@
         @endif
     </div>
 </header>
+
+<a href="https://t.me/luminex_asia" class="btn_tlg" style="left:inherit; right:2%; bottom:2%;">TELEGRAM SUPPORT</a>

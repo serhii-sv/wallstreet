@@ -142,7 +142,7 @@ class Deposit extends Model
      * @return Deposit|null
      * @throws \Exception
      */
-    public static function addDeposit($field)
+    public static function addDeposit($field, bool $force=false)
     {
         /** @var User $user */
         $user     = isset($field['user']) ? $field['user'] : Auth::user();
@@ -159,12 +159,14 @@ class Deposit extends Model
             throw new \Exception('Wrong currency ID');
         }
 
-        if ($amount < $rate->min || $amount > $rate->max) {
-            throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
-        }
+        if (false === $force) {
+            if ($amount < $rate->min || $amount > $rate->max) {
+                throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
+            }
 
-        if (abs($amount) > abs($wallet->balance)) {
-            throw new \Exception('Not enough money at your balance.');
+            if (abs($amount) > abs($wallet->balance)) {
+                throw new \Exception('Not enough money at your balance.');
+            }
         }
 
         /** @var Currency $currency */

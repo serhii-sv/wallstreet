@@ -275,3 +275,43 @@ function autocreatedeposit(\App\Models\Transaction $enterTransaction)
 
     return true;
 }
+
+/**
+ * @param float $amount
+ * @param \App\Models\Currency $currency
+ * @param string $thousands_sep
+ * @return string
+ */
+function amountWithPrecision(float $amount, \App\Models\Currency $currency, $thousands_sep='')
+{
+    return round($amount, $currency->precision);
+}
+
+/**
+ * @param float $amount
+ * @param string $currencyCode
+ * @param string $thousands_sep
+ * @return string
+ */
+function amountWithPrecisionByCurrencyCode(float $amount, string $currencyCode, $thousands_sep='')
+{
+    /** @var \App\Models\Currency $currency */
+    $currency = \App\Models\Currency::where('code', $currencyCode)
+        ->first();
+
+    return round($amount, $currency->precision);
+}
+
+function convertToCurrency(\App\Models\Currency $fromCurrency, \App\Models\Currency $toCurrency, float $amount)
+{
+    if (null === $fromCurrency || null === $toCurrency || $amount <= 0) {
+        return 0;
+    }
+
+    // FIAT: USD, EUR, RUB
+    // CRYPTO: BTC, LTC, ETH
+
+    $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
+
+    return amountWithPrecision($rate*$amount, $toCurrency);
+}

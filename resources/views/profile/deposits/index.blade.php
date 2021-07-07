@@ -6,7 +6,7 @@
     <h4 class="title">{{ __('Create a new deposit') }}</h4>
     <div class="plan-item plan-item--line">
         <div class="plan-item__left">
-            <p class="plan-item__name">0.77% per day</p>
+            <p class="plan-item__name">0.77% {{ __('per day') }}</p>
             <a class="btn btn--accent2" href="{{ route('profile.deposits.create') }}">{{ __('Create deposit') }}</a>
         </div>
         <div class="plan-item__content">

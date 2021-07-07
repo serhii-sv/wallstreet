@@ -25,4 +25,14 @@ class NewController extends Controller
             'title' => 'Регистрация'
         ]);
     }
+    
+    public function showReset() {
+        return view('new.reset-form');
+    }
+    
+    public function showResetPass($token) {
+        return view('new.password-reset', [
+            'token' => $token
+        ]);
+    }
 }

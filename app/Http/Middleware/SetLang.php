@@ -35,7 +35,7 @@ class SetLang
             ]);
         }
 
-        $locale = session('lang', 'en');
+        $locale = session('lang', 'cn');
 
         if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $locale) {
             setcookie('lang', $locale, Carbon::now()->addDays(365)->timestamp, '/');
