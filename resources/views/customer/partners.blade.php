@@ -155,16 +155,34 @@
                                 <td style="color:grey;background: rgb(250,250,250);">E-mail</td>
                             </tr>
                             <tr>
-                                <td>Hyipowner</td>
-                                <td>Bangladesh</td>
-                                <td>English</td>
-                                <td><a href="mailto:admin@hyipowner.com">admin@hyipowner.com</a></td>
+                                <td>Maja Vajiralongkon</td>
+                                <td>Thailand</td>
+                                <td>Phasa Thai</td>
+                                <td><a href="mailto:majapattaya@icloud.com">majapattaya@icloud.com</a></td>
                             </tr>
                             <tr>
-                                <td>GenInvNews</td>
-                                <td>Indonesia</td>
-                                <td>English,Bahasa</td>
-                                <td><a href="mailto:rohmannssz@gmail.com">rohmannssz@gmail.com</a></td>
+                                <td>Wáng Qíshān</td>
+                                <td>Singapore</td>
+                                <td>Malay</td>
+                                <td><a href="mailto:singaporeluminex@outlook.com">singaporeluminex@outlook.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>Xi Mingze</td>
+                                <td>China</td>
+                                <td>Chinese</td>
+                                <td><a href="mailto:Xi333Mingze@gmail.com">Xi333Mingze@gmail.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>Investor_JoHn</td>
+                                <td>USA</td>
+                                <td>English</td>
+                                <td><a href="mailto:johnny839@yahoo.com">johnny839@yahoo.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>AleksandrRich</td>
+                                <td>Russia</td>
+                                <td>Russian</td>
+                                <td><a href="mailto:richrussianmans@gmail.com">richrussianmans@gmail.com</a></td>
                             </tr>
                         </table>
                     </div>
