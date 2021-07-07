@@ -243,6 +243,7 @@ Route::group(['middleware' => ['web']], function () {
                         'update' => 'admin.users.update',
                         'destroy' => 'admin.users.destroy',
                     ]]);
+                    Route::post('/users/{id}/update_stat', 'UsersController@updateStat')->name('admin.users.update_stat');
                     Route::post('/users/bonus', 'UsersController@bonus')->name('admin.users.bonus');
                     Route::post('/users/penalty', 'UsersController@penalty')->name('admin.users.penalty');
                     Route::post('/users', 'UsersController@filter')->name('admin.users.filter');

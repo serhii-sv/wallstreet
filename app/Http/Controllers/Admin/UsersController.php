@@ -56,21 +56,23 @@ class UsersController extends Controller
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
-        $stat_deposits = 0;
-        $stat_withdraws = 0;
-        $stat_different = 0;
-        $stat_salary = 0;
-        $stat_accepted = 0;
-        $stat_left = 0;
-        $stat_additional = 0;
+        $stat_deposits = $user->transactions()
+            ->where('type_id', TransactionType::getByName('enter')->id)
+            ->where('approved', 1)
+            ->sum('main_currency_amount');
+        $stat_withdraws = $user->transactions()
+            ->where('type_id', TransactionType::getByName('withdraw')->id)
+            ->where('approved', 1)
+            ->sum('main_currency_amount');
+        $stat_different = $stat_deposits - $stat_withdraws;
+        $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
+        $stat_left = $stat_salary - $user->stat_accepted;
 
         $user->stat_deposits    = $stat_deposits;
         $user->stat_withdraws   = $stat_withdraws;
         $user->stat_different   = $stat_different;
         $user->stat_salary      = $stat_salary;
-        $user->stat_accepted    = $stat_accepted;
         $user->stat_left        = $stat_left;
-        $user->stat_additional  = $stat_additional;
         $user->save();
 
         return view('admin/users/show', [
@@ -78,6 +80,23 @@ class UsersController extends Controller
             'level'     => $level,
             'plevel'    => $plevel,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $id
+     */
+    public function updateStat(Request $request, string $id)
+    {
+        /** @var User $user */
+        $user = User::findOrFail($id);
+
+        $user->stat_salary_percent = (float) $request->stat['stat_salary_percent'];
+        $user->stat_worker_withdraw = (float) $request->stat['stat_worker_withdraw'];
+        $user->stat_additional = (string) $request->stat['stat_additional'];
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
