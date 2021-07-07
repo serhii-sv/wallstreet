@@ -76,7 +76,7 @@
             "columns": [
                 {
                     "data": 'user.login', "orderable": true, "searchable": true, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/users/' + row.user.id + '" target="_blank">'+ row.user.login +'</a>';
+                        return '<a href="/wallstreet/users/' + row.user.id + '" target="_blank">'+ row.user.login +'</a>';
                     }
                 },
                 {"data": "s_key", "name":"s_key"},

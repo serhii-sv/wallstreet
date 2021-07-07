@@ -383,7 +383,7 @@
                                 "orderable": false,
                                 "searchable": false,
                                 "render": function (data, type, row) {
-                                    return '<input type="checkbox" name="list[]" value="' + row['id'] + '"> &nbsp; <a href="/admin/requests/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a> &nbsp; <a href="/admin/requests/approve/' + row['id'] + '" class="btn btn-xs btn-success" target="_blank"><i class="glyphicon glyphicon-check"></i> {{ __('approve') }}</a> &nbsp;<a href="/admin/requests/reject/' + row['id'] + '" class="btn btn-xs btn-warning" target="_blank"><i class="glyphicon glyphicon-check"></i> {{ __('reject') }}</a>';
+                                    return '<input type="checkbox" name="list[]" value="' + row['id'] + '"> &nbsp; <a href="/wallstreet/requests/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a> &nbsp; <a href="/admin/requests/approve/' + row['id'] + '" class="btn btn-xs btn-success" target="_blank"><i class="glyphicon glyphicon-check"></i> {{ __('approve') }}</a> &nbsp;<a href="/admin/requests/reject/' + row['id'] + '" class="btn btn-xs btn-warning" target="_blank"><i class="glyphicon glyphicon-check"></i> {{ __('reject') }}</a>';
                                 }
                             },
                         ],
@@ -487,7 +487,7 @@
                                 "orderable": false,
                                 "searchable": false,
                                 "render": function (data, type, row) {
-                                    return '<a href="/admin/deposits/' + row['id'] + '" class="btn btn-xs btn-primary"  target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
+                                    return '<a href="/wallstreet/deposits/' + row['id'] + '" class="btn btn-xs btn-primary"  target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
                                 }
                             },
                         ],
@@ -590,7 +590,7 @@
                                 "orderable": false,
                                 "searchable": false,
                                 "render": function (data, type, row) {
-                                    return '<a href="/admin/transactions/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
+                                    return '<a href="/wallstreet/transactions/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
                                 }
                             },
                         ],

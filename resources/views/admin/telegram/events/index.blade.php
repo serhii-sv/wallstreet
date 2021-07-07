@@ -84,7 +84,7 @@
                 {"data": "created_at", "name": "telegram_bot_events.created_at"},
                 {
                     "data": 'action', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/telegram/bots/' + row['bot_id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('bot details') }}</a>';
+                        return '<a href="/wallstreet/telegram/bots/' + row['bot_id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('bot details') }}</a>';
                     }
                 }
             ],

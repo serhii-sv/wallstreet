@@ -74,7 +74,7 @@
             "columns": [
                 {
                     "data": 'telegram_bot_id', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/telegram/bots/' + row['telegram_bot_id'] + '/edit" target="_blank">'+ row['bot_username'] +'</a>';
+                        return '<a href="/wallstreet/telegram/bots/' + row['telegram_bot_id'] + '/edit" target="_blank">'+ row['bot_username'] +'</a>';
                     }
                 },
                 {

@@ -96,7 +96,7 @@
                     "orderable": false,
                     "searchable": false,
                     "render": function (data, type, row, meta) {
-                        return '<a href="/admin/transactions/' + row['id'] + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show')}}</a>';
+                        return '<a href="/wallstreet/transactions/' + row['id'] + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show')}}</a>';
                     }
                 }
             ],

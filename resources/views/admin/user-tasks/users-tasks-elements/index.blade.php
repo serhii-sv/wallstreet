@@ -76,7 +76,7 @@
             "columns": [
                 {
                     "data": 'task', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/users/' + row['user_id'] + '" class="btn btn-xs btn-default" target="_blank"><i class="glyphicon glyphicon-eye"></i> {{ __('open user details') }}</a>';
+                        return '<a href="/wallstreet/users/' + row['user_id'] + '" class="btn btn-xs btn-default" target="_blank"><i class="glyphicon glyphicon-eye"></i> {{ __('open user details') }}</a>';
                     }
                 },
                 {"data": "task_action_id", "name": "user_task_actions.task_action_id"},

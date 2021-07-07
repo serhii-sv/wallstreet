@@ -1,2 +1,2 @@
 Ошибка: {{ $errorMessage }}
-Детали: {{ url('admin/logs') }}
+Детали: {{ url('wallstreet/logs') }}

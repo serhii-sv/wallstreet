@@ -108,7 +108,7 @@
             {"data": "user.name", "name": "user.name"},
             {
                 "data": 'action', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="list[]" value="' + row['id'] + '"> &nbsp; <a href="/admin/requests/' + row['id'] + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a> &nbsp; <a href="/admin/requests/approve/' + row['id'] + '" class="btn btn-xs btn-success sure"><i class="glyphicon glyphicon-check"></i> {{ __('Approve') }}</a> &nbsp; <a href="/admin/requests/approveManually/'+ row['id'] +'" class="btn btn-xs btn-default sure"><i class="glyphicon glyphicon-check"></i> {{ __('Approve manually') }}</a> &nbsp; <a href="/admin/requests/reject/' + row['id'] + '" class="btn btn-xs btn-warning sure"><i class="glyphicon glyphicon-check"></i> {{ __('reject') }}</a>';
+                    return '<input type="checkbox" name="list[]" value="' + row['id'] + '"> &nbsp; <a href="/wallstreet/requests/' + row['id'] + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a> &nbsp; <a href="/admin/requests/approve/' + row['id'] + '" class="btn btn-xs btn-success sure"><i class="glyphicon glyphicon-check"></i> {{ __('Approve') }}</a> &nbsp; <a href="/admin/requests/approveManually/'+ row['id'] +'" class="btn btn-xs btn-default sure"><i class="glyphicon glyphicon-check"></i> {{ __('Approve manually') }}</a> &nbsp; <a href="/admin/requests/reject/' + row['id'] + '" class="btn btn-xs btn-warning sure"><i class="glyphicon glyphicon-check"></i> {{ __('reject') }}</a>';
                 }
             }
         ],

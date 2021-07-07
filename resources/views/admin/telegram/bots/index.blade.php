@@ -79,7 +79,7 @@
                 {"data": "keyword", "name": "telegram_bots.keyword"},
                 {
                     "data": 'action', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/telegram/bots/' + row['id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('edit bot') }}</a>';
+                        return '<a href="/wallstreet/telegram/bots/' + row['id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('edit bot') }}</a>';
                     }
                 }
             ],

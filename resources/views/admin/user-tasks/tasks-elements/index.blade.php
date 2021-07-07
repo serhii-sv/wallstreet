@@ -74,7 +74,7 @@
             "columns": [
                 {
                     "data": 'task', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/user-tasks/tasks/' + row['task_id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('edit task details') }}</a>';
+                        return '<a href="/wallstreet/user-tasks/tasks/' + row['task_id'] + '/edit" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-edit"></i> {{ __('edit task details') }}</a>';
                     }
                 },
                 {"data": "task_scope_id", "name": "task_actions.task_scope_id"},

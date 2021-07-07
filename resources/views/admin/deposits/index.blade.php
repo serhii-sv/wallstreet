@@ -90,7 +90,7 @@
             {"data": "created_at"},
             {
                 "data": 'action', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                    return '<a href="/admin/deposits/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
+                    return '<a href="/wallstreet/deposits/' + row['id'] + '" class="btn btn-xs btn-primary" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> {{ __('show') }}</a>';
                 }
             }
         ],

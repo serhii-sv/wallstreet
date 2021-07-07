@@ -72,12 +72,12 @@
             "columns": [
                 {
                     "data": 'user_name', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/users/' + row['user_id'] + '" target="_blank" style="font-weight:bold;"> '+ row['user_name'] +'</a>';
+                        return '<a href="/wallstreet/users/' + row['user_id'] + '" target="_blank" style="font-weight:bold;"> '+ row['user_name'] +'</a>';
                     }
                 },
                 {
                     "data": 'bot_username', "orderable": false, "searchable": false, "render": function (data, type, row, meta) {
-                        return '<a href="/admin/telegram/bots/' + row['bot_id'] + '/edit" target="_blank"> '+ row['bot_username'] +'</a>';
+                        return '<a href="/wallstreet/telegram/bots/' + row['bot_id'] + '/edit" target="_blank"> '+ row['bot_username'] +'</a>';
                     }
                 },
                 {"data": "created_at", "name": "telegram_users.created_at"},
