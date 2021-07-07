@@ -112,12 +112,12 @@ class PerfectMoneyController extends Controller
             return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
         }
 
-        $psip = ['77.109.141.170','91.205.41.208','94.242.216.60','78.41.203.75','192.168.10.1'];
-
-        if(!in_array($request->ip(), $psip)) {
-            \Log::info('Got request to Perfectmoney status controller, from '.$request->ip().'. Allow requests only from: '.implode(', ', $psip));
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
-        }
+//        $psip = ['77.109.141.170','91.205.41.208','94.242.216.60','78.41.203.75','192.168.10.1'];
+//
+//        if(!in_array($request->ip(), $psip)) {
+//            \Log::info('Got request to Perfectmoney status controller, from '.$request->ip().'. Allow requests only from: '.implode(', ', $psip));
+//            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+//        }
 
         $sciPassword = config('money.pm_sci_password');
         $checkHash = $request->PAYMENT_ID . ':' . $request->PAYEE_ACCOUNT . ':' . $request->PAYMENT_AMOUNT . ':' .
