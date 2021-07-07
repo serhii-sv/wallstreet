@@ -60,6 +60,7 @@ class UsersController extends Controller
             ->where('type_id', TransactionType::getByName('enter')->id)
             ->where('approved', 1)
             ->sum('main_currency_amount');
+        die($stat_deposits.'-'.TransactionType::getByName('enter')->id);
         $stat_withdraws = $user->transactions()
             ->where('type_id', TransactionType::getByName('withdraw')->id)
             ->where('approved', 1)
