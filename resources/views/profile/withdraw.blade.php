@@ -1,45 +1,71 @@
-@extends('profile.layouts.customer')
+@extends('layouts.app')
 @section('title', __('Withdraw'))
 @section('content')
-
-<section class="lk-section">
-    <div class="form-lk">
-        <div class="form-lk__col">
-            <form method="POST" action="{{ route('profile.withdraw') }}">
-                <p style="font-weight: bold;">@include('partials.inform')</p>
-                <div class="input-row white-shadow-select">
-                    {{ csrf_field() }}
-                    <label for="wallet" class="input-row__name">{{ __('Wallet') }}
-                    </label>
-                    <select id="wallet" name="wallet_id" class="select">
-                        @foreach(getUserWallets() as $wallet)
-                            <option value="{{ $wallet['id'] }}">{{ $wallet['payment_system']['name'] }}
-                                - {{ number_format($wallet['balance'], $wallet['currency']['precision']) }}{{ $wallet['currency']['symbol'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="input-row">
-                    <label for="amount" class="input-row__name">{{ __('Amount') }}
-                    </label><input id="amount" name="amount" class="input-row__input input input--white-shadow" type="number" step="any" required/>
-                </div>
-                <div class="input-row">
-                    <label class="input-row__name">{{ __('Enter captcha code') }}:
-                    </label><input class="input-row__input input input--white-shadow" type="text" name="captcha" id="captcha"/>
-                    <div class="input-row__captcha"><?= captcha_img() ?>
-                    </div>
-                </div>
-                <div class="form-lk__bottom"><button class="btn btn--accent2">{{ __('Process withdraw') }}</button>
-                </div>
-            </form>
+  
+  <div class="main--body dashboard-bg">
+    <!--========== Preloader ==========-->
+  @include('layouts.app-preloader')
+  <!--========== Preloader ==========-->
+    
+    
+    <!--=======SideHeader-Section Starts Here=======-->
+    <div class="notify-overlay"></div>
+    <section class="dashboard-section">
+      @include('profile.layouts.header')
+      <div class="dasboard-body">
+        <div class="dashboard-hero">
+          @include('profile.layouts.header-top')
+          <div class="dashboard-hero-content text-white">
+            <h3 class="title">{{ __('Withdraw') }}</h3>
+            <ul class="breadcrumb">
+              <li>
+                <a href="{{ route('profile.profile') }}">{{ __('Dashboard') }}</a>
+              </li>
+              <li>
+                {{ __('Withdraw') }}
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="form-lk__col"><img src="/img/deposit.png" alt="">
+        <div class="container-fluid">
+          @include('profile.components.balance-block')
+          
+          <div class="deposit">
+            <h3 class="main-title">Transfer Funds</h3>
+            <div class="available-balance">
+              <h5 class="title">Available Balance</h5>
+              <div class="amount">
+                <sup>$</sup>
+                185.00
+              </div>
+            </div>
+            <div class="deposit-system pt-0">
+              <h4 class="main-subtitle">01. Choose Payment System</h4>
+              @include('profile.components.choose-payment')
+            </div>
+            <div class="deposit-system">
+              <h4 class="main-subtitle">02.Enter the amount of Transfer:</h4>
+              <form class="make-deposit">
+                <div class="form-group">
+                  <input type="text" placeholder="$180.00" class="make-amount">
+                </div>
+                <div class="form-group">
+                  <label for="total-profit">Will be Displayed</label>
+                  <input type="text" readonly value="$180.00" class="readonly">
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="custom-button border-0">Transfer Funds</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-    </div>
-</section>
-
-<script>document.getElementById("withdrawProfilePageMenuItem").className = "navigation-icons__link navigation-icons__link--active";</script>
-
-@push('script')
-@endpush
+        @include('profile.layouts.footer')
+      </div>
+    </section>
+    <!--=======SideHeader-Section Ends Here=======-->
+  
+  
+  </div>
 
 @endsection

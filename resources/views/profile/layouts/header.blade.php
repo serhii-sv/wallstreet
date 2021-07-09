@@ -12,26 +12,30 @@
     </div>
     <ul class="dashboard-menu">
       <li>
-        <a href="{{ route('profile.profile') }}" class="active"><i class="flaticon-man"></i>Dashboard</a>
+        <a href="{{ route('profile.profile') }}" @if(Route::currentRouteName() == 'profile.profile') class="active" @endif><i class="flaticon-man"></i>
+          {{ __("Dashboard") }}
+        </a>
       </li>
       <li>
-        <a href="{{ route('profile.operations.index') }}"><i class="flaticon-coin"></i>Operations</a>
+        <a href="{{ route('profile.operations.index') }}" @if(Route::currentRouteName() == 'profile.operations.index') class="active" @endif><i class="flaticon-coin"></i>{{ __("Operations") }}</a>
       </li>
       <li>
-        <a href="{{ route('profile.deposits') }}"><i class="flaticon-interest"></i>Deposits</a>
+        <a href="{{ route('profile.deposits') }}" @if(Route::currentRouteName() == 'profile.deposits') class="active" @endif><i class="flaticon-interest"></i>{{ __("Deposits") }}</a>
       </li>
       <li>
-        <a href="{{ route('profile.withdraw') }}"><i class="flaticon-atm"></i>Withdraw</a>
+        <a href="{{ route('profile.withdraw') }}" @if(Route::currentRouteName() == 'profile.withdraw') class="active" @endif><i class="flaticon-atm"></i>
+        {{ __("Withdraw") }}</a>
       </li>
-      <li>
-        <a href="fund-transfer.html"><i class="flaticon-exchange"></i>Fund Transfer </a>
-      </li>
+      
       <li>
         <a href="partners.html"><i class="flaticon-deal"></i>Partners</a>
       </li>
+      
       <li>
-        <a href="setting.html"><i class="flaticon-gears"></i>Settings</a>
+        <a href="{{ route('profile.settings') }}" @if(Route::currentRouteName() == 'profile.settings') class="active" @endif><i class="flaticon-gears"></i>
+        {{ __("Settings") }}</a>
       </li>
+      
       <li>
         <a href="notification.html"><i class="flaticon-bell"></i>Notifications</a>
       </li>
@@ -39,10 +43,11 @@
         <a href="ticket.html"><i class="flaticon-sms"></i>Tickets</a>
       </li>
       <li>
-        <a href="promotional-metarials.html"><i class="flaticon-deal"></i>Promotional</a>
+        <a href="{{ route('profile.promo') }}"><i class="flaticon-deal"></i>{{ __("Promo") }}</a>
       </li>
+      
       <li>
-        <a href="javascript:void(0)"><i class="flaticon-right-arrow"></i>Logout</a>
+        <a href="{{ route('logout') }}"><i class="flaticon-right-arrow"></i>{{ __("Logout") }}</a>
       </li>
     </ul>
   </div>

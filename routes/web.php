@@ -13,7 +13,7 @@ Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@ind
 
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
-    
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
     // oAuth
     //    Route::get('login/callback/vk/{telegramUserId}', 'controller')->name('vk.redirect_url');
     
@@ -80,8 +80,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/withdraw', 'Profile\WithdrawController@index')->name('profile.withdraw');
             Route::post('/withdraw', 'Profile\WithdrawController@handle')->name('profile.withdraw');
     
-            Route::get('/fund_transfer', 'Profile\WithdrawController@index')->name('profile.withdraw');
-            
             Route::get('/topup', 'Profile\TopupController@index')->name('profile.topup');
             Route::post('/topup', 'Profile\TopupController@handle')->name('profile.topup');
             
