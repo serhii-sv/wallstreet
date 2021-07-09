@@ -1,420 +1,1343 @@
-@extends('layouts.customer')
+@extends('layouts.app')
 @section('title', __('Home'))
 @section('content')
-    @include('partials.loader')
-    <main role="main">
-        <section class="intro">
-            <div class="container">
-                <div class="intro__content">
-                    <h1 class="intro__title">
-                      {{ __('Luminex') }}<span> {{ __('for Finance')  }}</span>
-                    </h1>
-                    <p class="intro__description">{{ __('It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system.') }}
-                    </p><a class="btn intro__btn" href="{{ route('register') }}">{{ __('Start now!') }}</a>
-                </div>
-                <div class="intro__image"><img src="/img/header-img.png" alt=""/>
-                </div>
+  <div class="main--body">
+    
+    <!--========== Preloader ==========-->
+  @include('layouts.app-preloader')
+  <!--========== Preloader ==========-->
+  
+  <!--=======Header-Section Starts Here=======-->
+    @include('layouts.app-header')
+    <!--=======Header-Section Ends Here=======-->
+    
+    
+    <!--=======Banner-Section Starts Here=======-->
+    <section class="banner-section" id="home">
+      <div class="banner-bg d-lg-none">
+        <img src="{{ asset('images/banner/banner-bg2.jpg') }}" alt="banner">
+      </div>
+      <div class="banner-bg d-none d-lg-block bg_img" data-background="./assets/images/banner/banner.jpg">
+        <div class="chart-1 wow fadeInLeft" data-wow-delay=".5s" data-wow-duration=".7s">
+          <img src="{{ asset('images/banner/chart1.png') }}" alt="banner">
+        </div>
+        <div class="chart-2 wow fadeInDown" data-wow-delay="1s" data-wow-duration=".7s">
+          <img src="{{ asset('images/banner/chart2.png') }}" alt="banner">
+        </div>
+        <div class="chart-3 wow fadeInRight" data-wow-delay="1.5s" data-wow-duration=".7s">
+          <img src="{{ asset('images/banner/chart3.png') }}" alt="banner">
+        </div>
+        <div class="chart-4 wow fadeInUp" data-wow-delay="2s" data-wow-duration=".7s">
+          <img src="{{ asset('images/banner/clock.png') }}" alt="banner">
+        </div>
+      </div>
+      <div class="animation-area d-none d-lg-block">
+        <div class="plot">
+          <img src="{{ asset('images/banner/plot.png') }}" alt="banner">
+        </div>
+        <div class="element-1 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/light.png') }}" alt="banner">
+        </div>
+        <div class="element-2 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin1.png') }}" alt="banner">
+        </div>
+        <div class="element-3 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin2.png') }}" alt="banner">
+        </div>
+        <div class="element-4 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin3.png') }}" alt="banner">
+        </div>
+        <div class="element-5 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin4.png') }}" alt="banner">
+        </div>
+        <div class="element-6 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin5.png') }}" alt="banner">
+        </div>
+        <div class="element-7 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin6.png') }}" alt="banner">
+        </div>
+        <div class="element-8 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/sheild.png') }}" alt="banner">
+        </div>
+        <div class="element-9 wow fadeIn" data-wow-delay="1s">
+          <img src="{{ asset('images/banner/coin7.png') }}" alt="banner">
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5 col-lg-6 offset-lg-6 offset-xl-7">
+            <div class="banner-content">
+              <h1 class="title">Simply
+                <span>Profitably </span>
+                Conveniently
+              </h1>
+              <p>
+                A Profitable platform for high-margin investment
+              </p>
+              <div class="button-group">
+                <a href="" class="custom-button">Get Started Now!</a>
+                <a href="https://www.youtube.com/watch?v=GT6-H4BRyqQ" class="popup video-button">
+                  <i class="flaticon-play"></i></a>
+              </div>
             </div>
-        </section>
-        <!-- <section class="counts">
-            <div class="container">
-                <ul class="counts__list">
-                    <li class="counts__item counts__item--icon">
-                        <div class="counts__icon"><img src="/img/six.png" alt="">
-                        </div>
-                        <div class="counts__description-block">
-                            <p class="counts__title">{{ __('actual information') }}
-                            </p>
-                            <p class="counts__description">{{ __('in business') }}
-                            </p>
-                        </div>
-                    </li>
-                    <li class="counts__item">
-                        <div class="counts__block">
-                            <p class="number">{{ getRunningDays() }}
-                            </p><img src="/img/icons/map-icon.svg" alt="">
-                        </div>
-                        <div class="counts__description-block">
-                            <p class="counts__title">{{ getRunningDays() }} {{ __('days') }}
-                            </p>
-                            <p class="counts__description">{{ __('in business') }}
-                            </p>
-                        </div>
-                    </li>
-                    <li class="counts__item">
-                        <div class="counts__block">
-                            <p class="number">{{ getTotalAccounts() }}
-                            </p><img src="/img/icons/peoples-icon.svg" alt="">
-                        </div>
-                        <div class="counts__description-block">
-                            <p class="counts__title">{{ getTotalAccounts() }} {{ __('investors') }}
-                            </p>
-                            <p class="counts__description">{{ __('are using Luminex') }}
-                            </p>
-                        </div>
-                    </li>
-                    <li class="counts__item">
-                        <div class="counts__block">
-                            <p class="number"><span>$</span> {{ getTotalDeposited()['USD'] }}
-                            </p><img src="/img/icons/money-icon.svg" alt="">
-                        </div>
-                        <div class="counts__description-block">
-                            <p class="counts__title">$ {{ getTotalDeposited()['USD'] }} {{ __('invested') }}
-                            </p>
-                            <p class="counts__description">{{ __('by our investors') }}
-                            </p>
-                        </div>
-                    </li>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Banner-Section Ends Here=======-->
+    
+    
+    <!--=======Counter-Section Starts Here=======-->
+    <div class="counter-section">
+      <div class="container">
+        <div class="row align-items-center mb-30-none justify-content-center">
+          <div class="col-sm-6 col-md-4">
+            <div class="counter-item">
+              <div class="counter-thumb">
+                <img src="{{ asset('images/counter/counter01.png') }}" alt="counter">
+              </div>
+              <div class="counter-content">
+                <div class="counter-header">
+                  <h3 class="title odometer" data-odometer-final="36.9">0</h3>
+                  <h3 class="title">M</h3>
+                </div>
+                <p>Registered users</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="counter-item">
+              <div class="counter-thumb">
+                <img src="{{ asset('images/counter/counter02.png') }}" alt="counter">
+              </div>
+              <div class="counter-content">
+                <div class="counter-header">
+                  <h3 class="title odometer" data-odometer-final="174">0</h3>
+                </div>
+                <p>Countries Supported</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="counter-item">
+              <div class="counter-thumb">
+                <img src="{{ asset('images/counter/counter03.png') }}" alt="counter">
+              </div>
+              <div class="counter-content">
+                <div class="counter-header">
+                  <h3 class="title">$</h3>
+                  <h3 class="odometer title" data-odometer-final="10.8">0</h3>
+                  <h3 class="title">M</h3>
+                </div>
+                <p>Average Investment</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--=======Counter-Section Ends Here=======-->
+    
+    
+    <!--=======About-Section Starts Here=======-->
+    <section class="about-section padding-top padding-bottom" id="about">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 d-none d-lg-block rtl">
+            <img src="{{ asset('images/about/about.png') }}" alt="about">
+          </div>
+          <div class="col-lg-6">
+            <div class="section-header left-style">
+              <span class="cate">WELCOME TO HYIPLAND</span>
+              <h2 class="title">about hyipland</h2>
+              <p>
+                HYIPLAND is an investment company, whose team is working on making money from the volatility of cryptocurrencies and offer great returns to our clients.
+              </p>
+            </div>
+            <div class="about--content">
+              <div class="about-item">
+                <div class="about-thumb">
+                  <img src="{{ asset('images/about/about01.png') }}" alt="about">
+                </div>
+                <div class="about-content">
+                  <h5 class="title">Secure & Reliable</h5>
+                  <p>
+                    Secure assets fund for users
+                  </p>
+                </div>
+              </div>
+              <div class="about-item">
+                <div class="about-thumb">
+                  <img src="{{ asset('images/about/about02.png') }}" alt="about">
+                </div>
+                <div class="about-content">
+                  <h5 class="title">Fast Withdrawals</h5>
+                  <p>
+                    Quick money withdrawals for users
+                  </p>
+                </div>
+              </div>
+              <div class="about-item">
+                <div class="about-thumb">
+                  <img src="{{ asset('images/about/about03.png') }}" alt="about">
+                </div>
+                <div class="about-content">
+                  <h5 class="title">Guaranteed</h5>
+                  <p>
+                    Your return on investment is guaranteed
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======About-Section Ends Here=======-->
+    
+    
+    <!--=======Feature-Section Starts Here=======-->
+    <section class="feature-section padding-top padding-bottom bg_img" data-background="{{ asset('images/feature/feature-bg.png') }}" id="feature">
+      <div class="ball-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
+          data-paroller-type="foreground" data-paroller-direction="horizontal">
+        <img src="{{ asset('images/balls/ball1.png') }}" alt="balls">
+      </div>
+      <div class="ball-2" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
+          data-paroller-type="foreground" data-paroller-direction="horizontal">
+        <img src="{{ asset('images/balls/ball2.png') }}" alt="balls">
+      </div>
+      <div class="ball-3" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
+          data-paroller-type="foreground" data-paroller-direction="horizontal">
+        <img src="{{ asset('images/balls/ball3.png') }}" alt="balls">
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <div class="section-header">
+              <span class="cate">Our Amazing Features</span>
+              <h2 class="title">
+                why should you invest
+              </h2>
+              <p class="mw-100">
+                We are worldwide investment company who are committed to the principle of revenue
+                maximization and reduction of the financial risks at investing.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center feature-wrapper">
+          <div class="col-md-6 col-sm-10 col-lg-4">
+            <div class="feature-item">
+              <div class="feature-thumb">
+                <img src="{{ asset('images/feature/feature01.png') }}" alt="feature">
+              </div>
+              <div class="feature-content">
+                <h5 class="title">Profitable Investment</h5>
+                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-10 col-lg-4">
+            <div class="feature-item">
+              <div class="feature-thumb">
+                <img src="{{ asset('images/feature/feature02.png') }}" alt="feature">
+              </div>
+              <div class="feature-content">
+                <h5 class="title">DDS Protection</h5>
+                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-10 col-lg-4">
+            <div class="feature-item">
+              <div class="feature-thumb">
+                <img src="{{ asset('images/feature/feature03.png') }}" alt="feature">
+              </div>
+              <div class="feature-content">
+                <h5 class="title">24/7 Support Center</h5>
+                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Feature-Section Ends Here=======-->
+    
+    
+    <!--=======How-Section Starts Here=======-->
+    <section class="get-section padding-top padding-bottom">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-8">
+            <div class="section-header">
+              <span class="cate">get to know</span>
+              <h2 class="title">how we work?</h2>
+              <p>
+                Follow these simple steps and make profit!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-tab">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 d-lg-block d-none">
+              <div class="hover-tab-area">
+                <div class="tab-area">
+                  <div class="tab-item active first">
+                    <img src="{{ asset('images/how/how01.png') }}" alt="how">
+                  </div>
+                  <div class="tab-item second">
+                    <img src="{{ asset('images/how/how02.png') }}" alt="how">
+                  </div>
+                  <div class="tab-item third">
+                    <img src="{{ asset('images/how/how03.png') }}" alt="how">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-9">
+              <div class="hover-tab-menu">
+                <ul class="tab-menu">
+                  <li class="active">
+                    <div class="menu-thumb">
+                                            <span>
+                                                01
+                                            </span>
+                    </div>
+                    <div class="menu-content">
+                      <h5 class="title">Instant registration</h5>
+                      <p>
+                        Click
+                        <a href="#0">Sign Up</a>
+                        to fill the blank, our 256 SSL will Protect your privacy.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-thumb">
+                                            <span>
+                                                02
+                                            </span>
+                    </div>
+                    <div class="menu-content">
+                      <h5 class="title">MAKE AN INVEST</h5>
+                      <p>
+                        <a href="#0">Login</a>
+                        your account to click invest to start to earn the profit.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-thumb">
+                                            <span>
+                                                03
+                                            </span>
+                    </div>
+                    <div class="menu-content">
+                      <h5 class="title">get profit</h5>
+                      <p>
+                        You will get your profit on your profile, also you will get Instant Payment
+                      </p>
+                    </div>
+                  </li>
                 </ul>
+              </div>
             </div>
-        </section> -->
-        <section class="intro-text">
-            <div class="container">
-                <h2 class="page-title">{{ __('About the company') }}</span>
-                </h2>
-                <div class="intro-text__description">
-                    <p>{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
-                </div><a class="btn btn--yellow-line" href="{{ route('customer.aboutus') }}">{{ __('Find out more') }}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======How-Section Ends Here=======-->
+    
+    
+    <!--=======Check-Section Starts Here=======-->
+    <section class="call-section call-overlay bg_img" data-background="{{ asset('images/call/call-bg.jpg') }}">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <div class="call--item">
+              <span class="cate">Why We are always ready</span>
+              <h3 class="title">Request a call back</h3>
             </div>
-        </section>
-        <section class="mosaic">
-            <div class="container">
-                <div class="mosaic__row mosaic__row--profit">
-                    <div class="mosaic__image" style="margin-top:100px;">
-                        <div class="mosaic__image-block"><img src="/images/c1.png" alt="" style="max-width:290px;margin-left:120px;">
-                        </div>
-                    </div>
-                    <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Profit 0.77% per day') }}
-                        </h3>
-                        <div class="mosaic__description">
-                            <p>{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</p>
-                        </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
-                    </div>
-                </div>
-                <div class="mosaic__row mosaic__row--deposit reverse" style="margin-top:100px;">
-                    <div class="mosaic__text">
-                        <h3 class="mosaic__title">{{ __('Minimum deposit') }} USD 10$
-                        </h3>
-                        <div class="mosaic__description">
-                            <p>{{ __('The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income.') }}</p>
-                        </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
-                    </div>
-                    <div class="mosaic__image">
-                        <div class="mosaic__image-block"><img src="/images/c2.png" alt="" style="margin-right:200px;">
-                        </div>
-                    </div>
-                </div>
-{{--                <div class="mosaic__row mosaic__row--withdrawl">--}}
-{{--                    <div class="mosaic__image">--}}
-{{--                        <div class="mosaic__image-block"><img src="/img/mosaic/widthdrawal.png" alt="">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mosaic__text">--}}
-{{--                        <h3 class="mosaic__title">{{ __('Minimum withdrawal') }} 0.0008 BTC--}}
-{{--                        </h3>--}}
-{{--                        <div class="mosaic__description">--}}
-{{--                            <p>{{ __('An investor is usually a person who, in exchange for the opportunity of increasing profits, assumes the risk of losing his or her funds. But Luminex proves on a daily basis that this approach is outdated. Our investors are not only taking no risks, but can withdraw money at any time.') }}</p>--}}
-{{--                        </div><a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+          </div>
+          <div class="col-lg-5">
+            <div class="call-button">
+              <a href="Tel:0939303" class="call">
+                <img src="{{ asset('images/call/icon02.png') }}" alt="call">
+              </a>
+              <a href="#0" class="custom-button"> Contact Support</a>
             </div>
-        </section>
-        <section class="calculate">
-            <div class="container">
-                <div class="calculate-block">
-                    <div class="calculate-block__top">
-                        <svg id="svg7819" viewBox="0 0 1153 68">
-                            <path id="path7829" style="fill:#ffffff" d="M 576.5,69.27947 H 0 v -4.88605 -4.88605 l 4.003163,-5.99478 4.003162,-5.99478 5.454519,-4.20814 5.45452,-4.20813 L 46.207682,35.16108 73.5,31.22062 l 38,-4.51337 38,-4.51337 32,-2.91771 32,-2.91772 24,-2.02385 24,-2.02384 41,-2.48712 41,-2.48711 30,-1.50162 30,-1.50162 L 430,3.32771 456.5,2.32212 519,1.16106 581.5,0 l 73,0.63135 73,0.63135 36.5,1.00502 36.5,1.00502 33.5,1.5363 33.5,1.53631 50,2.99393 50,2.99392 18.00003,1.50443 17.99997,1.50444 33.5,2.98832 33.5,2.98832 31,3.55713 31,3.55712 3.7916,2.46497 3.7916,2.46496 3.8969,4.01551 3.8969,4.01552 2.5615,4.37084 2.5615,4.37085 v 9.57193 9.57193 z"></path>
-                        </svg>
-                        <div class="calculate-block__top-content">
-                            <div class="calculate-block__bonus">
-                                <p style="margin-left:30px;margin-top:-15px;"><strong>+0.51%</strong> {{ __('to daily earnings') }}</p>
-                            </div>
-                            <div class="calculate-block__content">
-                                <h3 class="calculate-block__title"> <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 38.4% of income per month') }}
-                                </h3>
-                                <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
-                            </div>
-                            <div class="calculate-block__right">
-                                <div class="calc">
-                                    <div class="calc__top">
-                                        <div class="calc__row">
-                                            <label class="label">{{ __('Choose a period') }}<span> ({{ __('days') }})</span>
-                                            </label>
-                                            <div class="js-slider">
-                                            </div><input type="hidden" class="calculatorDuration" value="180"/>
-                                        </div>
-                                        <div class="calc__row">
-                                            <label class="label">{{ __('Choose a budget') }}
-                                            </label>
-                                            <div class="calc__input-row"><input value="0.15" type="text" id="calculatorAmount"/>
-                                                <select id="calculatorCurrency">
-                                                    <option>BTC</option>
-                                                    <option>ETH</option>
-                                                    <option>USD</option>
-                                                </select>
-                                                {{--<p class="subtext" class="calculatorBonus">+ <span class="calculatorBonusCurrency">BTC</span> 0.01 <span>бонус!</span>--}}
-                                                {{--</p>--}}
-                                            </div>
-                                        </div>
-                                        <div class="calc__row">
-                                            <!-- <label class="label">Выберите план
-                                            </label>
-                                            <select class="select">
-                                                <option>Plan name here</option>
-                                                <option>Plan name here</option>
-                                                <option>Plan name here</option>
-                                            </select> -->
-                                        </div>
-                                    </div>
-                                    <div class="calc__bottom">
-                                        <ul class="calc-results">
-                                            <li class="calc-results__item">
-                                                <p class="calc-results__title">{{ __('Profit') }}
-                                                </p>
-                                            </li>
-                                            <li class="calc-results__item">
-                                                <p class="calc-results__count day" style="font-size:16px;">7.50
-                                                </p>
-                                                <p class="calc-results__currency">BTC
-                                                </p>
-                                                <p class="calc-results__description day">{{ __('per day') }}
-                                                </p>
-                                            </li>
-                                            <li class="calc-results__item">
-                                                <p class="calc-results__count alltime" style="font-size:16px;">675.00
-                                                </p>
-                                                <p class="calc-results__currency">BTC
-                                                </p>
-                                                <p class="calc-results__description alltime">{{ __('for the entire period') }}
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="calculate-block__bottom">
-                        <div class="calculate-block__bottom-content">
-                            <div class="calculate-block__bottom-text">
-                                <p><strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }} <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
-                            </div>
-                        </div>
-                        <svg viewBox="0 0 1151 50">
-                            <path d="M940.9125 49.836L748.5 49.672l-47.5-.7468-47.5-.7467-50-1.1203-50-1.1203-33-.9432-33-.9432-37.5-1.052-37.5-1.052-38-1.496-38-1.4959-52.5-2.451-52.5-2.4512-12.5-.5853-12.5-.5853-25-1.4713-25-1.4712-46-2.9513-46-2.9513L42 22.4069l-22.5-1.6308-4.6972-2.9584-4.6972-2.9584-3.4962-3.87L3.113 7.1196 1.5566 4.1094 0 1.0994V0h1151v32.6744l-3.9637 5.5353-3.9637 5.5352-4.8739 3.1276L1133.3249 50z" fill="#5d639d"></path>
-                        </svg>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Check-Section Ends Here=======-->
+    
+    
+    <!--=======Offer-Section Stars Here=======-->
+    <section class="offer-section padding-top padding-bottom pb-max-md-0" id="plan">
+      <div class="ball-group-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
+          data-paroller-type="foreground" data-paroller-direction="horizontal">
+        <img src="{{ asset('images/balls/ball-group1.png') }}" alt="balls">
+      </div>
+      <div class="ball-group-2" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
+          data-paroller-type="foreground" data-paroller-direction="horizontal">
+        <img src="{{ asset('images/balls/ball-group2.png') }}" alt="balls">
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-xl-7">
+            <div class="section-header">
+              <span class="cate">INVESTMENT OFFER</span>
+              <h2 class="title">OUR INVESTMENT PLANS</h2>
+              <p>
+                Hyipland provides a straightforward and transparent mechanism to attract investments and make more profits.
+              </p>
             </div>
-        </section>
-        <section class="guarantees">
-            <div class="container">
-                <h3 class="guarantees__title">{{ __('We provide guarantees') }}<span> {{ __('It’s safe with us') }}</span></h3>
-                <div style="clear:both; margin-top:50px;"></div>
-                <div class="guarantees__row" style="width:40%; margin-right: 60px; float:left; padding:0;">
-                    <div style="line-height: 140%;">
-                        <p style="margin-bottom: 30px;">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
-{{--                        <div style="text-align: center;">--}}
-{{--                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>--}}
-{{--                        </div>--}}
-                    </div>
-                </div>
-                <iframe style="float:right;" width="50%" height="315" src="https://www.youtube.com/embed/j4lAr7EsnBg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <div style="clear:both; margin-top:450px;"></div>
-                <table style="width:100%; clear:both;">
-                    <tr>
-                        <td>
-                            <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
-                                <h3 style="font-weight:bold; font-size:19px;">{{ __('Certificate of Registration of a Legal Entity') }}</h3>
-                                <div style="margin-top:30px;">
-                                    <div class="guarantees__list-wrap" style="width:100%;">
-                                        <ul class="guarantees__list">
-                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc1.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc1.jpg" alt="" style="width:200px;"></a>
-                                            </li>
-                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                            {{--</li>--}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
-                                <h3 style="font-weight:bold; font-size:19px;">{{ __('Investment License') }}</h3>
-                                <div style="margin-top:30px;">
-                                    <div class="guarantees__list-wrap" style="width:100%;">
-                                        <ul class="guarantees__list" style="margin-left: 50px;">
-                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc3.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc3.jpg" alt="" style="width:250px; background:none;"></a>
-                                            </li>
-                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                            {{--</li>--}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
-                                <h3 style="font-weight:bold; font-size:19px;text-align:right;">{{ __('License to Do Business on the Internet') }}</h3>
-                                <div style="margin-top:30px;">
-                                    <div class="guarantees__list-wrap" style="width:100%; float:right;">
-                                        <ul class="guarantees__list" style="margin-left:60px;">
-                                            <li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/doc2.jpg" data-fancybox="guarantees" style="box-shadow: none; border:none;"><img src="/img/guarantees/doc2.jpg" alt="" style="width:200px;"></a>
-                                            </li>
-                                            {{--<li class="guarantees__item"><a class="guarantees__link" href="/img/guarantees/guarant2.png" data-fancybox="guarantees"><img src="/img/guarantees/guarant2.png" alt=""></a>--}}
-                                            {{--</li>--}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div style="clear:both;"></div>
-                <div class="guarantees__bottom">
-                    <h4 class="guarantees__bottom-title">{{ __('Do you have any questions?') }}
-                    </h4><a class="btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
-                </div>
+          </div>
+        </div>
+        <div class="offer-wrapper">
+          <div class="offer-item">
+            <div class="offer-header">
+              <h3 class="title">120%</h3>
+              <span><b>every day</b></span>
             </div>
-        </section>
-        <section class="referral">
-            <div class="container">
-                <div class="referral__image"><img src="/img/refferal.png" alt="">
+            <div class="offer-body">
+              <span class="bal-shape"></span>
+              <div class="item first">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
                 </div>
-                <div class="referral__content">
-                    <h3 class="referral__title"><span>{{ __('4 level') }}</span> {{ __('referral program') }}
-                    </h3>
-                    <div class="referral__desription">
-                        <p>{{ __('We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.') }}</p>
-                    </div><a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>
+                <div class="item-content">
+                  <h5 class="title">Deposit</h5>
+                  <h5 class="subtitle">
+                    <span class="min">$10</span>
+                    <span class="to">to</span>
+                    <span class="max">$3500</span>
+                  </h5>
                 </div>
+              </div>
+              <span class="bal-shape"></span>
+              <div class="item">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Terms</h5>
+                  <h5 class="subtitle">10 days</h5>
+                </div>
+              </div>
             </div>
-        </section>
-        <section class="levels">
-            <div class="container">
-                <ul class="levels__list">
-                    <li class="levels__item">
-                        <div class="levels__icon js-tilt"><img src="/img/levels/level1.png" alt="">
-                        </div>
-                        <p class="levels__title">1<sup>{{ __('st') }}</sup> {{ __('level') }}
-                        </p>
-                        <!-- <p class="levels__description">хз, что тут писать
-                        </p> -->
-                    </li>
-                    <li class="levels__item">
-                        <div class="levels__icon js-tilt"><img src="/img/levels/level2.png" alt="">
-                        </div>
-                        <p class="levels__title">2<sup>{{ __('nd') }}</sup> {{ __('level') }}
-                        </p>
-                        <!-- <p class="levels__description">хз, что тут писать
-                        </p> -->
-                    </li>
-                    <li class="levels__item">
-                        <div class="levels__icon js-tilt"><img src="/img/levels/level3.png" alt="">
-                        </div>
-                        <p class="levels__title">3<sup>{{ __('rd') }}</sup> {{ __('level') }}
-                        </p>
-                        <!-- <p class="levels__description">хз, что тут писать
-                        </p> -->
-                    </li>
-                    <li class="levels__item">
-                        <div class="levels__icon js-tilt"><img src="/img/levels/level4.png" alt="">
-                        </div>
-                        <p class="levels__title">4<sup>{{ __('th') }}</sup> {{ __('level') }}
-                        </p>
-                        <!-- <p class="levels__description">хз, что тут писать
-                        </p> -->
-                    </li>
+            <div class="offer-footer">
+              <a href="#0" class="custom-button">invest now</a>
+            </div>
+          </div>
+          <div class="offer-item">
+            <div class="offer-header">
+              <h3 class="title">120%</h3>
+              <span><b>every day</b></span>
+            </div>
+            <div class="offer-body">
+              <span class="bal-shape"></span>
+              <div class="item first">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Deposit</h5>
+                  <h5 class="subtitle">
+                    <span class="min">$10</span>
+                    <span class="to">to</span>
+                    <span class="max">$3500</span>
+                  </h5>
+                </div>
+              </div>
+              <span class="bal-shape"></span>
+              <div class="item">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Terms</h5>
+                  <h5 class="subtitle">10 days</h5>
+                </div>
+              </div>
+            </div>
+            <div class="offer-footer">
+              <a href="#0" class="custom-button">invest now</a>
+            </div>
+          </div>
+          <div class="offer-item">
+            <div class="offer-header">
+              <h3 class="title">120%</h3>
+              <span><b>every day</b></span>
+            </div>
+            <div class="offer-body">
+              <span class="bal-shape"></span>
+              <div class="item first">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Deposit</h5>
+                  <h5 class="subtitle">
+                    <span class="min">$10</span>
+                    <span class="to">to</span>
+                    <span class="max">$3500</span>
+                  </h5>
+                </div>
+              </div>
+              <span class="bal-shape"></span>
+              <div class="item">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Terms</h5>
+                  <h5 class="subtitle">10 days</h5>
+                </div>
+              </div>
+            </div>
+            <div class="offer-footer">
+              <a href="#0" class="custom-button">invest now</a>
+            </div>
+          </div>
+          <div class="offer-item">
+            <div class="offer-header">
+              <h3 class="title">120%</h3>
+              <span><b>every day</b></span>
+            </div>
+            <div class="offer-body">
+              <span class="bal-shape"></span>
+              <div class="item first">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Deposit</h5>
+                  <h5 class="subtitle">
+                    <span class="min">$10</span>
+                    <span class="to">to</span>
+                    <span class="max">$3500</span>
+                  </h5>
+                </div>
+              </div>
+              <span class="bal-shape"></span>
+              <div class="item">
+                <div class="item-thumb">
+                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                </div>
+                <div class="item-content">
+                  <h5 class="title">Terms</h5>
+                  <h5 class="subtitle">10 days</h5>
+                </div>
+              </div>
+            </div>
+            <div class="offer-footer">
+              <a href="#0" class="custom-button">invest now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Offer-Section Ends Here=======-->
+    
+    
+    <!--=======Proit-Section Starts Here=======-->
+    <section class="profit-section padding-top" id="profit">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-xl-7">
+            <div class="section-header">
+              <span class="cate">Calculate the amazing profits</span>
+              <h2 class="title">You Can Earn</h2>
+              <p>Calculate your profit before making an investment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid p-0">
+        <div class="profit-bg bg_img" data-background="{{ asset('images/profit/profit-bg.png') }}">
+          <div class="animation-group">
+            <div class="platform">
+              <img src="{{ asset('images/profit/platform.png') }}" alt="profit">
+            </div>
+            <div class="light">
+              <img src="{{ asset('images/profit/light.png') }}" alt="profit">
+            </div>
+            <div class="coin-1 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin6.png') }}" alt="profit">
+            </div>
+            <div class="coin-2 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin2.png') }}" alt="profit">
+            </div>
+            <div class="coin-3 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin3.png') }}" alt="profit">
+            </div>
+            <div class="coin-4 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin4.png') }}" alt="profit">
+            </div>
+            <div class="coin-5 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin5.png') }}" alt="profit">
+            </div>
+            <div class="coin-6 wow fadeOutDown" data-wow-delay="1s">
+              <img src="{{ asset('images/profit/coin1.png') }}" alt="profit">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="calculate-wrapper tab">
+          <div class="calculate--area">
+            <div class="calculate-area">
+              <div class="calculate-item">
+                <h5 class="title" data-serial="01">Select the plan</h5>
+                <select class="select-bar">
+                  <option value="01">120% daily for 50 days</option>
+                  <option value="02">110% daily for 30 days</option>
+                  <option value="03">105% daily for 20 days</option>
+                  <option value="04">102% daily for 10 days</option>
+                  <option value="05">101% daily for 5 days</option>
+                </select>
+              </div>
+              <div class="calculate-item">
+                <h5 class="title" data-serial="02">Select the currency</h5>
+                <ul class="tab-menu">
+                  <li>usd</li>
+                  <li class="active">btc</li>
+                  <li>eth</li>
+                  <li>rub</li>
                 </ul>
+              </div>
+              <div class="calculate-item">
+                <h5 class="title" data-serial="03">Enter the amount</h5>
+                <input type="number" value="100">
+              </div>
             </div>
-        </section>
-{{--        <section class="representative">--}}
-{{--            <div class="container">--}}
-{{--                <div class="representative__content">--}}
-{{--                    <h3 class="representative__title"><span>{{ __('Representative') }}</span> {{ __('referral program') }}--}}
-{{--                    </h3>--}}
-{{--                    <ul class="levels-list">--}}
-{{--                        <li class="levels-list__item">--}}
-{{--                            <p class="levels-list__count">7<sup>%</sup>--}}
-{{--                            </p>--}}
-{{--                            <p class="levels-list__desc">1<sup>{{ __('st') }}</sup> {{ __('level') }}--}}
-{{--                            </p>--}}
-{{--                        </li>--}}
-{{--                        <li class="levels-list__item">--}}
-{{--                            <p class="levels-list__count">5<sup>%</sup>--}}
-{{--                            </p>--}}
-{{--                            <p class="levels-list__desc">2<sup>{{ __('nd') }}</sup> {{ __('level') }}--}}
-{{--                            </p>--}}
-{{--                        </li>--}}
-{{--                        <li class="levels-list__item">--}}
-{{--                            <p class="levels-list__count">3<sup>%</sup>--}}
-{{--                            </p>--}}
-{{--                            <p class="levels-list__desc">3<sup>{{ __('rd') }}</sup> {{ __('level') }}--}}
-{{--                            </p>--}}
-{{--                        </li>--}}
-{{--                        <li class="levels-list__item">--}}
-{{--                            <p class="levels-list__count">1<sup>%</sup>--}}
-{{--                            </p>--}}
-{{--                            <p class="levels-list__desc">4<sup>{{ __('th') }}</sup> {{ __('level') }}--}}
-{{--                            </p>--}}
-{{--                        </li>--}}
-{{--                        <li class="levels-list__item">--}}
-{{--                            <p class="levels-list__count">1<sup>%</sup>--}}
-{{--                            </p>--}}
-{{--                            <p class="levels-list__desc">5<sup>{{ __('th') }}</sup> {{ __('level') }}--}}
-{{--                            </p>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                    <div class="representative__description">--}}
-{{--                        <p>{{ __('We offer a special referral program for major partners of our company. You can become our official representative and use your own audience or advertising company to receive profit from us.') }}</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="representative__right"><img class="representative__image-main" src="/img/representative.png" alt="" role="presentation"/>--}}
-{{--                    <div class="representative__text">--}}
-{{--                        <!-- <p>хз, что тут писать</p> -->--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="representative__bottom"><a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
-        <section class="partners">
-            @include('layouts.partnerlist')
-        </section>
-        <section class="faq">
-            <div class="container">
-                <div class="faq__top">
-                    <h3 class="faq__subtitle">{{ __('Got questions?') }}
-                    </h3>
-                    <h3 class="faq__title"><span>{{ __('FAQ') }}</span>
-                    </h3>
+            <div class="tab-area">
+              <div class="tab-item">
+                <div class="profit-calc">
+                  <div class="item">
+                    <span class="cate">Daily Profit</span>
+                    <h2 class="title cl-theme-1">0.026400 USD</h2>
+                  </div>
+                  <div class="item">
+                    <span class="cate">Total Profit</span>
+                    <h2 class="title cl-theme">1.320000 USD</h2>
+                  </div>
                 </div>
-                <div class="faq__content">
-                    <div class="faq-block accordion">
-                        <h3 class="faq-block__title">{{ __("What is Luminex?") }}
-                        </h3>
-                        <div class="faq-block__content">{{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
-                        </div>
-                        <h3 class="faq-block__title">{{ __("What is Luminex Technology?") }}
-                        </h3>
-                        <div class="faq-block__content">{{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
-                        </div>
-                        <h3 class="faq-block__title">{{ __("Is Luminex an officially registered company?") }}
-                        </h3>
-                        <div class="faq-block__content">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
-                        </div>
+                <div class="invest-range-area">
+                  <div class="main-amount">
+                    <input type="text" class="calculator-invest" id="usd-amount" readonly>
+                  </div>
+                  <div class="invest-amount" data-min="1.00 USD" data-max="1000 USD">
+                    <div id="usd-range" class="invest-range-slider"></div>
+                  </div>
+                  <button type="submit" class="custom-button">join now</button>
+                </div>
+              </div>
+              <div class="tab-item active">
+                <div class="profit-calc">
+                  <div class="item">
+                    <span class="cate">Daily Profit</span>
+                    <h2 class="title cl-theme-1">0.026400 BTC</h2>
+                  </div>
+                  <div class="item">
+                    <span class="cate">Total Profit</span>
+                    <h2 class="title cl-theme">1.320000 BTC</h2>
+                  </div>
+                </div>
+                <div class="invest-range-area">
+                  <div class="main-amount">
+                    <input type="text" class="calculator-invest" id="btc-amount" readonly>
+                  </div>
+                  <div class="invest-amount" data-min="1.00 BTC" data-max="1000 BTC">
+                    <div id="btc-range" class="invest-range-slider"></div>
+                  </div>
+                  <button type="submit" class="custom-button">join now</button>
+                </div>
+              </div>
+              <div class="tab-item">
+                <div class="profit-calc">
+                  <div class="item">
+                    <span class="cate">Daily Profit</span>
+                    <h2 class="title cl-theme-1">0.026400 ETH</h2>
+                  </div>
+                  <div class="item">
+                    <span class="cate">Total Profit</span>
+                    <h2 class="title cl-theme">1.320000 ETH</h2>
+                  </div>
+                </div>
+                <div class="invest-range-area">
+                  <div class="main-amount">
+                    <input type="text" class="calculator-invest" id="eth-amount" readonly>
+                  </div>
+                  <div class="invest-amount" data-min="1.00 ETH" data-max="1000 ETH">
+                    <div id="eth-range" class="invest-range-slider"></div>
+                  </div>
+                  <button type="submit" class="custom-button">join now</button>
+                </div>
+              </div>
+              <div class="tab-item">
+                <div class="profit-calc">
+                  <div class="item">
+                    <span class="cate">Daily Profit</span>
+                    <h2 class="title cl-theme-1">0.026400 RUB</h2>
+                  </div>
+                  <div class="item">
+                    <span class="cate">Total Profit</span>
+                    <h2 class="title cl-theme">1.320000 RUB</h2>
+                  </div>
+                </div>
+                <div class="invest-range-area">
+                  <div class="main-amount">
+                    <input type="text" class="calculator-invest" id="rub-amount" readonly>
+                  </div>
+                  <div class="invest-amount" data-min="1.00 RUB" data-max="1000 RUB">
+                    <div id="rub-range" class="invest-range-slider"></div>
+                  </div>
+                  <button type="submit" class="custom-button">join now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Proit-Section Ends Here=======-->
+    
+    
+    <!--=======Latest-Transaction-Section Starts Here=======-->
+    <section class="latest-transaction padding-top padding-bottom" id="transaction">
+      <div class="transaction-bg bg_img" data-background="{{ asset('images/transaction/transaction-bg.png') }}">
+        <span class="d-none">Image</span>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-xl-7">
+            <div class="section-header">
+              <span class="cate">Latest Transactions</span>
+              <h2 class="title">Monthly Income Feed</h2>
+              <p>Our goal is to simplify investing so that anyone can be an investor.Withthis in mind,
+                we hand-pick the investments we offer on our platform.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tab transaction-tab d-flex flex-wrap justify-content-center">
+          <ul class="tab-menu">
+            <li class="active">
+              <div class="thumb">
+                <i class="flaticon-wallet"></i>
+              </div>
+              <div class="content">
+                <span class="d-block">last</span>
+                <span class="d-block">deposits</span>
+              </div>
+            </li>
+            <li>
+              <div class="thumb">
+                <i class="flaticon-atm"></i>
+              </div>
+              <div class="content">
+                <span class="d-block">last</span>
+                <span class="d-block">withdrawals</span>
+              </div>
+            </li>
+            <li>
+              <div class="thumb">
+                <i class="flaticon-team"></i>
+              </div>
+              <div class="content">
+                <span class="d-block">last</span>
+                <span class="d-block">investors</span>
+              </div>
+            </li>
+          </ul>
+          <div class="tab-area">
+            <div class="tab-item active">
+              <div class="row justify-content-center mb-30-none">
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">KimHowell21</h5>
+                      <span class="date">December 24, 17:57</span>
                     </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 BTC</h5>
+                    </div>
+                  </div>
                 </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">ildar25864</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 ETH</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Buha74</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Eduardo54</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Pedro33</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Nelson35</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Doug9544</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Hector 951</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
-    </main>
-
-<script>document.getElementById("homePageMenuItem").className = "navigation__item navigation__item--active";</script>
-
+            <div class="tab-item">
+              <div class="row justify-content-center mb-30-none">
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Doug9544</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Hector 951</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">KimHowell21</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 BTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">ildar25864</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 ETH</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Buha74</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Eduardo54</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Pedro33</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Nelson35</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-item">
+              <div class="row justify-content-center mb-30-none">
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Buha74</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Eduardo54</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Pedro33</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Nelson35</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 XRP</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Doug9544</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 USD</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">Hector 951</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 LTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">KimHowell21</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 BTC</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xl-3 col-sm-6">
+                  <div class="transaction-item">
+                    <div class="transaction-header">
+                      <h5 class="title">ildar25864</h5>
+                      <span class="date">December 24, 17:57</span>
+                    </div>
+                    <div class="transaction-thumb">
+                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                    </div>
+                    <div class="transaction-footer">
+                      <span class="amount">Amount</span>
+                      <h5 class="sub-title">0.00449721 ETH</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Latest-Transaction-Section Ends Here=======-->
+    
+    
+    <!--=======Affiliate-Section Starts Here=======-->
+    <section class="affiliate-programe" id="affiliate">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 padding-bottom padding-top">
+            <div class="section-header left-style">
+              <span class="cate">What You’ll Get As</span>
+              <h2 class="title fz-md-49">Affiliate Program</h2>
+              <p>
+                We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.
+              </p>
+            </div>
+            <div class="affiliate-wrapper">
+              <div class="affiliate-item">
+                <div class="affiliate-inner">
+                  <div class="affiliate-thumb">
+                    <h3 class="title">2</h3>
+                    <span class="remainder">%</span>
+                    <span class="cont">1st</span>
+                  </div>
+                </div>
+              </div>
+              <div class="affiliate-item cl-two">
+                <div class="affiliate-inner">
+                  <div class="affiliate-thumb">
+                    <h3 class="title">5</h3>
+                    <span class="remainder">%</span>
+                    <span class="cont">2nd</span>
+                  </div>
+                </div>
+              </div>
+              <div class="affiliate-item cl-three">
+                <div class="affiliate-inner">
+                  <div class="affiliate-thumb">
+                    <h3 class="title">12</h3>
+                    <span class="remainder">%</span>
+                    <span class="cont">3rd</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="affiliate-bottom">
+              <h6 class="title">Make money with hyipland</h6>
+              <a href="#0" class="custom-button">
+                learn more <i class="flaticon-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-5 d-lg-block d-none">
+            <div class="afiliate-thumb">
+              <img src="{{ asset('images/affiliate/affiliate.png') }}" alt="affiliate">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Affiliate-Section Ends Here=======-->
+    
+    
+    <!--=======Check-Section Starts Here=======-->
+    <section class="call-section call-overlay bg_img" data-background="{{ asset('images/call/call-bg.jpg') }}">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7 col-xl-6">
+            <div class="call-item text-center text-sm-left">
+              <div class="call-icon">
+                <img src="{{ asset('images/call/icon01.png') }}" alt="call">
+              </div>
+              <div class="call-content">
+                <h5 class="title">Ready To Start Your Earnings Through Crypto Currency</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
+            <a href="#0" class="custom-button">learn more <i class="flaticon-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Check-Section Ends Here=======-->
+    
+    
+    <!--=======Check-Section Starts Here=======-->
+    <section class="client-section padding-bottom padding-top">
+      <div class="background-map">
+        <img src="{{ asset('images/client/client-bg.png') }}" alt="client">
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10">
+            <div class="section-header left-style">
+              <span class="cate">TESTIMONIALS</span>
+              <h2 class="title">
+                <span>40,000</span>
+                HAPPY CLIENTS AROUND THE WORLD
+              </h2>
+              <p class="mw-500">
+                We have many happy investors invest with us .Some impresions from our Customers!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-9">
+            <div class="m--30">
+              <div class="client-slider owl-carousel owl-theme">
+                <div class="client-item">
+                  <div class="client-content">
+                    <p>
+                      Perfect work to start on, support is awesome
+                    </p>
+                    <div class="rating">
+                      <span>
+                          <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                          <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                          <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                          <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                          <i class="fas fa-star-half-alt"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="client-thumb">
+                    <a href="#0">
+                      <img src="{{ asset('images/client/client01.png') }}" alt="client">
+                    </a>
+                  </div>
+                </div>
+                <div class="client-item">
+                  <div class="client-content">
+                    <p>
+                      Very easy to use, perfect for invest
+                    </p>
+                    <div class="rating">
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                       <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                       <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                       <i class="fas fa-star-half-alt"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="client-thumb">
+                    <a href="#0">
+                      <img src="{{ asset('images/client/client02.png') }}" alt="client">
+                    </a>
+                  </div>
+                </div>
+                <div class="client-item">
+                  <div class="client-content">
+                    <p>
+                      Awesome hyipland most profitable site!
+                    </p>
+                    <div class="rating">
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-star-half-alt"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="client-thumb">
+                    <a href="#0">
+                      <img src="{{ asset('images/client/client03.png') }}" alt="client">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=======Check-Section Ends Here=======-->
+    
+    
+    <!-- ==========Footer-Section Starts Here========== -->
+  @include('layouts.app-footer')
+  <!-- ==========Footer-Section Ends Here========== -->
+  </div>
 @endsection
-
-@push('scripts')
-@if(isset($errors) && !empty($errors->first()))
-<script>
-    alert("{{ $errors->first() }}");
-</script>
-@endif
-@endpush

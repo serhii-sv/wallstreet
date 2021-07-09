@@ -30,15 +30,6 @@ Route::group(['middleware' => ['web']], function () {
         // Confirm email
         Route::get('/resend', 'Customer\MainController@index')->name('resend');
         
-        /*
-         * Временно
-         */
-        Route::get('/new', 'NewController@index');
-        Route::get('/new/login', 'NewController@showLogin');
-        Route::get('/new/sign-up', 'NewController@showSignUp');
-        Route::get('/new/password/reset', 'NewController@showReset');
-        Route::get('/new/password/reset/{token}', 'NewController@showResetPass');
-        
         // Not authorized
         Route::get('/', 'Customer\MainController@index')->name('customer.main');
         Route::get('/aboutus', 'Customer\AboutUsController@index')->name('customer.aboutus');
@@ -88,6 +79,8 @@ Route::group(['middleware' => ['web']], function () {
             
             Route::get('/withdraw', 'Profile\WithdrawController@index')->name('profile.withdraw');
             Route::post('/withdraw', 'Profile\WithdrawController@handle')->name('profile.withdraw');
+    
+            Route::get('/fund_transfer', 'Profile\WithdrawController@index')->name('profile.withdraw');
             
             Route::get('/topup', 'Profile\TopupController@index')->name('profile.topup');
             Route::post('/topup', 'Profile\TopupController@handle')->name('profile.topup');

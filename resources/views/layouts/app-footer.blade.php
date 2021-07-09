@@ -44,19 +44,19 @@
       </div>
       <ul class="links">
         <li>
-          <a href="#0">About</a>
+          <a href="{{ route('customer.aboutus') }}">About</a>
         </li>
         <li>
-          <a href="#0">Affiliates</a>
+          <a href="{{ route('customer.partners') }}">Affiliates</a>
         </li>
         <li>
-          <a href="#0">Plans</a>
+          <a href="">Plans</a>
         </li>
         <li>
-          <a href="#0">FAQ</a>
+          <a href="{{ route('customer.faq') }}">FAQ</a>
         </li>
         <li>
-          <a href="#0">Privacy Policy</a>
+          <a href="{{ route('customer.agreement') }}">Privacy Policy</a>
         </li>
       </ul>
     </div>
@@ -64,7 +64,7 @@
       <div class="footer-bottom-area">
         <div class="left">
           <p>&copy; 2020
-            <a href="#0">Hyipland</a>
+            <a href="{{ route('customer.main') }}">Hyipland</a>
             | All right reserved
           </p>
         </div>
