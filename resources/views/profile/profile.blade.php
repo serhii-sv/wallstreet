@@ -7,7 +7,7 @@
         <div class="referral-link__col">
             <h3 class="title">{{ __('Your referral link') }}
             </h3>
-            <div class="input-row"><input class="input-row__input input input--accent2" value="{{ getUserReferralLink() }}" type="text"/>
+            <div class="input-row"><input class="input-row__input input input--accent2" id="refLink" value="{{ getUserReferralLink() }}" type="text"/>
             </div>
         </div>
         <div class="referral-link__col">
@@ -184,5 +184,35 @@
             ],
         });
         //*initialize basic datatable
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('#refLink').click(function(obj) {
+                copyToClipboard('refLink');
+            });
+
+            function copyToClipboard(elementId) {
+                // Create a "hidden" input
+                var aux = document.createElement("input");
+
+                // Assign it the value of the specified element
+                aux.setAttribute("value", document.getElementById(elementId).value);
+
+                // Append it to the body
+                document.body.appendChild(aux);
+
+                // Highlight its content
+                aux.select();
+
+                // Copy the highlighted text
+                document.execCommand("copy");
+
+                // Remove it from the body
+                document.body.removeChild(aux);
+
+                alert('Скопировано');
+            }
+        });
     </script>
 @endpush
