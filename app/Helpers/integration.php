@@ -650,7 +650,11 @@ function getPartnerInfoFromCookies()
             return [];
         }
 
-        return \App\Models\User::where('my_id', $partnerId)->first()->toArray();
+        $user = \App\Models\User::where('my_id', $partnerId)->first();
+
+        return null !== $user
+            ? $user
+            : [];
     });
 }
 
