@@ -814,8 +814,10 @@ function getPartnerArray()
     return cache()->remember('i.' . \Auth::user()->id . '.partnerArray', getCacheILifetime('partnerArray'), function () {
         $partnerId = getPartnerId();
 
-        if ($partnerId > 0) {
-            return \App\Models\User::where('my_id', $partnerId)->first()->toArray();
+        $user = \App\Models\User::where('my_id', $partnerId)->first();
+
+        if ($partnerId > 0 && !empty($user)) {
+            return $user->toArray();
         }
         return [];
     });
