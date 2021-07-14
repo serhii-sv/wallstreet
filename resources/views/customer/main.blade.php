@@ -29,11 +29,15 @@
               {{ __('It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system.') }}
             @endif
           </p>
-          <a class="btn intro__btn" href="{{ route('register') }}"   @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+          <a class="btn intro__btn" href="{{ route('register') }}"
+              @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+          >
+            @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name="Start now!" contenteditable="true">{{ __('Start now!') }}</editor_block>
             @else
               {{ __('Start now!') }}
-            @endif</a>
+            @endif
+          </a>
         </div>
         <div class="intro__image"><img src="/img/header-img.png" alt="" />
         </div>
@@ -94,12 +98,27 @@
 </section> -->
     <section class="intro-text">
       <div class="container">
-        <h2 class="page-title">{{ __('About the company') }}</span>
+        <h2 class="page-title">
+          @if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name="About the company" contenteditable="true">{{ __('About the company') }}</editor_block>
+            @else
+            {{ __('About the company') }}
+            @endif
+            </span>
         </h2>
         <div class="intro-text__description">
-          <p>{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
+          <p>@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name="Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs." contenteditable="true">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</editor_block>
+            @else
+              {{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}
+            @endif
+          </p>
         </div>
-        <a class="btn btn--yellow-line" href="{{ route('customer.aboutus') }}">{{ __('Find out more') }}</a>
+        <a class="btn btn--yellow-line" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault();" @endif href="{{ route('customer.aboutus') }}">@if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name="Find out more" contenteditable="true">{{ __('Find out more') }}</editor_block>
+          @else
+            {{ __('Find out more') }}
+          @endif</a>
       </div>
     </section>
     <section class="mosaic">
@@ -111,22 +130,46 @@
             </div>
           </div>
           <div class="mosaic__text">
-            <h3 class="mosaic__title">{{ __('Profit 0.77% per day') }}
+            <h3 class="mosaic__title">
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Profit 0.77% per day" contenteditable="true">{{ __('Profit 0.77% per day') }}</editor_block>
+              @else
+                {{ __('Profit 0.77% per day') }}
+              @endif
             </h3>
             <div class="mosaic__description">
-              <p>{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</p>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened &quot;trust management&quot; and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.' contenteditable="true">{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}</editor_block>
+                @else{{ __('Our main task is to promote our business using our author strategies and trading techniques by increasing our capital raised by the trust management system to increase our profitability. To do this, we have entered the market for online investments, opened "trust management" and began cooperation on mutually beneficial terms with private investors. Our goal is to increase company`s assets and also to make the world of cryptocurrency trading accessible to everyone, regardless of their status, income or country of residence.') }}@endif
+              </p>
             </div>
-            <a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
+            <a class="btn btn--yellow-line" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault();" @endif href="{{ route('customer.investors') }}">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Find out more" contenteditable="true">{{ __('Find out more') }}</editor_block>
+              @else{{ __('Find out more') }}@endif</a>
           </div>
         </div>
         <div class="mosaic__row mosaic__row--deposit reverse" style="margin-top:100px;">
           <div class="mosaic__text">
-            <h3 class="mosaic__title">{{ __('Minimum deposit') }} USD 10$
+            <h3 class="mosaic__title">
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Minimum deposit" contenteditable="true">{{ __('Minimum deposit') }}</editor_block>
+              @else
+                {{ __('Minimum deposit') }}
+              @endif
+              USD 10$
             </h3>
             <div class="mosaic__description">
-              <p>{{ __('The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income.') }}</p>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name="The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income." contenteditable="true">{{ __('The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income.') }}</editor_block>
+                @else
+                  {{ __('The most accessible investment method available for the general public today. Even without having millions in your wallet, you have the opportunity to get a decent passive income.') }}
+                @endif</p>
             </div>
-            <a class="btn btn--yellow-line" href="{{ route('customer.investors') }}">{{ __('Find out more') }}</a>
+            <a class="btn btn--yellow-line" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif href="{{ route('customer.investors') }}">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Find out more" contenteditable="true">{{ __('Find out more') }}</editor_block>
+              @else
+                {{ __('Find out more') }}
+              @endif</a>
           </div>
           <div class="mosaic__image">
             <div class="mosaic__image-block"><img src="/images/c2.png" alt="" style="margin-right:200px;">
@@ -157,20 +200,46 @@
             </svg>
             <div class="calculate-block__top-content">
               <div class="calculate-block__bonus">
-                <p style="margin-left:30px;margin-top:-15px;"><strong>+0.51%</strong> {{ __('to daily earnings') }}</p>
+                <p style="margin-left:30px;margin-top:-15px;">
+                  <strong>+0.51%</strong>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name="to daily earnings" contenteditable="true">{{ __('to daily earnings') }}</editor_block>
+                  @else
+                    {{ __('to daily earnings') }}
+                  @endif</p>
               </div>
               <div class="calculate-block__content">
                 <h3 class="calculate-block__title">
-                  <span>{{ __('Calculate your profit') }} </span>{{ __('and get up to 38.4% of income per month') }}
+                  <span>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name="Calculate your profit" contenteditable="true">{{ __('Calculate your profit') }}</editor_block>
+                    @else
+                      {{ __('Calculate your profit') }}
+                    @endif </span>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name="and get up to 38.4% of income per month" contenteditable="true">{{ __('and get up to 38.4% of income per month') }}</editor_block>
+                  @else
+                    {{ __('and get up to 38.4% of income per month') }}
+                  @endif
                 </h3>
-                <p>{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name="Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him." contenteditable="true">{{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}</editor_block>
+                  @else
+                    {{ __('Three ready-to-use investment proposals and the configurator of investment packages were developed for achieving these goals. Thanks to it every investor can create such an investment package, which is more appropriate for him.') }}
+                  @endif</p>
               </div>
               <div class="calculate-block__right">
                 <div class="calc">
                   <div class="calc__top">
                     <div class="calc__row">
-                      <label class="label">{{ __('Choose a period') }}
-                        <span> ({{ __('days') }})</span>
+                      <label class="label">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name="Choose a period" contenteditable="true">{{ __('Choose a period') }}</editor_block>
+                        @else
+                          {{ __('Choose a period') }}
+                        @endif
+                        <span>@if(canEditLang() && checkRequestOnEdit())
+                            (
+                            <editor_block data-name="days" contenteditable="true">{{ __('days') }}</editor_block>)
+                          @else
+                            ({{ __('days') }})
+                          @endif</span>
                       </label>
                       <div class="js-slider">
                       </div>
@@ -202,7 +271,11 @@
                   <div class="calc__bottom">
                     <ul class="calc-results">
                       <li class="calc-results__item">
-                        <p class="calc-results__title">{{ __('Profit') }}
+                        <p class="calc-results__title">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name="Profit" contenteditable="true">{{ __('Profit') }}</editor_block>
+                          @else
+                            {{ __('Profit') }}
+                          @endif
                         </p>
                       </li>
                       <li class="calc-results__item">
@@ -210,7 +283,11 @@
                         </p>
                         <p class="calc-results__currency">BTC
                         </p>
-                        <p class="calc-results__description day">{{ __('per day') }}
+                        <p class="calc-results__description day">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name="per day" contenteditable="true">{{ __('per day') }}</editor_block>
+                          @else
+                            {{ __('per day') }}
+                          @endif
                         </p>
                       </li>
                       <li class="calc-results__item">
@@ -218,7 +295,11 @@
                         </p>
                         <p class="calc-results__currency">BTC
                         </p>
-                        <p class="calc-results__description alltime">{{ __('for the entire period') }}
+                        <p class="calc-results__description alltime">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name="for the entire period" contenteditable="true">{{ __('for the entire period') }}</editor_block>
+                          @else
+                            {{ __('for the entire period') }}
+                          @endif
                         </p>
                       </li>
                     </ul>
@@ -231,8 +312,16 @@
             <div class="calculate-block__bottom-content">
               <div class="calculate-block__bottom-text">
                 <p>
-                  <strong>{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }}
-                    <br>{{ __('1.28% - your new interest rate!') }}</strong></p>
+                  <strong>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name="If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%." contenteditable="true">{{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }}</editor_block>
+                    @else
+                      {{ __('If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.51%.') }}
+                    @endif
+                    <br>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name="1.28% - your new interest rate!" contenteditable="true">{{ __('1.28% - your new interest rate!') }}</editor_block>
+                    @else
+                      {{ __('1.28% - your new interest rate!') }}
+                    @endif</strong></p>
               </div>
             </div>
             <svg viewBox="0 0 1151 50">
@@ -244,13 +333,25 @@
     </section>
     <section class="guarantees">
       <div class="container">
-        <h3 class="guarantees__title">{{ __('We provide guarantees') }}
-          <span> {{ __('It’s safe with us') }}</span>
+        <h3 class="guarantees__title">@if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name="We provide guarantees" contenteditable="true">{{ __('We provide guarantees') }}</editor_block>
+          @else
+            {{ __('We provide guarantees') }}
+          @endif
+          <span> @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name="It’s safe with us" contenteditable="true">{{ __('It’s safe with us') }}</editor_block>
+            @else
+              {{ __('It’s safe with us') }}
+            @endif</span>
         </h3>
         <div style="clear:both; margin-top:50px;"></div>
         <div class="guarantees__row" style="width:40%; margin-right: 60px; float:left; padding:0;">
           <div style="line-height: 140%;">
-            <p style="margin-bottom: 30px;">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</p>
+            <p style="margin-bottom: 30px;">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.' contenteditable="true">{{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}</editor_block>
+              @else
+                {{ __('Luminex is an online ecosystem that provides financial services to businesses and individuals around the globe. We have selected the best high-yield tools for our ecosystem and made them as accessible as possible. A wide range of services for different customer needs.') }}
+              @endif</p>
             {{--                        <div style="text-align: center;">--}}
             {{--                            <a class="btn btn--white-line" href="{{ route('register') }}">{{ __('Start earning!') }}</a>--}}
             {{--                        </div>--}}
@@ -262,7 +363,11 @@
           <tr>
             <td>
               <div style="width:33%; min-width:350px; float:left; height:380px; text-align: left;">
-                <h3 style="font-weight:bold; font-size:19px;">{{ __('Certificate of Registration of a Legal Entity') }}</h3>
+                <h3 style="font-weight:bold; font-size:19px;">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Certificate of Registration of a Legal Entity' contenteditable="true">{{ __('Certificate of Registration of a Legal Entity') }}</editor_block>
+                  @else
+                    {{ __('Certificate of Registration of a Legal Entity') }}
+                  @endif</h3>
                 <div style="margin-top:30px;">
                   <div class="guarantees__list-wrap" style="width:100%;">
                     <ul class="guarantees__list">
@@ -277,7 +382,11 @@
                 </div>
               </div>
               <div style="width:33%; min-width:350px; float:left; height:280px; text-align: center;">
-                <h3 style="font-weight:bold; font-size:19px;">{{ __('Investment License') }}</h3>
+                <h3 style="font-weight:bold; font-size:19px;">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Investment License' contenteditable="true">{{ __('Investment License') }}</editor_block>
+                  @else
+                    {{ __('Investment License') }}
+                  @endif</h3>
                 <div style="margin-top:30px;">
                   <div class="guarantees__list-wrap" style="width:100%;">
                     <ul class="guarantees__list" style="margin-left: 50px;">
@@ -292,7 +401,11 @@
                 </div>
               </div>
               <div style="width:33%; min-width:350px; float:left; height:380px; text-align: right;">
-                <h3 style="font-weight:bold; font-size:19px;text-align:right;">{{ __('License to Do Business on the Internet') }}</h3>
+                <h3 style="font-weight:bold; font-size:19px;text-align:right;">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='License to Do Business on the Internet' contenteditable="true">{{ __('License to Do Business on the Internet') }}</editor_block>
+                  @else
+                    {{ __('License to Do Business on the Internet') }}
+                  @endif</h3>
                 <div style="margin-top:30px;">
                   <div class="guarantees__list-wrap" style="width:100%; float:right;">
                     <ul class="guarantees__list" style="margin-left:60px;">
@@ -311,9 +424,17 @@
         </table>
         <div style="clear:both;"></div>
         <div class="guarantees__bottom">
-          <h4 class="guarantees__bottom-title">{{ __('Do you have any questions?') }}
+          <h4 class="guarantees__bottom-title">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Do you have any questions?' contenteditable="true">{{ __('Do you have any questions?') }}</editor_block>
+            @else
+              {{ __('Do you have any questions?') }}
+            @endif
           </h4>
-          <a class="btn btn--accent-line" href="{{ route('customer.contact') }}">{{ __('Contact us') }}</a>
+          <a class="btn btn--accent-line" href="{{ route('customer.contact') }}">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Contact us' contenteditable="true">{{ __('Contact us') }}</editor_block>
+            @else
+              {{ __('Contact us') }}
+            @endif</a>
         </div>
       </div>
     </section>
@@ -323,12 +444,28 @@
         </div>
         <div class="referral__content">
           <h3 class="referral__title">
-            <span>{{ __('4 level') }}</span> {{ __('referral program') }}
+            <span>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='4 level' contenteditable="true">{{ __('4 level') }}</editor_block>
+              @else
+                {{ __('4 level') }}
+              @endif</span> @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='referral program' contenteditable="true">{{ __('referral program') }}</editor_block>
+            @else
+              {{ __('referral program') }}
+            @endif
           </h3>
           <div class="referral__desription">
-            <p>{{ __('We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.') }}</p>
+            <p>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.' contenteditable="true">{{ __('We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.') }}</editor_block>
+              @else
+                {{ __('We have developed a whole loyalty system for the leaders of our company. Grow your business on the promotion of Luminex, attracting new customers. You can expect generous rewards, a dedicated dashboard for attracted customers.') }}
+              @endif</p>
           </div>
-          <a class="btn btn--yellow-line" href="{{ route('customer.partners') }}">{{ __('Find out more') }}</a>
+          <a class="btn btn--yellow-line" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif href="{{ route('customer.partners') }}">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Find out more' contenteditable="true">{{ __('Find out more') }}</editor_block>
+            @else
+              {{ __('Find out more') }}
+            @endif</a>
         </div>
       </div>
     </section>
@@ -338,7 +475,16 @@
           <li class="levels__item">
             <div class="levels__icon js-tilt"><img src="/img/levels/level1.png" alt="">
             </div>
-            <p class="levels__title">1<sup>{{ __('st') }}</sup> {{ __('level') }}
+            <p class="levels__title">1<sup>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='st' contenteditable="true">{{ __('st') }}</editor_block>
+                @else
+                  {{ __('st') }}
+                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
+              @else
+                {{ __('level') }}
+              @endif
             </p>
             <!-- <p class="levels__description">хз, что тут писать
             </p> -->
@@ -346,7 +492,15 @@
           <li class="levels__item">
             <div class="levels__icon js-tilt"><img src="/img/levels/level2.png" alt="">
             </div>
-            <p class="levels__title">2<sup>{{ __('nd') }}</sup> {{ __('level') }}
+            <p class="levels__title">2<sup>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='nd' contenteditable="true">{{ __('nd') }}</editor_block>
+                @else
+                  {{ __('nd') }}
+                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
+              @else
+                {{ __('level') }}
+              @endif
             </p>
             <!-- <p class="levels__description">хз, что тут писать
             </p> -->
@@ -354,7 +508,15 @@
           <li class="levels__item">
             <div class="levels__icon js-tilt"><img src="/img/levels/level3.png" alt="">
             </div>
-            <p class="levels__title">3<sup>{{ __('rd') }}</sup> {{ __('level') }}
+            <p class="levels__title">3<sup>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='rd' contenteditable="true">{{ __('rd') }}</editor_block>
+              @else
+                  {{ __('rd') }}
+              @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
+              @else
+                {{ __('level') }}
+              @endif
             </p>
             <!-- <p class="levels__description">хз, что тут писать
             </p> -->
@@ -362,7 +524,15 @@
           <li class="levels__item">
             <div class="levels__icon js-tilt"><img src="/img/levels/level4.png" alt="">
             </div>
-            <p class="levels__title">4<sup>{{ __('th') }}</sup> {{ __('level') }}
+            <p class="levels__title">4<sup>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='th' contenteditable="true">{{ __('th') }}</editor_block>
+              @else
+                  {{ __('th') }}
+              @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
+              @else
+                {{ __('level') }}
+              @endif
             </p>
             <!-- <p class="levels__description">хз, что тут писать
             </p> -->
@@ -426,25 +596,57 @@
     <section class="faq">
       <div class="container">
         <div class="faq__top">
-          <h3 class="faq__subtitle">{{ __('Got questions?') }}
+          <h3 class="faq__subtitle">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Got questions?' contenteditable="true">{{ __('Got questions?') }}</editor_block>
+            @else
+              {{ __('Got questions?') }}
+            @endif
           </h3>
           <h3 class="faq__title">
-            <span>{{ __('FAQ') }}</span>
+            <span>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='FAQ' contenteditable="true">{{ __('FAQ') }}</editor_block>
+              @else
+                {{ __('FAQ') }}
+              @endif</span>
           </h3>
         </div>
         <div class="faq__content">
           <div class="faq-block accordion">
-            <h3 class="faq-block__title">{{ __("What is Luminex?") }}
+            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='What is Luminex?' contenteditable="true">{{ __('What is Luminex?') }}</editor_block>
+              @else
+                {{ __("What is Luminex?") }}
+              @endif
             </h3>
-            <div class="faq-block__content">{{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
+            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities." contenteditable="true">{{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}</editor_block>
+              @else
+                {{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
+              @endif
             </div>
-            <h3 class="faq-block__title">{{ __("What is Luminex Technology?") }}
+            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="What is Luminex Technology?" contenteditable="true">{{ __("What is Luminex Technology?") }}</editor_block>
+              @else
+                {{ __("What is Luminex Technology?") }}
+              @endif
             </h3>
-            <div class="faq-block__content">{{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
+            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount." contenteditable="true">{{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}</editor_block>
+              @else
+                {{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
+              @endif
             </div>
-            <h3 class="faq-block__title">{{ __("Is Luminex an officially registered company?") }}
+            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Is Luminex an officially registered company?" contenteditable="true">{{ __("Is Luminex an officially registered company?") }}</editor_block>
+              @else
+                {{ __("Is Luminex an officially registered company?") }}
+              @endif
             </h3>
-            <div class="faq-block__content">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
+            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name="Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us." contenteditable="true">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}</editor_block>
+              @else
+                {{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
+              @endif
             </div>
           </div>
         </div>
@@ -463,107 +665,3 @@
     </script>
   @endif
 @endpush
-@if(request()->get('edit') && request()->get('edit') == 'true')
-  @push('scripts')
-    <script>
-      $(document).ready(function () {
-        class Request {
-          constructor() {
-            this.protocol = '';
-            this.domain = '';
-            this.params = {};
-            
-          }
-          
-          postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
-            callbackSuccess = callbackSuccess || function () {
-            };
-            callbackFail = callbackFail || function () {
-            };
-            callbackBefore = callbackBefore || function () {
-            };
-            callbackAfter = callbackAfter || function () {
-            };
-            method = method || 'POST';
-            data = data || {};
-            url = url || '';
-            
-            callbackBefore({}, data);
-            
-            $.ajax({
-              type: method,
-              url: url,
-              data: data,
-              headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function (data) {
-                if (data.error) {
-                  callbackFail({}, data);
-                  callbackAfter({}, data);
-                  return;
-                }
-                callbackSuccess(data.data, data);
-                callbackAfter({}, data);
-              },
-              error: function (data) {
-                callbackFail({}, data);
-                callbackAfter({}, data);
-              }
-            });
-          }
-          
-          queryAjax(url, data, success, fail, before, after) {
-            data = data || {};
-            this.postJsonRequestAjax(
-                url,
-                'POST',
-                this.objectMerge(data, this.params),
-                success,
-                fail,
-                before,
-                after
-            );
-          }
-          
-          objectMerge(a, b) {
-            return Object.assign(a, b);
-          }
-          
-          messageSuccess(mes, data) {
-            return {
-              error: false,
-              message: mes,
-              data: data || {}
-            };
-          }
-          
-          messageError(mes, data) {
-            return {
-              error: true,
-              message: mes,
-              data: data || {}
-            };
-          }
-        }
-        
-        $('editor_block')
-        .prop('contentEditable', true)
-        .focusin(function () {
-          let $this = $(this);
-        })
-        .focusout(function (e) {
-          let $this = $(this);
-          
-          (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
-            name: $this.attr('data-name'),
-            text: $this.text()
-          }, function (data, dataRaw) {
-          
-          });
-        });
-        
-      });
-    </script>
-  @endpush
-@endif
