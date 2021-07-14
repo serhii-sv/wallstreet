@@ -1,4 +1,4 @@
-@if(canEditLang() && request()->get('edit') == 'true')
+@if(canEditLang() && checkRequestOnEdit())
   <div class="admin-edit-lang">
     <a href="{{ url()->current() }}">Перейти в обычный режим</a>
     <a href="{{ route('admin') }}" target="_blank">Перейти в админку</a>

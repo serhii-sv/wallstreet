@@ -316,4 +316,9 @@ function convertToCurrency(\App\Models\Currency $fromCurrency, \App\Models\Curre
     return amountWithPrecision($rate*$amount, $toCurrency);
 }
 
-
+function checkRequestOnEdit() : bool {
+    if (request()->get('edit') && request()->get('edit') == 'true'){
+        return true;
+    }
+    return false;
+}
