@@ -315,3 +315,5 @@ function convertToCurrency(\App\Models\Currency $fromCurrency, \App\Models\Curre
 
     return amountWithPrecision($rate*$amount, $toCurrency);
 }
+
+
