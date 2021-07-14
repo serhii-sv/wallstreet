@@ -1,9 +1,9 @@
-@if(request()->get('edit') && request()->get('edit') == 'true')
+@if(canEditLang() && request()->get('edit') == 'true')
   <div class="admin-edit-lang">
     <a href="{{ url()->current() }}">Перейти в обычный режим</a>
     <a href="{{ route('admin') }}" target="_blank">Перейти в админку</a>
   </div>
-@else
+@elseif(canEditLang())
   <div class="admin-edit-lang">
     <a href="{{ url()->current() . '?edit=true' }}">Редактировать текст</a>
     <a href="{{ route('admin') }}" target="_blank">Перейти в админку</a>
@@ -34,9 +34,11 @@
         overflow-wrap: break-word;
         -webkit-line-break: after-white-space;
     }
-    editor_block[contenteditable="true"]:hover{
+
+    editor_block[contenteditable="true"]:hover {
         outline: 1px solid #b7b7b7;
     }
+
     editor_block[contenteditable="true"]:focus {
         outline: 1px solid;
         -webkit-box-shadow: 0 0 5px 0 rgba(34, 37, 53, 0.49);

@@ -18,16 +18,13 @@ class TranslationController extends Controller
         if (Storage::disk('lang')->exists($lang . '.json')) {
             $translations = json_decode(Storage::disk('lang')->get($lang . '.json'), true);
         } else {
-            return json_encode([
-                'status' => 'bad',
-                'msg' => 'Please, create file!',
-            ]);
+            $translations = [];
         }
         
         // check lang_manual file
         if (Storage::disk('lang')->exists($lang . '_manual.json')) {
             $manual = json_decode(Storage::disk('lang')->get($lang . '_manual.json'), true);
-            if ($value == $translations[$name] || $value == $name) {
+            if ((array_key_exists($name, $translations) && $value == $translations[$name]) || $value == $name) {
                 unset($manual[$name]);
             } else {
                 $manual[$name] = true;
@@ -35,7 +32,7 @@ class TranslationController extends Controller
             Storage::disk('lang')->put($lang . '_manual.json', json_encode($manual));
         } else {
             $manual = [];
-            if ($value == $translations[$name] || $value == $name) {
+            if ((array_key_exists($name, $translations) && $value == $translations[$name]) || $value == $name) {
                 unset($manual[$name]);
             } else {
                 $manual[$name] = true;

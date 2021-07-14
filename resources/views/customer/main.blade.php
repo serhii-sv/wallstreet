@@ -7,13 +7,13 @@
       <div class="container">
         <div class="intro__content">
           <h1 class="intro__title">
-            @if(request()->get('edit') && request()->get('edit') == 'true')
+            @if(canEditLang() && request()->get('edit') == 'true')
               <editor_block data-name="Luminex" contenteditable="true">{{ __('Luminex') }}</editor_block>
             @else
               {{ __('Luminex') }}
             @endif
             <span>
-              @if(request()->get('edit') && request()->get('edit') == 'true')
+    @if(canEditLang() && request()->get('edit') == 'true')
                 <editor_block data-name="for Finance" contenteditable="true">{{ __('for Finance') }}</editor_block>
               @else
                 {{ __('for Finance')  }}
@@ -21,7 +21,7 @@
             </span>
           </h1>
           <p class="intro__description">
-            @if(request()->get('edit') && request()->get('edit') == 'true')
+            @if(canEditLang() && request()->get('edit') == 'true')
               <editor_block data-name="It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system." contenteditable="true">
                 {{ __('It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system.') }}
               </editor_block>
@@ -29,7 +29,7 @@
               {{ __('It is an online ecosystem based on financial services around the world. We have collected the best high-yield instruments in a single system.') }}
             @endif
           </p>
-          <a class="btn intro__btn" href="{{ route('register') }}"  @if(request()->get('edit') && request()->get('edit') == 'true') onclick="event.preventDefault()" @endif> @if(request()->get('edit') && request()->get('edit') == 'true')
+          <a class="btn intro__btn" href="{{ route('register') }}" @if(canEditLang() && request()->get('edit') == 'true') onclick="event.preventDefault()" @endif> @if(canEditLang() && request()->get('edit') == 'true')
               <editor_block data-name="Start now!" contenteditable="true">{{ __('Start now!') }}</editor_block>
             @else
               {{ __('Start now!') }}
