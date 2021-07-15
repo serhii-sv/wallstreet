@@ -51,6 +51,7 @@
                                     width: 100%;
                                 }
                             </style>
+                            @dump($langs)
                             @foreach(getLanguagesArray() as $language)
                                 <tr>
                                     <td>{{ $language['name'] }}</td>

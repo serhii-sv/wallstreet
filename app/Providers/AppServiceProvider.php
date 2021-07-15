@@ -73,6 +73,7 @@ use App\Observers\UserTasks\UserTaskActionsObserver;
 use App\Observers\UserTasks\UserTaskPropositionsObserver;
 use App\Observers\UserTasks\UserTasksObserver;
 use App\Observers\WalletObserver;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
@@ -86,6 +87,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::directive('dump', function ($expression) {
+            return "<?php dump({$expression}); ?>";
+        });
+
         Schema::defaultStringLength(191);
 
         Horizon::auth(function ($request) {
