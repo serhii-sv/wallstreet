@@ -55,7 +55,7 @@ class DepositsController extends Controller
         try {
             Deposit::addDeposit($request->all());
         } catch (\Exception $exception) {
-            return redirect()->route('profile.deposits')->with('error', $exception->getMessage());
+            return redirect()->back()->with('error', $exception->getMessage());
         }
         return redirect()->route('profile.deposits')->with('success', __('Deposit has been created'));
     }
