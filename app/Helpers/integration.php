@@ -140,6 +140,7 @@ function getTotalDeposited($useSymbols = false)
             $invested = \App\Models\Transaction::where('currency_id', $currency['id'])
                 ->where('type_id', $type->id)
                 ->where('approved', true)
+                ->where('user_id', auth()->user()->id)
                 ->sum('amount');
             $arrayKey = true === $useSymbols ? $currency['symbol'] : $currency['code'];
 
