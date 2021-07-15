@@ -33,18 +33,22 @@
 
                     <form class="form-horizontal" method="POST" action="{{ route('admin.tpl_texts.store') }}">
                         {{ csrf_field() }}
-
+                      <div class="form-group">
+                        <label class="col-md-4 control-label">{{ __("Key") }}</label>
+                        <div class="col-md-6">
+                          <input type="text" name="key" class="form-control">
+                        </div>
+                      </div>
                         @foreach(getLanguagesArray() as $lang)
                             <div class="form-group">
                                 <label for="text" class="col-md-4 control-label">{{ __($lang['name']) }}</label>
                                 <div class="col-md-6">
                                     <input id="text" type="text" class="form-control" name="text_{{ $lang['code'] }}"
                                            value="">
-                                    <input type="hidden" name="lang_id_{{ $lang['code'] }}" value="{{ $lang['id'] }}">
                                 </div>
                             </div>
                         @endforeach
-                        <div class="form-group">
+                      {{--  <div class="form-group">
                             <label class="col-md-4 control-label" for="category">{{ __('Category') }}</label>
                             <div class="col-md-6">
                                 <select id="category" name="category" class="form-control">
@@ -54,7 +58,7 @@
                                 </select>
                                 <span class="help-block"></span>
                             </div>
-                        </div>
+                        </div>--}}
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
