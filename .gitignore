@@ -13,7 +13,6 @@ yarn-error.log
 /nbproject/*
 clear.bat
 mytodo.txt
-/resources/lang/en.json
-/resources/lang/ru.json
 payeer*.txt
 *.licence
+/resources/lang/*.json
