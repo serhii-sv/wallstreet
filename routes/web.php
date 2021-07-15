@@ -8,7 +8,9 @@ Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@ind
 
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
-
+    
+    Route::post('/ajax/change-lang', 'Ajax\TranslationController@changeLang')->name('ajax.change.lang');
+    
     // oAuth
 //    Route::get('login/callback/vk/{telegramUserId}', 'controller')->name('vk.redirect_url');
 
@@ -96,9 +98,12 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/deposits_datatable/{active?}', 'Profile\DepositsController@dataTable')->name('profile.deposits.dataTable');
         });
         Route::group(['middleware' => ['tfa']], function () {
+            
             Route::prefix('wallstreet')->namespace('Admin')->group(function () {
                 // Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
+    
+           
                     Route::get('/', 'DashboardController@index')->name('admin');
 
                     Route::get('/impersonate/{id}', 'ImpersonateController@impersonate')->name('admin.impersonate');

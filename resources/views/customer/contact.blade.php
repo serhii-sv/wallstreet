@@ -8,7 +8,15 @@
             </svg>
             @include('partials.breadcrumbs')
             <div class="container">
-                <h2 class="page-title page-title--line">{{ __('We are always glad to see you') }} <span>{{ __('Write to us') }}</span>
+                <h2 class="page-title page-title--line">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='We are always glad to see you' contenteditable="true">{{ __('We are always glad to see you') }}</editor_block>
+                  @else
+                    {{ __('We are always glad to see you') }}
+                  @endif <span>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Write to us' contenteditable="true">{{ __('Write to us') }}</editor_block>
+                    @else
+                      {{ __('Write to us') }}
+                    @endif</span>
                 </h2>
             </div>
             <section class="map">
@@ -20,9 +28,21 @@
                 <div class="container">
                     <div class="text-and-form__content">
                         <div class="text">
-                            <p><strong>{{ __("Data protection and client privacy are important to us.") }}</strong></p>
-                            <p>{{ __("All personal user data being transferred to the company is stored strictly in absolute confidentiality and protected by the Law on the protection of personal data. Without any exception, all data provided to the company can be used exclusively for the purpose of optimizing the investment process within the Luminex project, as well as to improve the quality of services provided.") }}</p>
-                            <p>{{ __("Reliable protection of service data from distributed denial of service attacks is ensured by the industry standard encryption solutions.") }}</p>
+                            <p><strong>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Data protection and client privacy are important to us.' contenteditable="true">{{ __('Data protection and client privacy are important to us.') }}</editor_block>
+                                @else
+                                  {{ __("Data protection and client privacy are important to us.") }}
+                                @endif</strong></p>
+                            <p>@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='All personal user data being transferred to the company is stored strictly in absolute confidentiality and protected by the Law on the protection of personal data. Without any exception, all data provided to the company can be used exclusively for the purpose of optimizing the investment process within the Luminex project, as well as to improve the quality of services provided.' contenteditable="true">{{ __('All personal user data being transferred to the company is stored strictly in absolute confidentiality and protected by the Law on the protection of personal data. Without any exception, all data provided to the company can be used exclusively for the purpose of optimizing the investment process within the Luminex project, as well as to improve the quality of services provided.') }}</editor_block>
+                              @else
+                                {{ __("All personal user data being transferred to the company is stored strictly in absolute confidentiality and protected by the Law on the protection of personal data. Without any exception, all data provided to the company can be used exclusively for the purpose of optimizing the investment process within the Luminex project, as well as to improve the quality of services provided.") }}
+                              @endif</p>
+                            <p>@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Reliable protection of service data from distributed denial of service attacks is ensured by the industry standard encryption solutions.' contenteditable="true">{{ __('Reliable protection of service data from distributed denial of service attacks is ensured by the industry standard encryption solutions.') }}</editor_block>
+                              @else
+                                {{ __("Reliable protection of service data from distributed denial of service attacks is ensured by the industry standard encryption solutions.") }}
+                              @endif</p>
                         </div>
                     </div>
                     <div class="text-and-form__right">
@@ -30,7 +50,11 @@
                             <form method="POST" target="_top" action="{{ route('customer.support') }}">
                                 {{ csrf_field() }}
 
-                                <h4 class="form__title">{{ __('Contact us') }}
+                                <h4 class="form__title">@if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Contact us' contenteditable="true">{{ __('Contact us') }}</editor_block>
+                                  @else
+                                    {{ __('Contact us') }}
+                                  @endif
                                 </h4>
                                 <div class="input-row">
                                     @include('partials.inform')
@@ -40,7 +64,11 @@
                                     </label><input class="input-row__input" type="email" name="email"/>
                                 </div>
                                 <div class="input-row">
-                                    <label class="input-row__label">{{ __('Question') }}
+                                    <label class="input-row__label">@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Question' contenteditable="true">{{ __('Question') }}</editor_block>
+                                      @else
+                                        {{ __('Question') }}
+                                      @endif
                                     </label><textarea class="input-row__textarea" name="text"></textarea>
                                 </div>
                                 <div class="input-row">
@@ -53,7 +81,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form__bottom"><input type="submit" value="{{ __('Contact us') }}" class="btn btn superFormButton">
+                                <div class="form__bottom">
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block class="btn btn superFormButton" data-name='Registration' contenteditable="true">{{ __('Contact us') }}</editor_block>
+                                  @else
+                                    <input type="submit" value="{{ __('Contact us') }}" class="btn btn superFormButton">
+                                  @endif
                                 </div>
                             </form>
                         </div>

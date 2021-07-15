@@ -8,55 +8,141 @@
             </svg>
             @include('partials.breadcrumbs')
             <div class="container">
-                <h2 class="page-title">{{ __('We have the answers to your questions') }}<span>FAQ</span>
+                <h2 class="page-title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='We have the answers to your questions' contenteditable="true">{{ __('We have the answers to your questions') }}</editor_block>
+                  @else
+                    {{ __('We have the answers to your questions') }}
+                  @endif<span>FAQ</span>
                 </h2>
             </div>
             <section class="faq faq--offPadding">
                 <div class="container">
                     <div class="faq__content">
                         <div class="faq-block accordion">
-                            <h3 class="faq-block__title">{{ __("What is Luminex?") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='What is Luminex?' contenteditable="true">{{ __('What is Luminex?') }}</editor_block>
+                              @else
+                                {{ __("What is Luminex?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.' contenteditable="true">{{ __('This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.') }}</editor_block>
+                              @else
+                                {{ __("This is an innovative company that opens opportunities to attract the funds of investors with various financial capabilities.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("What is Luminex Technology?") }}
+                            <h3 class="faq-block__title">
+                              @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='What is Luminex Technology?' contenteditable="true">{{ __('What is Luminex Technology?') }}</editor_block>
+                              @else
+                                {{ __("What is Luminex Technology?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.' contenteditable="true">{{ __('Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.') }}</editor_block>
+                              @else
+                                {{ __("Luminex Technology is the technology developed by the specialists of our company that allows us to quickly and efficiently use the funds of a large number of investors at once to profit on their total amount.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("Is Luminex an officially registered company?") }}
+                            <h3 class="faq-block__title">
+                              @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Is Luminex an officially registered company?' contenteditable="true">{{ __('Is Luminex an officially registered company?') }}</editor_block>
+                              @else
+                                {{ __("Is Luminex an officially registered company?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name="Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us." contenteditable="true">{{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}</editor_block>
+                              @else
+                                {{ __("Our company is officially registered, and works legally. All documents are presented on the company's website. By starting your work with this service, you enter into an agreement with us.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("Can I lose my money or get no profits?") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Can I lose my money or get no profits?' contenteditable="true">{{ __('Can I lose my money or get no profits?') }}</editor_block>
+                              @else
+                                {{ __("Can I lose my money or get no profits?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("Of course not. Our project is not a win-win lottery. In the real business world, there is always a certain risk involved, but the point is that this risk is not only justified, but reduced to None for our investors. The company undertakes all the risks. Payouts are made exactly according to the presented investment plans.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Of course not. Our project is not a win-win lottery. In the real business world, there is always a certain risk involved, but the point is that this risk is not only justified, but reduced to None for our investors. The company undertakes all the risks. Payouts are made exactly according to the presented investment plans.' contenteditable="true">{{ __('Of course not. Our project is not a win-win lottery. In the real business world, there is always a certain risk involved, but the point is that this risk is not only justified, but reduced to None for our investors. The company undertakes all the risks. Payouts are made exactly according to the presented investment plans.') }}</editor_block>
+                              @else
+                                {{ __("Of course not. Our project is not a win-win lottery. In the real business world, there is always a certain risk involved, but the point is that this risk is not only justified, but reduced to None for our investors. The company undertakes all the risks. Payouts are made exactly according to the presented investment plans.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("How do I replenish the account?") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='How do I replenish the account?' contenteditable="true">{{ __('How do I replenish the account?') }}</editor_block>
+                              @else
+                                {{ __("How do I replenish the account?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("You can do it via your personal account using the following payment systems: Bitcoin, Etherium, Perfect Money, Payeer.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='You can do it via your personal account using the following payment systems: Bitcoin, Etherium, Perfect Money, Payeer.' contenteditable="true">{{ __('You can do it via your personal account using the following payment systems: Bitcoin, Etherium, Perfect Money, Payeer.') }}</editor_block>
+                              @else
+                                {{ __("You can do it via your personal account using the following payment systems: Bitcoin, Etherium, Perfect Money, Payeer.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("Am I allowed to open several deposits?") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Am I allowed to open several deposits?' contenteditable="true">{{ __('Am I allowed to open several deposits?') }}</editor_block>
+                              @else
+                                {{ __("Am I allowed to open several deposits?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("Yes, you are. When adding funds to your deposit, the amount in your account will automatically be updated. If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Yes, you are. When adding funds to your deposit, the amount in your account will automatically be updated. If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.' contenteditable="true">{{ __('Yes, you are. When adding funds to your deposit, the amount in your account will automatically be updated. If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.') }}</editor_block>
+                              @else
+                                {{ __("Yes, you are. When adding funds to your deposit, the amount in your account will automatically be updated. If your deposit amount reaches over $1000, you will receive a bonus in the amount of 0.2%.") }}
+                              @endif
                             </div>
-                            <h3 class="faq-block__title">{{ __("I couldn't find an answer to my question") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name="I couldn't find an answer to my question" contenteditable="true">{{ __("I couldn't find an answer to my question") }}</editor_block>
+                              @else
+                                {{ __("I couldn't find an answer to my question") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("If you did not find the answer, please contact our support team. Use the contact information provided on our website.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='If you did not find the answer, please contact our support team. Use the contact information provided on our website.' contenteditable="true">{{ __('If you did not find the answer, please contact our support team. Use the contact information provided on our website.') }}</editor_block>
+                              @else
+                                {{ __("If you did not find the answer, please contact our support team. Use the contact information provided on our website.") }}
+                              @endif
                             </div>
 
-                            <h3 class="faq-block__title">{{ __("HOW CAN I MAKE A DEPOSIT") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='HOW CAN I MAKE A DEPOSIT' contenteditable="true">{{ __('HOW CAN I MAKE A DEPOSIT') }}</editor_block>
+                              @else
+                                {{ __("HOW CAN I MAKE A DEPOSIT") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("If you want to make a deposit you need to click  the \"Balance\" and select the currency to funds the Balance, after Money available at Balance. Next click the \"Deposit\", enter the amount available at Balance.While depositing funds in USD the site of the payment system will be opened and you will need to make a payment. If you want to make a deposit in crypto currency the wallet will be generated for making a deposit in crypto currency.Please note that deposits in the crypto currency are credited after 3 confirmations in the network. We can’t influence the speed of confirmation. For each new deposit you need to generate a new wallet.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='If you want to make a deposit you need to click  the \"Balance\" and select the currency to funds the Balance, after Money available at Balance. Next click the "Deposit", enter the amount available at Balance.While depositing funds in USD the site of the payment system will be opened and you will need to make a payment. If you want to make a deposit in crypto currency the wallet will be generated for making a deposit in crypto currency.Please note that deposits in the crypto currency are credited after 3 confirmations in the network. We can’t influence the speed of confirmation. For each new deposit you need to generate a new wallet.' contenteditable="true">{{ __('If you want to make a deposit you need to click  the \"Balance\" and select the currency to funds the Balance, after Money available at Balance. Next click the "Deposit", enter the amount available at Balance.While depositing funds in USD the site of the payment system will be opened and you will need to make a payment. If you want to make a deposit in crypto currency the wallet will be generated for making a deposit in crypto currency.Please note that deposits in the crypto currency are credited after 3 confirmations in the network. We can’t influence the speed of confirmation. For each new deposit you need to generate a new wallet.') }}</editor_block>
+                              @else
+                                {{ __('If you want to make a deposit you need to click  the \"Balance\" and select the currency to funds the Balance, after Money available at Balance. Next click the "Deposit", enter the amount available at Balance.While depositing funds in USD the site of the payment system will be opened and you will need to make a payment. If you want to make a deposit in crypto currency the wallet will be generated for making a deposit in crypto currency.Please note that deposits in the crypto currency are credited after 3 confirmations in the network. We can’t influence the speed of confirmation. For each new deposit you need to generate a new wallet.') }}
+                              @endif
                             </div>
 
-                            <h3 class="faq-block__title">{{ __("AFTER I MAKE A WITHDRAWAL REQUEST, WHEN WILL THE FUNDS BE AVAILABLE ON MY WALLET?") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='AFTER I MAKE A WITHDRAWAL REQUEST, WHEN WILL THE FUNDS BE AVAILABLE ON MY WALLET?' contenteditable="true">{{ __('AFTER I MAKE A WITHDRAWAL REQUEST, WHEN WILL THE FUNDS BE AVAILABLE ON MY WALLET?') }}</editor_block>
+                              @else
+                                {{ __("AFTER I MAKE A WITHDRAWAL REQUEST, WHEN WILL THE FUNDS BE AVAILABLE ON MY WALLET?") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("As a rule, we are trying to process withdrawals as fast as possible. Your funds will be available in a few hours. Maximum processing time is 24 hours.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='As a rule, we are trying to process withdrawals as fast as possible. Your funds will be available in a few hours. Maximum processing time is 24 hours.' contenteditable="true">{{ __('As a rule, we are trying to process withdrawals as fast as possible. Your funds will be available in a few hours. Maximum processing time is 24 hours.') }}</editor_block>
+                              @else
+                                {{ __("As a rule, we are trying to process withdrawals as fast as possible. Your funds will be available in a few hours. Maximum processing time is 24 hours.") }}
+                              @endif
                             </div>
 
-                            <h3 class="faq-block__title">{{ __("BE ONE OF OUR REPRESENTATIVES") }}
+                            <h3 class="faq-block__title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='BE ONE OF OUR REPRESENTATIVES' contenteditable="true">{{ __('BE ONE OF OUR REPRESENTATIVES') }}</editor_block>
+                              @else
+                                {{ __("BE ONE OF OUR REPRESENTATIVES") }}
+                              @endif
                             </h3>
-                            <div class="faq-block__content">{{ __("You can become an official representative and awarded with a higher reward, get in touch with support center 24 hours a day, attract more investors from your region by being listed in our partners page and many more advantages which can be discussed individually with administrative department. Your active deposit amount should be not less than $500, you will receive representative status and  5 levels rewards will be added to your standard referral fee.") }}
+                            <div class="faq-block__content">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='You can become an official representative and awarded with a higher reward, get in touch with support center 24 hours a day, attract more investors from your region by being listed in our partners page and many more advantages which can be discussed individually with administrative department. Your active deposit amount should be not less than $500, you will receive representative status and  5 levels rewards will be added to your standard referral fee.' contenteditable="true">{{ __('You can become an official representative and awarded with a higher reward, get in touch with support center 24 hours a day, attract more investors from your region by being listed in our partners page and many more advantages which can be discussed individually with administrative department. Your active deposit amount should be not less than $500, you will receive representative status and  5 levels rewards will be added to your standard referral fee.') }}</editor_block>
+                              @else
+                                {{ __("You can become an official representative and awarded with a higher reward, get in touch with support center 24 hours a day, attract more investors from your region by being listed in our partners page and many more advantages which can be discussed individually with administrative department. Your active deposit amount should be not less than $500, you will receive representative status and  5 levels rewards will be added to your standard referral fee.") }}
+                              @endif
                             </div>
                         </div>
                     </div>
