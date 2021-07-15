@@ -52,7 +52,11 @@ class DepositsController extends Controller
      */
     public function store(RequestCreateDeposit $request)
     {
-        Deposit::addDeposit($request->all());
+        try {
+            Deposit::addDeposit($request->all());
+        } catch (\Exception $exception) {
+            return redirect()->route('profile.deposits')->with('error', $exception->getMessage());
+        }
         return redirect()->route('profile.deposits')->with('success', __('Deposit has been created'));
     }
 
