@@ -139,9 +139,13 @@ function getTotalDeposited($useSymbols = false)
         foreach ($currencies as $currency) {
             $invested = \App\Models\Transaction::where('currency_id', $currency['id'])
                 ->where('type_id', $type->id)
-                ->where('approved', true)
-                ->where('user_id', auth()->user()->id)
-                ->sum('amount');
+                ->where('approved', true);
+
+            if (auth()->check()) {
+                $invested = $invested->where('user_id', auth()->user()->id);
+            }
+
+            $invested = $invested->sum('amount');
             $arrayKey = true === $useSymbols ? $currency['symbol'] : $currency['code'];
 
             if (!isset($totalDeposited[$arrayKey])) {
