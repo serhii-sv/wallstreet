@@ -122,25 +122,14 @@
           }
         },
         {"data": "closing_at"},
-        // {
-        //   "data": "weblink",
-        //   "render": function(data, type, row, meta){
-        //     if(type === 'display'){
-        //       data = '<a href="' + data + '">' + data + '</a>';
-        //     }
-        //
-        //     return data;
-        //   }
-        // }
-      ],
-      "columnDefs": [ {
-        "targets": 6,
-        "data": "weblink",
-        "render": function ( data, type, row, meta ) {
-          // console.log( row);
-          return '<a href=" {{ route('profile.deposits.reinvest') }}/'+ row['id'] +'">Реинвестировать</a>';
+        {
+          "data": "weblink",
+          "render": function ( data, type, row, meta ) {
+            console.log( data);
+            return '<a href="/deposits/'+ row['id'] +'/reinvest">Реинвестировать</a>';
+          }
         }
-      } ],
+      ],
     });
     //*initialize basic datatable
   </script>

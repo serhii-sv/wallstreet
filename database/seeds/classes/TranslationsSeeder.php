@@ -38,7 +38,7 @@ class TranslationsSeeder extends Seeder
     {
         $files = [
             'tpl_default_langs',
-            'tpl_translations',
+//            'tpl_translations',
         ];
 
         foreach ($files as $tableName) {
@@ -93,27 +93,27 @@ class TranslationsSeeder extends Seeder
                     }
                 }
 
-                if ($tableName == 'tpl_translations') {
-                    $checkExistsParent = \App\Models\TplDefaultLang::where('id', $row['default_id'])
-                        ->get()
-                        ->count();
-
-                    $checkExists = DB::table($tableName)
-                        ->where('default_id', $row['default_id'])
-                        ->get()
-                        ->count();
-
-                    if ($checkExistsParent > 0 && $checkExists == 0) {
-                        \App\Models\TplTranslation::create([
-                            'text'       => $row['text'],
-                            'lang_id'    => $row['lang_id'],
-                            'default_id' => $row['default_id'],
-                        ]);
-                        echo "Translation '".$row['text']."' in ".$tableName." table registered.\n";
-                    } else {
-                        echo "Translation '".$row['text']."' in ".$tableName." table already registered.\n";
-                    }
-                }
+//                if ($tableName == 'tpl_translations') {
+//                    $checkExistsParent = \App\Models\TplDefaultLang::where('id', $row['default_id'])
+//                        ->get()
+//                        ->count();
+//
+//                    $checkExists = DB::table($tableName)
+//                        ->where('default_id', $row['default_id'])
+//                        ->get()
+//                        ->count();
+//
+//                    if ($checkExistsParent > 0 && $checkExists == 0) {
+////                        \App\Models\TplTranslation::create([
+////                            'text'       => $row['text'],
+////                            'lang_id'    => $row['lang_id'],
+////                            'default_id' => $row['default_id'],
+////                        ]);
+//                        echo "Translation '".$row['text']."' in ".$tableName." table registered.\n";
+//                    } else {
+//                        echo "Translation '".$row['text']."' in ".$tableName." table already registered.\n";
+//                    }
+//                }
             }
         }
     }

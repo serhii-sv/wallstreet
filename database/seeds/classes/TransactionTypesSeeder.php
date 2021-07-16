@@ -28,6 +28,7 @@ class TransactionTypesSeeder extends Seeder
             'create_dep',
             'close_dep',
             'penalty',
+            'reinvest',
         ];
 
         foreach ($transactionTypes as $type) {
