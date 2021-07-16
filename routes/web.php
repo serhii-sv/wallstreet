@@ -154,6 +154,8 @@ Route::group(['middleware' => ['web']], function () {
                         'edit' => 'admin.langs.edit',
                         'update' => 'admin.langs.update',
                     ]]);
+                 //   Route::get('/langs-translate', 'LanguagesController@translate')->name('admin.langs.translate');
+                    
                     Route::get('/langs/destroy/{id}', 'LanguagesController@destroy')->name('admin.langs.destroy');
 
                     Route::resource('/translations', 'TplTranslationsController', ['names' => [

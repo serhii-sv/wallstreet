@@ -29,6 +29,7 @@
     "socialiteproviders/instagram": "^3.0",
     "spatie/laravel-backup": "^5.1",
     "spatie/laravel-permission": "^2.7",
+    "stichoza/google-translate-php": "^4.1",
     "torann/geoip": "^1.0",
     "twilio/sdk": "^5.16",
     "webpatser/laravel-countries": "dev-develop",
