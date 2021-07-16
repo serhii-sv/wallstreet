@@ -4,6 +4,8 @@
  * Any questions? Please, visit https://newgen.company
  */
 
+use Illuminate\Routing\Route;
+
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
 
 Route::group(['middleware' => ['web']], function () {
@@ -95,6 +97,8 @@ Route::group(['middleware' => ['web']], function () {
                 'create' => 'profile.deposits.create',
                 'store' => 'profile.deposits.store',
             ]]);
+            Route::get('/deposits/reinvest/{id}', 'Profile\DepositsController')->name('profile.deposits.reinvest');
+            
             Route::get('/deposits_datatable/{active?}', 'Profile\DepositsController@dataTable')->name('profile.deposits.dataTable');
         });
         Route::group(['middleware' => ['tfa']], function () {

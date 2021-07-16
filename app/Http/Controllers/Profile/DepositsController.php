@@ -73,13 +73,14 @@ class DepositsController extends Controller
             if (null !== $active) {
                 $deposits = $deposits->where('active', $active);
             }
-
+            
             return $deposits->with([
                 'transactions',
                 'user',
                 'rate',
                 'wallet',
-                'paymentSystem'
+                'paymentSystem',
+                'weblink'
             ])
                 ->get();
         });
@@ -98,4 +99,8 @@ class DepositsController extends Controller
     {
         //
     }
+    
+//    public function reinvest($id) {
+//        dd($id);
+//    }
 }
