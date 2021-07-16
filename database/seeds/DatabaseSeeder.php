@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             TransactionTypesSeeder::class,
             CountriesSeeder::class,
             SettingSeeder::class,
-            TranslationsSeeder::class,
             TelegramBotSeeder::class,
             TaskScopesSeeder::class,
         ]);
