@@ -32,35 +32,28 @@
                 <div class="tile-body">
 
                     <form class="form-horizontal" method="POST"
-                          action="{{ route('admin.tpl_texts.update', ['id' => $id]) }}">
+                          action="{{ route('admin.tpl_texts.update', ['key' => $key]) }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="put">
-
-                        @foreach($data as $item)
+                      
+                      <div class="form-group">
+                        <label for="text" class="col-md-4 control-label">{{ __("Key") }}</label>
+                        <div class="col-md-6">
+                          <input id="text" type="text" class="form-control"
+                              value="{{ $key }}" readonly>
+                        </div>
+                      </div>
+                        @foreach($languages as $item)
                             <div class="form-group">
-                                <label for="text" class="col-md-4 control-label">{{ $item['lang_name'] }}</label>
+                                <label for="text" class="col-md-4 control-label">{{ $item->code }}</label>
                                 <div class="col-md-6">
                                     <input id="text" type="text" class="form-control"
-                                           name="text_{{ $item['lang_code'] }}"
-                                           value="{{ $item['text'] }}">
-                                    <input type="hidden" name="lang_id_{{ $item['lang_code'] }}"
-                                           value="{{ $item['lang_id'] }}">
+                                           name="text_{{ $item->code }}"
+                                           value="{{ $data[$item->code] }}">
                                 </div>
                             </div>
                         @endforeach
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="category">{{ __('Category') }}</label>
-                            <div class="col-md-6">
-                                <select id="category" name="category" class="form-control">
-                                    <option value="admin"{{ $category == 'admin' ? ' selected' : '' }}>{{ __('Admin translation') }}</option>
-                                    <option value="customer"{{ $category == 'customer' ? ' selected' : '' }}>{{ __('Customer translation') }}</option>
-                                    <option value="demo"{{ $category == 'demo' ? ' selected' : '' }}>{{ __('Demo translation') }}</option>
-                                </select>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-
+                      
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

@@ -35,10 +35,10 @@ class Language extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tplDefault()
+ /*   public function tplDefault()
     {
         return $this->hasMany(TplDefaultLang::class, 'lang_id');
-    }
+    }*/
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
