@@ -18,21 +18,21 @@
                 <div class="tile-header dvd dvd-btm">
                     <h1 class="custom-font">{{ __('Template translations') }}</h1>
                     <ul class="controls">
-                        <li>
-                            <a role="button"
-                               href="{{ route('admin.tpl_texts.index',['category'=>'customer']) }}">{{ __('customer texts') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a role="button"
-                               href="{{ route('admin.tpl_texts.index',['category'=>'admin']) }}">{{ __('admin texts') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a role="button"
-                               href="{{ route('admin.tpl_texts.index',['category'=>'demo']) }}">{{ __('demo texts') }}
-                            </a>
-                        </li>
+{{--                        <li>--}}
+{{--                            <a role="button"--}}
+{{--                               href="{{ route('admin.tpl_texts.index',['category'=>'customer']) }}">{{ __('customer texts') }}--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a role="button"--}}
+{{--                               href="{{ route('admin.tpl_texts.index',['category'=>'admin']) }}">{{ __('admin texts') }}--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a role="button"--}}
+{{--                               href="{{ route('admin.tpl_texts.index',['category'=>'demo']) }}">{{ __('demo texts') }}--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                         <li>
                             <a role="button" href="{{ route('admin.tpl_texts.create') }}"
                                style="font-weight: bold;">[{{ __('add new text') }}]
@@ -60,23 +60,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($texts as $text)
+                            @foreach($texts as $key => $value)
                                 <tr>
-                                    <td>{{ $text->text }}</td>
-                                    <td style="font-weight: bold;">{{ $text->lang->name }}</td>
+                                    <td>{{ $key }}</td>
+                                    <td style="font-weight: bold;">{{ $lang }}</td>
                                     <td>
                                         <a type="button" class="btn btn-primary btn-xs" style="display:block;"
-                                           href="{{ route('admin.tpl_texts.edit', ['id' => $text->id]) }}">{{ __('edit') }}</a>
+                                           href="{{ route('admin.tpl_texts.edit', ['key' => $key]) }}">{{ __('edit') }}</a>
                                         <a type="button" class="btn btn-warning btn-xs"
                                            style="display: block; margin-top:5px;" href="#" onclick="
                                                 var result = confirm('{{ __('Please confirm deletion') }}');
                                                 if(result) {
                                                 event.preventDefault();
-                                                document.getElementById('delete-{{ $text->id }}').submit()
+                                                document.getElementById('delete-{{ $key }}').submit()
                                                 }">{{ __('delete') }}</a>
-                                        <form action="{{ route('admin.tpl_texts.destroy', ['id' => $text->id]) }}"
+                                        <form action="{{ route('admin.tpl_texts.destroy', ['key' => $key]) }}"
                                               method="POST"
-                                              id="delete-{{ $text->id }}" style="display: none;">
+                                              id="delete-{{ $key }}" style="display: none;">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                         </form>
@@ -102,7 +102,7 @@
     <script>
         //initialize basic datatable
         var table = $('#translations-table').DataTable({
-            "order": [[0, "desc"]],
+            "order": [[0, "asc"]],
         });
 
         $('#translations-table tbody').on('click', 'tr', function () {

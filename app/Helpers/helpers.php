@@ -314,4 +314,12 @@ function convertToCurrency(\App\Models\Currency $fromCurrency, \App\Models\Curre
     $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
 
     return amountWithPrecision($rate*$amount, $toCurrency);
+
+}
+
+function checkRequestOnEdit() : bool {
+    if (request()->get('edit') && request()->get('edit') == 'true'){
+        return true;
+    }
+    return false;
 }

@@ -10,6 +10,7 @@
         <img src="{{ asset('images/logo/logo.png') }}" alt="logo">
       </a>
     </div>
+<<<<<<< HEAD
     <ul class="dashboard-menu">
       <li>
         <a href="{{ route('profile.profile') }}" @if(Route::currentRouteName() == 'profile.profile') class="active" @endif><i class="flaticon-man"></i>
@@ -52,3 +53,8 @@
     </ul>
   </div>
 </div>
+=======
+</header>
+
+<a href="https://t.me/luminex_asia" class="btn_tlg" style="left:inherit; right:2%; bottom:2%;">TELEGRAM SUPPORT</a>
+>>>>>>> translation

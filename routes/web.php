@@ -13,7 +13,10 @@ Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@ind
 
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
+    
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::post('/ajax/change-lang', 'Ajax\TranslationController@changeLang')->name('ajax.change.lang');
+ 
     // oAuth
     //    Route::get('login/callback/vk/{telegramUserId}', 'controller')->name('vk.redirect_url');
     

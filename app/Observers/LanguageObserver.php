@@ -19,9 +19,9 @@ class LanguageObserver
      */
     public function deleting(Language $language)
     {
-        foreach ($language->tplDefault()->get() as $tpl) {
-            $tpl->delete();
-        }
+//        foreach ($language->tplDefault()->get() as $tpl) {
+//            $tpl->delete();
+//        }
 
         foreach ($language->tplTranslate()->get() as $translate) {
             $translate->delete();

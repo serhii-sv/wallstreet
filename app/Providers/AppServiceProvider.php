@@ -27,7 +27,7 @@ use App\Models\Telegram\TelegramBotScopes;
 use App\Models\Telegram\TelegramUsers;
 use App\Models\Telegram\TelegramWebhooks;
 use App\Models\Telegram\TelegramWebhooksInfo;
-use App\Models\TplDefaultLang;
+//use App\Models\TplDefaultLang;
 use App\Models\TplTranslation;
 use App\Models\Transaction;
 use App\Models\TransactionType;
@@ -73,6 +73,7 @@ use App\Observers\UserTasks\UserTaskActionsObserver;
 use App\Observers\UserTasks\UserTaskPropositionsObserver;
 use App\Observers\UserTasks\UserTasksObserver;
 use App\Observers\WalletObserver;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
@@ -86,6 +87,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::directive('dump', function ($expression) {
+            return "<?php dump({$expression}); ?>";
+        });
+
         Schema::defaultStringLength(191);
 
         Horizon::auth(function ($request) {
@@ -116,7 +121,7 @@ class AppServiceProvider extends ServiceProvider
         Referral::observe(ReferralObserver::class);
         Reviews::observe(ReviewsObserver::class);
         Setting::observe(SettingObserver::class);
-        TplDefaultLang::observe(TplDefaultLangObserver::class);
+//        TplDefaultLang::observe(TplDefaultLangObserver::class);
         TplTranslation::observe(TplTranslationObserver::class);
         Transaction::observe(TransactionObserver::class);
         TransactionType::observe(TransactionTypeObserver::class);

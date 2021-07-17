@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', __('About us'))
 @section('content')
+<<<<<<< HEAD
   <div class="main--body">
   
   @include('layouts.app-preloader')
@@ -415,9 +416,5 @@
       <!-- ==========Footer-Section Starts Here========== -->
     @include('layouts.app-footer')
     <!-- ==========Footer-Section Ends Here========== -->
-    
-    
     </div>
-    
-
 @endsection
