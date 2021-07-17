@@ -67,7 +67,14 @@
         <div class="row">
           <div class="col-xl-5 col-lg-6 offset-lg-6 offset-xl-7">
             <div class="banner-content">
-              <h1 class="title">Simply
+              <h1 class="title">
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Simply' contenteditable="true">
+                    {{ __('Simply') }}
+                  </editor_block>
+                @else
+                  {{ __('Simply') }}
+                  @endif
                 <span>Profitably </span>
                 Conveniently
               </h1>

@@ -11,6 +11,7 @@
 @endif
 <style>
     .admin-edit-lang {
+        height: 60px;
         background: #222535;
         color: white;
         font-size: 18px;
