@@ -136,6 +136,7 @@
                   text: $this.text()
                 }, function (data, dataRaw) {
                   console.log('Сохранено!');
+                  console.log($this.text());
                 }, function () {
                 
                 },

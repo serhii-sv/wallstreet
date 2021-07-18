@@ -6,10 +6,10 @@
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-  
-  <!--=======Header-Section Starts Here=======-->
-    @include('layouts.app-header')
-    <!--=======Header-Section Ends Here=======-->
+    
+    <!--=======Header-Section Starts Here=======-->
+  @include('layouts.app-header')
+  <!--=======Header-Section Ends Here=======-->
     
     
     <!--=======Banner-Section Starts Here=======-->
@@ -69,20 +69,42 @@
             <div class="banner-content">
               <h1 class="title">
                 @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Simply' contenteditable="true">
-                    {{ __('Simply') }}
+                  <editor_block data-name='main.title.first' contenteditable="true">
+                    {{ __('main.title.first') }}
                   </editor_block>
                 @else
-                  {{ __('Simply') }}
-                  @endif
-                <span>Profitably </span>
-                Conveniently
-              </h1>
+                  {{ __('main.title.first') }}
+                @endif
+                <span>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.title.second' contenteditable="true">
+                    {{ __('main.title.second') }}
+                  </editor_block>
+                  @else
+                    {{ __('main.title.second') }}
+                  @endif </span>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.title.third' contenteditable="true">
+                    {{ __('main.title.third') }}
+                  </editor_block>
+                @else
+                  {{ __('main.title.third') }}
+                @endif</h1>
               <p>
-                A Profitable platform for high-margin investment
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.subtitle.first' contenteditable="true">
+                    {{ __('main.subtitle.first') }}
+                  </editor_block>
+                @else
+                  {{ __('main.subtitle.first') }}
+                @endif
               </p>
               <div class="button-group">
-                <a href="" class="custom-button">Get Started Now!</a>
+                <a href="" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.first.btn' contenteditable="true">
+                      {{ __('main.first.btn') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.first.btn') }}
+                  @endif</a>
                 <a href="https://www.youtube.com/watch?v=GT6-H4BRyqQ" class="popup video-button">
                   <i class="flaticon-play"></i></a>
               </div>
@@ -108,7 +130,13 @@
                   <h3 class="title odometer" data-odometer-final="36.9">0</h3>
                   <h3 class="title">M</h3>
                 </div>
-                <p>Registered users</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Registered users' contenteditable="true">
+                      {{ __('Registered users') }}
+                    </editor_block>
+                  @else
+                    {{ __('Registered users') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -121,7 +149,13 @@
                 <div class="counter-header">
                   <h3 class="title odometer" data-odometer-final="174">0</h3>
                 </div>
-                <p>Countries Supported</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Countries Supported' contenteditable="true">
+                      {{ __('Countries Supported') }}
+                    </editor_block>
+                  @else
+                    {{ __('Countries Supported') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -136,7 +170,13 @@
                   <h3 class="odometer title" data-odometer-final="10.8">0</h3>
                   <h3 class="title">M</h3>
                 </div>
-                <p>Average Investment</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Average Investment' contenteditable="true">
+                      {{ __('Average Investment') }}
+                    </editor_block>
+                  @else
+                    {{ __('Average Investment') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -155,10 +195,28 @@
           </div>
           <div class="col-lg-6">
             <div class="section-header left-style">
-              <span class="cate">WELCOME TO HYIPLAND</span>
-              <h2 class="title">about hyipland</h2>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.second.span' contenteditable="true">
+                      {{ __('main.second.span') }}
+                    </editor_block>
+                @else
+                  {{ __('main.second.span') }}
+                @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.second.title' contenteditable="true">
+                    {{ __('main.second.title') }}
+                  </editor_block>
+                @else
+                  {{ __('main.second.title') }}
+                @endif</h2>
               <p>
-                HYIPLAND is an investment company, whose team is working on making money from the volatility of cryptocurrencies and offer great returns to our clients.
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.second.text' contenteditable="true">
+                    {{ __('main.second.text') }}
+                  </editor_block>
+                @else
+                  {{ __('main.second.text') }}
+                @endif
               </p>
             </div>
             <div class="about--content">
@@ -167,10 +225,20 @@
                   <img src="{{ asset('images/about/about01.png') }}" alt="about">
                 </div>
                 <div class="about-content">
-                  <h5 class="title">Secure & Reliable</h5>
-                  <p>
-                    Secure assets fund for users
-                  </p>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.title.1' contenteditable="true">
+                        {{ __('main.second.list.title.1') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.title.1') }}
+                    @endif</h5>
+                  <p>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.text.1' contenteditable="true">
+                        {{ __('main.second.list.text.1') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.text.1') }}
+                    @endif</p>
                 </div>
               </div>
               <div class="about-item">
@@ -178,9 +246,21 @@
                   <img src="{{ asset('images/about/about02.png') }}" alt="about">
                 </div>
                 <div class="about-content">
-                  <h5 class="title">Fast Withdrawals</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.title.2' contenteditable="true">
+                        {{ __('main.second.list.title.2') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.title.2') }}
+                    @endif</h5>
                   <p>
-                    Quick money withdrawals for users
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.text.2' contenteditable="true">
+                        {{ __('main.second.list.text.2') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.text.2') }}
+                    @endif
                   </p>
                 </div>
               </div>
@@ -189,10 +269,20 @@
                   <img src="{{ asset('images/about/about03.png') }}" alt="about">
                 </div>
                 <div class="about-content">
-                  <h5 class="title">Guaranteed</h5>
-                  <p>
-                    Your return on investment is guaranteed
-                  </p>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.title.3' contenteditable="true">
+                        {{ __('main.second.list.title.3') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.title.3') }}
+                    @endif</h5>
+                  <p>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='main.second.list.text.3' contenteditable="true">
+                        {{ __('main.second.list.text.3') }}
+                      </editor_block>
+                    @else
+                      {{ __('main.second.list.text.3') }}
+                    @endif</p>
                 </div>
               </div>
             </div>
@@ -221,13 +311,30 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-10">
             <div class="section-header">
-              <span class="cate">Our Amazing Features</span>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.third.span' contenteditable="true">
+                        {{ __('main.third.span') }}
+                      </editor_block>
+                @else
+                  {{ __('main.third.span') }}
+                @endif</span>
               <h2 class="title">
-                why should you invest
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.third.title' contenteditable="true">
+                    {{ __('main.third.title') }}
+                  </editor_block>
+                @else
+                  {{ __('main.third.title') }}
+                @endif
               </h2>
               <p class="mw-100">
-                We are worldwide investment company who are committed to the principle of revenue
-                maximization and reduction of the financial risks at investing.
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.third.text' contenteditable="true">
+                    {{ __('main.third.text') }}
+                  </editor_block>
+                @else
+                  {{ __('main.third.text') }}
+                @endif
               </p>
             </div>
           </div>
@@ -239,8 +346,20 @@
                 <img src="{{ asset('images/feature/feature01.png') }}" alt="feature">
               </div>
               <div class="feature-content">
-                <h5 class="title">Profitable Investment</h5>
-                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.title.1' contenteditable="true">
+                      {{ __('main.third.list.title.1') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.title.1') }}
+                  @endif</h5>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.text.1' contenteditable="true">
+                      {{ __('main.third.list.text.1') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.text.1') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -250,8 +369,20 @@
                 <img src="{{ asset('images/feature/feature02.png') }}" alt="feature">
               </div>
               <div class="feature-content">
-                <h5 class="title">DDS Protection</h5>
-                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.title.2' contenteditable="true">
+                      {{ __('main.third.list.title.2') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.title.2') }}
+                  @endif</h5>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.text.2' contenteditable="true">
+                      {{ __('main.third.list.text.2') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.text.2') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -261,8 +392,20 @@
                 <img src="{{ asset('images/feature/feature03.png') }}" alt="feature">
               </div>
               <div class="feature-content">
-                <h5 class="title">24/7 Support Center</h5>
-                <p>Donec tincidunt viverra ligula non interdum. Maecenas nulla </p>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.title.3' contenteditable="true">
+                      {{ __('main.third.list.title.3') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.title.3') }}
+                  @endif</h5>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='main.third.list.text.3' contenteditable="true">
+                      {{ __('main.third.list.text.3') }}
+                    </editor_block>
+                  @else
+                    {{ __('main.third.list.text.3') }}
+                  @endif</p>
               </div>
             </div>
           </div>
@@ -278,10 +421,28 @@
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
             <div class="section-header">
-              <span class="cate">get to know</span>
-              <h2 class="title">how we work?</h2>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.fourth.span' contenteditable="true">
+                        {{ __('main.fourth.span') }}
+                      </editor_block>
+                @else
+                  {{ __('main.fourth.span') }}
+                @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.fourth.title' contenteditable="true">
+                    {{ __('main.fourth.title') }}
+                  </editor_block>
+                @else
+                  {{ __('main.fourth.title') }}
+                @endif</h2>
               <p>
-                Follow these simple steps and make profit!
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='main.fourth.text' contenteditable="true">
+                    {{ __('main.fourth.text') }}
+                  </editor_block>
+                @else
+                  {{ __('main.fourth.text') }}
+                @endif
               </p>
             </div>
           </div>
@@ -308,43 +469,94 @@
                 <ul class="tab-menu">
                   <li class="active">
                     <div class="menu-thumb">
-                                            <span>
-                                                01
-                                            </span>
+                      <span>
+                        01
+                      </span>
                     </div>
                     <div class="menu-content">
-                      <h5 class="title">Instant registration</h5>
+                      <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='main.fourth.list.title.1' contenteditable="true">
+                            {{ __('main.fourth.list.title.1') }}
+                          </editor_block>
+                        @else
+                          {{ __('main.fourth.list.title.1') }}
+                        @endif</h5>
                       <p>
-                        Click
-                        <a href="#0">Sign Up</a>
-                        to fill the blank, our 256 SSL will Protect your privacy.
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Click' contenteditable="true">
+                            {{ __('Click') }}
+                          </editor_block>
+                        @else
+                          {{ __('Click') }}
+                        @endif
+                        <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Sign Up' contenteditable="true">{{ __('Sign Up') }}</editor_block>
+                          @else
+                            {{ __('Sign Up') }}
+                          @endif</a>
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='to fill the blank, our 256 SSL will Protect your privacy.' contenteditable="true">
+                            {{ __('to fill the blank, our 256 SSL will Protect your privacy.') }}
+                          </editor_block>
+                        @else
+                          {{ __('to fill the blank, our 256 SSL will Protect your privacy.') }}
+                        @endif
                       </p>
                     </div>
                   </li>
                   <li>
                     <div class="menu-thumb">
-                                            <span>
-                                                02
-                                            </span>
+                      <span>
+                        02
+                      </span>
                     </div>
                     <div class="menu-content">
-                      <h5 class="title">MAKE AN INVEST</h5>
+                      <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='MAKE AN INVEST' contenteditable="true">
+                            {{ __('MAKE AN INVEST') }}
+                          </editor_block>
+                        @else
+                          {{ __('MAKE AN INVEST') }}
+                        @endif</h5>
                       <p>
-                        <a href="#0">Login</a>
-                        your account to click invest to start to earn the profit.
+                        <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block>
+                          @else
+                            {{ __('Login') }}
+                          @endif</a>
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='your account to click invest to start to earn the profit.' contenteditable="true">
+                            {{ __('your account to click invest to start to earn the profit.') }}
+                          </editor_block>
+                        @else
+                          {{ __('your account to click invest to start to earn the profit.') }}
+                        @endif
                       </p>
                     </div>
                   </li>
                   <li>
                     <div class="menu-thumb">
-                                            <span>
-                                                03
-                                            </span>
+                      <span>
+                          03
+                      </span>
                     </div>
                     <div class="menu-content">
-                      <h5 class="title">get profit</h5>
+                      <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='get profit' contenteditable="true">
+                            {{ __('get profit') }}
+                          </editor_block>
+                        @else
+                          {{ __('get profit') }}
+                        @endif
+                      </h5>
                       <p>
-                        You will get your profit on your profile, also you will get Instant Payment
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='You will get your profit on your profile, also you will get Instant Payment' contenteditable="true">
+                            {{ __('You will get your profit on your profile, also you will get Instant Payment') }}
+                          </editor_block>
+                        @else
+                          {{ __('You will get your profit on your profile, also you will get Instant Payment') }}
+                        @endif
                       </p>
                     </div>
                   </li>
@@ -364,8 +576,20 @@
         <div class="row align-items-center">
           <div class="col-lg-7">
             <div class="call--item">
-              <span class="cate">Why We are always ready</span>
-              <h3 class="title">Request a call back</h3>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Why We are always ready' contenteditable="true">
+                            {{ __('Why We are always ready') }}
+                          </editor_block>
+                @else
+                  {{ __('Why We are always ready') }}
+                @endif</span>
+              <h3 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Request a call back' contenteditable="true">
+                    {{ __('Request a call back') }}
+                  </editor_block>
+                @else
+                  {{ __('Request a call back') }}
+                @endif</h3>
             </div>
           </div>
           <div class="col-lg-5">
@@ -373,7 +597,13 @@
               <a href="Tel:0939303" class="call">
                 <img src="{{ asset('images/call/icon02.png') }}" alt="call">
               </a>
-              <a href="#0" class="custom-button"> Contact Support</a>
+              <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="custom-button">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Contact Support' contenteditable="true">
+                    {{ __('Contact Support') }}
+                  </editor_block>
+                @else
+                  {{ __('Contact Support') }}
+                @endif</a>
             </div>
           </div>
         </div>
@@ -396,10 +626,28 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">
             <div class="section-header">
-              <span class="cate">INVESTMENT OFFER</span>
-              <h2 class="title">OUR INVESTMENT PLANS</h2>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='INVESTMENT OFFER' contenteditable="true">
+                    {{ __('INVESTMENT OFFER') }}
+                  </editor_block>
+                @else
+                  {{ __('INVESTMENT OFFER') }}
+                @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='OUR INVESTMENT PLANS' contenteditable="true">
+                    {{ __('OUR INVESTMENT PLANS') }}
+                  </editor_block>
+                @else
+                  {{ __('OUR INVESTMENT PLANS') }}
+                @endif</h2>
               <p>
-                Hyipland provides a straightforward and transparent mechanism to attract investments and make more profits.
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Hyipland provides a straightforward and transparent mechanism to attract investments and make more profits.' contenteditable="true">
+                    {{ __('Hyipland provides a straightforward and transparent mechanism to attract investments and make more profits.') }}
+                  </editor_block>
+                @else
+                  {{ __('Hyipland provides a straightforward and transparent mechanism to attract investments and make more profits.') }}
+                @endif
               </p>
             </div>
           </div>
@@ -408,7 +656,13 @@
           <div class="offer-item">
             <div class="offer-header">
               <h3 class="title">120%</h3>
-              <span><b>every day</b></span>
+              <span><b>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='every day' contenteditable="true">
+                    {{ __('every day') }}
+                  </editor_block>
+                  @else
+                    {{ __('every day') }}
+                  @endif</b></span>
             </div>
             <div class="offer-body">
               <span class="bal-shape"></span>
@@ -417,11 +671,29 @@
                   <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Deposit</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposit' contenteditable="true">
+                        {{ __('Deposit') }}
+                      </editor_block>
+                    @else
+                      {{ __('Deposit') }}
+                    @endif</h5>
                   <h5 class="subtitle">
-                    <span class="min">$10</span>
-                    <span class="to">to</span>
-                    <span class="max">$3500</span>
+                    <span class="min">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$10' contenteditable="true">{{ __('$10') }}</editor_block>
+                      @else
+                        {{ __('$10') }}
+                      @endif</span>
+                    <span class="to">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='to' contenteditable="true">{{ __('to') }}</editor_block>
+                      @else
+                        {{ __('to') }}
+                      @endif</span>
+                    <span class="max">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$3500' contenteditable="true">{{ __('$3500') }}</editor_block>
+                      @else
+                        {{ __('$3500') }}
+                      @endif</span>
                   </h5>
                 </div>
               </div>
@@ -431,19 +703,37 @@
                   <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Terms</h5>
-                  <h5 class="subtitle">10 days</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Terms' contenteditable="true">{{ __('Terms') }}</editor_block>
+                    @else
+                      {{ __('Terms') }}
+                    @endif</h5>
+                  <h5 class="subtitle">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='10 days' contenteditable="true">{{ __('10 days') }}</editor_block>
+                    @else
+                      {{ __('10 days') }}
+                    @endif</h5>
                 </div>
               </div>
             </div>
             <div class="offer-footer">
-              <a href="#0" class="custom-button">invest now</a>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='invest now' contenteditable="true">{{ __('invest now') }}</editor_block>
+                @else
+                  {{ __('invest now') }}
+                @endif</a>
             </div>
           </div>
           <div class="offer-item">
             <div class="offer-header">
               <h3 class="title">120%</h3>
-              <span><b>every day</b></span>
+              <span><b>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='every day' contenteditable="true">
+                    {{ __('every day') }}
+                  </editor_block>
+                  @else
+                    {{ __('every day') }}
+                  @endif</b></span>
             </div>
             <div class="offer-body">
               <span class="bal-shape"></span>
@@ -452,11 +742,29 @@
                   <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Deposit</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposit' contenteditable="true">
+                        {{ __('Deposit') }}
+                      </editor_block>
+                    @else
+                      {{ __('Deposit') }}
+                    @endif</h5>
                   <h5 class="subtitle">
-                    <span class="min">$10</span>
-                    <span class="to">to</span>
-                    <span class="max">$3500</span>
+                    <span class="min">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$10' contenteditable="true">{{ __('$10') }}</editor_block>
+                      @else
+                        {{ __('$10') }}
+                      @endif</span>
+                    <span class="to">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='to' contenteditable="true">{{ __('to') }}</editor_block>
+                      @else
+                        {{ __('to') }}
+                      @endif</span>
+                    <span class="max">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$3500' contenteditable="true">{{ __('$3500') }}</editor_block>
+                      @else
+                        {{ __('$3500') }}
+                      @endif</span>
                   </h5>
                 </div>
               </div>
@@ -466,19 +774,37 @@
                   <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Terms</h5>
-                  <h5 class="subtitle">10 days</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Terms' contenteditable="true">{{ __('Terms') }}</editor_block>
+                    @else
+                      {{ __('Terms') }}
+                    @endif</h5>
+                  <h5 class="subtitle">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='10 days' contenteditable="true">{{ __('10 days') }}</editor_block>
+                    @else
+                      {{ __('10 days') }}
+                    @endif</h5>
                 </div>
               </div>
             </div>
             <div class="offer-footer">
-              <a href="#0" class="custom-button">invest now</a>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='invest now' contenteditable="true">{{ __('invest now') }}</editor_block>
+                @else
+                  {{ __('invest now') }}
+                @endif</a>
             </div>
           </div>
           <div class="offer-item">
             <div class="offer-header">
               <h3 class="title">120%</h3>
-              <span><b>every day</b></span>
+              <span><b>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='every day' contenteditable="true">
+                    {{ __('every day') }}
+                  </editor_block>
+                  @else
+                    {{ __('every day') }}
+                  @endif</b></span>
             </div>
             <div class="offer-body">
               <span class="bal-shape"></span>
@@ -487,11 +813,29 @@
                   <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Deposit</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposit' contenteditable="true">
+                        {{ __('Deposit') }}
+                      </editor_block>
+                    @else
+                      {{ __('Deposit') }}
+                    @endif</h5>
                   <h5 class="subtitle">
-                    <span class="min">$10</span>
-                    <span class="to">to</span>
-                    <span class="max">$3500</span>
+                    <span class="min">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$10' contenteditable="true">{{ __('$10') }}</editor_block>
+                      @else
+                        {{ __('$10') }}
+                      @endif</span>
+                    <span class="to">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='to' contenteditable="true">{{ __('to') }}</editor_block>
+                      @else
+                        {{ __('to') }}
+                      @endif</span>
+                    <span class="max">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$3500' contenteditable="true">{{ __('$3500') }}</editor_block>
+                      @else
+                        {{ __('$3500') }}
+                      @endif</span>
                   </h5>
                 </div>
               </div>
@@ -501,19 +845,37 @@
                   <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Terms</h5>
-                  <h5 class="subtitle">10 days</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Terms' contenteditable="true">{{ __('Terms') }}</editor_block>
+                    @else
+                      {{ __('Terms') }}
+                    @endif</h5>
+                  <h5 class="subtitle">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='10 days' contenteditable="true">{{ __('10 days') }}</editor_block>
+                    @else
+                      {{ __('10 days') }}
+                    @endif</h5>
                 </div>
               </div>
             </div>
             <div class="offer-footer">
-              <a href="#0" class="custom-button">invest now</a>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='invest now' contenteditable="true">{{ __('invest now') }}</editor_block>
+                @else
+                  {{ __('invest now') }}
+                @endif</a>
             </div>
           </div>
           <div class="offer-item">
             <div class="offer-header">
               <h3 class="title">120%</h3>
-              <span><b>every day</b></span>
+              <span><b>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='every day' contenteditable="true">
+                    {{ __('every day') }}
+                  </editor_block>
+                  @else
+                    {{ __('every day') }}
+                  @endif</b></span>
             </div>
             <div class="offer-body">
               <span class="bal-shape"></span>
@@ -522,11 +884,29 @@
                   <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Deposit</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposit' contenteditable="true">
+                        {{ __('Deposit') }}
+                      </editor_block>
+                    @else
+                      {{ __('Deposit') }}
+                    @endif</h5>
                   <h5 class="subtitle">
-                    <span class="min">$10</span>
-                    <span class="to">to</span>
-                    <span class="max">$3500</span>
+                    <span class="min">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$10' contenteditable="true">{{ __('$10') }}</editor_block>
+                      @else
+                        {{ __('$10') }}
+                      @endif</span>
+                    <span class="to">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='to' contenteditable="true">{{ __('to') }}</editor_block>
+                      @else
+                        {{ __('to') }}
+                      @endif</span>
+                    <span class="max">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$3500' contenteditable="true">{{ __('$3500') }}</editor_block>
+                      @else
+                        {{ __('$3500') }}
+                      @endif</span>
                   </h5>
                 </div>
               </div>
@@ -536,13 +916,25 @@
                   <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
-                  <h5 class="title">Terms</h5>
-                  <h5 class="subtitle">10 days</h5>
+                  <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Terms' contenteditable="true">{{ __('Terms') }}</editor_block>
+                    @else
+                      {{ __('Terms') }}
+                    @endif</h5>
+                  <h5 class="subtitle">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='10 days' contenteditable="true">{{ __('10 days') }}</editor_block>
+                    @else
+                      {{ __('10 days') }}
+                    @endif</h5>
                 </div>
               </div>
             </div>
             <div class="offer-footer">
-              <a href="#0" class="custom-button">invest now</a>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='invest now' contenteditable="true">{{ __('invest now') }}</editor_block>
+                @else
+                  {{ __('invest now') }}
+                @endif</a>
             </div>
           </div>
         </div>
@@ -557,9 +949,21 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">
             <div class="section-header">
-              <span class="cate">Calculate the amazing profits</span>
-              <h2 class="title">You Can Earn</h2>
-              <p>Calculate your profit before making an investment.</p>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Calculate the amazing profits' contenteditable="true">{{ __('Calculate the amazing profits') }}</editor_block>
+                @else
+                  {{ __('Calculate the amazing profits') }}
+                @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='You Can Earn' contenteditable="true">{{ __('You Can Earn') }}</editor_block>
+                @else
+                  {{ __('You Can Earn') }}
+                @endif</h2>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Calculate your profit before making an investment.' contenteditable="true">{{ __('Calculate your profit before making an investment.') }}</editor_block>
+                @else
+                  {{ __('Calculate your profit before making an investment.') }}
+                @endif</p>
             </div>
           </div>
         </div>
@@ -599,7 +1003,11 @@
           <div class="calculate--area">
             <div class="calculate-area">
               <div class="calculate-item">
-                <h5 class="title" data-serial="01">Select the plan</h5>
+                <h5 class="title" data-serial="01">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Select the plan' contenteditable="true">{{ __('Select the plan') }}</editor_block>
+                  @else
+                    {{ __('Select the plan') }}
+                  @endif</h5>
                 <select class="select-bar">
                   <option value="01">120% daily for 50 days</option>
                   <option value="02">110% daily for 30 days</option>
@@ -609,16 +1017,40 @@
                 </select>
               </div>
               <div class="calculate-item">
-                <h5 class="title" data-serial="02">Select the currency</h5>
+                <h5 class="title" data-serial="02">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Select the currency' contenteditable="true">{{ __('Select the currency') }}</editor_block>
+                  @else
+                    {{ __('Select the currency') }}
+                  @endif</h5>
                 <ul class="tab-menu">
-                  <li>usd</li>
-                  <li class="active">btc</li>
-                  <li>eth</li>
-                  <li>rub</li>
+                  <li>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='usd' contenteditable="true">{{ __('usd') }}</editor_block>
+                    @else
+                      {{ __('usd') }}
+                    @endif</li>
+                  <li class="active">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='btc' contenteditable="true">{{ __('btc') }}</editor_block>
+                    @else
+                      {{ __('btc') }}
+                    @endif</li>
+                  <li>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='eth' contenteditable="true">{{ __('eth') }}</editor_block>
+                    @else
+                      {{ __('eth') }}
+                    @endif</li>
+                  <li>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='rub' contenteditable="true">{{ __('rub') }}</editor_block>
+                    @else
+                      {{ __('rub') }}
+                    @endif</li>
                 </ul>
               </div>
               <div class="calculate-item">
-                <h5 class="title" data-serial="03">Enter the amount</h5>
+                <h5 class="title" data-serial="03">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block>
+                  @else
+                    {{ __('Enter the amount') }}
+                  @endif</h5>
                 <input type="number" value="100">
               </div>
             </div>
@@ -626,11 +1058,19 @@
               <div class="tab-item">
                 <div class="profit-calc">
                   <div class="item">
-                    <span class="cate">Daily Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
+                      @else
+                        {{ __('Daily Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme-1">0.026400 USD</h2>
                   </div>
                   <div class="item">
-                    <span class="cate">Total Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
+                      @else
+                        {{ __('Total Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme">1.320000 USD</h2>
                   </div>
                 </div>
@@ -641,17 +1081,29 @@
                   <div class="invest-amount" data-min="1.00 USD" data-max="1000 USD">
                     <div id="usd-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button">join now</button>
+                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
+                    @else
+                      {{ __('join now') }}
+                    @endif</button>
                 </div>
               </div>
               <div class="tab-item active">
                 <div class="profit-calc">
                   <div class="item">
-                    <span class="cate">Daily Profit</span>
+                  <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
+                    @else
+                      {{ __('Daily Profit') }}
+                    @endif</span>
                     <h2 class="title cl-theme-1">0.026400 BTC</h2>
                   </div>
                   <div class="item">
-                    <span class="cate">Total Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
+                      @else
+                        {{ __('Total Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme">1.320000 BTC</h2>
                   </div>
                 </div>
@@ -662,17 +1114,29 @@
                   <div class="invest-amount" data-min="1.00 BTC" data-max="1000 BTC">
                     <div id="btc-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button">join now</button>
+                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
+                    @else
+                      {{ __('join now') }}
+                    @endif</button>
                 </div>
               </div>
               <div class="tab-item">
                 <div class="profit-calc">
                   <div class="item">
-                    <span class="cate">Daily Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
+                      @else
+                        {{ __('Daily Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme-1">0.026400 ETH</h2>
                   </div>
                   <div class="item">
-                    <span class="cate">Total Profit</span>
+                     <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                         <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
+                       @else
+                         {{ __('Total Profit') }}
+                       @endif</span>
                     <h2 class="title cl-theme">1.320000 ETH</h2>
                   </div>
                 </div>
@@ -683,17 +1147,29 @@
                   <div class="invest-amount" data-min="1.00 ETH" data-max="1000 ETH">
                     <div id="eth-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button">join now</button>
+                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
+                    @else
+                      {{ __('join now') }}
+                    @endif</button>
                 </div>
               </div>
               <div class="tab-item">
                 <div class="profit-calc">
                   <div class="item">
-                    <span class="cate">Daily Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
+                      @else
+                        {{ __('Daily Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme-1">0.026400 RUB</h2>
                   </div>
                   <div class="item">
-                    <span class="cate">Total Profit</span>
+                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
+                      @else
+                        {{ __('Total Profit') }}
+                      @endif</span>
                     <h2 class="title cl-theme">1.320000 RUB</h2>
                   </div>
                 </div>
@@ -704,7 +1180,11 @@
                   <div class="invest-amount" data-min="1.00 RUB" data-max="1000 RUB">
                     <div id="rub-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button">join now</button>
+                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
+                    @else
+                      {{ __('join now') }}
+                    @endif</button>
                 </div>
               </div>
             </div>
@@ -724,10 +1204,24 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">
             <div class="section-header">
-              <span class="cate">Latest Transactions</span>
-              <h2 class="title">Monthly Income Feed</h2>
-              <p>Our goal is to simplify investing so that anyone can be an investor.Withthis in mind,
-                we hand-pick the investments we offer on our platform.</p>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Latest Transactions' contenteditable="true">{{ __('Latest Transactions') }}</editor_block>
+                @else
+                  {{ __('Latest Transactions') }}
+                @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Monthly Income Feed' contenteditable="true">{{ __('Monthly Income Feed') }}</editor_block>
+                @else
+                  {{ __('Monthly Income Feed') }}
+                @endif</h2>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Our goal is to simplify investing so that anyone can be an investor.Withthis in mind,
+                we hand-pick the investments we offer on our platform.' contenteditable="true">{{ __('Our goal is to simplify investing so that anyone can be an investor.Withthis in mind,
+                we hand-pick the investments we offer on our platform.') }}</editor_block>
+                @else
+                  {{ __('Our goal is to simplify investing so that anyone can be an investor.Withthis in mind,
+                we hand-pick the investments we offer on our platform.') }}
+                @endif</p>
             </div>
           </div>
         </div>
@@ -738,8 +1232,16 @@
                 <i class="flaticon-wallet"></i>
               </div>
               <div class="content">
-                <span class="d-block">last</span>
-                <span class="d-block">deposits</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
+                  @else
+                    {{ __('last') }}
+                  @endif</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='deposits' contenteditable="true">{{ __('deposits') }}</editor_block>
+                  @else
+                    {{ __('deposits') }}
+                  @endif</span>
               </div>
             </li>
             <li>
@@ -747,8 +1249,16 @@
                 <i class="flaticon-atm"></i>
               </div>
               <div class="content">
-                <span class="d-block">last</span>
-                <span class="d-block">withdrawals</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
+                  @else
+                    {{ __('last') }}
+                  @endif</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='withdrawals' contenteditable="true">{{ __('withdrawals') }}</editor_block>
+                  @else
+                    {{ __('withdrawals') }}
+                  @endif</span>
               </div>
             </li>
             <li>
@@ -756,8 +1266,16 @@
                 <i class="flaticon-team"></i>
               </div>
               <div class="content">
-                <span class="d-block">last</span>
-                <span class="d-block">investors</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
+                  @else
+                    {{ __('last') }}
+                  @endif</span>
+                <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='investors' contenteditable="true">{{ __('investors') }}</editor_block>
+                  @else
+                    {{ __('investors') }}
+                  @endif</span>
               </div>
             </li>
           </ul>
@@ -774,7 +1292,11 @@
                       <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 BTC</h5>
                     </div>
                   </div>
@@ -789,7 +1311,11 @@
                       <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 ETH</h5>
                     </div>
                   </div>
@@ -804,7 +1330,11 @@
                       <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -819,7 +1349,11 @@
                       <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -834,7 +1368,11 @@
                       <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -849,7 +1387,11 @@
                       <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -864,7 +1406,11 @@
                       <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -879,7 +1425,11 @@
                       <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -898,7 +1448,11 @@
                       <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -913,7 +1467,11 @@
                       <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -928,7 +1486,11 @@
                       <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 BTC</h5>
                     </div>
                   </div>
@@ -943,7 +1505,11 @@
                       <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 ETH</h5>
                     </div>
                   </div>
@@ -958,7 +1524,11 @@
                       <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -973,7 +1543,11 @@
                       <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -988,7 +1562,11 @@
                       <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -1003,7 +1581,11 @@
                       <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -1022,7 +1604,11 @@
                       <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -1037,7 +1623,11 @@
                       <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -1052,7 +1642,11 @@
                       <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -1067,7 +1661,11 @@
                       <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 XRP</h5>
                     </div>
                   </div>
@@ -1082,7 +1680,11 @@
                       <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 USD</h5>
                     </div>
                   </div>
@@ -1097,7 +1699,11 @@
                       <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 LTC</h5>
                     </div>
                   </div>
@@ -1112,7 +1718,11 @@
                       <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 BTC</h5>
                     </div>
                   </div>
@@ -1127,7 +1737,11 @@
                       <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
-                      <span class="amount">Amount</span>
+                      <span class="amount">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                        @else
+                          {{ __('Amount') }}
+                        @endif</span>
                       <h5 class="sub-title">0.00449721 ETH</h5>
                     </div>
                   </div>
@@ -1147,10 +1761,21 @@
         <div class="row">
           <div class="col-lg-7 padding-bottom padding-top">
             <div class="section-header left-style">
-              <span class="cate">What You’ll Get As</span>
-              <h2 class="title fz-md-49">Affiliate Program</h2>
-              <p>
-                We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='What You’ll Get As' contenteditable="true">{{ __('What You’ll Get As') }}</editor_block>
+                @else
+                  {{ __('What You’ll Get As') }}
+                @endif</span>
+              <h2 class="title fz-md-49">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Affiliate Program' contenteditable="true">{{ __('Affiliate Program') }}</editor_block>
+                @else
+                  {{ __('Affiliate Program') }}
+                @endif</h2>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.' contenteditable="true">{{ __('We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.') }}</editor_block>
+                @else
+                  {{ __('We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.') }}
+                @endif
               </p>
             </div>
             <div class="affiliate-wrapper">
@@ -1183,9 +1808,17 @@
               </div>
             </div>
             <div class="affiliate-bottom">
-              <h6 class="title">Make money with hyipland</h6>
-              <a href="#0" class="custom-button">
-                learn more <i class="flaticon-right"></i>
+              <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Make money with hyipland' contenteditable="true">{{ __('Make money with hyipland') }}</editor_block>
+                @else
+                  {{ __('Make money with hyipland') }}
+                @endif</h6>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
+                @else
+                  {{ __('learn more') }}
+                @endif <i class="flaticon-right"></i>
               </a>
             </div>
           </div>
@@ -1210,20 +1843,27 @@
                 <img src="{{ asset('images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
-                <h5 class="title">Ready To Start Your Earnings Through Crypto Currency</h5>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Ready To Start Your Earnings Through Crypto Currency' contenteditable="true">{{ __('Ready To Start Your Earnings Through Crypto Currency') }}</editor_block>
+                  @else
+                    {{ __('Ready To Start Your Earnings Through Crypto Currency') }}
+                  @endif</h5>
               </div>
             </div>
           </div>
           <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
-            <a href="#0" class="custom-button">learn more <i class="flaticon-right"></i></a>
+            <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
+              @else
+                {{ __('learn more') }}
+              @endif <i class="flaticon-right"></i></a>
           </div>
         </div>
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
     
-    
-    <!--=======Check-Section Starts Here=======-->
+  <!--=======Check-Section Starts Here=======-->
     <section class="client-section padding-bottom padding-top">
       <div class="background-map">
         <img src="{{ asset('images/client/client-bg.png') }}" alt="client">
@@ -1232,13 +1872,25 @@
         <div class="row">
           <div class="col-lg-8 col-md-10">
             <div class="section-header left-style">
-              <span class="cate">TESTIMONIALS</span>
+              <span class="cate">    @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='TESTIMONIALS' contenteditable="true">{{ __('TESTIMONIALS') }}</editor_block>
+                @else
+                  {{ __('TESTIMONIALS') }}
+                @endif</span>
               <h2 class="title">
                 <span>40,000</span>
-                HAPPY CLIENTS AROUND THE WORLD
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='HAPPY CLIENTS AROUND THE WORLD' contenteditable="true">{{ __('HAPPY CLIENTS AROUND THE WORLD') }}</editor_block>
+                @else
+                  {{ __('HAPPY CLIENTS AROUND THE WORLD') }}
+                  @endif
               </h2>
               <p class="mw-500">
-                We have many happy investors invest with us .Some impresions from our Customers!
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='We have many happy investors invest with us .Some impresions from our Customers!' contenteditable="true">{{ __('We have many happy investors invest with us .Some impresions from our Customers!') }}</editor_block>
+                @else
+                  {{ __('We have many happy investors invest with us .Some impresions from our Customers!') }}
+                  @endif
               </p>
             </div>
           </div>

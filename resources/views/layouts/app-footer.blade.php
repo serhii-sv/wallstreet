@@ -1,14 +1,27 @@
-
 <footer class="footer-section">
   <div class="newslater-section padding-bottom">
     <div class="container">
       <div class="newslater-area">
         <div class="newslater-content padding-bottom padding-top">
-          <span class="cate">SUBSCRIBE TO hyipland</span>
-          <h3 class="title">To Get Exclusive Benefits</h3>
+          <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='SUBSCRIBE TO hyipland' contenteditable="true">{{ __('SUBSCRIBE TO hyipland') }}</editor_block>
+            @else
+              {{ __('SUBSCRIBE TO hyipland') }}
+            @endif</span>
+          <h3 class="title">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='To Get Exclusive Benefits' contenteditable="true">{{ __('To Get Exclusive Benefits') }}</editor_block>
+            @else
+              {{ __('To Get Exclusive Benefits') }}
+            @endif
+          </h3>
           <form class="newslater-form">
             <input type="text" placeholder="Enter Your Email Here" required>
-            <button type="submit">subscribe</button>
+            <button type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='subscribe' contenteditable="true">{{ __('subscribe') }}</editor_block>
+              @else
+                {{ __('subscribe') }}
+              @endif
+            </button>
           </form>
         </div>
         <div class="newslater-thumb">
@@ -35,6 +48,7 @@
       </div>
     </div>
   </div>
+  
   <div class="container">
     <div class="footer-top">
       <div class="logo">
@@ -44,19 +58,40 @@
       </div>
       <ul class="links">
         <li>
-          <a href="{{ route('customer.aboutus') }}">About</a>
+          <a href="{{ route('customer.aboutus') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='About' contenteditable="true">{{ __('About') }}</editor_block>
+            @else
+              {{ __('About') }}
+            @endif</a>
         </li>
         <li>
-          <a href="{{ route('customer.partners') }}">Affiliates</a>
+          <a href="{{ route('customer.partners') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Affiliates' contenteditable="true">{{ __('Affiliates') }}</editor_block>
+            @else
+              {{ __('Affiliates') }}
+            @endif</a>
+        </li>
+    
+        <li>
+          <a href="{{ route('customer.faq') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='FAQ' contenteditable="true">{{ __('FAQ') }}</editor_block>
+            @else
+              {{ __('FAQ') }}
+            @endif</a>
         </li>
         <li>
-          <a href="">Plans</a>
+          <a href="{{ route('customer.agreement') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Privacy Policy' contenteditable="true">{{ __('Privacy Policy') }}</editor_block>
+            @else
+              {{ __('Privacy Policy') }}
+            @endif</a>
         </li>
         <li>
-          <a href="{{ route('customer.faq') }}">FAQ</a>
-        </li>
-        <li>
-          <a href="{{ route('customer.agreement') }}">Privacy Policy</a>
+          <a href="{{ route('customer.contact') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Contact' contenteditable="true">{{ __('Contact') }}</editor_block>
+            @else
+              {{ __('Contact') }}
+            @endif</a>
         </li>
       </ul>
     </div>
@@ -64,8 +99,16 @@
       <div class="footer-bottom-area">
         <div class="left">
           <p>&copy; 2020
-            <a href="{{ route('customer.main') }}">Hyipland</a>
-            | All right reserved
+            <a href="{{ route('customer.main') }}">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Hyipland' contenteditable="true">{{ __('Hyipland') }}</editor_block>
+              @else
+                {{ __('Hyipland') }}
+                @endif </a>
+            | @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='All right reserved' contenteditable="true">{{ __('All right reserved') }}</editor_block>
+            @else
+              {{ __('All right reserved') }}
+            @endif
           </p>
         </div>
         <ul class="social-icons">
