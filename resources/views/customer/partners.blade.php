@@ -17,13 +17,25 @@
     <section class="bg_img hero-section-2 " data-background="{{ asset('images/about/hero-bg4.png') }}">
       <div class="container">
         <div class="hero-content text-white">
-          <h1 class="title">Affiliates</h1>
+          <h1 class="title">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Affiliates' contenteditable="true">{{ __('Affiliates') }}</editor_block>
+            @else
+              {{ __('Affiliates') }}
+              @endif</h1>
           <ul class="breadcrumb">
             <li>
-              <a href="{{ route('customer.main') }}">Home</a>
+              <a href="{{ route('customer.main') }}">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Home' contenteditable="true">{{ __('Home') }}</editor_block>
+                @else
+                  {{ __('Home') }}
+                  @endif</a>
             </li>
             <li>
-              Affiliates
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Affiliates' contenteditable="true">{{ __('Affiliates') }}</editor_block>
+              @else
+                {{ __('Affiliates') }}
+                @endif
             </li>
           </ul>
         </div>
@@ -42,10 +54,22 @@
         <div class="row">
           <div class="col-lg-7 padding-bottom padding-top">
             <div class="section-header left-style">
-              <span class="cate">What You’ll Get As</span>
-              <h2 class="title fz-md-49">Affiliate Program</h2>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='What You’ll Get As' contenteditable="true">{{ __('What You’ll Get As') }}</editor_block>
+                @else
+                  {{ __('What You’ll Get As') }}
+                  @endif</span>
+              <h2 class="title fz-md-49">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Affiliate Program' contenteditable="true">{{ __('Affiliate Program') }}</editor_block>
+                @else
+                  {{ __('Affiliate Program') }}
+                  @endif</h2>
               <p>
-                We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.' contenteditable="true">{{ __('We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.') }}</editor_block>
+                @else
+                  {{ __('We give you the opportunity to earn money by recommending our website to others. You can start earning money even if you do not invest.') }}
+                  @endif
               </p>
             </div>
             <div class="affiliate-wrapper">
@@ -78,9 +102,17 @@
               </div>
             </div>
             <div class="affiliate-bottom">
-              <h6 class="title">Make money with hyipland</h6>
-              <a href="#0" class="custom-button">
-                learn more <i class="flaticon-right"></i>
+              <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Make money with hyipland' contenteditable="true">{{ __('Make money with hyipland') }}</editor_block>
+                @else
+                  {{ __('Make money with hyipland') }}
+                  @endif</h6>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
+                @else
+                  {{ __('learn more') }}
+                  @endif <i class="flaticon-right"></i>
               </a>
             </div>
           </div>
@@ -105,12 +137,20 @@
                 <img src="{{ asset('images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
-                <h5 class="title">Ready To Start Your Earnings Through Crypto Currency</h5>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Ready To Start Your Earnings Through Crypto Currency' contenteditable="true">{{ __('Ready To Start Your Earnings Through Crypto Currency') }}</editor_block>
+                  @else
+                    {{ __('Ready To Start Your Earnings Through Crypto Currency') }}
+                    @endif</h5>
               </div>
             </div>
           </div>
           <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
-            <a href="#0" class="custom-button">learn more <i class="flaticon-right"></i></a>
+            <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
+              @else
+                {{ __('learn more') }}
+                @endif <i class="flaticon-right"></i></a>
           </div>
         </div>
       </div>
@@ -124,9 +164,21 @@
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div class="section-header">
-              <span class="cate">You’re Part of something Big</span>
-              <h2 class="title">$50,257,285.47</h2>
-              <p>Total Commissions Paid to Our Affiliates</p>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='You’re Part of something Big' contenteditable="true">{{ __('You’re Part of something Big') }}</editor_block>
+                @else
+                  {{ __('You’re Part of something Big') }}
+                  @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='$50,257,285.47' contenteditable="true">{{ __('$50,257,285.47') }}</editor_block>
+                @else
+                  {{ __('$50,257,285.47') }}
+                @endif</h2>
+              <p>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                @else
+                  {{ __('Total Commissions Paid to Our Affiliates') }}
+                  @endif</p>
             </div>
           </div>
         </div>
@@ -153,7 +205,11 @@
                           <h2 class="title odometer" data-odometer-final="20">0</h2>
                         </div>
                         <p>
-                          Supported Languages
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Supported Languages' contenteditable="true">{{ __('Supported Languages') }}</editor_block>
+                          @else
+                            {{ __('Supported Languages') }}
+                            @endif
                         </p>
                       </div>
                     </div>
@@ -169,7 +225,11 @@
                           <h2 class="title">M</h2>
                         </div>
                         <p>
-                          Users Worldwide
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Users Worldwide' contenteditable="true">{{ __('Users Worldwide') }}</editor_block>
+                          @else
+                            {{ __('Users Worldwide') }}
+                            @endif
                         </p>
                       </div>
                     </div>
@@ -187,7 +247,11 @@
                           <h2 class="title">k</h2>
                         </div>
                         <p>
-                          Popular Investors
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Popular Investors' contenteditable="true">{{ __('Popular Investors') }}</editor_block>
+                          @else
+                            {{ __('Popular Investors') }}
+                            @endif
                         </p>
                       </div>
                     </div>
@@ -216,10 +280,22 @@
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div class="section-header">
-              <span class="cate">Here’s how it works</span>
-              <h2 class="title">Getting started? It’s simple</h2>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Here’s how it works' contenteditable="true">{{ __('Here’s how it works') }}</editor_block>
+                @else
+                  {{ __('Here’s how it works') }}
+                  @endif</span>
+              <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Getting started? It’s simple' contenteditable="true">{{ __('Getting started? It’s simple') }}</editor_block>
+                @else
+                  {{ __('Getting started? It’s simple') }}
+                  @endif</h2>
               <p>
-                The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!' contenteditable="true">{{ __('The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!') }}</editor_block>
+                @else
+                  {{ __('The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!') }}
+                  @endif
               </p>
             </div>
           </div>
@@ -233,8 +309,12 @@
                 </div>
               </div>
               <div class="how-content">
-                <h5 class="title">Join Program</h5>
-                <a href="#0">Join Now <i class="flaticon-right"></i></a>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Join Program' contenteditable="true">{{ __('Join Program') }}</editor_block>
+                  @else
+                    {{ __('Join Program') }}
+                    @endif</h5>
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Join Now <i class="flaticon-right"></i></a>
               </div>
             </div>
           </div>
@@ -246,8 +326,12 @@
                 </div>
               </div>
               <div class="how-content">
-                <h5 class="title">Promote</h5>
-                <a href="#0">Tracking Link <i class="flaticon-right"></i></a>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Promote' contenteditable="true">{{ __('Promote') }}</editor_block>
+                  @else
+                    {{ __('Promote') }}
+                    @endif</h5>
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Tracking Link <i class="flaticon-right"></i></a>
               </div>
             </div>
           </div>
@@ -259,8 +343,12 @@
                 </div>
               </div>
               <div class="how-content">
-                <h5 class="title">Earn</h5>
-                <a href="#0">Commission Model <i class="flaticon-right"></i></a>
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Earn' contenteditable="true">{{ __('Earn') }}</editor_block>
+                  @else
+                    {{ __('Earn') }}
+                    @endif</h5>
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Commission Model <i class="flaticon-right"></i></a>
               </div>
             </div>
           </div>
@@ -280,10 +368,22 @@
           <div class="col-lg-6">
             <div class="why-affiliate-content">
               <div class="section-header left-style">
-                <span class="cate">Why Should You</span>
-                <h2 class="title">Join affiliate?</h2>
+                <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Why Should You' contenteditable="true">{{ __('Why Should You') }}</editor_block>
+                  @else
+                    {{ __('Why Should You') }}
+                    @endif</span>
+                <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Join affiliate?' contenteditable="true">{{ __('Join affiliate?') }}</editor_block>
+                  @else
+                    {{ __('Join affiliate?') }}
+                    @endif</h2>
                 <p>
-                  The affiliate program is our special feature for loyal Investors.
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='The affiliate program is our special feature for loyal Investors.' contenteditable="true">{{ __('The affiliate program is our special feature for loyal Investors.') }}</editor_block>
+                  @else
+                    {{ __('The affiliate program is our special feature for loyal Investors.') }}
+                    @endif
                 </p>
               </div>
               <div class="why-area">
@@ -293,7 +393,11 @@
                       <img src="{{ asset('images/why/why1.png') }}" alt="why">
                     </div>
                     <div class="why-content">
-                      <h6 class="title">Joining free </h6>
+                      <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Joining free' contenteditable="true">{{ __('Joining free') }}</editor_block>
+                        @else
+                          {{ __('Joining free') }}
+                          @endif</h6>
                     </div>
                   </div>
                 </div>
@@ -303,7 +407,11 @@
                       <img src="{{ asset('images/why/why2.png') }}" alt="why">
                     </div>
                     <div class="why-content">
-                      <h6 class="title">Instant Payout</h6>
+                      <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Instant Payout' contenteditable="true">{{ __('Instant Payout') }}</editor_block>
+                        @else
+                          {{ __('Instant Payout') }}
+                          @endif</h6>
                     </div>
                   </div>
                 </div>
@@ -313,7 +421,11 @@
                       <img src="{{ asset('images/why/why3.png') }}" alt="why">
                     </div>
                     <div class="why-content">
-                      <h6 class="title">Performance Bonues</h6>
+                      <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Performance Bonues' contenteditable="true">{{ __('Performance Bonues') }}</editor_block>
+                        @else
+                          {{ __('Performance Bonues') }}
+                          @endif</h6>
                     </div>
                   </div>
                 </div>
@@ -323,12 +435,20 @@
                       <img src="{{ asset('images/why/why4.png') }}" alt="why">
                     </div>
                     <div class="why-content">
-                      <h6 class="title">Unlimited affiliates</h6>
+                      <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Unlimited affiliates' contenteditable="true">{{ __('Unlimited affiliates') }}</editor_block>
+                        @else
+                          {{ __('Unlimited affiliates') }}
+                          @endif</h6>
                     </div>
                   </div>
                 </div>
               </div>
-              <a href="#0" class="custom-button">join Now!</a>
+              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Join Now!' contenteditable="true">{{ __('Join Now!') }}</editor_block>
+                @else
+                  {{ __('Join Now!') }}
+                  @endif</a>
             </div>
           </div>
         </div>

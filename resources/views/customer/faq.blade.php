@@ -16,13 +16,25 @@
     <section class="bg_img hero-section-2" data-background="{{ asset('images/about/hero-bg3.jpg') }}">
       <div class="container">
         <div class="hero-content text-white">
-          <h1 class="title">faq</h1>
+          <h1 class="title">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='faq' contenteditable="true">{{ __('faq') }}</editor_block>
+            @else
+              {{ __('faq') }}
+              @endif</h1>
           <ul class="breadcrumb">
             <li>
-              <a href="{{ route('customer.main') }}">Home</a>
+              <a href="{{ route('customer.main') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Home' contenteditable="true">{{ __('Home') }}</editor_block>
+                @else
+                  {{ __('Home') }}
+                  @endif</a>
             </li>
             <li>
-              faq
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='faq' contenteditable="true">{{ __('faq') }}</editor_block>
+              @else
+                {{ __('faq') }}
+                @endif
             </li>
           </ul>
         </div>
@@ -48,77 +60,141 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-10">
             <div class="section-header">
-              <span class="cate">You have questions</span>
+              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='You have questions' contenteditable="true">{{ __('You have questions') }}</editor_block>
+                @else
+                  {{ __('You have questions') }}
+                  @endif</span>
               <h2 class="title">
-                we have answers
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='we have answers' contenteditable="true">{{ __('we have answers') }}</editor_block>
+                @else
+                  {{ __('we have answers') }}
+                  @endif
               </h2>
               <p class="mw-100">
-                Do not hesitate to send us an email if you can't find what you're looking for.
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name="Do not hesitate to send us an email if you can't find what you're looking for." contenteditable="true">{{ __("Do not hesitate to send us an email if you can't find what you're looking for.") }}</editor_block>
+                @else
+                  {{ __("Do not hesitate to send us an email if you can't find what you're looking for.") }}
+                  @endif
               </p>
             </div>
           </div>
         </div>
         <div class="tab faq-tab">
           <ul class="tab-menu">
-            <li>BASIC</li>
-            <li class="active">FINANCIAL</li>
-            <li>Affiliate</li>
+            <li>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='BASIC' contenteditable="true">{{ __('BASIC') }}</editor_block>
+              @else
+                {{ __('BASIC') }}
+                @endif</li>
+            <li class="active">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='FINANCIAL' contenteditable="true">{{ __('FINANCIAL') }}</editor_block>
+              @else
+                {{ __('FINANCIAL') }}
+                @endif</li>
+            <li>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Affiliate' contenteditable="true">{{ __('Affiliate') }}</editor_block>
+              @else
+                {{ __('Affiliate') }}
+                @endif</li>
           </ul>
           <div class="tab-area">
             <div class="tab-item">
               <div class="faq-wrapper">
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What is the minimum percentage that an investor can earn on Hyipland?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What is the minimum percentage that an investor can earn on Hyipland?' contenteditable="true">{{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}</editor_block>
+                      @else
+                        {{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item active open">
                   <div class="faq-title">
-                    <h5 class="title">Can i invest using cryptocurrency?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Can i invest using cryptocurrency?' contenteditable="true">{{ __('Can i invest using cryptocurrency?') }}</editor_block>
+                      @else
+                        {{ __('Can i invest using cryptocurrency?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What are the minimum and maximum deposit amounts?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What are the minimum and maximum deposit amounts?' contenteditable="true">{{ __('What are the minimum and maximum deposit amounts?') }}</editor_block>
+                      @else
+                        {{ __('What are the minimum and maximum deposit amounts?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">How long will the money arrive in my account after the withdrawal process?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='How long will the money arrive in my account after the withdrawal process?' contenteditable="true">{{ __('How long will the money arrive in my account after the withdrawal process?') }}</editor_block>
+                      @else
+                        {{ __('How long will the money arrive in my account after the withdrawal process?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What payment system can i use to withdraw?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What payment system can i use to withdraw?' contenteditable="true">{{ __('What payment system can i use to withdraw?') }}</editor_block>
+                      @else
+                        {{ __('What payment system can i use to withdraw?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
@@ -128,56 +204,96 @@
               <div class="faq-wrapper">
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What is the minimum percentage that an investor can earn on Hyipland?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What is the minimum percentage that an investor can earn on Hyipland?' contenteditable="true">{{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}</editor_block>
+                      @else
+                        {{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item active open">
                   <div class="faq-title">
-                    <h5 class="title">Can i invest using cryptocurrency?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Can i invest using cryptocurrency?' contenteditable="true">{{ __('Can i invest using cryptocurrency?') }}</editor_block>
+                      @else
+                        {{ __('Can i invest using cryptocurrency?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What are the minimum and maximum deposit amounts?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What are the minimum and maximum deposit amounts?' contenteditable="true">{{ __('What are the minimum and maximum deposit amounts?') }}</editor_block>
+                      @else
+                        {{ __('What are the minimum and maximum deposit amounts?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">How long will the money arrive in my account after the withdrawal process?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='How long will the money arrive in my account after the withdrawal process?' contenteditable="true">{{ __('How long will the money arrive in my account after the withdrawal process?') }}</editor_block>
+                      @else
+                        {{ __('How long will the money arrive in my account after the withdrawal process?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What payment system can i use to withdraw?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What payment system can i use to withdraw?' contenteditable="true">{{ __('What payment system can i use to withdraw?') }}</editor_block>
+                      @else
+                        {{ __('What payment system can i use to withdraw?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
@@ -187,56 +303,96 @@
               <div class="faq-wrapper">
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What is the minimum percentage that an investor can earn on Hyipland?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What is the minimum percentage that an investor can earn on Hyipland?' contenteditable="true">{{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}</editor_block>
+                      @else
+                        {{ __('What is the minimum percentage that an investor can earn on Hyipland?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item active open">
                   <div class="faq-title">
-                    <h5 class="title">Can i invest using cryptocurrency?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Can i invest using cryptocurrency?' contenteditable="true">{{ __('Can i invest using cryptocurrency?') }}</editor_block>
+                      @else
+                        {{ __('Can i invest using cryptocurrency?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What are the minimum and maximum deposit amounts?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What are the minimum and maximum deposit amounts?' contenteditable="true">{{ __('What are the minimum and maximum deposit amounts?') }}</editor_block>
+                      @else
+                        {{ __('What are the minimum and maximum deposit amounts?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">How long will the money arrive in my account after the withdrawal process?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='How long will the money arrive in my account after the withdrawal process?' contenteditable="true">{{ __('How long will the money arrive in my account after the withdrawal process?') }}</editor_block>
+                      @else
+                        {{ __('How long will the money arrive in my account after the withdrawal process?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>
                 <div class="faq-item">
                   <div class="faq-title">
-                    <h5 class="title">What payment system can i use to withdraw?</h5>
+                    <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='What payment system can i use to withdraw?' contenteditable="true">{{ __('What payment system can i use to withdraw?') }}</editor_block>
+                      @else
+                        {{ __('What payment system can i use to withdraw?') }}
+                        @endif</h5>
                     <span class="right-icon"></span>
                   </div>
                   <div class="faq-content">
                     <p>
-                      Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.' contenteditable="true">{{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}</editor_block>
+                      @else
+                        {{ __('Ea commodi eius nisi fugiat eligendi neque repellendus vero, aliquam temporibus, dicta optio eveniet saepe. Beatae hic fugiat qui possimus doloribus? Ratione, molestiae magnam.') }}
+                        @endif
                     </p>
                   </div>
                 </div>

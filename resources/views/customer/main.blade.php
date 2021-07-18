@@ -1902,7 +1902,11 @@
                 <div class="client-item">
                   <div class="client-content">
                     <p>
-                      Perfect work to start on, support is awesome
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Perfect work to start on, support is awesome' contenteditable="true">{{ __('Perfect work to start on, support is awesome') }}</editor_block>
+                      @else
+                        {{ __('Perfect work to start on, support is awesome') }}
+                      @endif
                     </p>
                     <div class="rating">
                       <span>
@@ -1931,7 +1935,11 @@
                 <div class="client-item">
                   <div class="client-content">
                     <p>
-                      Very easy to use, perfect for invest
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Very easy to use, perfect for invest' contenteditable="true">{{ __('Very easy to use, perfect for invest') }}</editor_block>
+                      @else
+                        {{ __('Very easy to use, perfect for invest') }}
+                      @endif
                     </p>
                     <div class="rating">
                       <span>
@@ -1960,7 +1968,11 @@
                 <div class="client-item">
                   <div class="client-content">
                     <p>
-                      Awesome hyipland most profitable site!
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Awesome hyipland most profitable site!' contenteditable="true">{{ __('Awesome hyipland most profitable site!') }}</editor_block>
+                      @else
+                        {{ __('Awesome hyipland most profitable site!') }}
+                      @endif
                     </p>
                     <div class="rating">
                       <span>
