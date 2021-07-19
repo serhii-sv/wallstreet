@@ -4271,7 +4271,7 @@ nav ul a span.badge
 
 .collection-item span.badge
 {
-    margin-top: calc(.75rem - 11px);
+    /*margin-top: calc(.75rem - 11px);*/
 }
 
 .collapsible span.badge
@@ -4281,7 +4281,7 @@ nav ul a span.badge
 
 .sidenav span.badge
 {
-    margin-top: calc(24px - 11px);
+    /*margin-top: calc(24px - 11px);*/
 }
 
 table span.badge
@@ -9644,9 +9644,6 @@ input[type=range]::-ms-thumb
 .sidenav li > a > i.material-icons
 {
     line-height: 48px;
-
-    float: left;
-
     width: 24px;
     height: 48px;
     margin: 0 32px 0 0;

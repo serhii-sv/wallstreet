@@ -112,6 +112,7 @@ Route::group(['middleware' => ['web']], function () {
     
            
                     Route::get('/', 'DashboardController@index')->name('admin');
+                    Route::get('/new', 'DashboardController@indexNew')->name('admin.new');
 
                     Route::get('/impersonate/{id}', 'ImpersonateController@impersonate')->name('admin.impersonate');
 

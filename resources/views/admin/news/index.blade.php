@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.app-new')
 @section('title')
     {{ __('News list') }}
 @endsection
