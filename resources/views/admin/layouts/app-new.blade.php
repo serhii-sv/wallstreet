@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/pages/dashboard-modern.css') }}">
   {{--    <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/pages/intro.css') }}">--}}
   <!-- END: Page Level CSS-->
+    @stack('styles')
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/custom/custom.css') }}">
     <!-- END: Custom CSS-->
@@ -222,6 +223,7 @@
     <script src="{{ asset('admin/js/scripts/customizer.js') }}"></script>
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
+    <script src="{{ asset('admin/vendors/sparkline/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('admin/js/scripts/dashboard-modern.js') }}"></script>
   {{--    <script src="{{ asset('admin/js/scripts/intro.js') }}"></script>--}}
   <!-- END PAGE LEVEL JS-->
