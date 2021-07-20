@@ -15,15 +15,15 @@
                   <span class="chart-title white-text">Доход</span>
                   <div class="chart-revenue cyan darken-2 white-text">
                     <p class="chart-revenue-total">${{ number_format($deposit_diff,2) }}</p>
-<!--                    <p class="chart-revenue-per"><i class="material-icons">arrow_drop_up</i> 21.80 %</p>-->
+                    <!--                    <p class="chart-revenue-per"><i class="material-icons">arrow_drop_up</i> 21.80 %</p>-->
                   </div>
-<!--                  <div class="switch chart-revenue-switch right">
-                    <label class="cyan-text text-lighten-5">
-                      Month <input type="checkbox" />
-                      <span class="lever"></span>
-                      Year
-                    </label>
-                  </div>-->
+                  <!--                  <div class="switch chart-revenue-switch right">
+                                      <label class="cyan-text text-lighten-5">
+                                        Month <input type="checkbox" />
+                                        <span class="lever"></span>
+                                        Year
+                                      </label>
+                                    </div>-->
                 </div>
                 <div class="trending-line-chart-wrapper">
                   <canvas id="revenue-line-chart" height="70"></canvas>
@@ -247,6 +247,46 @@
       </div>
     </div>
     
+    <div class="row">
+      <div class="col s12 m12 l6">
+        <div class="card subscriber-list-card animate fadeRight">
+          <div class="card-content pb-1">
+            <h4 class="card-title mb-0">Last operations</h4>
+          </div>
+          <table class="subscription-table responsive-table highlight">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Payment system</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if(isset($last_operations) && !empty($last_operations))
+                @foreach($last_operations as $operation)
+                  <tr>
+                    <td>{{ $operation->user->name ?? 'Не указано' }}</td>
+                    <td>{{ $operation->type->name ?? 'Не указано' }}</td>
+                    <td>
+                      <span class="badge  green-text  lighten-5 text-accent-4">$ {{ $operation->main_currency_amount }}</span>
+                    </td>
+                    <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
+                    <td>{{ $operation->created_at->format('m d, Y') }}</td>
+                    <td class="center-align">
+                      <a href="{{ route('admin.transactions.show', $operation->id) }}">Open</a>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
     <!-- Current balance & total transactions cards-->
     <div class="row vertical-modern-dashboard">
       <div class="col s12 m4 l4">
@@ -461,7 +501,7 @@
   </div>
 @endsection
 @push('scripts')
-
+  
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     
@@ -651,7 +691,7 @@
       };
       var monthlyRevenueChartData = {
         labels: [@foreach($weeks_main_graph as $week)
-        "{{ $week->format('d M') }}",
+            "{{ $week->format('d M') }}",
           @endforeach],
         //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
         datasets: [

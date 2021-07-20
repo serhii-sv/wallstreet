@@ -223,7 +223,7 @@
     <script src="{{ asset('admin/js/scripts/customizer.js') }}"></script>
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
-    <script src="{{ asset('admin/vendors/sparkline/jquery.sparkline.min.js') }}"></script>
+    
     <script src="{{ asset('admin/js/scripts/dashboard-modern.js') }}"></script>
   {{--    <script src="{{ asset('admin/js/scripts/intro.js') }}"></script>--}}
   <!-- END PAGE LEVEL JS-->

@@ -35,6 +35,7 @@ class DashboardController extends Controller
         $deposit_total_sum = array_sum($transactions_deposit_sum);
         $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
         $deposit_diff =  $deposit_total_sum - $deposit_total_withdraw;
+        
       
         return view('admin.dashboard-new', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
@@ -43,6 +44,7 @@ class DashboardController extends Controller
             'deposit_diff' => $deposit_diff,
             'deposit_total_sum' => $deposit_total_sum,
             'deposit_total_withdraw' => $deposit_total_withdraw,
+            'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
         ]);
     }
     

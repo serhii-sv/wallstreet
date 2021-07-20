@@ -35,7 +35,7 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{ __('Type') }}</th>
-                                <td>{{ __($transaction->type->name) }}</td>
+                                <td>{{ __($transaction->type->name ?? '') }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('User') }}</th>
@@ -55,7 +55,7 @@
                             <tr>
                                 <th scope="row">{{ __('Payment system') }}</th>
                                 <td>
-                                    <a href="{{ route('admin.payment-systems.edit', ['id' => $transaction->payment_system_id]) }}">{{ $transaction->paymentSystem->name }}</a>
+                                    <a href="{{ route('admin.payment-systems.edit', ['id' => $transaction->payment_system_id]) }}">{{ $transaction->paymentSystem->name ?? '' }}</a>
                                 </td>
                                 <td></td>
                             </tr>
@@ -72,7 +72,7 @@
                                 <tr>
                                     <th scope="row">{{ __('Tariff plan') }}</th>
                                     <td>
-                                        <a href="{{ route('admin.rates.show',['id'=>$transaction->rate_id]) }}">{{ $transaction->rate->name }}</a>
+                                        <a href="{{ route('admin.rates.show',['id'=>$transaction->rate_id]) }}">{{ $transaction->rate->name ?? '' }}</a>
                                     </td>
                                     <td></td>
                                 </tr>
