@@ -285,6 +285,89 @@
           </table>
         </div>
       </div>
+      <div class="col s12 m12 l6">
+        <div class="card">
+          @if(session()->has('success'))
+            <div class="card-alert card green mb-0">
+              <div class="card-content white-text">
+                  <span class="card-title white-text darken-1 mb-0">
+                    <i class="material-icons">notifications</i> @lang(session()->get('success'))</span>
+                {{--<p>Пользователю начислен бонус </p>--}}
+              </div>
+              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          @endif
+          @if ($errors->any())
+            <div class="card-alert card red lighten-2 mb-0">
+              <div class="card-content text-white">
+                     <span class="card-title white-text darken-1 mb-0">
+                    <i class="material-icons">notifications</i> {{ __("Error") }}</span>
+                @foreach ($errors->all() as $error)
+                  <p class="white-text darken-5">{{ $error }}</p>
+                @endforeach
+              </div>
+              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          @endif
+          <div class="card-content">
+            <h4 class="card-title mb-4">Give bonus</h4>
+            <form method="post" action="{{ route('admin.dashboard.add.bonus') }}">
+              {{ csrf_field() }}
+              <div class="row">
+                <div class="input-field col s12">
+                  <input placeholder="Id or Login or email" id="name2" name="user" type="text">
+                  <label for="name2" class="active">{{ __('User') }}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input placeholder="23" type="text" name="amount">
+                  <label class="active">{{ __('Amount') }}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <div class="select-wrapper">
+                    <select tabindex="-1" name="currency_id">
+                      <option value="" disabled="" selected="">Choose currency</option>
+                      @forelse($currencies as $item)
+                        <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
+                      @empty
+                      @endforelse
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <div class="select-wrapper">
+                    <select tabindex="-1" name="payment_system_id">
+                      <option value="" disabled="" selected="">Choose payment system</option>
+                      @forelse($payment_system as $item)
+                        <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
+                      @empty
+                      @endforelse
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <button class="btn cyan waves-effect waves-light right" type="submit" name="action">{{ __("send bonus") }}
+                      <i class="material-icons right">send</i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     
     <!-- Current balance & total transactions cards-->
@@ -501,7 +584,7 @@
   </div>
 @endsection
 @push('scripts')
-  
+  <script src="{{ asset('admin/js/scripts/ui-alerts.js') }}"></script>
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     
