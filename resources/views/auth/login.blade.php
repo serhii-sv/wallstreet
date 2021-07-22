@@ -35,7 +35,7 @@
               <div style="color: red; align-content: center">@include('partials.inform')<br></div>
               <div class="form-group">
                 <label for="sign-up">{{ __('E-Mail Address or login') }}</label>
-                <input type="text" placeholder="Enter Your Email "  id="sign-up" name="login">
+                <input type="text" placeholder="Enter Your Email "  id="sign-up" name="email">
               </div>
               <div class="form-group">
                 <label for="pass">{{ __('Password') }}</label>
