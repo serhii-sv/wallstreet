@@ -242,6 +242,10 @@ class Wallet extends Model
             /** @var User $partner */
             $partner        = $user->getPartnerOnLevel($level);
 
+            if (empty($partner)) {
+                continue;
+            }
+
             if ($partner->partner_level_1 > 0 && $level == 1) {
                 $partnerAmount = $amount * $partner->partner_level_1 / 100;
             }
@@ -263,10 +267,6 @@ class Wallet extends Model
             }
 
             \Log::info('Found partner '.$partner->login );
-
-            if (empty($partner)) {
-                continue;
-            }
 
             $partnerWallets = $partner->wallets()->get();
 
