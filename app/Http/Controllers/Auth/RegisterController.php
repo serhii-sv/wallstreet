@@ -13,7 +13,10 @@ use App\Models\PaymentSystem;
 use App\Models\Rate;
 use App\Models\User;
 use App\Models\Wallet;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,7 +51,29 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
+    
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        
+        event(new Registered($user = $this->create($request->all())));
+        
+        $this->guard()->login($user);
+     
+        if (Auth::check()){
+            createUserAuthLog($request, $user);
+        }
+        
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+    
     /**
      * Get a validator for an incoming registration request.
      *

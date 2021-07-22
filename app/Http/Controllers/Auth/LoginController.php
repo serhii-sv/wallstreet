@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserAuthLog;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -83,13 +84,10 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             /** @var User $user */
             $user = auth()->user();
-            
-            //dd($request->ip());
-            
+            createUserAuthLog($request, $user);
             if ($user->hasAnyRole(['admin','root'])) {
                 return redirect(route('admin'));
             }
-
             return redirect(route('profile.profile'));
         }
 
@@ -155,10 +153,6 @@ class LoginController extends Controller
          * Trying to authorize user
          */
         if (\Auth::attempt(['email' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
-            return true;
-        }
-
-        if (\Auth::attempt(['login' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
             return true;
         }
 
