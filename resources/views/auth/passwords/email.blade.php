@@ -1,26 +1,52 @@
-@extends('layouts.form')
-@section('title', __('Reset password'))
+@extends('layouts.app')
+@section('title', __('Login'))
 @section('content')
-
-<body>
-<div class="login-page">
-    <div class="form">
-        <a href="{{ route('customer.main') }}" class="modal-window__close" title="{{ __('Back') }}"></a>
-        <form class="register-form" method="POST" action="{{ route('password.email') }}">
-            {{ csrf_field() }}
-            <h4 class="form__title form__title--line">Reset<span>password</span></h4>
-            <div style="color: red; align-content: center">@include('partials.inform')<br></div>
-            <div class="input-row">
-                <div class="input-row">
-                    <label class="form__title"><span>{{ __('email') }}</span>
-                    </label><input id="email" name="email" type="text" value="{{ old('email') }}" required autofocus />
-                </div>
-            </div>
-            <div class="form__bottom">
-                <button class="btn btn btn--accent-line" type="submit" value="Submit">{{ __('Send Password Reset Link') }}</button>
-            </div>
-        </form>
+  
+  <div class="main--body">
+  
+    <!--========== Preloader ==========-->
+  @include('layouts.app-preloader')
+  <!--========== Preloader ==========-->
+  
+  {{--    <div class="preloader">--}}
+  {{--      <div class="preloader-inner">--}}
+  {{--        <div class="preloader-icon">--}}
+  {{--          <span></span>--}}
+  {{--          <span></span>--}}
+  {{--        </div>--}}
+  {{--      </div>--}}
+  {{--    </div>--}}
+  
+  <!--============= Sign In Section Starts Here =============-->
+    <div class="account-section bg_img" data-background="{{ asset('images/account-bg.jpg') }}">
+      <div class="container">
+        <div class="account-title text-center">
+          <a href="" class="back-home"><i class="fas fa-angle-left"></i>
+            <span>Back <span class="d-none d-sm-inline-block">To Hyipland</span></span>
+          </a>
+          <a href="#0" class="logo">
+            <img src="{{ asset('images/logo/footer-logo.png') }}" alt="logo">
+          </a>
+        </div>
+        <div class="account-wrapper">
+          <div class="account-body">
+            <h4 class="title mb-20">Reset <span>password</span></h4>
+            <form class="account-form"  method="POST" action="{{ route('password.email') }}">
+              {{ csrf_field() }}
+              <div style="color: red; align-content: center">@include('partials.inform')<br></div>
+              <div class="form-group">
+                <label for="sign-up">{{ __('E-Mail Address or login') }}</label>
+                <input id="email" name="email" type="text" value="{{ old('email') }}" required autofocus />
+              </div>
+              
+              <div class="form-group text-center">
+                <button type="submit" class="mt-2 mb-2">{{ __('Send Password Reset Link') }}</button>
+              </div>
+            </form>
+          </div>
+        
+        </div>
+      </div>
     </div>
-</div>
-</body>
+    <!--============= Sign In Section Ends Here =============-->
 @endsection

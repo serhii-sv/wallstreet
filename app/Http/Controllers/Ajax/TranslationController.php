@@ -40,7 +40,7 @@ class TranslationController extends Controller
             Storage::disk('lang')->put($lang . '_manual.json', json_encode($manual));
         }
         
-        $translations[$name] = $value;
+        $translations[$name] = htmlspecialchars($value);
         
         if (Storage::disk('lang')->put($lang . '.json', json_encode($translations))) {
             return json_encode([

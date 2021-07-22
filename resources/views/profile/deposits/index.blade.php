@@ -1,178 +1,251 @@
-@extends('profile.layouts.customer')
+@extends('layouts.app')
 @section('title', __('Deposits'))
 @section('content')
   
-  <section class="lk-section">
-    <h4 class="title">{{ __('Create a new deposit') }}</h4>
-    <div class="plan-item plan-item--line">
-      <div class="plan-item__left">
-        <p class="plan-item__name">0.77% {{ __('per day') }}</p>
-        <a class="btn btn--accent2" href="{{ route('profile.deposits.create') }}">{{ __('Create deposit') }}</a>
+  <div class="main--body dashboard-bg">
+    <!--========== Preloader ==========-->
+  @include('layouts.app-preloader')
+  <!--========== Preloader ==========-->
+    
+    
+    <!--=======SideHeader-Section Starts Here=======-->
+    <div class="notify-overlay"></div>
+    <section class="dashboard-section">
+      @include('profile.layouts.header')
+      <div class="dasboard-body">
+        <div class="dashboard-hero">
+          @include('profile.layouts.header-top')
+          <div class="dashboard-hero-content text-white">
+            <h3 class="title">{{ __("Deposits") }}</h3>
+            <ul class="breadcrumb">
+              <li>
+                <a href="{{ route('profile.profile') }}">{{ __("Dashboard") }}</a>
+              </li>
+              <li>
+                {{ __("Deposits") }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="container-fluid">
+          
+          @include('profile.components.balance-block')
+          
+          <div class="deposit">
+            <h3 class="main-title">Make Deposits</h3>
+            <h4 class="main-subtitle">01. Select the Plan</h4>
+            <div class="deposit-wrapper">
+              <div class="deposit-item">
+                <div class="deposit-inner">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <div class="deposit-item">
+                <div class="deposit-inner active">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <div class="deposit-item">
+                <div class="deposit-inner">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <div class="deposit-item">
+                <div class="deposit-inner">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <div class="deposit-item">
+                <div class="deposit-inner">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+              <div class="deposit-item">
+                <div class="deposit-inner">
+                  <div class="deposit-header">
+                    <h3 class="title">120%</h3>
+                    <span><b>every day</b></span>
+                  </div>
+                  <div class="deposit-body">
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Deposit</h5>
+                        <h5 class="subtitle"><span class="min">$10</span><span class="to">to</span><span class="max">$3500</span></h5>
+                      </div>
+                    </div>
+                    <span class="bal-shape"></span>
+                    <div class="item">
+                      <div class="item-thumb">
+                        <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                      </div>
+                      <div class="item-content">
+                        <h5 class="title">Terms</h5>
+                        <h5 class="subtitle">10 days</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#0" class="select-plan"><i class="fas fa-plus"></i></a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="deposit-system">
+              <h4 class="main-subtitle">02. Choose Payment  System</h4>
+              @include('profile.components.choose-payment')
+            </div>
+            
+            <div class="deposit-system">
+              <h4 class="main-subtitle">03. Enter the amount of Deposit:</h4>
+              <form class="make-deposit">
+                <div class="form-group">
+                  <input type="text" placeholder="Enter your amount" class="make-amount">
+                </div>
+                <div class="form-group">
+                  <label for="total-profit">Total Profit</label>
+                  <input type="text" readonly value="$180.00" class="readonly">
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="custom-button border-0">Make Deposit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        @include('profile.layouts.footer')
       </div>
-      <div class="plan-item__content">
-        <ul class="information-icons">
-          <li class="information-icons__item">
-            <div class="information-icons__icon"><img src="/img/icons/icon-calendar.svg" alt="">
-            </div>
-            <div class="information-icons__content">
-              <p class="information-icons__title">{{ __('Plan duration') }}</p>
-              <p class="information-icons__name">{{ __('100 days') }}</p>
-            </div>
-          </li>
-          <li class="information-icons__item">
-            <div class="information-icons__icon"><img src="/img/icons/icon-cash.svg" alt="">
-            </div>
-            <div class="information-icons__content">
-              <p class="information-icons__title">{{ __('Daily interest') }}
-              </p>
-              <p class="information-icons__name">0.77%
-              </p>
-            </div>
-          </li>
-          <li class="information-icons__item">
-            <div class="information-icons__icon"><img src="/img/icons/icon-monets.svg" alt="">
-            </div>
-            <div class="information-icons__content">
-              <p class="information-icons__title">{{ __('Minimum investment') }}
-              </p>
-              <p class="information-icons__name">USD 10$
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  <section class="lk-section">
-    <h3 class="title">{{ __('Active deposits list') }}</h3>
-    <div>
-      <div>
-        <table class="table table-striped" id="deposits-table-active" style="width:100%;">
-          <thead>
-            <tr>
-              <th>{{ __('Currency') }}</th>
-              <th>{{ __('Rate') }}</th>
-              <th>{{ __('Earnings') }}</th>
-              <th>{{ __('Invested') }}</th>
-              <th>{{ __('Status') }}</th>
-              <th>{{ __('Closing') }}</th>
-              <th></th>
-            </tr>
-          </thead>
-        </table>
-        <hr>
-        <br>
-        <h3 class="title">{{ __('Closed deposits list') }}</h3>
-        <table class="table table-striped" id="deposits-table-closed" style="width:100%;">
-          <thead>
-            <tr>
-              <th>{{ __('Currency') }}</th>
-              <th>{{ __('Rate') }}</th>
-              <th>{{ __('Earnings') }}</th>
-              <th>{{ __('Invested') }}</th>
-              <th>{{ __('Status') }}</th>
-              <th>{{ __('Closing') }}</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-    </div>
-  </section>
+    </section>
+    <!--=======SideHeader-Section Ends Here=======-->
   
-  <script>document.getElementById("depositsProfilePageMenuItem").className = "navigation-icons__link navigation-icons__link--active";</script>
+  
+  </div>
 
 @endsection
 
-@push('script')
-@endpush
-
-@push('load-scripts')
-  <script>
-    //initialize basic datatable
-    jQuery('#deposits-table-active').width('100%').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "order": [[5, "desc"]],
-      "ajax": '{{route('profile.deposits.dataTable', ['active' => 1])}}',
-      "columns": [
-        {"data": "currency.name"},
-        {"data": "rate.name"},
-        {
-          "data": 'daily',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['daily'] + '% {{ __('per day') }}';
-          }
-        },
-        {
-          "data": 'invested',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['invested'] + row['currency']['symbol'];
-          }
-        },
-        {
-          "data": 'active',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['active'] == 1 ? '{{ __('active') }}' : '{{ __('closed') }}';
-          }
-        },
-        {"data": "closing_at"},
-        {
-          "data": "weblink",
-          "render": function ( data, type, row, meta ) {
-            console.log( data);
-            return '<a href="/deposits/'+ row['id'] +'/reinvest">Реинвестировать</a>';
-          }
-        }
-      ],
-    });
-    //*initialize basic datatable
-  </script>
-@endpush
-
-@push('load-scripts')
-  <script>
-    //initialize basic datatable
-    jQuery('#deposits-table-closed').width('100%').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "order": [[5, "desc"]],
-      "ajax": '{{route('profile.deposits.dataTable', ['active' => 0])}}',
-      "columns": [
-        {"data": "currency.name"},
-        {"data": "rate.name"},
-        {
-          "data": 'daily',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['daily'] + '% {{ __('per day') }}';
-          }
-        },
-        {
-          "data": 'invested',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['invested'] + row['currency']['symbol'];
-          }
-        },
-        {
-          "data": 'active',
-          "orderable": false,
-          "searchable": false,
-          "render": function (data, type, row, meta) {
-            return row['active'] == 1 ? '{{ __('active') }}' : '{{ __('closed') }}';
-          }
-        },
-        {"data": "closing_at"},
-      ],
-    });
-    //*initialize basic datatable
-  </script>
-@endpush
