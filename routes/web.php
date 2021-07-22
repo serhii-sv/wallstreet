@@ -63,6 +63,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['site.status']], function () {
+            Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+            
             Route::get('/impersonate/leave', 'Admin\ImpersonateController@leave')->name('admin.impersonate.leave');
 
             Route::get('/reftree', 'Technical\ReftreeController@show')->name('users.reftree');
@@ -112,7 +114,6 @@ Route::group(['middleware' => ['web']], function () {
     
            
                     Route::get('/', 'DashboardController@index')->name('admin');
-                    Route::get('/new', 'DashboardController@indexNew')->name('admin.new');
                     Route::post('/dashboard/user/bonus', 'DashboardController@addUserBonus')->name('admin.dashboard.add.bonus');
 
                     Route::get('/impersonate/{id}', 'ImpersonateController@impersonate')->name('admin.impersonate');

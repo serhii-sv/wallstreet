@@ -22,10 +22,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        return view('admin.dashboard');
-    }
-    
-    public function indexNew() {
+        
         $count_main_graph = 12;
         $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
@@ -47,7 +44,7 @@ class DashboardController extends Controller
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
         
         
-        return view('admin.dashboard-new', [
+        return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
             'transactions_deposit_sum' => $transactions_deposit_sum,
             'transactions_withdraw_sum' => $transactions_withdraw_sum,

@@ -83,7 +83,9 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             /** @var User $user */
             $user = auth()->user();
-
+            
+            //dd($request->ip());
+            
             if ($user->hasAnyRole(['admin','root'])) {
                 return redirect(route('admin'));
             }

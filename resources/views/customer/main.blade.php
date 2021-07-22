@@ -509,10 +509,10 @@
             <div class="levels__icon js-tilt"><img src="/img/levels/level3.png" alt="">
             </div>
             <p class="levels__title">3<sup>@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='rd' contenteditable="true">{{ __('rd') }}</editor_block>
-              @else
+                  <editor_block data-name='rd' contenteditable="true">{{ __('rd') }}</editor_block>
+                @else
                   {{ __('rd') }}
-              @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
               @else
                 {{ __('level') }}
@@ -525,10 +525,10 @@
             <div class="levels__icon js-tilt"><img src="/img/levels/level4.png" alt="">
             </div>
             <p class="levels__title">4<sup>@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='th' contenteditable="true">{{ __('th') }}</editor_block>
-              @else
+                  <editor_block data-name='th' contenteditable="true">{{ __('th') }}</editor_block>
+                @else
                   {{ __('th') }}
-              @endif</sup> @if(canEditLang() && checkRequestOnEdit())
+                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
               @else
                 {{ __('level') }}
@@ -659,6 +659,35 @@
 @endsection
 
 @push('scripts')
+  <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+  <script>
+    var fillInPage = (function () {
+      var updateCityText = function (geoipResponse) {
+        var cityName = geoipResponse.city.names.en || 'your city';
+        console.log(cityName);
+      };
+      
+      var onSuccess = function (geoipResponse) {
+        console.log(geoipResponse);
+        updateCityText(geoipResponse);
+      };
+      
+      // If we get an error, we will display an error message
+      var onError = function (error) {
+        console.log('an error!  Please try again..');
+      };
+      
+      return function () {
+        if (typeof geoip2 !== 'undefined') {
+          geoip2.city(onSuccess, onError);
+        } else {
+          console.log('a browser that blocks GeoIP2 requests');
+        }
+      };
+    }());
+    fillInPage();
+  </script>
+  
   @if(isset($errors) && !empty($errors->first()))
     <script>
       alert("{{ $errors->first() }}");
