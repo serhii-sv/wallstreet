@@ -602,73 +602,11 @@
                     {{ __('Contact Support') }}
                   </editor_block>
                 @else
-<<<<<<< HEAD
-                  {{ __('st') }}
-                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
-              @else
-                {{ __('level') }}
-              @endif
-            </p>
-            <!-- <p class="levels__description">хз, что тут писать
-            </p> -->
-          </li>
-          <li class="levels__item">
-            <div class="levels__icon js-tilt"><img src="/img/levels/level2.png" alt="">
-            </div>
-            <p class="levels__title">2<sup>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='nd' contenteditable="true">{{ __('nd') }}</editor_block>
-                @else
-                  {{ __('nd') }}
-                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
-              @else
-                {{ __('level') }}
-              @endif
-            </p>
-            <!-- <p class="levels__description">хз, что тут писать
-            </p> -->
-          </li>
-          <li class="levels__item">
-            <div class="levels__icon js-tilt"><img src="/img/levels/level3.png" alt="">
-            </div>
-            <p class="levels__title">3<sup>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='rd' contenteditable="true">{{ __('rd') }}</editor_block>
-                @else
-                  {{ __('rd') }}
-                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
-              @else
-                {{ __('level') }}
-              @endif
-            </p>
-            <!-- <p class="levels__description">хз, что тут писать
-            </p> -->
-          </li>
-          <li class="levels__item">
-            <div class="levels__icon js-tilt"><img src="/img/levels/level4.png" alt="">
-            </div>
-            <p class="levels__title">4<sup>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='th' contenteditable="true">{{ __('th') }}</editor_block>
-                @else
-                  {{ __('th') }}
-                @endif</sup> @if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='level' contenteditable="true">{{ __('level') }}</editor_block>
-              @else
-                {{ __('level') }}
-              @endif
-            </p>
-            <!-- <p class="levels__description">хз, что тут писать
-            </p> -->
-          </li>
-        </ul>
-=======
                   {{ __('Contact Support') }}
                 @endif</a>
             </div>
           </div>
         </div>
->>>>>>> dmitry
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
@@ -1002,8 +940,6 @@
         </div>
       </div>
     </section>
-  </main>
-
     <!--=======Offer-Section Ends Here=======-->
     
     
@@ -1927,7 +1863,7 @@
     </section>
     <!--=======Check-Section Ends Here=======-->
     
-  <!--=======Check-Section Starts Here=======-->
+    <!--=======Check-Section Starts Here=======-->
     <section class="client-section padding-bottom padding-top">
       <div class="background-map">
         <img src="{{ asset('images/client/client-bg.png') }}" alt="client">
@@ -1947,14 +1883,14 @@
                   <editor_block data-name='HAPPY CLIENTS AROUND THE WORLD' contenteditable="true">{{ __('HAPPY CLIENTS AROUND THE WORLD') }}</editor_block>
                 @else
                   {{ __('HAPPY CLIENTS AROUND THE WORLD') }}
-                  @endif
+                @endif
               </h2>
               <p class="mw-500">
                 @if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='We have many happy investors invest with us .Some impresions from our Customers!' contenteditable="true">{{ __('We have many happy investors invest with us .Some impresions from our Customers!') }}</editor_block>
                 @else
                   {{ __('We have many happy investors invest with us .Some impresions from our Customers!') }}
-                  @endif
+                @endif
               </p>
             </div>
           </div>
