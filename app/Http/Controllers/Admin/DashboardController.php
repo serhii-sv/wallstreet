@@ -13,6 +13,7 @@ use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -42,8 +43,17 @@ class DashboardController extends Controller
         $deposit_total_sum = array_sum($transactions_deposit_sum);
         $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
-        
-        
+    
+        $payment_system = PaymentSystem::all();
+        foreach ($payment_system as $item)
+        {
+            $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
+                return $item->transactions_enter()->sum('main_currency_amount');
+            });
+            $item->transaction_minus = cache()->remember('dshb.payment_transaction_minu' . $item->id, 60, function () use ($item) {
+                return $item->transactions_withdraw()->sum('main_currency_amount');
+            });
+        }
         return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
             'transactions_deposit_sum' => $transactions_deposit_sum,
@@ -53,7 +63,9 @@ class DashboardController extends Controller
             'deposit_total_withdraw' => $deposit_total_withdraw,
             'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
             'currencies' => Currency::all(),
-            'payment_system' => PaymentSystem::all(),
+            'payment_system' => $payment_system,
+            'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
+            
         ]);
     }
     
