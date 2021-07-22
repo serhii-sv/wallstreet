@@ -15,7 +15,6 @@ use App\Console\Commands\Automatic\DepositQueueCommand;
 use App\Console\Commands\Automatic\FillCacheCommand;
 use App\Console\Commands\Automatic\GenerateDemoDataCommand;
 use App\Console\Commands\Automatic\ProcessInstantPaymentsCommand;
-use App\Console\Commands\Automatic\PublishLanguageFilesCommand;
 use App\Console\Commands\Automatic\ScanSysLoadCommand;
 use App\Console\Commands\Automatic\ScriptCheckerCommand;
 use App\Console\Commands\Automatic\TaskCheck\CheckAllScopes;
@@ -62,7 +61,6 @@ class Kernel extends ConsoleKernel
         RegisterCurrenciesCommand::class,
         RegisterPaymentSystemsCommand::class,
         ProcessInstantPaymentsCommand::class,
-        PublishLanguageFilesCommand::class,
         CheckPaymentSystemsConnectionsCommand::class,
         ArchiveBlockioAddressesCommand::class,
         UnarchiveAllBlockioAddressesCommand::class,
@@ -124,9 +122,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('process:instant_payments')->everyFiveMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('update:currency_rates')->twiceDaily()->withoutOverlapping();
-
-        // Languages
-        $schedule->command('publish:language_files')->everyTenMinutes()->withoutOverlapping();
 
         // Backups
         $schedule->command('backup:clean')->twiceDaily();

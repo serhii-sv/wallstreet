@@ -85,11 +85,6 @@ class InstallScriptCommand extends Command
 
         $this->line('===================================');
 
-        $this->info('Publishing languages files:');
-        $this->call('publish:language_files');
-
-        $this->line('===================================');
-
         $askNeedTelegram = $this->ask('Do you need to register Telegram BOT? [yes|no]', 'no');
 
         if ($askNeedTelegram == 'yes') {
