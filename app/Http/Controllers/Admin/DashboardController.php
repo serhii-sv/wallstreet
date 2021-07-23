@@ -76,6 +76,9 @@ class DashboardController extends Controller
     
     public function addUserBonus(RequestDashboardBonusUser $request) {
         $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
+        if (empty($user)){
+            return back()->withErrors([__('User not found!')])->withInput();
+        }
         $currency_id = $request->post('currency_id');
         $payment_system_id = $request->post('payment_system_id');
         $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency_id)->where('payment_system_id', $payment_system_id)->first();

@@ -242,13 +242,13 @@
               {{ csrf_field() }}
               <div class="row">
                 <div class="input-field col s12">
-                  <input placeholder="Id or Login or email" id="name2" name="user" type="text">
+                  <input placeholder="Id or Login or email" id="name2" name="user" type="text" value="{{ old('name') ?? '' }}">
                   <label for="name2" class="active">{{ __('User') }}</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input placeholder="23" type="text" name="amount">
+                  <input placeholder="23" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                   <label class="active">{{ __('Amount') }}</label>
                 </div>
               </div>
@@ -258,7 +258,7 @@
                     <select tabindex="-1" name="currency_id">
                       <option value="" disabled="" selected="">Choose currency</option>
                       @forelse($currencies as $item)
-                        <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
+                        <option value="{{ $item->id }}" @if($item->id == old('currency_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
                       @empty
                       @endforelse
                     </select>
@@ -271,7 +271,7 @@
                     <select tabindex="-1" name="payment_system_id">
                       <option value="" disabled="" selected="">Choose payment system</option>
                       @forelse($payment_system as $item)
-                        <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
+                        <option value="{{ $item->id }}" @if($item->id == old('payment_system_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
                       @empty
                       @endforelse
                     </select>
@@ -648,7 +648,7 @@
         datasets: [
           {
             label: "Browser",
-            data: [5, 6, 7, 8, 6],
+            data: [1550, 600, 1200, 800, 900],
             fillColor: "rgba(255,255,255,0.2)",
             borderColor: "#fff",
             pointBorderColor: "#fff",
