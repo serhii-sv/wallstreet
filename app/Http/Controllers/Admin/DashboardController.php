@@ -26,6 +26,7 @@ class DashboardController extends Controller
         
         $count_main_graph = 12;
         $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
+        $months = $this->getMonthsFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         $id_drawn = TransactionType::where('name', 'bonus')->first()->id;
@@ -47,7 +48,7 @@ class DashboardController extends Controller
         $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
         $deposit_total_drawn = array_sum($transactions_drawn_sum);
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
-    
+        
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item)
         {
@@ -57,6 +58,19 @@ class DashboardController extends Controller
             $item->transaction_minus = cache()->remember('dshb.payment_transaction_minu' . $item->id, 60, function () use ($item) {
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
+        }
+        $transactions_month= [];
+        foreach ($months as $key => $month) {
+            $transactions_month[$key]['month'] = $month;
+            $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60*24, function () use ($month) {
+                return Transaction::where('approved', 1)->whereBetween('created_at', [
+                    $month->format('Y-m-d H:i:s'),
+                    $month->endOfMonth(),
+                ])->select('type_id', 'main_currency_amount')->get();
+            });
+            $transactions_month[$key]['enter'] = $last_month_transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
+            $transactions_month[$key]['withdraw'] = $last_month_transactions->where('type_id', '!=', $id_withdraw)->sum('main_currency_amount');
+            $transactions_month[$key]['drawn'] = $last_month_transactions->where('type_id', '!=', $id_drawn)->sum('main_currency_amount');
         }
         return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
@@ -70,7 +84,7 @@ class DashboardController extends Controller
             'currencies' => Currency::all(),
             'payment_system' => $payment_system,
             'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
-            
+            'transactions_month' => $transactions_month,
         ]);
     }
     
@@ -88,7 +102,7 @@ class DashboardController extends Controller
             $wallet->currency_id = $currency_id;
             $wallet->payment_system_id = $payment_system_id;
         }
-        $wallet = $wallet->addBonus($request->post('amount'));
+        $wallet = $wallet->addBonus(intval($request->post('amount')));
         if ($wallet) {
             // send notification to user
             $data = [
@@ -98,9 +112,9 @@ class DashboardController extends Controller
                 'balance' => $wallet->balance,
             ];
             $wallet->user->sendNotification('bonus_accrued', $data);
-            return back()->with('success', __('Bonus accrued'));
+            return back()->with('success', __('Bonus accrued'))->withInput();
         }
-        return back()->with('error', __('Unable to accrue bonus'));
+        return back()->with('error', __('Unable to accrue bonus'))->withInput();
     }
     
     public function getWeeksFirstDayArray($count = 1) {
@@ -109,5 +123,13 @@ class DashboardController extends Controller
             $weeks[$j] = now()->startOfWeek()->subWeek($count - 1);
         }
         return $weeks;
+    }
+    
+    public function getMonthsFirstDayArray($count){
+        $months = [];
+        for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {
+            $months[$j] = now()->startOfMonth()->subMonth($count - 1);
+        }
+        return $months;
     }
 }

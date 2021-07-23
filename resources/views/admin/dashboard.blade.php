@@ -72,21 +72,24 @@
               <table class="responsive-table">
                 <thead>
                   <tr>
-                    <th data-field="id">ID</th>
-                    <th data-field="month">Month</th>
-                    <th data-field="item-sold">Item Sold</th>
-                    <th data-field="item-price">Item Price</th>
-                    <th data-field="total-profit">Total Profit</th>
+                    <th data-field="">id</th>
+                    <th data-field="">Month</th>
+                    <th data-field="">Нарисовано</th>
+                    <th data-field="">Пополнено</th>
+                    <th data-field="">Выведено</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @forelse($transactions_month as $i => $item)
                   <tr>
-                    <td>1</td>
-                    <td>January</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
+                    <td>{{ $i }}</td>
+                    <td>{{ $item['month']->format('M Y') ?? '' }}</td>
+                    <td>${{ number_format($item['drawn'], 2, ',', '.') ?? 0 }}</td>
+                    <td>${{ number_format($item['enter'], 2, ',', '.') ?? 0 }}</td>
+                    <td>${{ number_format($item['withdraw'], 2, ',', '.') ?? 0 }}</td>
                   </tr>
+                  @empty
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -242,7 +245,7 @@
               {{ csrf_field() }}
               <div class="row">
                 <div class="input-field col s12">
-                  <input placeholder="Id or Login or email" id="name2" name="user" type="text" value="{{ old('name') ?? '' }}">
+                  <input placeholder="Id or Login or email" id="name2" name="user" type="text" value="{{ old('user') ?? '' }}">
                   <label for="name2" class="active">{{ __('User') }}</label>
                 </div>
               </div>
