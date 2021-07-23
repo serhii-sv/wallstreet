@@ -87,83 +87,6 @@
                     <td>100</td>
                     <td>$122,00.00</td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>February</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>March</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>April</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>May</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>June</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>July</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td>August</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>9</td>
-                    <td>Septmber</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>10</td>
-                    <td>Octomber</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>11</td>
-                    <td>November</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
-                  <tr>
-                    <td>12</td>
-                    <td>December</td>
-                    <td>122</td>
-                    <td>100</td>
-                    <td>$122,00.00</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -173,7 +96,7 @@
           <div class="card animate fadeUp">
             <div class="card-move-up teal accent-4 waves-effect waves-block waves-light">
               <div class="move-up">
-                <p class="margin white-text">Browser Stats</p>
+                <p class="margin white-text">User Stats</p>
                 <canvas id="trending-radar-chart" height="114"></canvas>
               </div>
             </div>
@@ -595,7 +518,7 @@
         datasets: [
           {
             label: "Sales",
-            data: [{{ $deposit_diff }}, {{ $deposit_total_sum }}, {{ $deposit_total_withdraw }}],
+            data: [{{ $deposit_total_drawn }}, {{ $deposit_total_sum }}, {{ $deposit_total_withdraw }}],
             backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"]
           }
         ]

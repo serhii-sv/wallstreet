@@ -27,6 +27,8 @@ class DashboardController extends Controller
         $count_main_graph = 12;
         $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
+        $id_enter = TransactionType::where('name', 'enter')->first()->id;
+        $id_drawn = TransactionType::where('name', 'bonus')->first()->id;
         
         $transactions_deposit_sum = [];
         $transactions_withdraw_sum = [];
@@ -37,11 +39,13 @@ class DashboardController extends Controller
                     $week->endOfWeek(),
                 ])->get();
             });
-            $transactions_deposit_sum[$key] = $transactions->where('type_id', '!=', $id_withdraw)->sum('main_currency_amount');
+            $transactions_deposit_sum[$key] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
             $transactions_withdraw_sum[$key] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+            $transactions_drawn_sum[$key] = $transactions->where('type_id', '=', $id_drawn)->sum('main_currency_amount');
         }
         $deposit_total_sum = array_sum($transactions_deposit_sum);
         $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
+        $deposit_total_drawn = array_sum($transactions_drawn_sum);
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
     
         $payment_system = PaymentSystem::all();
@@ -59,6 +63,7 @@ class DashboardController extends Controller
             'transactions_deposit_sum' => $transactions_deposit_sum,
             'transactions_withdraw_sum' => $transactions_withdraw_sum,
             'deposit_diff' => $deposit_diff,
+            'deposit_total_drawn' => $deposit_total_drawn,
             'deposit_total_sum' => $deposit_total_sum,
             'deposit_total_withdraw' => $deposit_total_withdraw,
             'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
