@@ -390,14 +390,14 @@
                   </thead>
                   <tbody>
                     @forelse($user_auth_logs as $item)
-                    <tr>
-                      <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
-                      <td>{{ $item->ip ?? '' }}</td>
-                      <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
-                    </tr>
+                      <tr>
+                        <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
+                        <td>{{ $item->ip ?? '' }}</td>
+                        <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
+                      </tr>
                     @empty
                       <tr>
-                      <td colspan="3" style="text-align: center">Пусто</td>
+                        <td colspan="3" style="text-align: center">Пусто</td>
                       </tr>
                     @endforelse
                   </tbody>
@@ -428,16 +428,28 @@
                   </thead>
                   <tbody>
                     @forelse($payment_system as $item)
-                    <tr>
-                      <td>{{ $item->name }}</td>
-                      <td class="green-text"><span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}</td>
-                      <td class="red-text"><span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}</td>
-                      <td class="blue-grey-text"><span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}</td>
-                      <td>{{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}%</td>
-                    </tr>
+                      <tr>
+                        <td>{{ $item->name }}</td>
+                        <td class="green-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
+                        </td>
+                        <td class="red-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
+                        </td>
+                        <td class="blue-grey-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
+                        </td>
+                        <td>@if($item->transaction_sum)
+                            {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
+                          @else
+                            0
+                          @endif
+                          %
+                        </td>
+                      </tr>
                     @empty
                       <tr>
-                      <td colspan="3" style="text-align: center">Пусто</td>
+                        <td colspan="3" style="text-align: center">Пусто</td>
                       </tr>
                     @endforelse
                   </tbody>
@@ -448,7 +460,7 @@
         </div>
       </div>
     </div>
-    
+  
   </div>
 @endsection
 @push('scripts')
