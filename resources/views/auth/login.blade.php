@@ -42,7 +42,20 @@
                 <input type="password" placeholder="Enter Your Password" id="pass" name="password">
                 <span class="sign-in-recovery">Forgot your password? <a href="#0">recover password</a></span>
               </div>
-              
+              <div class="form__bottom">
+                @if(loginCaptchaCanBeShown())
+                  <div class="form-group">
+                    <div class="col-lg-4">
+                      <input type="text" name="captcha" id="captcha">
+                    </div>
+                    <label class="col-md-4 control-label"
+                        for="captcha">{{ __('Enter captcha code') }}</label>
+                    <div class="col-lg-4">
+                        <?= captcha_img() ?>
+                    </div>
+                  </div>
+                @endif
+              </div>
               <div class="form-group text-center">
                 <button type="submit" class="mt-2 mb-2">{{__('Log in')}}</button>
               </div>
