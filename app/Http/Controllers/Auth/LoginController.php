@@ -156,6 +156,10 @@ class LoginController extends Controller
             return true;
         }
 
+        if (\Auth::attempt(['login' => $request->login, 'password' => $request->password], $request->filled('remember'))) {
+            return true;
+        }
+
         return $this->sendFailedLoginResponse($request);
     }
 
