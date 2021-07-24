@@ -67,7 +67,9 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['site.status']], function () {
-            Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+            
+            Route::post('/ajax/set-user-location', 'Ajax\UserLocationController@setUserLocationInfo')->name('ajax.set.user.location');
+            Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
             
             Route::get('/impersonate/leave', 'Admin\ImpersonateController@leave')->name('admin.impersonate.leave');
             

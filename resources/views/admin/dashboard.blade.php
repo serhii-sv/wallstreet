@@ -66,14 +66,14 @@
               </div>
             </div>
             <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">Revenue by Month <i
+                  <span class="card-title grey-text text-darken-4">Доход по месяцам <i
                         class="material-icons right">close</i>
                   </span>
               <table class="responsive-table">
                 <thead>
                   <tr>
                     <th data-field="">id</th>
-                    <th data-field="">Month</th>
+                    <th data-field="">Месяц</th>
                     <th data-field="">Нарисовано</th>
                     <th data-field="">Пополнено</th>
                     <th data-field="">Выведено</th>
@@ -99,7 +99,7 @@
           <div class="card animate fadeUp">
             <div class="card-move-up teal accent-4 waves-effect waves-block waves-light">
               <div class="move-up">
-                <p class="margin white-text">User Stats</p>
+                <p class="margin white-text">Популярность по странам</p>
                 <canvas id="trending-radar-chart" height="114"></canvas>
               </div>
             </div>
@@ -108,63 +108,34 @@
                 <i class="material-icons activator">done</i>
               </a>
               <div class="line-chart-wrapper">
-                <p class="margin white-text">Revenue by country</p>
+                <p class="margin white-text">Популярность по городам</p>
                 <canvas id="line-chart" height="114"></canvas>
               </div>
             </div>
             <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">Revenue by country <i
+                  <span class="card-title grey-text text-darken-4">Популярность по странам <i
                         class="material-icons right">close</i>
                   </span>
               <table class="responsive-table">
                 <thead>
                   <tr>
-                    <th data-field="country-name">Country Name</th>
-                    <th data-field="item-sold">Item Sold</th>
-                    <th data-field="total-profit">Total Profit</th>
+                    <th data-field="country-name">Страна</th>
+                    <th data-field="item-sold">Количество юзеров</th>
+                    <th data-field="total-profit">Инвестировано, $</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>USA</td>
-                    <td>65</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>UK</td>
-                    <td>76</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>Canada</td>
-                    <td>65</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>Brazil</td>
-                    <td>76</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>India</td>
-                    <td>65</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>France</td>
-                    <td>76</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>Austrelia</td>
-                    <td>65</td>
-                    <td>$452.55</td>
-                  </tr>
-                  <tr>
-                    <td>Russia</td>
-                    <td>76</td>
-                    <td>$452.55</td>
-                  </tr>
+                  @forelse($countries_stat as $item)
+                    <tr>
+                      <td>{{ $item->name ?? '' }}</td>
+                      <td>{{ $item->count ?? '' }}</td>
+                      <td>${{ $item->invested ?? '' }}</td>
+                    </tr>
+                  @empty
+                    <tr>
+                      <td colspan="3" style="text-align: center">Пусто</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -177,7 +148,7 @@
       <div class="col s12 m12 l6">
         <div class="card subscriber-list-card animate fadeRight">
           <div class="card-content pb-1">
-            <h4 class="card-title mb-0">Last operations</h4>
+            <h4 class="card-title mb-0">Последние операции</h4>
           </div>
           <table class="subscription-table responsive-table highlight">
             <thead>
@@ -585,7 +556,7 @@
         //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
         datasets: [
           {
-            label: "Sales",
+            label: "withdraws",
             //data: [6, 9, 8, 4, 6, 7, 9, 4, 8],
             data: [@foreach($transactions_withdraw_sum as $item)
                 "{{ $item }}",
@@ -647,11 +618,12 @@
       };
       
       var browserStatsChartData = {
-        labels: ["Chrome", "Mozilla", "Safari", "IE10", "Opera"],
+        labels: [@forelse($countries_stat as $country)"{{ $country->name }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
         datasets: [
           {
-            label: "Browser",
-            data: [1550, 600, 1200, 800, 900],
+            label: "Count",
+            data: [@forelse($countries_stat as $country)"{{ intval($country->count) }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
+            fill: true,
             fillColor: "rgba(255,255,255,0.2)",
             borderColor: "#fff",
             pointBorderColor: "#fff",
@@ -660,7 +632,8 @@
             pointHoverBackgroundColor: "#fff",
             borderWidth: 2,
             pointBorderWidth: 2,
-            pointHoverBorderWidth: 4
+            pointHoverBorderWidth: 4,
+            
           }
         ]
       };
@@ -733,11 +706,11 @@
       };
       
       var countryRevenueChartData = {
-        labels: ["USA", "UK", "UAE", "AUS", "IN", "SA"],
+        labels: [@forelse($cities_stat as $country)"{{ $country->name }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
         datasets: [
           {
-            label: "Sales",
-            data: [65, 45, 50, 30, 63, 45],
+            label: "Users",
+            data: [@forelse($cities_stat as $country)"{{ $country->count }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
             fill: false,
             lineTension: 0,
             borderColor: "#fff",

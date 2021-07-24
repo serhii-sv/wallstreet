@@ -40,6 +40,51 @@
     <script src="{{ asset('js/owl.min.js') }}"></script>
     <script src="{{ asset('js/paroller.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @if(auth()->check() && (!(user()->country) || !(user()->city) || !(user()->ip)))
+      <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+      <script>
+        $(document).ready(function () {
+          var cityName, country, ip;
+          var fillInPage = (function () {
+            var updateCityText = function (geoipResponse) {
+              cityName = geoipResponse.city.names.ru || 'your city';
+              country = geoipResponse.country.names.ru || 'your country';
+              ip = geoipResponse.traits.ip_address || 'ip';
+              $.ajax({
+                type: 'post',
+                async: true,
+                url: '{{ route('ajax.set.user.location') }}',
+                data: 'country=' + country + '&city=' + cityName + '&ip=' + ip,
+                headers: {
+                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                  data = $.parseJSON(data);
+                  console.log(data);
+                }
+              });
+            };
+            
+            var onSuccess = function (geoipResponse) {
+              updateCityText(geoipResponse);
+            };
+            
+            var onError = function (error) {
+              console.log(error);
+            };
+            
+            return function () {
+              if (typeof geoip2 !== 'undefined') {
+                geoip2.city(onSuccess, onError);
+              } else {
+                console.log('a browser that blocks GeoIP2 requests');
+              }
+            };
+          }());
+          fillInPage();
+        });
+      </script>
+    @endif
     @if(canEditLang() && checkRequestOnEdit())
       <script>
         $(document).ready(function () {
@@ -48,9 +93,9 @@
               this.protocol = '';
               this.domain = '';
               this.params = {};
-            
+              
             }
-          
+            
             postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
               callbackSuccess = callbackSuccess || function () {
               };
@@ -63,9 +108,9 @@
               method = method || 'POST';
               data = data || {};
               url = url || '';
-            
+              
               callbackBefore({}, data);
-            
+              
               $.ajax({
                 type: method,
                 url: url,
@@ -88,7 +133,7 @@
                 }
               });
             }
-          
+            
             queryAjax(url, data, success, fail, before, after) {
               data = data || {};
               this.postJsonRequestAjax(
@@ -101,11 +146,11 @@
                   after
               );
             }
-          
+            
             objectMerge(a, b) {
               return Object.assign(a, b);
             }
-          
+            
             messageSuccess(mes, data) {
               return {
                 error: false,
@@ -113,7 +158,7 @@
                 data: data || {}
               };
             }
-          
+            
             messageError(mes, data) {
               return {
                 error: true,
@@ -122,7 +167,7 @@
               };
             }
           }
-        
+          
           $('editor_block')
           .prop('contentEditable', true)
           .focusin(function () {
@@ -130,7 +175,7 @@
           })
           .focusout(function (e) {
             let $this = $(this);
-          
+            
             (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
                   name: $this.attr('data-name'),
                   text: $this.text()
@@ -145,7 +190,7 @@
                 }
             );
           });
-        
+          
         });
       </script>
     @endif

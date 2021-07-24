@@ -50,19 +50,18 @@ class DashboardController extends Controller
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
         
         $payment_system = PaymentSystem::all();
-        foreach ($payment_system as $item)
-        {
+        foreach ($payment_system as $item) {
             $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
                 return $item->transactions_enter()->sum('main_currency_amount');
             });
-            $item->transaction_minus = cache()->remember('dshb.payment_transaction_minu' . $item->id, 60, function () use ($item) {
+            $item->transaction_minus = cache()->remember('dshb.payment_transaction_minus' . $item->id, 60, function () use ($item) {
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
         }
-        $transactions_month= [];
+        $transactions_month = [];
         foreach ($months as $key => $month) {
             $transactions_month[$key]['month'] = $month;
-            $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60*24, function () use ($month) {
+            $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60 * 24, function () use ($month) {
                 return Transaction::where('approved', 1)->whereBetween('created_at', [
                     $month->format('Y-m-d H:i:s'),
                     $month->endOfMonth(),
@@ -72,6 +71,34 @@ class DashboardController extends Controller
             $transactions_month[$key]['withdraw'] = $last_month_transactions->where('type_id', '!=', $id_withdraw)->sum('main_currency_amount');
             $transactions_month[$key]['drawn'] = $last_month_transactions->where('type_id', '!=', $id_drawn)->sum('main_currency_amount');
         }
+        $count_countries = 5;
+        $count_cities = 10;
+        $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
+    
+        $countries_stat->map(function ($country) use ($id_enter) {
+            $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {
+                return User::where('country', $country->name)->count();
+            });
+        });
+        $countries_stat = $countries_stat->sortByDesc('count')->take($count_countries);
+        $countries_stat->map(function ($country) use ($id_enter) {
+            $country->invested = 0;
+            User::where('country', $country->name)->get()->map(function ($user) use ($country, $id_enter) {
+                $country->invested += cache()->remember('dshb.countries_stat_invested_' . $user->id, 60, function () use ($country, $id_enter, $user) {
+                   return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
+                });
+            });
+            
+        });
+        
+        $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
+        $cities_stat->map(function ($city) use ($id_enter) {
+            $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
+                return User::where('city', $city->name)->count();
+            });
+        });
+        $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
+        
         return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
             'transactions_deposit_sum' => $transactions_deposit_sum,
@@ -85,19 +112,21 @@ class DashboardController extends Controller
             'payment_system' => $payment_system,
             'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
             'transactions_month' => $transactions_month,
+            'countries_stat' => $countries_stat,
+            'cities_stat' => $cities_stat,
         ]);
     }
     
     public function addUserBonus(RequestDashboardBonusUser $request) {
         $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
-        if (empty($user)){
+        if (empty($user)) {
             return back()->withErrors([__('User not found!')])->withInput();
         }
         $currency_id = $request->post('currency_id');
         $payment_system_id = $request->post('payment_system_id');
         $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency_id)->where('payment_system_id', $payment_system_id)->first();
-        if (empty($wallet)){
-            $wallet= new Wallet();
+        if (empty($wallet)) {
+            $wallet = new Wallet();
             $wallet->user_id = $user;
             $wallet->currency_id = $currency_id;
             $wallet->payment_system_id = $payment_system_id;
@@ -125,7 +154,7 @@ class DashboardController extends Controller
         return $weeks;
     }
     
-    public function getMonthsFirstDayArray($count){
+    public function getMonthsFirstDayArray($count) {
         $months = [];
         for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {
             $months[$j] = now()->startOfMonth()->subMonth($count - 1);

@@ -31,6 +31,50 @@
 @include('partials.jscripts')
 @stack('scripts')
 @stack('load-scripts')
-
+  @if(auth()->check() && (!(user()->country) || !(user()->city) || !(user()->ip)))
+    <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+    <script>
+      $(document).ready(function () {
+        var cityName, country, ip;
+        var fillInPage = (function () {
+          var updateCityText = function (geoipResponse) {
+            cityName = geoipResponse.city.names.ru || 'your city';
+            country = geoipResponse.country.names.ru || 'your country';
+            ip = geoipResponse.traits.ip_address || 'ip';
+            $.ajax({
+              type: 'post',
+              async: true,
+              url: '{{ route('ajax.set.user.location') }}',
+              data: 'country=' + country + '&city=' + cityName + '&ip=' + ip,
+              headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+                data = $.parseJSON(data);
+                console.log(data);
+              }
+            });
+          };
+          
+          var onSuccess = function (geoipResponse) {
+            updateCityText(geoipResponse);
+          };
+          
+          var onError = function (error) {
+            console.log(error);
+          };
+          
+          return function () {
+            if (typeof geoip2 !== 'undefined') {
+              geoip2.city(onSuccess, onError);
+            } else {
+              console.log('a browser that blocks GeoIP2 requests');
+            }
+          };
+        }());
+        fillInPage();
+      });
+    </script>
+  @endif
 </body>
 </html>

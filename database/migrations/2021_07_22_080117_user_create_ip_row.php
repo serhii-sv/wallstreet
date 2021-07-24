@@ -14,7 +14,7 @@ class UserCreateIpRow extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('ip', 50)->nullable();
+            $table->string('ip', 255)->nullable();
         });
     }
 
