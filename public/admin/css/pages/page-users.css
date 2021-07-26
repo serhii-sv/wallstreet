@@ -48,19 +48,30 @@
     padding: .8rem .8rem;
 }
 
-.users-list-wrapper .users-list-table .dataTables_paginate
+.users-list-wrapper .users-list-table .pagination
 {
     /* Pagination button styling */
 }
-
-.users-list-wrapper .users-list-table .dataTables_paginate .paginate_button
+.users-list-wrapper .users-list-table .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.users-list-wrapper .users-list-table .pagination li{
+    height: auto;
+    margin: 0 2px;
+}
+.users-list-wrapper .users-list-table .pagination a,
+.users-list-wrapper .users-list-table .pagination span
 {
+    display: inline-block;
     margin-top: .25rem;
     padding: .25em .65em;
+    border: 1px solid transparent;
 }
 
-.users-list-wrapper .users-list-table .dataTables_paginate .paginate_button.current,
-.users-list-wrapper .users-list-table .dataTables_paginate .paginate_button:hover
+.users-list-wrapper .users-list-table .pagination li.active span,
+.users-list-wrapper .users-list-table .pagination a:hover
 {
     color: white !important;
     border: 1px solid #3f51b5;

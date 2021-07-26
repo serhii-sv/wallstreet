@@ -17,7 +17,7 @@ $(document).ready(function () {
   // to store into local storage to get rendered on second page named page-users-view
   $(document).on("click", "#users-list-datatable tr", function () {
     $(this).find("td").each(function () {
-      usersDataArray.push($(this).text().trim())
+      usersDataArray.push($(this).text().trim());
     })
 
     localStorage.setItem("usersId", usersDataArray[1]);
@@ -26,7 +26,7 @@ $(document).ready(function () {
     localStorage.setItem("usersVerified", usersDataArray[5]);
     localStorage.setItem("usersRole", usersDataArray[6]);
     localStorage.setItem("usersStatus", usersDataArray[7]);
-  })
+  });
   // render stored local storage data on page named page-users-view
   if (localStorage.usersId !== undefined) {
     $(".users-view-id").html(localStorage.getItem("usersId"));
@@ -37,7 +37,7 @@ $(document).ready(function () {
     $(".users-view-status").html(localStorage.getItem("usersStatus"));
     // update badge color on status change
     if ($(".users-view-status").text() === "Banned") {
-      $(".users-view-status").toggleClass("badge-light-success badge-light-danger")
+      $(".users-view-status").toggleClass("badge-light-success badge-light-danger");
     }
     // update badge color on status change
     if ($(".users-view-status").text() === "Close") {

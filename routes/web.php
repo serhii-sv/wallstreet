@@ -124,6 +124,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::prefix('wallstreet')->namespace('Admin')->group(function () {
 //                 Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
+                    Route::post('/ajax/search-users', 'Ajax\SearchUserController@search')->name('ajax.search.users');
+                    
                     Route::get('/', 'DashboardController@index')->name('admin');
                     Route::post('/dashboard/user/bonus', 'DashboardController@addUserBonus')->name('admin.dashboard.add.bonus');
 
