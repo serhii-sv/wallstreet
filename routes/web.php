@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
 
-Route::get('/ttt', function(){
-
-});
-
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
     
