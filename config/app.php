@@ -189,6 +189,9 @@ return [
         Hedii\ArtisanLogCleaner\ArtisanLogCleanerServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+
+        // Custom registered providers
+        App\Providers\ComposerServiceProvider::class,
         
     ],
 

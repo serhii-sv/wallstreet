@@ -81,6 +81,9 @@ class User extends Authenticatable
     /** @var bool $incrementing */
     public $incrementing = false;
 
+    // Append additional fields to the model
+    protected $appends = ['shortName'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -891,5 +894,18 @@ class User extends Authenticatable
         if ($this->email_verification_hash != $this->getEmailVerificationHash($this->email)) {
             return $this->sendVerificationEmail();
         }
+    }
+
+    public function getShortNameAttribute(){
+        if(strlen($this->name) <= 18)
+            return $this->name;
+
+        if(explode(' ', $this->name)[0] <= 15)
+            return explode(' ', $this->name)[0] . " " . substr(explode(' ', $this->name)[1], 0, 1) . ".";
+
+        if(explode(' ', $this->name)[0] <= 18)
+            return explode(' ', $this->name)[0];
+
+        return substr($this->name, 0, 18);
     }
 }

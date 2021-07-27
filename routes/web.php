@@ -7,11 +7,23 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\NewController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
+
+Route::get('/ttt', function(){
+    dd(User::whereHas('roles', function($query){
+        $query->where(function($query){
+            $query->where('roles.id', '=', 1);
+            $query->orWhere('roles.id', '=', 2);
+        });
+        //dd(str_replace_array('?', $query->getQuery()->getBindings(), $query->getQuery()->toSql()));
+    })
+        ->get());
+});
 
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
