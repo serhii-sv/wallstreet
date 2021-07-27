@@ -18,6 +18,7 @@ use App\Models\UserTasks\UserTasks;
 use App\Models\Youtube\YoutubeVideoWatch;
 use App\Traits\Uuids;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -67,6 +68,7 @@ use Webpatser\Uuid\Uuid;
  * @property string stat_additional
  * @property float stat_salary_percent
  * @property float stat_worker_withdraw
+ * @property Carbon last_activity_at
  */
 class User extends Authenticatable
 {
@@ -82,7 +84,10 @@ class User extends Authenticatable
     public $incrementing = false;
 
     // Append additional fields to the model
-    protected $appends = ['shortName'];
+    protected $appends = [
+        'short_name',
+        'last_activity'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -896,6 +901,11 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * Accessor for short name
+     * On the right sidebar menu with all users sometimes names are too long
+     * @return false|mixed|string
+     */
     public function getShortNameAttribute(){
         if(strlen($this->name) <= 18)
             return $this->name;
@@ -906,6 +916,50 @@ class User extends Authenticatable
         if(explode(' ', $this->name)[0] <= 18)
             return explode(' ', $this->name)[0];
 
-        return substr($this->name, 0, 18);
+        return substr($this->name, 0, 15) . "...";
+    }
+
+    /**
+     * Accessor for last activity field
+     * Used at the moment for indicate if user is online for at least 2 minutes ago
+     * @return array
+     */
+    public function getLastActivityAttribute(){
+        if($this->last_activity_at === null)
+            return [
+                'is_online' => false,
+                'last_seen' => 'Wait auth'
+            ];
+
+        $currentDate = Carbon::make($this->last_activity_at);
+
+        $now = Carbon::now();
+
+        if($currentDate->greaterThanOrEqualTo($now->startOfDay()))
+            return [
+                'is_online' => $now->subMinutes(2)->lessThan($currentDate),
+                'last_seen' => $currentDate->format("g.i A")
+            ];
+
+        return [
+            'is_online' => false,
+            'last_seen' => $currentDate->format("j \of M")
+        ];
+    }
+
+    /**
+     * Mutator for last activity field
+     * @param DateTime|null $time
+     * @return User
+     */
+    public function setLastActivity(DateTime $time = null){
+        $this->last_activity_at = $time;
+
+        if($time === null)
+            $this->last_activity_at = new DateTime();
+
+        $this->save();
+
+        return $this;
     }
 }

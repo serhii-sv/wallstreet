@@ -39,7 +39,7 @@
               @foreach($admins as $admin)
                 <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
                     data-target="slide-out-chat">
-                <span class="avatar-status avatar-online avatar-50"><img
+                <span class="avatar-status {{$admin->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50"><img
                           src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" />
                   <i></i>
                 </span>
@@ -47,7 +47,7 @@
                     <h6 class="line-height-0">{{$admin->shortName}}</h6>
                     <p class="medium-small blue-grey-text text-lighten-3 pt-3">{{$admin->email}}</p>
                   </div>
-                  <span class="secondary-content medium-small">5.00 AM</span>
+                  <span class="secondary-content medium-small">{{$admin->lastActivity['last_seen']}}</span>
                 </li>
               @endforeach
               {{--<li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
