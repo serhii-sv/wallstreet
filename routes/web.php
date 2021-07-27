@@ -7,6 +7,8 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\NewController;
+use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
