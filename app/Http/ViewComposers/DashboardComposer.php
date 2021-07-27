@@ -38,6 +38,8 @@ class DashboardComposer
                 $query->where('roles.id', '=', 1);
                 $query->orWhere('roles.id', '=', 2);
             });
-        })->get());
+        })
+            ->orderBy('last_activity_at', 'desc')
+            ->get());
     }
 }
