@@ -19,7 +19,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'admin/layouts.app-right-sidebar', 'App\Http\ViewComposers\DashboardComposer'
+            ['admin.layouts.app-right-sidebar'], 'App\Http\ViewComposers\DashboardComposer'
         );
     }
 

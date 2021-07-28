@@ -937,7 +937,7 @@ class User extends Authenticatable
 
         if($currentDate->greaterThanOrEqualTo($now->startOfDay()))
             return [
-                'is_online' => $now->subMinutes(2)->lessThan($currentDate),
+                'is_online' => $now->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
                 'last_seen' => $currentDate->format("g.i A")
             ];
 

@@ -22,7 +22,8 @@ class SetLastActivity
      */
     public function handle($request, Closure $next)
     {
-        auth()->user()->setLastActivity();
+        if(auth()->user())
+            auth()->user()->setLastActivity();
 
         return $next($request);
     }
