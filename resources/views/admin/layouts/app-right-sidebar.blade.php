@@ -34,9 +34,23 @@
       <div class="slide-out-right-body row pl-3">
         <div id="messages" class="col s12 pb-0">
           <div class="collection border-none mb-0">
-            <input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search Messages" />
+            {{--<input class="header-search-input mt-4 mb-2" type="text" name="Search" placeholder="Search Messages" />--}}
             <ul class="collection right-sidebar-chat p-0 mb-0">
-              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+              @foreach($admins as $admin)
+                <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                    data-target="slide-out-chat">
+                <span class="avatar-status {{$admin->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50">
+                  <img src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" />
+                  <i></i>
+                </span>
+                  <div class="user-content">
+                    <h6 class="line-height-0">{{$admin->shortName}}</h6>
+                    <p class="medium-small blue-grey-text text-lighten-3 pt-3">{{$admin->email}}</p>
+                  </div>
+                  <span class="secondary-content medium-small">{{$admin->lastActivity['last_seen']}}</span>
+                </li>
+              @endforeach
+              {{--<li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
                   data-target="slide-out-chat">
                 <span class="avatar-status avatar-online avatar-50"><img
                       src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" />
@@ -203,7 +217,7 @@
                   <p class="medium-small blue-grey-text text-lighten-3 pt-3">Leave it</p>
                 </div>
                 <span class="secondary-content medium-small">2.00 PM</span>
-              </li>
+              </li>--}}
             </ul>
           </div>
         </div>

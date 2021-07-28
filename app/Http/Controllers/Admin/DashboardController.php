@@ -17,17 +17,23 @@ use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
+    protected $users;
+
+    public function __construct(User $users)
+    {
+        $this->users = $users;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        
+
         $count_main_graph = 12;
-        //$weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
-        // $months = $this->getMonthsFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         
@@ -84,9 +90,9 @@ class DashboardController extends Controller
                     return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
-            
+
         });
-        
+
         $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
         $cities_stat->map(function ($city) use ($id_enter) {
             $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
@@ -124,9 +130,13 @@ class DashboardController extends Controller
             'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
             'countries_stat' => $countries_stat,
             'cities_stat' => $cities_stat,
+            'online_users' => $this->users->where('last_activity_at', '>', Carbon::now()
+                ->subSeconds(config('chats.max_idle_sec_to_be_online'))
+                ->format('Y-m-d H:i:s')
+            )->get()
         ]);
     }
-    
+
     public function addUserBonus(RequestDashboardBonusUser $request) {
         $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
         if (empty($user)) {

@@ -4,8 +4,103 @@
 
 @section('content')
   <div class="section">
-  
+
     <div id="chart-dashboard">
+
+      <div id="card-stats" class="pt-0">
+        <div class="row">
+          <div class="col s12 m6 l6 xl3">
+            <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft">
+              <div class="padding-4">
+                <div class="row">
+                  <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">add_shopping_cart</i>
+                    <p>Аккаунты</p>
+                  </div>
+                  <div class="col s5 m5 right-align">
+                    <h5 class="mb-0 white-text">690</h5>
+                    <p class="no-margin">Сегодня</p>
+                    <p>6,00,00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m6 l6 xl3">
+            <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeLeft">
+              <div class="padding-4">
+                <div class="row">
+                  <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">perm_identity</i>
+                    <p>Пополнение</p>
+                  </div>
+                  <div class="col s5 m5 right-align">
+                    <h5 class="mb-0 white-text">1885</h5>
+                    <p class="no-margin">Сегодня</p>
+                    <p>1,12,900</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m6 l6 xl3">
+            <div class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight">
+              <div class="padding-4">
+                <div class="row">
+                  <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">timeline</i>
+                    <p>Вывод</p>
+                  </div>
+                  <div class="col s5 m5 right-align">
+                    <h5 class="mb-0 white-text">80%</h5>
+                    <p class="no-margin">Сегодня</p>
+                    <p>3,42,230</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m6 l6 xl3">
+            <div class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeRight">
+              <div class="padding-4">
+                <div class="row">
+                  <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">attach_money</i>
+                    <p>Прибыль</p>
+                  </div>
+                  <div class="col s5 m5 right-align">
+                    <h5 class="mb-0 white-text">$890</h5>
+                    <p class="no-margin">Сегодня</p>
+                    <p>$25,000</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 l4">
+          <!-- Recent Buyers -->
+          <div class="card recent-buyers-card animate fadeUp">
+            <div class="card-content">
+              <h4 class="card-title mb-0">Пользователи онлайн </h4>
+
+              <ul class="collection mb-0">
+                @foreach($online_users as $user)
+                <li class="collection-item avatar">
+                  <img src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" class="circle"/>
+                  <p class="font-weight-600">{{$user->short_name}}</p>
+                  <p class="medium-small">{{$user->login}}</p>
+                </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
@@ -147,7 +242,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col s12 m12 l6">
         <div class="card subscriber-list-card animate fadeRight">
