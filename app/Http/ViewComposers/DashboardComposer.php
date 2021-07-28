@@ -35,8 +35,8 @@ class DashboardComposer
     {
         $view->with('admins', $this->users->whereHas('roles', function($query){
             $query->where(function($query){
-                $query->where('roles.id', '=', 1);
-                $query->orWhere('roles.id', '=', 2);
+                $query->where('roles.name', '=', 'root');
+                $query->orWhere('roles.name', '=', 'admin');
             });
         })
             ->orderBy('last_activity_at', 'desc')
