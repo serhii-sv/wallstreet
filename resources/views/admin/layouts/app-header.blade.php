@@ -7,9 +7,6 @@
           <ul class="search-list collection display-none"></ul>
         </div>
         <ul class="navbar-list right">
-          <li>
-            
-          </li>
 {{--          <li class="dropdown-language">--}}
 {{--            <a class="waves-effect waves-block waves-light translation-button" href="#" data-target="translation-dropdown">--}}
 {{--              <span class="flag-icon flag-icon-gb"></span>--}}
