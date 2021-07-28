@@ -4,7 +4,7 @@
       <a class="brand-logo darken-1" href="{{ route('admin') }}">
         <img class="hide-on-med-and-down" src="{{ asset('admin/images/logo/materialize-logo-color.png') }}" alt="materialize logo" />
         <img class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('admin/images/logo/materialize-logo.png') }}" alt="materialize logo" />
-        <span class="logo-text hide-on-med-and-down">Название</span>
+        <span class="logo-text hide-on-med-and-down">Wallstreet</span>
       </a>
       <a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a>
     </h1>
