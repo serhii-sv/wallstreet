@@ -17,6 +17,7 @@ use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
 {
@@ -31,7 +32,6 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-
         $count_main_graph = 12;
         $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
         $months = $this->getMonthsFirstDayArray($count_main_graph);
@@ -66,15 +66,16 @@ class DashboardController extends Controller
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
         }
+
         $transactions_month = [];
         foreach ($months as $key => $month) {
             $transactions_month[$key]['month'] = $month;
-            $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60 * 24, function () use ($month) {
-                return Transaction::where('approved', 1)->whereBetween('created_at', [
-                    $month->format('Y-m-d H:i:s'),
-                    $month->endOfMonth(),
-                ])->select('type_id', 'main_currency_amount')->get();
-            });
+                $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60 * 24, function () use ($month) {
+                    return Transaction::where('approved', 1)->whereBetween('created_at', [
+                        $month->format('Y-m-d H:i:s'),
+                        $month->endOfMonth(),
+                    ])->select('type_id', 'main_currency_amount')->get();
+                });
             $transactions_month[$key]['enter'] = $last_month_transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
             $transactions_month[$key]['withdraw'] = $last_month_transactions->where('type_id', '!=', $id_withdraw)->sum('main_currency_amount');
             $transactions_month[$key]['drawn'] = $last_month_transactions->where('type_id', '!=', $id_drawn)->sum('main_currency_amount');
@@ -107,6 +108,58 @@ class DashboardController extends Controller
         });
         $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
 
+        $enter_transactions_for_24h_sum = Cache::remember('dshb.transactions.enter.for_24h', 60,
+            function() {
+                return Transaction::where('created_at', '>=', Carbon::now()->subDay()->format('Y-m-d H:i:s'))
+                    ->where('approved', '=', 1)
+                    ->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'enter');
+                    })->get()
+                    ->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+            });
+
+        $enter_transactions_for_today_sum = Cache::remember('dshb.transactions.enter.for_today', 60,
+            function() {
+                return Transaction::where('created_at', '>=', Carbon::now()->startOfDay()->format('Y-m-d H:i:s'))
+                    ->where('approved', '=', 1)
+                    ->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'enter');
+                    })->get()
+                    ->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+            });
+
+        $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60,
+            function() {
+                return Transaction::where('created_at', '>=', Carbon::now()->subDay()->format('Y-m-d H:i:s'))
+                    ->where('approved', '=', 1)
+                    ->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'withdraw');
+                    })->get()
+                    ->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+            });
+
+        $withdraw_transactions_for_today_sum = Cache::remember('dshb.transactions.withdraw.for_today', 60,
+            function() {
+                return Transaction::where('created_at', '>=', Carbon::now()->startOfDay()->format('Y-m-d H:i:s'))
+                    ->where('approved', '=', 1)
+                    ->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'withdraw');
+                    })->get()
+                    ->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+            });
+
         return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
             'transactions_deposit_sum' => $transactions_deposit_sum,
@@ -122,10 +175,21 @@ class DashboardController extends Controller
             'transactions_month' => $transactions_month,
             'countries_stat' => $countries_stat,
             'cities_stat' => $cities_stat,
-            'online_users' => $this->users->where('last_activity_at', '>', Carbon::now()
-                ->subSeconds(config('chats.max_idle_sec_to_be_online'))
-                ->format('Y-m-d H:i:s')
-            )->get()
+            'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
+            'withdraw_transactions_for_24h_sum' => $withdraw_transactions_for_24h_sum,
+            'profit_transactions_for_24h_sum' => $enter_transactions_for_24h_sum - $withdraw_transactions_for_24h_sum,
+            'profit_transactions_for_today_sum' => $enter_transactions_for_today_sum - $withdraw_transactions_for_today_sum,
+            'users' => [
+                'online' => $this->users->where('last_activity_at', '>', Carbon::now()
+                    ->subSeconds(config('chats.max_idle_sec_to_be_online'))
+                    ->format('Y-m-d H:i:s')
+                )->get(),
+                'total' => $this->users->all()->count(),
+                'today' => $this->users->where('created_at', '>', Carbon::now()
+                    ->subDay()
+                    ->format('Y-m-d H:i:s')
+                )->get()->count()
+            ]
         ]);
     }
 
