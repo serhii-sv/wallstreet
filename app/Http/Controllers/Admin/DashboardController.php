@@ -16,21 +16,29 @@ use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
+    protected $users;
+
+    public function __construct(User $users)
+    {
+        $this->users = $users;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        
+
         $count_main_graph = 12;
         $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
         $months = $this->getMonthsFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         $id_drawn = TransactionType::where('name', 'bonus')->first()->id;
-        
+
         $transactions_deposit_sum = [];
         $transactions_withdraw_sum = [];
         foreach ($weeks_main_graph as $key => $week) {
@@ -48,7 +56,7 @@ class DashboardController extends Controller
         $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
         $deposit_total_drawn = array_sum($transactions_drawn_sum);
         $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
-        
+
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item) {
             $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
@@ -74,7 +82,7 @@ class DashboardController extends Controller
         $count_countries = 5;
         $count_cities = 10;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
-    
+
         $countries_stat->map(function ($country) use ($id_enter) {
             $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {
                 return User::where('country', $country->name)->count();
@@ -88,9 +96,9 @@ class DashboardController extends Controller
                    return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
-            
+
         });
-        
+
         $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
         $cities_stat->map(function ($city) use ($id_enter) {
             $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
@@ -98,7 +106,7 @@ class DashboardController extends Controller
             });
         });
         $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
-        
+
         return view('admin.dashboard', [
             'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
             'transactions_deposit_sum' => $transactions_deposit_sum,
@@ -114,9 +122,13 @@ class DashboardController extends Controller
             'transactions_month' => $transactions_month,
             'countries_stat' => $countries_stat,
             'cities_stat' => $cities_stat,
+            'online_users' => $this->users->where('last_activity_at', '>', Carbon::now()
+                ->subSeconds(config('chats.max_idle_sec_to_be_online'))
+                ->format('Y-m-d H:i:s')
+            )->get()
         ]);
     }
-    
+
     public function addUserBonus(RequestDashboardBonusUser $request) {
         $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
         if (empty($user)) {
@@ -145,7 +157,7 @@ class DashboardController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'))->withInput();
     }
-    
+
     public function getWeeksFirstDayArray($count = 1) {
         $weeks = [];
         for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {
@@ -153,7 +165,7 @@ class DashboardController extends Controller
         }
         return $weeks;
     }
-    
+
     public function getMonthsFirstDayArray($count) {
         $months = [];
         for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {

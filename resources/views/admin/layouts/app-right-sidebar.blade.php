@@ -39,8 +39,8 @@
               @foreach($admins as $admin)
                 <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
                     data-target="slide-out-chat">
-                <span class="avatar-status {{$admin->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50"><img
-                          src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" />
+                <span class="avatar-status {{$admin->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50">
+                  <img src="{{ asset('admin/images/avatar/avatar-7.png') }}" alt="avatar" />
                   <i></i>
                 </span>
                   <div class="user-content">

@@ -12,6 +12,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/ttt', function(){
+    dd(config('chats.max_idle_sec_to_be_online'));
+});
 
 Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
 
