@@ -9,7 +9,7 @@ How to install:
     - cd laradock-wallstreet
     - cp .env.example .env
     - Change prefix in .env
-    - docker-compose up -d nginx mariadb php-fpm phpmyadmin workspace redis mailhog memcached
+    - docker-compose up -d nginx mysql php-fpm phpmyadmin workspace redis mailhog memcached
     - docker-compose exec workspace bash
 - composer install
 - cp .env.example .env
