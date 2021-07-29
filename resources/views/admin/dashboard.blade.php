@@ -578,7 +578,6 @@
       };
       
       var revenueLineChartConfigWeek = {
-<<<<<<< HEAD
         type: "line",
         options: revenueLineChartOptions,
         data: revenueLineChartDataWeek
@@ -586,16 +585,7 @@
       var revenueLineChartConfigMonth = {
         type: "line",
         options: revenueLineChartOptions,
-=======
-        type: "line",
-        options: revenueLineChartOptions,
         data: revenueLineChartDataWeek
-      };
-      var revenueLineChartConfigMonth = {
-        type: "line",
-        options: revenueLineChartOptions,
->>>>>>> wallstreet_engine
-        data: revenueLineChartDataMonth
       };
       
       /*
