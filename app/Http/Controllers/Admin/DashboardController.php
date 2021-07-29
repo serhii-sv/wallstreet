@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Cache;
 class DashboardController extends Controller
 {
     protected $users;
-
+    
     public function __construct(User $users)
     {
         $this->users = $users;
     }
-
+    
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -53,7 +53,7 @@ class DashboardController extends Controller
             $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
             $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-
+        
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item) {
             $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
@@ -63,7 +63,7 @@ class DashboardController extends Controller
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
         }
-
+        
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
         $weeks_deposit_revenue = $weeks_total_enter - $weeks_total_withdraw;
@@ -78,7 +78,7 @@ class DashboardController extends Controller
             $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
             $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-       
+        
         $month_total_enter = array_sum($month_period_enter_transactions);
         $month_total_withdraw = array_sum($month_period_withdraw_transactions);
         $month_deposit_revenue = $month_total_enter - $month_total_withdraw;
@@ -99,9 +99,9 @@ class DashboardController extends Controller
                     return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
-
+            
         });
-
+        
         $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
         $cities_stat->map(function ($city) use ($id_enter) {
             $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
@@ -109,7 +109,7 @@ class DashboardController extends Controller
             });
         });
         $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
-
+        
         $enter_transactions_for_24h_sum = Cache::remember('dshb.transactions.enter.for_24h', 60,
             function() {
                 return Transaction::where('created_at', '>=', Carbon::now()->subDay()->format('Y-m-d H:i:s'))
@@ -122,7 +122,7 @@ class DashboardController extends Controller
                         return $carry + $item->main_currency_amount;
                     }, 0);
             });
-
+        
         $enter_transactions_for_today_sum = Cache::remember('dshb.transactions.enter.for_today', 60,
             function() {
                 return Transaction::where('created_at', '>=', Carbon::now()->startOfDay()->format('Y-m-d H:i:s'))
@@ -220,7 +220,7 @@ class DashboardController extends Controller
                 }),
         ]);
     }
-
+    
     public function addUserBonus(RequestDashboardBonusUser $request) {
         $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
         if (empty($user)) {
