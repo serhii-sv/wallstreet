@@ -93,7 +93,7 @@
     <!-- BEGIN PAGE VENDOR JS-->
     <script src="{{ asset('admin/vendors/chartjs/chart.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/chartist-js/chartist.min.js') }}"></script>
-    <script src="{{ asset('admin/vendors/chartist-js/chartist-plugin-tooltip.js') }}"></script>
+{{--    <script src="{{ asset('admin/vendors/chartist-js/chartist-plugin-tooltip.js') }}"></script>--}}
     <script src="{{ asset('admin/vendors/chartist-js/chartist-plugin-fill-donut.min.js') }}"></script>
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN THEME  JS-->
@@ -104,7 +104,7 @@
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     
-    <script src="{{ asset('admin/js/scripts/dashboard-modern.js') }}"></script>
+{{--    <script src="{{ asset('admin/js/scripts/dashboard-modern.js') }}"></script>--}}
   {{--    <script src="{{ asset('admin/js/scripts/intro.js') }}"></script>--}}
   <!-- END PAGE LEVEL JS-->
     @stack('scripts')

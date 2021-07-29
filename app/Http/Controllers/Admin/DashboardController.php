@@ -33,29 +33,27 @@ class DashboardController extends Controller
      */
     public function index() {
         $count_main_graph = 12;
-        $weeks_main_graph = $this->getWeeksFirstDayArray($count_main_graph);
-        $months = $this->getMonthsFirstDayArray($count_main_graph);
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
-        $id_drawn = TransactionType::where('name', 'bonus')->first()->id;
-
-        $transactions_deposit_sum = [];
-        $transactions_withdraw_sum = [];
-        foreach ($weeks_main_graph as $key => $week) {
-            $transactions = cache()->remember('dshb.last_transactions' . $key, 60, function () use ($week) {
+        
+        $weeks_period_enter_transactions = [];
+        $weeks_period_withdraw_transactions = [];
+        $month_period_enter_transactions = [];
+        $month_period_withdraw_transactions = [];
+        
+        $month_period = $this->getMonthPeriod();
+        $weeks_period = $this->getWeeksPeriod();
+        
+        foreach ($weeks_period as $key => $week) {
+            $transactions = cache()->remember('dshb.last_transactions' . $week['start'], 60, function () use ($week) {
                 return Transaction::where('approved', 1)->whereBetween('created_at', [
-                    $week->format('Y-m-d H:i:s'),
-                    $week->endOfWeek(),
+                    $week['start'],
+                    $week['end'],
                 ])->get();
             });
-            $transactions_deposit_sum[$key] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
-            $transactions_withdraw_sum[$key] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
-            $transactions_drawn_sum[$key] = $transactions->where('type_id', '=', $id_drawn)->sum('main_currency_amount');
+            $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
+            $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-        $deposit_total_sum = array_sum($transactions_deposit_sum);
-        $deposit_total_withdraw = array_sum($transactions_withdraw_sum);
-        $deposit_total_drawn = array_sum($transactions_drawn_sum);
-        $deposit_diff = $deposit_total_sum - $deposit_total_withdraw;
 
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item) {
@@ -67,23 +65,28 @@ class DashboardController extends Controller
             });
         }
 
-        $transactions_month = [];
-        foreach ($months as $key => $month) {
-            $transactions_month[$key]['month'] = $month;
-                $last_month_transactions = cache()->remember('dshb.last_month_transactions' . $key, 60 * 24, function () use ($month) {
-                    return Transaction::where('approved', 1)->whereBetween('created_at', [
-                        $month->format('Y-m-d H:i:s'),
-                        $month->endOfMonth(),
-                    ])->select('type_id', 'main_currency_amount')->get();
-                });
-            $transactions_month[$key]['enter'] = $last_month_transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
-            $transactions_month[$key]['withdraw'] = $last_month_transactions->where('type_id', '!=', $id_withdraw)->sum('main_currency_amount');
-            $transactions_month[$key]['drawn'] = $last_month_transactions->where('type_id', '!=', $id_drawn)->sum('main_currency_amount');
+        $weeks_total_enter = array_sum($weeks_period_enter_transactions);
+        $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
+        $weeks_deposit_revenue = $weeks_total_enter - $weeks_total_withdraw;
+
+        foreach ($month_period as $key => $month) {
+            $transactions = cache()->remember('dshb.last_transactions' . $month['start'], 60, function () use ($month) {
+                return Transaction::where('approved', 1)->whereBetween('created_at', [
+                    $month['start'],
+                    $month['end'],
+                ])->get();
+            });
+            $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '!=', $id_enter)->sum('main_currency_amount');
+            $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
+       
+        $month_total_enter = array_sum($month_period_enter_transactions);
+        $month_total_withdraw = array_sum($month_period_withdraw_transactions);
+        $month_deposit_revenue = $month_total_enter - $month_total_withdraw;
         $count_countries = 5;
         $count_cities = 10;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
-
+        
         $countries_stat->map(function ($country) use ($id_enter) {
             $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {
                 return User::where('country', $country->name)->count();
@@ -94,7 +97,7 @@ class DashboardController extends Controller
             $country->invested = 0;
             User::where('country', $country->name)->get()->map(function ($user) use ($country, $id_enter) {
                 $country->invested += cache()->remember('dshb.countries_stat_invested_' . $user->id, 60, function () use ($country, $id_enter, $user) {
-                   return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
+                    return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
 
@@ -161,18 +164,22 @@ class DashboardController extends Controller
             });
 
         return view('admin.dashboard', [
-            'weeks_main_graph' => $this->getWeeksFirstDayArray($count_main_graph),
-            'transactions_deposit_sum' => $transactions_deposit_sum,
-            'transactions_withdraw_sum' => $transactions_withdraw_sum,
-            'deposit_diff' => $deposit_diff,
-            'deposit_total_drawn' => $deposit_total_drawn,
-            'deposit_total_sum' => $deposit_total_sum,
-            'deposit_total_withdraw' => $deposit_total_withdraw,
+            'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
+            'weeks_period_withdraw_transactions' => $weeks_period_withdraw_transactions,
+            'month_period_enter_transactions' => $month_period_enter_transactions,
+            'month_period_withdraw_transactions' => $month_period_withdraw_transactions,
+            'month_total_enter' => $month_total_enter,
+            'month_total_withdraw' => $month_total_withdraw,
+            'month_deposit_revenue' => $month_deposit_revenue,
+            'weeks_deposit_revenue' => $weeks_deposit_revenue,
+            'weeks_total_enter' => $weeks_total_enter,
+            'weeks_total_withdraw' => $weeks_total_withdraw,
+            'weeks_period' => $weeks_period,
+            'month_period' => $month_period,
             'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
             'currencies' => Currency::all(),
             'payment_system' => $payment_system,
             'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
-            'transactions_month' => $transactions_month,
             'countries_stat' => $countries_stat,
             'cities_stat' => $cities_stat,
             'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
@@ -189,7 +196,29 @@ class DashboardController extends Controller
                     ->subDay()
                     ->format('Y-m-d H:i:s')
                 )->get()->count()
-            ]
+            ],
+            'deposit_total_sum' => Cache::remember('dshb.transactions.enter.total', 60,
+                function() {
+                    return Transaction::where('approved', '=', 1)
+                        ->whereNotNull('payment_system_id')
+                        ->whereHas('type', function ($query) {
+                            $query->where('name', 'withdraw');
+                        })->get()
+                        ->reduce(function ($carry, $item) {
+                            return $carry + $item->main_currency_amount;
+                        }, 0);
+                }),
+            'deposit_total_withdraw' => Cache::remember('dshb.transactions.withdraw.total', 60,
+                function() {
+                    return Transaction::where('approved', '=', 1)
+                        ->whereNotNull('payment_system_id')
+                        ->whereHas('type', function ($query) {
+                            $query->where('name', 'withdraw');
+                        })->get()
+                        ->reduce(function ($carry, $item) {
+                            return $carry + $item->main_currency_amount;
+                        }, 0);
+                }),
         ]);
     }
 
@@ -221,20 +250,41 @@ class DashboardController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'))->withInput();
     }
-
-    public function getWeeksFirstDayArray($count = 1) {
-        $weeks = [];
-        for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {
-            $weeks[$j] = now()->startOfWeek()->subWeek($count - 1);
+    
+    public function getMonthPeriod() {
+        $period = [];
+        $current_week_count = now()->weekNumberInMonth;
+        for ($i = 0; $i < $current_week_count; $i++) {
+            if (now()->startOfMonth()->addWeek($i)->startOfWeek() < now()) {
+                if (now()->startOfMonth()->addWeek($i)->startOfWeek() < now()->startOfMonth()) {
+                    $period[$i]['start'] = now()->startOfMonth();
+                } else {
+                    $period[$i]['start'] = now()->startOfMonth()->addWeek($i)->startOfWeek();
+                }
+                if (now()->startOfMonth()->addWeek($i)->endOfWeek() > now()) {
+                    $period[$i]['end'] = now();
+                } else {
+                    $period[$i]['end'] = now()->startOfMonth()->addWeek($i)->endOfWeek();
+                }
+            }
         }
-        return $weeks;
+        return $period;
     }
-
-    public function getMonthsFirstDayArray($count) {
-        $months = [];
-        for ($i = 1, $j = 1; $count >= $i; $j++, $count--) {
-            $months[$j] = now()->startOfMonth()->subMonth($count - 1);
+    
+    public function getWeeksPeriod() {
+        $period = [];
+        $days = now()->dayOfWeek;
+        for ($i = 0; $i < $days; $i++) {
+            if (now()->startOfWeek()->addDay($i) < now()) {
+                $period[$i]['start'] = now()->startOfWeek()->addDay($i);
+                if (now()->startOfWeek()->addDay($i)->endOfDay() > now()) {
+                    $period[$i]['end'] = now();
+                } else {
+                    $period[$i]['end'] = now()->startOfWeek()->addDay($i)->endOfDay();
+                }
+            }
         }
-        return $months;
+        return $period;
     }
+    
 }

@@ -4,6 +4,7 @@
 
 @section('content')
   <div class="section">
+
     <div id="chart-dashboard">
 
       <div id="card-stats" class="pt-0">
@@ -106,21 +107,23 @@
             <div class="card-move-up waves-effect waves-block waves-light">
               <div class="move-up cyan darken-1">
                 <div>
-                  <span class="chart-title white-text">Доход</span>
+                  <span class="chart-title white-text">Статистика</span>
                   <div class="chart-revenue cyan darken-2 white-text">
-                    <p class="chart-revenue-total">${{ number_format($deposit_diff,2) }}</p>
-                    <!--                    <p class="chart-revenue-per"><i class="material-icons">arrow_drop_up</i> 21.80 %</p>-->
+                    <p class="chart-revenue-total week">${{ number_format($weeks_deposit_revenue,2)  }}</p>
+                    <p class="chart-revenue-total month display-none">${{ number_format($month_deposit_revenue,2)  }}</p>
+                  <!--                    <p class="chart-revenue-per"><i class="material-icons">arrow_drop_up</i> 21.80 %</p>-->
                   </div>
-                  <!--                  <div class="switch chart-revenue-switch right">
-                                      <label class="cyan-text text-lighten-5">
-                                        Month <input type="checkbox" />
-                                        <span class="lever"></span>
-                                        Year
-                                      </label>
-                                    </div>-->
+                  <div class="switch chart-revenue-switch right">
+                    <label class="cyan-text text-lighten-5">
+                      Неделя <input type="checkbox" class="chart-revenue-switch-input" />
+                      <span class="lever"></span>
+                      Месяц
+                    </label>
+                  </div>
                 </div>
-                <div class="trending-line-chart-wrapper">
+                <div class="trending-line-chart-wrapper mt-3">
                   <canvas id="revenue-line-chart" height="70"></canvas>
+                  <canvas id="revenue-line-chart2" height="70"></canvas>
                 </div>
               </div>
             </div>
@@ -131,18 +134,18 @@
               <div class="col s12 m3 l3">
                 <div id="doughnut-chart-wrapper">
                   <canvas id="doughnut-chart" height="200"></canvas>
-                  <div class="doughnut-chart-status">
-                    <p class="center-align font-weight-600 mt-4">${{ number_format($deposit_total_sum,2) }}</p>
-                    <p class="ultra-small center-align">Внесено</p>
+                  <div class="doughnut-chart-status week">
+                    <p class="center-align font-weight-600 mt-4">${{ number_format($weeks_deposit_revenue,2) ?? 0 }}</p>
+                    <p class="ultra-small center-align">Доход</p>
+                  </div>
+                  <div class="doughnut-chart-status month display-none">
+                    <p class="center-align font-weight-600 mt-4">${{ number_format($month_deposit_revenue,2) ?? 0 }}</p>
+                    <p class="ultra-small center-align">Доход</p>
                   </div>
                 </div>
               </div>
               <div class="col s12 m2 l2">
                 <ul class="doughnut-chart-legend">
-                  <li class="mobile ultra-small">
-                    <span class="legend-color"></span>
-                    Нарисовано
-                  </li>
                   <li class="kitchen ultra-small">
                     <span class="legend-color"></span>
                     Пополнено
@@ -167,21 +170,23 @@
                 <thead>
                   <tr>
                     <th data-field="">id</th>
-                    <th data-field="">Месяц</th>
-                    <th data-field="">Нарисовано</th>
+                    <th data-field="">Дата</th>
                     <th data-field="">Пополнено</th>
                     <th data-field="">Выведено</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse($transactions_month as $i => $item)
-                  <tr>
-                    <td>{{ $i }}</td>
-                    <td>{{ $item['month']->format('M Y') ?? '' }}</td>
-                    <td>${{ number_format($item['drawn'], 2, ',', '.') ?? 0 }}</td>
-                    <td>${{ number_format($item['enter'], 2, ',', '.') ?? 0 }}</td>
-                    <td>${{ number_format($item['withdraw'], 2, ',', '.') ?? 0 }}</td>
-                  </tr>
+                  @forelse($month_period as $key => $item)
+                    <tr>
+                      {{--                    <td>{{ $i }}</td>--}}
+                      {{--                    <td>{{ $item['month']->format('M Y') ?? '' }}</td>--}}
+                      {{--                    <td>${{ number_format($item['enter'], 2, ',', '.') ?? 0 }}</td>--}}
+                      {{--                    <td>${{ number_format($item['withdraw'], 2, ',', '.') ?? 0 }}</td>  --}}
+                      <td>{{ $loop->index }}</td>
+                      <td>{{ $item['start']->format('d M') . '-' . $item['end']->format('d M') }}</td>
+                      <td>$ {{ number_format($month_period_enter_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0 }}</td>
+                      <td>$ {{ number_format($month_period_withdraw_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0 }}</td>
+                    </tr>
                   @empty
                   @endforelse
                 </tbody>
@@ -461,11 +466,7 @@
     
     (function (window, document, $) {
       
-      // Check first if any of the task is checked
-      
-      //Trending line chart
       var revenueLineChartCTX = $("#revenue-line-chart");
-      
       var revenueLineChartOptions = {
         responsive: true,
         // maintainAspectRatio: false,
@@ -497,26 +498,22 @@
               },
               ticks: {
                 beginAtZero: false,
-                fontColor: "#fff"
+                fontColor: "#fff",
+                callback: function(value) {if (value % 1 === 0 && value >= 0) {return value;}}
               }
             }
           ]
         }
       };
       
-      var revenueLineChartData = {
-        labels: [@foreach($weeks_main_graph as $week)
-            "{{ $week->format('d M') }}",
-          @endforeach],
-        //labels: ["Apple", "Samsung", "Sony", "Motorola", "Nokia", "Microsoft", "Xiaomi"],
+      var revenueLineChartDataWeek = {
+        labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         datasets: [
           {
             label: "Deposit",
-            data: [@foreach($transactions_deposit_sum as $item)
-                "{{ $item }}",
-              @endforeach],
+            data: [@foreach($weeks_period_enter_transactions as $key => $item){{ $item }},@endforeach],
             //data: [150, 50, 20, 40, 80, 50, 80],
-            backgroundColor: "rgba(128, 222, 234, 0.5)",
+            backgroundColor: "rgba(128, 222, 234, 0.6)",
             borderColor: "#d1faff",
             pointBorderColor: "#d1faff",
             pointBackgroundColor: "#00bcd4",
@@ -529,9 +526,42 @@
           },
           {
             label: "Withdraw",
-            data: [@foreach($transactions_withdraw_sum as $item)
-                "{{ $item }}",
-              @endforeach],
+            data: [@foreach($weeks_period_withdraw_transactions as $key => $item){{ $item }},@endforeach],
+            borderDash: [15, 5],
+            backgroundColor: "rgba(128, 222, 234, 0.2)",
+            borderColor: "#80deea",
+            pointBorderColor: "#80deea",
+            pointBackgroundColor: "#00bcd4",
+            pointHighlightFill: "#80deea",
+            pointHoverBackgroundColor: "#80deea",
+            borderWidth: 2,
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 4,
+            pointRadius: 4
+          }
+        ]
+      };
+      var revenueLineChartDataMonth = {
+        labels: [@foreach($month_period as $key => $item)"{{ $item['start']->format('d M') .'-'.$item['end']->format('d M') }}",@endforeach],
+        datasets: [
+          {
+            label: "Deposit",
+            data: [@foreach($month_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            //data: [150, 50, 20, 40, 80, 50, 80],
+            backgroundColor: "rgba(128, 222, 234, 0.6)",
+            borderColor: "#d1faff",
+            pointBorderColor: "#d1faff",
+            pointBackgroundColor: "#00bcd4",
+            pointHighlightFill: "#d1faff",
+            pointHoverBackgroundColor: "#d1faff",
+            borderWidth: 2,
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 4,
+            pointRadius: 4
+          },
+          {
+            label: "Withdraw",
+            data: [@foreach($month_period_withdraw_transactions as $key => $item){{ $item }},@endforeach],
             borderDash: [15, 5],
             backgroundColor: "rgba(128, 222, 234, 0.2)",
             borderColor: "#80deea",
@@ -547,60 +577,60 @@
         ]
       };
       
-      var revenueLineChart;
-      /*setInterval(function () {
-        // Get a random index point
-        var indexToUpdate = Math.round(Math.random() * (revenueLineChartData.labels.length - 1));
-        if (typeof revenueLineChart != "undefined") {
-          // Update one of the points in the second dataset
-          if (revenueLineChartData.datasets[0].data[indexToUpdate]) {
-            revenueLineChartData.datasets[0].data[indexToUpdate] = Math.round(Math.random() * 100);
-          }
-          if (revenueLineChartData.datasets[1].data[indexToUpdate]) {
-            revenueLineChartData.datasets[1].data[indexToUpdate] = Math.round(Math.random() * 100);
-          }
-          revenueLineChart.update();
-        }
-      }, 2000);*/
-      
-      var revenueLineChartConfig = {
+      var revenueLineChartConfigWeek = {
         type: "line",
         options: revenueLineChartOptions,
-        data: revenueLineChartData
+        data: revenueLineChartDataWeek
+      };
+      var revenueLineChartConfigMonth = {
+        type: "line",
+        options: revenueLineChartOptions,
+        data: revenueLineChartDataMonth
       };
       
       /*
    Doughnut Chart Widget
    */
       
-      var doughnutSalesChartCTX = $("#doughnut-chart");
-      var browserStatsChartOptions = {
+      var totalRevenueChartCTX = $("#doughnut-chart");
+      var totalRevenueChartOptions = {
         cutoutPercentage: 70,
         legend: {
           display: false
-        }
+        },
       };
-      
-      var doughnutSalesChartData = {
-        labels: ["Нарисовано", "Пополнено", "Выведено"],
+      var totalRevenueChartDataWeek = {
+        labels: ["Пополнено", "Выведено"],
         datasets: [
           {
             label: "Sales",
-            data: [{{ $deposit_total_drawn }}, {{ $deposit_total_sum }}, {{ $deposit_total_withdraw }}],
-            backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"]
+            data: [{{ $weeks_total_enter ?? 0 }}, {{ $weeks_total_withdraw ?? 0 }}],
+            backgroundColor: ["#46BFBD", "#FDB45C"]
+          }
+        ]
+      };
+      var totalRevenueChartDataMonth = {
+        labels: ["Пополнено", "Выведено"],
+        datasets: [
+          {
+            label: "Sales",
+            data: [{{ $month_total_enter ?? 0 }}, {{ $month_total_withdraw ?? 0 }}],
+            backgroundColor: ["#46BFBD", "#FDB45C"]
           }
         ]
       };
       
-      var doughnutSalesChartConfig = {
+      var totalRevenueChartConfigWeek = {
         type: "doughnut",
-        options: browserStatsChartOptions,
-        data: doughnutSalesChartData
+        options: totalRevenueChartOptions,
+        data: totalRevenueChartDataWeek
+      };
+      var totalRevenueChartConfigMonth = {
+        type: "doughnut",
+        options: totalRevenueChartOptions,
+        data: totalRevenueChartDataMonth
       };
       
-      /*
-   Monthly Revenue : Trending Bar Chart
-   */
       
       var monthlyRevenueChartCTX = $("#trending-bar-chart");
       var monthlyRevenueChartOptions = {
@@ -629,7 +659,8 @@
                 display: false
               },
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                callback: function(value) {if (value % 1 === 0 && value >= 0) {return value;}}
               }
             }
           ]
@@ -643,54 +674,46 @@
           }
         }
       };
-      var monthlyRevenueChartData = {
-        labels: [@foreach($weeks_main_graph as $week)
-            "{{ $week->format('d M') }}",
-          @endforeach],
+      var monthlyRevenueChartDataWeek = {
+        labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
         datasets: [
           {
-            label: "withdraws",
+            label: "Внесено",
             //data: [6, 9, 8, 4, 6, 7, 9, 4, 8],
-            data: [@foreach($transactions_withdraw_sum as $item)
-                "{{ $item }}",
-              @endforeach],
+            data: [@foreach($weeks_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            backgroundColor: "#46BFBD",
+            hoverBackgroundColor: "#009688"
+          }
+        ]
+      };
+      var monthlyRevenueChartDataMonth = {
+        labels: [@foreach($month_period as $key => $item)"{{ $item['start']->format('d M') .'-'.$item['end']->format('d M') }}",@endforeach],
+        //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
+        datasets: [
+          {
+            label: "Внесено",
+            data: [@foreach($month_period_enter_transactions as $key => $item){{ $item }},@endforeach],
             backgroundColor: "#46BFBD",
             hoverBackgroundColor: "#009688"
           }
         ]
       };
       
-      var nReloads1 = 0;
-      var min1 = 1;
-      var max1 = 10;
-      var monthlyRevenueChart;
-      
-      function updateMonthlyRevenueChart() {
-        if (typeof monthlyRevenueChart != "undefined") {
-          nReloads1++;
-          var x = Math.floor(Math.random() * (max1 - min1 + 1)) + min1;
-          monthlyRevenueChartData.datasets[0].data.shift();
-          monthlyRevenueChartData.datasets[0].data.push([x]);
-          monthlyRevenueChart.update();
-        }
-      }
-      
-      // setInterval(updateMonthlyRevenueChart, 2000);
-      updateMonthlyRevenueChart();
-      var monthlyRevenueChartConfig = {
+      var monthlyRevenueChartConfigWeek = {
         type: "bar",
         options: monthlyRevenueChartOptions,
-        data: monthlyRevenueChartData
+        data: monthlyRevenueChartDataWeek
+      };
+      var monthlyRevenueChartConfigMonth = {
+        type: "bar",
+        options: monthlyRevenueChartOptions,
+        data: monthlyRevenueChartDataMonth
       };
       
-      /*
-   Trending Bar Chart
-   */
       
-      var browserStatsChartCTX = $("#trending-radar-chart");
-      
-      var browserStatsChartOptions = {
+      var countryStatsChartCTX = $("#trending-radar-chart");
+      var countryStatsChartOptions = {
         responsive: true,
         // maintainAspectRatio: false,
         legend: {
@@ -710,13 +733,12 @@
           }
         }
       };
-      
-      var browserStatsChartData = {
-        labels: [@forelse($countries_stat as $country)"{{ $country->name }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
+      var countryStatsChartData = {
+        labels: [@forelse($countries_stat as $country)"{{ $country->name }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
         datasets: [
           {
             label: "Count",
-            data: [@forelse($countries_stat as $country)"{{ intval($country->count) }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
+            data: [@forelse($countries_stat as $country)"{{ intval($country->count) }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
             fill: true,
             fillColor: "rgba(255,255,255,0.2)",
             borderColor: "#fff",
@@ -731,38 +753,14 @@
           }
         ]
       };
-      
-      var nReloads2 = 0;
-      var min2 = 1;
-      var max2 = 10;
-      var browserStatsChart;
-      
-      function browserStatsChartUpdate() {
-        if (typeof browserStatsChart != "undefined") {
-          nReloads2++;
-          var x = Math.floor(Math.random() * (max2 - min2 + 1)) + min2;
-          browserStatsChartData.datasets[0].data.pop();
-          browserStatsChartData.datasets[0].data.push([x]);
-          browserStatsChart.update();
-        }
-      }
-      
-      browserStatsChartUpdate();
-      //setInterval(browserStatsChartUpdate, 2000);
-      
-      var browserStatsChartConfig = {
+      var countryStatsChartConfig = {
         type: "radar",
-        options: browserStatsChartOptions,
-        data: browserStatsChartData
+        options: countryStatsChartOptions,
+        data: countryStatsChartData
       };
       
-      /*
-      Revenue by country - Line Chart
-   */
-      
-      var countryRevenueChartCTX = $("#line-chart");
-      
-      var countryRevenueChartOption = {
+      var cityStatsChartCTX = $("#line-chart");
+      var cityStatsChartOption = {
         responsive: true,
         // maintainAspectRatio: false,
         legend: {
@@ -792,19 +790,19 @@
               },
               ticks: {
                 beginAtZero: false,
-                fontColor: "#fff"
+                fontColor: "#fff",
+                callback: function (value) { if (Number.isInteger(value)) { return value; } },
               }
             }
           ]
         }
       };
-      
-      var countryRevenueChartData = {
-        labels: [@forelse($cities_stat as $country)"{{ $country->name }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
+      var cityStatsChartData = {
+        labels: [@forelse($cities_stat as $country)"{{ $country->name }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
         datasets: [
           {
             label: "Users",
-            data: [@forelse($cities_stat as $country)"{{ $country->count }}"@if(!$loop->last),@endif @empty "Пусто" @endforelse],
+            data: [@forelse($cities_stat as $country)"{{ $country->count }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
             fill: false,
             lineTension: 0,
             borderColor: "#fff",
@@ -819,124 +817,62 @@
           }
         ]
       };
-      var countryRevenueChartConfig = {
+      var cityStatsChartConfig = {
         type: "line",
-        options: countryRevenueChartOption,
-        data: countryRevenueChartData
+        options: cityStatsChartOption,
+        data: cityStatsChartData
       };
       
-      
-      // Create the chart
       
       window.onload = function () {
-        revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfig);
-        monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfig);
-        var doughnutSalesChart = new Chart(doughnutSalesChartCTX, doughnutSalesChartConfig);
-        browserStatsChart = new Chart(browserStatsChartCTX, browserStatsChartConfig);
-        var countryRevenueChart = new Chart(countryRevenueChartCTX, countryRevenueChartConfig);
+        
+        var revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfigWeek);
+        var monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfigWeek);
+        var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
+        var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
+        var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
+        
+        document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
+          if (typeof revenueLineChart != "undefined") {
+            if (this.checked == true) {
+              revenueLineChart.config = revenueLineChartConfigMonth;
+              revenueLineChart.update();
+            } else {
+              revenueLineChart.config = revenueLineChartConfigWeek;
+              revenueLineChart.update();
+            }
+          }
+          if (typeof monthlyRevenueChart != "undefined") {
+            if (this.checked == true) {
+              monthlyRevenueChart.config = monthlyRevenueChartConfigMonth;
+              monthlyRevenueChart.update();
+            } else {
+              monthlyRevenueChart.config = monthlyRevenueChartConfigWeek;
+              monthlyRevenueChart.update();
+            }
+          }
+          if (typeof totalRevenueChart != "undefined") {
+            if (this.checked == true) {
+              totalRevenueChart.config = totalRevenueChartConfigMonth;
+              totalRevenueChart.update();
+              document.querySelector('.doughnut-chart-status.month').classList.remove('display-none');
+              document.querySelector('.doughnut-chart-status.week').classList.add('display-none');
+              
+              document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
+              document.querySelector('.chart-revenue-total.week').classList.add('display-none');
+            } else {
+              totalRevenueChart.config = totalRevenueChartConfigWeek;
+              totalRevenueChart.update();
+              document.querySelector('.doughnut-chart-status.month').classList.add('display-none');
+              document.querySelector('.doughnut-chart-status.week').classList.remove('display-none');
+              
+              document.querySelector('.chart-revenue-total.month').classList.add('display-none');
+              document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
+            }
+          }
+        });
       };
       
-      $(function () {
-        /*
-         * STATS CARDS
-         */
-        // Bar chart ( New Clients)
-        $("#clients-bar").sparkline([70, 80, 65, 78, 58, 80, 78, 80, 70, 50, 75, 65, 80, 70, 65, 90, 65, 80, 70, 65, 90], {
-          type: "bar",
-          height: "25",
-          barWidth: 7,
-          barSpacing: 4,
-          barColor: "#b2ebf2",
-          negBarColor: "#81d4fa",
-          zeroColor: "#81d4fa"
-        });
-        // Total Sales - Bar
-        $("#sales-compositebar").sparkline([4, 6, 7, 7, 4, 3, 2, 3, 1, 4, 6, 5, 9, 4, 6, 7, 7, 4, 6, 5, 9], {
-          type: "bar",
-          barColor: "#F6CAFD",
-          height: "25",
-          width: "100%",
-          barWidth: "7",
-          barSpacing: 4
-        });
-        //Total Sales - Line
-        $("#sales-compositebar").sparkline([4, 1, 5, 7, 9, 9, 8, 8, 4, 2, 5, 6, 7], {
-          composite: true,
-          type: "line",
-          width: "100%",
-          lineWidth: 2,
-          lineColor: "#fff3e0",
-          fillColor: "rgba(255, 82, 82, 0.25)",
-          highlightSpotColor: "#fff3e0",
-          highlightLineColor: "#fff3e0",
-          minSpotColor: "#00bcd4",
-          maxSpotColor: "#00e676",
-          spotColor: "#fff3e0",
-          spotRadius: 4
-        });
-        // Tristate chart (Today Profit)
-        $("#profit-tristate").sparkline([2, 3, 0, 4, -5, -6, 7, -2, 3, 0, 2, 3, -1, 0, 2, 3, 3, -1, 0, 2, 3], {
-          type: "tristate",
-          width: "100%",
-          height: "25",
-          posBarColor: "#ffecb3",
-          negBarColor: "#fff8e1",
-          barWidth: 7,
-          barSpacing: 4,
-          zeroAxis: false
-        });
-        // Line chart ( New Invoice)
-        $("#invoice-line").sparkline([5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7, 5, 6, 7, 9, 9, 5], {
-          type: "line",
-          width: "100%",
-          height: "25",
-          lineWidth: 2,
-          lineColor: "#E1D0FF",
-          fillColor: "rgba(255, 255, 255, 0.2)",
-          highlightSpotColor: "#E1D0FF",
-          highlightLineColor: "#E1D0FF",
-          minSpotColor: "#00bcd4",
-          maxSpotColor: "#4caf50",
-          spotColor: "#E1D0FF",
-          spotRadius: 4
-        });
-        
-        /*
-         * Project Line chart ( Project Box )
-         */
-        $("#project-line-1").sparkline([5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7, 5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
-          type: "line",
-          width: "100%",
-          height: "30",
-          lineWidth: 2,
-          lineColor: "#00bcd4",
-          fillColor: "rgba(0, 188, 212, 0.2)"
-        });
-        $("#project-line-2").sparkline([6, 7, 5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7, 5, 6, 7, 9, 9, 5, 3, 2, 2, 4], {
-          type: "line",
-          width: "100%",
-          height: "30",
-          lineWidth: 2,
-          lineColor: "#00bcd4",
-          fillColor: "rgba(0, 188, 212, 0.2)"
-        });
-        $("#project-line-3").sparkline([2, 4, 6, 7, 5, 6, 7, 9, 5, 6, 7, 9, 9, 5, 3, 2, 9, 5, 3, 2, 2, 4, 6, 7], {
-          type: "line",
-          width: "100%",
-          height: "30",
-          lineWidth: 2,
-          lineColor: "#00bcd4",
-          fillColor: "rgba(0, 188, 212, 0.2)"
-        });
-        $("#project-line-4").sparkline([9, 5, 3, 2, 2, 4, 6, 7, 5, 6, 7, 9, 5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
-          type: "line",
-          width: "100%",
-          height: "30",
-          lineWidth: 2,
-          lineColor: "#00bcd4",
-          fillColor: "rgba(0, 188, 212, 0.2)"
-        });
-      });
     })(window, document, jQuery);
   
   </script>
