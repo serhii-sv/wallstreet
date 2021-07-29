@@ -15,7 +15,6 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -202,7 +201,7 @@ class DashboardController extends Controller
                     return Transaction::where('approved', '=', 1)
                         ->whereNotNull('payment_system_id')
                         ->whereHas('type', function ($query) {
-                            $query->where('name', 'withdraw');
+                            $query->where('name', 'enter');
                         })->get()
                         ->reduce(function ($carry, $item) {
                             return $carry + $item->main_currency_amount;
