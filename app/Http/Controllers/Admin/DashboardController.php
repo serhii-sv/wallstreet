@@ -162,7 +162,6 @@ class DashboardController extends Controller
                     }, 0);
             });
 
->>>>>>> b1e1d06b8bade37345e86273d4024a3ac3de87e1
         return view('admin.dashboard', [
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
             'weeks_period_withdraw_transactions' => $weeks_period_withdraw_transactions,
