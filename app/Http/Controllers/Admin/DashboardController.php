@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
         $weeks_deposit_revenue = $weeks_total_enter - $weeks_total_withdraw;
-        
+
         foreach ($month_period as $key => $month) {
             $transactions = cache()->remember('dshb.last_transactions' . $month['start'], 60, function () use ($month) {
                 return Transaction::where('approved', 1)->whereBetween('created_at', [
@@ -135,7 +135,7 @@ class DashboardController extends Controller
                         return $carry + $item->main_currency_amount;
                     }, 0);
             });
-        
+
         $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60,
             function() {
                 return Transaction::where('created_at', '>=', Carbon::now()->subDay()->format('Y-m-d H:i:s'))
@@ -148,7 +148,7 @@ class DashboardController extends Controller
                         return $carry + $item->main_currency_amount;
                     }, 0);
             });
-        
+
         $withdraw_transactions_for_today_sum = Cache::remember('dshb.transactions.withdraw.for_today', 60,
             function() {
                 return Transaction::where('created_at', '>=', Carbon::now()->startOfDay()->format('Y-m-d H:i:s'))
@@ -161,7 +161,8 @@ class DashboardController extends Controller
                         return $carry + $item->main_currency_amount;
                     }, 0);
             });
-        
+
+>>>>>>> b1e1d06b8bade37345e86273d4024a3ac3de87e1
         return view('admin.dashboard', [
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
             'weeks_period_withdraw_transactions' => $weeks_period_withdraw_transactions,

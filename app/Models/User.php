@@ -933,11 +933,9 @@ class User extends Authenticatable
 
         $currentDate = Carbon::make($this->last_activity_at);
 
-        $now = Carbon::now();
-
-        if($currentDate->greaterThanOrEqualTo($now->startOfDay()))
+        if($currentDate->greaterThanOrEqualTo(Carbon::now()->startOfDay()))
             return [
-                'is_online' => $now->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
+                'is_online' => Carbon::now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
                 'last_seen' => $currentDate->format("g.i A")
             ];
 

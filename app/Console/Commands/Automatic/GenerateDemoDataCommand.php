@@ -8,17 +8,23 @@ namespace App\Console\Commands\Automatic;
 
 use App\Jobs\GenerateDemoForUserJob;
 use App\Models\Currency;
+use App\Models\Deposit;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\News;
 use App\Models\NewsLang;
+use App\Models\PaymentSystem;
 use App\Models\Rate;
 use App\Models\Referral;
 use App\Models\Reviews;
 use App\Models\Setting;
+use App\Models\Transaction;
+use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Console\Command;
 use Faker\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * Class GenerateDemoDataCommand
@@ -97,6 +103,10 @@ class GenerateDemoDataCommand extends Command
             $this->comment('Generating settings');
             $this->generateSettings();
             $this->comment('Settings generated');
+
+            $this->comment('Generating transactions');
+            $this->generateTransactions();
+            $this->comment('Transactions generated');
         }
 
         $this->comment('Generating users');
@@ -138,6 +148,52 @@ class GenerateDemoDataCommand extends Command
                 NewsLang::create($newsLangs);
                 $this->info('news with lang ' . $language->code . ' created with title "' . $newsLangs['title'] . '"');
             }
+        }
+    }
+
+    private function generateTransactions(){
+        $transactionTypeIds = TransactionType::all()->map(function($tr){
+            return $tr->id;
+        });
+
+        $userIds = User::all()->map(function ($u) {
+            return $u->id;
+        });
+
+        $currencyIds = Currency::all()->map(function($c){
+            return $c->id;
+        });
+
+        $rateIds = Rate::all()->map(function($r){
+            return $r->id;
+        });
+
+        $depositIds = Deposit::all()->map(function($d){
+           return $d->id;
+        });
+
+        $walletIds = Wallet::all()->map(function($w){
+            return $w->id;
+        });
+
+        $paymentSystemIds = PaymentSystem::all()->map(function($p){
+            return $p->id;
+        });
+
+        for($i = 0; $i < 50; $i++){
+
+            Transaction::create([
+                'type_id' =>    $transactionTypeIds->get(rand(0,8)),
+                'user_id' =>    $userIds->get(rand(0, count($userIds) - 1)),
+                'currency_id' => $currencyIds->get(rand(0, count($currencyIds) - 1)),
+                'rate_id' => $rateIds->get(rand(0, count($rateIds) - 1)),
+                'deposit_id' => $depositIds->get(rand(0, count($depositIds) - 1)),
+                'wallet_id' => $walletIds->get(rand(0, count($walletIds) - 1)),
+                'payment_system_id' => $paymentSystemIds->get(rand(0, count($paymentSystemIds) - 1)),
+                'amount' => rand(200, 1000),
+                'approved' => rand(0,1),
+                'created_at' => Carbon::today()->subDays(rand(0, 2))
+            ]);
         }
     }
 
