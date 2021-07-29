@@ -3,19 +3,19 @@
     <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-indigo-purple no-shadow">
       <div class="nav-wrapper">
         <div class="header-search-wrapper hide-on-med-and-down"><i class="material-icons">Search</i>
-          <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Explore Materialize" data-search="template-list">
+          <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Search users by Login / Email / Name" data-search="template-list">
           <ul class="search-list collection display-none"></ul>
         </div>
         <ul class="navbar-list right">
-          <li class="dropdown-language">
-            <a class="waves-effect waves-block waves-light translation-button" href="#" data-target="translation-dropdown">
-              <span class="flag-icon flag-icon-gb"></span>
-            </a>
-          </li>
-          <li class="hide-on-med-and-down">
-            <a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);">
-              <i class="material-icons">settings_overscan</i></a>
-          </li>
+{{--          <li class="dropdown-language">--}}
+{{--            <a class="waves-effect waves-block waves-light translation-button" href="#" data-target="translation-dropdown">--}}
+{{--              <span class="flag-icon flag-icon-gb"></span>--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--          <li class="hide-on-med-and-down">--}}
+{{--            <a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);">--}}
+{{--              <i class="material-icons">settings_overscan</i></a>--}}
+{{--          </li>--}}
           <li class="hide-on-large-only search-input-wrapper">
             <a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);">
               <i class="material-icons">search</i></a>
@@ -35,28 +35,28 @@
           </li>
         </ul>
         <!-- translation-button-->
-        <ul class="dropdown-content" id="translation-dropdown">
-          <li class="dropdown-item">
-            <a class="grey-text text-darken-1" href="#!" data-language="en">
-              <i class="flag-icon flag-icon-gb"></i> English
-            </a>
-          </li>
-          <li class="dropdown-item">
-            <a class="grey-text text-darken-1" href="#!" data-language="fr">
-              <i class="flag-icon flag-icon-fr"></i> French
-            </a>
-          </li>
-          <li class="dropdown-item">
-            <a class="grey-text text-darken-1" href="#!" data-language="pt">
-              <i class="flag-icon flag-icon-pt"></i> Portuguese
-            </a>
-          </li>
-          <li class="dropdown-item">
-            <a class="grey-text text-darken-1" href="#!" data-language="de">
-              <i class="flag-icon flag-icon-de"></i> German
-            </a>
-          </li>
-        </ul>
+{{--        <ul class="dropdown-content" id="translation-dropdown">--}}
+{{--          <li class="dropdown-item">--}}
+{{--            <a class="grey-text text-darken-1" href="#!" data-language="en">--}}
+{{--              <i class="flag-icon flag-icon-gb"></i> English--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--          <li class="dropdown-item">--}}
+{{--            <a class="grey-text text-darken-1" href="#!" data-language="fr">--}}
+{{--              <i class="flag-icon flag-icon-fr"></i> French--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--          <li class="dropdown-item">--}}
+{{--            <a class="grey-text text-darken-1" href="#!" data-language="pt">--}}
+{{--              <i class="flag-icon flag-icon-pt"></i> Portuguese--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--          <li class="dropdown-item">--}}
+{{--            <a class="grey-text text-darken-1" href="#!" data-language="de">--}}
+{{--              <i class="flag-icon flag-icon-de"></i> German--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--        </ul>--}}
         <!-- notifications-dropdown-->
         <ul class="dropdown-content" id="notifications-dropdown">
           <li>
@@ -134,7 +134,7 @@
         <div class="nav-wrapper">
           <form id="navbarForm">
             <div class="input-field search-input-sm">
-              <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Explore Materialize" data-search="template-list">
+              <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Search users by Login / Email / Name" data-search="template-list">
               <label class="label-icon" for="search"><i class="material-icons search-sm-icon">search</i></label><i class="material-icons search-sm-close">close</i>
               <ul class="search-list collection search-list-sm display-none"></ul>
             </div>
