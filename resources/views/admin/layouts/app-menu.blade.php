@@ -69,13 +69,6 @@
       </a>
     </li>
     
-    <li class="bold">
-      <a class="waves-effect waves-cyan {{ (Route::is('admin.statistic') ? 'active' : '') }}" href="{{ route('admin.statistic') }}">
-        <i class="fa fa-bar-chart-o"></i>
-        <span class="menu-title" data-i18n="Statistics">{{ __('Statistics') }}</span>
-      </a>
-    </li>
-    
     <li class="bold {{ (Route::is('admin.news.*') ? 'active' : '') }} {{ (Route::is('admin.reviews.*') ? 'active' : '') }} {{ (Route::is('admin.faqs.*') ? 'active' : '') }}">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="fa fa-bullhorn"></i>
