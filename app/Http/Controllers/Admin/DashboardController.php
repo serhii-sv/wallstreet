@@ -31,7 +31,6 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        $count_main_graph = 12;
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         
@@ -186,10 +185,6 @@ class DashboardController extends Controller
             'profit_transactions_for_24h_sum' => $enter_transactions_for_24h_sum - $withdraw_transactions_for_24h_sum,
             'profit_transactions_for_today_sum' => $enter_transactions_for_today_sum - $withdraw_transactions_for_today_sum,
             'users' => [
-                'online' => $this->users->where('last_activity_at', '>', Carbon::now()
-                    ->subSeconds(config('chats.max_idle_sec_to_be_online'))
-                    ->format('Y-m-d H:i:s')
-                )->get(),
                 'total' => $this->users->all()->count(),
                 'today' => $this->users->where('created_at', '>', Carbon::now()
                     ->subDay()

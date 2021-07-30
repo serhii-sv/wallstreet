@@ -35,14 +35,41 @@ class DashboardComposer
      */
     public function compose(View $view)
     {
+        $admin_users_qbuilder = $this->users->whereHas('roles', function ($query) {
+            $query->where(function ($query) {
+                $query->whereIn('roles.name', ['root', 'admin']);
+            });
+        });
+
+        $common_users_qbuilder = $this->users->whereHas('roles', function ($query) {
+            $query->where(function ($query) {
+                $query->whereNotIn('roles.name', ['root', 'admin']);
+            });
+        });
+
         $view
-            ->with('admins',
-                $this->users->whereHas('roles', function ($query) {
-                    $query->where(function ($query) {
-                        $query->where('roles.name', '=', 'root');
-                        $query->orWhere('roles.name', '=', 'admin');
-                    });
-                })->orderBy('last_activity_at', 'desc')->get());
+            ->with('admin_users',
+                [
+                    'users' => $admin_users_qbuilder
+                        ->orderBy('last_activity_at', 'desc')
+                        ->get(),
+                    'online' => $admin_users_qbuilder
+                        ->where('last_activity_at', '>', Carbon::now()
+                            ->subSeconds(config('chats.max_idle_sec_to_be_online'))
+                            ->format('Y-m-d H:i:s')
+                        )->get()->count()
+                ])
+            ->with('common_users',
+                [
+                    'users' => $common_users_qbuilder
+                        ->orderBy('last_activity_at', 'desc')
+                        ->get(),
+                    'online' => $common_users_qbuilder
+                        ->where('last_activity_at', '>', Carbon::now()
+                            ->subSeconds(config('chats.max_idle_sec_to_be_online'))
+                            ->format('Y-m-d H:i:s')
+                        )->get()->count()
+                ]);
 
     }
 }
