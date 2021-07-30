@@ -4,6 +4,8 @@
  * Any questions? Please, visit https://newgen.company
  */
 
+namespace Database\Seeders;
+
 use App\Models\TransactionType;
 use Illuminate\Database\Seeder;
 
