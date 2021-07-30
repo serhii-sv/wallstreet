@@ -1,13 +1,8 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
@@ -16,7 +11,7 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function test_example()
     {
         $this->assertTrue(true);
     }

@@ -14,7 +14,6 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @property string email
  * @property string text
- * @property string captcha
  */
 class RequestSupport extends FormRequest
 {
@@ -38,7 +37,6 @@ class RequestSupport extends FormRequest
         return [
             'email'   => 'required|max:255|email',
             'text'    => 'required',
-            'captcha' => 'required|captcha',
         ];
     }
 
@@ -54,9 +52,6 @@ class RequestSupport extends FormRequest
 
             'text.required'    => trans('main.emails.request.text_required'),
             'text.min'         => trans('main.emails.request.text_min'),
-
-            'captcha.required' => trans('validation.captcha_required'),
-            'captcha.captcha'  => trans('validation.captcha_captcha'),
         ];
     }
 }

@@ -1,52 +1,47 @@
 @extends('layouts.app')
-@section('title', __('Login'))
+
 @section('content')
-  
-  <div class="main--body">
-  
-    <!--========== Preloader ==========-->
-  @include('layouts.app-preloader')
-  <!--========== Preloader ==========-->
-  
-  {{--    <div class="preloader">--}}
-  {{--      <div class="preloader-inner">--}}
-  {{--        <div class="preloader-icon">--}}
-  {{--          <span></span>--}}
-  {{--          <span></span>--}}
-  {{--        </div>--}}
-  {{--      </div>--}}
-  {{--    </div>--}}
-  
-  <!--============= Sign In Section Starts Here =============-->
-    <div class="account-section bg_img" data-background="{{ asset('images/account-bg.jpg') }}">
-      <div class="container">
-        <div class="account-title text-center">
-          <a href="" class="back-home"><i class="fas fa-angle-left"></i>
-            <span>Back <span class="d-none d-sm-inline-block">To Hyipland</span></span>
-          </a>
-          <a href="#0" class="logo">
-            <img src="{{ asset('images/logo/footer-logo.png') }}" alt="logo">
-          </a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Reset Password') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Send Password Reset Link') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="account-wrapper">
-          <div class="account-body">
-            <h4 class="title mb-20">Reset <span>password</span></h4>
-            <form class="account-form"  method="POST" action="{{ route('password.email') }}">
-              {{ csrf_field() }}
-              <div style="color: red; align-content: center">@include('partials.inform')<br></div>
-              <div class="form-group">
-                <label for="sign-up">{{ __('E-Mail Address or login') }}</label>
-                <input id="email" name="email" type="text" value="{{ old('email') }}" required autofocus />
-              </div>
-              
-              <div class="form-group text-center">
-                <button type="submit" class="mt-2 mb-2">{{ __('Send Password Reset Link') }}</button>
-              </div>
-            </form>
-          </div>
-        
-        </div>
-      </div>
     </div>
-    <!--============= Sign In Section Ends Here =============-->
+</div>
 @endsection

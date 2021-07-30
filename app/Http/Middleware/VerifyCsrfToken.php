@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace App\Http\Middleware;
 
@@ -16,16 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/perfectmoney/status',
-        '/advcash/status',
-        '/payeer/status',
-        '/blockio/status',
-        '/coinpayments/status',
-        '/enpay/status',
-        '/nixmoney/status',
-        '/topup/payment_message',
-
-        '/telegram_webhook/*',
-        '/youtube/watch/save/*/*',
+        //
     ];
 }

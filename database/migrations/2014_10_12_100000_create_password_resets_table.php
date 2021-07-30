@@ -1,12 +1,8 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePasswordResetsTable extends Migration
 {

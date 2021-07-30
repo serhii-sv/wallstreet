@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +12,7 @@
 */
 
 $app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
 /*
@@ -44,6 +40,10 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+
+if (env('APP_DEBUG')) {
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------

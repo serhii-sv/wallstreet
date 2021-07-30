@@ -52,12 +52,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('dump', function ($expression) {
-            return "<?php dump({$expression}); ?>";
-        });
-
-        Schema::defaultStringLength(191);
-
         Horizon::auth(function ($request) {
             $user = \Auth::user();
 

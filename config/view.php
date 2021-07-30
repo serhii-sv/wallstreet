@@ -1,10 +1,7 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | View Storage Paths
@@ -31,6 +28,9 @@ return [
     |
     */
 
-    'compiled' => realpath(storage_path('framework/views')),
+    'compiled' => env(
+        'VIEW_COMPILED_PATH',
+        realpath(storage_path('framework/views'))
+    ),
 
 ];

@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace App\Http\Controllers\Auth;
 
@@ -23,14 +19,4 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 }

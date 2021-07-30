@@ -1,15 +1,11 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace App\Providers;
 
-use App\Listeners\LoggingListener;
-use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,26 +15,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
-        ],
-        'App\Events\TranslationPublishedEvent' => [
-            'App\Listeners\TranslationActionsListener',
-        ],
-        'Illuminate\Auth\Events\Login' => [
-            'App\Listeners\LogSuccessfulLogin',
-        ],
-        'Illuminate\Auth\Events\Logout' => [
-            'App\Listeners\LogSuccessfulLogout',
-        ],
-        'Illuminate\Auth\Events\PasswordReset' => [
-            'App\Listeners\NotificationPasswordReset',
-        ],
-        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
-            'SocialiteProviders\\Instagram\\InstagramExtendSocialite@handle',
-        ],
-        'Illuminate\Mail\Events\MessageSent' => [
-            'App\Listeners\LogSentEmail',
+        Registered::class => [
+            SendEmailVerificationNotification::class,
         ],
     ];
 
@@ -49,6 +27,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+        //
     }
 }

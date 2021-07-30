@@ -1,14 +1,9 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace App\Exceptions;
 
-use App\Jobs\SendLogsJob;
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -27,28 +22,20 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
 
     /**
-     * @param Exception $exception
-     * @return mixed|void
-     * @throws Exception
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
      */
-    public function report(Exception $exception)
+    public function register()
     {
-        parent::report($exception);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param Exception $exception
-     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Throwable
-     */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 }

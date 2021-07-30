@@ -1,32 +1,33 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 return [
-    'facebook' => [
-        'client_id'     => env('FACEBOOK_OAUTH_CLIENT_ID'),
-        'client_secret' => env('FACEBOOK_OAUTH_CLIENT_SECRET'),
-        'redirect'      => 'https://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/callback/facebook',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Third Party Services
+    |--------------------------------------------------------------------------
+    |
+    | This file is for storing the credentials for third party services such
+    | as Mailgun, Postmark, AWS and more. This file provides the de facto
+    | location for this type of information, allowing packages to have
+    | a conventional file to locate the various service credentials.
+    |
+    */
+
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
-    'google' => [
-        'client_id'     => env('GOOGLE_OAUTH_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_OAUTH_CLIENT_SECRET'),
-        'redirect'      => 'https://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/callback/google',
+    'postmark' => [
+        'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'instagram' => [
-        'client_id' => env('INSTAGRAM_KEY'),
-        'client_secret' => env('INSTAGRAM_SECRET'),
-        'redirect' => 'https://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/callback/instagram',
+    'ses' => [
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'odnoklassniki' => [
-        'client_id' => env('ODNOKLASSNIKI_ID'),
-        'client_secret' => env('ODNOKLASSNIKI_SECRET'),
-        'client_public' => env('ODNOKLASSNIKI_PUBLIC'),
-        'redirect' => 'https://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').'/login/callback/odnoklassniki',
-    ],
 ];

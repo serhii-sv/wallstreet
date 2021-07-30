@@ -18,7 +18,6 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @property string wallet_id
  * @property float amount
- * @property string captcha
  */
 class RequestWithdraw extends FormRequest
 {
@@ -42,7 +41,6 @@ class RequestWithdraw extends FormRequest
         return [
             'wallet_id' => ['required', new RuleWalletExist, new RuleUUIDEqual, new RuleWalletWithExternalAddress],
             'amount'    => ['numeric', new RuleEnoughBalance, 'min:0.0003', 'max:1000000'],
-            'captcha'   => 'required|captcha',
         ];
     }
 
@@ -54,9 +52,6 @@ class RequestWithdraw extends FormRequest
         return [
             'wallet_id.required' => __('Wallet is required'),
             'amount.numeric'     => __('Amount have to be numeric'),
-            
-            'captcha.required'   => trans('validation.captcha_required'),
-            'captcha.captcha'    => trans('validation.captcha_captcha'),
         ];
     }
 }

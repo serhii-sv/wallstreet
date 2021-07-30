@@ -1,6 +1,8 @@
-
 <?php
+
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -11,6 +13,7 @@ use Illuminate\Foundation\Inspiring;
 | simple approach to interacting with each command's IO methods.
 |
 */
-Artisan::command('get_env', function () {
-    $this->info(config('app.env'));
-});
+
+Artisan::command('inspire', function () {
+    $this->comment(Inspiring::quote());
+})->purpose('Display an inspiring quote');

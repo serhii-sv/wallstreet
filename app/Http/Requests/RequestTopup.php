@@ -14,7 +14,6 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @property string currency
  * @property float amount
- * @property string captcha
  */
 class RequestTopup extends FormRequest
 {
@@ -38,7 +37,6 @@ class RequestTopup extends FormRequest
         return [
             'currency' => 'required|max:255|string',
             'amount'   => 'required|regex:/^\d*(\.\d{1,8})?$/|min:0.00000001',
-            'captcha'  => 'required|captcha',
         ];
     }
 
@@ -55,9 +53,6 @@ class RequestTopup extends FormRequest
             'amount.required'   => __('Amount is required.'),
             'amount.regex'      => __('Wrong amount format.'),
             'amount.min'        => __('Minimum amount is').' 0.00000001',
-
-            'captcha.required'  => trans('validation.captcha_required'),
-            'captcha.captcha'   => trans('validation.captcha_captcha'),
         ];
     }
 }

@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
- */
 
 namespace App\Http\Middleware;
 
@@ -16,6 +12,7 @@ class TrimStrings extends Middleware
      * @var array
      */
     protected $except = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
