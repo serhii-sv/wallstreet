@@ -4,14 +4,14 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Manual;
+namespace App\Console\Commands;
 
 use App\Models\Currency;
 use Illuminate\Console\Command;
 
 /**
  * Class RegisterCurrenciesCommand
- * @package App\Console\Commands\Manual
+ * @package App\Console\Commands
  */
 class RegisterCurrenciesCommand extends Command
 {

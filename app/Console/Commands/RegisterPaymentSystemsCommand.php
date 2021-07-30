@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Manual;
+namespace App\Console\Commands;
 
 use App\Models\Currency;
 use App\Models\PaymentSystem;
@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 
 /**
  * Class RegisterPaymentSystemsCommand
- * @package App\Console\Commands\Manual
+ * @package App\Console\Commands
  */
 class RegisterPaymentSystemsCommand extends Command
 {

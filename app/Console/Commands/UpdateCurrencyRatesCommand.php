@@ -1,5 +1,5 @@
 <?php
-namespace App\Console\Commands\Automatic;
+namespace App\Console\Commands;
 
 use App\Models\Currency;
 use App\Models\Setting;
@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 
 /**
  * Class UpdateCurrencyRatesCommand
- * @package App\Console\Commands\Automatic
+ * @package App\Console\Commands
  */
 class UpdateCurrencyRatesCommand extends Command
 {

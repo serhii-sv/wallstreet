@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Automatic;
+namespace App\Console\Commands;
 
 use App\Http\Controllers\Admin\WithdrawalRequestsController;
 use App\Models\Currency;
@@ -16,7 +16,7 @@ use Illuminate\Console\Command;
 
 /**
  * Class ProcessInstantPaymentsCommand
- * @package App\Console\Commands\Automatic
+ * @package App\Console\Commands
  */
 class ProcessInstantPaymentsCommand extends Command
 {

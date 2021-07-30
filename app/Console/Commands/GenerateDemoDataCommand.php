@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Automatic;
+namespace App\Console\Commands;
 
 use App\Jobs\GenerateDemoForUserJob;
 use App\Models\Currency;
@@ -28,7 +28,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * Class GenerateDemoDataCommand
- * @package App\Console\Commands\Automatic
+ * @package App\Console\Commands
  */
 class GenerateDemoDataCommand extends Command
 {

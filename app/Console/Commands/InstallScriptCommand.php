@@ -4,13 +4,13 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Manual;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
 /**
  * Class InstallScriptCommand
- * @package App\Console\Commands\Manual
+ * @package App\Console\Commands
  */
 class InstallScriptCommand extends Command
 {

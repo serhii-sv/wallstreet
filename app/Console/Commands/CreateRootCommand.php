@@ -4,14 +4,14 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Manual;
+namespace App\Console\Commands;
 
 use Faker\Factory;
 use Illuminate\Console\Command;
 
 /**
  * Class CreateRootCommand
- * @package App\Console\Commands\Manual
+ * @package App\Console\Commands
  */
 class CreateRootCommand extends Command
 {

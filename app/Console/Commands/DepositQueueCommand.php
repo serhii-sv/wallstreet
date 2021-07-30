@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Automatic;
+namespace App\Console\Commands;
 
 use App\Jobs\AccrueDeposit;
 use App\Jobs\CloseDeposit;
@@ -13,7 +13,7 @@ use Illuminate\Console\Command;
 
 /**
  * Class DepositQueueCommand
- * @package App\Console\Commands\Automatic
+ * @package App\Console\Commands
  */
 class DepositQueueCommand extends Command
 {

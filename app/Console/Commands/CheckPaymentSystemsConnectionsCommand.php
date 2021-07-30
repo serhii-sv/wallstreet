@@ -4,14 +4,14 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Console\Commands\Automatic;
+namespace App\Console\Commands;
 
 use App\Models\PaymentSystem;
 use Illuminate\Console\Command;
 
 /**
  * Class CheckPaymentSystemsConnectionsCommand
- * @package App\Console\Commands\Automatic
+ * @package App\Console\Commands
  */
 class CheckPaymentSystemsConnectionsCommand extends Command
 {
