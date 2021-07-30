@@ -293,11 +293,6 @@
                           @endif
                         </a>
                       </li>
-                      <li class="{{ (Route::is('admin.social_meta.*') ? 'active' : '') }}"><a
-                            href="{{ route('admin.social_meta.index') }}"><i class="fa fa-list-alt"></i>
-                          <span>{{ __('Social meta') }}</span>
-                        </a>
-                      </li>
                       <li class="{{ (Route::is('admin.deposits.*') ? 'active' : '') }}"><a
                             href="{{ route('admin.deposits.index') }}"><i
                               class="fa fa-suitcase"></i>
@@ -328,11 +323,6 @@
                             <span class="label label-success">{{ getAdminTransactionsCount() }}</span>
                           @endif
                         </a>
-                      </li>
-                      <li class="{{ (Route::is('admin.statistic') ? 'active' : '') }}"><a
-                            href="{{ route('admin.statistic') }}"><i
-                              class="fa fa-bar-chart-o"></i>
-                          <span>{{ __('Statistics') }}</span></a>
                       </li>
                       <li>
                         <a role="button"><i class="fa fa-bullhorn"></i> <span>{{ __('Content') }}</span>
@@ -392,114 +382,6 @@
                             href="{{ route('admin.backup.index') }}"><i
                               class="fa fa-hdd-o"></i>
                           <span>{{ __('Backups') }}</span></a>
-                      </li>
-                      @hasrole('root')
-                      <li>
-                        <a role="button"><i class="fa fa-database"></i>
-                          <span>{{ __('System') }}</span></a>
-                        <ul>
-                          <li>
-                            <a href="/horizon" target="_blank"><i class="fa fa-clock-o"></i><span>{{ __('Jobs monitor') }}</span></a>
-                          </li>
-                          <li>
-                            <a href="{{ route('admin.sys_load') }}" target="_blank"><i class="fa fa-server"></i><span>{{ __('Server status') }}</span></a>
-                          </li>
-                          <li class="{{ (Route::is('admin.failedjobs.index') ? 'active' : '') }}"><a
-                                href="{{ route('admin.failedjobs.index') }}"
-                            ><i class="fa fa-refresh"></i>
-                              <span>{{ __('Failed jobs') }}</span>
-                            </a>
-                          </li>
-                          <li><a href="{{ route('logs') }}" target="_blank"><i
-                                  class="fa fa-warning"></i><span>{{ __('System logs') }}</span></a>
-                          </li>
-                          <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1GLPqYeqt_echN6DS58jTinbfd_uTanklfqIxaokHH2A/edit?usp=sharing"
-                                target="_blank"><i
-                                  class="fa fa-file-text"></i><span>{{ __('Integration documents') }}</span></a>
-                          </li>
-                        </ul>
-                      </li>
-                      @endhasrole
-                      <li>
-                        <a role="button"><i class="fa fa-location-arrow"></i>
-                          <span>{{ __('Telegram') }}</span>
-                        </a>
-                        <ul>
-                          <li class="{{ (Route::is('admin.telegram.bots.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.bots.index') }}">
-                              <i class="fa fa-dot-circle-o"></i>
-                              <span>{{ __('Bots') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.telegram.events.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.events.list') }}">
-                              <i class="fa  fa-rss-square"></i>
-                              <span>{{ __('Events') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.telegram.messages.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.messages.list') }}">
-                              <i class="fa fa-envelope-square"></i>
-                              <span>{{ __('Messages') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.telegram.users.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.users.list') }}">
-                              <i class="fa fa-group"></i>
-                              <span>{{ __('Telegram users') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.telegram.webhooks.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.webhooks.list') }}">
-                              <i class="fa fa-exchange"></i>
-                              <span>{{ __('Webhooks') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.telegram.webhooks_info.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.telegram.webhooks_info.list') }}">
-                              <i class="fa fa-info-circle"></i>
-                              <span>{{ __('Webhooks info') }}</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a role="button"><i class="fa fa-tasks"></i>
-                          <span>{{ __('User quests') }}</span>
-                        </a>
-                        <ul>
-                          <li class="{{ (Route::is('admin.user-tasks.tasks.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.user-tasks.tasks.index') }}">
-                              <i class="fa fa-circle"></i>
-                              <span>{{ __('Quests list') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.user-tasks.accepted_tasks.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.user-tasks.accepted_tasks.list') }}">
-                              <i class="fa fa-check-circle"></i>
-                              <span>{{ __('Accepted quests') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.user-tasks.available_elements.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.user-tasks.available_elements.list') }}">
-                              <i class="fa fa-cogs"></i>
-                              <span>{{ __('Available quest elements') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.user-tasks.tasks_elements.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.user-tasks.tasks_elements.list') }}">
-                              <i class="fa fa-cubes"></i>
-                              <span>{{ __('Quest elements') }}</span>
-                            </a>
-                          </li>
-                          <li class="{{ (Route::is('admin.user-tasks.user_task_elements.*') ? 'active' : '') }}">
-                            <a href="{{ route('admin.user-tasks.user_task_elements.list') }}">
-                              <i class="fa fa-briefcase"></i>
-                              <span>{{ __('Users quests elements') }}</span>
-                            </a>
-                          </li>
-                        </ul>
                       </li>
                     </ul>
                     <!--/ NAVIGATION Content -->

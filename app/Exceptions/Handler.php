@@ -7,14 +7,8 @@
 namespace App\Exceptions;
 
 use App\Jobs\SendLogsJob;
-use App\Models\Telegram\TelegramBots;
-use App\Models\User;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Session\TokenMismatchException;
-use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,26 +49,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
-            return redirect()->route('customer.main')->with('errors', __('Unauthorized access'));
-        }
-
-        $message = $exception->getMessage();
-
-        $stopWords = [
-            'Unauthenticated',
-            'invalid_grant',
-        ];
-
-        foreach ($stopWords as $stopWord) {
-            if (preg_match('/'.$stopWord.'/', $message)) {
-                return parent::render($request, $exception);
-            }
-        }
-
-        if (!empty($exception->getMessage())) {
-            SendLogsJob::dispatch($message)->onQueue(getSupervisorName().'-low')->delay(0);
-        }
         return parent::render($request, $exception);
     }
 }

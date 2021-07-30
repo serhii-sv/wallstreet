@@ -9,24 +9,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/telegram_webhook/{token}', 'Telegram\TelegramWebhookController@index')->name('telegram.webhook');
-
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
     
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
     Route::post('/ajax/change-lang', 'Ajax\TranslationController@changeLang')->name('ajax.change.lang');
- 
-    // oAuth
-    //    Route::get('login/callback/vk/{telegramUserId}', 'controller')->name('vk.redirect_url');
-    
-    //    Route::get('login/redirect/google/{telegramUserId}', 'controller')->name('google.redirect_url');
-    //    Route::get('login/callback/google', 'controller');
-    
-    // social event catcher
-    Route::get('youtube/watch/{taskAction}/{userId}', 'Technical\Youtube\YoutubeWatchCatchController@index')->name('youtube.watch');
-    Route::any('youtube/watch/save/{taskAction}/{userId}', 'Technical\Youtube\YoutubeWatchCatchController@catchEvent')->name('youtube.watch.save');
-    
+
     Route::get('/confirm_email/{hash}', 'Customer\ConfirmEmailController@index')->name('email.confirm');
     
     Route::group(['middleware' => ['site.status']], function () {
@@ -53,19 +41,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/partner/{partner_id}', 'SetPartnerController@index')->name('partner');
         Route::get('/lang/{locale}', 'LanguageController@index')->name('set.lang');
         
-        // IPN
-        Route::post('/advcash/status', 'Payment\AdvcashController@status')->name('advcash.status');
+        // Instant Payment Notifications (IPN)
         Route::post('/perfectmoney/status', 'Payment\PerfectMoneyController@status')->name('perfectmoney.status');
-        Route::post('/payeer/status', 'Payment\PayeerController@status')->name('payeer.status');
-        Route::post('/blockio/status', 'Payment\BlockioController@status')->name('blockio.status');
-        Route::post('/coinpayments/status', 'Payment\CoinpaymentsController@status')->name('coinpayments.status');
-        Route::post('/enpay/status', 'Payment\EnpayController@status')->name('enpay.status');
-        Route::post('/nixmoney/status', 'Payment\NixmoneyController@status')->name('nixmoney.status');
     });
     
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['site.status']], function () {
-            
             Route::post('/ajax/set-user-location', 'Ajax\UserLocationController@setUserLocationInfo')->name('ajax.set.user.location');
             Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
             
@@ -120,7 +101,6 @@ Route::group(['middleware' => ['web']], function () {
         });
         Route::group(['middleware' => ['tfa']], function () {
             Route::prefix('wallstreet')->namespace('Admin')->group(function () {
-//                 Controllers Within The "App\Http\Controllers\Admin" Namespace
                 Route::group(['middleware' => ['role:root|admin']], function () {
                     Route::post('/ajax/search-users', 'Ajax\SearchUserController@search')->name('ajax.search.users');
                     
@@ -128,13 +108,7 @@ Route::group(['middleware' => ['web']], function () {
                     Route::post('/dashboard/user/bonus', 'DashboardController@addUserBonus')->name('admin.dashboard.add.bonus');
 
                     Route::get('/impersonate/{id}', 'ImpersonateController@impersonate')->name('admin.impersonate');
-                    
-                    Route::get('auth/2fa', 'Admin\TwoFactAuthController@authForm')->name('auth.form.token');
-                    Route::post('auth/2fa', 'Admin\TwoFactAuthController@enterToken')->name('auth.enter.token');
-                    Route::post('auth/2fa/send', 'Admin\TwoFactAuthController@sendToken')->name('auth.send.token');
-                    Route::get('auth/2fa/status', 'Admin\TwoFactAuthController@statusForm')->name('auth.tfa.form');
-                    Route::post('auth/2fa/status', 'Admin\TwoFactAuthController@statusUpdate')->name('auth.tfa.update');
-                    
+
                     Route::get('/statistic', 'StatisticController@index')->name('admin.statistic');
                     
                     Route::get('/settings', 'SettingsController@index')->name('admin.settings.index');
@@ -315,63 +289,6 @@ Route::group(['middleware' => ['web']], function () {
                     
                     Route::get('/social_meta', 'SocialMetaController@index')->name('admin.social_meta.index');
                     Route::get('/social_meta/dtdata', 'SocialMetaController@dataTable')->name('admin.social_meta.dtdata');
-                    
-                    /*
-                     * Telegram
-                     */
-                    Route::resource('/telegram/bots', 'Telegram\BotsController', [
-                        'names' => [
-                            'index' => 'admin.telegram.bots.index',
-                            'create' => 'admin.telegram.bots.create',
-                            'store' => 'admin.telegram.bots.store',
-                            'edit' => 'admin.telegram.bots.edit',
-                            'update' => 'admin.telegram.bots.update',
-                        ],
-                    ]);
-                    Route::get('/telegram/datatable/bots/{id}/destroy', 'Telegram\BotsController@destroy')->name('admin.telegram.bots.destroy');
-                    Route::get('/telegram/datatable/bots', 'Telegram\BotsController@datatable')->name('admin.telegram.bots.datatable');
-                    
-                    Route::get('/telegram/events', 'Telegram\EventsController@index')->name('admin.telegram.events.list');
-                    Route::get('/telegram/datatable/events', 'Telegram\EventsController@datatable')->name('admin.telegram.events.datatable');
-                    
-                    Route::get('/telegram/messages', 'Telegram\MessagesController@index')->name('admin.telegram.messages.list');
-                    Route::get('/telegram/datatable/messages', 'Telegram\MessagesController@datatable')->name('admin.telegram.messages.datatable');
-                    
-                    Route::get('/telegram/users', 'Telegram\UsersController@index')->name('admin.telegram.users.list');
-                    Route::get('/telegram/datatable/users', 'Telegram\UsersController@datatable')->name('admin.telegram.users.datatable');
-                    
-                    Route::get('/telegram/webhooks', 'Telegram\WebhooksController@index')->name('admin.telegram.webhooks.list');
-                    Route::get('/telegram/datatable/webhooks', 'Telegram\WebhooksController@datatable')->name('admin.telegram.webhooks.datatable');
-                    
-                    Route::get('/telegram/webhooks_info', 'Telegram\WebhooksInfoController@index')->name('admin.telegram.webhooks_info.list');
-                    Route::get('/telegram/datatable/webhooks_info', 'Telegram\WebhooksInfoController@datatable')->name('admin.telegram.webhooks_info.datatable');
-                    
-                    /*
-                     * User tasks
-                     */
-                    Route::resource('/user-tasks/tasks', 'UserTasks\TasksController', [
-                        'names' => [
-                            'index' => 'admin.user-tasks.tasks.index',
-                            'create' => 'admin.user-tasks.tasks.create',
-                            'store' => 'admin.user-tasks.tasks.store',
-                            'edit' => 'admin.user-tasks.tasks.edit',
-                            'update' => 'admin.user-tasks.tasks.update',
-                        ],
-                    ]);
-                    Route::get('/user-tasks/datatable/tasks/{id}/destroy', 'UserTasks\TasksController@destroy')->name('admin.user-tasks.tasks.destroy');
-                    Route::get('/user-tasks/datatable/tasks', 'UserTasks\TasksController@datatable')->name('admin.user-tasks.tasks.datatable');
-                    
-                    Route::get('/user-tasks/accepted_tasks', 'UserTasks\AcceptedTasksController@index')->name('admin.user-tasks.accepted_tasks.list');
-                    Route::get('/user-tasks/datatable/accepted_tasks', 'UserTasks\AcceptedTasksController@datatable')->name('admin.user-tasks.accepted_tasks.datatable');
-                    
-                    Route::get('/user-tasks/available_elements', 'UserTasks\AvailableElementsController@index')->name('admin.user-tasks.available_elements.list');
-                    Route::get('/user-tasks/datatable/available_elements', 'UserTasks\AvailableElementsController@datatable')->name('admin.user-tasks.available_elements.datatable');
-                    
-                    Route::get('/user-tasks/tasks_elements', 'UserTasks\TasksElementsController@index')->name('admin.user-tasks.tasks_elements.list');
-                    Route::get('/user-tasks/datatable/tasks_elements', 'UserTasks\TasksElementsController@datatable')->name('admin.user-tasks.tasks_elements.datatable');
-                    
-                    Route::get('/user-tasks/user_task_elements', 'UserTasks\UserTaskElementsController@index')->name('admin.user-tasks.user_task_elements.list');
-                    Route::get('/user-tasks/datatable/user_task_elements', 'UserTasks\UserTaskElementsController@datatable')->name('admin.user-tasks.user_task_elements.datatable');
                 });
                 
                 Route::group(['middleware' => ['role:root']], function () {
@@ -381,14 +298,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('/backup/backupAll', 'BackupController@backupAll')->name('admin.backup.backupAll');
                     Route::get('/backup/destroy/{file}', 'BackupController@destroy')->where('file', '(.*(?:%2F:)?.*)')->name('admin.backup.destroy');
                     Route::post('/backup/download', 'BackupController@download')->name('admin.backup.download');
-                    
-                    Route::get('/failedjobs', 'FailedJobsController@index')->name('admin.failedjobs.index');
-                    Route::get('/failedjobs/datatable', 'FailedJobsController@dataTable')->name('admin.failedjobs.datatable');
-                    
+
                     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
-                    Route::get('see_integration_example/{functionName}', 'SeeIntegrationExample@index')->name('integration-docs');
-                    
-                    Route::get('/sys_load', 'SysLoadController@index')->name('admin.sys_load');
                 });
             });
         });
