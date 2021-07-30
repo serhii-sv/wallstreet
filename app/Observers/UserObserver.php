@@ -26,18 +26,6 @@ class UserObserver
             $transaction->delete();
         }
 
-        foreach ($user->taskPropositions()->get() as $taskProposition) {
-            $taskProposition->delete();
-        }
-
-        foreach ($user->userTaskActions()->get() as $userTaskAction) {
-            $userTaskAction->delete();
-        }
-
-        foreach ($user->userTasks()->get() as $userTask) {
-            $userTask->delete();
-        }
-
         /** @var Deposit $deposit */
         foreach ($user->deposits()->get() as $deposit) {
             DepositQueue::where('deposit_id', $deposit->id)->delete();
@@ -47,34 +35,7 @@ class UserObserver
         foreach ($user->wallets()->get() as $wallet) {
             $wallet->delete();
         }
-
-        foreach ($user->telegramUser()->get() as $telegramUser) {
-            $telegramUser->delete();
-        }
-
-        foreach ($user->user_ips()->get() as $ip) {
-            $ip->delete();
-        }
-
-        foreach ($user->socialMeta()->get() as $meta) {
-            $meta->delete();
-        }
-
-        foreach ($user->youtubeVideoWatches()->get() as $watch) {
-            $watch->delete();
-        }
-
-        foreach ($user->mailSents()->get() as $mail) {
-            $mail->delete();
-        }
-
-        \DB::table('blockio_notifications')->where('user_id', $user->id)->delete();
-
-        User::where('partner_id', $user->my_id)->update([
-            'partner_id' => null !== $user->partner_id
-                ? $user->partner_id
-                : null,
-        ]);
+        
     }
     
     /**
@@ -86,8 +47,6 @@ class UserObserver
      */
     public function created(User $user)
     {
-        Wallet::registerWallets($user);
-        $user->sendVerificationEmail();
         
     }
 
@@ -103,10 +62,7 @@ class UserObserver
         if (empty($user->login)) {
             $user->login = $user->email;
         }
-
-        if (null === $user->my_id || empty($user->my_id)) {
-            $user->my_id = generateMyId();
-        }
+        
     }
 
     /**
@@ -114,16 +70,7 @@ class UserObserver
      */
     public function saved(User $user)
     {
-        if ($user->isDirty(['email'])) {
-            $user->refreshEmailVerificationAndSendNew();
-        }
-
-        if ($user->isDirty(['partner_id'])) {
-            if ($user->partner_id == $user->my_id) {
-                $user->partner_id = null;
-                $user->save();
-            }
-        }
+    
     }
 
     /**
