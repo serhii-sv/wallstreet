@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Currency;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 
 /**
  * Class CurrenciesController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class CurrenciesController extends Controller
 {

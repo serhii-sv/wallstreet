@@ -17,31 +17,31 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['middleware' => ['role:root|admin']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Admin\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
 
-            Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
-            Route::post('/dashboard/user/bonus', [\App\Http\Controllers\Admin\DashboardController::class, 'addUserBonus'])->name('admin.dashboard.add.bonus');
+            Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('admin');
+            Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('admin.dashboard.add.bonus');
 
-            Route::get('/impersonate/{id}', [\App\Http\Controllers\Admin\ImpersonateController::class, 'impersonate'])->name('admin.impersonate');
+            Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('admin.impersonate');
 
-            Route::get('/settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('admin.settings.index');
-            Route::get('/settings/switch_site_status', [\App\Http\Controllers\Admin\SettingsController::class, 'switchSiteStatus'])->name('admin.settings.switchSiteStatus');
-            Route::post('/settings/change-many', [\App\Http\Controllers\Admin\SettingsController::class, 'changeMany'])->name('admin.settings.change-many');
+            Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('admin.settings.index');
+            Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('admin.settings.switchSiteStatus');
+            Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('admin.settings.change-many');
 
-            Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\Admin\DepositController::class, 'block'])->name('admin.deposits.block');
-            Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\Admin\DepositController::class, 'unblock'])->name('admin.deposits.unblock');
-            Route::get('/deposits/dtdata', [\App\Http\Controllers\Admin\DepositController::class, 'dataTable'])->name('admin.deposits.dtdata');
-            Route::resource('/deposits', \App\Http\Controllers\Admin\DepositController::class, [
+            Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\DepositController::class, 'block'])->name('admin.deposits.block');
+            Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\DepositController::class, 'unblock'])->name('admin.deposits.unblock');
+            Route::get('/deposits/dtdata', [\App\Http\Controllers\DepositController::class, 'dataTable'])->name('admin.deposits.dtdata');
+            Route::resource('/deposits', \App\Http\Controllers\DepositController::class, [
                 'names' => [
                     'index' => 'admin.deposits.index',
                     'show' => 'admin.deposits.show',
                 ],
             ]);
 
-            Route::get('/requests/approve/{id}', [\App\Http\Controllers\Admin\WithdrawalRequestsController::class, 'approve'])->name('admin.requests.approve');
-            Route::post('/requests/approve-many', [\App\Http\Controllers\Admin\WithdrawalRequestsController::class, 'approveMany'])->name('admin.requests.approve-many');
-            Route::get('/requests/reject/{id}', [\App\Http\Controllers\Admin\WithdrawalRequestsController::class, 'reject'])->name('admin.requests.reject');
-            Route::get('/requests/approveManually/{id}', [\App\Http\Controllers\Admin\WithdrawalRequestsController::class, 'approveManually'])->name('admin.requests.approveManually');
-            Route::get('/requests/dtdata', [\App\Http\Controllers\Admin\WithdrawalRequestsController::class, 'dataTable'])->name('admin.requests.dtdata');
-            Route::resource('/requests', \App\Http\Controllers\Admin\WithdrawalRequestsController::class, [
+            Route::get('/requests/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('admin.requests.approve');
+            Route::post('/requests/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('admin.requests.approve-many');
+            Route::get('/requests/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('admin.requests.reject');
+            Route::get('/requests/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('admin.requests.approveManually');
+            Route::get('/requests/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('admin.requests.dtdata');
+            Route::resource('/requests', \App\Http\Controllers\WithdrawalRequestsController::class, [
                 'names' => [
                     'index' => 'admin.requests.index',
                     'show' => 'admin.requests.show',
@@ -50,15 +50,15 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::get('/transactions/dtdata', [\App\Http\Controllers\Admin\TransactionsController::class, 'dataTable'])->name('admin.transactions.dtdata');
-            Route::resource('/transactions', \App\Http\Controllers\Admin\TransactionsController::class, [
+            Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('admin.transactions.dtdata');
+            Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class, [
                 'names' => [
                     'index' => 'admin.transactions.index',
                     'show' => 'admin.transactions.show',
                 ],
             ]);
 
-            Route::resource('/langs', \App\Http\Controllers\Admin\LanguagesController::class, [
+            Route::resource('/langs', \App\Http\Controllers\LanguagesController::class, [
                 'names' => [
                     'index' => 'admin.langs.index',
                     'create' => 'admin.langs.create',
@@ -67,9 +67,9 @@ Route::group(['middleware' => ['web']], function () {
                     'update' => 'admin.langs.update',
                 ],
             ]);
-            Route::get('/langs/destroy/{id}', [\App\Http\Controllers\Admin\LanguagesController::class, 'destroy'])->name('admin.langs.destroy');
+            Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('admin.langs.destroy');
 
-            Route::resource('/translations', \App\Http\Controllers\Admin\TplTranslationsController::class, [
+            Route::resource('/translations', \App\Http\Controllers\TplTranslationsController::class, [
                 'names' => [
                     'index' => 'admin.tpl_texts.index',
                     'index/{category?}' => 'admin.tpl_texts.index',
@@ -81,14 +81,14 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/currencies', \App\Http\Controllers\Admin\CurrenciesController::class, [
+            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class, [
                 'names' => [
                     'index' => 'admin.currencies.index',
                     'edit' => 'admin.currencies.edit',
                     'update' => 'admin.currencies.update',
                 ],
             ]);
-            Route::resource('/payment-systems', \App\Http\Controllers\Admin\PaymentSystemsController::class, [
+            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class, [
                 'names' => [
                     'index' => 'admin.payment-systems.index',
                     'edit' => 'admin.payment-systems.edit',
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class, [
+            Route::resource('/news', \App\Http\Controllers\NewsController::class, [
                 'names' => [
                     'index' => 'admin.news.index',
                     'create' => 'admin.news.create',
@@ -107,7 +107,7 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/reviews', \App\Http\Controllers\Admin\ReviewsController::class, [
+            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class, [
                 'names' => [
                     'index' => 'admin.reviews.index',
                     'create' => 'admin.reviews.create',
@@ -117,7 +117,7 @@ Route::group(['middleware' => ['web']], function () {
                     'destroy' => 'admin.reviews.destroy',
                 ],
             ]);
-            Route::resource('/faqs', \App\Http\Controllers\Admin\FaqsController::class, [
+            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class, [
                 'names' => [
                     'index' => 'admin.faqs.index',
                     'create' => 'admin.faqs.create',
@@ -128,7 +128,7 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/referral', \App\Http\Controllers\Admin\ReferralController::class, [
+            Route::resource('/referral', \App\Http\Controllers\ReferralController::class, [
                 'names' => [
                     'index' => 'admin.referral.index',
                     'create' => 'admin.referral.create',
@@ -137,7 +137,7 @@ Route::group(['middleware' => ['web']], function () {
                     'update' => 'admin.referral.update',
                 ],
             ]);
-            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\Admin\ReferralController::class, 'destroy'])->name('admin.referral.destroy');
+            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('admin.referral.destroy');
 
             Route::resource('/rates', 'RateController', [
                 'names' => [
@@ -149,15 +149,15 @@ Route::group(['middleware' => ['web']], function () {
                     'update' => 'admin.rates.update',
                 ],
             ]);
-            Route::get('/rates/destroy/{id}', [\App\Http\Controllers\Admin\RateController::class, 'destroy'])->name('admin.rates.destroy');
+            Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('admin.rates.destroy');
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('admin.users.reftree');
-            Route::get('/users/dtdata', [\App\Http\Controllers\Admin\UsersController::class, 'dataTable'])->name('admin.users.dtdata');
-            Route::get('/users/dt-transactions/{user_id}', [\App\Http\Controllers\Admin\UsersController::class, 'dataTableTransactions'])->name('admin.users.dt-transactions');
-            Route::get('/users/dt-deposits/{user_id}', [\App\Http\Controllers\Admin\UsersController::class, 'dataTableDeposits'])->name('admin.users.dt-deposits');
-            Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\Admin\UsersController::class, 'dataTableDeposits'])->name('admin.users.dt-wrs');
+            Route::get('/users/dtdata', [\App\Http\Controllers\UsersController::class, 'dataTable'])->name('admin.users.dtdata');
+            Route::get('/users/dt-transactions/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableTransactions'])->name('admin.users.dt-transactions');
+            Route::get('/users/dt-deposits/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('admin.users.dt-deposits');
+            Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('admin.users.dt-wrs');
 
-            Route::resource('/users', \App\Http\Controllers\Admin\UsersController::class, ['names' => [
+            Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'index' => 'admin.users.index',
                 'show' => 'admin.users.show',
                 'show/{level?}{plevel?}' => 'admin.users.show',
@@ -165,19 +165,19 @@ Route::group(['middleware' => ['web']], function () {
                 'update' => 'admin.users.update',
                 'destroy' => 'admin.users.destroy',
             ]]);
-            Route::post('/users/{id}/update_stat', [\App\Http\Controllers\Admin\UsersController::class, 'updateStat'])->name('admin.users.update_stat');
+            Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('admin.users.update_stat');
 
-            Route::post('/users/bonus', [\App\Http\Controllers\Admin\UsersController::class, 'bonus'])->name('admin.users.bonus');
-            Route::post('/users/penalty', [\App\Http\Controllers\Admin\UsersController::class, 'penalty'])->name('admin.users.penalty');
+            Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('admin.users.bonus');
+            Route::post('/users/penalty', [\App\Http\Controllers\UsersController::class, 'penalty'])->name('admin.users.penalty');
         });
 
         Route::group(['middleware' => ['role:root']], function () {
-            Route::get('/backup', [\App\Http\Controllers\Admin\BackupController::class, 'index'])->name('admin.backup.index');
-            Route::get('/backup/backupDB', [\App\Http\Controllers\Admin\BackupController::class, 'backupDB'])->name('admin.backup.backupDB');
-            Route::get('/backup/backupFiles', [\App\Http\Controllers\Admin\BackupController::class, 'backupFiles'])->name('admin.backup.backupFiles');
-            Route::get('/backup/backupAll', [\App\Http\Controllers\Admin\BackupController::class, 'backupAll'])->name('admin.backup.backupAll');
-            Route::get('/backup/destroy/{file}', [\App\Http\Controllers\Admin\BackupController::class, 'destroy'])->where('file', '(.*(?:%2F:)?.*)')->name('admin.backup.destroy');
-            Route::post('/backup/download', [\App\Http\Controllers\Admin\BackupController::class, 'download'])->name('admin.backup.download');
+            Route::get('/backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('admin.backup.index');
+            Route::get('/backup/backupDB', [\App\Http\Controllers\BackupController::class, 'backupDB'])->name('admin.backup.backupDB');
+            Route::get('/backup/backupFiles', [\App\Http\Controllers\BackupController::class, 'backupFiles'])->name('admin.backup.backupFiles');
+            Route::get('/backup/backupAll', [\App\Http\Controllers\BackupController::class, 'backupAll'])->name('admin.backup.backupAll');
+            Route::get('/backup/destroy/{file}', [\App\Http\Controllers\BackupController::class, 'destroy'])->where('file', '(.*(?:%2F:)?.*)')->name('admin.backup.destroy');
+            Route::post('/backup/download', [\App\Http\Controllers\BackupController::class, 'download'])->name('admin.backup.download');
 
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
         });

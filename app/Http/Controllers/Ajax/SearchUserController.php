@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Ajax;
+namespace App\Http\Controllers\Ajax;
 
 use App\Models\User;
 use Illuminate\Http\Request;

@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Helpers\Constants;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use Yajra\DataTables\DataTables;
 
 /**
  * Class FailedJobsController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class FailedJobsController extends Controller
 {

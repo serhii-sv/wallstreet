@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\PaymentSystem;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 
 /**
  * Class PaymentSystemsController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class PaymentSystemsController extends Controller
 {

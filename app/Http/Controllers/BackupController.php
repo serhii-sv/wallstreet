@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 
 /**
  * Class BackupController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class BackupController extends Controller
 {

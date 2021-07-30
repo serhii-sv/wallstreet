@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestCreateLanguage;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 /**
  * Class LanguagesController
  *
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class LanguagesController extends Controller
 {
@@ -26,30 +26,30 @@ class LanguagesController extends Controller
     public function index() {
         return view('admin.langs.index');
     }
-    
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create() {
         return view('admin.langs.create');
     }
-    
+
     /**
      * @param RequestCreateLanguage $request
      *
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function store(RequestCreateLanguage $request) {
-        
+
         $createLang = Language::create($request->all());
-        
+
         if (!$createLang) {
             return back()->with('error', __('Unable to create language'))->withInput();
         }
-        
+
         return back()->with('success', __('Language has been created'));
     }
-    
+
     /**
      * @param Language $lang
      *
@@ -60,7 +60,7 @@ class LanguagesController extends Controller
             'lang' => $lang,
         ]);
     }
-    
+
     /**
      * @param Request  $request
      * @param Language $lang
@@ -71,9 +71,9 @@ class LanguagesController extends Controller
         if ($lang->default) {
             return back()->with('error', __('It is forbidden to change the default language'))->withInput();
         }
-        
+
         $update = $lang->update($request->all());
-        
+
         if ($request->default) {
             Language::where('default', 1)->update([
                 'default' => 0,
@@ -81,14 +81,14 @@ class LanguagesController extends Controller
             $lang->default = 1;
             $lang->save();
         }
-        
+
         if (!$update) {
             return back()->with('error', __('Unable to update language'))->withInput();
         }
-        
+
         return back()->with('success', 'Language has been updated');
     }
-    
+
     /**
      * @param $lang
      *
@@ -96,16 +96,16 @@ class LanguagesController extends Controller
      */
     public function destroy($lang) {
         $lang = Language::find($lang);
-        
+
         if ($lang->default) {
             return back()->with('error', __('It is forbidden to change the default language\''))->withInput();
         }
-        
+
         if ($lang->delete()) {
             return redirect()->route('admin.langs.index')->with('success', __('Language has been deleted'));
         }
-        
+
         return redirect()->route('admin.langs.index')->with('error', __('Unable to delete language'));
     }
-    
+
 }

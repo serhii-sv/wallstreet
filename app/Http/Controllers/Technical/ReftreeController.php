@@ -4,13 +4,13 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin\Technical;
+namespace App\Http\Controllers\Technical;
 
 use App\Http\Controllers\Controller;
 
 /**
  * Class ReftreeController
- * @package App\Http\Controllers\Admin\Technical
+ * @package App\Http\Controllers\Technical
  */
 class ReftreeController extends Controller
 {

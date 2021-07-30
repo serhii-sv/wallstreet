@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestRateStoreUpdate;
 use App\Models\Rate;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 
 /**
  * Class RateController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class RateController extends Controller
 {

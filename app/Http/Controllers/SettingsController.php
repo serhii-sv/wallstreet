@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class SettingsController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class SettingsController extends Controller
 {

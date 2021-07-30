@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
@@ -12,7 +12,7 @@ use Yajra\Datatables\Datatables;
 
 /**
  * Class DepositController
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class DepositController extends Controller
 {

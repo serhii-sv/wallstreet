@@ -4,7 +4,7 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\TplDefaultLang;
 use App\Models\TplTranslation;
@@ -17,7 +17,7 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 /**
  * Class TplTranslationsController
  *
- * @package App\Http\Controllers\Admin
+ * @package App\Http\Controllers
  */
 class TplTranslationsController extends Controller
 {
@@ -28,30 +28,30 @@ class TplTranslationsController extends Controller
      */
     public function index(Request $request) {
         $lang = Language::getDefault()->code;
-        
+
         $texts = Storage::disk('lang')->exists($lang . '.json') ? json_decode(Storage::disk('lang')->get($lang . '.json'), true) : [];
         $category = 'customer';
-        
+
         //        if (!empty($request->category)) {
         //            $texts = $texts->where('category', $request->category);
         //            $category = $request->category;
         //        }
         //$texts = $texts->orderBy('text')->get();
-        
+
         return view('admin.langs.translations.index', [
             'texts' => $texts,
             'lang' => $lang,
             'category' => $category,
         ]);
     }
-    
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create() {
         return view('admin.langs.translations.create');
     }
-    
+
     /**
      * @param Request $request
      *
@@ -74,10 +74,10 @@ class TplTranslationsController extends Controller
             }
             Storage::disk('lang')->put($lang . '.json', json_encode($translations));
         });
-        
+
         return back()->with('success', __('Translation has been created'));
     }
-    
+
     /**
      * @param $id
      *
@@ -85,7 +85,7 @@ class TplTranslationsController extends Controller
      */
     public function edit($key) {
         $languages = Language::all();
-        
+
         $data = $languages->mapWithKeys(function ($lang) use ($key) {
             if (Storage::disk('lang')->exists($lang->code . '.json')) {
                 $translations = json_decode(Storage::disk('lang')->get($lang->code . '.json'), true);
@@ -102,7 +102,7 @@ class TplTranslationsController extends Controller
             'languages' => $languages,
         ]);
     }
-    
+
     /**
      * @param Request $request
      * @param         $key
@@ -125,7 +125,7 @@ class TplTranslationsController extends Controller
         });
         return back()->with('success', __('Translation ahs been updated'));
     }
-    
+
     /**
      * @param $key
      *
