@@ -213,7 +213,7 @@
       </div>
    </div>
 </div>
-@include('pages.intro')
+@include('pages.sample.intro')
 @endsection
 
 {{-- vendor scripts --}}

@@ -95,14 +95,13 @@ class CreateRootCommand extends Command
         }
 
         $password = empty($askPassword) ? str_random(12) : $askPassword;
-        $my_id = generateMyId();
 
         $user = \App\Models\User::create([
             'name'     => $name,
             'email'    => $email,
             'login'    => $login,
             'password' => bcrypt($password),
-            'my_id'    => $my_id,
+            'my_id'    => null,
         ]);
         $user->assignRole('root');
         $user->save();

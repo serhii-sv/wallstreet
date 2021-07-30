@@ -1,10 +1,10 @@
 {{-- pageConfigs variable pass to Helper's updatePageConfig function to update page configuration  --}}
 @isset($pageConfigs)
-{!! Helper::updatePageConfig($pageConfigs) !!}
+{!! App\Helpers\Helper::updatePageConfig($pageConfigs) !!}
 @endisset
 <!DOCTYPE html>
 @php
-$configData = Helper::applClasses();
+$configData = App\Helpers\Helper::applClasses();
 @endphp
 <!--
 Template Name: Materialize - Material Design Admin Template

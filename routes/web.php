@@ -9,6 +9,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::group(['middleware' => ['web']], function () {
     Auth::routes();
 
@@ -181,4 +182,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
         });
     });
+});
+
+Route::get('/', function (){
+    return view('pages.dashboard');
 });
