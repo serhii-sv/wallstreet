@@ -16,4 +16,4 @@ mytodo.txt
 payeer*.txt
 *.licence
 /resources/lang/*.json
-laradock-wallstreet
+laradock-*
