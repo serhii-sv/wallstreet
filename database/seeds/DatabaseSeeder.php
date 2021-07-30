@@ -19,10 +19,6 @@ class DatabaseSeeder extends Seeder
             LanguagesTableSeeder::class,
             RolesAndPermissionsSeeder::class,
             TransactionTypesSeeder::class,
-            CountriesSeeder::class,
-            SettingSeeder::class,
-            TelegramBotSeeder::class,
-            TaskScopesSeeder::class,
         ]);
     }
 }
