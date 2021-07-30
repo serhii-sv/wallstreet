@@ -24,7 +24,7 @@ class ReCreateWalletAmount extends Migration
         Schema::table('wallets', function (Blueprint $table) {
             $table->float('balance', 12, 8)->after('external')->default(0.00000000);
         });
-        Artisan::call('check:user_balances');
+      //  Artisan::call('check:user_balances');
     }
 
     /**
