@@ -173,7 +173,6 @@ return [
          * Package Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -188,7 +187,6 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Hedii\ArtisanLogCleaner\ArtisanLogCleanerServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
-        \SocialiteProviders\Manager\ServiceProvider::class,
 
         // Custom registered providers
         App\Providers\ComposerServiceProvider::class,
@@ -243,7 +241,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
-        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,

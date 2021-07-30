@@ -4,276 +4,178 @@
  * Any questions? Please, visit https://newgen.company
  */
 
-use Twilio\Rest\Client;
+/**
+ * TODO:
+ * 1. разнести логику по моделям
+ * 2. удалить этот файл
+ */
 
 /**
- * @param $number
- * @param $text
- * @return bool|\Twilio\Rest\Api\V2010\Account\MessageInstance
- * @throws \Twilio\Exceptions\ConfigurationException
+ * @param $userId |null
  *
- * TODO: twilio have to be as module
+ * @return string|null
+ * @throws Exception
  */
-function sendSmsTwilio($number, $text)
-{
-    // Your Account SID and Auth Token from twilio.com/console
-    $sid = config('sms.set_twilio_sid');
-    $token = config('sms.set_twilio_token');
-    $client = new Client($sid, $token);
-    $purchasedTwilioNumber = config('sms.set_twilio_number');
-
-    try {
-        return $client->messages->create(
-            $number,
-            [
-                // A Twilio phone number you purchased at twilio.com/console
-                'from' => $purchasedTwilioNumber,
-                'body' => $text
-            ]
-        );
-    } catch(Exception $e) {
-        return false;
+function getAdminD3V3ReferralsTree($userId = null) {
+    if (null === $userId) {
+        return null;
     }
-}
 
-/**
- * @param string $currencyId
- * @param float $value
- * @return float
- * @throws Exception
- */
-function currencyPrecision(string $currencyId, float $value): float
-{
-    $precision = cache()->tags(['currency', 'precision'])->rememberForever('precision_' . $currencyId, function () use ($currencyId) {
-        /** @var \App\Models\Currency $currency */
-        $currency = \App\Models\Currency::find($currencyId);
-
-        return $currency->precision > 0
-            ? $currency->precision
-            : 2;
-    });
-    return round($value, $precision);
-}
-
-/**
- * @param array $keys
- * @return void
- * @throws Exception
- */
-function clearCacheByArray(array $keys)
-{
-    foreach ($keys as $key) {
-        cache()->forget($key);
-    }
-}
-
-/**
- * @param array $tags
- * @return void
- * @throws Exception
- */
-function clearCacheByTags(array $tags)
-{
-    cache()->tags($tags)->flush();
-}
-
-/**
- * @return array
- * @throws Exception
- */
-function getTransactionTypes(): array
-{
-    return cache()->remember('h.transactionTypes', getCacheHLifetime('transactionTypes'), function() {
-        return \App\Models\TransactionType::get()->toArray();
+    return cache()->remember('a.' . $userId . '.d3v3ReferralsTree', now()->addHour(), function () use ($userId) {
+        return json_encode(\App\Models\User::getD3V3ReferralsTree(\App\Models\User::find($userId)));
     });
 }
 
 /**
  * @return int
- */
-function generateMyId(): int
-{
-    $maxExists = \App\Models\User::max('my_id');
-    $maxExists = $maxExists > 0 ? $maxExists+1 : rand(500000, 2000000);
-    return $maxExists;
-}
-
-/**
- * @param string $baseCurrency
- * @return array
  * @throws Exception
- *
- * TODO: currency rates have to be as module
  */
-function currenciesRates(string $baseCurrency = 'USD'): array
-{
-    return cache()->tags(['currency', 'precision', 'rates'])->remember('rates_' . $baseCurrency, getCacheHLifetime('currenciesRates'), function () use ($baseCurrency) {
-        $rates = \App\Models\Currency::balances();
-        array_pull($rates, $baseCurrency);
-        $keys = implode(",", array_keys($rates));
+function getAdminWithdrawRequestsCount()
+: int {
+    return cache()->remember('a.withdrawRequestsCount', now()->addHour(), function () {
+        /** @var \App\Models\TransactionType $transactionWithdrawalType */
+        $transactionWithdrawalType = \App\Models\TransactionType::getByName('withdraw');
 
-        try {
-            $f = fopen('https://openexchangerates.org/api/latest.json?app_id=' . env('OPENEXCHANGERATES_API') . '&base=' . $baseCurrency . '&symbols=' . $keys . '&show_alternative=true', 'rb');
-
-            if ($f) {
-                $out = "";
-
-                while (!feof($f)) {
-                    $out .= fgets($f);
-                }
-
-                fclose($f);
-                $out = json_decode($out, true);
-
-                if (isset($out['rates'])) {
-                    foreach ($out['rates'] as $key => $value) {
-                        $rates[$key] = currencyPrecision($baseCurrency, (1 / $value));
-                    }
-                }
-            }
-        } finally {
-            return $rates;
-        }
+        return \App\Models\Transaction::where('type_id', $transactionWithdrawalType->id)->where('approved', 0)->count();
     });
 }
 
 /**
- * @param string|null $key
- * @param string|null $section
- * @return \Carbon\Carbon
+ * @param string|null $typeId
+ *
+ * @return int
  * @throws Exception
  */
-function getCacheLifetime($key = null, $section = null)
-{
-    if (null == $key) {
-        throw new Exception('Cache key is empty');
-    }
-
-    if (null == $section) {
-        throw new Exception('Cache section is empty');
-    }
-
-    return now()->addMinutes(config()->get('cache.lifetimes.' . $section . '.' . $key));
+function getAdminTransactionsCount($typeId = null)
+: int {
+    return cache()->remember('a.transactionsCount', getCacheALifetime('transactionsCount'), function () use ($typeId) {
+        if (null !== $typeId) {
+            return \App\Models\Transaction::where('type_id', $typeId)->count();
+        }
+        return \App\Models\Transaction::count();
+    });
 }
 
 /**
- * @param null $key
- * @return \Carbon\Carbon
- * @throws Exception
+ * @return array
+ *
+ * :)
  */
-function getCacheILifetime($key = null)
-{
-    return getCacheLifetime($key, 'i');
-}
-
-/**
- * @param null $key
- * @return \Carbon\Carbon
- * @throws Exception
- */
-function getCacheALifetime($key = null)
-{
-    return getCacheLifetime($key, 'a');
-}
-
-/**
- * @param null $key
- * @return \Carbon\Carbon
- * @throws Exception
- */
-function getCacheHLifetime($key = null)
-{
-    return getCacheLifetime($key, 'h');
-}
-
-/**
- * @param null $key
- * @return \Carbon\Carbon
- * @throws Exception
- */
-function getCacheCLifetime($key = null)
-{
-    return getCacheLifetime($key, 'c');
-}
-
-/**
- * @return string
- */
-function getTodayLicenceFile()
-{
-    $today          = now()->toDateString();
-    $todayTimestamp = strtotime($today);
-    $indicatorFile  = $todayTimestamp.'.licence';
-
-    return $indicatorFile;
-}
-
-/**
- * @return boolean
- */
-function checkLicence()
-{
-//    $disk        = 'licences';
-//    $licenceFile = getTodayLicenceFile();
-//
-//    if (isset($_SERVER['HTTP_HOST']) && preg_match('/\.(test|develop)/', $_SERVER['HTTP_HOST'])) {
-//        return true;
-//    }
-//
-//    return \Illuminate\Support\Facades\Storage::disk($disk)->exists($licenceFile);
-    return true;
-}
-
-/**
- * @return string
- */
-function getSupervisorName()
-{
-    return preg_replace('/ /', '-', env('APP_NAME', 'supervisor-1'));
-}
-
-/**
- * @param \App\Models\Transaction $enterTransaction
- * @return bool
- * @throws Exception
- */
-function autocreatedeposit(\App\Models\Transaction $enterTransaction)
-{
-    $user = $enterTransaction->user;
-    $wallet = $enterTransaction->wallet;
-    $amount = $enterTransaction->amount;
-
-    if (null === $user || null === $wallet) {
-        return false;
-    }
-
-    $lookForAutoCreateRecord = \App\Models\AutoCreateDeposit::where('user_id', $user->id)
-        ->where('wallet_id', $wallet->id)
-        ->where('amount', $amount)
-        ->orderBy('created_at', 'desc')
-        ->first();
-
-    if (null === $lookForAutoCreateRecord) {
-        return false;
-    }
-
-    $depositData = [
-        'wallet_id'  => $wallet->id,
-        'rate_id'    => $lookForAutoCreateRecord->rate_id,
-        'amount'     => $amount,
-        'reinvest'   => 0,
-        'created_at' => now(),
-        'user'       => $user,
+function getAdminMergeDepositedAndWithdrew()
+: array {
+    return [
+        'deposited' => getTotalDeposited(),
+        'withdrew' => getTotalWithdrew(),
     ];
-    $depo = \App\Models\Deposit::addDeposit($depositData);
+}
 
-    if (null === $depo) {
-        return false;
+/**
+ * @param \Carbon\Carbon $date
+ * @param int            $limit
+ *
+ * @return array
+ * @throws Exception
+ */
+function getAdminDepositsSumClosingAtDate($date = null, $limit = 100)
+: array {
+    if (null == $date || (false == $date instanceof \Carbon\Carbon)) {
+        return [];
     }
 
-    $lookForAutoCreateRecord->delete();
+    return cache()->tags('depositsSumClosingAtDate')->remember('a.depositsSumClosingAtDate.' . $date . '.limit-' . $limit, getCacheALifetime('depositsSumClosingAtDate'), function () use ($date, $limit) {
+        $depositsAtDate = \App\Models\Deposit::where('datetime_closing', 'like', \Carbon\Carbon::parse($date)->toDateString() . '%');
+        $closingDeposits = [];
+        $closingDepositsSum = [];
 
-    return true;
+        foreach ($depositsAtDate as $deposit) {
+            if (!isset($closingDepositsSum[$deposit->currency->code])) {
+                $closingDepositsSum[$deposit->currency->code] = 0;
+            }
+
+            $closingDeposits[] = $deposit;
+            $closingDepositsSum[$deposit->currency->code] += $deposit->invested;
+        }
+        return [
+            'deposits' => $closingDeposits,
+            'total' => $closingDepositsSum,
+        ];
+    });
+}
+
+/**
+ * @return array
+ * @throws Exception
+ */
+function getAdminPlanPopularity()
+: array {
+    return cache()->remember('a.plansPopularity', getCacheALifetime('plansPopularity'), function () {
+        $popularity = [];
+        $plans = getTariffPlans();
+
+        foreach ($plans as $plan) {
+            $depositsSum = \App\Models\Deposit::where('rate_id', $plan['id'])->count();
+            $popularity[$plan['id']] = $plan;
+            $popularity[$plan['id']]['depositsSum'] = $depositsSum;
+        }
+
+        return $popularity;
+    });
+}
+
+/**
+ * @param int    $days
+ * @param string $currency
+ *
+ * @return array
+ * @throws Exception
+ */
+function getAdminMoneyTrafficStatistic($days = null, $currency = null) {
+    if (null === $days || null === $currency) {
+        return [];
+    }
+
+    return cache()->tags('moneyTrafficStatistic')->remember('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency, getCacheALifetime('moneyTrafficStatistic'), function () use ($days, $currency) {
+        $daysArray = [];
+        $currency = \App\Models\Currency::where('code', $currency)->first();
+        $typeEnter = \App\Models\TransactionType::getByName('enter');
+        $typeWithdraw = \App\Models\TransactionType::getByName('withdraw');
+
+        if (null === $currency || null === $typeEnter || null === $typeWithdraw) {
+            return null;
+        }
+
+        for ($i = $days; $i > 0; $i--) {
+            $day = \Carbon\Carbon::now()->subDays($i);
+            $daysArray[$day->format('Y-m-d')] = cache()->tags('moneyTrafficStatistic.specificDay')->rememberForever('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency . '.date-' . $day->toFormattedDateString(), function () use ($days, $currency, $typeEnter, $typeWithdraw, $day) {
+                $enter = \App\Models\Transaction::where('currency_id', $currency->id)->where('type_id', $typeEnter->id)->where('created_at', '>=', $day->format('Y-m-d') . ' 00:00:01')->where('created_at', '<=', $day->format('Y-m-d') . ' 23:59:59')->sum('amount');
+                $withdrew = \App\Models\Transaction::where('currency_id', $currency->id)->where('type_id', $typeWithdraw->id)->where('created_at', '>=', $day->format('Y-m-d') . ' 00:00:01')->where('created_at', '<=', $day->format('Y-m-d') . ' 23:59:59')->sum('amount');
+                return [
+                    'enter' => round($enter, $currency->precision),
+                    'withdrew' => round($withdrew, $currency->precision),
+                ];
+            });
+        }
+        return $daysArray;
+    });
+}
+
+function canEditLang()
+: bool {
+    if (auth()->check() && auth()->user()->hasRole('root|admin')) {
+        return true;
+    }
+    return false;
+}
+
+function createUserAuthLog($request, $user) {
+    $user_log = new UserAuthLog();
+    $user_log->user_id = $user->id;
+    $user_log->ip = $request->ip();
+    $user->hasAnyRole([
+        'admin',
+        'root',
+    ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
+    $user_log->save();
 }
 
 /**
@@ -322,4 +224,67 @@ function checkRequestOnEdit() : bool {
         return true;
     }
     return false;
+}
+
+/**
+ * How much users was registered.
+ *
+ * @param \Carbon\Carbon $date
+ * @return int
+ * @throws
+ */
+function getTotalAccounts(\Carbon\Carbon $date = null): int
+{
+    return cache()->tags('totalAccounts')->remember('i.totalAccounts.date-' . $date, now()->addHour(), function () use ($date) {
+        if (null !== $date) {
+            return \App\Models\User::where('created_at', '<=', $date->format('Y-m-d') . '00:00:01')
+                ->where('created_at', '>=', $date->format('Y-m-d') . '23:59:29')
+                ->count();
+        }
+        return \App\Models\User::count();
+    });
+}
+
+/**
+ * @param \Carbon\Carbon $date
+ * @return int
+ * @throws Exception
+ */
+function getClosedDepositsCount(\Carbon\Carbon $date = null): int
+{
+    return getDepositsCount('no', $date);
+}
+
+/**
+ * @param \Carbon\Carbon $date
+ * @param int $active
+ * @return int
+ * @throws Exception
+ */
+function getDepositsCount($active = null, \Carbon\Carbon $date = null): int
+{
+    return cache()->tags('depositsCount')->remember('depositsCount.' . ($active ? $active : 'd') . '.date-' . $date, now()->addHour(), function () use ($active, $date) {
+        $deposits = \App\Models\Deposit::select('*');
+
+        if (null != $active) {
+            $deposits = $deposits->where('active', $active == 'yes' ? 1 : 0);
+        }
+
+        if (null !== $date) {
+            $deposits = $deposits->where('created_at', '>=', $date->format('Y-m-d') . '00:00:01')
+                ->where('created_at', '<=', $date->format('Y-m-d') . '23:59:59');
+        }
+
+        return $deposits->count();
+    });
+}
+
+/**
+ * @param \Carbon\Carbon $date
+ * @return int
+ * @throws Exception
+ */
+function getActiveDepositsCount(\Carbon\Carbon $date = null): int
+{
+    return getDepositsCount('yes', $date);
 }

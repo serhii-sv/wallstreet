@@ -109,25 +109,6 @@ class LoginController extends Controller
     protected function attemptLogin(Request $request)
     {
         /*
-         * Check captcha
-         */
-        $validator = \Validator::make($request->all(), [
-            'captcha' => loginCaptchaCanBeShown() ? 'required|captcha' : '',
-        ], [
-            'captcha.required' => trans('validation.captcha_required'),
-            'captcha.captcha' => trans('validation.captcha_captcha')
-        ]);
-
-        /*
-         * Send errors about captcha
-         */
-        if ($validator->fails()) {
-            throw ValidationException::withMessages([
-                $this->username() => [$validator->errors()->get('captcha')[0]],
-            ]);
-        }
-
-        /*
          * Turn off blocking
          */
         if (session()->has('blocked_time') && $this->getDiffInMinutesForBlocked() < 1) {

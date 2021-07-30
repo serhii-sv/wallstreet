@@ -212,22 +212,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function user_ips()
-    {
-        return $this->hasMany(UserIp::class, 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function mailSents()
-    {
-        return $this->hasMany(MailSent::class, 'user_id');
-    }
-
-    /**
      * @param boolean $useSymbols
      * @param string $currencyId
      * @return array
@@ -697,14 +681,6 @@ class User extends Authenticatable
             $admin = User::find($role->model_id);
             $admin->sendTelegramNotification($code, $data, $notificationBot);
         }
-    }
-
-    /**
-     * @return void
-     */
-    public function addIp()
-    {
-        UserIp::addIp($this->id);
     }
 
     /**

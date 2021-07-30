@@ -31,6 +31,5 @@ class LogSuccessfulLogin
     public function handle(Login $event)
     {
         //
-        $event->user->addIp();
     }
 }

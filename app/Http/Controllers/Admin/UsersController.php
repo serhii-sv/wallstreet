@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestBonusUser;
 use App\Http\Requests\RequestPenaltyUser;
 use App\Models\Deposit;
-use App\Models\PageViews;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -165,28 +164,6 @@ class UsersController extends Controller
             ->editColumn('approved', function ($transaction) {
                 return __($transaction->approved == 1 ? 'yes' : 'no');
             })
-            ->make(true);
-    }
-
-    /**
-     * @param $userId
-     * @return mixed
-     * @throws \Exception
-     */
-    public function dataTablePageViews($userId)
-    {
-        $pageViews = PageViews::where('user_id', $userId)
-            ->select('page_views.*');
-
-        return Datatables::of($pageViews)
-            ->addColumn('location', function ($pv) {
-                $countries = Cache::rememberForever('countries', function () {
-                    return Countries::select('iso_3166_2', 'flag')->get();
-                });
-                $flag = $countries->where('iso_3166_2', geoip($pv->user_ip)->iso_code)->first();
-                return '<img src="' . secure_asset('flags') . '/' . $flag->flag . '"> ' . geoip($pv->user_ip)->country . ', ' . geoip($pv->user_ip)->city;
-            })
-            ->rawColumns(['location'])
             ->make(true);
     }
 

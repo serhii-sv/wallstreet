@@ -41,7 +41,6 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             \App\Http\Middleware\SetLang::class,
-            \App\Http\Middleware\PageViews::class,
             \App\Http\Middleware\DemoAutoAuth::class,
             \App\Http\Middleware\SetLastActivity::class,
         ],

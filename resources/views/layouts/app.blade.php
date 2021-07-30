@@ -40,7 +40,7 @@
     <script src="{{ asset('js/owl.min.js') }}"></script>
     <script src="{{ asset('js/paroller.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    @if(auth()->check() && (!(user()->country) || !(user()->city) || !(user()->ip)))
+    @if(auth()->check() && (!(auth()->user()->country) || !(auth()->user()->city) || !(auth()->user()->ip)))
       <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
       <script>
         $(document).ready(function () {

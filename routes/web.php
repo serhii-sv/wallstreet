@@ -260,7 +260,6 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('/users/dt-transactions/{user_id}', 'UsersController@dataTableTransactions')->name('admin.users.dt-transactions');
                     Route::get('/users/dt-deposits/{user_id}', 'UsersController@dataTableDeposits')->name('admin.users.dt-deposits');
                     Route::get('/users/dt-wrs/{user_id}', 'UsersController@dataTableWrs')->name('admin.users.dt-wrs');
-                    Route::get('/users/dt-pvs/{user_id}', 'UsersController@dataTablePageViews')->name('admin.users.dt-pvs');
 
                     Route::resource('/users', 'UsersController', [
                         'names' => [
