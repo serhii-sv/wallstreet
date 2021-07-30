@@ -25,26 +25,6 @@ class TransactionTypeObserver
     }
 
     /**
-     * @param TransactionType $transactionType
-     * @return array
-     */
-    private function getCacheKeys(TransactionType $transactionType): array
-    {
-        return [
-            'i.enterCommission'
-        ];
-    }
-
-    /**
-     * @param TransactionType $transactionType
-     * @return array
-     */
-    private function getCacheTags(TransactionType $transactionType): array
-    {
-        return [];
-    }
-
-    /**
      * Listen to the TransactionType created event.
      *
      * @param TransactionType $transactionType
@@ -53,8 +33,7 @@ class TransactionTypeObserver
      */
     public function created(TransactionType $transactionType)
     {
-        clearCacheByArray($this->getCacheKeys($transactionType));
-        clearCacheByTags($this->getCacheTags($transactionType));
+    
     }
 
     /**
@@ -66,8 +45,7 @@ class TransactionTypeObserver
      */
     public function deleted(TransactionType $transactionType)
     {
-        clearCacheByArray($this->getCacheKeys($transactionType));
-        clearCacheByTags($this->getCacheTags($transactionType));
+    
     }
 
     /**
@@ -79,7 +57,6 @@ class TransactionTypeObserver
      */
     public function updated(TransactionType $transactionType)
     {
-        clearCacheByArray($this->getCacheKeys($transactionType));
-        clearCacheByTags($this->getCacheTags($transactionType));
+    
     }
 }

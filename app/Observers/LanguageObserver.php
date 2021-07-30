@@ -45,30 +45,7 @@ class LanguageObserver
      */
     public function created(Language $language)
     {
-        clearCacheByArray($this->getCacheKeys($language));
-        clearCacheByTags($this->getCacheTags($language));
-    }
-
-    /**
-     * @param Language $language
-     * @return array
-     */
-    private function getCacheKeys(Language $language): array
-    {
-        return [
-            'i.languagesArray'
-        ];
-    }
-
-    /**
-     * @param Language $language
-     * @return array
-     */
-    private function getCacheTags(Language $language): array
-    {
-        return [
-            'languages'
-        ];
+    
     }
 
     /**
@@ -80,8 +57,7 @@ class LanguageObserver
      */
     public function deleted(Language $language)
     {
-        clearCacheByArray($this->getCacheKeys($language));
-        clearCacheByTags($this->getCacheTags($language));
+    
     }
 
     /**
@@ -93,7 +69,6 @@ class LanguageObserver
      */
     public function updated(Language $language)
     {
-        clearCacheByArray($this->getCacheKeys($language));
-        clearCacheByTags($this->getCacheTags($language));
+    
     }
 }

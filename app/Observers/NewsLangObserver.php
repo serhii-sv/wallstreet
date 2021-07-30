@@ -23,29 +23,9 @@ class NewsLangObserver
      */
     public function created(NewsLang $newsLang)
     {
-        clearCacheByArray($this->getCacheKeys($newsLang));
-        clearCacheByTags($this->getCacheTags($newsLang));
+    
     }
-
-    /**
-     * @param NewsLang $newsLang
-     * @return array
-     */
-    private function getCacheKeys(NewsLang $newsLang): array
-    {
-
-        return [];
-    }
-
-    /**
-     * @param NewsLang $newsLang
-     * @return array
-     */
-    private function getCacheTags(NewsLang $newsLang): array
-    {
-        return [];
-    }
-
+    
     /**
      * Listen to the NewsLang deleting event.
      *
@@ -55,8 +35,7 @@ class NewsLangObserver
      */
     public function deleted(NewsLang $newsLang)
     {
-        clearCacheByArray($this->getCacheKeys($newsLang));
-        clearCacheByTags($this->getCacheTags($newsLang));
+    
     }
 
     /**
@@ -68,7 +47,6 @@ class NewsLangObserver
      */
     public function updated(NewsLang $newsLang)
     {
-        clearCacheByArray($this->getCacheKeys($newsLang));
-        clearCacheByTags($this->getCacheTags($newsLang));
+    
     }
 }

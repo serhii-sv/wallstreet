@@ -24,27 +24,6 @@ class NewsObserver
             $child->delete();
         }
     }
-
-    /**
-     * @param News $news
-     * @return array
-     */
-    private function getCacheKeys(News $news): array
-    {
-        return [
-            'i.allNews'
-        ];
-    }
-
-    /**
-     * @param News $news
-     * @return array
-     */
-    private function getCacheTags(News $news): array
-    {
-        return [];
-    }
-
     /**
      * Listen to the News created event.
      *
@@ -54,8 +33,7 @@ class NewsObserver
      */
     public function created(News $news)
     {
-        clearCacheByArray($this->getCacheKeys($news));
-        clearCacheByTags($this->getCacheTags($news));
+    
     }
 
     /**
@@ -67,8 +45,7 @@ class NewsObserver
      */
     public function deleted(News $news)
     {
-        clearCacheByArray($this->getCacheKeys($news));
-        clearCacheByTags($this->getCacheTags($news));
+    
     }
 
     /**
@@ -80,7 +57,6 @@ class NewsObserver
      */
     public function updated(News $news)
     {
-        clearCacheByArray($this->getCacheKeys($news));
-        clearCacheByTags($this->getCacheTags($news));
+    
     }
 }

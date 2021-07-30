@@ -76,53 +76,7 @@ class UserObserver
                 : null,
         ]);
     }
-
-    /**
-     * @param User $user
-     * @return array
-     */
-    private function getCacheKeys(User $user): array
-    {
-        if (null == $user->id) {
-            return [];
-        }
-
-        $keys = [
-            'i.activeAccounts',
-            'userController.allUsers'
-        ];
-
-        if ($user->partner_id > 0) {
-            $keys[] = 'i.' . $user->partner_id . '.partnerArray';
-            $keys[] = 'a.' . $user->partner_id . '.d3v3ReferralsTree';
-        }
-
-        return $keys;
-    }
-
-    /**
-     * @param User $user
-     * @return array
-     */
-    private function getCacheTags(User $user): array
-    {
-        if (null == $user->id) {
-            return [];
-        }
-
-        $keys = [
-            'lastCreatedMembers',
-            'totalAccounts',
-            'activeAccounts',
-        ];
-
-        if ($user->partner_id > 0) {
-            $keys[] = 'userReferrals.' . $user->partner_id;
-        }
-
-        return $keys;
-    }
-
+    
     /**
      * Listen to the User created event.
      *
@@ -134,9 +88,7 @@ class UserObserver
     {
         Wallet::registerWallets($user);
         $user->sendVerificationEmail();
-
-        clearCacheByArray($this->getCacheKeys($user));
-        clearCacheByTags($this->getCacheTags($user));
+        
     }
 
     /**
@@ -183,7 +135,6 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        clearCacheByArray($this->getCacheKeys($user));
-        clearCacheByTags($this->getCacheTags($user));
+    
     }
 }

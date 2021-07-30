@@ -37,32 +37,10 @@ class RateObserver
      */
     public function created(Rate $rate)
     {
-        clearCacheByArray($this->getCacheKeys($rate));
-        clearCacheByTags($this->getCacheTags($rate));
+    
     }
 
-    /**
-     * @param Rate $rate
-     * @return array
-     */
-    private function getCacheKeys(Rate $rate): array
-    {
-        return [
-            'i.tariffPlans'
-        ];
-    }
-
-    /**
-     * @param Rate $rate
-     * @return array
-     */
-    private function getCacheTags(Rate $rate): array
-    {
-        return [
-            'rates'
-        ];
-    }
-
+    
     /**
      * Listen to the Rate deleting event.
      *
@@ -72,8 +50,7 @@ class RateObserver
      */
     public function deleted(Rate $rate)
     {
-        clearCacheByArray($this->getCacheKeys($rate));
-        clearCacheByTags($this->getCacheTags($rate));
+    
     }
 
     /**
@@ -85,7 +62,6 @@ class RateObserver
      */
     public function updated(Rate $rate)
     {
-        clearCacheByArray($this->getCacheKeys($rate));
-        clearCacheByTags($this->getCacheTags($rate));
+    
     }
 }

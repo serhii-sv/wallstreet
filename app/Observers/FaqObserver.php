@@ -23,28 +23,7 @@ class FaqObserver
      */
     public function created(Faq $faq)
     {
-        clearCacheByArray($this->getCacheKeys($faq));
-        clearCacheByTags($this->getCacheTags($faq));
-    }
-
-    /**
-     * @param Faq $faq
-     * @return array
-     */
-    private function getCacheKeys(Faq $faq): array
-    {
-        return [
-            'i.faqsList'
-        ];
-    }
-
-    /**
-     * @param Faq $faq
-     * @return array
-     */
-    private function getCacheTags(Faq $faq): array
-    {
-        return [];
+    
     }
 
     /**
@@ -56,8 +35,7 @@ class FaqObserver
      */
     public function deleted(Faq $faq)
     {
-        clearCacheByArray($this->getCacheKeys($faq));
-        clearCacheByTags($this->getCacheTags($faq));
+    
     }
 
     /**
@@ -69,7 +47,6 @@ class FaqObserver
      */
     public function updated(Faq $faq)
     {
-        clearCacheByArray($this->getCacheKeys($faq));
-        clearCacheByTags($this->getCacheTags($faq));
+    
     }
 }

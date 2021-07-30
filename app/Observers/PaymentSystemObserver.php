@@ -33,26 +33,6 @@ class PaymentSystemObserver
     }
 
     /**
-     * @param PaymentSystem $paymentSystem
-     * @return array
-     */
-    private function getCacheKeys(PaymentSystem $paymentSystem): array
-    {
-        return [
-            'i.paymentSystems'
-        ];
-    }
-
-    /**
-     * @param PaymentSystem $paymentSystem
-     * @return array
-     */
-    private function getCacheTags(PaymentSystem $paymentSystem): array
-    {
-        return [];
-    }
-
-    /**
      * Listen to the PaymentSystem created event.
      *
      * @param PaymentSystem $paymentSystem
@@ -61,8 +41,7 @@ class PaymentSystemObserver
      */
     public function created(PaymentSystem $paymentSystem)
     {
-        clearCacheByArray($this->getCacheKeys($paymentSystem));
-        clearCacheByTags($this->getCacheTags($paymentSystem));
+    
     }
 
     /**
@@ -74,8 +53,8 @@ class PaymentSystemObserver
      */
     public function deleted(PaymentSystem $paymentSystem)
     {
-        clearCacheByArray($this->getCacheKeys($paymentSystem));
-        clearCacheByTags($this->getCacheTags($paymentSystem));
+    
+    
     }
 
     /**
@@ -87,7 +66,7 @@ class PaymentSystemObserver
      */
     public function updated(PaymentSystem $paymentSystem)
     {
-        clearCacheByArray($this->getCacheKeys($paymentSystem));
-        clearCacheByTags($this->getCacheTags($paymentSystem));
+    
+    
     }
 }

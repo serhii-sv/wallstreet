@@ -49,32 +49,9 @@ class CurrencyObserver
      */
     public function created(Currency $currency)
     {
-        clearCacheByArray($this->getCacheKeys($currency));
-        clearCacheByTags($this->getCacheTags($currency));
+    
     }
 
-    /**
-     * @param Currency $currency
-     * @return array
-     */
-    private function getCacheKeys(Currency $currency): array
-    {
-        return [
-            'i.currencies'
-        ];
-    }
-
-    /**
-     * @param Currency $currency
-     * @return array
-     */
-    private function getCacheTags(Currency $currency): array
-    {
-        return [
-            'currency',
-            'precision',
-        ];
-    }
 
     /**
      * Listen to the Currency deleting event.
@@ -85,8 +62,7 @@ class CurrencyObserver
      */
     public function deleted(Currency $currency)
     {
-        clearCacheByArray($this->getCacheKeys($currency));
-        clearCacheByTags($this->getCacheTags($currency));
+    
     }
 
     /**
@@ -98,7 +74,6 @@ class CurrencyObserver
      */
     public function updated(Currency $currency)
     {
-        clearCacheByArray($this->getCacheKeys($currency));
-        clearCacheByTags($this->getCacheTags($currency));
+    
     }
 }

@@ -23,7 +23,7 @@ class SettingObserver
      */
     public function created(Setting $setting)
     {
-        cache()->flush();
+    
     }
 
     /**
@@ -35,7 +35,7 @@ class SettingObserver
      */
     public function deleted(Setting $setting)
     {
-        cache()->flush();
+    
     }
 
     /**
@@ -47,6 +47,6 @@ class SettingObserver
      */
     public function updated(Setting $setting)
     {
-        cache()->flush();
+    
     }
 }

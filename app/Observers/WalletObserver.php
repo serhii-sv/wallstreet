@@ -28,32 +28,7 @@ class WalletObserver
         }
     }
 
-    /**
-     * @param Wallet $wallet
-     * @return array
-     */
-    private function getCacheKeys(Wallet $wallet): array
-    {
-        if (null == $wallet->user_id) {
-            return [];
-        }
-
-        return [
-            'i.' . $wallet->user_id . '.userWallets',
-            'i.' . $wallet->user_id . '.userWallets.currency-'.$wallet->currency_id,
-            'i.' . $wallet->user_id . '.userWallets.currency-'.null,
-        ];
-    }
-
-    /**
-     * @param Wallet $wallet
-     * @return array
-     */
-    private function getCacheTags(Wallet $wallet): array
-    {
-        return [];
-    }
-
+    
     /**
      * Listen to the Wallet created event.
      *
@@ -63,8 +38,7 @@ class WalletObserver
      */
     public function created(Wallet $wallet)
     {
-        clearCacheByArray($this->getCacheKeys($wallet));
-        clearCacheByTags($this->getCacheTags($wallet));
+    
     }
 
     /**
@@ -76,8 +50,7 @@ class WalletObserver
      */
     public function deleted(Wallet $wallet)
     {
-        clearCacheByArray($this->getCacheKeys($wallet));
-        clearCacheByTags($this->getCacheTags($wallet));
+    
     }
 
     /**
@@ -89,7 +62,6 @@ class WalletObserver
      */
     public function updated(Wallet $wallet)
     {
-        clearCacheByArray($this->getCacheKeys($wallet));
-        clearCacheByTags($this->getCacheTags($wallet));
+    
     }
 }

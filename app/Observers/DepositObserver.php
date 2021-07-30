@@ -28,30 +28,12 @@ class DepositObserver
      * @param Deposit $deposit
      * @return array
      */
-    private function getCacheKeys(Deposit $deposit): array
-    {
-        if (null == $deposit->user_id) {
-            return [];
-        }
-
-        return [];
-    }
 
     /**
      * @param Deposit $deposit
      * @return array
      */
-    private function getCacheTags(Deposit $deposit): array
-    {
-        if (null == $deposit->user_id) {
-            return [];
-        }
 
-        return [
-            'userDeposits.' . $deposit->user_id,
-            'lastCreatedDeposits',
-        ];
-    }
 
     /**
      * Listen to the Deposit created event.
@@ -62,8 +44,7 @@ class DepositObserver
      */
     public function created(Deposit $deposit)
     {
-        clearCacheByArray($this->getCacheKeys($deposit));
-        clearCacheByTags($this->getCacheTags($deposit));
+
     }
 
     /**
@@ -75,8 +56,7 @@ class DepositObserver
      */
     public function deleted(Deposit $deposit)
     {
-        clearCacheByArray($this->getCacheKeys($deposit));
-        clearCacheByTags($this->getCacheTags($deposit));
+ 
     }
 
     /**
@@ -88,7 +68,6 @@ class DepositObserver
      */
     public function updated(Deposit $deposit)
     {
-        clearCacheByArray($this->getCacheKeys($deposit));
-        clearCacheByTags($this->getCacheTags($deposit));
+    
     }
 }

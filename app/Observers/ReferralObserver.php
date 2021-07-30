@@ -23,28 +23,7 @@ class ReferralObserver
      */
     public function created(Referral $referral)
     {
-        clearCacheByArray($this->getCacheKeys($referral));
-        clearCacheByTags($this->getCacheTags($referral));
-    }
-
-    /**
-     * @param Referral $referral
-     * @return array
-     */
-    private function getCacheKeys(Referral $referral): array
-    {
-        return [
-            'i.affiliateLevels'
-        ];
-    }
-
-    /**
-     * @param Referral $referral
-     * @return array
-     */
-    private function getCacheTags(Referral $referral): array
-    {
-        return [];
+    
     }
 
     /**
@@ -56,8 +35,7 @@ class ReferralObserver
      */
     public function deleted(Referral $referral)
     {
-        clearCacheByArray($this->getCacheKeys($referral));
-        clearCacheByTags($this->getCacheTags($referral));
+    
     }
 
     /**
@@ -69,7 +47,6 @@ class ReferralObserver
      */
     public function updated(Referral $referral)
     {
-        clearCacheByArray($this->getCacheKeys($referral));
-        clearCacheByTags($this->getCacheTags($referral));
+    
     }
 }
