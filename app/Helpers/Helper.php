@@ -29,7 +29,7 @@ class Helper
             'largeScreenLogo' => 'images/logo/materialize-logo-color.png',
             'smallScreenLogo' => 'images/logo/materialize-logo.png',
             'isFabButton'=>false,
-            'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
+            'direction' => env('MIX_CONTENT_DIRECTION', 'rlt'),
         ];
         // if any key missing of array from custom.php file it will be merge and set a default value from dataDefault array and store in data variable
         $data = array_merge($dataDefault, config('custom.custom'));
