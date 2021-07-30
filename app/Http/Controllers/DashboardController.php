@@ -31,7 +31,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        $count_main_graph = 12;
+        
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 
@@ -162,7 +162,7 @@ class DashboardController extends Controller
                     }, 0);
             });
 
-        return view('pages.dashboard-modern', [
+        return view('pages.dashboard', [
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
             'weeks_period_withdraw_transactions' => $weeks_period_withdraw_transactions,
             'month_period_enter_transactions' => $month_period_enter_transactions,
