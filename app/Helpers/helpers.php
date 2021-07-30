@@ -168,7 +168,7 @@ function canEditLang()
 }
 
 function createUserAuthLog($request, $user) {
-    $user_log = new UserAuthLog();
+    $user_log = new \App\Models\UserAuthLog();
     $user_log->user_id = $user->id;
     $user_log->ip = $request->ip();
     $user->hasAnyRole([
