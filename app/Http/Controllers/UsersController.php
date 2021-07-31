@@ -27,9 +27,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderByDesc('created_at')->paginate(16);
+        $users = User::orderByDesc('created_at')->paginate(10);
         $users_count = User::count();
-        return view('pages.sample.app-contacts', compact('users','users_count'));
+        $roles = Role::all();
+        return view('pages.sample.app-contacts', compact('users','users_count', 'roles'));
     }
 
     /**
