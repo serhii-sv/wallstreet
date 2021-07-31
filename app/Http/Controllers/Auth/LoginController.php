@@ -19,16 +19,16 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
+
     use AuthenticatesUsers;
-    
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -37,15 +37,17 @@ class LoginController extends Controller
     public function __construct() {
         $this->middleware(['guest'])->except('logout');
     }
-    
+
     protected function validateLogin(Request $request) {
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => 'required|recaptchav3:login,0.5',
+            'g-recaptcha-response' => config('app.env') == 'production'
+                ? 'required|recaptchav3:login,0.5'
+                : '',
         ], [
             'recaptchav3' => 'Captcha error! Try again',
         ]);
-        
+
     }
 }
