@@ -479,18 +479,17 @@
 @section('vendor-script')
   <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
-  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>
+{{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
   <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}
 @section('page-script')
-  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>
+{{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
 {{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
   <script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
-  
     (function (window, document, $) {
     
       var revenueLineChartCTX = $("#revenue-line-chart");
