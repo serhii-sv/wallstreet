@@ -139,7 +139,6 @@
                 </div>
                 <div class="trending-line-chart-wrapper mt-3">
                   <canvas id="revenue-line-chart" height="70"></canvas>
-                  <canvas id="revenue-line-chart2" height="70"></canvas>
                 </div>
               </div>
             </div>
@@ -613,7 +612,7 @@
       var revenueLineChartConfigMonth = {
         type: "line",
         options: revenueLineChartOptions,
-        data: revenueLineChartDataWeek
+        data: revenueLineChartDataMonth
       };
     
       /*
@@ -861,6 +860,7 @@
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
       
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
+   
           if (typeof revenueLineChart != "undefined") {
             if (this.checked == true) {
               revenueLineChart.config = revenueLineChartConfigMonth;
