@@ -6,16 +6,22 @@
 
 //use Illuminate\Routing\Route;
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['web']], function () {
-    Auth::routes();
-
+    Auth::routes([
+        'register' => false,
+        'reset' => false,
+        'verify' => false,
+    ]);
+    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
+    
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['role:root|admin']], function () {
-            Route::post('/ajax/search-users', [\App\Http\Controllers\Admin\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
+            Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
 
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add.bonus');
@@ -138,17 +144,17 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
             Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
-
-            Route::resource('/rates', 'RateController', [
-                'names' => [
-                    'index' => 'rates.index',
-                    'show' => 'rates.show',
-                    'create' => 'rates.create',
-                    'store' => 'rates.store',
-                    'edit' => 'rates.edit',
-                    'update' => 'rates.update',
-                ],
-            ]);
+//
+//            Route::resource('/rates', 'RateController', [
+//                'names' => [
+//                    'index' => 'rates.index',
+//                    'show' => 'rates.show',
+//                    'create' => 'rates.create',
+//                    'store' => 'rates.store',
+//                    'edit' => 'rates.edit',
+//                    'update' => 'rates.update',
+//                ],
+//            ]);
             Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
@@ -182,4 +188,5 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
         });
     });
+    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });

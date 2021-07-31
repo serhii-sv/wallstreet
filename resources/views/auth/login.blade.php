@@ -13,8 +13,15 @@
 @section('content')
 <div id="login-page" class="row">
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
+
     <form class="login-form" method="POST" action="{{ route('login') }}">
+      @error('g-recaptcha-response')
+      <small class="red-text ml-7" >
+        {{ $message }}
+      </small>
+      @enderror
       @csrf
+      <input type="hidden" name="g-recaptcha-response" id="recaptcha">
       <div class="row">
         <div class="input-field col s12">
           <h5 class="ml-4">{{ __('Sign in') }}</h5>
@@ -63,17 +70,19 @@
           </button>
         </div>
       </div>
-      <div class="row">
-        <div class="input-field col s6 m6 l6">
-          <p class="margin medium-small"><a href="{{ route('register') }}">Register Now!</a></p>
-        </div>
-        <div class="input-field col s6 m6 l6">
-          <p class="margin right-align medium-small">
-            <a href="{{ route('password.request') }}">Forgot password?</a>
-          </p>
-        </div>
-      </div>
     </form>
   </div>
 </div>
+@endsection
+@section('page-script')
+  <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptchav3.sitekey') }}"></script>
+  <script>
+    grecaptcha.ready(function() {
+      grecaptcha.execute('{{ config('recaptchav3.sitekey') }}', {action: 'login'}).then(function(token) {
+        if (token) {
+          document.getElementById('recaptcha').value = token;
+        }
+      });
+    });
+  </script>
 @endsection
