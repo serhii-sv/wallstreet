@@ -37,10 +37,16 @@
         <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
           <ul class="contact-list display-grid">
             <li class="sidebar-title">Роли</li>
+            <li @if(empty(request()->get('roles'))) class="active" @endif>
+              <a href="{{ route('users.index') }}" class="text-sub">
+                <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '' }};">fiber_manual_record</i>
+                Все
+              </a>
+            </li>
             @forelse($roles as $role)
-              <li @if($loop->first) class="active" @endif>
-                <a href="" class="text-sub">
-                  <i class="purple-text material-icons small-icons mr-2">fiber_manual_record</i>
+              <li @if(request()->get('roles') === $role->name) class="active" @endif>
+                <a href="{{ route('users.index', array_add(request()->except('page'),'roles', $role->name) ) }}" class="text-sub">
+                  <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
                   {{$role->name}}
                 </a>
               </li>
@@ -108,7 +114,7 @@
       </div>
     </div>
     <div>
-    {{ $users->links() }}
+    {{ $users->appends(request()->except('page'))->links() }}
     </div>
   </div>
 </div>
