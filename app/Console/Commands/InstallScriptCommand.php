@@ -65,11 +65,6 @@ class InstallScriptCommand extends Command
 
         $this->line('===================================');
 
-        $this->info('Checking script:');
-        $this->call('check:script');
-
-        $this->line('===================================');
-
         $this->info('Registering currencies:');
         $this->call('register:currencies');
 
@@ -82,15 +77,6 @@ class InstallScriptCommand extends Command
 
         $this->info('Registering root user:');
         $this->call('make:root');
-
-        $this->line('===================================');
-
-        $askNeedTelegram = $this->ask('Do you need to register Telegram BOT? [yes|no]', 'no');
-
-        if ($askNeedTelegram == 'yes') {
-            $this->info('Install telegram bot:');
-            $this->call('telegram:register_bot');
-        }
 
         $this->line('===================================');
 
