@@ -10,7 +10,6 @@ use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
-use App\Console\Commands\ProcessInstantPaymentsCommand;
 use App\Console\Commands\CreateRootCommand;
 use App\Console\Commands\InstallScriptCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
@@ -32,7 +31,6 @@ class Kernel extends ConsoleKernel
         InstallScriptCommand::class,
         RegisterCurrenciesCommand::class,
         RegisterPaymentSystemsCommand::class,
-        ProcessInstantPaymentsCommand::class,
         CheckPaymentSystemsConnectionsCommand::class,
         DepositQueueCommand::class,
     ];
@@ -53,7 +51,6 @@ class Kernel extends ConsoleKernel
 
         // Financial
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
-        $schedule->command('process:instant_payments')->everyFiveMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('update:currency_rates')->twiceDaily()->withoutOverlapping();
 
