@@ -19,30 +19,22 @@ class CreateDepositsTable extends Migration
     {
         Schema::create('deposits', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('currency_id');
-            $table->uuid('rate_id');
-            $table->uuid('user_id');
-            $table->uuid('wallet_id');
-            $table->string('name')->nullable();
+            $table->uuid('currency_id')->index();
+            $table->uuid('rate_id')->index();
+            $table->uuid('user_id')->index();
+            $table->uuid('wallet_id')->index();
             $table->float('daily')->default(0)->unsigned()->nullable();
             $table->float('overall')->default(0)->unsigned()->nullable();
             $table->integer('duration')->default(0)->unsigned()->nullable();
             $table->float('payout')->default(0)->unsigned()->nullable();
-            $table->float('invested')->default(0)->unsigned();
-            $table->float('balance')->default(0)->unsigned()->nullable();
-            $table->boolean('reinvest')->default(0);
-            $table->boolean('autoclose')->default(0);
-            $table->boolean('active')->default(0);
-            $table->string('condition')->default('undefined');
-            $table->text('log')->nullable();
+            $table->decimal('invested', 24,12)->default(0)->unsigned();
+            $table->decimal('balance', 24,12)->default(0)->nullable()->unsigned();
+            $table->boolean('autoclose')->default(0)->index();
+            $table->boolean('active')->default(0)->index();
+            $table->string('condition')->default('undefined')->index();
+            $table->dateTime('datetime_closing');
             $table->timestamps();
-        });
-
-        Schema::table('deposits', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('rate_id')->references('id')->on('rates');
-            $table->foreign('currency_id')->references('id')->on('currencies');
-            $table->foreign('wallet_id')->references('id')->on('wallets');
+            $table->integer('reinvest')->default(0);
         });
     }
 

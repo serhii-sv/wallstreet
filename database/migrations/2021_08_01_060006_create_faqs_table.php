@@ -1,14 +1,10 @@
 <?php
-/*
- * This engine owned and produced by HyipLab studio.
- * Visit our website: https://hyiplab.net/
- */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class News extends Migration
+class CreateFaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +13,10 @@ class News extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('news_langs');
-        Schema::dropIfExists('news');
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->longText('subject'); // json
-            $table->longText('content'); // json
+            $table->longText('question'); // json
+            $table->longText('answer'); // json
             $table->timestamps();
         });
     }
@@ -34,6 +28,6 @@ class News extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('faqs');
     }
 }
