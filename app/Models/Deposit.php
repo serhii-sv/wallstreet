@@ -118,9 +118,6 @@ class Deposit extends Model
      */
     public function getBalanceAttribute($value)
     {
-        if (isset($this->currency->code)) {
-            return currencyPrecision($this->currency->id, $value);
-        };
         return $value;
     }
 
@@ -131,9 +128,6 @@ class Deposit extends Model
      */
     public function getInvestedAttribute($value)
     {
-        if (isset($this->currency->code)) {
-            return currencyPrecision($this->currency->id, $value);
-        };
         return $value;
     }
 
@@ -233,7 +227,7 @@ class Deposit extends Model
             $data = [
                 'deposit' => $deposit
             ];
-            $deposit->user->sendNotification('deposit_opened', $data);
+//            $deposit->user->sendNotification('deposit_opened', $data);
             return ($deposit->createSequence())
                 ? $deposit
                 : null;
@@ -316,7 +310,7 @@ class Deposit extends Model
             'dividend' => $dividend,
             'deposit'  => $this
         ];
-        $user->sendNotification('deposit_accrued', $data);
+//        $user->sendNotification('deposit_accrued', $data);
         return true;
     }
 
@@ -364,7 +358,7 @@ class Deposit extends Model
         $data = [
             'deposit' => $this
         ];
-        $user->sendNotification('deposit_closed', $data);
+//        $user->sendNotification('deposit_closed', $data);
         return true;
     }
 

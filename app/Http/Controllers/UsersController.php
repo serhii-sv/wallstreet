@@ -25,10 +25,15 @@ class UsersController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderByDesc('created_at')->paginate(16);
-        return view('admin.users.index', compact('users'));
+        $filter_role = $request->get('roles') ? $request->get('roles') : false;
+        $users = User::when($filter_role, function($query) use ($filter_role){
+            return $query->role($filter_role);
+        })->orderByDesc('created_at')->paginate(10);
+        $users_count = User::count();
+        $roles = Role::all();
+        return view('pages.sample.app-contacts', compact('users','users_count', 'roles'));
     }
 
     /**
@@ -183,7 +188,7 @@ class UsersController extends Controller
                 'payment_system' => $wallet->paymentSystem,
                 'balance'        => $wallet->balance,
             ];
-            $wallet->user->sendNotification('bonus_accrued', $data);
+//            $wallet->user->sendNotification('bonus_accrued', $data);
             return back()->with('success', __('Bonus accrued'));
         }
         return back()->with('error', __('Unable to accrue bonus'));
@@ -207,7 +212,7 @@ class UsersController extends Controller
                 'payment_system' => $wallet->paymentSystem,
                 'balance'        => $wallet->balance,
             ];
-            $wallet->user->sendNotification('penalty_accrued', $data);
+//            $wallet->user->sendNotification('penalty_accrued', $data);
             return back()->with('success', __('Penalty handled'));
         }
         return back()->with('error', __('Unable to handle penalty'));

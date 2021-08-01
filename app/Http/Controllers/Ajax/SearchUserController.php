@@ -20,11 +20,11 @@ class SearchUserController extends Controller
                 foreach ($users as $user) {
                     $html .= '
                     <li class="auto-suggestion">
-                        <a class="collection-item" href="'.route('admin.users.show', $user->id).'">
+                        <a class="collection-item" href="'.route('users.show', $user->id).'">
                            <div class="display-flex">
                               <div class="display-flex align-item-center flex-grow-1">
                                   <div class="avatar">
-                                      <img class="circle" src="' . asset('admin/images/avatar/user.svg') . '" width="30" alt="sample image">
+                                      <img class="circle" src="' . asset('images/avatar/user.svg') . '" width="30" alt="sample image">
                                   </div>
                                   <div class="member-info display-flex flex-column">
                                     <span class="black-text">' . $user->name . '</span>

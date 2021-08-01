@@ -90,7 +90,7 @@ class RegisterCurrenciesCommand extends Command
                 'precision' => 8,
             ],
             'XRP' => [
-                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('XRP" [yes|no]', 'yes'),
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('XRP [yes|no]', 'yes'),
                 'name'      => 'XRP',
                 'symbol'    => '$',
                 'precision' => 8,

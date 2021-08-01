@@ -89,7 +89,7 @@ class Rate extends Model
             return $value;
         }
 
-        return currencyPrecision($currency->id, $value);
+        return $value;
     }
 
     /**
@@ -106,6 +106,6 @@ class Rate extends Model
             return $value;
         }
 
-        return currencyPrecision($currency->id, $value);
+        return $value;
     }
 }

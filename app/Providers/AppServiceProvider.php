@@ -12,7 +12,6 @@ use App\Models\Faq;
 use App\Models\Language;
 use App\Models\MailSent;
 use App\Models\News;
-use App\Models\NewsLang;
 use App\Models\PaymentSystem;
 use App\Models\Rate;
 use App\Models\Referral;
@@ -27,7 +26,6 @@ use App\Observers\CurrencyObserver;
 use App\Observers\DepositObserver;
 use App\Observers\FaqObserver;
 use App\Observers\LanguageObserver;
-use App\Observers\NewsLangObserver;
 use App\Observers\NewsObserver;
 use App\Observers\PaymentSystemObserver;
 use App\Observers\RateObserver;
@@ -38,6 +36,7 @@ use App\Observers\TransactionObserver;
 use App\Observers\TransactionTypeObserver;
 use App\Observers\UserObserver;
 use App\Observers\WalletObserver;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();
 
@@ -71,7 +72,6 @@ class AppServiceProvider extends ServiceProvider
         Deposit::observe(DepositObserver::class);
         Faq::observe(FaqObserver::class);
         Language::observe(LanguageObserver::class);
-        NewsLang::observe(NewsLangObserver::class);
         News::observe(NewsObserver::class);
         PaymentSystem::observe(PaymentSystemObserver::class);
         Rate::observe(RateObserver::class);

@@ -7,6 +7,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
+use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Console\Commands\ProcessInstantPaymentsCommand;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         GenerateDemoDataCommand::class,
         CreateRootCommand::class,
+        CreateAdminCommand::class,
         InstallScriptCommand::class,
         RegisterCurrenciesCommand::class,
         RegisterPaymentSystemsCommand::class,
