@@ -19,18 +19,13 @@ class CreateNewsLangsTable extends Migration
     {
         Schema::create('news_langs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('news_id');
-            $table->uuid('lang_id');
+            $table->uuid('news_id')->index();
+            $table->uuid('lang_id')->index();
             $table->boolean('show')->default(false);
             $table->string('title')->nullable();
             $table->text('teaser')->nullable();
             $table->text('text')->nullable();
             $table->timestamps();
-        });
-
-        Schema::table('news_langs', function($table) {
-            $table->foreign('lang_id')->references('id')->on('languages')->onDelete('cascade');
-            $table->foreign('news_id')->references('id')->on('news')->onDelete('cascade');
         });
     }
 

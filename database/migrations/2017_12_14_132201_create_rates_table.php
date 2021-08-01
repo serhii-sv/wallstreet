@@ -19,23 +19,18 @@ class CreateRatesTable extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('currency_id');
-            $table->string('name');
-            $table->float('min')->default(0)->unsigned();
-            $table->float('max')->default(0)->unsigned();
+            $table->uuid('currency_id')->index();
+            $table->string('name')->index();
+            $table->decimal('min', 24,12)->default(0)->nullable()->unsigned()->index();
+            $table->decimal('max', 24,12)->default(0)->nullable()->unsigned()->index();
             $table->float('daily')->default(0)->unsigned();
             $table->float('overall')->default(0)->unsigned();
-            $table->integer('duration')->default(1)->unsigned();
+            $table->integer('duration')->default(1)->unsigned()->index();
             $table->float('payout')->default(100)->unsigned();
-            $table->boolean('reinvest')->default(0);
-            $table->boolean('autoclose')->default(0);
-            $table->boolean('active')->default(0);
-            $table->boolean('vip')->default(0);
+            $table->boolean('reinvest')->default(0)->index();
+            $table->boolean('autoclose')->default(0)->index();
+            $table->boolean('active')->default(0)->index();
             $table->timestamps();
-        });
-
-        Schema::table('rates', function ($table) {
-            $table->foreign('currency_id')->references('id')->on('currencies');
         });
     }
 

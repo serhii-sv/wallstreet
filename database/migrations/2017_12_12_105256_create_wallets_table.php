@@ -19,18 +19,12 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_id');
-            $table->uuid('currency_id');
-            $table->uuid('payment_system_id');
+            $table->uuid('user_id')->index();
+            $table->uuid('currency_id')->index();
+            $table->uuid('payment_system_id')->index();
             $table->string('external')->nullable();
-            $table->float('balance')->nullable()->unsigned();
-            $table->text('log')->nullable();
+            $table->float('balance', 24, 8)->default(0.00000000);
             $table->timestamps();
-        });
-
-        Schema::table('wallets', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('currency_id')->references('id')->on('currencies');
         });
     }
 
