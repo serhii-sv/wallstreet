@@ -22,7 +22,7 @@ class CreateLanguagesTable extends Migration
             $table->string('name')->unique();
             $table->string('code')->unique();
             $table->string('original_name')->nullable();
-            $table->boolean('default')->default(false);
+            $table->boolean('default')->default(false)->index();
             $table->timestamps();
         });
     }

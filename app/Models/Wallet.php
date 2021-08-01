@@ -86,9 +86,7 @@ class Wallet extends Model
      */
     public function getBalanceAttribute($value)
     {
-        /** @var Currency $currency */
-        $currency = $this->currency()->first();
-        return currencyPrecision($currency->id, $value);
+        return $value;
     }
 
     /**
@@ -184,15 +182,15 @@ class Wallet extends Model
 
         $this->save();
 
-        $data = [
-            'refill_amount'  => $amount,
-            'external'       => $external,
-            'payment_system' => $this->paymentSystem()->first(),
-            'balance'        => $this->balance
-        ];
-        /** @var User $user */
-        $user = $this->user()->first();
-        $user->sendNotification('wallet_refiled', $data);
+//        $data = [
+//            'refill_amount'  => $amount,
+//            'external'       => $external,
+//            'payment_system' => $this->paymentSystem()->first(),
+//            'balance'        => $this->balance
+//        ];
+//        /** @var User $user */
+//        $user = $this->user()->first();
+//        $user->sendNotification('wallet_refiled', $data);
     }
 
     /**
@@ -292,13 +290,13 @@ class Wallet extends Model
                         ->count();
 
                     if ($notificationActive > 0) {
-                        $partner->sendNotification('affiliate_earnings', [
-                            'amount'            => $partnerAmount,
-                            'receiveWallet'     => $partnerWallet,
-                            'sender'            => $user,
-                            'receive'           => $partner,
-                            'level'             => $level,
-                        ]);
+//                        $partner->sendNotification('affiliate_earnings', [
+//                            'amount'            => $partnerAmount,
+//                            'receiveWallet'     => $partnerWallet,
+//                            'sender'            => $user,
+//                            'receive'           => $partner,
+//                            'level'             => $level,
+//                        ]);
                     }
 
                     break;
@@ -331,7 +329,7 @@ class Wallet extends Model
             'currency'      => $this->currency,
             'type'          => $type
         ];
-        $this->user->sendNotification('partner_accrue', $data);
+//        $this->user->sendNotification('partner_accrue', $data);
     }
 
     /**

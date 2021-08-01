@@ -1,7 +1,7 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
+/*
+ * This engine owned and produced by HyipLab studio.
+ * Visit our website: https://hyiplab.net/
  */
 
 namespace App\Models;
@@ -13,51 +13,35 @@ use Illuminate\Database\Eloquent\Model;
  * Class News
  * @package App\Models
  *
- * @property string id
- * @property string img
- * @property string slug
- * @property string created_at
+ * @property string subject
+ * @property string content
+ * @property Language language_id
  */
 class News extends Model
 {
     use Uuids;
 
-    /** @var bool $incrementing */
     public $incrementing = false;
+
+    /** @var string $table */
+    protected $table = 'news';
+
+    /** @var array $timestamps */
+    public $timestamps = ['created_at', 'updated_at'];
 
     /** @var array $fillable */
     protected $fillable = [
-        'img',
-        'slug',
+        'subject',
+        'content',
+        'language_id',
         'created_at',
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function child() {
-        return $this->hasMany(NewsLang::class, 'news_id', 'id');
-    }
-
-    /**
-     * @param $file
-     */
-    public function addImg($file) {
-        $folder          = 'news_img';
-        $destinationPath = public_path() . '/'.$folder.'/';
-
-        if (!empty($this->img)) {
-            @unlink($destinationPath . $this->img);
-        }
-
-        $ext      = $file->getClientOriginalExtension() ?: 'png';
-        $filename = str_random(20) . '.' . $ext;
-
-        $file->move($destinationPath, $filename);
-        \Image::make($destinationPath . $filename)->widen(1000)
-            ->save($destinationPath . $filename, 70);
-
-        $this->img = $filename;
-        $this->save();
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 }

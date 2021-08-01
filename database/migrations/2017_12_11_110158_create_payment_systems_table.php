@@ -19,9 +19,13 @@ class CreatePaymentSystemsTable extends Migration
     {
         Schema::create('payment_systems', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('code');
+            $table->string('name')->index();
+            $table->string('code')->index();
             $table->json('instant_limit')->nullable();
+            $table->json('external_balances')->nullable();
+            $table->json('minimum_topup')->nullable()->default(null);
+            $table->json('minimum_withdraw')->nullable()->default(null);
+            $table->boolean('connected')->default(false)->index();
             $table->timestamps();
         });
     }

@@ -35,9 +35,9 @@ class UserObserver
         foreach ($user->wallets()->get() as $wallet) {
             $wallet->delete();
         }
-        
+
     }
-    
+
     /**
      * Listen to the User created event.
      *
@@ -47,7 +47,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        
+        Wallet::registerWallets($user);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserObserver
         if (empty($user->login)) {
             $user->login = $user->email;
         }
-        
+
     }
 
     /**
@@ -70,7 +70,7 @@ class UserObserver
      */
     public function saved(User $user)
     {
-    
+
     }
 
     /**
@@ -82,6 +82,6 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-    
+
     }
 }

@@ -7,7 +7,6 @@
 namespace App\Observers;
 
 use App\Models\News;
-use App\Models\NewsLang;
 
 /**
  * Class NewsObserver
@@ -20,9 +19,7 @@ class NewsObserver
      */
     public function deleting(News $news)
     {
-        foreach ($news->child()->get() as $child) {
-            $child->delete();
-        }
+
     }
     /**
      * Listen to the News created event.
@@ -33,7 +30,7 @@ class NewsObserver
      */
     public function created(News $news)
     {
-    
+
     }
 
     /**
@@ -45,7 +42,7 @@ class NewsObserver
      */
     public function deleted(News $news)
     {
-    
+
     }
 
     /**
@@ -57,6 +54,6 @@ class NewsObserver
      */
     public function updated(News $news)
     {
-    
+
     }
 }

@@ -135,7 +135,7 @@ class WithdrawalRequestsController extends Controller
             'currency'        => $currency,
             'payment_system'  => $paymentSystem
         ];
-        $user->sendNotification('rejected_withdrawal', $data);
+//        $user->sendNotification('rejected_withdrawal', $data);
 
         if (true === $massMode) {
             return __('Request rejected');
@@ -211,7 +211,7 @@ class WithdrawalRequestsController extends Controller
             'currency'        => $currency,
             'payment_system'  => $paymentSystem
         ];
-        $user->sendNotification('approved_withdrawal', $data);
+//        $user->sendNotification('approved_withdrawal', $data);
 
         try {
             $ps::getBalances();
@@ -275,7 +275,7 @@ class WithdrawalRequestsController extends Controller
             'currency'          => $currency,
             'payment_system'    => $paymentSystem
         ];
-        $user->sendNotification('approved_withdrawal', $data);
+//        $user->sendNotification('approved_withdrawal', $data);
 
         $ps = $paymentSystem->getClassName();
 

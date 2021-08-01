@@ -31,7 +31,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        
+
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 
@@ -244,7 +244,7 @@ class DashboardController extends Controller
                 'payment_system' => $wallet->paymentSystem,
                 'balance' => $wallet->balance,
             ];
-            $wallet->user->sendNotification('bonus_accrued', $data);
+//            $wallet->user->sendNotification('bonus_accrued', $data);
             return back()->with('success', __('Bonus accrued'))->withInput();
         }
         return back()->with('error', __('Unable to accrue bonus'))->withInput();

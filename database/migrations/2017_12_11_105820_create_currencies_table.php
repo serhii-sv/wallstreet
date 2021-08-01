@@ -21,6 +21,10 @@ class CreateCurrenciesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->string('code')->unique();
+            $table->string('symbol')->nullable();
+            $table->integer('precision')->unsigned()->nullable()->default(2);
+            $table->string('currency_id')->nullable()->index();
+            $table->timestamps();
         });
     }
 
