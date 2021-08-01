@@ -38,6 +38,7 @@ use App\Observers\TransactionObserver;
 use App\Observers\TransactionTypeObserver;
 use App\Observers\UserObserver;
 use App\Observers\WalletObserver;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +53,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
+        Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();
 

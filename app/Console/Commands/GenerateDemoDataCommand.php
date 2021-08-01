@@ -104,9 +104,9 @@ class GenerateDemoDataCommand extends Command
             $this->generateSettings();
             $this->comment('Settings generated');
 
-            $this->comment('Generating transactions');
-            $this->generateTransactions();
-            $this->comment('Transactions generated');
+//            $this->comment('Generating transactions');
+//            $this->generateTransactions();
+//            $this->comment('Transactions generated');
         }
 
         $this->comment('Generating users');
@@ -342,7 +342,7 @@ class GenerateDemoDataCommand extends Command
             }
 
             $user = User::create($newUser);
-            GenerateDemoForUserJob::dispatch($user, $this->stressLevel)->onQueue(getSupervisorName().'-low')->delay(0);
+            GenerateDemoForUserJob::dispatch($user, $this->stressLevel)->delay(0);
             $this->info('user ' . $newUser['name'] . ' registered');
         }
     }
