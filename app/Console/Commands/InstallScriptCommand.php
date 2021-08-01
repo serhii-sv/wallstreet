@@ -79,15 +79,6 @@ class InstallScriptCommand extends Command
         $this->call('make:root');
 
         $this->line('===================================');
-
-        $askNeedCheckPS = $this->ask('Do you want to check payment systems? [yes|no]', 'no');
-
-        if ($askNeedCheckPS == 'yes') {
-            $this->info('Checking payment systems:');
-            $this->call('check:payment_systems_connections');
-        }
-
-        $this->line('===================================');
         $needDemoData = $this->ask('Do you need demo data? [yes|no]', false);
 
         if ($needDemoData == 'yes') {

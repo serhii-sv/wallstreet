@@ -182,14 +182,14 @@ class Wallet extends Model
 
         $this->save();
 
-        $data = [
-            'refill_amount'  => $amount,
-            'external'       => $external,
-            'payment_system' => $this->paymentSystem()->first(),
-            'balance'        => $this->balance
-        ];
-        /** @var User $user */
-        $user = $this->user()->first();
+//        $data = [
+//            'refill_amount'  => $amount,
+//            'external'       => $external,
+//            'payment_system' => $this->paymentSystem()->first(),
+//            'balance'        => $this->balance
+//        ];
+//        /** @var User $user */
+//        $user = $this->user()->first();
 //        $user->sendNotification('wallet_refiled', $data);
     }
 

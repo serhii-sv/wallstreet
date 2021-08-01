@@ -20,11 +20,8 @@ use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Console\Command;
 use Faker\Factory;
+use Illuminate\Support\Facades\DB;
 
-/**
- * Class GenerateDemoDataCommand
- * @package App\Console\Commands\Automatic
- */
 class GenerateDemoDataCommand extends Command
 {
     /**
@@ -152,7 +149,7 @@ class GenerateDemoDataCommand extends Command
     {
         $this->faker = Factory::create();
 
-        for ($usersCount = 1; $usersCount <= $this->faker->numberBetween(30,100); $usersCount++) {
+        for ($usersCount = 1; $usersCount <= 20; $usersCount++) {
             $partnerId = User::select('my_id')
                 ->inRandomOrder()
                 ->limit(1)
@@ -179,14 +176,19 @@ class GenerateDemoDataCommand extends Command
                 continue;
             }
 
-            /** @var User $user */
-            $user = User::create($newUser);
+            $user = null;
 
-            $this->generateBalances($user);
-            $this->generateDeposits($user);
-            $this->generateWithdrawals($user);
+            DB::transaction(function() use($newUser, &$user) {
+                /** @var User $user */
+                $user = User::create($newUser);
+
+                $this->generateBalances($user);
+                $this->generateDeposits($user);
+                $this->generateWithdrawals($user);
+            });
 
             $this->info('user ' . $user->name . ' registered');
+            sleep(1);
         }
     }
 
@@ -200,7 +202,7 @@ class GenerateDemoDataCommand extends Command
 
         /** @var Wallet $wallet */
         foreach ($user->wallets()->get() as $wallet) {
-            for($i = 1; $i <= $this->faker->numberBetween(3,5); $i++) {
+            for($i = 1; $i <= 1; $i++) {
                 $amount             = $this->faker->numberBetween(10, 1000);
                 $externalWallet     = 'W' . $this->faker->randomNumber(5);
                 $transactionData    = [
@@ -222,7 +224,7 @@ class GenerateDemoDataCommand extends Command
 
                 $wallet->refill($transaction->amount, $externalWallet);
 
-                $this->info('balance updated '.$i);
+                $this->info('balance updated '.$wallet->id);
             }
         }
     }
@@ -318,7 +320,7 @@ class GenerateDemoDataCommand extends Command
             ];
 
             /** @var Deposit $deposit */
-            $deposit = Deposit::addDeposit($depositData);
+            $deposit = Deposit::addDeposit($depositData, true);
 
             $this->info('deposit created '.$deposit->id);
         }
