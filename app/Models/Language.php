@@ -24,7 +24,7 @@ class Language extends Model
 
     /** @var bool $incrementing */
     public $incrementing = false;
-
+    public $keyType      = 'string';
     /** @var array $fillable */
     protected $fillable = [
         'name',

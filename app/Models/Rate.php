@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use Uuids;
-
+    public $keyType      = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 

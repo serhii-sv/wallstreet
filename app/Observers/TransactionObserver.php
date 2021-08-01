@@ -68,7 +68,7 @@ class TransactionObserver
             if ($currency->code == $mainCurrency->code) {
                 $transaction->main_currency_amount = $amount;
             } else {
-                $transaction->main_currency_amount = convertToCurrency($currency, $mainCurrency, $amount);
+                $transaction->main_currency_amount = $transaction->convertToCurrency($currency, $mainCurrency, $amount);
             }
         }
     }

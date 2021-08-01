@@ -329,7 +329,7 @@ class GenerateDemoDataCommand extends Command
             $data = [
                 'subject'       => $this->faker->title,
                 'content'       => $this->faker->text,
-                'language_id'   => Language::inRandomOrder()->limit(1)->first()->id,
+             
                 'created_at'    => $this->faker->dateTimeThisMonth()->format('Y-m-d').' 12:00:00',
             ];
 
@@ -344,7 +344,6 @@ class GenerateDemoDataCommand extends Command
             $data = [
                 'question'          => $this->faker->text,
                 'answer'            => $this->faker->text,
-                'language_id'       => Language::inRandomOrder()->limit(1)->first()->id,
                 'created_at'        => $this->faker->dateTimeThisMonth()->format('Y-m-d').' 12:00:00',
             ];
 
