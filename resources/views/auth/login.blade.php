@@ -30,7 +30,7 @@
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">person_outline</i>
-          <input id="email" type="email" class=" @error('email') is-invalid @enderror" name="email"
+          <input id="email" type="text" class=" @error('email') is-invalid @enderror" name="email"
             value="{{ old('email') }}"  autocomplete="email" autofocus>
           <label for="email" class="center-align">{{ __('Username') }}</label>
           @error('email')
@@ -57,7 +57,7 @@
         <div class="col s12 m12 l12 ml-2 mt-1">
           <p>
             <label>
-              <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+              <input type="checkbox" name="remember" id="remember" checked="checked">
               <span>Remember Me</span>
             </label>
           </p>
