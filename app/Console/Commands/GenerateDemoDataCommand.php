@@ -87,7 +87,7 @@ class GenerateDemoDataCommand extends Command
 
     public function generateReferralLevels()
     {
-        for ($level = 1; $level <= $this->faker->numberBetween(3, 5); $level++) {
+        for ($level = 1; $level <= $this->faker->numberBetween(1, 2); $level++) {
             Referral::create([
                 'level'         => $level,
                 'percent'       => $this->faker->numberBetween(1, 10),
@@ -147,9 +147,7 @@ class GenerateDemoDataCommand extends Command
 
     public function generateUsers()
     {
-        $this->faker = Factory::create();
-
-        for ($usersCount = 1; $usersCount <= 20; $usersCount++) {
+        for ($usersCount = 1; $usersCount <= 15; $usersCount++) {
             $partnerId = User::select('my_id')
                 ->inRandomOrder()
                 ->limit(1)
@@ -183,12 +181,11 @@ class GenerateDemoDataCommand extends Command
                 $user = User::create($newUser);
 
                 $this->generateBalances($user);
-                $this->generateDeposits($user);
-                $this->generateWithdrawals($user);
+//                $this->generateDeposits($user);
+//                $this->generateWithdrawals($user);
             });
 
             $this->info('user ' . $user->name . ' registered');
-            sleep(1);
         }
     }
 
@@ -202,7 +199,7 @@ class GenerateDemoDataCommand extends Command
 
         /** @var Wallet $wallet */
         foreach ($user->wallets()->get() as $wallet) {
-            for($i = 1; $i <= 1; $i++) {
+            for($i = 1; $i <= 5; $i++) {
                 $amount             = $this->faker->numberBetween(10, 1000);
                 $externalWallet     = 'W' . $this->faker->randomNumber(5);
                 $transactionData    = [
