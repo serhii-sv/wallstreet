@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserChangeMyIdNull extends Migration
+class CreateRoleHasPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class UserChangeMyIdNull extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('my_id');
-        });
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('my_id', 100)->nullable();
+        Schema::create('role_has_permissions', function (Blueprint $table) {
+            $table->integer('permission_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+
+            $table->primary(['permission_id', 'role_id']);
         });
     }
 
@@ -28,6 +28,6 @@ class UserChangeMyIdNull extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('role_has_permissions');
     }
 }

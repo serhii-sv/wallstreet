@@ -19,15 +19,11 @@ class DepositQueue extends Migration
     {
         Schema::create('deposit_queue', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('deposit_id');
+            $table->string('deposit_id')->index();
             $table->integer('type');
             $table->timestamp('available_at');
             $table->boolean('done')->default(false);
             $table->timestamps();
-        });
-
-        Schema::table('deposit_queue', function($table) {
-            $table->foreign('deposit_id')->references('id')->on('deposits');
         });
     }
 

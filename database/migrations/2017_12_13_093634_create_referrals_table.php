@@ -21,8 +21,9 @@ class CreateReferralsTable extends Migration
             $table->uuid('id')->primary();
             $table->integer('level')->unsigned()->unique();
             $table->float('percent')->default(0);
-            $table->boolean('on_load')->default(false);
-            $table->boolean('on_profit')->default(false);
+            $table->boolean('on_load')->default(false)->index();
+            $table->boolean('on_profit')->default(false)->index();
+            $table->boolean('on_task')->default(false)->index();
             $table->timestamps();
         });
     }

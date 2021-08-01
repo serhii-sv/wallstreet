@@ -19,8 +19,8 @@ class CreateCurrencyPaymentSystemTable extends Migration
     {
         Schema::create('currency_payment_system', function (Blueprint $table) {
             //
-            $table->uuid('currency_id')->nullable(false);
-            $table->uuid('payment_system_id')->nullable(false);
+            $table->uuid('currency_id')->nullable(false)->index();
+            $table->uuid('payment_system_id')->nullable(false)->index();
         });
     }
 
