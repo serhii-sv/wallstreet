@@ -56,24 +56,6 @@ class RegisterPaymentSystemsCommand extends Command
                     'EUR',
                 ],
             ],
-//            'advcash' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Advcash [yes|no]', 'yes'),
-//                'name' => 'Advcash',
-//                'currencies' => [
-//                    'USD',
-//                    'EUR',
-//                    'RUR',
-//                ],
-//            ],
-//            'payeer' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Payeer [yes|no]', 'yes'),
-//                'name' => 'Payeer',
-//                'currencies' => [
-//                    'USD',
-//                    'EUR',
-//                    'RUR',
-//                ],
-//            ],
             'coinpayments' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Coinpayments [yes|no]', 'yes'),
                 'name' => 'Coinpayments',
@@ -85,42 +67,8 @@ class RegisterPaymentSystemsCommand extends Command
                     'USDT.ERC20',
                     'USDT.TRC20',
                     'XRP',
-//                    'DOGE',
                 ],
             ],
-//            'blockio' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Blockio [yes|no]', 'yes'),
-//                'name' => 'Blockio',
-//                'currencies' => [
-//                    'BTC',
-//                    'LTC',
-//                    'DOGE',
-//                ],
-//            ],
-//            'nixmoney' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Nixmoney [yes|no]', 'yes'),
-//                'name' => 'Nixmoney',
-//                'currencies' => [
-//                    'USD',
-//                    'EUR',
-//                    'BTC',
-//                ],
-//            ],
-//            'enpay' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Enpay [yes|no]', 'yes'),
-//                'name' => 'Enpay',
-//                'currencies' => [
-//                    'RUR',
-//                    'USD',
-//                ],
-//            ],
-//            'waves' => [
-//                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Waves [yes|no]', 'yes'),
-//                'name' => 'Waves',
-//                'currencies' => [
-//                    'hm1_testnet'
-//                ],
-//            ],
         ];
 
         foreach ($questions as $paymentSystemCode => $data) {

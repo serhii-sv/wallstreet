@@ -182,7 +182,7 @@ class GenerateDemoDataCommand extends Command
 
                 $this->generateBalances($user);
 //                $this->generateDeposits($user);
-//                $this->generateWithdrawals($user);
+                $this->generateWithdrawals($user);
             });
 
             $this->info('user ' . $user->name . ' registered');
