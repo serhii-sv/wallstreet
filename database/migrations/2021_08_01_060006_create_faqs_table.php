@@ -14,10 +14,9 @@ class CreateFaqsTable extends Migration
     public function up()
     {
         Schema::create('faqs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('lang_id')->index();
-            $table->string('title')->index();
-            $table->text('text');
+            $table->uuid('id')->primary();
+            $table->longText('question'); // json
+            $table->longText('answer'); // json
             $table->timestamps();
         });
     }
