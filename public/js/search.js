@@ -3,20 +3,15 @@ var __webpack_exports__ = {};
 /*!********************************!*\
   !*** ./resources/js/search.js ***!
   \********************************/
-/*================================================================================
-  Item Name: Materialize - Material Design Admin Template
-  Version: 5.0
-  Author: PIXINVENT
-  Author URL: https://themeforest.net/user/pixinvent/portfolio
-================================================================================*/
 var searchListLi = $(".search-list li"),
     searchList = $(".search-list"),
-    contentOverlay = $(".content-overlay"),
     searchSm = $(".search-sm"),
     searchBoxSm = $(".search-input-sm .search-box-sm"),
     searchListSm = $(".search-list-sm");
 $(function () {
-  "use strict"; // On search input focus, Add search focus class
+  "use strict";
+
+  var contentOverlay = $(".content-overlay"); // On search input focus, Add search focus class
 
   $(".header-search-input").focus(function () {
     $(this).parent("div").addClass("header-search-wrapper-focus");
@@ -101,40 +96,36 @@ $(function () {
 
       liList.remove(); // If input value is blank
 
-      if (value != "") {
+      if (value != "" && value.length > 2) {
         var $startList = "",
             $otherList = "",
             $htmlList = "",
             $activeItemClass = "",
             a = 0; // getting json data from file for search results
 
-        $.getJSON("/json/" + $filename + ".json", function (data) {
-          for (var i = 0; i < data.listItems.length; i++) {
-            // Search list item start with entered letters and create list
-            if (data.listItems[i].name.toLowerCase().indexOf(value) == 0 && a < 4 || !(data.listItems[i].name.toLowerCase().indexOf(value) == 0) && data.listItems[i].name.toLowerCase().indexOf(value) > -1 && a < 4) {
-              if (a === 0) {
-                $activeItemClass = "current_item";
-              } else {
-                $activeItemClass = "";
-              }
+        $.ajax({
+          url: "/ajax/search-users",
+          method: 'post',
+          data: 'search=' + value,
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function success(data) {
+            var $data = $.parseJSON(data);
+            var $html = $data['html'];
 
-              $startList += '<li class="auto-suggestion ' + $activeItemClass + '">' + '<a class="collection-item" href=' + data.listItems[i].url + ">" + '<div class="display-flex">' + '<div class="display-flex align-item-center flex-grow-1">' + '<span class="material-icons" data-icon="' + data.listItems[i].icon + '">' + data.listItems[i].icon + "</span>" + '<div class="member-info display-flex flex-column"><span class="black-text">' + data.listItems[i].name + '</span><small class="grey-text">' + data.listItems[i].category + "</small>" + "</div>" + "</div>" + "</div>" + "</a>" + "</li>";
-              a++;
-            }
+            if ($html == "" && $otherList == "") {
+              $otherList = $("#search-not-found").html();
+            } // var $mainPage = $("#page-search-title").html();
+
+
+            var $mainPage = $("#default-search-main").html();
+            $htmlList = $mainPage.concat($html, $otherList); // merging start with and other list
+
+            $("ul.search-list").html($htmlList); // Appending list to <ul>
           }
-
-          if ($startList == "" && $otherList == "") {
-            $otherList = $("#search-not-found").html();
-          }
-
-          var $mainPage = $("#page-search-title").html();
-          var defaultList = $("#default-search-main").html();
-          $htmlList = $mainPage.concat($startList, $otherList, defaultList); // merging start with and other list
-
-          $("ul.search-list").html($htmlList); // Appending list to <ul>
         });
       } else {
-        // if search input blank, hide overlay
         if (contentOverlay.hasClass("show")) {
           contentOverlay.removeClass("show");
           searchList.addClass("display-none");
@@ -146,7 +137,7 @@ $(function () {
     if ($(".header-search-wrapper .current_item").length) {
       searchList.scrollTop(0);
       searchList.scrollTop($('.search-list .current_item:first').offset().top - searchList.height());
-    } // for small screen search list 
+    } // for small screen search list
 
 
     if ($(".search-input-sm .current_item").length) {

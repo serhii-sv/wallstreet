@@ -49,3 +49,60 @@
 
 // Customizer
 @import "../../theme-components/customizer"; // Customizer demo, remove in real project
+.sidenav label {
+  font-weight: 400;
+}
+
+.sidenav .onoffswitch {
+  right: -10px;
+}
+
+.sidenav .onoffswitch .onoffswitch-label {
+  filter: alpha(opacity=40);
+  opacity: 0.4;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidenav .onoffswitch-checkbox:checked + .onoffswitch-label {
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+.site-status-wrapper {
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.pagination
+{
+  /* Pagination button styling */
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.pagination li{
+  height: auto;
+  margin: 0 2px;
+}
+.pagination a, .pagination span
+{
+  display: block;
+  margin-top: .25rem;
+  padding: .25em .65em;
+  border: 1px solid transparent;
+}
+
+.pagination li.active span,
+.pagination a:hover
+{
+  color: white !important;
+  border: 1px solid #3f51b5;
+  border-radius: 4px;
+  background: #3f51b5;
+  box-shadow: 0 0 8px 0 #3f51b5;
+}
