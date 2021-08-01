@@ -120,11 +120,7 @@ class Transaction extends Model
      */
     public function getAmountAttribute($value)
     {
-        if (null == $this->currency_id) {
-            return $value;
-        }
-
-        return currencyPrecision($this->currency_id, $value);
+        return $value;
     }
 
     /**

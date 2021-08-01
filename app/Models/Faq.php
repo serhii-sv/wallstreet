@@ -1,39 +1,47 @@
 <?php
-/**
- * Copyright. "NewGen" investment engine. All rights reserved.
- * Any questions? Please, visit https://newgen.company
+/*
+ * This engine owned and produced by HyipLab studio.
+ * Visit our website: https://hyiplab.net/
  */
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Faq
  * @package App\Models
  *
- * @property string lang_id
- * @property string title
- * @property string text
- * @property Carbon created_at
+ * @property string question
+ * @property string answer
+ * @property Language language_id
  */
 class Faq extends Model
 {
+    use Uuids;
+
+    public $incrementing = false;
+
+    /** @var string $table */
+    protected $table = 'faq';
+
+    /** @var array $timestamps */
+    public $timestamps = ['created_at', 'updated_at'];
+
     /** @var array $fillable */
     protected $fillable = [
-        'lang_id',
-        'title',
-        'text',
-        'created_at'
+        'question',
+        'answer',
+        'language_id',
+        'created_at',
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function lang()
+    public function language()
     {
-        return $this->belongsTo(Language::class, 'lang_id');
+        return $this->belongsTo(Language::class, 'language_id');
     }
-
 }

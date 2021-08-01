@@ -51,14 +51,6 @@ class Language extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function news()
-    {
-        return $this->hasMany(NewsLang::class, 'lang_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function reviews()
     {
         return $this->hasMany(Reviews::class, 'lang_id');

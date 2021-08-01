@@ -56,7 +56,7 @@ class UpdateCurrencyRatesCommand extends Command
                 continue;
             }
 
-            $rateInUsd = (float) amountWithPrecision($response['data'][strtoupper($currency->code)]['quote']['USD']['price'], $currency);
+            $rateInUsd = (float) round($response['data'][strtoupper($currency->code)]['quote']['USD']['price'], $currency->precision);
 
             $key = strtolower($currency->code).'_to_usd';
             Setting::setValue($key, $rateInUsd);
