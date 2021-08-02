@@ -25,7 +25,8 @@
         "laravel/ui": "^3.3",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-permission": "^4.2",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

@@ -48,6 +48,8 @@ class UserObserver
     public function created(User $user)
     {
         Wallet::registerWallets($user);
+
+        cache()->forget('counts.users');
     }
 
     /**
@@ -82,6 +84,6 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-
+        cache()->forget('counts.users');
     }
 }

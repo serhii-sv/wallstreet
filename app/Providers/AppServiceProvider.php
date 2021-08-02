@@ -6,6 +6,7 @@
 
 namespace App\Providers;
 
+use App\Models\CloudFile;
 use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Faq;
@@ -22,6 +23,7 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Observers\CloudFileObserver;
 use App\Observers\CurrencyObserver;
 use App\Observers\DepositObserver;
 use App\Observers\FaqObserver;
@@ -69,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
          * Base observers
          */
         Currency::observe(CurrencyObserver::class);
+        CloudFile::observe(CloudFileObserver::class);
         Deposit::observe(DepositObserver::class);
         Faq::observe(FaqObserver::class);
         Language::observe(LanguageObserver::class);
