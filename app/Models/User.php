@@ -23,7 +23,7 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
-
+    public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 

@@ -25,7 +25,7 @@
     <div class="sidebar-content">
       <div class="sidebar-header">
         <div class="sidebar-details">
-          <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">perm_identity</i> Все пользователи
+          <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">perm_identity</i> Пользователи
           </h5>
           <div class="mt-10 pt-2">
             <p class="m-0 subtitle font-weight-700">Общее количество пользователей</p>
@@ -45,7 +45,7 @@
             </li>
             @forelse($roles as $role)
               <li @if(request()->get('roles') === $role->name) class="active" @endif>
-                <a href="{{ route('users.index', array_add(request()->except('page'),'roles', $role->name) ) }}" class="text-sub">
+                <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" class="text-sub">
                   <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
                   {{$role->name}}
                 </a>

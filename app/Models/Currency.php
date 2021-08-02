@@ -26,7 +26,8 @@ class Currency extends Model
     use Uuids;
 
     public $incrementing = false;
-
+    public $keyType = 'string';
+    
     protected $fillable = [
         'name',
         'code',
@@ -96,4 +97,6 @@ class Currency extends Model
             return isset($balances)? $balances : [];
         });
     }
+    
+   
 }

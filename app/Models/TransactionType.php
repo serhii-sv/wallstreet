@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionType extends Model
 {
     use Uuids;
-
+    public $keyType      = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 

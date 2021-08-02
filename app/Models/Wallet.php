@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 class Wallet extends Model
 {
     use Uuids;
-
+    public $keyType      = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 
