@@ -48,40 +48,47 @@
         <span class="badge badge pill purple float-right mr-2">0</span>
       </a>
     </li>
-  
+
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.index') }}">
+              <i class="fa fa-sitemap"></i>
+              <span class="menu-title" data-i18n="Backups">Менеджер файлов</span>
+          </a>
+      </li>
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active' : '') }}" href="{{ route('deposits.index') }}">
         <i class="fa fa-suitcase"></i>
         <span class="menu-title" data-i18n="Deposits">{{ __('Deposits') }}</span>
-       
+
           <span class="badge badge pill pink accent-2 float-right mr-10">0</span>
 
-     
+
           <span class="badge badge pill purple float-right mr-2">9</span>
-   
+
       </a>
     </li>
-  
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('requests.*') ? 'active' : '') }}" href="{{ route('requests.index') }}">
         <i class="fa fa-mail-forward"></i>
         <span class="menu-title" data-i18n="Withdrawal requests">{{ __('Withdrawal requests') }}</span>
-    
+
           <span class="badge badge pill purple float-right mr-2">9</span>
-  
+
       </a>
     </li>
-  
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active' : '') }}" href="{{ route('transactions.index') }}">
         <i class="fa fa-cubes"></i>
         <span class="menu-title" data-i18n="Transactions">{{ __('Transactions') }}</span>
-        
+
           <span class="badge badge pill purple float-right mr-2">88</span>
-    
+
       </a>
     </li>
-  
+
     <li class="bold {{ (Route::is('news.*') ? 'active' : '') }} {{ (Route::is('reviews.*') ? 'active' : '') }} {{ (Route::is('faqs.*') ? 'active' : '') }}">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="fa fa-bullhorn"></i>
@@ -112,7 +119,7 @@
         </ul>
       </div>
     </li>
-  
+
     <li class="bold {{ (Route::is('settings.*') ? 'active' : '') }} {{ (Route::is('langs.*') ? 'active' : '') }} {{ (Route::is('tpl_texts.*') ? 'active' : '') }} {{ (Route::is('currencies.*') ? 'active' : '') }} {{ (Route::is('payment-systems.*') ? 'active' : '') }}">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="fa fa-wrench"></i>
@@ -153,22 +160,22 @@
         </ul>
       </div>
     </li>
-  
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('referral.*') ? 'active' : '') }}" href="{{ route('referral.index') }}">
         <i class="fa fa-sitemap"></i>
         <span class="menu-title" data-i18n="Affiliate plans">{{ __('Affiliate plans') }}</span>
       </a>
     </li>
-    
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('backup.*') ? 'active' : '') }}" href="{{ route('backup.index') }}">
         <i class="fa fa-sitemap"></i>
         <span class="menu-title" data-i18n="Backups">{{ __('Backups') }}</span>
       </a>
     </li>
-  
-    
+
+
     {{-- Foreach menu item starts --}}
 {{--    @if(!empty($menuData[0]) && isset($menuData[0]))--}}
 {{--      @foreach ($menuData[0]->menu as $menu)--}}

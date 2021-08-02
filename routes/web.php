@@ -18,7 +18,7 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
-    
+
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['role:root|admin']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
@@ -175,6 +175,15 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('users.bonus');
             Route::post('/users/penalty', [\App\Http\Controllers\UsersController::class, 'penalty'])->name('users.penalty');
+
+
+            Route::resource('/cloud_files', \App\Http\Controllers\CloudFilesController::class, [
+                'names' => [
+                    'index' => 'cloud_files.manager',
+                    'store' => 'cloud_files.upload',
+                    'destroy' => 'cloud_files.destroy',
+                ],
+            ]);
         });
 
         Route::group(['middleware' => ['role:root']], function () {
