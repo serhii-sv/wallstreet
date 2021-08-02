@@ -3243,7 +3243,6 @@ span.badge {
   line-height: 22px;
   height: 22px;
   color: #757575;
-  float: right;
   box-sizing: border-box;
 }
 span.badge.new {

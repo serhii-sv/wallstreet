@@ -9,6 +9,9 @@
         <ul class="search-list collection display-none"></ul>
       </div>
       <ul class="navbar-list right">
+        <li>
+          <span class="badge red">{{ now()->format('d-m-Y H:i') }}</span>
+        </li>
 {{--        <li class="dropdown-language">--}}
 {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
 {{--            data-target="translation-dropdown">--}}
