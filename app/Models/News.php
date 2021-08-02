@@ -20,7 +20,8 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use Uuids;
-
+    public $keyType      = 'string';
+    
     public $incrementing = false;
 
     /** @var string $table */
@@ -33,7 +34,6 @@ class News extends Model
     protected $fillable = [
         'subject',
         'content',
-        'language_id',
         'created_at',
     ];
 
@@ -42,6 +42,6 @@ class News extends Model
      */
     public function language()
     {
-        return $this->belongsTo(Language::class, 'language_id');
+        return $this->belongsTo(Language::class, 'id');
     }
 }

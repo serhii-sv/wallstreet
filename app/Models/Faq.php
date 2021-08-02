@@ -22,9 +22,9 @@ class Faq extends Model
     use Uuids;
 
     public $incrementing = false;
-
+    public $keyType      = 'string';
     /** @var string $table */
-    protected $table = 'faq';
+    protected $table = 'faqs';
 
     /** @var array $timestamps */
     public $timestamps = ['created_at', 'updated_at'];

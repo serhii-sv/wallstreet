@@ -28,7 +28,8 @@ class DepositQueue extends Model
     CONST TYPE_CLOSING = 2;
 
     use Uuids;
-
+    public $keyType      = 'string';
+    
     public $incrementing = false;
 
     /** @var string $table */

@@ -325,26 +325,26 @@
             </div>
           @endif
           <div class="card-content">
-            <h4 class="card-title mb-4">Give bonus</h4>
+            <h4 class="card-title mb-4">Начислить бонус</h4>
             <form method="post" action="{{ route('dashboard.add.bonus') }}">
               {{ csrf_field() }}
               <div class="row">
                 <div class="input-field col s12">
                   <input placeholder="Id or Login or email" id="name2" name="user" type="text" value="{{ old('user') ?? '' }}">
-                  <label for="name2" class="active">{{ __('User') }}</label>
+                  <label for="name2" class="active">Пользователь</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input placeholder="23" type="text" name="amount" value="{{ old('amount') ?? '' }}">
-                  <label class="active">{{ __('Amount') }}</label>
+                  <label class="active">Количество</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <div class="select-wrapper">
                     <select tabindex="-1" name="currency_id">
-                      <option value="" disabled="" selected="">Choose currency</option>
+                      <option value="" disabled="" selected="">Выберите валюту</option>
                       @forelse($currencies as $item)
                         <option value="{{ $item->id }}" @if($item->id == old('currency_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
                       @empty
@@ -357,7 +357,7 @@
                 <div class="input-field col s12">
                   <div class="select-wrapper">
                     <select tabindex="-1" name="payment_system_id">
-                      <option value="" disabled="" selected="">Choose payment system</option>
+                      <option value="" disabled="" selected="">Выберите платёжную систему</option>
                       @forelse($payment_system as $item)
                         <option value="{{ $item->id }}" @if($item->id == old('payment_system_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
                       @empty
@@ -369,7 +369,7 @@
               <div class="row">
                 <div class="row">
                   <div class="input-field col s12">
-                    <button class="btn cyan waves-effect waves-light right" type="submit" name="action">{{ __("send bonus") }}
+                    <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Начислить бонус
                       <i class="material-icons right">send</i>
                     </button>
                   </div>
@@ -394,9 +394,9 @@
                 <table class="striped">
                   <thead>
                     <tr>
-                      <th data-field="id">User</th>
+                      <th data-field="id">Пользователь</th>
                       <th data-field="name">Ip</th>
-                      <th data-field="price">Date</th>
+                      <th data-field="price">Дата</th>
                     </tr>
                   </thead>
                   <tbody>
