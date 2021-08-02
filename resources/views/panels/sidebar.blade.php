@@ -35,16 +35,24 @@
   </div>
     <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
 
-        <li class="bold"><a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active' : '') }}" href="{{ route('home') }}">
-                <i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Дашборд">Дашборд</span></a>
+        <li class="bold">
+            <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active' : '') }}" href="{{ route('home') }}">
+                <i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Дашборд">Дашборд</span>
+            </a>
         </li>
 
-        <li class="bold"><a class="waves-effect waves-cyan {{ (Route::is('users.*') ? 'active' : '') }}" href="{{ route('users.index') }}">
-                <i class="material-icons">people</i><span class="menu-title" data-i18n="Пользователи">Пользователи</span></a>
+        <li class="bold">
+            <a class="waves-effect waves-cyan {{ (Route::is('users.*') ? 'active' : '') }}" href="{{ route('users.index') }}">
+                <i class="material-icons">people</i><span class="menu-title" data-i18n="Пользователи">Пользователи</span>
+                <span class="badge badge pill purple float-right mr-10">{{ $counts['users'] }}</span>
+            </a>
         </li>
 
-        <li class="bold"><a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.manager') }}">
-                <i class="material-icons">cloud_download</i><span class="menu-title" data-i18n="Менеджер файлов">Менеджер файлов</span></a>
+        <li class="bold">
+            <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.manager') }}">
+                <i class="material-icons">cloud_download</i><span class="menu-title" data-i18n="Менеджер файлов">Файлы</span>
+                <span class="badge badge pill purple float-right mr-10">{{ $counts['files'] }}</span>
+            </a>
         </li>
 
 {{--   DROPDOWN     --}}
