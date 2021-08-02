@@ -7,6 +7,7 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,18 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
-
-    Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
+    Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
+    Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
+    
+    Route::group(['middleware' => ['auth', 'locked.user']], function () {
+        
         Route::group(['middleware' => ['role:root|admin']], function () {
+          
+            
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
+            Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
 
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add.bonus');

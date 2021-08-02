@@ -182,7 +182,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
-        \App\Providers\ComposerServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
 
     ],
 
