@@ -12,7 +12,8 @@ $(document).ready(function () {
         {
           orderable: true,
           targets: 1,
-          checkboxes: { selectRow: true }
+          checkboxes: { selectRow: true },
+            className: 'select-checkbox',
         },
         {
           targets: [0, 1],
@@ -21,11 +22,10 @@ $(document).ready(function () {
         { "orderable": false, "targets": 8 },
       ],
       order: [2, 'asc'],
-      dom:
-        '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+      dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
       language: {
         search: "",
-        searchPlaceholder: "Search Invoice"
+        searchPlaceholder: "Search Invoice",
       },
       select: {
         style: "multi",
@@ -45,6 +45,21 @@ $(document).ready(function () {
     var filterButton = $(".filter-btn");
     $(".action-btns").append(invoiceFilterAction, invoiceCreateBtn);
     $(".dataTables_filter label").append(filterButton);
+
+    $('.search').click(() => {
+        let query = $('.invoice-list-wrapper input[type="search"]').val();
+        if (query.length > 2) {
+            location.href = '/withdrawals?email=' + query
+        }
+    })
+
+      // $('.select-checkbox').change(() => {
+      //     let transactionIds = [];
+      //
+      //     $('.select-checkbox').map((index, checkbox) => {
+      //         console.log(checkbox)
+      //     })
+      // })
   }
 
   /* Invoice edit */

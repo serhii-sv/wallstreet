@@ -42,17 +42,17 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::get('/requests/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('requests.approve');
-            Route::post('/requests/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('requests.approve-many');
-            Route::get('/requests/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('requests.reject');
-            Route::get('/requests/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('requests.approveManually');
-            Route::get('/requests/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('requests.dtdata');
-            Route::resource('/requests', \App\Http\Controllers\WithdrawalRequestsController::class, [
+            Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
+            Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
+            Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
+            Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
+            Route::get('/withdrawals/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('withdrawals.dtdata');
+            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class, [
                 'names' => [
-                    'index' => 'requests.index',
-                    'show' => 'requests.show',
-                    'edit' => 'requests.edit',
-                    'update' => 'requests.update',
+                    'index' => 'withdrawals.index',
+                    'show' => 'withdrawals.show',
+                    'edit' => 'withdrawals.edit',
+                    'update' => 'withdrawals.update',
                 ],
             ]);
 
