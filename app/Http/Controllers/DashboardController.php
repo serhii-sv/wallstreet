@@ -31,8 +31,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        session()->flash('success_short', 'Успешный успех ');
-        session()->flash('error_short', 'Ошибка');
+       
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         
