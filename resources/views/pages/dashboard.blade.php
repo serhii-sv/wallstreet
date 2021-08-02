@@ -257,7 +257,11 @@
         </div>
       </div>
     </div>
-    
+    <style>
+        .subscription-table thead th{
+            font-weight: 600;
+        }
+    </style>
     <div class="row">
       <div class="col s12 m12 l6">
         <div class="card subscriber-list-card animate fadeRight">
@@ -267,25 +271,25 @@
           <table class="subscription-table responsive-table highlight">
             <thead>
               <tr>
-                <th>User</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Payment system</th>
-                <th>Created</th>
-                <th>Action</th>
+                <th>Пользователь</th>
+                <th>Тип</th>
+                <th>Сумма</th>
+                <th>Платёжная система</th>
+                <th>Дата операции</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               @if(isset($last_operations) && !empty($last_operations))
                 @foreach($last_operations as $operation)
                   <tr>
-                    <td>{{ $operation->user->name ?? 'Не указано' }}</td>
-                    <td>{{ $operation->type->name ?? 'Не указано' }}</td>
+                    <td>{{ Str::limit( $operation->user->name, 13) ?? 'Не указано' }}</td>
+                    <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
                     <td>
-                      <span class="badge  green-text  lighten-5 text-accent-4">$ {{ $operation->main_currency_amount }}</span>
+                      <span class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
                     </td>
                     <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                    <td>{{ $operation->created_at->format('m d, Y') }}</td>
+                    <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
                     <td class="center-align">
                       <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
                     </td>
