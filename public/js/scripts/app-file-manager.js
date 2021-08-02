@@ -51,8 +51,7 @@ $(function () {
 
   // On click of "app-file-info" class from file-content-area, visible edit sidebar and hide left sidebar
   $('.app-file-info').on('click', function () {
-        var fileid = $(this).attr('file-id');
-        $('#app-file-sidebar-info-'+fileid).addClass('show');
+    sideBarInfo.addClass('show');
     appContentOverlay.addClass('show');
   });
 
