@@ -99,6 +99,9 @@ class CloudFilesController extends Controller
 
         $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
 
+        $file->last_access = now();
+        $file->save();
+
         return response($fileFromStorage, 200, [
             'Content-type' => $file->mime,
         ]);
