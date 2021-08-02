@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','App File Manager')
+@section('title', 'Менеджер файлов')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -17,7 +17,7 @@
 
 {{-- page content --}}
 @section('content')
-    <div class="section app-file-manager-wrapper">
+    <div class="section app-file-manager-wrapper" style="min-height: 800px;">
         <!-- File Manager app overlay -->
         <div class="app-file-overlay"></div>
         <!-- /File Manager app overlay -->
@@ -34,101 +34,106 @@
                         <!-- Add File Button -->
                         <button class="add-file-btn btn btn-block waves-effect waves-light mb-10">
                             <i class="material-icons">add</i>
-                            <span>Add File</span>
+                            <span>Загрузить файл</span>
                         </button>
                         <!-- file input  -->
-                        <div class="getfileInput">
-                            <input type="file" id="getFile">
-                        </div>
+
+                        <form action="{{ route('cloud_files.upload') }}" id="uploadForm" method="POST" target="_top" enctype="multipart/form-data">
+                            {{ @csrf_field() }}
+
+                            <div class="getfileInput">
+                                <input type="file" name="file" id="getFile">
+                            </div>
+                        </form>
                     </div>
                     <div class="app-file-sidebar-content">
                         <!-- App File Left Sidebar - Drive Content Starts -->
-                        <span class="app-file-label">My Drive</span>
+                        <span class="app-file-label">Файлы</span>
                         <div class="collection file-manager-drive mt-3">
-                            <a href="#" class="collection-item file-item-action active">
+                            <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action active">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
-                                <span>All Files</span>
-                                <span class="chip red lighten-5 float-right red-text">2</span>
+                                <span>Все файлы</span>
+                                <span class="chip red lighten-5 float-right red-text">{{ count($files) }}</span>
                             </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">computer</i>
-                                </div>
-                                <span>My Devices</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">schedule</i>
-                                </div>
-                                <span>Recents</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">star_border</i>
-                                </div>
-                                <span>Important</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">delete</i>
-                                </div>
-                                <span> Deleted Files</span>
-                            </a>
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">computer</i>--}}
+{{--                                </div>--}}
+{{--                                <span>My Devices</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">schedule</i>--}}
+{{--                                </div>--}}
+{{--                                <span>Recents</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">star_border</i>--}}
+{{--                                </div>--}}
+{{--                                <span>Important</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">delete</i>--}}
+{{--                                </div>--}}
+{{--                                <span> Deleted Files</span>--}}
+{{--                            </a>--}}
                         </div>
                         <!-- App File Left Sidebar - Drive Content Ends -->
 
                         <!-- App File Left Sidebar - Labels Content Starts -->
-                        <span class="app-file-label">Labels</span>
-                        <div class="collection file-manager-drive mt-3">
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">content_paste</i>
-                                </div>
-                                <span> Documents</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">filter</i>
-                                </div>
-                                <span>Images</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">ondemand_video</i>
-                                </div>
-                                <span>Videos</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">music_note</i>
-                                </div>
-                                <span> Audio</span>
-                            </a>
-                            <a href="#" class="collection-item file-item-action">
-                                <div class="fonticon-wrap display-inline mr-3">
-                                    <i class="material-icons">storage</i>
-                                </div>
-                                <span>Zip Files</span>
-                            </a>
-                        </div>
+{{--                        <span class="app-file-label">Labels</span>--}}
+{{--                        <div class="collection file-manager-drive mt-3">--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">content_paste</i>--}}
+{{--                                </div>--}}
+{{--                                <span> Documents</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">filter</i>--}}
+{{--                                </div>--}}
+{{--                                <span>Images</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">ondemand_video</i>--}}
+{{--                                </div>--}}
+{{--                                <span>Videos</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">music_note</i>--}}
+{{--                                </div>--}}
+{{--                                <span> Audio</span>--}}
+{{--                            </a>--}}
+{{--                            <a href="#" class="collection-item file-item-action">--}}
+{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+{{--                                    <i class="material-icons">storage</i>--}}
+{{--                                </div>--}}
+{{--                                <span>Zip Files</span>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
                         <!-- App File Left Sidebar - Labels Content Ends -->
 
                         <!-- App File Left Sidebar - Storage Content Starts -->
-                        <span class="app-file-label">Storage Status</span>
-                        <div class="display-flex mb-1 mt-3">
-                            <div class="fonticon-wrap mr-3">
-                                <i class="material-icons storage-icon">sd_card</i>
-                            </div>
-                            <div class="file-manager-progress">
-                                <small>19.5GB used of 25GB</small>
-                                <div class="progress pink lighten-5 mt-0">
-                                    <div class="determinate" style="width: 70%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" class="font-weight-900">Upgrade Storage</a>
+{{--                        <span class="app-file-label">Storage Status</span>--}}
+{{--                        <div class="display-flex mb-1 mt-3">--}}
+{{--                            <div class="fonticon-wrap mr-3">--}}
+{{--                                <i class="material-icons storage-icon">sd_card</i>--}}
+{{--                            </div>--}}
+{{--                            <div class="file-manager-progress">--}}
+{{--                                <small>19.5GB used of 25GB</small>--}}
+{{--                                <div class="progress pink lighten-5 mt-0">--}}
+{{--                                    <div class="determinate" style="width: 70%"></div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <a href="#" class="font-weight-900">Upgrade Storage</a>--}}
                         <!-- App File Left Sidebar - Storage Content Ends -->
                     </div>
                 </div>
@@ -149,353 +154,62 @@
                     </div>
                     <div class="app-file-header-search">
                         <div class="input-field m-0">
-                            <i class="material-icons prefix">search</i>
-                            <input type="search" id="email-search" placeholder="Search email">
+                            <form action="{{ route('cloud_files.manager') }}" method="GET" target="_top">
+                                <i class="material-icons prefix">search</i>
+                                <input type="search" id="email-search" name="search" placeholder="Поиск файлов" value="{{ request()->search ?? '' }}">
+                            </form>
                         </div>
                     </div>
                     <!-- Header search bar Ends -->
 
                     <!-- Header Icons Starts -->
-                    <div class="app-file-header-icons display-flex align-items-center">
-                        <div class="fonticon-wrap display-inline">
-                            <i class="material-icons">person_outline</i>
-                        </div>
-                        <div class="fonticon-wrap display-inline">
-                            <i class="material-icons">delete</i>
-                        </div>
-                        <div class="fonticon-wrap display-inline ">
-                            <i class="material-icons">more_vert</i>
-                        </div>
-                    </div>
+{{--                    <div class="app-file-header-icons display-flex align-items-center">--}}
+{{--                        <div class="fonticon-wrap display-inline">--}}
+{{--                            <i class="material-icons">person_outline</i>--}}
+{{--                        </div>--}}
+{{--                        <div class="fonticon-wrap display-inline">--}}
+{{--                            <i class="material-icons">delete</i>--}}
+{{--                        </div>--}}
+{{--                        <div class="fonticon-wrap display-inline ">--}}
+{{--                            <i class="material-icons">more_vert</i>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <!-- Header Icons Ends -->
                 </div>
                 <!-- App File Header Ends -->
 
                 <!-- App File Content Starts -->
                 <div class="app-file-content">
-                    <h6 class="font-weight-700 mb-3">All Files</h6>
+                    <h6 class="font-weight-700 mb-3">Файлы</h6>
 
                     <!-- App File - Recent Accessed Files Section Starts -->
-                    <span class="app-file-label">Recently Accessed Files</span>
+                    <span class="app-file-label">Все файлы в облаке</span>
                     <div class="row app-file-recent-access mb-3">
-                        <div class="col xl3 l6 m3 s12">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
+                        @foreach($files as $file)
+                            <div class="col xl3 l6 m3 s12">
+                                <div class="card box-shadow-none mb-1 app-file-info" file-id="{{ $file->id }}">
+                                    <div class="card-content">
+                                        <a href="{{ route('cloud_files.open', ['id' => $file->id]) }}" target="_blank">
+                                            <div class="app-file-content-logo grey lighten-4">
+                                                {{--                                            <div class="fonticon">--}}
+                                                {{--                                                <i class="material-icons">more_vert</i>--}}
+                                                {{--                                            </div>--}}
+                                                <img class="recent-file" src="{{asset('images/icon/pdf.png')}}" height="38" width="30"
+                                                     alt="{{ $file->name }}">
+                                            </div>
+                                        </a>
+                                        <div class="app-file-recent-details">
+                                            <div class="app-file-name font-weight-700">{{ $file->name }}</div>
+                                            <div class="app-file-size">Размер: {{ round($file->size/1024/1024, 4) }} мб.</div>
+                                            <div class="app-file-last-access">Дата создания : {{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</div>
                                         </div>
-                                        <img class="recent-file" src="{{asset('images/icon/pdf.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-recent-details">
-                                        <div class="app-file-name font-weight-700">Felecia_Resume.pdf</div>
-                                        <div class="app-file-size">12.85kb</div>
-                                        <div class="app-file-last-access">Last accessed : 3 hours ago</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s12">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon"><i class="material-icons">more_vert</i></div>
-                                        <img class="recent-file" src="{{asset('images/icon/psd.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-content-details">
-                                        <div class="app-file-name font-weight-700">Logo_design.psd</div>
-                                        <div class="app-file-size">15.60mb</div>
-                                        <div class="app-file-last-access">Last accessed : 3 hours ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s12">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon"> <i class="material-icons">more_vert</i></div>
-                                        <img class="recent-file" src="{{asset('images/icon/doc.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-content-details">
-                                        <div class="app-file-name font-weight-700">Music_Two.xyz</div>
-                                        <div class="app-file-size">1.2gb</div>
-                                        <div class="app-file-last-access">Last accessed : 3 hours ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s12">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/sketch.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-content-details">
-                                        <div class="app-file-name font-weight-700">Application.sketch</div>
-                                        <div class="app-file-size">92.83kb</div>
-                                        <div class="app-file-last-access">Last accessed : 3 hours ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
+                    {{ $files->links() }}
                     <!-- App File - Recent Accessed Files Section Ends -->
-
-                    <!-- App File - Folder Section Starts -->
-                    <span class="app-file-label">Folder</span>
-                    <div class="row app-file-folder mb-3">
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Project</div>
-                                            <div class="app-file-folder-size">2 files, 14.05mb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Video</div>
-                                            <div class="app-file-folder-size">130 files, 890mb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Music</div>
-                                            <div class="app-file-folder-size">15 files, 58mb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Documents</div>
-                                            <div class="app-file-folder-size">12 files, 9.5mb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Application Design</div>
-                                            <div class="app-file-folder-size">1 files, 36.25kb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m4 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-folder-content cursor-pointer display-flex align-items-center">
-                                        <div class="app-file-folder-logo mr-3">
-                                            <i class="material-icons">folder_open</i>
-                                        </div>
-                                        <div class="app-file-folder-details">
-                                            <div class="app-file-folder-name font-weight-700">Photos</div>
-                                            <div class="app-file-folder-size">3.6k files, 348mb</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- App File - Folder Section Ends -->
-
-                    <!-- App File - Files Section Starts -->
-                    <label class="app-file-label">Files</label>
-                    <div class="row app-file-files">
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/pdf.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Banner.jpg</div>
-                                        <div class="app-file-size">13kb</div>
-                                        <div class="app-file-type">Image File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/psd.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Management.docx</div>
-                                        <div class="app-file-size">15.60mb</div>
-                                        <div class="app-file-type">Word Document</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/doc.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Thunder.mp3</div>
-                                        <div class="app-file-size">3.4mb</div>
-                                        <div class="app-file-type">Mp3 File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/sketch.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Dashboard.sketch</div>
-                                        <div class="app-file-size">108kb</div>
-                                        <div class="app-file-type">Sketch File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row app-file-files">
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/psd.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Logo.psd</div>
-                                        <div class="app-file-size">10.6kb</div>
-                                        <div class="app-file-type">Photoshop File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/sketch.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Logo_Design.sketch</div>
-                                        <div class="app-file-size">256.5kb</div>
-                                        <div class="app-file-type">Sketch File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/doc.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Bootstrap.xyz</div>
-                                        <div class="app-file-size">0.0kb</div>
-                                        <div class="app-file-type">Unknown File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col xl3 l6 m3 s6">
-                            <div class="card box-shadow-none mb-1 app-file-info">
-                                <div class="card-content">
-                                    <div class="app-file-content-logo grey lighten-4">
-                                        <div class="fonticon">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <img class="recent-file" src="{{asset('images/icon/pdf.png')}}" height="38" width="30"
-                                             alt="Card image cap">
-                                    </div>
-                                    <div class="app-file-details">
-                                        <div class="app-file-name font-weight-700">Read_Me.pdf</div>
-                                        <div class="app-file-size">10.5kb</div>
-                                        <div class="app-file-type">PDF File</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- App File - Files Section Ends -->
                 </div>
             </div>
 
@@ -503,149 +217,61 @@
         </div>
         <!-- content-right end -->
         <!-- App File sidebar - Right section Starts -->
-        <div class="app-file-sidebar-info">
-            <div class="card box-shadow-none m-0 pb-1">
-                <div class="card-header display-flex justify-content-between align-items-center">
-                    <h6 class="m-0">Document.pdf</h6>
-                    <div class="app-file-action-icons display-flex align-items-center">
-                        <i class="material-icons mr-10">delete</i>
-                        <i class="material-icons close-icon">close</i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <ul class="tabs tabs-fixed-width mb-1">
-                        <li class="tab mr-1 pr-1">
-                            <a class="active display-flex align-items-center" id="details-tab" href="#details">
-                                <i class="material-icons mr-1">content_paste</i>
-                                <span>Details</span>
+        @foreach($files as $file)
+            <div class="app-file-sidebar-info" id="app-file-sidebar-info-{{ $file->id }}">
+                <div class="card box-shadow-none m-0 pb-1">
+                    <div class="card-header display-flex justify-content-between align-items-center">
+                        <h6 class="m-0">{{ $file->name }}</h6>
+                        <div class="app-file-action-icons display-flex align-items-center">
+                            <a href="{{ route('cloud_files.destroy', ['id' => $file->id]) }}">
+                                <i class="material-icons mr-10">delete</i>
                             </a>
-                        </li>
-                        <li class="tab">
-                            <a class="display-flex align-items-center" id="activity-tab" href="#file-activity">
-                                <i class="material-icons mr-1">timeline</i>
-                                <span>Activity</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="details-tab active" id="details">
-                            <div class="display-flex align-items-center flex-column pb-2 pt-4">
-                                <img src="{{asset('images/icon/pdf.png')}}" alt="PDF" height="42" width="35" class="mt-5 mb-5">
-                                <p class="mt-4">15.3mb</p>
-                            </div>
-                            <div class="divider mt-5 mb-5"></div>
-                            <div class="pt-6">
-                                <span class="app-file-label">Setting</span>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>File Sharing</p>
-                                    <div class="switch">
-                                        <label>
-                                            <input type="checkbox" id="customSwitchGlow1">
-                                            <span class="lever"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Synchronization</p>
-                                    <div class="switch">
-                                        <label>
-                                            <input type="checkbox" id="customSwitchGlow2" checked>
-                                            <span class="lever"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6 mb-8">
-                                    <p>Backup</p>
-                                    <div class="switch">
-                                        <label>
-                                            <input type="checkbox" id="customSwitchGlow3">
-                                            <span class="lever"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <span class="app-file-label">Info</span>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Type</p>
-                                    <p class="font-weight-700">PDF</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Size</p>
-                                    <p class="font-weight-700">15.6mb</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Location</p>
-                                    <p class="font-weight-700">Files > Documents</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Owner</p>
-                                    <p class="font-weight-700">Elnora Reese</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Modified</p>
-                                    <p class="font-weight-700">September 4 2019</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Opened</p>
-                                    <p class="font-weight-700">July 8, 2019</p>
-                                </div>
-                                <div class="display-flex justify-content-between align-items-center mt-6">
-                                    <p>Created</p>
-                                    <p class="font-weight-700">July 1, 2019</p>
-                                </div>
-                            </div>
+                            <i class="material-icons close-icon">close</i>
                         </div>
-                        <div class="activity-tab" id="file-activity">
-                            <ul class="widget-timeline mb-0">
-                                <li class="timeline-items timeline-icon-green active">
-                                    <div class="timeline-time">Today</div>
-                                    <h6 class="timeline-title">You added an item to</h6>
-                                    <p class="timeline-text">You added an item</p>
-                                    <div class="timeline-content">
-                                        <img src="{{asset('images/icon/psd.png')}}" alt="PSD" height="30" width="25" class="mr-1">Mockup.psd
+                    </div>
+                    <div class="card-content">
+                        <ul class="tabs tabs-fixed-width mb-1">
+                            <li class="tab mr-1 pr-1">
+                                <a class="active display-flex align-items-center" id="details-tab" href="#details">
+                                    <i class="material-icons mr-1">content_paste</i>
+                                    <span>Детали файла</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="details-tab active" id="details">
+                                <div class="display-flex align-items-center flex-column pb-2 pt-4">
+                                    <img src="{{asset('images/icon/pdf.png')}}" alt="PDF" height="42" width="35" class="mt-5 mb-5">
+                                    <p class="mt-4">Размер: {{ round($file->size/1024/1024, 4) }} мб.</p>
+                                </div>
+                                <div class="divider mt-5 mb-5"></div>
+                                <div class="pt-6">
+                                    <span class="app-file-label">Информация</span>
+                                    <div class="display-flex justify-content-between align-items-center mt-6">
+                                        <p>Создатель</p>
+                                        <p class="font-weight-700">
+                                            <a href="{{ route('users.show', ['user' => $file->author->id]) }}">{{ $file->author->email }}</a>
+                                        </p>
                                     </div>
-                                </li>
-                                <li class="timeline-items timeline-icon-cyan active">
-                                    <div class="timeline-time">10 min ago</div>
-                                    <h6 class="timeline-title">You shared 2 times</h6>
-                                    <p class="timeline-text">Emily Bennett edited an item</p>
-                                    <div class="timeline-content">
-                                        <img src="{{asset('images/icon/sketch.png')}}" alt="Sketch" height="30" width="25"
-                                             class="mr-1">Template_Design.sketch
+                                    <div class="display-flex justify-content-between align-items-center mt-6">
+                                        <p>Изменен</p>
+                                        <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->updated_at)->format('d-m-Y H:i') }}</p>
                                     </div>
-                                </li>
-                                <li class="timeline-items timeline-icon-red active">
-                                    <div class="timeline-time">Mon 10:20 PM</div>
-                                    <h6 class="timeline-title">You edited an item</h6>
-                                    <p class="timeline-text">You edited an item</p>
-                                    <div class="timeline-content">
-                                        <img src="{{asset('images/icon/pdf.png')}}" alt="document" height="30" width="25"
-                                             class="mr-1">Information.doc
+                                    <div class="display-flex justify-content-between align-items-center mt-6">
+                                        <p>Создан</p>
+                                        <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</p>
                                     </div>
-                                </li>
-                                <li class="timeline-items timeline-icon-indigo active">
-                                    <div class="timeline-time">Jul 13 2019</div>
-                                    <h6 class="timeline-title">You edited an item</h6>
-                                    <p class="timeline-text">John Keller edited an item</p>
-                                    <div class="timeline-content">
-                                        <img src="{{asset('images/icon/pdf.png')}}" alt="document" height="30" width="25"
-                                             class="mr-1">Documentation.doc
+                                    <div class="display-flex justify-content-between align-items-center mt-6">
+                                        <p>Последнее открытие</p>
+                                        <p class="font-weight-700">{{ null !== $file->last_access ? \Carbon\Carbon::parse($file->last_access)->format('d-m-Y H:i') : 'нет' }}</p>
                                     </div>
-                                </li>
-                                <li class="timeline-items timeline-icon-orange">
-                                    <div class="timeline-time">Apr 18 2019</div>
-                                    <h6 class="timeline-title">You added an item to</h6>
-                                    <p class="timeline-text">You edited an item</p>
-                                    <div class="timeline-content">
-                                        <img src="{{asset('images/icon/pdf.png')}}" alt="document" height="30" width="25"
-                                             class="mr-1">Resume.pdf
-                                    </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endforeach
         <!-- App File sidebar - Right section Ends -->
     </div>
 @endsection
@@ -657,4 +283,12 @@
 {{-- page scripts --}}
 @section('page-script')
     <script src="{{asset('js/scripts/app-file-manager.js')}}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#getFile').change(function() {
+                $('#uploadForm').submit();
+            });
+        });
+    </script>
 @endsection

@@ -50,7 +50,7 @@
     </li>
 
       <li class="bold">
-          <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.index') }}">
+          <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.manager') }}">
               <i class="fa fa-sitemap"></i>
               <span class="menu-title" data-i18n="Backups">Менеджер файлов</span>
           </a>

@@ -21,7 +21,11 @@ class CloudFile extends Model
     protected $fillable = [
         'created_by',
         'name',
+        'ext',
+        'mime',
         'url',
+        'last_access',
+        'size',
     ];
 
     /**
@@ -31,7 +35,7 @@ class CloudFile extends Model
      */
     public function author()
     {
-        $author = $this->belongsTo(User::class, 'user_id');
+        $author = $this->belongsTo(User::class, 'created_by');
         return $author;
 
     }//end author()

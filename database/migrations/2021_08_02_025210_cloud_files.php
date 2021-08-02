@@ -17,7 +17,11 @@ class CloudFiles extends Migration
             $table->uuid('id')->primary();
             $table->string('created_by');
             $table->string('name');
+            $table->string('ext');
+            $table->string('mime');
             $table->string('url');
+            $table->timestamp('last_access')->nullable();
+            $table->float('size')->default(0);
             $table->timestamps();
         });
     }

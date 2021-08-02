@@ -177,13 +177,10 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/users/penalty', [\App\Http\Controllers\UsersController::class, 'penalty'])->name('users.penalty');
 
 
-            Route::resource('/cloud_files', \App\Http\Controllers\CloudFilesController::class, [
-                'names' => [
-                    'index' => 'cloud_files.manager',
-                    'store' => 'cloud_files.upload',
-                    'destroy' => 'cloud_files.destroy',
-                ],
-            ]);
+            Route::get('/cloud_files', [\App\Http\Controllers\CloudFilesController::class, 'manager'])->name('cloud_files.manager');
+            Route::post('/cloud_files', [\App\Http\Controllers\CloudFilesController::class, 'upload'])->name('cloud_files.upload');
+            Route::get('/cloud_files/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'destroy'])->name('cloud_files.destroy');
+            Route::get('/cloud_files/{id}', [\App\Http\Controllers\CloudFilesController::class, 'open'])->name('cloud_files.open');
         });
 
         Route::group(['middleware' => ['role:root']], function () {
