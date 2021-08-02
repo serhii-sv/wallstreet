@@ -25,7 +25,7 @@ class Helper
             'isFooterFixed' => false,
             'templateTitle' => '',
             'isCustomizer' => true,
-            'defaultLanguage'=>'en',
+            'defaultLanguage'=>'ru',
             'largeScreenLogo' => 'images/logo/materialize-logo-color.png',
             'smallScreenLogo' => 'images/logo/materialize-logo.png',
             'isFabButton'=>false,
