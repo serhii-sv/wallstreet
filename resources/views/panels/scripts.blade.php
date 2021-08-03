@@ -15,7 +15,6 @@
   <script>
     var toastHTML = '<span class="font-weight-600">{{ session()->get('success_short') }}</span>';
     M.toast({html: toastHTML, classes: 'border-radius-4 green darken-1'});
-    
   </script>
 @endif
 @if(session()->has('error_short'))

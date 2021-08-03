@@ -22,11 +22,11 @@
                     <span>Пользователи</span>
                   </a>
                 </li>
-                <li class="tab col s4 p-0">
+           {{--     <li class="tab col s4 p-0">
                   <a href="#settings">
                     <span>Settings</span>
                   </a>
-                </li>
+                </li>--}}
               
               </ul>
             </div>
@@ -495,7 +495,7 @@
           </div>
         </div>
         
-        <div id="settings" class="col s12">
+       {{-- <div id="settings" class="col s12">
           <p class="setting-header mt-8 mb-3 ml-5 font-weight-900">GENERAL SETTINGS</p>
           <ul class="collection border-none">
             <li class="collection-item border-none">
@@ -623,7 +623,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div>--}}
       </div>
     </div>
   </div>

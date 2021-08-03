@@ -96,7 +96,7 @@
         </div>
       </div>
       
-      <div class="row">
+ {{--     <div class="row">
         <div class="col s12 l4">
           <!-- Recent Buyers -->
           <div class="card recent-buyers-card animate fadeUp">
@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      
+      --}}
       <div class="row">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
