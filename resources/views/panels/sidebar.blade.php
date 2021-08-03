@@ -64,6 +64,13 @@
         </li>
 
         <li class="bold">
+            <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active' : '') }}" href="{{ route('transactions.index') }}">
+                <i class="material-icons">receipt</i><span class="menu-title" data-i18n="Трпнзакции">Транзакции</span>
+{{--                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['replenishments_amount']), 0, ',', ' ') }}</span>--}}
+            </a>
+        </li>
+
+        <li class="bold">
             <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.manager') }}">
                 <i class="material-icons">cloud_download</i><span class="menu-title" data-i18n="Менеджер файлов">Файлы</span>
                 <span class="badge badge pill purple float-right mr-10">{{ $counts['files'] }}</span>
