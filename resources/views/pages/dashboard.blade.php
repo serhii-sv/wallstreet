@@ -20,9 +20,9 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-    
+
     <div id="chart-dashboard">
-      
+
       <div id="card-stats" class="pt-0">
         <div class="row">
           <div class="col s12 m6 l6 xl3">
@@ -95,14 +95,14 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col s12 l4">
           <!-- Recent Buyers -->
           <div class="card recent-buyers-card animate fadeUp">
             <div class="card-content">
               <h4 class="card-title mb-0">Пользователи онлайн </h4>
-              
+
               <ul class="collection mb-0">
                 @foreach($users['online'] as $user)
                   <li class="collection-item avatar">
@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
@@ -263,7 +263,7 @@
         }
     </style>
     <div class="row">
-      <div class="col s12 m12 l6">
+      <div class="col s12 m12 l8">
         <div class="card subscriber-list-card animate fadeRight">
           <div class="card-content pb-1">
             <h4 class="card-title mb-0">Последние операции</h4>
@@ -300,7 +300,9 @@
           </table>
         </div>
       </div>
-      <div class="col s12 m12 l6">
+    </div>
+    <div class="row">
+      <div class="col s12 m12 l8">
         <div class="card">
           @if(session()->has('success'))
             <div class="card-alert card green mb-0">
@@ -332,59 +334,13 @@
             <h4 class="card-title mb-4">Начислить бонус</h4>
             <form method="post" action="{{ route('dashboard.add.bonus') }}">
               {{ csrf_field() }}
-              <div class="row">
-                <div class="input-field col s12">
-                  <input placeholder="Id or Login or email" id="name2" name="user" type="text" value="{{ old('user') ?? '' }}">
-                  <label for="name2" class="active">Пользователь</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <input placeholder="23" type="text" name="amount" value="{{ old('amount') ?? '' }}">
-                  <label class="active">Количество</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <div class="select-wrapper">
-                    <select tabindex="-1" name="currency_id">
-                      <option value="" disabled="" selected="">Выберите валюту</option>
-                      @forelse($currencies as $item)
-                        <option value="{{ $item->id }}" @if($item->id == old('currency_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
-                      @empty
-                      @endforelse
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <div class="select-wrapper">
-                    <select tabindex="-1" name="payment_system_id">
-                      <option value="" disabled="" selected="">Выберите платёжную систему</option>
-                      @forelse($payment_system as $item)
-                        <option value="{{ $item->id }}" @if($item->id == old('payment_system_id')) selected="selected" @endif>{{ $item->name ?? '' }}</option>
-                      @empty
-                      @endforelse
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Начислить бонус
-                      <i class="material-icons right">send</i>
-                    </button>
-                  </div>
-                </div>
-              </div>
+                ...
             </form>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col s12 m12 l6">
         <div id="striped-table" class="card card card-default scrollspy">
@@ -475,7 +431,7 @@
         </div>
       </div>
     </div>
-  
+
   </div>
 @endsection
 
@@ -495,7 +451,7 @@
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     (function (window, document, $) {
-    
+
       var revenueLineChartCTX = $("#revenue-line-chart");
       var revenueLineChartOptions = {
         responsive: true,
@@ -535,7 +491,7 @@
           ]
         }
       };
-    
+
       var revenueLineChartDataWeek = {
         labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         datasets: [
@@ -606,7 +562,7 @@
           }
         ]
       };
-    
+
       var revenueLineChartConfigWeek = {
         type: "line",
         options: revenueLineChartOptions,
@@ -617,11 +573,11 @@
         options: revenueLineChartOptions,
         data: revenueLineChartDataMonth
       };
-    
+
       /*
    Doughnut Chart Widget
    */
-    
+
       var totalRevenueChartCTX = $("#doughnut-chart");
       var totalRevenueChartOptions = {
         cutoutPercentage: 70,
@@ -649,7 +605,7 @@
           }
         ]
       };
-    
+
       var totalRevenueChartConfigWeek = {
         type: "doughnut",
         options: totalRevenueChartOptions,
@@ -660,8 +616,8 @@
         options: totalRevenueChartOptions,
         data: totalRevenueChartDataMonth
       };
-    
-    
+
+
       var monthlyRevenueChartCTX = $("#trending-bar-chart");
       var monthlyRevenueChartOptions = {
         responsive: true,
@@ -729,7 +685,7 @@
           }
         ]
       };
-    
+
       var monthlyRevenueChartConfigWeek = {
         type: "bar",
         options: monthlyRevenueChartOptions,
@@ -740,8 +696,8 @@
         options: monthlyRevenueChartOptions,
         data: monthlyRevenueChartDataMonth
       };
-    
-    
+
+
       var countryStatsChartCTX = $("#trending-radar-chart");
       var countryStatsChartOptions = {
         responsive: true,
@@ -779,7 +735,7 @@
             borderWidth: 2,
             pointBorderWidth: 2,
             pointHoverBorderWidth: 4,
-          
+
           }
         ]
       };
@@ -788,7 +744,7 @@
         options: countryStatsChartOptions,
         data: countryStatsChartData
       };
-    
+
       var cityStatsChartCTX = $("#line-chart");
       var cityStatsChartOption = {
         responsive: true,
@@ -852,18 +808,18 @@
         options: cityStatsChartOption,
         data: cityStatsChartData
       };
-    
-    
+
+
       window.onload = function () {
-      
+
         var revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfigWeek);
         var monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfigWeek);
         var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
         var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
-      
+
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
-   
+
           if (typeof revenueLineChart != "undefined") {
             if (this.checked == true) {
               revenueLineChart.config = revenueLineChartConfigMonth;
@@ -888,7 +844,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.remove('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.add('display-none');
-            
+
               document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
               document.querySelector('.chart-revenue-total.week').classList.add('display-none');
             } else {
@@ -896,14 +852,14 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.add('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.remove('display-none');
-            
+
               document.querySelector('.chart-revenue-total.month').classList.add('display-none');
               document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
             }
           }
         });
       };
-    
+
     })(window, document, jQuery);
 
   </script>
