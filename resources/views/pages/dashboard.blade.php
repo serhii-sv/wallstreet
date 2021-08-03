@@ -97,27 +97,6 @@
       </div>
 
       <div class="row">
-        <div class="col s12 l4">
-          <!-- Recent Buyers -->
-          <div class="card recent-buyers-card animate fadeUp">
-            <div class="card-content">
-              <h4 class="card-title mb-0">Пользователи онлайн </h4>
-
-              <ul class="collection mb-0">
-                @foreach($users['online'] as $user)
-                  <li class="collection-item avatar">
-                    <img src="{{ asset('images/avatar/avatar-7.png') }}" alt="avatar" class="circle"/>
-                    <p class="font-weight-600">{{$user->short_name}}</p>
-                    <p class="medium-small">{{$user->login}}</p>
-                  </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
             <div class="card-move-up waves-effect waves-block waves-light">
