@@ -17,7 +17,7 @@ class CreateModelHasRolesTable extends Migration
             $table->integer('role_id')->unsigned();
             $table->uuid('model_id');
             $table->string('model_type');
-
+            
             $table->primary(['role_id', 'model_id', 'model_type']);
         });
     }

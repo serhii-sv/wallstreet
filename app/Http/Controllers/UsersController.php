@@ -38,20 +38,20 @@ class UsersController extends Controller
         return view('pages.sample.app-contacts', compact('users', 'users_count', 'roles'));
     }
     
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    public function dataTable() {
-        $users = User::orderBy('created_at', 'desc');
-        
-        return Datatables::of($users)->addColumn('show', function ($user) {
-            return route('admin.users.show', ['id' => $user->id]);
-        })->addColumn('edit', function ($user) {
-            return route('admin.users.edit', ['id' => $user->id]);
-        })->make(true);
-    }
-    
+//    /**
+//     * @return mixed
+//     * @throws \Exception
+//     */
+//    public function dataTable() {
+//        $users = User::orderBy('created_at', 'desc');
+//
+//        return Datatables::of($users)->addColumn('show', function ($user) {
+//            return route('admin.users.show', ['id' => $user->id]);
+//        })->addColumn('edit', function ($user) {
+//            return route('admin.users.edit', ['id' => $user->id]);
+//        })->make(true);
+//    }
+//
     /**
      * @param Request $request
      * @param User    $user
@@ -74,11 +74,11 @@ class UsersController extends Controller
         $user->stat_salary = $stat_salary;
         $user->stat_left = $stat_left;
         $user->save();
-        
-        return view('admin/users/show', [
+      //  $user->assignRole('admin');
+       // $user->removeRole('admin');
+      // dd($user);
+        return view('pages.sample.page-users-view', [
             'user' => $user,
-            'level' => $level,
-            'plevel' => $plevel,
         ]);
     }
     
@@ -206,7 +206,7 @@ class UsersController extends Controller
     public function edit(User $user) {
         $roles = Role::all();
         
-        return view('admin/users/edit', [
+        return view('pages.sample.page-users-edit', [
             'roles' => $roles,
             'user' => $user,
         ]);
@@ -222,20 +222,15 @@ class UsersController extends Controller
         $this->validate($request, [
             'name' => 'bail|required|min:2',
             'email' => 'required|email',
-            'password' => 'nullable|min:6',
         ]);
-        
         if ($user->update($request->except([
             'roles',
             'password',
         ]))) {
-            if (!empty($request->get('password'))) {
-                $user->setPassword($request->password);
-            }
             if ($request->roles) {
                 $user->syncRoles($request->roles);
             }
-            return redirect()->route('admin.users.show', ['id' => $user->id])->with('success', __('User has been updated'));
+            return redirect()->route('users.show', $user)->with('success','Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {
             return back()->with('error', __('Unable to update user'))->withInput();
         }

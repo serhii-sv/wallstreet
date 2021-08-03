@@ -134,7 +134,7 @@
         <li>
           <a class="grey-text text-darken-1" href="{{ route('user.lock', Auth::user()) }}">
             <i class="material-icons">lock_outline</i>
-            Lock
+            Заблокировать
           </a>
         </li>
         <li>
