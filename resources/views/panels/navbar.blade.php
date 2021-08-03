@@ -118,6 +118,11 @@
         </li>
       </ul>
       <!-- profile-dropdown-->
+      <style>
+        .dropdown-content{
+            width: 290px !important;
+        }
+      </style>
       <ul class="dropdown-content" id="profile-dropdown">
         <li>
           <a class="grey-text text-darken-1" href="{{ route('home') }}">
