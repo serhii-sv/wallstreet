@@ -34,6 +34,9 @@ class SidebarComposer
                 }),
                 'withdrawals_amount' => cache()->remember('counts.withdrawals_amount', now()->addHour(), function() {
                     return Transaction::where('approved', 0)->sum('main_currency_amount');
+                }),
+                'replenishments_amount' => cache()->remember('counts.replenishments_amount', now()->addHour(), function() {
+                    return Transaction::where('approved', 0)->sum('main_currency_amount');
                 })
             ]);
 
