@@ -18,8 +18,13 @@ class UserGeoipComposer
     protected $userGeoip;
     
     public function __construct() {
-        $this->user = Auth::user();
-        $this->userGeoip = UserGeoip::where('user_id', $this->user->id)->where('created_at', '>=', now()->subMinute(10))->first();
+        if (Auth::check()) {
+            $this->user = Auth::user();
+            $this->userGeoip = UserGeoip::where('user_id', $this->user->id)->where('created_at', '>=', now()->subMinute(10))->first();
+        } else {
+            $this->user = null;
+            $this->userGeoip = null;
+        }
     }
     
     public function compose(View $view) {
