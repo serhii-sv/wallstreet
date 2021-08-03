@@ -6508,7 +6508,7 @@ span.badge.pill {
 }
 .navbar .sideNav-lock .header-search-wrapper {
   margin: 10px auto 0 260px;
-  width: calc(100% - 560px);
+  width: calc(100% - 610px);
 }
 .navbar input.header-search-input {
   display: block;
@@ -6703,7 +6703,7 @@ span.badge.pill {
 }
 
 .horizontal-layout .navbar .header-search-wrapper {
-  width: calc(100% - 560px);
+  width: calc(100% - 610px);
 }
 
 .navbar .navbar-main {

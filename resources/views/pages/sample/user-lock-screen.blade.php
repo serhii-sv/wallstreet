@@ -13,33 +13,25 @@
 @section('content')
 <div id="lock-screen" class="row">
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 forgot-card bg-opacity-8">
-    <form class="login-form">
+    <form class="login-form" method="post" action="{{ route('user.unlock') }}">
+      @csrf
+      <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
       <div class="row">
         <div class="input-field col s12 center-align mt-10">
-          <img class="z-depth-4 circle responsive-img" width="100" src="{{asset('images/user/4.jpg')}}" alt="">
-          <h5>John Doe</h5>
+          <img class="z-depth-4 circle responsive-img" width="100" src="{{asset('images/avatar/user.svg')}}" alt="">
+          <h5>{{ Auth::user()->name ?? "Пользователь" }}</h5>
         </div>
       </div>
       <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">lock_outline</i>
-          <input id="password" type="password">
+          <input id="password" type="password" name="password">
           <label for="password">Password</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <a href="{{asset('/')}}"
-            class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12">Login</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s6 m6 l6">
-          <p class="margin medium-small"><a href="{{asset('user-register')}}">Register Now!</a></p>
-        </div>
-        <div class="input-field col s6 m6 l6">
-          <p class="margin right-align medium-small"><a href="{{asset('user-forgot-password')}}">Forgot password ?</a>
-          </p>
+          <button class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12">Войти</button>
         </div>
       </div>
     </form>

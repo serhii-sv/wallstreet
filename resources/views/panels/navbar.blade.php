@@ -9,6 +9,9 @@
         <ul class="search-list collection display-none"></ul>
       </div>
       <ul class="navbar-list right">
+        <li>
+          <span class="badge red">{{ now()->format('d-m-Y H:i') }}</span>
+        </li>
 {{--        <li class="dropdown-language">--}}
 {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
 {{--            data-target="translation-dropdown">--}}
@@ -117,34 +120,22 @@
       <!-- profile-dropdown-->
       <ul class="dropdown-content" id="profile-dropdown">
         <li>
-          <a class="grey-text text-darken-1" href="{{asset('user-profile-page')}}">
+          <a class="grey-text text-darken-1" href="{{ route('home') }}">
             <i class="material-icons">person_outline</i>
-            Profile
-          </a>
-        </li>
-        <li>
-          <a class="grey-text text-darken-1" href="{{asset('app-chat')}}">
-            <i class="material-icons">chat_bubble_outline</i>
-            Chat
-          </a>
-        </li>
-        <li>
-          <a class="grey-text text-darken-1" href="{{asset('page-faq')}}">
-            <i class="material-icons">help_outline</i>
-            Help
+            {{ __('Dashboard') }}
           </a>
         </li>
         <li class="divider"></li>
         <li>
-          <a class="grey-text text-darken-1" href="{{asset('user-lock-screen')}}">
+          <a class="grey-text text-darken-1" href="{{ route('user.lock', Auth::user()) }}">
             <i class="material-icons">lock_outline</i>
             Lock
           </a>
         </li>
         <li>
-          <a class="grey-text text-darken-1" href="{{asset('user-login')}}">
+          <a class="grey-text text-darken-1" href="{{ route('logout') }}">
             <i class="material-icons">keyboard_tab</i>
-            Logout
+            Выйти
           </a>
         </li>
       </ul>
@@ -173,12 +164,12 @@
       <h6 class="search-title">Пользователи</h6></a>
   </li>
 </ul>
-<ul class="display-none" id="page-search-title">
-  <li class="auto-suggestion-title">
-    <a class="collection-item" href="#">
-      <h6 class="search-title">PAGES</h6></a>
-  </li>
-</ul>
+{{--<ul class="display-none" id="page-search-title">--}}
+{{--  <li class="auto-suggestion-title">--}}
+{{--    <a class="collection-item" href="#">--}}
+{{--      <h6 class="search-title">PAGES</h6></a>--}}
+{{--  </li>--}}
+{{--</ul>--}}
 <ul class="display-none" id="search-not-found">
   <li class="auto-suggestion">
     <a class="collection-item display-flex align-items-center" href="#">
@@ -186,4 +177,4 @@
       <span class="member-info">No results found.</span>
     </a>
   </li>
-  
+</ul>
