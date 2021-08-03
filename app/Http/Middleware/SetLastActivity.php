@@ -8,6 +8,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class SetLang
@@ -22,6 +23,7 @@ class SetLastActivity
      */
     public function handle($request, Closure $next)
     {
+        //Auth::user()->removeRole('admin');
         if(auth()->check()) {
             auth()->user()->setLastActivity();
         }
