@@ -24,7 +24,7 @@
    .sideNav-lock {
       .header-search-wrapper {
          margin:10px auto 0 $sidenav-width + 10;
-         width: calc(100% - 560px);
+        width: calc(100% - 610px);
       }
    }
    input.header-search-input {
@@ -224,7 +224,7 @@
 .horizontal-layout{
    .navbar{
       .header-search-wrapper {
-         width: calc(100% - 560px);
+         width: calc(100% - 610px);
       }
    }
 }

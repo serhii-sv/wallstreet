@@ -70,6 +70,7 @@ class User extends Authenticatable
         'stat_salary_percent',
         'stat_worker_withdraw',
         'ip',
+        'is_locked',
     ];
 
     /**

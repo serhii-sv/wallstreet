@@ -230,7 +230,7 @@
                   <span class="card-title grey-text text-darken-4">Популярность по странам <i
                         class="material-icons right">close</i>
                   </span>
-              <table class="responsive-table">
+              <table class="responsive-table ">
                 <thead>
                   <tr>
                     <th data-field="country-name">Страна</th>

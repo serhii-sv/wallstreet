@@ -21,7 +21,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             ['pages.sidebar.right-sidebar'], 'App\Http\ViewComposers\DashboardComposer'
         );
-
+        View::composer(['panels.scripts'], 'App\Http\ViewComposers\UserGeoipComposer');
         View::composer(
             ['panels.sidebar'], 'App\Http\ViewComposers\SidebarComposer'
         );

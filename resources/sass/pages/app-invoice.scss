@@ -255,7 +255,7 @@ $invoice-border-color:#e8e8e8;
 }
 
 @media (min-width:600px){
-  /* responsive table*/ 
+  /* responsive table*/
   .responsive-table{
     .top{
       .action-btns,
@@ -376,11 +376,22 @@ $invoice-border-color:#e8e8e8;
 
 }
 
-// omitted header and footer while print 
+// omitted header and footer while print
 @page {
   size: auto;
   /* auto is the initial value */
-  margin: 0; 
+  margin: 0;
   padding: 0;
   /* this affects the margin in the printer settings */
+}
+
+.alert-wrap {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.alert-wrap .card-alert {
+    display: flex;
+    justify-content: center;
 }

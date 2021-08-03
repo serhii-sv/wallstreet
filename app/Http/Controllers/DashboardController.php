@@ -31,7 +31,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        
+       
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         

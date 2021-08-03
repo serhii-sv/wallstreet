@@ -55,6 +55,13 @@
             </a>
         </li>
 
+        <li class="bold">
+            <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active' : '') }}" href="{{ route('withdrawals.index') }}">
+                <i class="material-icons">receipt</i><span class="menu-title" data-i18n="Выводы">Выводы</span>
+{{--                <span class="badge badge pill purple float-right mr-10">{{ $counts['users'] }}</span>--}}
+            </a>
+        </li>
+
 {{--   DROPDOWN     --}}
 {{--        <li class="active bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">settings_input_svideo</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge pill orange float-right mr-10">3</span></a>--}}
 {{--            <div class="collapsible-body">--}}
