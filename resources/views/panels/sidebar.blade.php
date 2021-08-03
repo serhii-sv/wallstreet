@@ -58,7 +58,7 @@
         <li class="bold">
             <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active' : '') }}" href="{{ route('withdrawals.index') }}">
                 <i class="material-icons">receipt</i><span class="menu-title" data-i18n="Выводы">Выводы</span>
-{{--                <span class="badge badge pill purple float-right mr-10">{{ $counts['users'] }}</span>--}}
+                <span class="badge badge pill purple float-right mr-10">${{ number_format($counts['withdrawals_amount'], 2, ',', ' ') }}</span>
             </a>
         </li>
 

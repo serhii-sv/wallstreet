@@ -12,8 +12,13 @@ $(document).ready(function () {
         {
           orderable: true,
           targets: 1,
-          checkboxes: { selectRow: true },
-            className: 'select-checkbox',
+            render: function ( data, type, row ) {
+                if ( type === 'display' ) {
+                    return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + row[1] + '" />';
+                }
+                return data;
+            },
+          checkboxes: { selectRow: true }
         },
         {
           targets: [0, 1],
@@ -53,13 +58,16 @@ $(document).ready(function () {
         }
     })
 
-      // $('.select-checkbox').change(() => {
-      //     let transactionIds = [];
-      //
-      //     $('.select-checkbox').map((index, checkbox) => {
-      //         console.log(checkbox)
-      //     })
-      // })
+      $('.dt-checkboxes-select-all').click(function () {
+          $('tbody .select-checkbox').map((index, checkbox) => {
+              $(checkbox).prop('checked', !$(this).prop('checked'))
+              console.log($(checkbox).prop('checked'))
+          })
+      })
+
+      $(document).on('click', '.bottom-invoice-mass-actions button', function () {
+          $('input[name="type"]').val($(this).attr('id'))
+      })
   }
 
   /* Invoice edit */

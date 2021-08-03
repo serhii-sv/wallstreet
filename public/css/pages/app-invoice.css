@@ -330,3 +330,32 @@ table td {
   display: flex;
   justify-content: center;
 }
+
+.button-tabs-wrap {
+  margin-bottom: 20px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-tabs-wrap a.active {
+  background-color: #ff0d5f;
+}
+
+.action-btns {
+  display: none;
+}
+
+.action-filters {
+  width: 100%;
+}
+
+.bottom-invoice-mass-actions {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.bottom-invoice-mass-actions input {
+  color: white;
+}
