@@ -10,19 +10,6 @@ use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Wallet
- * @package App\Models
- *
- * @property string id
- * @property string user_id
- * @property string currency_id
- * @property string payment_system_id
- * @property string external
- * @property float balance
- * @property Carbon created_at
- * @property Carbon updated_at
- */
 class Wallet extends Model
 {
     use Uuids;

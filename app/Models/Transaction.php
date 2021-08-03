@@ -10,27 +10,6 @@ use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Transaction
- * @package App\Models
- *
- * @property string id
- * @property string type_id - тип операции
- * @property string user_id
- * @property string rate_id - тарифный план, если это депозитная транзакция.
- * @property string deposit_id
- * @property string wallet_id
- * @property string payment_system_id
- * @property float amount
- * @property float main_currency_amount
- * @property string source - кошелек реферала пользователя, если это партнерская транзакция.
- * @property string result - ответ платежной системы.
- * @property string batch_id - ИД операции в платежной системе.
- * @property bool approved
- * @property float commission
- * @property Carbon created_at
- * @property Carbon updated_at
- */
 class Transaction extends Model
 {
     use Uuids;
@@ -48,6 +27,7 @@ class Transaction extends Model
         'wallet_id',
         'payment_system_id',
         'amount',
+        'is_real',
         'main_currency_amount',
         'source',
         'result',
@@ -401,10 +381,10 @@ class Transaction extends Model
         if (null === $fromCurrency || null === $toCurrency || $amount <= 0) {
             return 0;
         }
-        
+
         $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
-        
+
         return round($rate * $amount, $toCurrency->precision);
-        
+
     }
 }

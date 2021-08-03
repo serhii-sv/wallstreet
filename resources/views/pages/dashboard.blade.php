@@ -253,6 +253,18 @@
                           </button>
                       </div>
                   @endif
+                      @if(session()->has('error'))
+                          <div class="card-alert card red mb-0">
+                              <div class="card-content white-text">
+                  <span class="card-title white-text darken-1 mb-0">
+                    <i class="material-icons">notifications</i> @lang(session()->get('error'))</span>
+                                  {{--<p>Пользователю начислен бонус </p>--}}
+                              </div>
+                              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                              </button>
+                          </div>
+                      @endif
                   @if ($errors->any())
                       <div class="card-alert card red lighten-2 mb-0">
                           <div class="card-content text-white">
@@ -274,8 +286,25 @@
 
                           <div class="row" style="margin-top:20px; text-align: center;">
                               <div class="input-field col s12">
-                                  <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="" style="font-weight: bold; text-align: center;">
+                                  <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="{{ old('login') }}" style="font-weight: bold; text-align: center;">
                               </div>
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="text-align: center; margin-top:20px;">
+                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
+                                    <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
+                                  </label>
+                              </span>
+                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
+                                    <span style="color:white; font-weight: bold;">Вывод средств</span>
+                                  </label>
+                              </span>
                           </div>
 
                           <div style="border-top:1px dotted gray; margin-top:20px;"></div>
@@ -287,7 +316,7 @@
                                   @endif
                                   <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
-                                    <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" />
+                                    <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
                                   </label>
                               </span>
@@ -303,7 +332,7 @@
                                   @endif
                                   <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
-                                    <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" />
+                                    <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
                                   </label>
                               </span>
@@ -315,14 +344,14 @@
                           <div class="row" style="margin-top:20px; text-align: center;">
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
-                                    <input class="with-gap" name="is_real" value="1" type="radio" />
+                                    <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Реал</span>
                                   </label>
                               </span>
 
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
-                                    <input class="with-gap" name="is_real" value="0" type="radio" />
+                                    <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Фейк</span>
                                   </label>
                               </span>
@@ -332,7 +361,7 @@
 
                           <div class="row" style="margin-top:20px; text-align: center;">
                               <div class="input-field col s12">
-                                  <input id="amount" type="text" name="amount" placeholder="Сумма" value="" style="font-weight: bold; text-align: center;">
+                                  <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}" style="font-weight: bold; text-align: center;">
                               </div>
                           </div>
 

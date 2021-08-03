@@ -18,6 +18,7 @@ use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -204,8 +205,68 @@ class DashboardController extends Controller
         })->first();
 
         if (null === $user) {
-            return back()->with('error', 'Пользователь не найден');
+            return back()->with('error', 'Пользователь не найден')->withInput();
         }
+
+        $type = $request->type;
+
+        $currencyPaymentSystem = $currency->paymentSystems()
+            ->where('payment_system_id', $paymentSystem->id)
+            ->first();
+
+        if (null === $currencyPaymentSystem) {
+            return back()->with('error', 'Эта платежная система не поддерживает валюту '.$currency->code)->withInput();
+        }
+
+        /** @var TransactionType $transactionType */
+        $transactionType = TransactionType::where('name', $type)
+            ->firstOrFail();
+
+        /** @var Wallet $wallet */
+        $wallet = $user->wallets()
+            ->where('currency_id', $currency->id)
+            ->where('payment_system_id', $paymentSystem->id)
+            ->first();
+
+        if (null === $wallet) {
+            return back()->with('error', 'Кошелек пользователя не найден')->withInput();
+        }
+
+        $amount = abs((float) $request->amount);
+
+        $data = [
+            'type_id'               => $transactionType->id,
+            'user_id'               => $user->id,
+            'currency_id'           => $currency->id,
+            'rate_id'               => null,
+            'deposit_id'            => null,
+            'wallet_id'             => $wallet->id,
+            'payment_system_id'     => $paymentSystem->id,
+            'amount'                => $amount,
+            'source'                => auth()->user()->email,
+            'result'                => null,
+            'batch_id'              => null,
+            'approved'              => 1,
+            'is_real'               => $request->is_real == 1,
+        ];
+
+        DB::transaction(function() use($data, $wallet, $type) {
+            Transaction::create($data);
+
+            switch($type) {
+                case "enter":
+                    $wallet->balance += $data['amount'];
+                    break;
+
+                case "withdraw":
+                    $wallet->balance -= $data['amount'];
+                    break;
+            }
+
+            $wallet->save();
+        });
+
+        return back()->with('success', 'Операция успешно проведена')->withInput();
     }
 
     public function getMonthPeriod() {

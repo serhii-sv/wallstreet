@@ -30,6 +30,7 @@ class RequestDashboardBonusUser extends FormRequest
             'payment_system' => ['required'],
             'is_real'        => ['required'],
             'amount'         => ['required'],
+            'type'           => ['required', 'in:enter,withdraw'],
         ];
     }
 }
