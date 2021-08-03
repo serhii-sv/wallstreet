@@ -236,6 +236,209 @@
         </div>
       </div>
     </div>
+
+
+      <div class="row">
+          <div class="col s12 m12 l6">
+              <div class="card">
+                  @if(session()->has('success'))
+                      <div class="card-alert card green mb-0">
+                          <div class="card-content white-text">
+                  <span class="card-title white-text darken-1 mb-0">
+                    <i class="material-icons">notifications</i> @lang(session()->get('success'))</span>
+                              {{--<p>Пользователю начислен бонус </p>--}}
+                          </div>
+                          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                          </button>
+                      </div>
+                  @endif
+                  @if ($errors->any())
+                      <div class="card-alert card red lighten-2 mb-0">
+                          <div class="card-content text-white">
+                     <span class="card-title white-text darken-1 mb-0">
+                    <i class="material-icons">notifications</i> {{ __("Error") }}</span>
+                              @foreach ($errors->all() as $error)
+                                  <p class="white-text darken-5">{{ $error }}</p>
+                              @endforeach
+                          </div>
+                          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                          </button>
+                      </div>
+                  @endif
+                  <div class="card-content">
+                      <h4 class="card-title mb-4">Начислить бонус</h4>
+                      <form method="post" action="{{ route('dashboard.add_bonus') }}">
+                          {{ csrf_field() }}
+
+                          <div class="row" style="margin-top:20px; text-align: center;">
+                              <div class="input-field col s12">
+                                  <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="" style="font-weight: bold; text-align: center;">
+                              </div>
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="text-align: center; margin-top:20px;">
+                              @foreach($currencies as $currency)
+                                  @if($loop->index % 2 && $loop->index > 1)
+                                      <br><br>
+                                  @endif
+                                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" />
+                                    <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
+                                  </label>
+                              </span>
+                              @endforeach
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="margin-top:20px; text-align: center;">
+                              @foreach($payment_system as $ps)
+                                  @if($loop->index % 2 && $loop->index > 1)
+                                      <br><br>
+                                  @endif
+                                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" />
+                                    <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
+                                  </label>
+                              </span>
+                              @endforeach
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="margin-top:20px; text-align: center;">
+                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="is_real" value="1" type="radio" />
+                                    <span style="color:white; font-weight: bold;">Реал</span>
+                                  </label>
+                              </span>
+
+                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                  <label>
+                                    <input class="with-gap" name="is_real" value="0" type="radio" />
+                                    <span style="color:white; font-weight: bold;">Фейк</span>
+                                  </label>
+                              </span>
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="margin-top:20px; text-align: center;">
+                              <div class="input-field col s12">
+                                  <input id="amount" type="text" name="amount" placeholder="Сумма" value="" style="font-weight: bold; text-align: center;">
+                              </div>
+                          </div>
+
+                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+
+                          <div class="row" style="text-align: center;">
+                              <div class="input-field col s12" style="text-align:center;">
+                                  <button class="btn blue waves-effect waves-light" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i></button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col s12 m12 l6">
+              <div id="striped-table" class="card card card-default scrollspy">
+                  <div class="card-content">
+                      <h4 class="card-title">Статистика</h4>
+                      <p class="mb-2"></p>
+                      <div class="row">
+                          <div class="col s12">
+                          </div>
+                          <div class="col s12">
+                              <table class="striped">
+                                  <thead>
+                                  <tr>
+                                      <th data-field="name">Система</th>
+                                      <th data-field="plus">Пополнений</th>
+                                      <th data-field="minus">Выплат</th>
+                                      <th data-field="sum">Сумма</th>
+                                      <th data-field="percent">В процентах</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  @forelse($payment_system as $item)
+                                      <tr>
+                                          <td>{{ $item->name }}</td>
+                                          <td class="green-text">
+                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
+                                          </td>
+                                          <td class="red-text">
+                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
+                                          </td>
+                                          <td class="blue-grey-text">
+                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
+                                          </td>
+                                          <td>@if($item->transaction_sum)
+                                                  {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
+                                              @else
+                                                  0
+                                              @endif
+                                              %
+                                          </td>
+                                      </tr>
+                                  @empty
+                                      <tr>
+                                          <td colspan="3" style="text-align: center">Пусто</td>
+                                      </tr>
+                                  @endforelse
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col s12 m12 l6">
+              <div id="striped-table" class="card card card-default scrollspy">
+                  <div class="card-content">
+                      <h4 class="card-title">История входов админов</h4>
+                      <p class="mb-2"></p>
+                      <div class="row">
+                          <div class="col s12">
+                          </div>
+                          <div class="col s12">
+                              <table class="striped">
+                                  <thead>
+                                  <tr>
+                                      <th data-field="id">Пользователь</th>
+                                      <th data-field="name">Ip</th>
+                                      <th data-field="price">Дата</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  @forelse($user_auth_logs as $item)
+                                      <tr>
+                                          <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
+                                          <td>{{ $item->ip ?? '' }}</td>
+                                          <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
+                                      </tr>
+                                  @empty
+                                      <tr>
+                                          <td colspan="3" style="text-align: center">Пусто</td>
+                                      </tr>
+                                  @endforelse
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
     <style>
         .subscription-table thead th{
             font-weight: 600;
@@ -277,136 +480,6 @@
               @endif
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s12 m12 l8">
-        <div class="card">
-          @if(session()->has('success'))
-            <div class="card-alert card green mb-0">
-              <div class="card-content white-text">
-                  <span class="card-title white-text darken-1 mb-0">
-                    <i class="material-icons">notifications</i> @lang(session()->get('success'))</span>
-                {{--<p>Пользователю начислен бонус </p>--}}
-              </div>
-              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-          @endif
-          @if ($errors->any())
-            <div class="card-alert card red lighten-2 mb-0">
-              <div class="card-content text-white">
-                     <span class="card-title white-text darken-1 mb-0">
-                    <i class="material-icons">notifications</i> {{ __("Error") }}</span>
-                @foreach ($errors->all() as $error)
-                  <p class="white-text darken-5">{{ $error }}</p>
-                @endforeach
-              </div>
-              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-          @endif
-          <div class="card-content">
-            <h4 class="card-title mb-4">Начислить бонус</h4>
-            <form method="post" action="{{ route('dashboard.add.bonus') }}">
-              {{ csrf_field() }}
-                ...
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col s12 m12 l6">
-        <div id="striped-table" class="card card card-default scrollspy">
-          <div class="card-content">
-            <h4 class="card-title">История входов админов</h4>
-            <p class="mb-2"></p>
-            <div class="row">
-              <div class="col s12">
-              </div>
-              <div class="col s12">
-                <table class="striped">
-                  <thead>
-                    <tr>
-                      <th data-field="id">Пользователь</th>
-                      <th data-field="name">Ip</th>
-                      <th data-field="price">Дата</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @forelse($user_auth_logs as $item)
-                      <tr>
-                        <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
-                        <td>{{ $item->ip ?? '' }}</td>
-                        <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
-                      </tr>
-                    @empty
-                      <tr>
-                        <td colspan="3" style="text-align: center">Пусто</td>
-                      </tr>
-                    @endforelse
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 m12 l6">
-        <div id="striped-table" class="card card card-default scrollspy">
-          <div class="card-content">
-            <h4 class="card-title">Статистика</h4>
-            <p class="mb-2"></p>
-            <div class="row">
-              <div class="col s12">
-              </div>
-              <div class="col s12">
-                <table class="striped">
-                  <thead>
-                    <tr>
-                      <th data-field="name">Система</th>
-                      <th data-field="plus">Пополнений</th>
-                      <th data-field="minus">Выплат</th>
-                      <th data-field="sum">Сумма</th>
-                      <th data-field="percent">В процентах</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @forelse($payment_system as $item)
-                      <tr>
-                        <td>{{ $item->name }}</td>
-                        <td class="green-text">
-                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
-                        </td>
-                        <td class="red-text">
-                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
-                        </td>
-                        <td class="blue-grey-text">
-                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
-                        </td>
-                        <td>@if($item->transaction_sum)
-                            {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
-                          @else
-                            0
-                          @endif
-                          %
-                        </td>
-                      </tr>
-                    @empty
-                      <tr>
-                        <td colspan="3" style="text-align: center">Пусто</td>
-                      </tr>
-                    @endforelse
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

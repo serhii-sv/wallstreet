@@ -187,33 +187,25 @@ class DashboardController extends Controller
         ]);
     }
 
+    /**
+     * @param RequestDashboardBonusUser $request
+     */
     public function addUserBonus(RequestDashboardBonusUser $request) {
-        $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
-        if (empty($user)) {
-            return back()->withErrors([__('User not found!')])->withInput();
+        /** @var Currency $currency */
+        $currency = Currency::findOrFail($request->currency);
+
+        /** @var PaymentSystem $paymentSystem */
+        $paymentSystem = PaymentSystem::findOrFail($request->payment_system);
+
+        /** @var User $user */
+        $user = User::where(function($q) use($request) {
+            $q->where('email', $request->login)
+                ->orWhere('login', $request->login);
+        })->first();
+
+        if (null === $user) {
+            return back()->with('error', 'Пользователь не найден');
         }
-        $currency_id = $request->post('currency_id');
-        $payment_system_id = $request->post('payment_system_id');
-        $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency_id)->where('payment_system_id', $payment_system_id)->first();
-        if (empty($wallet)) {
-            $wallet = new Wallet();
-            $wallet->user_id = $user;
-            $wallet->currency_id = $currency_id;
-            $wallet->payment_system_id = $payment_system_id;
-        }
-        $wallet = $wallet->addBonus(intval($request->post('amount')));
-        if ($wallet) {
-            // send notification to user
-            $data = [
-                'bonus_amount' => $request->post('amount'),
-                'currency' => $wallet->currency,
-                'payment_system' => $wallet->paymentSystem,
-                'balance' => $wallet->balance,
-            ];
-            //            $wallet->user->sendNotification('bonus_accrued', $data);
-            return back()->with('success', __('Bonus accrued'))->withInput();
-        }
-        return back()->with('error', __('Unable to accrue bonus'))->withInput();
     }
 
     public function getMonthPeriod() {
