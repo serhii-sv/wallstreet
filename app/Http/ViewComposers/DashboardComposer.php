@@ -42,7 +42,7 @@ class DashboardComposer
             })
             ->orderBy('last_activity_at', 'desc')
             ->get())
-            ->with('online_users', $this->users->where('last_activity_at', '>=', now()->subHour(4))
+            ->with('online_users', $this->users->doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
                 ->orderBy('last_activity_at', 'desc')
                 ->get());
         

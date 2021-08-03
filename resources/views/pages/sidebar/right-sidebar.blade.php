@@ -231,6 +231,7 @@
                 @foreach($online_users as $user)
                   <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
                       data-target="slide-out-chat">
+                    
                 <span class="avatar-status {{$user->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50">
                   <img src="{{ asset('images/avatar/user.svg') }}" alt="avatar" />
                   <i></i>

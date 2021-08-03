@@ -10,7 +10,7 @@
       </div>
       <ul class="navbar-list right">
         <li>
-          <span class="badge red">{{ now()->format('d-m-Y H:i') }}</span>
+          <span class=" badge gradient-45deg-light-blue-cyan">{{ now()->format('d-m-Y H:i') }}</span>
         </li>
 {{--        <li class="dropdown-language">--}}
 {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
@@ -118,6 +118,11 @@
         </li>
       </ul>
       <!-- profile-dropdown-->
+      <style>
+        .dropdown-content{
+            width: 290px !important;
+        }
+      </style>
       <ul class="dropdown-content" id="profile-dropdown">
         <li>
           <a class="grey-text text-darken-1" href="{{ route('home') }}">
