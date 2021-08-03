@@ -11,11 +11,6 @@
 @if ($configData['isCustomizer']=== true)
   <script src="{{asset('js/scripts/customizer.js')}}"></script>
 @endif
-
-@if(session()->has('success_short') || session()->has('error_short'))
-
-@endif
-
 @if(session()->has('success_short'))
   <script>
     var toastHTML = '<span class="font-weight-600">{{ session()->get('success_short') }}</span>';
