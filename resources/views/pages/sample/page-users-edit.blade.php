@@ -87,7 +87,7 @@
                     <thead>
                       <tr>
                         <th>Роль</th>
-                        <th>Статус</th>
+                        <th>Выбрать</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -96,7 +96,7 @@
                         <td><span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span></td>
                         <td>
                           <label>
-                            <input type="checkbox" name="roles[]" value="{{ $role->name ?? '' }}" @if($user->hasRole($role->name)) checked="checked" @endif />
+                            <input type="radio" name="roles[]" value="{{ $role->name ?? '' }}" @if($user->hasRole($role->name)) checked="checked" @endif />
                             <span></span>
                           </label>
                         </td>
@@ -106,7 +106,31 @@
                       @endforelse
                     </tbody>
                   </table>
-                  <!-- </div> -->
+                </div>
+                <div class="col s12">
+                  <table class="mt-1">
+                    <thead>
+                      <tr>
+                        <th>Права</th>
+                        <th>Выбрать</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @forelse($permissions as $permission)
+                      <tr>
+                        <td><span class="users-view-status chip green lighten-5 green-text">{{ $permission->name ?? ''}}</span></td>
+                        <td>
+                          <label>
+                            <input type="checkbox" name="permissions[]" value="{{ $permission->name ?? '' }}" @if($user->hasPermissionTo($permission->name)) checked="checked" @endif />
+                            <span></span>
+                          </label>
+                        </td>
+                      </tr>
+                      @empty
+                        <tr>Нет прав</tr>
+                      @endforelse
+                    </tbody>
+                  </table>
                 </div>
                 <div class="col s12 display-flex justify-content-end mt-1">
                   <button type="submit" class="btn indigo">
@@ -140,11 +164,11 @@
                       <label for="sex">Пол</label>
                     </div>
                     <div class="col s12 input-field">
-                      <input id="city" name="city" type="text" value="{{ $user->city ?? '' }}" class="validate">
+                      <input id="city" type="text" value="{{ $user->city ?? '' }}" class="validate" readonly>
                       <label for="city">Город</label>
                     </div>
                     <div class="col s12 input-field">
-                      <input id="country" name="country" type="text" value="{{ $user->country ?? '' }}" class="validate">
+                      <input id="country" type="text"  class="validate" value="{{ $user->country }}" readonly>
                       <label for="country">Страна</label>
                     </div>
                   </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestBonusUser;
 use App\Http\Requests\RequestPenaltyUser;
 use App\Models\Deposit;
+use App\Models\Permission;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -51,36 +52,8 @@ class UsersController extends Controller
 //            return route('admin.users.edit', ['id' => $user->id]);
 //        })->make(true);
 //    }
-//
-    /**
-     * @param Request $request
-     * @param User    $user
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show(Request $request, User $user) {
-        $level = $request->has('level') ? $request->level : 1;
-        $plevel = $request->has('plevel') ? $request->plevel : 1;
-        
-        $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
-        $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
-        $stat_different = $stat_deposits - $stat_withdraws;
-        $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
-        $stat_left = $stat_salary - $user->stat_worker_withdraw;
-        
-        $user->stat_deposits = $stat_deposits;
-        $user->stat_withdraws = $stat_withdraws;
-        $user->stat_different = $stat_different;
-        $user->stat_salary = $stat_salary;
-        $user->stat_left = $stat_left;
-        $user->save();
-      //  $user->assignRole('admin');
-       // $user->removeRole('admin');
-      // dd($user);
-        return view('pages.sample.page-users-view', [
-            'user' => $user,
-        ]);
-    }
+
+    
     
     /**
      * @param Request $request
@@ -121,13 +94,7 @@ class UsersController extends Controller
                 return number_format($transaction->amount, $transaction->wallet->currency->precision, '.', '');
             })->make(true);
     }
-    
-    /**
-     * @param $userId
-     *
-     * @return mixed
-     * @throws \Exception
-     */
+   
     public function dataTableDeposits($userId) {
         $deposits = Deposit::where('user_id', $userId)->with('rate', 'currency')->select('deposits.*');
         
@@ -136,12 +103,6 @@ class UsersController extends Controller
             })->make(true);
     }
     
-    /**
-     * @param $userId
-     *
-     * @return mixed
-     * @throws \Exception
-     */
     public function dataTableTransactions($userId) {
         $transactions = Transaction::where('user_id', $userId)->with('currency', 'type')->select('transactions.*');
         
@@ -152,11 +113,6 @@ class UsersController extends Controller
             })->make(true);
     }
     
-    /**
-     * @param RequestBonusUser $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function bonus(RequestBonusUser $request) {
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->addBonus($request->amount);
@@ -174,11 +130,6 @@ class UsersController extends Controller
         return back()->with('error', __('Unable to accrue bonus'));
     }
     
-    /**
-     * @param RequestPenaltyUser $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function penalty(RequestPenaltyUser $request) {
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
@@ -198,37 +149,58 @@ class UsersController extends Controller
         return back()->with('error', __('Unable to handle penalty'));
     }
     
-    /**
-     * @param User $user
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(User $user) {
-        $roles = Role::all();
+    public function show(Request $request, User $user) {
+        $level = $request->has('level') ? $request->level : 1;
+        $plevel = $request->has('plevel') ? $request->plevel : 1;
         
+        $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
+        $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
+        $stat_different = $stat_deposits - $stat_withdraws;
+        $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
+        $stat_left = $stat_salary - $user->stat_worker_withdraw;
+        
+        $user->stat_deposits = $stat_deposits;
+        $user->stat_withdraws = $stat_withdraws;
+        $user->stat_different = $stat_different;
+        $user->stat_salary = $stat_salary;
+        $user->stat_left = $stat_left;
+        $user->save();
+        
+        $deposit_sum = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
+        
+        return view('pages.sample.page-users-view', [
+            'user' => $user,
+            'deposit_sum' => $deposit_sum,
+            'balance_usd' => $user->wallets()->sum('main_currency_amount'),
+        ]);
+    }
+    
+    public function edit(User $user) {
+       
+        $roles = Role::all();
+        $permissions = Permission::all();
         return view('pages.sample.page-users-edit', [
             'roles' => $roles,
+            'permissions' => $permissions,
             'user' => $user,
         ]);
     }
     
-    /**
-     * @param Request $request
-     * @param User    $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, User $user) {
         $this->validate($request, [
             'name' => 'bail|required|min:2',
             'email' => 'required|email',
         ]);
         if ($user->update($request->except([
+            'permissions',
             'roles',
             'password',
         ]))) {
             if ($request->roles) {
                 $user->syncRoles($request->roles);
+            }
+            if ($request->permissions) {
+                $user->syncPermissions($request->permissions);
             }
             return redirect()->route('users.show', $user)->with('success','Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {

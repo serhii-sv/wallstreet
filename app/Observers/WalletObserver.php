@@ -6,6 +6,7 @@
 
 namespace App\Observers;
 
+use App\Models\Currency;
 use App\Models\Wallet;
 
 /**
@@ -62,6 +63,17 @@ class WalletObserver
      */
     public function updated(Wallet $wallet)
     {
-    
+        $amount = $wallet->balance;
+        $currency = $wallet->currency()->get();
+
+        $mainCurrency = Currency::where('code', 'USD')->first();
+
+        if (null !== $currency && null !== $mainCurrency && $amount > 0) {
+            if ($currency->code == $mainCurrency->code) {
+                $wallet->main_currency_amount = $amount;
+            } else {
+                $wallet->main_currency_amount = $wallet->convertToCurrency($currency, $mainCurrency, $amount);
+            }
+        }
     }
 }

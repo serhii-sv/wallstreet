@@ -6,12 +6,14 @@
 
 namespace App\Models;
 
+use App\Traits\ConvertCurrency;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Wallet extends Model
 {
+    use ConvertCurrency;
     use Uuids;
     public $keyType      = 'string';
     /** @var bool $incrementing */
@@ -22,6 +24,7 @@ class Wallet extends Model
         'user_id',
         'currency_id',
         'payment_system_id',
+        'main_currency_amount',
         'external',
         'balance',
     ];
@@ -344,4 +347,6 @@ class Wallet extends Model
             }
         }
     }
+    
+    
 }

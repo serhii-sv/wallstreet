@@ -2,6 +2,7 @@
     "/js/materialize.js": "/js/materialize.js",
     "/js/plugins.js": "/js/plugins.js",
     "/js/search.js": "/js/search.js",
+    "/css/laravel-custom.css": "/css/laravel-custom.css",
     "/css/themes/vertical-modern-menu-template/style.css": "/css/themes/vertical-modern-menu-template/style.css",
     "/css/themes/vertical-modern-menu-template/materialize.css": "/css/themes/vertical-modern-menu-template/materialize.css",
     "/css/themes/vertical-menu-nav-dark-template/style.css": "/css/themes/vertical-menu-nav-dark-template/style.css",
@@ -17,7 +18,6 @@
     "/css/pages/app-contacts.css": "/css/pages/app-contacts.css",
     "/css/pages/app-chat.css": "/css/pages/app-chat.css",
     "/css/pages/app-calendar.css": "/css/pages/app-calendar.css",
-    "/css/laravel-custom.css": "/css/laravel-custom.css",
     "/css/style-rtl.css": "/css/style-rtl.css",
     "/css/layouts/style-horizontal.css": "/css/layouts/style-horizontal.css",
     "/css/pages/advance-ui-media.css": "/css/pages/advance-ui-media.css",
@@ -141,5 +141,7 @@
     "/json/horizontalMenu.json": "/json/horizontalMenu.json",
     "/json/template-list.json": "/json/template-list.json",
     "/json/verticalMenu.json": "/json/verticalMenu.json",
-    "/js/vendors.min.js": "/js/vendors.min.js"
+    "/js/vendors.min.js": "/js/vendors.min.js",
+    "/js/jquery.js": "/js/jquery.js",
+    "/js/bootstrap-colorpicker.min.js": "/js/bootstrap-colorpicker.min.js"
 }

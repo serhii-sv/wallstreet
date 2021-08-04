@@ -15,9 +15,6 @@ use Webpatser\Uuid\Uuid;
 trait Uuids
 {
 
-    
- 
-  
     protected static function boot()
     {
         parent::boot();

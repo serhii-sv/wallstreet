@@ -51,7 +51,7 @@ class UserLocationController extends Controller
         $country = $request->post('country');
         $city = $request->post('city');
         $ip = $request->post('ip');
-        //  DB::beginTransaction();
+        DB::beginTransaction();
         
         try {
             if ($country && $city && $ip) {
@@ -72,7 +72,6 @@ class UserLocationController extends Controller
                     return json_encode([
                         'status' => 'good',
                         'msg' => 'User location setted!',
-                        'user_geoip' => $user_geoip,
                     ]);
                 }
                 return json_encode([

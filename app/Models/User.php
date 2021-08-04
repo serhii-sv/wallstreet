@@ -399,4 +399,15 @@ class User extends Authenticatable
             'role_id'
         )->withTimestamps();
     }
+    
+    public function permissions(): BelongsToMany
+    {
+        return $this->morphToMany(
+            config('permission.models.permission'),
+            'model',
+            config('permission.table_names.model_has_permissions'),
+            config('permission.column_names.model_morph_key'),
+            'permission_id'
+        )->withTimestamps();
+    }
 }
