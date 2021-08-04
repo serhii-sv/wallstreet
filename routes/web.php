@@ -65,6 +65,10 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
+            Route::prefix('replenishments')->as('replenishments.')->group(function () {
+                Route::resource('/', \App\Http\Controllers\ReplenishmentController::class);
+            });
+
             Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class, [
                 'names' => [

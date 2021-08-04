@@ -28,17 +28,13 @@ class WithdrawalRequestsController extends Controller
      */
     public function index(Request $request)
     {
-        $transactionWithdrawType    = TransactionType::getByName('withdraw');
+        $transactionWithdrawType = TransactionType::getByName('withdraw');
 
         $transactions = Transaction::select('transactions.*')->with([
             'user',
-        ])->where('type_id', $transactionWithdrawType->id);
-
-        if ($request->has('email')) {
-            $transactions->whereHas('user', function ($q) use ($request) {
-                return $q->where('email', 'like', '%' . $request->email . '%');
-            });
-        }
+        ])
+            ->where('type_id', $transactionWithdrawType->id)
+            ->where('approved', $request->only('type') ?? 0);
 
         $transactions = $transactions->get();
 
@@ -79,7 +75,7 @@ class WithdrawalRequestsController extends Controller
     {
         $transaction = Transaction::find($transaction);
 
-        return view('admin.requests.show', [
+        return view('pages.withdrawals.show', [
             'transaction' => $transaction,
         ]);
     }
@@ -93,21 +89,21 @@ class WithdrawalRequestsController extends Controller
     {
         $messages = [];
 
-        if ($request->approve) {
+        if ($request->type == 'approve') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approve($item, true);
             }
-        } elseif ($request->approveManually) {
+        } elseif ($request->type == 'approveManually') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approveManually($item, true);
             }
-        } elseif ($request->reject) {
+        } elseif ($request->type == 'reject') {
             foreach ($request->list as $item) {
                 $messages[] = $this->reject($item, true);
             }
         }
 
-        return back()->with('success', __('List of withdrawal requests processed.').'<hr>'.implode('<hr>', $messages));
+        return back()->with('success', __('List of withdrawal requests processed.').implode(', ', $messages));
     }
 
     /**

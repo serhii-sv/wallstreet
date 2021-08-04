@@ -22,7 +22,7 @@
     <!-- invoice list -->
     <section class="invoice-list-wrapper section">
 
-    <!-- create invoice button-->
+        <!-- create invoice button-->
         <!-- Options and filter dropdown button-->
         {{--        <div class="invoice-filter-action mr-3">--}}
         {{--            <a href="javascript:void(0)" class="btn waves-effect waves-light invoice-export border-round z-depth-4">--}}
@@ -39,13 +39,12 @@
         {{--        </div>--}}
         <div class="button-tabs-wrap">
             <div>
-                <a href="/withdrawals?type=0" class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>
+                <a href="/replenishments?type=0"
+                   class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>
             </div>
             <div>
-                <a href="/withdrawals?type=1" class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>
-            </div>
-            <div>
-                <a href="/withdrawals?type=2" class="{{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light btn-large">Отклоненные</a>
+                <a href="/replenishments?type=1"
+                   class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>
             </div>
         </div>
         <div class="filter-btn mr-1">
@@ -66,7 +65,7 @@
             {{--            </ul>--}}
         </div>
         <div class="responsive-table">
-            <form id="withdrawsForm" action="/withdrawals/approve-many" method="post">
+            <form id="withdrawsForm" action="/replenishments/approve-many" method="post">
                 @csrf
                 <table class="table invoice-data-table white border-radius-4 pt-1">
                     <thead>
@@ -117,12 +116,13 @@
                             </td>
                             <td>
                                 <div class="invoice-action">
-                                    <a href="{{ route('withdrawals.show', $transaction->id) }}" class="invoice-action-view mr-4">
+                                    <a href="{{ route('withdrawals.show', $transaction->id) }}"
+                                       class="invoice-action-view mr-4">
                                         <i class="material-icons">remove_red_eye</i>
                                     </a>
-{{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
-{{--                                        <i class="material-icons">edit</i>--}}
-{{--                                    </a>--}}
+                                    {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
+                                    {{--                                        <i class="material-icons">edit</i>--}}
+                                    {{--                                    </a>--}}
                                 </div>
                             </td>
                             <td></td>
@@ -133,15 +133,11 @@
                 @include('pages.partials.notifications')
                 <div class="bottom-invoice-mass-actions">
                     <input type="hidden" name="type" value="">
-                    <div>
-                        <button type="submit" id="approve" class="waves-effect waves-light btn green">Принять</button>
-                    </div>
-                    <div>
-                        <button type="submit" id="approveManually" class="waves-effect waves-light btn cyan">Принять вручную</button>
-                    </div>
-                    <div>
-                        <button type="submit" id="reject" class="waves-effect waves-light btn">Отклонить</button>
-                    </div>
+                    @if(request()->type == 0 || is_null(request()->type))
+                        <div>
+                            <button type="submit" id="approveManually" class="waves-effect waves-light btn cyan">Принять вручную</button>
+                        </div>
+                    @endif
                 </div>
             </form>
         </div>
