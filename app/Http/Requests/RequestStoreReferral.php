@@ -11,7 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class RequestStoreReferral
  * @package App\Http\Requests
- * 
+ *
  * @property integer level
  * @property float percent
  */
@@ -24,7 +24,7 @@ class RequestStoreReferral extends FormRequest
      */
     public function authorize()
     {
-        return \Auth::check();
+        return \return true;;
     }
 
     /**

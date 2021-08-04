@@ -14,7 +14,6 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class WithdrawalRequestsController
@@ -22,12 +21,24 @@ use Yajra\Datatables\Datatables;
  */
 class WithdrawalRequestsController extends Controller
 {
+
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.requests.index');
+        $transactionWithdrawType = TransactionType::getByName('withdraw');
+
+        $transactions = Transaction::select('transactions.*')->with([
+            'user',
+        ])
+            ->where('type_id', $transactionWithdrawType->id)
+            ->where('approved', $request->only('type') ?? 0);
+
+        $transactions = $transactions->get();
+
+        return view('pages.withdrawals.index', compact('transactions'));
     }
 
     /**
@@ -36,24 +47,24 @@ class WithdrawalRequestsController extends Controller
      */
     public function dataTable()
     {
-        /** @var TransactionType $transactionWithdrawType */
-        $transactionWithdrawType    = TransactionType::getByName('withdraw');
-        $wrs                        = Transaction::select('transactions.*')->with([
-            'currency',
-            'paymentSystem',
-            'wallet',
-            'user',
-        ])
-            ->where('approved', 0)
-            ->where('type_id', $transactionWithdrawType->id);
-
-        return Datatables::of($wrs)->editColumn('status', function ($wr) {
-            return $wr->approved == 1 ? __('approved') : __('new');
-        })->editColumn('amount', function (Transaction $wr) {
-            return number_format($wr->amount, $wr->wallet->currency->precision, '.', '');
-        })->addColumn('external', function (Transaction $wr) {
-            return $wr->wallet->external;
-        })->make(true);
+//        /** @var TransactionType $transactionWithdrawType */
+//        $transactionWithdrawType    = TransactionType::getByName('withdraw');
+//        $wrs                        = Transaction::select('transactions.*')->with([
+//            'currency',
+//            'paymentSystem',
+//            'wallet',
+//            'user',
+//        ])
+//            ->where('approved', 0)
+//            ->where('type_id', $transactionWithdrawType->id);
+//
+//        return Datatables::of($wrs)->editColumn('status', function ($wr) {
+//            return $wr->approved == 1 ? __('approved') : __('new');
+//        })->editColumn('amount', function (Transaction $wr) {
+//            return number_format($wr->amount, $wr->wallet->currency->precision, '.', '');
+//        })->addColumn('external', function (Transaction $wr) {
+//            return $wr->wallet->external;
+//        })->make(true);
     }
 
     /**
@@ -64,7 +75,7 @@ class WithdrawalRequestsController extends Controller
     {
         $transaction = Transaction::find($transaction);
 
-        return view('admin.requests.show', [
+        return view('pages.withdrawals.show', [
             'transaction' => $transaction,
         ]);
     }
@@ -78,21 +89,21 @@ class WithdrawalRequestsController extends Controller
     {
         $messages = [];
 
-        if ($request->approve) {
+        if ($request->type == 'approve') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approve($item, true);
             }
-        } elseif ($request->approveManually) {
+        } elseif ($request->type == 'approveManually') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approveManually($item, true);
             }
-        } elseif ($request->reject) {
+        } elseif ($request->type == 'reject') {
             foreach ($request->list as $item) {
                 $messages[] = $this->reject($item, true);
             }
         }
 
-        return back()->with('success', __('List of withdrawal requests processed.').'<hr>'.implode('<hr>', $messages));
+        return back()->with('success', __('List of withdrawal requests processed.').implode(', ', $messages));
     }
 
     /**

@@ -18,31 +18,32 @@ use App\Models\UserAuthLog;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     protected $users;
-    
+
     public function __construct(User $users) {
         $this->users = $users;
     }
-    
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-       
+
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
-        
+
         $weeks_period_enter_transactions = [];
         $weeks_period_withdraw_transactions = [];
         $month_period_enter_transactions = [];
         $month_period_withdraw_transactions = [];
-        
+
         $month_period = $this->getMonthPeriod();
         $weeks_period = $this->getWeeksPeriod();
-        
+
         foreach ($weeks_period as $key => $week) {
             $transactions = cache()->remember('dshb.last_transactions' . $week['start'], 60, function () use ($week) {
                 return Transaction::where('approved', 1)->whereBetween('created_at', [
@@ -53,7 +54,7 @@ class DashboardController extends Controller
             $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-        
+
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item) {
             $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
@@ -63,11 +64,11 @@ class DashboardController extends Controller
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
         }
-        
+
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
         $weeks_deposit_revenue = $weeks_total_enter - $weeks_total_withdraw;
-        
+
         foreach ($month_period as $key => $month) {
             $transactions = cache()->remember('dshb.last_transactions' . $month['start'], 60, function () use ($month) {
                 return Transaction::where('approved', 1)->whereBetween('created_at', [
@@ -78,14 +79,14 @@ class DashboardController extends Controller
             $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-    
+
         $month_total_enter = array_sum($month_period_enter_transactions);
         $month_total_withdraw = array_sum($month_period_withdraw_transactions);
         $month_deposit_revenue = $month_total_enter - $month_total_withdraw;
         $count_countries = 5;
         $count_cities = 10;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
-        
+
         $countries_stat->map(function ($country) use ($id_enter) {
             $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {
                 return User::where('country', $country->name)->count();
@@ -99,9 +100,9 @@ class DashboardController extends Controller
                     return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
-            
+
         });
-        
+
         $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
         $cities_stat->map(function ($city) use ($id_enter) {
             $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
@@ -109,7 +110,7 @@ class DashboardController extends Controller
             });
         });
         $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
-        
+
         $enter_transactions_for_24h_sum = Cache::remember('dshb.transactions.enter.for_24h', 60, function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'enter');
@@ -117,7 +118,7 @@ class DashboardController extends Controller
                     return $carry + $item->main_currency_amount;
                 }, 0);
         });
-        
+
         $enter_transactions_for_today_sum = Cache::remember('dshb.transactions.enter.for_today', 60, function () {
             return Transaction::where('created_at', '>=', now()->startOfDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'enter');
@@ -125,7 +126,7 @@ class DashboardController extends Controller
                     return $carry + $item->main_currency_amount;
                 }, 0);
         });
-        
+
         $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60, function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'withdraw');
@@ -133,7 +134,7 @@ class DashboardController extends Controller
                     return $carry + $item->main_currency_amount;
                 }, 0);
         });
-        
+
         $withdraw_transactions_for_today_sum = Cache::remember('dshb.transactions.withdraw.for_today', 60, function () {
             return Transaction::where('created_at', '>=', now()->startOfDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'withdraw');
@@ -141,7 +142,7 @@ class DashboardController extends Controller
                     return $carry + $item->main_currency_amount;
                 }, 0);
         });
-        
+
         return view('pages.dashboard', [
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
             'weeks_period_withdraw_transactions' => $weeks_period_withdraw_transactions,
@@ -186,36 +187,88 @@ class DashboardController extends Controller
             }),
         ]);
     }
-    
+
+    /**
+     * @param RequestDashboardBonusUser $request
+     */
     public function addUserBonus(RequestDashboardBonusUser $request) {
-        $user = User::where('name', $request->post('user'))->orWhere('login', $request->post('user'))->orWhere('email', $request->post('user'))->first();
-        if (empty($user)) {
-            return back()->withErrors([__('User not found!')])->withInput();
+        /** @var Currency $currency */
+        $currency = Currency::findOrFail($request->currency);
+
+        /** @var PaymentSystem $paymentSystem */
+        $paymentSystem = PaymentSystem::findOrFail($request->payment_system);
+
+        /** @var User $user */
+        $user = User::where(function($q) use($request) {
+            $q->where('email', $request->login)
+                ->orWhere('login', $request->login);
+        })->first();
+
+        if (null === $user) {
+            return back()->with('error', 'Пользователь не найден')->withInput();
         }
-        $currency_id = $request->post('currency_id');
-        $payment_system_id = $request->post('payment_system_id');
-        $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency_id)->where('payment_system_id', $payment_system_id)->first();
-        if (empty($wallet)) {
-            $wallet = new Wallet();
-            $wallet->user_id = $user;
-            $wallet->currency_id = $currency_id;
-            $wallet->payment_system_id = $payment_system_id;
+
+        $type = $request->type;
+
+        $currencyPaymentSystem = $currency->paymentSystems()
+            ->where('payment_system_id', $paymentSystem->id)
+            ->first();
+
+        if (null === $currencyPaymentSystem) {
+            return back()->with('error', 'Эта платежная система не поддерживает валюту '.$currency->code)->withInput();
         }
-        $wallet = $wallet->addBonus(intval($request->post('amount')));
-        if ($wallet) {
-            // send notification to user
-            $data = [
-                'bonus_amount' => $request->post('amount'),
-                'currency' => $wallet->currency,
-                'payment_system' => $wallet->paymentSystem,
-                'balance' => $wallet->balance,
-            ];
-            //            $wallet->user->sendNotification('bonus_accrued', $data);
-            return back()->with('success', __('Bonus accrued'))->withInput();
+
+        /** @var TransactionType $transactionType */
+        $transactionType = TransactionType::where('name', $type)
+            ->firstOrFail();
+
+        /** @var Wallet $wallet */
+        $wallet = $user->wallets()
+            ->where('currency_id', $currency->id)
+            ->where('payment_system_id', $paymentSystem->id)
+            ->first();
+
+        if (null === $wallet) {
+            return back()->with('error', 'Кошелек пользователя не найден')->withInput();
         }
-        return back()->with('error', __('Unable to accrue bonus'))->withInput();
+
+        $amount = abs((float) $request->amount);
+
+        $data = [
+            'type_id'               => $transactionType->id,
+            'user_id'               => $user->id,
+            'currency_id'           => $currency->id,
+            'rate_id'               => null,
+            'deposit_id'            => null,
+            'wallet_id'             => $wallet->id,
+            'payment_system_id'     => $paymentSystem->id,
+            'amount'                => $amount,
+            'source'                => auth()->user()->email,
+            'result'                => null,
+            'batch_id'              => null,
+            'approved'              => 1,
+            'is_real'               => $request->is_real == 1,
+        ];
+
+        DB::transaction(function() use($data, $wallet, $type) {
+            Transaction::create($data);
+
+            switch($type) {
+                case "enter":
+                    $wallet->balance += $data['amount'];
+                    break;
+
+                case "withdraw":
+                    $wallet->balance -= $data['amount'];
+                    break;
+            }
+
+            $wallet->save();
+        });
+
+        return back()->with('success', 'Операция успешно проведена')->withInput();
     }
-    
+
     public function getMonthPeriod() {
         $period = [];
         $current_week_count = now()->weekNumberInMonth;
@@ -235,7 +288,7 @@ class DashboardController extends Controller
         }
         return $period;
     }
-    
+
     public function getWeeksPeriod() {
         $period = [];
         $days = now()->dayOfWeekIso;
@@ -256,5 +309,5 @@ class DashboardController extends Controller
         }
         return $period;
     }
-    
+
 }

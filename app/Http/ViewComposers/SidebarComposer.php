@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use App\Models\CloudFile;
+use App\Models\Transaction;
 use App\Models\User;
 use DateTime;
 use Illuminate\Support\Carbon;
@@ -31,6 +32,12 @@ class SidebarComposer
                 'files' => cache()->remember('counts.files', now()->addHour(), function() {
                     return CloudFile::count();
                 }),
+                'withdrawals_amount' => cache()->remember('counts.withdrawals_amount', now()->addHour(), function() {
+                    return Transaction::where('approved', 0)->sum('main_currency_amount');
+                }),
+                'replenishments_amount' => cache()->remember('counts.replenishments_amount', now()->addHour(), function() {
+                    return Transaction::where('approved', 0)->sum('main_currency_amount');
+                })
             ]);
 
     }

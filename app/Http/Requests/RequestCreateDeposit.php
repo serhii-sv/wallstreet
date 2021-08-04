@@ -31,7 +31,7 @@ class RequestCreateDeposit extends FormRequest
      */
     public function authorize()
     {
-        return \Auth::check();
+        return \return true;;
     }
 
     /**

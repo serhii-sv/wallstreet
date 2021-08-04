@@ -12,6 +12,12 @@ $(document).ready(function () {
         {
           orderable: true,
           targets: 1,
+            render: function ( data, type, row ) {
+                if ( type === 'display' ) {
+                    return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + row[1] + '" />';
+                }
+                return data;
+            },
           checkboxes: { selectRow: true }
         },
         {
@@ -21,11 +27,10 @@ $(document).ready(function () {
         { "orderable": false, "targets": 8 },
       ],
       order: [2, 'asc'],
-      dom:
-        '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+      dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
       language: {
         search: "",
-        searchPlaceholder: "Search Invoice"
+        searchPlaceholder: "Search Invoice",
       },
       select: {
         style: "multi",
@@ -45,6 +50,24 @@ $(document).ready(function () {
     var filterButton = $(".filter-btn");
     $(".action-btns").append(invoiceFilterAction, invoiceCreateBtn);
     $(".dataTables_filter label").append(filterButton);
+
+    $('.search').click(() => {
+        let query = $('.invoice-list-wrapper input[type="search"]').val();
+        if (query.length > 2) {
+            location.href = '/withdrawals?email=' + query
+        }
+    })
+
+      $('.dt-checkboxes-select-all').click(function () {
+          $('tbody .select-checkbox').map((index, checkbox) => {
+              $(checkbox).prop('checked', !$(this).prop('checked'))
+              console.log($(checkbox).prop('checked'))
+          })
+      })
+
+      $(document).on('click', '.bottom-invoice-mass-actions button', function () {
+          $('input[name="type"]').val($(this).attr('id'))
+      })
   }
 
   /* Invoice edit */

@@ -14,7 +14,7 @@ class RequestDashboardBonusUser extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -25,20 +25,12 @@ class RequestDashboardBonusUser extends FormRequest
     public function rules()
     {
         return [
-            'currency_id' => ['required'],
-            'payment_system_id' => ['required'],
-            'user'   => ['required'],
-            'amount'    => ['required'],
-        ];
-    }
-    
-    public function messages()
-    {
-        return [
-            'currency_id.required' => __('Currency is required'),
-            'payment_system_id.required' => __('Payment system is required'),
-            'user.required'   => __('User must be selected'),
-            'amount.required'    => __('Amount is required'),
+            'login'          => ['required'],
+            'currency'       => ['required'],
+            'payment_system' => ['required'],
+            'is_real'        => ['required'],
+            'amount'         => ['required'],
+            'type'           => ['required', 'in:enter,withdraw'],
         ];
     }
 }

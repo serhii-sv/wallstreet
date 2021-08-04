@@ -255,7 +255,7 @@ $invoice-border-color:#e8e8e8;
 }
 
 @media (min-width:600px){
-  /* responsive table*/ 
+  /* responsive table*/
   .responsive-table{
     .top{
       .action-btns,
@@ -376,11 +376,51 @@ $invoice-border-color:#e8e8e8;
 
 }
 
-// omitted header and footer while print 
+// omitted header and footer while print
 @page {
   size: auto;
   /* auto is the initial value */
-  margin: 0; 
+  margin: 0;
   padding: 0;
   /* this affects the margin in the printer settings */
+}
+
+.alert-wrap {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.alert-wrap .card-alert {
+    display: flex;
+    justify-content: center;
+}
+
+.button-tabs-wrap {
+    margin-bottom: 20px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.button-tabs-wrap a.active {
+    background-color: #ff0d5f;
+}
+
+.action-btns {
+    display: none;
+}
+
+.action-filters {
+    width: 100%;
+}
+
+.bottom-invoice-mass-actions {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+}
+
+.bottom-invoice-mass-actions input {
+    color: white;
 }

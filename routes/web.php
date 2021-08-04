@@ -21,19 +21,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
     
     Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
-    
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
     
     Route::group(['middleware' => ['auth', 'locked.user']], function () {
        
         Route::group(['middleware' => ['role:root|admin']], function () {
-            
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
 
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
-            Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add.bonus');
+            Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
 
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
 
@@ -51,19 +49,23 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::get('/requests/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('requests.approve');
-            Route::post('/requests/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('requests.approve-many');
-            Route::get('/requests/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('requests.reject');
-            Route::get('/requests/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('requests.approveManually');
-            Route::get('/requests/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('requests.dtdata');
-            Route::resource('/requests', \App\Http\Controllers\WithdrawalRequestsController::class, [
+            Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
+            Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
+            Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
+            Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
+            Route::get('/withdrawals/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('withdrawals.dtdata');
+            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class, [
                 'names' => [
-                    'index' => 'requests.index',
-                    'show' => 'requests.show',
-                    'edit' => 'requests.edit',
-                    'update' => 'requests.update',
+                    'index' => 'withdrawals.index',
+                    'show' => 'withdrawals.show',
+                    'edit' => 'withdrawals.edit',
+                    'update' => 'withdrawals.update',
                 ],
             ]);
+
+            Route::prefix('replenishments')->as('replenishments.')->group(function () {
+                Route::resource('/', \App\Http\Controllers\ReplenishmentController::class);
+            });
 
             Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class, [
