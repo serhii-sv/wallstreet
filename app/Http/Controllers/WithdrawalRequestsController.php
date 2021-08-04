@@ -75,9 +75,7 @@ class WithdrawalRequestsController extends Controller
     {
         $transaction = Transaction::find($transaction);
 
-        return view('pages.withdrawals.show', [
-            'transaction' => $transaction,
-        ]);
+        return view('pages.withdrawals.show', compact('transaction'));
     }
 
     /**
@@ -303,5 +301,17 @@ class WithdrawalRequestsController extends Controller
             return $transaction->amount.$currency->symbol.' - '.__('Request approved.');
         }
         return back()->with('success', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Transaction $transaction)
+    {
+        if ($transaction->delete()) {
+            return redirect()->to(route('withdrawals.index'));
+        }
+        return back()->with('error', __('ERROR:').' Вывод не был удален');
     }
 }

@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
  */
 class TransactionsController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(Request $request)
     {
         $filter_type = $request->get('type') ? $request->get('type') : false;
@@ -60,8 +64,20 @@ class TransactionsController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return view('admin.transactions.show', [
+        return view('pages.transactions.show', [
             'transaction' => $transaction
         ]);
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Transaction $transaction)
+    {
+        if ($transaction->delete()) {
+            return redirect()->to(route('transactions.index'));
+        }
+        return back()->with('error', __('ERROR:').' Транзакция не была удалена');
     }
 }

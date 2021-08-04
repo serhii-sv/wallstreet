@@ -52,14 +52,14 @@
         <li class="bold">
             <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active' : '') }}" href="{{ route('withdrawals.index') }}">
                 <i class="material-icons">receipt</i><span class="menu-title" data-i18n="Выводы">Выводы</span>
-                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['withdrawals_amount']), 0, ',', ' ') }}</span>
+                <span class="badge badge pill purple float-right mr-10">${{ $counts['withdrawals_amount'] }}</span>
             </a>
         </li>
 
         <li class="bold">
             <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active' : '') }}" href="{{ route('replenishments.index') }}">
                 <i class="material-icons">receipt</i><span class="menu-title" data-i18n="Пополнения">Пополнения</span>
-                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['replenishments_amount']), 0, ',', ' ') }}</span>
+                <span class="badge badge pill purple float-right mr-10">${{ $counts['replenishments_amount'] }}</span>
             </a>
         </li>
 

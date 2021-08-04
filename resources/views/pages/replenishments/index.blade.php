@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/dataTables.checkboxes.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
 @endsection
 
 {{-- page styles --}}
@@ -65,7 +66,7 @@
             {{--            </ul>--}}
         </div>
         <div class="responsive-table">
-            <form id="withdrawsForm" action="/replenishments/approve-many" method="post">
+            <form id="transactionsForm" action="/replenishments/approve-many" method="post">
                 @csrf
                 <table class="table invoice-data-table white border-radius-4 pt-1">
                     <thead>
@@ -97,7 +98,7 @@
                             <td><span
                                     class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
                             </td>
-                            <td>{{ $transaction->created_at }}</td>
+                            <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
                             <td><span
                                     class="invoice-customer">{{ isset($transaction->user->partner) ? $transaction->user->partner->email : null }}</span>
                             </td>
@@ -116,10 +117,14 @@
                             </td>
                             <td>
                                 <div class="invoice-action">
-                                    <a href="{{ route('withdrawals.show', $transaction->id) }}"
-                                       class="invoice-action-view mr-4">
+                                    <a href="{{ route('replenishments.show', $transaction->id) }}" class="invoice-action-view mr-4">
                                         <i class="material-icons">remove_red_eye</i>
                                     </a>
+                                    @if(request()->type == 0 || is_null(request()->type))
+                                        <a href="{{ route('replenishments.approveManually', $transaction->id) }}" data-title="Подтвердить вручную" class="invoice-action-view mr-4 tooltip">
+                                            <i class="material-icons">done_all</i>
+                                        </a>
+                                    @endif
                                     {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
                                     {{--                                        <i class="material-icons">edit</i>--}}
                                     {{--                                    </a>--}}
@@ -149,6 +154,7 @@
     <script src="{{asset('vendors/data-tables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('vendors/data-tables/js/datatables.checkboxes.min.js')}}"></script>
+    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}

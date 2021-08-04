@@ -7,6 +7,7 @@
 {{-- vendor styles --}}
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/jquery.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/dataTables.checkboxes.css')}}">
@@ -66,7 +67,7 @@
             {{--            </ul>--}}
         </div>
         <div class="responsive-table">
-            <form id="withdrawsForm" action="/withdrawals/approve-many" method="post">
+            <form id="transactionsForm" action="/withdrawals/approve-many" method="post">
                 @csrf
                 <table class="table invoice-data-table white border-radius-4 pt-1">
                     <thead>
@@ -95,10 +96,10 @@
                             <td>
                                 {{ $transaction->user->email }}
                             </td>
-                            <td><span
-                                    class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
+                            <td>
+                                <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span>
                             </td>
-                            <td>{{ $transaction->created_at }}</td>
+                            <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
                             <td><span
                                     class="invoice-customer">{{ isset($transaction->user->partner) ? $transaction->user->partner->email : null }}</span>
                             </td>
@@ -117,8 +118,17 @@
                             </td>
                             <td>
                                 <div class="invoice-action">
-                                    <a href="{{ route('withdrawals.show', $transaction->id) }}" class="invoice-action-view mr-4">
+                                    <a href="{{ route('withdrawals.show', $transaction->id) }}" data-title="Показать" class="invoice-action-view mr-4 tooltip">
                                         <i class="material-icons">remove_red_eye</i>
+                                    </a>
+                                    <a href="{{ route('withdrawals.approve', $transaction->id) }}" data-title="Подтвердить" class="invoice-action-view mr-4 tooltip">
+                                        <i class="material-icons">check</i>
+                                    </a>
+                                    <a href="{{ route('withdrawals.approveManually', $transaction->id) }}" data-title="Подтвердить вручную" class="invoice-action-view mr-4 tooltip">
+                                        <i class="material-icons">done_all</i>
+                                    </a>
+                                    <a href="{{ route('withdrawals.reject', $transaction->id) }}" data-title="Отклонить" class="invoice-action-view mr-4 tooltip">
+                                        <i class="material-icons">clear</i>
                                     </a>
 {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
 {{--                                        <i class="material-icons">edit</i>--}}
@@ -151,6 +161,7 @@
 {{-- vendor scripts --}}
 @section('vendor-script')
     <script src="{{asset('vendors/data-tables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
     <script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('vendors/data-tables/js/datatables.checkboxes.min.js')}}"></script>
 @endsection

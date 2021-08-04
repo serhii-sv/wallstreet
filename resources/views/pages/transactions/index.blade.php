@@ -47,7 +47,7 @@
                                 <li @if(request()->get('type') === $type->id) class="active" @endif>
                                     <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}" class="text-sub">
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                        {{$type->name}}
+                                        {{  __('locale.' . $type->name)}}
                                     </a>
                                 </li>
                             @empty
@@ -70,26 +70,26 @@
                     <table id="data-table-contact" class="display subscription-table responsive-table highlight" style="width:100%;">
                         <thead>
                         <tr>
-                            <th style=" padding-left: 20px;">User</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Payment system</th>
-                            <th>Created</th>
-                            <th>Action</th>
+                           <th style=" padding-left: 20px;">Пользователь</th>
+                            <th>Тип</th>
+                            <th>Сумма</th>
+                            <th>Платёжная система</th>
+                            <th>Дата операции</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @if(isset($transactions) && !empty($transactions))
                             @foreach($transactions as $operation)
                                 <tr>
-                                    <td style=" padding-left: 20px;">{{ $operation->user->name ?? 'Не указано' }}</td>
-                                    <td>{{ $operation->type->name ?? 'Не указано' }}</td>
+                                    <td style=" padding-left: 20px;">@if($operation->user->email)<a href="{{ route('users.show', $operation->user->id) }}">{{ $operation->user->email }}</a> @else Не указано @endif</td>
+                                    <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
                                     <td>
-                                        <span class="badge  green-text  lighten-5 text-accent-4">$ {{ $operation->main_currency_amount }}</span>
+                                        <span class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
                                     </td>
                                     <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                                    <td>{{ $operation->created_at->format('m d, Y') }}</td>
-                                    <td class="{{--center-align--}}">
+                                    <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
+                                    <td class="center-align">
                                         <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
                                     </td>
                                 </tr>
