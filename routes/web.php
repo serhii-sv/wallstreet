@@ -19,16 +19,14 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
-
+    
+    Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
-    Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
-
+    
     Route::group(['middleware' => ['auth', 'locked.user']], function () {
-
+       
         Route::group(['middleware' => ['role:root|admin']], function () {
-
-
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
 

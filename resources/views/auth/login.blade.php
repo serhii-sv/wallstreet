@@ -24,7 +24,7 @@
       <input type="hidden" name="g-recaptcha-response" id="recaptcha">
       <div class="row">
         <div class="input-field col s12">
-          <h5 class="ml-4">{{ __('Sign in') }}</h5>
+          <h5 class="ml-4">Авторизация</h5>
         </div>
       </div>
       <div class="row margin">
@@ -32,7 +32,7 @@
           <i class="material-icons prefix pt-2">person_outline</i>
           <input id="email" type="text" class=" @error('email') is-invalid @enderror" name="email"
             value="{{ old('email') }}"  autocomplete="email" autofocus>
-          <label for="email" class="center-align">{{ __('Username') }}</label>
+          <label for="email" class="center-align">Email</label>
           @error('email')
           <small class="red-text ml-7" >
             {{ $message }}
@@ -45,7 +45,7 @@
           <i class="material-icons prefix pt-2">lock_outline</i>
           <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
             name="password"  autocomplete="current-password">
-          <label for="password">{{ __('password') }}</label>
+          <label for="password">Пароль</label>
           @error('password')
           <small class="red-text ml-7" >
             {{ $message }}
@@ -58,7 +58,7 @@
           <p>
             <label>
               <input type="checkbox" name="remember" id="remember" checked="checked">
-              <span>Remember Me</span>
+              <span>Запомнить меня</span>
             </label>
           </p>
         </div>
@@ -66,7 +66,7 @@
       <div class="row">
         <div class="input-field col s12">
           <button type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12">
-            Login
+            Войти
           </button>
         </div>
       </div>

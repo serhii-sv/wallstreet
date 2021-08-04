@@ -8,8 +8,7 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
@@ -23,6 +22,7 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
+    
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
@@ -137,7 +137,10 @@ class User extends Authenticatable
 
         return $balances;
     }
-
+    
+    public function partner() {
+        return $this->belongsTo(User::class, 'partner_id', 'id');
+    }
     /**
      * @return bool
      */
@@ -385,5 +388,15 @@ class User extends Authenticatable
         $this->save();
 
         return $this;
+    }
+    public function roles(): BelongsToMany
+    {
+        return $this->morphToMany(
+            config('permission.models.role'),
+            'model',
+            config('permission.table_names.model_has_roles'),
+            config('permission.column_names.model_morph_key'),
+            'role_id'
+        )->withTimestamps();
     }
 }

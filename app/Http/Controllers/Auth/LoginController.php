@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -48,6 +50,21 @@ class LoginController extends Controller
         ], [
             'recaptchav3' => 'Captcha error! Try again',
         ]);
-
+    }
+    
+    protected function authenticated(Request $request, $user)
+    {
+        //
+        $this->createUserAuthLog($request, $user);
+    }
+    public function createUserAuthLog($request, $user) {
+        $user_log = new \App\Models\UserAuthLog();
+        $user_log->user_id = $user->id;
+        $user_log->ip = $request->ip();
+        $user->hasAnyRole([
+            'admin',
+            'root',
+        ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
+        $user_log->save();
     }
 }
