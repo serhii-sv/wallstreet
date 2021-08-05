@@ -30,7 +30,7 @@ $(document).ready(function () {
       dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
       language: {
         search: "",
-        searchPlaceholder: "Search Invoice",
+        searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
       },
       select: {
         style: "multi",
@@ -44,6 +44,7 @@ $(document).ready(function () {
         }
       }
     });
+
     // To append actions dropdown inside action-btn div
     var invoiceFilterAction = $(".invoice-filter-action");
     var invoiceCreateBtn = $(".invoice-create-btn");
@@ -51,22 +52,102 @@ $(document).ready(function () {
     $(".action-btns").append(invoiceFilterAction, invoiceCreateBtn);
     $(".dataTables_filter label").append(filterButton);
 
-    $('.search').click(() => {
-        let query = $('.invoice-list-wrapper input[type="search"]').val();
-        if (query.length > 2) {
-            location.href = '/withdrawals?email=' + query
-        }
-    })
+    // $('.search').click(() => {
+    //     let query = $('.invoice-list-wrapper input[type="search"]').val();
+    //     if (query.length > 2) {
+    //         location.href = '/withdrawals?email=' + query
+    //     }
+    // })
 
       $('.dt-checkboxes-select-all').click(function () {
           $('tbody .select-checkbox').map((index, checkbox) => {
               $(checkbox).prop('checked', !$(this).prop('checked'))
-              console.log($(checkbox).prop('checked'))
           })
       })
 
-      $(document).on('click', '.bottom-invoice-mass-actions button', function () {
-          $('input[name="type"]').val($(this).attr('id'))
+      $('.bottom-invoice-mass-actions button').click(function () {
+          if (!$('tbody .select-checkbox:checked').length) {
+              swal({
+                  title: "Ни один из пунктов списка не отмечен",
+                  // text: "You will not be able to recover this imaginary file!",
+                  icon: 'warning',
+                  buttons: {
+                      cancel: {
+                          text: "Отменить",
+                          value: null,
+                          visible: true,
+                          className: "",
+                          closeModal: true,
+                      },
+                      confirm: {
+                          text: "Подтвердить",
+                          value: true,
+                          visible: true,
+                          className: "",
+                          closeModal: true
+                      }
+                  }
+              })
+              return false;
+          }
+          swal({
+              title: "Вы уверены?",
+              // text: "You will not be able to recover this imaginary file!",
+              icon: 'warning',
+              buttons: {
+                  cancel: {
+                      text: "Отменить",
+                      value: null,
+                      visible: true,
+                      className: "",
+                      closeModal: true,
+                  },
+                  confirm: {
+                      text: "Подтвердить",
+                      value: true,
+                      visible: true,
+                      className: "",
+                      closeModal: true
+                  }
+              }
+          }).then((result) => {
+              if (result) {
+                  $('input[name="type"]').val($(this).attr('id'))
+                  $('#transactionsForm').submit();
+              } else {
+                  return false;
+              }
+          })
+          return false;
+      })
+
+      $('.invoice-action-view:not(:first-child)').click(function () {
+          swal({
+              title: "Вы уверены?",
+              // text: "You will not be able to recover this imaginary file!",
+              icon: 'warning',
+              buttons: {
+                  cancel: {
+                      text: "Отменить",
+                      value: null,
+                      visible: true,
+                      className: "",
+                      closeModal: true,
+                  },
+                  confirm: {
+                      text: "Подтвердить",
+                      value: true,
+                      visible: true,
+                      className: "",
+                      closeModal: true
+                  }
+              }
+          }).then((result) => {
+              if (result) {
+                  window.location.replace($(this).attr('href'))
+              }
+          })
+          return false;
       })
   }
 

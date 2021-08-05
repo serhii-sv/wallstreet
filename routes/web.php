@@ -67,12 +67,21 @@ Route::group(['middleware' => ['web']], function () {
                     'show' => 'withdrawals.show',
                     'edit' => 'withdrawals.edit',
                     'update' => 'withdrawals.update',
+                    'destroy' => 'withdrawals.destroy',
                 ],
             ]);
 
-            Route::prefix('replenishments')->as('replenishments.')->group(function () {
-                Route::resource('/', \App\Http\Controllers\ReplenishmentController::class);
-            });
+            Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('approveManually');
+
+            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class, [
+                'names' => [
+                    'index' => 'replenishments.index',
+                    'show' => 'replenishments.show',
+                    'edit' => 'replenishments.edit',
+                    'update' => 'replenishments.update',
+                    'destroy' => 'replenishments.destroy',
+                ]
+            ]);
 
             Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class, [
