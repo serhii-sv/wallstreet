@@ -16,6 +16,7 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
+use App\Modules\Parsers\FixerModule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,8 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-
+     //   Currency::where('code', 'RUR')->update(['code'=> 'RUB']);
+   
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 
