@@ -29,7 +29,7 @@ class WalletObserver
         }
     }
 
-    
+
     /**
      * Listen to the Wallet created event.
      *
@@ -39,7 +39,7 @@ class WalletObserver
      */
     public function created(Wallet $wallet)
     {
-    
+
     }
 
     /**
@@ -51,7 +51,7 @@ class WalletObserver
      */
     public function deleted(Wallet $wallet)
     {
-    
+
     }
 
     /**
@@ -64,7 +64,7 @@ class WalletObserver
     public function updated(Wallet $wallet)
     {
         $amount = $wallet->balance;
-        $currency = $wallet->currency()->get();
+        $currency = $wallet->currency()->first();
 
         $mainCurrency = Currency::where('code', 'USD')->first();
 
