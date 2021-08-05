@@ -15,19 +15,7 @@
   <div class="section users-view">
     <!-- users view media object start -->
     <div class="card-panel">
-      @if(session()->has('success'))
-        <div class="card-alert card gradient-45deg-green-teal mt-0">
-          <div class="card-content white-text">
-            <p>
-              <i class="material-icons">check</i>
-              {{ session()->get('success') }}
-            </p>
-          </div>
-          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-      @endif
+      @include('panels.inform')
       <div class="row">
         <div class="col s12 m7">
           <div class="display-flex media">
@@ -77,7 +65,7 @@
                   <td>Роли:</td>
                   <td class="users-view-role">
                     @forelse($user->roles as $role)
-                      <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? 'ы'}}</span>
+                      <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
                     @empty
                       <span class="users-view-status chip red lighten-5 red-text">Никаких ролей нет</span>
                     @endforelse
@@ -90,12 +78,12 @@
             <table class="responsive-table">
               <thead>
                 <tr>
-                  <th>Все роли</th>
+                  <th>Все права</th>
                   <th style="text-align: right">Дата выдачи</th>
                 </tr>
               </thead>
               <tbody>
-                @forelse($user->roles as $role)
+                @forelse($user->permissions as $role)
                   <tr>
                     <td>
                       <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
@@ -104,7 +92,7 @@
                   </tr>
                 @empty
                   <td colspan="2">
-                    <span class="users-view-status chip red lighten-5 red-text">Никаких ролей нет</span>
+                    <span class="users-view-status chip red lighten-5 red-text">Никаких прав нет</span>
                   </td>
                 @endforelse
               </tbody>
@@ -121,13 +109,13 @@
         <div class="row indigo lighten-5 border-radius-4 mb-2">
           <div class="col s12 m4 users-view-timeline">
             <h6 class="indigo-text m-0">Денег на балансе:
-              <span>125$</span>
+              <span>{{ number_format($balance_usd, 2, '.', ',') }}$</span>
             </h6>
           </div>
           @if(!empty($user->deposits))
             <div class="col s12 m4 users-view-timeline">
               <h6 class="indigo-text m-0">Сумма депозитов:
-                <span>{{ $user->stat_deposits ?? 0 }}$</span>
+                <span>{{ $deposit_sum ?? 0 }}$</span>
               </h6>
             </div>
           @endif

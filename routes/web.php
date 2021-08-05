@@ -25,7 +25,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
     
     Route::group(['middleware' => ['auth', 'locked.user']], function () {
-       
+        //'role:root|admin'
         Route::group(['middleware' => ['role:root|admin']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
@@ -48,7 +48,14 @@ Route::group(['middleware' => ['web']], function () {
                     'show' => 'deposits.show',
                 ],
             ]);
-
+            
+            Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
+            Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
+          
+            Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
+            Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
+          
+            
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');

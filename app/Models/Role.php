@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends \Spatie\Permission\Models\Role
 {
+    
     public $timestamps = true;
+    public $keyType = 'string';
     
     public function permissions()
     : BelongsToMany {

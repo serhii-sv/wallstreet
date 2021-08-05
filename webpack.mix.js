@@ -72,6 +72,8 @@ mix.js('resources/js/materialize.js', 'public/js')
 
 
 mix.copy('resources/js/vendors.min.js', 'public/js/vendors.min.js');
+mix.copy('resources/js/jquery.js', 'public/js/jquery.js');
+mix.copy('resources/js/bootstrap-colorpicker.min.js', 'public/js/bootstrap-colorpicker.min.js');
 
 mix.then(() => {
     if (process.env.MIX_CONTENT_DIRECTION === "rtl") {

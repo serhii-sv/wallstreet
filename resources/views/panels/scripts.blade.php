@@ -7,6 +7,7 @@
 <!-- BEGIN THEME  JS-->
 <script src="{{asset('js/plugins.js')}}"></script>
 <script src="{{asset('js/search.js')}}"></script>
+<script src="{{ asset('js/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('js/custom/custom-script.js')}}"></script>
 <script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
 @if ($configData['isCustomizer']=== true)
