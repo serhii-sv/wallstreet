@@ -139,3 +139,6 @@ Intro
     width: 100px;
   }
 }
+.card-stats .card {
+  height: 150px;
+}

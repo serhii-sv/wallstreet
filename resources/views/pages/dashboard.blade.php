@@ -129,11 +129,11 @@
                 <div id="doughnut-chart-wrapper">
                   <canvas id="doughnut-chart" height="200"></canvas>
                   <div class="doughnut-chart-status week">
-                    <p class="center-align font-weight-600 mt-4">${{ number_format($weeks_deposit_revenue,2) ?? 0 }}</p>
+                    <p class="center-align font-weight-600 mt-4">${{ number_format($weeks_deposit_revenue) ?? 0 }}</p>
                     <p class="ultra-small center-align">Доход</p>
                   </div>
                   <div class="doughnut-chart-status month display-none">
-                    <p class="center-align font-weight-600 mt-4">${{ number_format($month_deposit_revenue,2) ?? 0 }}</p>
+                    <p class="center-align font-weight-600 mt-4">${{ number_format($month_deposit_revenue) ?? 0 }}</p>
                     <p class="ultra-small center-align">Доход</p>
                   </div>
                 </div>

@@ -19,11 +19,11 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
-    
+
     Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
-    
+
     Route::group(['middleware' => ['auth', 'locked.user']], function () {
         //'role:root|admin'
         Route::group(['middleware' => ['role:root|admin']], function () {
@@ -48,14 +48,14 @@ Route::group(['middleware' => ['web']], function () {
                     'show' => 'deposits.show',
                 ],
             ]);
-            
+
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
-          
+
             Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
             Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
-          
-            
+
+
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('approveManually');
+            Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
 
             Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class, [
                 'names' => [

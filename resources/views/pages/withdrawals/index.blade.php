@@ -38,16 +38,29 @@
         {{--                <span class="hide-on-small-only">Create Invoice</span>--}}
         {{--            </a>--}}
         {{--        </div>--}}
-        <div class="button-tabs-wrap">
-            <div>
-                <a href="/withdrawals?type=0" class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>
-            </div>
-            <div>
-                <a href="/withdrawals?type=1" class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>
-            </div>
-            <div>
-                <a href="/withdrawals?type=2" class="{{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light btn-large">Отклоненные</a>
-            </div>
+{{--        <div class="button-tabs-wrap">--}}
+{{--            <div>--}}
+{{--                <a href="/withdrawals?type=0" class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <a href="/withdrawals?type=1" class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <a href="/withdrawals?type=2" class="{{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light btn-large">Отклоненные</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <div class="tabs-wrap">
+            <ul class="tabs">
+                <li class="tab col m3">
+                    <a class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}}" href="/withdrawals?type=0">Неоплаченные</a>
+                </li>
+                <li class="tab col m3">
+                    <a class="{{ request()->type == 1 ? 'active' : ''}}" href="/withdrawals?type=1">Оплаченные</a>
+                </li>
+                <li class="tab col m3">
+                    <a class="{{ request()->type == 2 ? 'active' : ''}}" href="/withdrawals?type=2">Отклоненные</a>
+                </li>
+            </ul>
         </div>
         <div class="filter-btn mr-1">
             <!-- Dropdown Trigger -->
@@ -94,7 +107,7 @@
                             <td></td>
                             <td>{{ $transaction->id }}</td>
                             <td>
-                                {{ $transaction->user->email }}
+                                {{ $transaction->user->email ?? 'Без аплайнера' }}
                             </td>
                             <td>
                                 <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span>
@@ -121,15 +134,17 @@
                                     <a href="{{ route('withdrawals.show', $transaction->id) }}" data-title="Показать" class="invoice-action-view mr-4 tooltip">
                                         <i class="material-icons">remove_red_eye</i>
                                     </a>
-                                    <a href="{{ route('withdrawals.approve', $transaction->id) }}" data-title="Подтвердить" class="invoice-action-view mr-4 tooltip">
-                                        <i class="material-icons">check</i>
-                                    </a>
-                                    <a href="{{ route('withdrawals.approveManually', $transaction->id) }}" data-title="Подтвердить вручную" class="invoice-action-view mr-4 tooltip">
-                                        <i class="material-icons">done_all</i>
-                                    </a>
-                                    <a href="{{ route('withdrawals.reject', $transaction->id) }}" data-title="Отклонить" class="invoice-action-view mr-4 tooltip">
-                                        <i class="material-icons">clear</i>
-                                    </a>
+                                    @if(request()->type == 0 || is_null(request()->type))
+                                        <a href="{{ route('withdrawals.approve', $transaction->id) }}" data-title="Подтвердить" class="invoice-action-view mr-4 tooltip">
+                                            <i class="material-icons">check</i>
+                                        </a>
+                                        <a href="{{ route('withdrawals.approveManually', $transaction->id) }}" data-title="Подтвердить вручную" class="invoice-action-view mr-4 tooltip">
+                                            <i class="material-icons">done_all</i>
+                                        </a>
+                                        <a href="{{ route('withdrawals.reject', $transaction->id) }}" data-title="Отклонить" class="invoice-action-view mr-4 tooltip">
+                                            <i class="material-icons">clear</i>
+                                        </a>
+                                    @endif
 {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
 {{--                                        <i class="material-icons">edit</i>--}}
 {{--                                    </a>--}}
@@ -141,18 +156,20 @@
                     </tbody>
                 </table>
                 @include('pages.partials.notifications')
-                <div class="bottom-invoice-mass-actions">
-                    <input type="hidden" name="type" value="">
-                    <div>
-                        <button type="submit" id="approve" class="waves-effect waves-light btn green">Принять</button>
+                @if(request()->type == 0 || is_null(request()->type))
+                    <div class="bottom-invoice-mass-actions">
+                        <input type="hidden" name="type" value="">
+                        <div>
+                            <button type="submit" id="approve" class="waves-effect waves-light btn green">Принять</button>
+                        </div>
+                        <div>
+                            <button type="submit" id="approveManually" class="waves-effect waves-light btn cyan">Принять вручную</button>
+                        </div>
+                        <div>
+                            <button type="submit" id="reject" class="waves-effect waves-light btn">Отклонить</button>
+                        </div>
                     </div>
-                    <div>
-                        <button type="submit" id="approveManually" class="waves-effect waves-light btn cyan">Принять вручную</button>
-                    </div>
-                    <div>
-                        <button type="submit" id="reject" class="waves-effect waves-light btn">Отклонить</button>
-                    </div>
-                </div>
+                @endif
             </form>
         </div>
     </section>
