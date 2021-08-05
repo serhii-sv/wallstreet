@@ -18,7 +18,7 @@ class ReplenishmentController extends Controller
      */
     public function index(Request $request)
     {
-        $transactionWithdrawType = TransactionType::getByName('withdraw');
+        $transactionWithdrawType = TransactionType::getByName('enter');
 
         $transactions = Transaction::select('transactions.*')->with([
             'user',
@@ -29,6 +29,17 @@ class ReplenishmentController extends Controller
         $transactions = $transactions->get();
 
         return view('pages.replenishments.index', compact('transactions'));
+    }
+
+    /**
+     * @param $transaction
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($transaction)
+    {
+        $transaction = Transaction::find($transaction);
+
+        return view('pages.replenishments.show', compact('transaction'));
     }
 
     /**
@@ -112,5 +123,17 @@ class ReplenishmentController extends Controller
             return $transaction->amount.$currency->symbol.' - '.__('Request approved.');
         }
         return back()->with('success', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Transaction $transaction)
+    {
+        if ($transaction->delete()) {
+            return redirect()->to(route('replenishments.index'));
+        }
+        return back()->with('error', __('ERROR:').' Пополнение не было удалено');
     }
 }

@@ -22,7 +22,7 @@
                         <!-- header section -->
                         <div class="row invoice-date-number">
                             <div class="col xl4 s12">
-                                <span class="invoice-number mr-1">Вывод</span>
+                                <span class="invoice-number mr-1">Транзакция</span>
 {{--                                <span>{{ $transaction->id }}</span>--}}
                             </div>
                             <div class="col xl8 s12">
@@ -208,7 +208,7 @@
 {{--                            </a>--}}
 {{--                        </div>--}}
                         <div class="invoice-action-btn">
-                            <form action="{{ route('withdrawals.destroy', $transaction->id) }}" class="display-flex align-items-center justify-content-center" method="post">
+                            <form action="{{ route('transactions.destroy', $transaction->id) }}" class="display-flex align-items-center justify-content-center" method="post">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
