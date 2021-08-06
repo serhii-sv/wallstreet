@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\Referrals;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,12 +23,19 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
+    use Referrals;
 
+    /**
+     * @var string
+     */
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 
     // Append additional fields to the model
+    /**
+     * @var string[]
+     */
     protected $appends = [
         'short_name',
         'last_activity'
@@ -124,23 +132,11 @@ class User extends Authenticatable
         return $balances;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'id');
-    }
-    /**
-     * @return bool
-     */
-    public function hasReferrals()
-    {
-        return self::where('partner_id', $this->my_id)->count() > 0;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function referrals()
-    {
-        return $this->hasMany(User::class, 'partner_id', 'my_id');
     }
 
     /**
@@ -152,72 +148,7 @@ class User extends Authenticatable
     {
         $all = $this->getAllReferrals($json);
 
-        return isset($all[$level])
-            ? $all[$level]
-            : null;
-    }
-
-    /**
-     * @param int $level
-     * @return array
-     */
-    public function getLevels($level=1)
-    {
-        $countReferrals = $this->referrals()->count();
-        $levels         = [
-            $level => $countReferrals
-        ];
-
-        if ($countReferrals > 0) {
-            /** @var User $referral */
-            foreach ($this->referrals()->get() as $referral) {
-                foreach ($referral->getLevels($level+1) as $l => $v) {
-                    if (isset($levels[$l])) {
-                        $levels[$l] += $v;
-                        continue;
-                    }
-                    if ($v > 0) {
-                        $levels[$l] = $v;
-                    }
-                }
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param int $level
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getLevels24h($level=1)
-    {
-        $countReferrals     = $this->referrals()
-            ->count();
-        $countReferrals24h  = $this->referrals()
-            ->where('created_at', '>', now()->subDay()->toDateTimeString())
-            ->count();
-        $levels             = [
-            $level => $countReferrals24h
-        ];
-
-        if ($countReferrals > 0) {
-            /** @var User $referral */
-            foreach ($this->referrals()->get() as $referral) {
-                foreach ($referral->getLevels24h($level+1) as $l => $v) {
-                    if (isset($levels[$l])) {
-                        $levels[$l] += $v;
-                        continue;
-                    }
-                    if ($v > 0) {
-                        $levels[$l] = $v;
-                    }
-                }
-            }
-        }
-
-        return $levels;
+        return $all[$level] ?? null;
     }
 
     /**
@@ -257,63 +188,9 @@ class User extends Authenticatable
      * @param $level
      * @return int
      */
-    public function getReferralOnLoadPercent($level)
-    {
-        return Referral::getOnLoad($level);
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getReferralOnProfitPercent($level)
-    {
-        return Referral::getOnProfit($level);
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
     public function getReferralOnTaskPercent($level)
     {
         return Referral::getOnTask($level);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPartnerLevels()
-    {
-        static $partnerLevel = 0;
-        static $partnerLevels;
-
-        if ($user = User::where('my_id', $this->partner_id)->first()) {
-            $partnerLevels[] = ++$partnerLevel;
-            $user->getPartnerLevels();
-        }
-        return !empty($partnerLevels) ? $partnerLevels : [];
-    }
-
-    /**
-     * @param $plevel
-     * @param bool $json
-     * @return mixed
-     */
-    public function getPartnerOnLevel($plevel, bool $json = false)
-    {
-        if ($user = User::where('my_id', $this->partner_id)->first()) {
-            if ($plevel == 1) {
-                if (true === $json) {
-                    return $user->toArray();
-                }
-                return $user;
-            }
-            $plevel = $plevel - 1;
-
-            return $user->getPartnerOnLevel($plevel, $json);
-        }
-        return null;
     }
 
     /**
@@ -375,6 +252,10 @@ class User extends Authenticatable
 
         return $this;
     }
+
+    /**
+     * @return BelongsToMany
+     */
     public function roles(): BelongsToMany
     {
         return $this->morphToMany(
@@ -386,6 +267,9 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function permissions(): BelongsToMany
     {
         return $this->morphToMany(
@@ -396,4 +280,5 @@ class User extends Authenticatable
             'permission_id'
         )->withTimestamps();
     }
+
 }

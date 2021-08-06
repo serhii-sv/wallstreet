@@ -33,6 +33,8 @@ class DashboardController extends Controller
      */
     public function index() {
 
+        dd(User::inRandomOrder()->first()->referrals);
+
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 
