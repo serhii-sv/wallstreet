@@ -2,65 +2,65 @@
 @section('title', __('Home'))
 @section('content')
   <div class="main--body">
-    
+
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-    
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Banner-Section Starts Here=======-->
     <section class="banner-section" id="home">
       <div class="banner-bg d-lg-none">
-        <img src="{{ asset('images/banner/banner-bg2.jpg') }}" alt="banner">
+        <img src="{{ asset('theme/images/banner/banner-bg2.jpg') }}" alt="banner">
       </div>
-      <div class="banner-bg d-none d-lg-block bg_img" data-background="./assets/images/banner/banner.jpg">
+      <div class="banner-bg d-none d-lg-block bg_img" data-background="{{ asset('theme/images/banner/banner.jpg') }}">
         <div class="chart-1 wow fadeInLeft" data-wow-delay=".5s" data-wow-duration=".7s">
-          <img src="{{ asset('images/banner/chart1.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/chart1.png') }}" alt="banner">
         </div>
         <div class="chart-2 wow fadeInDown" data-wow-delay="1s" data-wow-duration=".7s">
-          <img src="{{ asset('images/banner/chart2.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/chart2.png') }}" alt="banner">
         </div>
         <div class="chart-3 wow fadeInRight" data-wow-delay="1.5s" data-wow-duration=".7s">
-          <img src="{{ asset('images/banner/chart3.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/chart3.png') }}" alt="banner">
         </div>
         <div class="chart-4 wow fadeInUp" data-wow-delay="2s" data-wow-duration=".7s">
-          <img src="{{ asset('images/banner/clock.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/clock.png') }}" alt="banner">
         </div>
       </div>
       <div class="animation-area d-none d-lg-block">
         <div class="plot">
-          <img src="{{ asset('images/banner/plot.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/plot.png') }}" alt="banner">
         </div>
         <div class="element-1 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/light.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/light.png') }}" alt="banner">
         </div>
         <div class="element-2 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin1.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin1.png') }}" alt="banner">
         </div>
         <div class="element-3 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin2.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin2.png') }}" alt="banner">
         </div>
         <div class="element-4 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin3.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin3.png') }}" alt="banner">
         </div>
         <div class="element-5 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin4.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin4.png') }}" alt="banner">
         </div>
         <div class="element-6 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin5.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin5.png') }}" alt="banner">
         </div>
         <div class="element-7 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin6.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin6.png') }}" alt="banner">
         </div>
         <div class="element-8 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/sheild.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/sheild.png') }}" alt="banner">
         </div>
         <div class="element-9 wow fadeIn" data-wow-delay="1s">
-          <img src="{{ asset('images/banner/coin7.png') }}" alt="banner">
+          <img src="{{ asset('theme/images/banner/coin7.png') }}" alt="banner">
         </div>
       </div>
       <div class="container">
@@ -114,8 +114,8 @@
       </div>
     </section>
     <!--=======Banner-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Counter-Section Starts Here=======-->
     <div class="counter-section">
       <div class="container">
@@ -123,7 +123,7 @@
           <div class="col-sm-6 col-md-4">
             <div class="counter-item">
               <div class="counter-thumb">
-                <img src="{{ asset('images/counter/counter01.png') }}" alt="counter">
+                <img src="{{ asset('theme/images/counter/counter01.png') }}" alt="counter">
               </div>
               <div class="counter-content">
                 <div class="counter-header">
@@ -143,7 +143,7 @@
           <div class="col-sm-6 col-md-4">
             <div class="counter-item">
               <div class="counter-thumb">
-                <img src="{{ asset('images/counter/counter02.png') }}" alt="counter">
+                <img src="{{ asset('theme/images/counter/counter02.png') }}" alt="counter">
               </div>
               <div class="counter-content">
                 <div class="counter-header">
@@ -162,7 +162,7 @@
           <div class="col-sm-6 col-md-4">
             <div class="counter-item">
               <div class="counter-thumb">
-                <img src="{{ asset('images/counter/counter03.png') }}" alt="counter">
+                <img src="{{ asset('theme/images/counter/counter03.png') }}" alt="counter">
               </div>
               <div class="counter-content">
                 <div class="counter-header">
@@ -184,14 +184,14 @@
       </div>
     </div>
     <!--=======Counter-Section Ends Here=======-->
-    
-    
+
+
     <!--=======About-Section Starts Here=======-->
     <section class="about-section padding-top padding-bottom" id="about">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 d-none d-lg-block rtl">
-            <img src="{{ asset('images/about/about.png') }}" alt="about">
+            <img src="{{ asset('theme/images/about/about.png') }}" alt="about">
           </div>
           <div class="col-lg-6">
             <div class="section-header left-style">
@@ -222,7 +222,7 @@
             <div class="about--content">
               <div class="about-item">
                 <div class="about-thumb">
-                  <img src="{{ asset('images/about/about01.png') }}" alt="about">
+                  <img src="{{ asset('theme/images/about/about01.png') }}" alt="about">
                 </div>
                 <div class="about-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -243,7 +243,7 @@
               </div>
               <div class="about-item">
                 <div class="about-thumb">
-                  <img src="{{ asset('images/about/about02.png') }}" alt="about">
+                  <img src="{{ asset('theme/images/about/about02.png') }}" alt="about">
                 </div>
                 <div class="about-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -266,7 +266,7 @@
               </div>
               <div class="about-item">
                 <div class="about-thumb">
-                  <img src="{{ asset('images/about/about03.png') }}" alt="about">
+                  <img src="{{ asset('theme/images/about/about03.png') }}" alt="about">
                 </div>
                 <div class="about-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -291,21 +291,21 @@
       </div>
     </section>
     <!--=======About-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Feature-Section Starts Here=======-->
-    <section class="feature-section padding-top padding-bottom bg_img" data-background="{{ asset('images/feature/feature-bg.png') }}" id="feature">
+    <section class="feature-section padding-top padding-bottom bg_img" data-background="{{ asset('theme/images/feature/feature-bg.png') }}" id="feature">
       <div class="ball-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball1.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball1.png') }}" alt="balls">
       </div>
       <div class="ball-2" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball2.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball2.png') }}" alt="balls">
       </div>
       <div class="ball-3" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball3.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball3.png') }}" alt="balls">
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -343,7 +343,7 @@
           <div class="col-md-6 col-sm-10 col-lg-4">
             <div class="feature-item">
               <div class="feature-thumb">
-                <img src="{{ asset('images/feature/feature01.png') }}" alt="feature">
+                <img src="{{ asset('theme/images/feature/feature01.png') }}" alt="feature">
               </div>
               <div class="feature-content">
                 <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -366,7 +366,7 @@
           <div class="col-md-6 col-sm-10 col-lg-4">
             <div class="feature-item">
               <div class="feature-thumb">
-                <img src="{{ asset('images/feature/feature02.png') }}" alt="feature">
+                <img src="{{ asset('theme/images/feature/feature02.png') }}" alt="feature">
               </div>
               <div class="feature-content">
                 <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -389,7 +389,7 @@
           <div class="col-md-6 col-sm-10 col-lg-4">
             <div class="feature-item">
               <div class="feature-thumb">
-                <img src="{{ asset('images/feature/feature03.png') }}" alt="feature">
+                <img src="{{ asset('theme/images/feature/feature03.png') }}" alt="feature">
               </div>
               <div class="feature-content">
                 <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -413,8 +413,8 @@
       </div>
     </section>
     <!--=======Feature-Section Ends Here=======-->
-    
-    
+
+
     <!--=======How-Section Starts Here=======-->
     <section class="get-section padding-top padding-bottom">
       <div class="container">
@@ -453,13 +453,13 @@
               <div class="hover-tab-area">
                 <div class="tab-area">
                   <div class="tab-item active first">
-                    <img src="{{ asset('images/how/how01.png') }}" alt="how">
+                    <img src="{{ asset('theme/images/how/how01.png') }}" alt="how">
                   </div>
                   <div class="tab-item second">
-                    <img src="{{ asset('images/how/how02.png') }}" alt="how">
+                    <img src="{{ asset('theme/images/how/how02.png') }}" alt="how">
                   </div>
                   <div class="tab-item third">
-                    <img src="{{ asset('images/how/how03.png') }}" alt="how">
+                    <img src="{{ asset('theme/images/how/how03.png') }}" alt="how">
                   </div>
                 </div>
               </div>
@@ -568,10 +568,10 @@
       </div>
     </section>
     <!--=======How-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
-    <section class="call-section call-overlay bg_img" data-background="{{ asset('images/call/call-bg.jpg') }}">
+    <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-7">
@@ -595,7 +595,7 @@
           <div class="col-lg-5">
             <div class="call-button">
               <a href="Tel:0939303" class="call">
-                <img src="{{ asset('images/call/icon02.png') }}" alt="call">
+                <img src="{{ asset('theme/images/call/icon02.png') }}" alt="call">
               </a>
               <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="custom-button">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Contact Support' contenteditable="true">
@@ -610,17 +610,17 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Offer-Section Stars Here=======-->
     <section class="offer-section padding-top padding-bottom pb-max-md-0" id="plan">
       <div class="ball-group-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball-group1.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball-group1.png') }}" alt="balls">
       </div>
       <div class="ball-group-2" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball-group2.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball-group2.png') }}" alt="balls">
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -668,7 +668,7 @@
               <span class="bal-shape"></span>
               <div class="item first">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -700,7 +700,7 @@
               <span class="bal-shape"></span>
               <div class="item">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -739,7 +739,7 @@
               <span class="bal-shape"></span>
               <div class="item first">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -771,7 +771,7 @@
               <span class="bal-shape"></span>
               <div class="item">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -810,7 +810,7 @@
               <span class="bal-shape"></span>
               <div class="item first">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -842,7 +842,7 @@
               <span class="bal-shape"></span>
               <div class="item">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -881,7 +881,7 @@
               <span class="bal-shape"></span>
               <div class="item first">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer1.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer1.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -913,7 +913,7 @@
               <span class="bal-shape"></span>
               <div class="item">
                 <div class="item-thumb">
-                  <img src="{{ asset('images/offer/offer2.png') }}" alt="offer">
+                  <img src="{{ asset('theme/images/offer/offer2.png') }}" alt="offer">
                 </div>
                 <div class="item-content">
                   <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -941,8 +941,8 @@
       </div>
     </section>
     <!--=======Offer-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Proit-Section Starts Here=======-->
     <section class="profit-section padding-top" id="profit">
       <div class="container">
@@ -969,31 +969,31 @@
         </div>
       </div>
       <div class="container-fluid p-0">
-        <div class="profit-bg bg_img" data-background="{{ asset('images/profit/profit-bg.png') }}">
+        <div class="profit-bg bg_img" data-background="{{ asset('theme/images/profit/profit-bg.png') }}">
           <div class="animation-group">
             <div class="platform">
-              <img src="{{ asset('images/profit/platform.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/platform.png') }}" alt="profit">
             </div>
             <div class="light">
-              <img src="{{ asset('images/profit/light.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/light.png') }}" alt="profit">
             </div>
             <div class="coin-1 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin6.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin6.png') }}" alt="profit">
             </div>
             <div class="coin-2 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin2.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin2.png') }}" alt="profit">
             </div>
             <div class="coin-3 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin3.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin3.png') }}" alt="profit">
             </div>
             <div class="coin-4 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin4.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin4.png') }}" alt="profit">
             </div>
             <div class="coin-5 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin5.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin5.png') }}" alt="profit">
             </div>
             <div class="coin-6 wow fadeOutDown" data-wow-delay="1s">
-              <img src="{{ asset('images/profit/coin1.png') }}" alt="profit">
+              <img src="{{ asset('theme/images/profit/coin1.png') }}" alt="profit">
             </div>
           </div>
         </div>
@@ -1193,11 +1193,11 @@
       </div>
     </section>
     <!--=======Proit-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Latest-Transaction-Section Starts Here=======-->
     <section class="latest-transaction padding-top padding-bottom" id="transaction">
-      <div class="transaction-bg bg_img" data-background="{{ asset('images/transaction/transaction-bg.png') }}">
+      <div class="transaction-bg bg_img" data-background="{{ asset('theme/images/transaction/transaction-bg.png') }}">
         <span class="d-none">Image</span>
       </div>
       <div class="container">
@@ -1289,7 +1289,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1308,7 +1308,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1327,7 +1327,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1346,7 +1346,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1365,7 +1365,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1384,7 +1384,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1403,7 +1403,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1422,7 +1422,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1445,7 +1445,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1464,7 +1464,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1483,7 +1483,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1502,7 +1502,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1521,7 +1521,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1540,7 +1540,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1559,7 +1559,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1578,7 +1578,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1601,7 +1601,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction03.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction03.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1620,7 +1620,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction04.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction04.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1639,7 +1639,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction05.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction05.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1658,7 +1658,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction06.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction06.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1677,7 +1677,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction07.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction07.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1696,7 +1696,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction08.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction08.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1715,7 +1715,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction01.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1734,7 +1734,7 @@
                       <span class="date">December 24, 17:57</span>
                     </div>
                     <div class="transaction-thumb">
-                      <img src="{{ asset('images/transaction/transaction02.png') }}" alt="transaction">
+                      <img src="{{ asset('theme/images/transaction/transaction02.png') }}" alt="transaction">
                     </div>
                     <div class="transaction-footer">
                       <span class="amount">@if(canEditLang() && checkRequestOnEdit())
@@ -1753,8 +1753,8 @@
       </div>
     </section>
     <!--=======Latest-Transaction-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Affiliate-Section Starts Here=======-->
     <section class="affiliate-programe" id="affiliate">
       <div class="container">
@@ -1824,23 +1824,23 @@
           </div>
           <div class="col-lg-5 d-lg-block d-none">
             <div class="afiliate-thumb">
-              <img src="{{ asset('images/affiliate/affiliate.png') }}" alt="affiliate">
+              <img src="{{ asset('theme/images/affiliate/affiliate.png') }}" alt="affiliate">
             </div>
           </div>
         </div>
       </div>
     </section>
     <!--=======Affiliate-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
-    <section class="call-section call-overlay bg_img" data-background="{{ asset('images/call/call-bg.jpg') }}">
+    <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-7 col-xl-6">
             <div class="call-item text-center text-sm-left">
               <div class="call-icon">
-                <img src="{{ asset('images/call/icon01.png') }}" alt="call">
+                <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
                 <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -1862,11 +1862,11 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
+
     <!--=======Check-Section Starts Here=======-->
     <section class="client-section padding-bottom padding-top">
       <div class="background-map">
-        <img src="{{ asset('images/client/client-bg.png') }}" alt="client">
+        <img src="{{ asset('theme/images/client/client-bg.png') }}" alt="client">
       </div>
       <div class="container">
         <div class="row">
@@ -1928,7 +1928,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('images/client/client01.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/client01.png') }}" alt="client">
                     </a>
                   </div>
                 </div>
@@ -1961,7 +1961,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('images/client/client02.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/client02.png') }}" alt="client">
                     </a>
                   </div>
                 </div>
@@ -1994,7 +1994,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('images/client/client03.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/client03.png') }}" alt="client">
                     </a>
                   </div>
                 </div>
@@ -2005,8 +2005,8 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->

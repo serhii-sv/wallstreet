@@ -2670,7 +2670,7 @@ input[type="submit"] {
     left: -50px;
     width: calc(100% + 50px);
     height: calc(100% + 160px);
-    background: url(./img/map.png) no-repeat center center;
+    background: url(../images/about/map.png) no-repeat center center;
     background-size: cover;
 }
 
