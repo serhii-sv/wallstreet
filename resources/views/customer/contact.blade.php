@@ -5,15 +5,15 @@
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-    
-    
+
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Banner-Section Starts Here=======-->
-    <section class="bg_img hero-section-2 left-bottom-lg-max" data-background="{{ asset('images/about/hero-bg5.png') }}">
+    <section class="bg_img hero-section-2 left-bottom-lg-max" data-background="{{ asset('theme/images/about/hero-bg5.png') }}">
       <div class="container">
         <div class="hero-content text-white">
           <h1 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -41,8 +41,8 @@
       </div>
     </section>
     <!--=======Banner-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Contact-Section Starts Here=======-->
     <section class="contact-section padding-bottom padding-top">
       <div class="container">
@@ -125,12 +125,12 @@
       </div>
     </section>
     <!--=======Contact-Section Ends Here=======-->
-    
-    
+
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->
-  
-  
+
+
   </div>
 @endsection
