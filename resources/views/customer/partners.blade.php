@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @section('title', __('For partners'))
 @section('content')
-  
+
   <div class="main--body">
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-    
-    
+
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Banner-Section Starts Here=======-->
-    <section class="bg_img hero-section-2 " data-background="{{ asset('images/about/hero-bg4.png') }}">
+    <section class="bg_img hero-section-2 " data-background="{{ asset('theme/images/about/hero-bg4.png') }}">
       <div class="container">
         <div class="hero-content text-white">
           <h1 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -42,13 +42,13 @@
       </div>
     </section>
     <!--=======Banner-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Affiliate-Section Starts Here=======-->
     <section class="affiliate-programe padding-top pt-max-lg-0">
       <div class="ball-3" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball4.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball4.png') }}" alt="balls">
       </div>
       <div class="container">
         <div class="row">
@@ -118,23 +118,23 @@
           </div>
           <div class="col-lg-5 d-lg-block d-none">
             <div class="afiliate-thumb">
-              <img src="{{ asset('images/affiliate/affiliate.png') }}" alt="affiliate">
+              <img src="{{ asset('theme/images/affiliate/affiliate.png') }}" alt="affiliate">
             </div>
           </div>
         </div>
       </div>
     </section>
     <!--=======Affiliate-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
-    <section class="call-section call-overlay bg_img" data-background="{{ asset('images/call/call-bg.jpg') }}">
+    <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-7 col-xl-6">
             <div class="call-item text-center text-sm-left">
               <div class="call-icon">
-                <img src="{{ asset('images/call/icon01.png') }}" alt="call">
+                <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
                 <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -156,8 +156,8 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!-- ==========Total-Affiliate-Section Starts Here========== -->
     <section class="total-affiliate-section padding-bottom padding-top">
       <div class="container">
@@ -185,19 +185,19 @@
         <div class="row">
           <div class="col-lg-4 d-lg-block d-none">
             <div class="total-thumb rtl">
-              <img src="{{ asset('images/affiliate/total-1.png') }}" alt="affiliate">
+              <img src="{{ asset('theme/images/affiliate/total-1.png') }}" alt="affiliate">
             </div>
           </div>
           <div class="col-lg-7">
             <div class="total-content">
               <div class="total-bg">
-                <img src="{{ asset('images/affiliate/affiliate-bg2.png') }}" alt="affiliate">
+                <img src="{{ asset('theme/images/affiliate/affiliate-bg2.png') }}" alt="affiliate">
               </div>
               <div class="tot-wrapper">
                 <div class="tot-area">
                   <div class="tot-item">
                     <div class="tot-thumb">
-                      <img src="{{ asset('images/affiliate/tot1.png') }}" alt="affiliate">
+                      <img src="{{ asset('theme/images/affiliate/tot1.png') }}" alt="affiliate">
                     </div>
                     <div class="tot-content">
                       <div class="counter--item">
@@ -216,7 +216,7 @@
                   </div>
                   <div class="tot-item">
                     <div class="tot-thumb">
-                      <img src="{{ asset('images/affiliate/tot3.png') }}" alt="affiliate">
+                      <img src="{{ asset('theme/images/affiliate/tot3.png') }}" alt="affiliate">
                     </div>
                     <div class="tot-content">
                       <div class="counter--item">
@@ -238,7 +238,7 @@
                 <div class="tot-area">
                   <div class="tot-item">
                     <div class="tot-thumb">
-                      <img src="{{ asset('images/affiliate/tot3.png') }}" alt="affiliate">
+                      <img src="{{ asset('theme/images/affiliate/tot3.png') }}" alt="affiliate">
                     </div>
                     <div class="tot-content">
                       <div class="counter--item">
@@ -264,17 +264,17 @@
       </div>
     </section>
     <!-- ==========Total-Affiliate-Section Ends Here========== -->
-    
-    
+
+
     <!-- ==========How-Section Starts Here========== -->
-    <section class="how-section bg_img padding-top padding-bottom pt-max-md-0" data-background="{{ asset('images/affiliate/affiliate-bg.png') }}">
+    <section class="how-section bg_img padding-top padding-bottom pt-max-md-0" data-background="{{ asset('theme/images/affiliate/affiliate-bg.png') }}">
       <div class="ball-3" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball-group9.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball-group9.png') }}" alt="balls">
       </div>
       <div class="ball-2" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
-        <img src="{{ asset('images/balls/ball-group10.png') }}" alt="balls">
+        <img src="{{ asset('theme/images/balls/ball-group10.png') }}" alt="balls">
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -305,7 +305,7 @@
             <div class="how-item">
               <div class="how-thumb-area">
                 <div class="how-thumb">
-                  <img src="{{ asset('images/how/how4.png') }}" alt="how">
+                  <img src="{{ asset('theme/images/how/how4.png') }}" alt="how">
                 </div>
               </div>
               <div class="how-content">
@@ -322,7 +322,7 @@
             <div class="how-item active">
               <div class="how-thumb-area">
                 <div class="how-thumb">
-                  <img src="{{ asset('images/how/how5.png') }}" alt="how">
+                  <img src="{{ asset('theme/images/how/how5.png') }}" alt="how">
                 </div>
               </div>
               <div class="how-content">
@@ -339,7 +339,7 @@
             <div class="how-item">
               <div class="how-thumb-area">
                 <div class="how-thumb">
-                  <img src="{{ asset('images/how/how6.png') }}" alt="how">
+                  <img src="{{ asset('theme/images/how/how6.png') }}" alt="how">
                 </div>
               </div>
               <div class="how-content">
@@ -356,12 +356,12 @@
       </div>
     </section>
     <!-- ==========How-Section Ends Here========== -->
-    
-    
+
+
     <!-- ==========Why-Affiliate-Section Starts Here========== -->
     <section class="why-affiliate-section padding-bottom padding-top pt-max-lg-0">
       <div class="why--thumb">
-        <img src="{{ asset('images/why/how.png') }}" alt="why">
+        <img src="{{ asset('theme/images/why/how.png') }}" alt="why">
       </div>
       <div class="container">
         <div class="row align-items-end">
@@ -390,7 +390,7 @@
                 <div class="why-item">
                   <div class="why-inner">
                     <div class="why-thumb">
-                      <img src="{{ asset('images/why/why1.png') }}" alt="why">
+                      <img src="{{ asset('theme/images/why/why1.png') }}" alt="why">
                     </div>
                     <div class="why-content">
                       <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -404,7 +404,7 @@
                 <div class="why-item">
                   <div class="why-inner">
                     <div class="why-thumb">
-                      <img src="{{ asset('images/why/why2.png') }}" alt="why">
+                      <img src="{{ asset('theme/images/why/why2.png') }}" alt="why">
                     </div>
                     <div class="why-content">
                       <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -418,7 +418,7 @@
                 <div class="why-item">
                   <div class="why-inner">
                     <div class="why-thumb">
-                      <img src="{{ asset('images/why/why3.png') }}" alt="why">
+                      <img src="{{ asset('theme/images/why/why3.png') }}" alt="why">
                     </div>
                     <div class="why-content">
                       <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -432,7 +432,7 @@
                 <div class="why-item">
                   <div class="why-inner">
                     <div class="why-thumb">
-                      <img src="{{ asset('images/why/why4.png') }}" alt="why">
+                      <img src="{{ asset('theme/images/why/why4.png') }}" alt="why">
                     </div>
                     <div class="why-content">
                       <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
@@ -455,13 +455,13 @@
       </div>
     </section>
     <!-- ==========Why-Affiliate-Section Ends Here========== -->
-    
-    
+
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->
-  
-  
+
+
   </div>
 
 @endsection
