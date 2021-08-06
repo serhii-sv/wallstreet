@@ -4651,7 +4651,7 @@ body *::-webkit-scrollbar-track {
     color: #4a61ff;
     width: 38px;
     height: 40px;
-    background: url(./img/faq.png) no-repeat center center;
+    background: url(../images/about/faq.png) no-repeat center center;
     background-size: contain;
 }
 
