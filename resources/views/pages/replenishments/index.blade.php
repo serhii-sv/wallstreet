@@ -21,7 +21,7 @@
 {{-- page content --}}
 @section('content')
     <!-- invoice list -->
-    <section class="invoice-list-wrapper section">
+    <section class="invoice-list-wrapper section replenishments">
 
         <!-- create invoice button-->
         <!-- Options and filter dropdown button-->
@@ -38,14 +38,28 @@
         {{--                <span class="hide-on-small-only">Create Invoice</span>--}}
         {{--            </a>--}}
         {{--        </div>--}}
-        <div class="button-tabs-wrap">
-            <div>
-                <a href="/replenishments?type=0"
-                   class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>
-            </div>
-            <div>
-                <a href="/replenishments?type=1"
-                   class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>
+{{--        <div class="button-tabs-wrap">--}}
+{{--            <div>--}}
+{{--                <a href="/replenishments?type=0"--}}
+{{--                   class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <a href="/replenishments?type=1"--}}
+{{--                   class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <div class="tabs-wrap">
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col m3">
+                            <a class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}}" href="/replenishments?type=0">Неоплаченные</a>
+                        </li>
+                        <li class="tab col m3">
+                            <a class="{{ request()->type == 1 ? 'active' : ''}}" href="/replenishments?type=1">Оплаченные</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="filter-btn mr-1">
@@ -93,7 +107,7 @@
                             <td></td>
                             <td>{{ $transaction->id }}</td>
                             <td>
-                                {{ $transaction->user->email }}
+                                {{ $transaction->user->email ?? 'Без аплайнера' }}
                             </td>
                             <td><span
                                     class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
@@ -136,7 +150,7 @@
                     </tbody>
                 </table>
                 @include('pages.partials.notifications')
-                <div class="bottom-invoice-mass-actions">
+                <div class="bottom-invoice-mass-actions justify-content-start">
                     <input type="hidden" name="type" value="">
                     @if(request()->type == 0 || is_null(request()->type))
                         <div>

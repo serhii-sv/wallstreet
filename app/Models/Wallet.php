@@ -347,6 +347,6 @@ class Wallet extends Model
             }
         }
     }
-    
-    
+
+
 }

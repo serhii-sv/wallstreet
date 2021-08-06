@@ -39,6 +39,10 @@ class Transaction extends Model
         'created_at',
     ];
 
+    public const TRANSACTION_APPROVED = 1;
+    public const TRANSACTION_REJECTED = 2;
+    public const TRANSACTION_PENDING = 0;
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -35,10 +35,10 @@ Intro
 
     .modal-content{
 
-    
+
         .carousel.carousel-slider {
             height: 100% !important;
-    
+
             .carousel-fixed-item{
             .middle-indicator-text{
                 position: absolute;
@@ -75,11 +75,11 @@ Intro
                 .slide-2-img{
                     width: 160px;
                 }
-    
+
                 .intro-step-title{
                     color: map-get($map: $purple, $key: darken-1)
                 }
-    
+
                 &.slide-2{
                     .select-wrapper{
                         input.select-dropdown{
@@ -112,7 +112,7 @@ Intro
                     }
                 }
             }
-        
+
         &:after{
             background: url('../../images/gallery/wave.png');
             background-size: cover;
@@ -120,7 +120,7 @@ Intro
         }
 
         .bg-img-div{
-            
+
         background: url('../../images/gallery/wave.png');
         background-size: cover;
         width: 90%;
@@ -152,7 +152,7 @@ Intro
                     }
                 }
             }
-            
+
         }
     }
 }
@@ -170,16 +170,16 @@ Intro
             width:80%;
             height: 100% !important;
             max-height: 70%;
-        
+
             .modal-content{
                 .carousel.carousel-slider{
-                
+
                     .carousel-item{
                         .intro-step-title{
                             font-size: 1.25rem !important;
                         }
                         &.slide-3{
-                            
+
                         ul.feature-list{
                             margin: 0;
                         }
@@ -205,5 +205,9 @@ Intro
             }
         }
     }
+}
+
+.card-stats .card {
+    height: 150px;
 }
 

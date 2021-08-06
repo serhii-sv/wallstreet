@@ -151,6 +151,10 @@ $(document).ready(function () {
       })
   }
 
+  $('.tabs a').click(function () {
+      window.location.replace($(this).attr('href'))
+  })
+
   /* Invoice edit */
   /* ------------*/
 
