@@ -59,8 +59,8 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'    => '€',
                 'precision' => 2,
             ],
-            'RUR' => [
-                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('RUR [yes|no]', 'yes'),
+            'RUB' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('RUB [yes|no]', 'yes'),
                 'name'      => 'Russian rubles',
                 'symbol'    => '₽',
                 'precision' => 2,

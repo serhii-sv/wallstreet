@@ -45,7 +45,7 @@ class UpdateCurrencyRatesCommand extends Command
         // FIAT: USD, EUR, RUR
         // CRYPTO: BTC, LTC, ETH
 
-        $cryptoCurrencies = Currency::whereNotIn('code', ['USD', 'UAH', 'RUR', 'EUR'])->get();
+        $cryptoCurrencies = Currency::whereNotIn('code', ['USD', 'UAH', 'RUB', 'EUR'])->get();
 
         /** @var Currency $currency */
         foreach($cryptoCurrencies as $currency) {

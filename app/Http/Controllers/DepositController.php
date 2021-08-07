@@ -6,9 +6,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Deposit;
-use Yajra\Datatables\Datatables;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 /**
  * Class DepositController
@@ -16,12 +16,20 @@ use Yajra\Datatables\Datatables;
  */
 class DepositController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        return view('admin.deposits.index');
+        $deposits_status = ['Не активные' => 'false', 'Активные' => 'true'];
+        $deposits_count = Deposit::count();
+        $filter_status = $request->get('status') ? $request->get('status') : false;
+        $deposits = Deposit::when($filter_status, function($query) use ($filter_status){
+            return $query->where('active', $filter_status);
+        })->orderByDesc('created_at')->paginate(10);
+        return view('pages.deposits.index', [
+            'deposits' => $deposits,
+            'deposits_count' => $deposits_count,
+            'deposits_status' => $deposits_status,
+        ]);
     }
 
     /**
@@ -48,7 +56,8 @@ class DepositController extends Controller
      */
     public function show(Deposit $deposit)
     {
-        return view('admin.deposits.show', ['deposit' => $deposit]);
+        
+        return view('pages.deposits.show', ['deposit' => $deposit]);
     }
 
     /**
