@@ -8,7 +8,7 @@ use App\Models\Deposit;
 use App\Models\Referral;
 use App\Models\User;
 
-trait Referrals
+trait HasReferral
 {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -180,5 +180,29 @@ trait Referrals
         return $this->partners()
             ->wherePivot('line', $level)
             ->first();
+    }
+
+    /**
+     * @param bool $json
+     * @param int $flag
+     * @return array
+     */
+    public function getAllReferrals(bool $json = false, $flag=1)
+    {
+        /** @var User $referrals */
+        $referrals  = $this->referrals()->get();
+
+        $result = [
+            'self' => $this,
+            'referrals' => []
+        ];
+
+        if(!empty($referrals)){
+            foreach ($referrals as $ref){
+                $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
+            }
+        }
+
+        return $result;
     }
 }

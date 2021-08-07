@@ -7,6 +7,8 @@
 namespace App\Http\Controllers\Technical;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ReftreeController
@@ -25,6 +27,10 @@ class ReftreeController extends Controller
             throw new \Exception('reftree id is null');
         }
 
-        return getAdminD3V3ReferralsTree($id);
+        $user = User::find($id);
+
+        return view('pages.users.reftree', [
+            'referrals_data' => $user->getAllReferrals()
+        ]);
     }
 }

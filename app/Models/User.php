@@ -6,7 +6,7 @@
 
 namespace App\Models;
 
-use App\Traits\Referrals;
+use App\Traits\HasReferral;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,7 +23,7 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
-    use Referrals;
+    use HasReferral;
 
     /**
      * @var string
@@ -130,67 +130,6 @@ class User extends Authenticatable
         }
 
         return $balances;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function partner() {
-        return $this->belongsTo(User::class, 'partner_id', 'id');
-    }
-
-    /**
-     * @param int $level
-     * @param bool $json
-     * @return array
-     */
-    public function getReferralsOnLevel($level=1, bool $json = false)
-    {
-        $all = $this->getAllReferrals($json);
-
-        return $all[$level] ?? null;
-    }
-
-    /**
-     * @param bool $json
-     * @param int $flag
-     * @return array
-     */
-    public function getAllReferrals(bool $json = false, $flag=1)
-    {
-        /** @var User $referrals */
-        $referrals  = $this->referrals()->get();
-        $levels     = [];
-
-        if (null !== $referrals) {
-            $levels[$flag] = null;
-
-            /** @var User $referral */
-            foreach ($referrals as $referral) {
-                $levels[$flag][] = true === $json
-                    ? $referral->toJson()
-                    : $referral->toArray();
-
-                if ($referral->hasReferrals()) {
-                    foreach ($referral->getAllReferrals($json, $flag+1) as $l => $list) {
-                        foreach ($list as $v) {
-                            $levels[$l][] = $v;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getReferralOnTaskPercent($level)
-    {
-        return Referral::getOnTask($level);
     }
 
     /**
