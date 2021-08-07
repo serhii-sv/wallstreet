@@ -91,8 +91,8 @@ trait HasReferral
      */
     public function getLevels()
     {
-        $levels     = [];
-        $referrals  = $this->referrals()
+        $levels = [];
+        $referrals = $this->referrals()
             ->get()
             ->groupBy('pivot.line', true);
 
@@ -187,22 +187,43 @@ trait HasReferral
      * @param int $flag
      * @return array
      */
-    public function getAllReferrals(bool $json = false, $flag=1)
+    public function getAllReferrals(bool $json = false, $flag = 1)
     {
         /** @var User $referrals */
-        $referrals  = $this->referrals()->get();
+        $referrals = $this->referrals()->get();
 
         $result = [
             'self' => $this,
             'referrals' => []
         ];
 
-        if(!empty($referrals)){
-            foreach ($referrals as $ref){
+        if ($flag > 100) {
+            return $result;
+        }
+
+        if (!empty($referrals)) {
+            foreach ($referrals as $ref) {
                 $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
             }
         }
 
         return $result;
+    }
+
+    /**
+     * @param $referrals
+     * @return bool
+     */
+    public function referralsRedistribution($referrals)
+    {
+        $ids = [];
+        $this->referrals()->detach();
+        foreach ($referrals as $referral) {
+            $ids[] = $referral->id;
+            $user = User::find($referral->id);
+            $user->referralsRedistribution($referral->children ?? []);
+        }
+        $this->referrals()->sync($ids);
+        return true;
     }
 }

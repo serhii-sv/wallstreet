@@ -60,29 +60,29 @@ class GenerateDemoDataCommand extends Command
     public function handle()
     {
         $this->comment('Reg program creating');
-        $this->generateReferralLevels();
+//        $this->generateReferralLevels();
 
-        $this->comment('Rates creating');
-        $this->generateRates();
-
-        $this->comment('Settings creating');
-        $this->generateSettings();
-
-        try {
-            $this->comment('Rates');
-            $this->call('update:currency_rates');
-        } catch (\Exception $e) {
-            $this->warn('can not update currency rates');
-        }
-
-        $this->comment('Users creating');
+//        $this->comment('Rates creating');
+//        $this->generateRates();
+//
+//        $this->comment('Settings creating');
+//        $this->generateSettings();
+//
+//        try {
+//            $this->comment('Rates');
+//            $this->call('update:currency_rates');
+//        } catch (\Exception $e) {
+//            $this->warn('can not update currency rates');
+//        }
+//
+//        $this->comment('Users creating');
         $this->generateUsers();
-
-        $this->comment('News creating');
-        $this->generateNews();
-
-        $this->comment('FAQ creating');
-        $this->generateFaq();
+//
+//        $this->comment('News creating');
+//        $this->generateNews();
+//
+//        $this->comment('FAQ creating');
+//        $this->generateFaq();
     }
 
     public function generateReferralLevels()
@@ -181,11 +181,54 @@ class GenerateDemoDataCommand extends Command
                 $user = User::create($newUser);
 
                 $this->generateBalances($user);
+                $this->generateReferrals($user);
 //                $this->generateDeposits($user);
                 $this->generateWithdrawals($user);
             });
 
             $this->info('user ' . $user->name . ' registered');
+        }
+    }
+
+    private function generateReferrals($user)
+    {
+        $parents = DB::table('user_parents')->pluck('parent_id')->toArray();
+        $childs = DB::table('user_parents')->pluck('user_id')->toArray();
+
+        $userIds = array_merge($parents, $childs);
+
+        $referrals = User::whereNotIn('id', $userIds)
+            ->where('id', '<>', $user->id)
+            ->limit(rand(1, (User::count() / 2)))
+            ->get();
+
+        $user->referrals()->sync($referrals->pluck('id')->toArray());
+
+        $iterations = 1;
+
+        while (true) {
+            $parent = User::where('id', '<>', $user->id)->inRandomOrder()->first();
+
+            $relation = DB::table('user_parents')
+                ->where('user_id', $user->id)
+                ->where('parent_id', $parent->id)
+                ->first();
+
+            $relation2 = DB::table('user_parents')
+                ->where('user_id', $parent->id)
+                ->where('parent_id', $user->id)
+                ->first();
+
+            if (is_null($relation) && is_null($relation2)) {
+                $parent->referrals()->attach($user->id);
+                break;
+            }
+
+            if ($iterations > 100) {
+                break;
+            }
+
+            $iterations++;
         }
     }
 
@@ -329,7 +372,7 @@ class GenerateDemoDataCommand extends Command
             $data = [
                 'subject'       => $this->faker->title,
                 'content'       => $this->faker->text,
-             
+
                 'created_at'    => $this->faker->dateTimeThisMonth()->format('Y-m-d').' 12:00:00',
             ];
 

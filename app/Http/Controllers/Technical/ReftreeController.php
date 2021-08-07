@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Technical;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -29,8 +30,21 @@ class ReftreeController extends Controller
 
         $user = User::find($id);
 
+//        dd($user->getAllReferrals());
+
         return view('pages.users.reftree', [
-            'referrals_data' => $user->getAllReferrals()
+            'referrals_data' => $user->getAllReferrals(),
+            'user' => $user
         ]);
+    }
+
+    public function referralsRedistribution(Request $request, $id)
+    {
+        $referrals = json_decode($request->referrals);
+        $user = User::find($id);
+
+        $user->referralsRedistribution($referrals);
+
+        return back()->with('success_short', 'Сохранено');
     }
 }
