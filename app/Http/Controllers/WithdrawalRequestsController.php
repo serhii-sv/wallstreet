@@ -137,7 +137,7 @@ class WithdrawalRequestsController extends Controller
         }
 
         $wallet->returnFromRejectedWithdrawal($transaction);
-        $transaction->delete();
+        $transaction->update(['approved' => Transaction::TRANSACTION_REJECTED]);
 
         $data = [
             'withdraw_amount' => $amount,

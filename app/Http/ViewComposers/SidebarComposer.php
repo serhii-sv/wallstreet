@@ -38,9 +38,14 @@ class SidebarComposer
                     return Transaction::sidebarIndicatorsFormatting($sum);
                 }),
                 'replenishments_amount' => cache()->remember('counts.replenishments_amount', now()->addHour(), function() {
-                    $sum = Transaction::where('approved', 0)->where('type_id', TransactionType::getByName('enter')->id)->sum('main_currency_amount');
+                    $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('enter')->id)->sum('main_currency_amount');
+                    return Transaction::sidebarIndicatorsFormatting($sum);
+                }),
+                'transactions_amount' => cache()->remember('counts.transactions_amount', now()->addHour(), function() {
+                    $sum = Transaction::sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);
                 })
+
             ]);
 
     }

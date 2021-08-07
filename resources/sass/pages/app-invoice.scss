@@ -396,15 +396,18 @@ $invoice-border-color:#e8e8e8;
     justify-content: center;
 }
 
-.button-tabs-wrap {
+.tabs {
+    display: flex;
     margin-bottom: 20px;
     margin-top: -40px;
-    display: flex;
-    justify-content: space-around;
 }
 
-.button-tabs-wrap a.active {
-    background-color: #ff0d5f;
+.replenishments .tabs .tab:nth-child(1) {
+    margin-left: 25% !important;
+}
+
+.replenishments .tabs {
+    display: block;
 }
 
 .action-btns {
@@ -450,4 +453,8 @@ $invoice-border-color:#e8e8e8;
 }
 .tooltip:hover::before {
     display: block;
+}
+
+.bottom-invoice-mass-actions.justify-content-start {
+    justify-content: start;
 }

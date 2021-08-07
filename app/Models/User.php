@@ -22,7 +22,7 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
-    
+
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
@@ -48,27 +48,13 @@ class User extends Authenticatable
         'phone',
         'skype',
         'created_at',
-        'blockio_wallet_btc',
-        'blockio_wallet_ltc',
-        'blockio_wallet_doge',
         'sex',
         'city',
         'country',
-        'longitude',
-        'latitude',
         'email_verified_at',
         'email_verification_sent',
         'email_verification_hash',
         'unhashed_password',
-        'stat_deposits',
-        'stat_withdraws',
-        'stat_different',
-        'stat_salary',
-        'stat_accepted',
-        'stat_left',
-        'stat_additional',
-        'stat_salary_percent',
-        'stat_worker_withdraw',
         'ip',
         'is_locked',
     ];
@@ -137,7 +123,7 @@ class User extends Authenticatable
 
         return $balances;
     }
-    
+
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'id');
     }
@@ -399,7 +385,7 @@ class User extends Authenticatable
             'role_id'
         )->withTimestamps();
     }
-    
+
     public function permissions(): BelongsToMany
     {
         return $this->morphToMany(
