@@ -101,7 +101,7 @@ class WithdrawalRequestsController extends Controller
             }
         }
 
-        return back()->with('success', __('List of withdrawal requests processed.').implode(', ', $messages));
+        return back()->with('success_short', __('List of withdrawal requests processed.').implode(', ', $messages));
     }
 
     /**
@@ -119,7 +119,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error_short', __('This request already processed.'));
         }
 
         /** @var Wallet $wallet */
@@ -149,7 +149,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return __('Request rejected');
         }
-        return back()->with('success', __('Request rejected'));
+        return back()->with('success_short', __('Request rejected'));
     }
 
     /**
@@ -167,7 +167,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error_short', __('This request already processed.'));
         }
 
         /** @var Wallet $wallet */
@@ -189,7 +189,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' wallet is empty';
             }
-            return back()->with('error', __('ERROR:').' wallet is empty');
+            return back()->with('error_short', __('ERROR:').' wallet is empty');
         }
 
         try {
@@ -198,7 +198,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' ' . $e->getMessage();
             }
-            return back()->with('error', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
         }
 
         if (empty($batchId)) {
@@ -207,7 +207,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __($batchErr);
             }
-            return back()->with('error', __($batchErr));
+            return back()->with('error_short', __($batchErr));
         }
 
         $transaction->update([
@@ -228,13 +228,13 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' ' . $e->getMessage();
             }
-            return back()->with('error', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
         }
 
         if (true === $massMode) {
             return $transaction->amount.$currency->symbol.' - '.__('Request approved, money transferred to user wallet');
         }
-        return back()->with('success', $transaction->amount.$currency->symbol.' - '.__('Request approved, money transferred to user wallet'));
+        return back()->with('success_short', $transaction->amount.$currency->symbol.' - '.__('Request approved, money transferred to user wallet'));
     }
 
     /**
@@ -252,7 +252,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error_short', __('This request already processed.'));
         }
 
         /** @var Wallet $wallet */
@@ -272,7 +272,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' wallet is empty';
             }
-            return back()->with('error', __('ERROR:').' wallet is empty');
+            return back()->with('error_short', __('ERROR:').' wallet is empty');
         }
 
         $transaction->update([
@@ -294,13 +294,13 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' ' . $e->getMessage();
             }
-            return back()->with('error', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
         }
 
         if (true === $massMode) {
             return $transaction->amount.$currency->symbol.' - '.__('Request approved.');
         }
-        return back()->with('success', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
+        return back()->with('success_short', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
     }
 
     /**
@@ -312,6 +312,6 @@ class WithdrawalRequestsController extends Controller
         if ($transaction->delete()) {
             return redirect()->to(route('withdrawals.index'));
         }
-        return back()->with('error', __('ERROR:').' Вывод не был удален');
+        return back()->with('error_short', __('ERROR:').' Вывод не был удален');
     }
 }

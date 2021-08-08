@@ -15,6 +15,7 @@ $(function() {
   $('#nestable').nestable({
       group: 1,
       maxDepth: 100000000000000,
+      threshold: 100000000000000
     })
     .on('change', updateOutput);
 

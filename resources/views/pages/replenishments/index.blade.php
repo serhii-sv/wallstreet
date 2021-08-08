@@ -21,67 +21,41 @@
 {{-- page content --}}
 @section('content')
     <!-- invoice list -->
-    <section class="invoice-list-wrapper section replenishments">
+    <section class="invoice-list-wrapper section">
 
         <!-- create invoice button-->
         <!-- Options and filter dropdown button-->
-        {{--        <div class="invoice-filter-action mr-3">--}}
-        {{--            <a href="javascript:void(0)" class="btn waves-effect waves-light invoice-export border-round z-depth-4">--}}
-        {{--                <i class="material-icons">picture_as_pdf</i>--}}
-        {{--                <span class="hide-on-small-only">Export to PDF</span>--}}
-        {{--            </a>--}}
-        {{--        </div>--}}
-        {{--        <!-- create invoice button-->--}}
-        {{--        <div class="invoice-create-btn">--}}
-        {{--            <a href="{{asset('app-invoice-add')}}" class="btn waves-effect waves-light invoice-create border-round z-depth-4">--}}
-        {{--                <i class="material-icons">add</i>--}}
-        {{--                <span class="hide-on-small-only">Create Invoice</span>--}}
-        {{--            </a>--}}
-        {{--        </div>--}}
-{{--        <div class="button-tabs-wrap">--}}
-{{--            <div>--}}
-{{--                <a href="/replenishments?type=0"--}}
-{{--                   class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light btn-large">Неоплаченные</a>--}}
-{{--            </div>--}}
-{{--            <div>--}}
-{{--                <a href="/replenishments?type=1"--}}
-{{--                   class="{{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light btn-large">Оплаченные</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-        <div class="tabs-wrap">
-            <div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col m3">
-                            <a class="{{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}}" href="/replenishments?type=0">Неоплаченные</a>
-                        </li>
-                        <li class="tab col m3">
-                            <a class="{{ request()->type == 1 ? 'active' : ''}}" href="/replenishments?type=1">Оплаченные</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="invoice-filter-action mr-3">
+            <a href="/replenishments?type=0" class="btn {{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light invoice-export border-round z-depth-4">
+                <i class="material-icons">attach_money</i>
+                <span class="hide-on-small-only">Неоплаченные</span>
+            </a>
         </div>
-        <div class="filter-btn mr-1">
+        <!-- create invoice button-->
+        <div class="invoice-create-btn">
+            <a href="/replenishments?type=1" class="btn {{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4">
+                <i class="material-icons">beenhere</i>
+                <span class="hide-on-small-only">Оплаченные</span>
+            </a>
+        </div>
+        <div class="filter-btn">
             <!-- Dropdown Trigger -->
-            {{--            <button class="search btn btn-block waves-effect waves-light mb-10">--}}
-            {{--                <i class="material-icons">search</i>--}}
-            {{--                <span>Поиск</span>--}}
-            {{--            </button>--}}
-            {{--            <a class='dropdown-trigger btn waves-effect waves-light purple darken-1 border-round' href='#' data-target='btn-filter'>--}}
-            {{--                <span class="hide-on-small-only">Filter Invoice</span>--}}
-            {{--                <i class="material-icons">keyboard_arrow_down</i>--}}
-            {{--            </a>--}}
-            {{--            <!-- Dropdown Structure -->--}}
-            {{--            <ul id='btn-filter' class='dropdown-content'>--}}
-            {{--                <li><a href="#!">Paid</a></li>--}}
-            {{--                <li><a href="#!">Unpaid</a></li>--}}
-            {{--                <li><a href="#!">Partial Payment</a></li>--}}
-            {{--            </ul>--}}
+            <a class='dropdown-trigger btn waves-effect waves-light purple darken-1 border-round' href='#' data-target='btn-filter'>
+                <span class="hide-on-small-only">Фильтрация</span>
+                <i class="material-icons">keyboard_arrow_down</i>
+            </a>
+            <!-- Dropdown Structure -->
+            <ul id='btn-filter' class='dropdown-content'>
+                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Дата по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Дата по возростанию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Сумма по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Сумма по возростанию</a></li>
+            </ul>
         </div>
         <div class="responsive-table">
             <form id="transactionsForm" action="/replenishments/approve-many" method="post">
                 @csrf
+                <input type="hidden" name="type">
                 <table class="table invoice-data-table white border-radius-4 pt-1">
                     <thead>
                     <tr>
@@ -113,8 +87,8 @@
                                     class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
                             </td>
                             <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
-                            <td><span
-                                    class="invoice-customer">{{ isset($transaction->user->partner) ? $transaction->user->partner->email : null }}</span>
+                            <td>
+                                <span class="invoice-customer">{{ isset($transaction->user->partner) ? $transaction->user->partner->email : null }}</span>
                             </td>
                             <td>
                                 @switch($transaction->approved)
@@ -131,11 +105,12 @@
                             </td>
                             <td>
                                 <div class="invoice-action">
-                                    <a href="{{ route('replenishments.show', $transaction->id) }}" class="invoice-action-view mr-4">
+                                    <a href="{{ route('replenishments.show', $transaction->id) }}" data-position="bottom" data-tooltip="Показать" class="invoice-action-view mr-4 tooltipped">
                                         <i class="material-icons">remove_red_eye</i>
                                     </a>
                                     @if(request()->type == 0 || is_null(request()->type))
-                                        <a href="{{ route('replenishments.approveManually', $transaction->id) }}" data-title="Подтвердить вручную" class="invoice-action-view mr-4 tooltip">
+                                        <a href="{{ route('replenishments.approveManually', $transaction->id) }}" data-action_type="approveManually" data-position="bottom" data-tooltip="Подтвердить вручную"
+                                           class="invoice-action-view mr-4 tooltipped">
                                             <i class="material-icons">done_all</i>
                                         </a>
                                     @endif
@@ -149,15 +124,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                @include('pages.partials.notifications')
-                <div class="bottom-invoice-mass-actions justify-content-start">
-                    <input type="hidden" name="type" value="">
-                    @if(request()->type == 0 || is_null(request()->type))
-                        <div>
-                            <button type="submit" id="approveManually" class="waves-effect waves-light btn cyan">Принять вручную</button>
-                        </div>
-                    @endif
-                </div>
             </form>
         </div>
     </section>

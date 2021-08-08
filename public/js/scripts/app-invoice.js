@@ -59,37 +59,13 @@ $(document).ready(function () {
     //     }
     // })
 
-      $('.dt-checkboxes-select-all').click(function () {
+      $(document).on('click', '.dt-checkboxes-select-all', function() {
           $('tbody .select-checkbox').map((index, checkbox) => {
               $(checkbox).prop('checked', !$(this).prop('checked'))
           })
       })
 
-      $('.bottom-invoice-mass-actions button').click(function () {
-          if (!$('tbody .select-checkbox:checked').length) {
-              swal({
-                  title: "Ни один из пунктов списка не отмечен",
-                  // text: "You will not be able to recover this imaginary file!",
-                  icon: 'warning',
-                  buttons: {
-                      cancel: {
-                          text: "Отменить",
-                          value: null,
-                          visible: true,
-                          className: "",
-                          closeModal: true,
-                      },
-                      confirm: {
-                          text: "Подтвердить",
-                          value: true,
-                          visible: true,
-                          className: "",
-                          closeModal: true
-                      }
-                  }
-              })
-              return false;
-          }
+      $(document).on('click', '.invoice-action-view:not(:first-child)', function () {
           swal({
               title: "Вы уверены?",
               // text: "You will not be able to recover this imaginary file!",
@@ -112,39 +88,12 @@ $(document).ready(function () {
               }
           }).then((result) => {
               if (result) {
-                  $('input[name="type"]').val($(this).attr('id'))
-                  $('#transactionsForm').submit();
-              } else {
-                  return false;
-              }
-          })
-          return false;
-      })
-
-      $('.invoice-action-view:not(:first-child)').click(function () {
-          swal({
-              title: "Вы уверены?",
-              // text: "You will not be able to recover this imaginary file!",
-              icon: 'warning',
-              buttons: {
-                  cancel: {
-                      text: "Отменить",
-                      value: null,
-                      visible: true,
-                      className: "",
-                      closeModal: true,
-                  },
-                  confirm: {
-                      text: "Подтвердить",
-                      value: true,
-                      visible: true,
-                      className: "",
-                      closeModal: true
+                  if ($('tbody .select-checkbox:checked').length) {
+                      $('input[name="type"]').val($(this).data('action_type'))
+                      $('#transactionsForm').submit();
+                  } else {
+                      window.location.replace($(this).attr('href'))
                   }
-              }
-          }).then((result) => {
-              if (result) {
-                  window.location.replace($(this).attr('href'))
               }
           })
           return false;
