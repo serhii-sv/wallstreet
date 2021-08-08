@@ -46,10 +46,10 @@
             </a>
             <!-- Dropdown Structure -->
             <ul id='btn-filter' class='dropdown-content'>
-                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Дата по убыванию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Дата по возростанию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Сумма по убыванию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['date' => 'desc']) }}">Сумма по возростанию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'order' => 'desc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'desc' ? 'active' : '' }}">Дата по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'order' => 'asc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'asc' ? 'active' : '' }}">Дата по возростанию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'order' => 'desc']) }}" class="{{ request()->field == 'amount' && request()->order == 'desc' ? 'active' : '' }}">Сумма по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'order' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a></li>
             </ul>
         </div>
         <div class="responsive-table">
@@ -81,14 +81,14 @@
                             <td></td>
                             <td>{{ $transaction->id }}</td>
                             <td>
-                                {{ $transaction->user->email ?? 'Без аплайнера' }}
+                                {{ $transaction->user->email }}
                             </td>
-                            <td><span
-                                    class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
+                            <td>
+                                <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
                             </td>
                             <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
                             <td>
-                                <span class="invoice-customer">{{ isset($transaction->user->partner) ? $transaction->user->partner->email : null }}</span>
+                                <span class="invoice-customer">{{ !is_null($transaction->user->partner) ? $transaction->user->partner->email : 'Без аплайнера' }}</span>
                             </td>
                             <td>
                                 @switch($transaction->approved)

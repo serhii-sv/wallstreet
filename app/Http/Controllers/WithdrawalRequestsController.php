@@ -36,6 +36,10 @@ class WithdrawalRequestsController extends Controller
             ->where('type_id', $transactionWithdrawType->id)
             ->where('approved', $request->only('type') ?? 0);
 
+        if (!is_null($request->field) && !is_null($request->order)) {
+            $transactions = $transactions->orderBy($request->field, $request->order);
+        }
+
         $transactions = $transactions->get();
 
         return view('pages.withdrawals.index', compact('transactions'));
