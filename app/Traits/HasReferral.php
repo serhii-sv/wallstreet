@@ -226,4 +226,24 @@ trait HasReferral
         $this->referrals()->sync($ids);
         return true;
     }
+
+    /**
+     * @param User $parent
+     */
+    public function generatePartnerTree(User $parent)
+    {
+        $parent_array = [];
+
+        $partners = $parent->partners()->orderBy('pivot_line','asc')->get();
+        $parent_array[$parent->id] = ['line'=>1];
+
+        $i = 1;
+
+        foreach ($partners as $partner) {
+            $i++;
+            $parent_array[$partner->id] = ['line'=>$i];
+        }
+
+        $this->partners()->sync($parent_array);
+    }
 }

@@ -49,6 +49,10 @@ class UserObserver
     {
         Wallet::registerWallets($user);
 
+        if (null !== $user->partner) {
+            $user->generatePartnerTree($user->partner);
+        }
+
         cache()->forget('counts.users');
     }
 

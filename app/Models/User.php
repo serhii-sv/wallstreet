@@ -229,7 +229,6 @@ class User extends Authenticatable
         $maxExists = $maxExists > 0 ? $maxExists+1 : rand(500000, 2000000);
 
         $this->my_id = $maxExists;
-        $this->save();
 
         return $this;
     }
