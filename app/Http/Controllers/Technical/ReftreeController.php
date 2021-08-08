@@ -28,7 +28,7 @@ class ReftreeController extends Controller
             throw new \Exception('reftree id is null');
         }
 
-        $user = User::where('id', $id)->firstOrFail();
+        $user = User::findOrFail($id);
 
         return view('pages.users.reftree', [
             'referrals_data' => $user->getAllReferrals(),
@@ -39,7 +39,7 @@ class ReftreeController extends Controller
     public function referralsRedistribution(Request $request, $id)
     {
         $referrals = json_decode($request->referrals);
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         $user->referralsRedistribution($referrals);
 
