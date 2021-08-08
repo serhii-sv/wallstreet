@@ -221,14 +221,16 @@ class User extends Authenticatable
     }
 
     /**
-     * @return int
+     * @return User
      */
-    public function generateMyId(): int
+    public function generateMyId() : User
     {
         $maxExists = \App\Models\User::max('my_id');
         $maxExists = $maxExists > 0 ? $maxExists+1 : rand(500000, 2000000);
 
         $this->my_id = $maxExists;
         $this->save();
+
+        return $this;
     }
 }
