@@ -62,7 +62,12 @@ class Deposit extends Model
         'datetime_closing',
         'created_at',
     ];
-
+    
+    public function total_assessed() {
+        return $this->transactions()
+            ->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)
+            ->sum('main_currency_amount');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

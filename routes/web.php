@@ -42,64 +42,29 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\DepositController::class, 'block'])->name('deposits.block');
             Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\DepositController::class, 'unblock'])->name('deposits.unblock');
             Route::get('/deposits/dtdata', [\App\Http\Controllers\DepositController::class, 'dataTable'])->name('deposits.dtdata');
-            Route::resource('/deposits', \App\Http\Controllers\DepositController::class, [
-                'names' => [
-                    'index' => 'deposits.index',
-                    'show' => 'deposits.show',
-                ],
-            ]);
-
+            Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
+            
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
 
             Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
             Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
-
-
+          
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
             Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
             Route::get('/withdrawals/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('withdrawals.dtdata');
-            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class, [
-                'names' => [
-                    'index' => 'withdrawals.index',
-                    'show' => 'withdrawals.show',
-                    'edit' => 'withdrawals.edit',
-                    'update' => 'withdrawals.update',
-                    'destroy' => 'withdrawals.destroy',
-                ],
-            ]);
+            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class);
 
             Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
 
-            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class, [
-                'names' => [
-                    'index' => 'replenishments.index',
-                    'show' => 'replenishments.show',
-                    'edit' => 'replenishments.edit',
-                    'update' => 'replenishments.update',
-                    'destroy' => 'replenishments.destroy',
-                ]
-            ]);
+            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class);
 
             Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
-            Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class, [
-                'names' => [
-                    'index' => 'transactions.index',
-                    'show' => 'transactions.show',
-                ],
-            ]);
+            Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
 
-            Route::resource('/langs', \App\Http\Controllers\LanguagesController::class, [
-                'names' => [
-                    'index' => 'langs.index',
-                    'create' => 'langs.create',
-                    'store' => 'langs.store',
-                    'edit' => 'langs.edit',
-                    'update' => 'langs.update',
-                ],
-            ]);
+            Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');
 
             Route::resource('/translations', \App\Http\Controllers\TplTranslationsController::class, [
@@ -114,74 +79,15 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class, [
-                'names' => [
-                    'index' => 'currencies.index',
-                    'edit' => 'currencies.edit',
-                    'update' => 'currencies.update',
-                ],
-            ]);
-            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class, [
-                'names' => [
-                    'index' => 'payment-systems.index',
-                    'edit' => 'payment-systems.edit',
-                    'update' => 'payment-systems.update',
-                ],
-            ]);
-
-            Route::resource('/news', \App\Http\Controllers\NewsController::class, [
-                'names' => [
-                    'index' => 'news.index',
-                    'create' => 'news.create',
-                    'store' => 'news.store',
-                    'edit' => 'news.edit',
-                    'update' => 'news.update',
-                    'destroy' => 'news.destroy',
-                ],
-            ]);
-
-            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class, [
-                'names' => [
-                    'index' => 'reviews.index',
-                    'create' => 'reviews.create',
-                    'store' => 'reviews.store',
-                    'edit' => 'reviews.edit',
-                    'update' => 'reviews.update',
-                    'destroy' => 'reviews.destroy',
-                ],
-            ]);
-            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class, [
-                'names' => [
-                    'index' => 'faqs.index',
-                    'create' => 'faqs.create',
-                    'store' => 'faqs.store',
-                    'edit' => 'faqs.edit',
-                    'update' => 'faqs.update',
-                    'destroy' => 'faqs.destroy',
-                ],
-            ]);
-
-            Route::resource('/referral', \App\Http\Controllers\ReferralController::class, [
-                'names' => [
-                    'index' => 'referral.index',
-                    'create' => 'referral.create',
-                    'store' => 'referral.store',
-                    'edit' => 'referral.edit',
-                    'update' => 'referral.update',
-                ],
-            ]);
+            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class);
+            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class);
+            Route::resource('/news', \App\Http\Controllers\NewsController::class);
+            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class);
+            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class);
+            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
             Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
-//
-//            Route::resource('/rates', 'RateController', [
-//                'names' => [
-//                    'index' => 'rates.index',
-//                    'show' => 'rates.show',
-//                    'create' => 'rates.create',
-//                    'store' => 'rates.store',
-//                    'edit' => 'rates.edit',
-//                    'update' => 'rates.update',
-//                ],
-//            ]);
+
+            Route::resource('/rates', App\Http\Controllers\RateController::class);
             Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
@@ -192,12 +98,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-wrs');
 
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
-                'index' => 'users.index',
-                'show' => 'users.show',
                 'show/{level?}{plevel?}' => 'users.show',
-                'edit' => 'users.edit',
-                'update' => 'users.update',
-                'destroy' => 'users.destroy',
             ]]);
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 

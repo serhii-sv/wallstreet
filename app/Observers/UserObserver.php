@@ -65,6 +65,9 @@ class UserObserver
             $user->login = $user->email;
         }
 
+        if (null === $user->my_id || empty($user->my_id)) {
+            $user->generateMyId();
+        }
     }
 
     /**
