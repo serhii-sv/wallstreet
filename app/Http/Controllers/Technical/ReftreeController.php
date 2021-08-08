@@ -79,7 +79,7 @@ class ReftreeController extends Controller
                 'message' => 'Пользователь уже является рефералом'
             ]);
         }
-
+      
         $user->referrals()->attach($referral->id);
 
         return response()->json([
