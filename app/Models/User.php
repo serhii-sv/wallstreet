@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasReferral;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,12 +23,19 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
+    use HasReferral;
 
+    /**
+     * @var string
+     */
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 
     // Append additional fields to the model
+    /**
+     * @var string[]
+     */
     protected $appends = [
         'short_name',
         'last_activity'
@@ -124,198 +132,6 @@ class User extends Authenticatable
         return $balances;
     }
 
-    public function partner() {
-        return $this->belongsTo(User::class, 'partner_id', 'id');
-    }
-    /**
-     * @return bool
-     */
-    public function hasReferrals()
-    {
-        return self::where('partner_id', $this->my_id)->count() > 0;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function referrals()
-    {
-        return $this->hasMany(User::class, 'partner_id', 'my_id');
-    }
-
-    /**
-     * @param int $level
-     * @param bool $json
-     * @return array
-     */
-    public function getReferralsOnLevel($level=1, bool $json = false)
-    {
-        $all = $this->getAllReferrals($json);
-
-        return isset($all[$level])
-            ? $all[$level]
-            : null;
-    }
-
-    /**
-     * @param int $level
-     * @return array
-     */
-    public function getLevels($level=1)
-    {
-        $countReferrals = $this->referrals()->count();
-        $levels         = [
-            $level => $countReferrals
-        ];
-
-        if ($countReferrals > 0) {
-            /** @var User $referral */
-            foreach ($this->referrals()->get() as $referral) {
-                foreach ($referral->getLevels($level+1) as $l => $v) {
-                    if (isset($levels[$l])) {
-                        $levels[$l] += $v;
-                        continue;
-                    }
-                    if ($v > 0) {
-                        $levels[$l] = $v;
-                    }
-                }
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param int $level
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getLevels24h($level=1)
-    {
-        $countReferrals     = $this->referrals()
-            ->count();
-        $countReferrals24h  = $this->referrals()
-            ->where('created_at', '>', now()->subDay()->toDateTimeString())
-            ->count();
-        $levels             = [
-            $level => $countReferrals24h
-        ];
-
-        if ($countReferrals > 0) {
-            /** @var User $referral */
-            foreach ($this->referrals()->get() as $referral) {
-                foreach ($referral->getLevels24h($level+1) as $l => $v) {
-                    if (isset($levels[$l])) {
-                        $levels[$l] += $v;
-                        continue;
-                    }
-                    if ($v > 0) {
-                        $levels[$l] = $v;
-                    }
-                }
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param bool $json
-     * @param int $flag
-     * @return array
-     */
-    public function getAllReferrals(bool $json = false, $flag=1)
-    {
-        /** @var User $referrals */
-        $referrals  = $this->referrals()->get();
-        $levels     = [];
-
-        if (null !== $referrals) {
-            $levels[$flag] = null;
-
-            /** @var User $referral */
-            foreach ($referrals as $referral) {
-                $levels[$flag][] = true === $json
-                    ? $referral->toJson()
-                    : $referral->toArray();
-
-                if ($referral->hasReferrals()) {
-                    foreach ($referral->getAllReferrals($json, $flag+1) as $l => $list) {
-                        foreach ($list as $v) {
-                            $levels[$l][] = $v;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getReferralOnLoadPercent($level)
-    {
-        return Referral::getOnLoad($level);
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getReferralOnProfitPercent($level)
-    {
-        return Referral::getOnProfit($level);
-    }
-
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getReferralOnTaskPercent($level)
-    {
-        return Referral::getOnTask($level);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPartnerLevels()
-    {
-        static $partnerLevel = 0;
-        static $partnerLevels;
-
-        if ($user = User::where('my_id', $this->partner_id)->first()) {
-            $partnerLevels[] = ++$partnerLevel;
-            $user->getPartnerLevels();
-        }
-        return !empty($partnerLevels) ? $partnerLevels : [];
-    }
-
-    /**
-     * @param $plevel
-     * @param bool $json
-     * @return mixed
-     */
-    public function getPartnerOnLevel($plevel, bool $json = false)
-    {
-        if ($user = User::where('my_id', $this->partner_id)->first()) {
-            if ($plevel == 1) {
-                if (true === $json) {
-                    return $user->toArray();
-                }
-                return $user;
-            }
-            $plevel = $plevel - 1;
-
-            return $user->getPartnerOnLevel($plevel, $json);
-        }
-        return null;
-    }
-
     /**
      * Accessor for short name
      * On the right sidebar menu with all users sometimes names are too long
@@ -375,6 +191,10 @@ class User extends Authenticatable
 
         return $this;
     }
+
+    /**
+     * @return BelongsToMany
+     */
     public function roles(): BelongsToMany
     {
         return $this->morphToMany(
@@ -386,6 +206,9 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function permissions(): BelongsToMany
     {
         return $this->morphToMany(
@@ -396,4 +219,5 @@ class User extends Authenticatable
             'permission_id'
         )->withTimestamps();
     }
+
 }

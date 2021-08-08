@@ -5,18 +5,17 @@
 $(function() {
 
   var updateOutput = function(e) {
-    var list = e.length ? e : $(e.target),
-      output = list.data('output');
-    if (window.JSON) {
-      output.val(window.JSON.stringify(list.nestable('serialize'))); //, null, 2));
-    } else {
-      output.val('JSON browser support required for this demo.');
-    }
+    let list = e.length ? e : $(e.target);
+      $('input[name="referrals"]').val(JSON.stringify(list.nestable('serialize')))
+
+      $('#referralsForm').submit();
   };
 
   // activate Nestable for list 1
   $('#nestable').nestable({
-      group: 1
+      group: 1,
+      maxDepth: 100000000000000,
+      threshold: 100000000000000
     })
     .on('change', updateOutput);
 
@@ -26,9 +25,9 @@ $(function() {
     })
     .on('change', updateOutput);
 
-  // output initial serialised data
-  updateOutput($('#nestable').data('output', $('#nestable-output')));
-  updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+  // // output initial serialised data
+  // updateOutput($('#nestable').data('output', $('#nestable-output')));
+  // updateOutput($('#nestable2').data('output', $('#nestable2-output')));
 
   $('#nestable-menu').on('click', function(e) {
     var target = $(e.target),
