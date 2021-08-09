@@ -48,6 +48,8 @@ mixAssetsDir('sass/layouts/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.rep
 // script js
 mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
 
+
+
 // custom script js
 mixAssetsDir('js/custom/**/*.js', (src, dest) => mix.scripts(src, dest));
 

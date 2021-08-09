@@ -1,3 +1,4 @@
+require('form-select2');
 /*
  * Contact Page
  */

@@ -140,6 +140,9 @@ $(function () {
     gutter: 0,
     coverTrigger: true,
     alignment: "left"
+  });
+  $(".notification-button").on("click", function (e) {
+    $(this).find('.notification-badge').text(0).remove();
   }); // Notification, Profile, Translation, Settings Dropdown & Horizontal Dropdown
 
   $(".notification-button, .profile-button, .translation-button, .dropdown-settings").dropdown({
