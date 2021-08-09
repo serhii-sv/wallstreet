@@ -9,6 +9,11 @@ $(function () {
                     html: response.message,
                     classes: response.success ? 'green' : 'red'
                 })
+                if (response.success) {
+                    setTimeout(() => {
+                        location.reload()
+                    }, 200)
+                }
             }
         });
         return false;
