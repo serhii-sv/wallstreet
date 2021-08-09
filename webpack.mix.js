@@ -48,6 +48,9 @@ mixAssetsDir('sass/layouts/**/!(_)*.scss', (src, dest) => mix.sass(src, dest.rep
 // script js
 mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
 
+
+mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
+
 // custom script js
 mixAssetsDir('js/custom/**/*.js', (src, dest) => mix.scripts(src, dest));
 
@@ -72,6 +75,7 @@ mix.js('resources/js/materialize.js', 'public/js')
 
 
 mix.copy('resources/js/vendors.min.js', 'public/js/vendors.min.js');
+mix.copy('resources/js/vendors/select2/select2.full.min.js', 'public/js/vendors/select2/select2.full.min.js');
 mix.copy('resources/js/jquery.js', 'public/js/jquery.js');
 mix.copy('resources/js/bootstrap-colorpicker.min.js', 'public/js/bootstrap-colorpicker.min.js');
 

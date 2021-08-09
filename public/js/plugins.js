@@ -3,8 +3,6 @@ var __webpack_exports__ = {};
 /*!*********************************!*\
   !*** ./resources/js/plugins.js ***!
   \*********************************/
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /*================================================================================
   Item Name: Materialize - Material Design Admin Template
   Version: 5.0
@@ -82,8 +80,6 @@ $(window).on("load", function () {
 $(function () {
   "use strict"; // function for detect touch device
 
-  var _$$dropdown;
-
   function is_touch_device() {
     var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
 
@@ -144,6 +140,9 @@ $(function () {
     gutter: 0,
     coverTrigger: true,
     alignment: "left"
+  });
+  $(".notification-button").on("click", function (e) {
+    $(this).find('.notification-badge').text(0).remove();
   }); // Notification, Profile, Translation, Settings Dropdown & Horizontal Dropdown
 
   $(".notification-button, .profile-button, .translation-button, .dropdown-settings").dropdown({
@@ -155,15 +154,16 @@ $(function () {
     coverTrigger: false,
     alignment: "right"
   });
-  $(".dropdown-menu").dropdown((_$$dropdown = {
+  $(".dropdown-menu").dropdown({
     inDuration: 300,
     outDuration: 225,
     constrainWidth: false,
     hover: false,
     gutter: 0,
     coverTrigger: false,
-    alignment: "right"
-  }, _defineProperty(_$$dropdown, "hover", false), _defineProperty(_$$dropdown, "closeOnClick", false), _$$dropdown)); // horizonatal nav nested dropdown
+    alignment: "right",
+    closeOnClick: false
+  }); // horizonatal nav nested dropdown
 
   $(".dropdownSub-menu").dropdown({
     closeOnClick: false,

@@ -152,7 +152,9 @@ $(function () {
       coverTrigger: true,
       alignment: "left"
    });
-
+  $(".notification-button").on("click", function (e){
+    $(this).find('.notification-badge').text(0).remove();
+  });
    // Notification, Profile, Translation, Settings Dropdown & Horizontal Dropdown
    $(".notification-button, .profile-button, .translation-button, .dropdown-settings").dropdown({
       inDuration: 300,
@@ -172,7 +174,6 @@ $(function () {
       gutter: 0,
       coverTrigger: false,
       alignment: "right",
-      hover: false,
       closeOnClick: false,
    });
 
