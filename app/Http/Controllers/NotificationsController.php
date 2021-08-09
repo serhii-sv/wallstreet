@@ -18,13 +18,11 @@ class NotificationsController extends Controller
             return $query->where('type_id', $filter_type);
         })->orderByDesc('created_at')->paginate(10);
     
-        $notification_types = NotificationType::all();
         $notifications_count = Notification::count();
 
     
         return view('pages.notifications.index', compact(
             'notifications',
-            'notification_types',
             'notifications_count',
          
         ));
