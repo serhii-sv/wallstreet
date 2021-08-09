@@ -7,6 +7,9 @@
 namespace App\Http\Controllers\Technical;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ReftreeController
@@ -25,6 +28,63 @@ class ReftreeController extends Controller
             throw new \Exception('reftree id is null');
         }
 
-        return getAdminD3V3ReferralsTree($id);
+        $user = User::findOrFail($id);
+
+        return view('pages.users.reftree', [
+            'referrals_data' => $user->getAllReferrals(),
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function referralsRedistribution(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        return response()->json($user->referralsRedistribution($request->referrals));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addReferral(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $request->new_referral)) {
+            $referral = User::where('id', $request->new_referral)
+                ->first();
+        } else {
+            $referral = User::orWhere('email', $request->new_referral)
+                ->orWhere('login', $request->new_referral)
+                ->first();
+        }
+
+        if (is_null($referral)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Пользователь с таки данными не зарегистрирован'
+            ]);
+        }
+
+        if (in_array($referral->id, $user->referrals()->pluck('id')->toArray())) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Пользователь уже является рефералом'
+            ]);
+        }
+      
+        $user->referrals()->attach($referral->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Добавлен новый реферал'
+        ]);
     }
 }

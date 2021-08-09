@@ -17,7 +17,7 @@
     <div class="card-panel">
       @include('panels.inform')
       <div class="row">
-        <div class="col s12 m7">
+        <div class="col s12 m6">
           <div class="display-flex media">
             <a href="#" class="avatar">
               <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle"
@@ -34,10 +34,12 @@
             </div>
           </div>
         </div>
-        <div class="col s12 m5 quick-action-btns display-flex justify-content-end align-items-center pt-2">
+        <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center pt-2">
           <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo">
-            <i class="material-icons">mail_outline</i></a>
+            <i class="material-icons">mail_outline</i>
+          </a>
           <a href="{{ route('users.edit', $user) }}" class="btn-small indigo">Редактировать</a>
+            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
         </div>
       </div>
     </div>
@@ -102,7 +104,7 @@
       </div>
     </div>
     <!-- users view card data ends -->
-    
+
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
@@ -162,7 +164,7 @@
                   <td>IP:</td>
                   <td>{{ $user->ip ?? 'Не указано' }}</td>
                 </tr>
-              
+
               </tbody>
             </table>
           </div>
@@ -171,7 +173,7 @@
       </div>
     </div>
     <!-- users view card details ends -->
-  
+
   </div>
   <!-- users view ends -->
 @endsection
