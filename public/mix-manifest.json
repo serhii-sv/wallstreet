@@ -142,7 +142,6 @@
     "/json/template-list.json": "/json/template-list.json",
     "/json/verticalMenu.json": "/json/verticalMenu.json",
     "/js/vendors.min.js": "/js/vendors.min.js",
-    "/js/vendors/select2/select2.full.min.js": "/js/vendors/select2/select2.full.min.js",
     "/js/jquery.js": "/js/jquery.js",
     "/js/bootstrap-colorpicker.min.js": "/js/bootstrap-colorpicker.min.js"
 }

@@ -12,9 +12,14 @@
 
 {{-- page style --}}
 @section('page-style')
+  <link href="https://cdn.quilljs.com/1.0.5/quill.snow.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-contact.css')}}">
   <link rel="stylesheet" href="{{ asset('vendors/select2/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/select2/select2-materialize.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('vendors/quill/katex.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('vendors/quill/monokai-sublime.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('vendors/quill/quill.snow.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('vendors/quill/quill.bubble.css') }}">
 @endsection
 
 {{-- page content --}}
@@ -120,6 +125,12 @@
               </div>
               <div class="row">
                 <div class="input-field col s12 width-100">
+                  <textarea id="editor" class="materialize-textarea"></textarea>
+                  <label for="editor">Текст для шаблона</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12 width-100">
                   <textarea id="textarea1" class="materialize-textarea"></textarea>
                   <label for="textarea1">Текст уведомления</label>
                   <a class="waves-effect waves-light btn">Отправить</a>
@@ -135,7 +146,8 @@
 
 {{-- page script --}}
 @section('page-script')
-  <script src="{{asset('js/vendors/select2/vendors.min.js')}}"></script>
+  <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
   <script src="{{asset('js/scripts/page-contact.js')}}"></script>
   <script src="{{asset('js/scripts/form-select2.js')}}"></script>
+  
 @endsection
