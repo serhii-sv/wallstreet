@@ -212,19 +212,29 @@ trait HasReferral
 
     /**
      * @param $referrals
-     * @return bool
+     * @param int $flag
+     * @return bool|false[]
      */
-    public function referralsRedistribution($referrals)
+    public function referralsRedistribution($referrals, $flag = 1)
     {
+        if ($flag > 1000) {
+            return [
+                'success' => false,
+                'message' => 'Возника ошибка'
+            ];
+        }
         $ids = [];
         $this->referrals()->detach();
         foreach ($referrals as $referral) {
-            $ids[] = $referral->id;
-            $user = User::find($referral->id);
-            $user->referralsRedistribution($referral->children ?? []);
+            $ids[] = $referral['id'];
+            $user = User::find($referral['id']);
+            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
         $this->referrals()->sync($ids);
-        return true;
+        return [
+            'success' => true,
+            'message' => 'Сохранено'
+        ];
     }
 
     /**

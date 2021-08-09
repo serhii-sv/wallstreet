@@ -26,7 +26,7 @@
       <div id="card-stats" class="pt-0">
         <div class="row">
           <div class="col s12 m6 l6 xl3">
-            <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft">
+            <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft" style="height: 156.05px">
               <div class="padding-4">
                 <div class="row">
                   <div class="col s7 m5">
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="col s12 m6 l6 xl3">
-            <div class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeLeft">
+            <div class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeLeft" style="height: 156.05px">
               <div class="padding-4">
                 <div class="row">
                   <div class="col s7 m5">
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="col s12 m6 l6 xl3">
-            <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeRight">
+            <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeRight" style="height: 156.05px">
               <div class="padding-4">
                 <div class="row">
                   <div class="col s7 m5">
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div class="col s12 m6 l6 xl3">
-            <div class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight">
+            <div class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight" style="height: 156.05px">
               <div class="padding-4">
                 <div class="row">
                   <div class="col s7 m5">

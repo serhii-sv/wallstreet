@@ -6,9 +6,23 @@ $(function() {
 
   var updateOutput = function(e) {
     let list = e.length ? e : $(e.target);
-      $('input[name="referrals"]').val(JSON.stringify(list.nestable('serialize')))
-
-      $('#referralsForm').submit();
+      $.ajax({
+          url: $('#request_url').val(),
+          method: 'post',
+          data: {
+              _token: $('meta[name="csrf-token"]').attr('content'),
+              referrals: list.nestable('serialize')
+          },
+          success: (response) => {
+              M.toast({
+                  html: response.message,
+                  classes: response.success ? 'green' : 'red'
+              })
+              setTimeout(() => {
+                  location.reload()
+              }, 200)
+          }
+      })
   };
 
   // activate Nestable for list 1
