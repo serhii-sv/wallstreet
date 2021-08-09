@@ -44,15 +44,7 @@
                   Все
                 </a>
               </li>
-              @forelse($notification_types as $type)
-                <li @if(request()->get('type') === $type->id) class="active" @endif>
-                  <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}" class="text-sub">
-                    <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                    {{  $type->name }}
-                  </a>
-                </li>
-              @empty
-              @endforelse
+       
             </ul>
           </div>
         </div>
