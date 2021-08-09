@@ -22,6 +22,7 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('template_name');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
         Schema::create('notifications', function (Blueprint $table) {
