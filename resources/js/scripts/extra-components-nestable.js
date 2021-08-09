@@ -18,18 +18,15 @@ $(function() {
                   html: response.message,
                   classes: response.success ? 'green' : 'red'
               })
-              setTimeout(() => {
-                  location.reload()
-              }, 200)
           }
       })
+      return false;
   };
 
   // activate Nestable for list 1
   $('#nestable').nestable({
       group: 1,
-      maxDepth: 100000000000000,
-      threshold: 100000000000000
+      maxDepth: 100
     })
     .on('change', updateOutput);
 
