@@ -13,20 +13,22 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_templates', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('template_name');
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
+//        Schema::create('notification_templates', function (Blueprint $table) {
+//            $table->id();
+//            $table->string('name');
+//            $table->string('template_name');
+//            $table->boolean('active')->default(true);
+//            $table->timestamps();
+//        });
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('type_id');
-            $table->integer('template_id');
+            $table->boolean('type_browser')->default(false);
+            $table->boolean('type_sms')->default(false);
             $table->string('name');
+            $table->string('subject');
             $table->string('text');
             $table->timestamps();
+            //$table->integer('template_id');
         });
         Schema::create('notification_users', function (Blueprint $table) {
             $table->id();

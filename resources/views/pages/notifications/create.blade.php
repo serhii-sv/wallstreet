@@ -70,69 +70,63 @@
           <div class="row">
             <form action="{{ route('notifications.store') }}" method="post" class="col s12">
               @csrf
+              @include('panels.inform')
               <div class="row">
                 <div class="input-field col m6 s12">
-                  <input id="name" type="text" class="validate">
+                  <input id="name" type="text" class="validate" name="name" value="{{ old('name') ?? '' }}">
+                  <label for="name">Название</label>
+                </div>
+                <div class="input-field col m6 s12">
+                  <input id="name" type="text" class="validate" name="subject" value="{{ old('subject') ?? '' }}">
                   <label for="name">Тема</label>
                 </div>
-                <div class="input-field col m6 s12">
-                  <input id="email" type="text" class="validate">
-                  <label for="email">С какого email</label>
-                </div>
               </div>
+              <style>
+                  .select2-search__field {
+                      min-width: 100px;
+                  }
+              </style>
               <div class="row">
                 <div class="input-field col m6 s12">
-                  <select class="select2 browser-default ">
-                    <option value="">Свой шаблон</option>
-                    @forelse($notification_templates as $item)
-                      <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
-                    @empty
-                      <option value="" disabled>Шаблонов нет</option>
-                    @endforelse
-                  </select>
+                  <input id="email" type="text" class="validate" name="from_email" value="{{ old('from_email') ?? '' }}">
+                  <label for="email">С какого email</label>
                 </div>
                 <div class="input-field col m6 s12">
                   <label class="">Кому отправить</label>
-                  <select class="select2-data-ajax browser-default" id="select2-ajax" multiple></select>
+                  <select class="select2-get-user-ajax browser-default" id="select2-ajax" name="users[]" multiple></select>
                 </div>
               </div>
               <div class="row" style="margin-top: 10px;">
                 <div class="col">Канал связи</div>
               </div>
               <div class="row ">
-                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
-                  <p style="margin-bottom: 5px;">
-                    <label>
-                      <input type="checkbox" name="type" checked="checked" />
-                      <span>Email</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
-                  <p style="margin-bottom: 5px;">
-                    <label>
-                      <input type="checkbox" name="type" />
-                      <span>Браузер</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
-                  <p style="margin-bottom: 5px;">
-                    <label>
-                      <input type="checkbox" name="type" disabled />
-                      <span>Смс (Пока не доступно)</span>
-                    </label>
-                  </p>
+                @forelse($notification_types as $key => $item)
+                  @if($item['active'])
+                    <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
+                      <p style="margin-bottom: 5px;">
+                        <label>
+                          <input type="checkbox" name="type[]" value="{{ $key }}" @if($loop->first) checked @endif @if(!$item['active']) disabled @endif/>
+                          <span>{{ $item['name'] }}</span>
+                        </label>
+                      </p>
+                    </div>
+                  @endif
+                @empty
+                @endforelse
+              </div>
+              <div class="divider"></div>
+              <div class="row ">
+                <div class="input-field col s12 width-100">
+                  <div class="font-weight-500 mb-2">Сообщение по Email</div>
+                  <textarea id="editor" name="email_text" class="materialize-textarea" placeholder="Текст для шаблона">{{ old('email_text') ?? '' }}</textarea>
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s12 width-100">
-                  <textarea id="editor" name="email_text" class="materialize-textarea" placeholder="Текст для шаблона"></textarea>
+                <div class="col">
+                  <div class="font-weight-500 ">Сообщение браузер</div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="input-field col s12 width-100">
-                  <textarea id="textarea1" class="materialize-textarea"></textarea>
+                  <textarea id="textarea1" name="text" class="materialize-textarea">{{ old('text') ?? '' }}</textarea>
                   <label for="textarea1">Текст уведомления</label>
                   <button class="waves-effect waves-light btn">Отправить</button>
                 </div>
@@ -152,6 +146,6 @@
   <script src="{{asset('js/scripts/form-select2.js')}}"></script>
   <script src="//cdn.ckeditor.com/4.16.1/full/ckeditor.js"></script>
   <script>
-    CKEDITOR.replace( 'email_text' );
+    CKEDITOR.replace('email_text');
   </script>
 @endsection
