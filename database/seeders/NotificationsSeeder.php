@@ -23,7 +23,7 @@ class NotificationsSeeder extends Seeder
             'name' => 'Смс',
         ]);
         DB::table('notification_templates')->insert([
-            'name' => 'Свой',
+            'name' => 'Свой шаблон',
             'template_name' => 'custom',
         ]);
         DB::table('notification_templates')->insert([

@@ -68,7 +68,8 @@
         </div>
         <div class="col s12 m12 l8 contact-form margin-top-contact">
           <div class="row">
-            <form class="col s12">
+            <form action="{{ route('notifications.store') }}" method="post" class="col s12">
+              @csrf
               <div class="row">
                 <div class="input-field col m6 s12">
                   <input id="name" type="text" class="validate">
@@ -101,7 +102,7 @@
                 <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
                   <p style="margin-bottom: 5px;">
                     <label>
-                      <input type="checkbox" checked="checked" />
+                      <input type="checkbox" name="type" checked="checked" />
                       <span>Email</span>
                     </label>
                   </p>
@@ -109,7 +110,7 @@
                 <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
                   <p style="margin-bottom: 5px;">
                     <label>
-                      <input type="checkbox" />
+                      <input type="checkbox" name="type" />
                       <span>Браузер</span>
                     </label>
                   </p>
@@ -117,7 +118,7 @@
                 <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
                   <p style="margin-bottom: 5px;">
                     <label>
-                      <input type="checkbox" disabled />
+                      <input type="checkbox" name="type" disabled />
                       <span>Смс (Пока не доступно)</span>
                     </label>
                   </p>
@@ -125,15 +126,14 @@
               </div>
               <div class="row">
                 <div class="input-field col s12 width-100">
-                  <textarea id="editor" class="materialize-textarea"></textarea>
-                  <label for="editor">Текст для шаблона</label>
+                  <textarea id="editor" name="email_text" class="materialize-textarea" placeholder="Текст для шаблона"></textarea>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12 width-100">
                   <textarea id="textarea1" class="materialize-textarea"></textarea>
                   <label for="textarea1">Текст уведомления</label>
-                  <a class="waves-effect waves-light btn">Отправить</a>
+                  <button class="waves-effect waves-light btn">Отправить</button>
                 </div>
               </div>
             </form>
@@ -149,5 +149,8 @@
   <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
   <script src="{{asset('js/scripts/page-contact.js')}}"></script>
   <script src="{{asset('js/scripts/form-select2.js')}}"></script>
-  
+  <script src="//cdn.ckeditor.com/4.16.1/full/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace( 'email_text' );
+  </script>
 @endsection

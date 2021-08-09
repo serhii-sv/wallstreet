@@ -40,7 +40,7 @@ class NotificationsController extends Controller
     
     public function store(Request $request)
     {
-        //
+       
     }
 
    
