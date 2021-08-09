@@ -13,11 +13,6 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
         Schema::create('notification_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -32,8 +27,6 @@ class CreateNotificationsTable extends Migration
             $table->string('name');
             $table->string('text');
             $table->timestamps();
-            $table->foreign('type_id')->references('id')->on('notification_types')->onDelete('cascade');
-            $table->foreign('template_id')->references('id')->on('notification_templates')->onDelete('cascade');
         });
         Schema::create('notification_users', function (Blueprint $table) {
             $table->id();
@@ -41,8 +34,6 @@ class CreateNotificationsTable extends Migration
             $table->integer('notification_id');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('notification_id')->references('id')->on('notifications')->onDelete('cascade');
         });
     }
 

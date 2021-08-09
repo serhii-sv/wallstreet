@@ -83,6 +83,7 @@
               <div class="row">
                 <div class="input-field col m6 s12">
                   <select class="select2 browser-default ">
+                    <option value="">Свой шаблон</option>
                     @forelse($notification_templates as $item)
                       <option value="{{ $item->id }}">{{ $item->name ?? '' }}</option>
                     @empty
