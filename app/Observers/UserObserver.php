@@ -49,6 +49,10 @@ class UserObserver
     {
         Wallet::registerWallets($user);
 
+        if (null !== $user->partner) {
+            $user->generatePartnerTree($user->partner);
+        }
+
         cache()->forget('counts.users');
     }
 
@@ -65,6 +69,9 @@ class UserObserver
             $user->login = $user->email;
         }
 
+        if (null === $user->my_id || empty($user->my_id)) {
+            $user->generateMyId();
+        }
     }
 
     /**
