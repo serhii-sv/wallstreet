@@ -75,7 +75,6 @@
                 </div>
               </div>
               <div class="row">
-                
                 <div class="input-field col m6 s12">
                   <select class="select2 browser-default ">
                     @forelse($notification_templates as $item)
@@ -88,6 +87,35 @@
                 <div class="input-field col m6 s12">
                   <label class="">Кому отправить</label>
                   <select class="select2-data-ajax browser-default" id="select2-ajax" multiple></select>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 10px;">
+                <div class="col">Канал связи</div>
+              </div>
+              <div class="row ">
+                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
+                  <p style="margin-bottom: 5px;">
+                    <label>
+                      <input type="checkbox" checked="checked" />
+                      <span>Email</span>
+                    </label>
+                  </p>
+                </div>
+                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
+                  <p style="margin-bottom: 5px;">
+                    <label>
+                      <input type="checkbox" />
+                      <span>Браузер</span>
+                    </label>
+                  </p>
+                </div>
+                <div class="input-field col m6 s12" style="margin-bottom: 5px;margin-top: 5px;">
+                  <p style="margin-bottom: 5px;">
+                    <label>
+                      <input type="checkbox" disabled />
+                      <span>Смс (Пока не доступно)</span>
+                    </label>
+                  </p>
                 </div>
               </div>
               <div class="row">
