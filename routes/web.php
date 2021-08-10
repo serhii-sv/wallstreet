@@ -53,6 +53,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
           
             Route::resource('/notifications', NotificationsController::class);
+            Route::post('/notifications/preview', [NotificationsController::class, 'showPreview'])->name('notifications.preview');
 
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
