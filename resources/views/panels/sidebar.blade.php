@@ -83,7 +83,7 @@
         {{--                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['replenishments_amount']), 0, ',', ' ') }}</span>--}}
       </a>
     </li>
-    
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active' : '') }}" href="{{ route('cloud_files.manager') }}">
         <i class="material-icons">cloud_download</i>
@@ -91,13 +91,20 @@
         <span class="badge badge pill purple float-right mr-10">{{ $counts['files'] }}</span>
       </a>
     </li>
-    
+
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('notifications.*') ? 'active' : '') }}" href="{{ route('notifications.index') }}">
         <i class="material-icons">cloud_download</i>
         <span class="menu-title" data-i18n="Уведомления">Уведомления</span>
       </a>
     </li>
+
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active' : '') }}" href="{{ route('kanban.index') }}">
+              <i class="material-icons">developer_board</i>
+              <span class="menu-title" data-i18n="Задачи">Задачи</span>
+          </a>
+      </li>
 
     <li class="bold">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">

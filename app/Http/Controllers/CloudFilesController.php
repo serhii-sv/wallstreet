@@ -194,6 +194,7 @@ class CloudFilesController extends Controller
             return redirect()->route('cloud_files.manager')->with('error_short', 'Такой папки не существует.');
         }
 
+        $folder->files()->delete();
         $folder->delete();
 
         Storage::disk('do_spaces')->deleteDirectory($folder->folder_name);

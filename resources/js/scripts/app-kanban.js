@@ -2,154 +2,211 @@ $(document).ready(function () {
     var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users, kanban_curr_item_date;
     // Kanban Board and Item Data passed by json
 
-    var kanban_board_data = [
-        {
-            id: "1",
-            title: "TO DO",
-            headerBg: "blue",
-            item: [
-                {
-                    id: "1_1",
-                    title: "Express jupiter express for outer solar system to travel",
-                    border: "green",
-                    dueDate: "SEPTEMBER 9, 2019",
-                    comment: 1,
-                    attachment: 1,
-                    users: [
-                        "images/avatar/avatar-10.png"
-                    ]
-                },
-                {
-                    id: "1_2",
-                    title: "Type Something",
-                    border: "orange",
-                    image: "images/gallery/46.jpg",
-                    dueDate: "FEBRUARY 1, 20190"
-                },
-                {
-                    id: "1_3",
-                    title: "Social Media Graphics",
-                    border: "cyan",
-                    dueDate: "OCTOMBER 3, 2019",
-                    comment: 23,
-                    attachment: 1,
-                    users: [
-                        "images/avatar/avatar-11.png"
-                    ]
-                },
-                {
-                    id: "1_4",
-                    title: "Book newspaper ads online in popular Book.",
-                    border: "red",
-                    dueDate: "MAY 3, 2019",
-                    comment: 56,
-                    attachment: 1,
-                    users: [
-                        "images/avatar/avatar-12.png"
-                    ]
-                },
-                {
-                    id: "1_5",
-                    title: "Twitter Marketing",
-                    border: "blue-grey"
-                }
-            ]
-        },
-        {
-            id: "2",
-            title: "IN PROGRESS",
-            headerBg: "orange",
-            item: [
-                {
-                    id: "2_1",
-                    title: "Flat UI Kit Design",
-                    border: "light-blue"
-                },
-                {
-                    id: "2_2",
-                    title: "Drag people onto a card to indicate that.",
-                    border: "orange",
-                    dueDate: "OCTOMBER 1, 2019",
-                    comment: 8,
-                    users: [
-                        "images/avatar/avatar-13.png"
-                    ]
-                },
-                {
-                    id: "2_3",
-                    title: "Application Design",
-                    border: "cyan"
-                },
-                {
-                    id: "2_4",
-                    title: "BBQ Logo Design 😱",
-                    border: "blue-grey",
-                    dueDate: "OCTOMBER 6, 2019",
-                    comment: 10,
-                    attachment: 1,
-                    badgeContent: "AK",
-                    badgeColor: "red"
-                }
-            ]
-        },
-        {
-            id: "3",
-            title: "IN REVIEW",
-            headerBg: "red",
-            item: [
-                {
-                    id: "3_1",
-                    title: "Database Management System (DBMS) is a collection of programs",
-                    border: "light-blue",
-                    dueDate: "MARCH 1, 2019",
-                    comment: 10,
-                    users: [
-                        "images/avatar/avatar-14.png"
-                    ]
-                },
-                {
-                    id: "3_2",
-                    title: "Admin Dashboard 🙂",
-                    border: "cyan",
-                    dueDate: "MARCH 6, 2019",
-                    comment: 7,
-                    badgeContent: "AD",
-                    badgeColor: "blue"
-                },
-                {
-                    id: "3_3",
-                    title: "Fix bootstrap progress bar with & issue",
-                    border: "red",
-                    dueDate: "MARCH 9, 2019",
-                    users: [
-                        "images/avatar/avatar-15.png"
-                    ]
-                }
-            ]
-        },
-    ];
+    // var kanban_board_data = [
+    //     {
+    //         id: "1",
+    //         title: "TO DO",
+    //         headerBg: "blue",
+    //         item: [
+    //             {
+    //                 id: "1_1",
+    //                 title: "Express jupiter express for outer solar system to travel",
+    //                 border: "green",
+    //                 dueDate: "SEPTEMBER 9, 2019",
+    //                 comment: 1,
+    //                 attachment: 1,
+    //                 users: [
+    //                     "images/avatar/avatar-10.png"
+    //                 ]
+    //             },
+    //             {
+    //                 id: "1_2",
+    //                 title: "Type Something",
+    //                 border: "orange",
+    //                 image: "images/gallery/46.jpg",
+    //                 dueDate: "FEBRUARY 1, 20190"
+    //             },
+    //             {
+    //                 id: "1_3",
+    //                 title: "Social Media Graphics",
+    //                 border: "cyan",
+    //                 dueDate: "OCTOMBER 3, 2019",
+    //                 comment: 23,
+    //                 attachment: 1,
+    //                 users: [
+    //                     "images/avatar/avatar-11.png"
+    //                 ]
+    //             },
+    //             {
+    //                 id: "1_4",
+    //                 title: "Book newspaper ads online in popular Book.",
+    //                 border: "red",
+    //                 dueDate: "MAY 3, 2019",
+    //                 comment: 56,
+    //                 attachment: 1,
+    //                 users: [
+    //                     "images/avatar/avatar-12.png"
+    //                 ]
+    //             },
+    //             {
+    //                 id: "1_5",
+    //                 title: "Twitter Marketing",
+    //                 border: "blue-grey"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: "2",
+    //         title: "IN PROGRESS",
+    //         headerBg: "orange",
+    //         item: [
+    //             {
+    //                 id: "2_1",
+    //                 title: "Flat UI Kit Design",
+    //                 border: "light-blue"
+    //             },
+    //             {
+    //                 id: "2_2",
+    //                 title: "Drag people onto a card to indicate that.",
+    //                 border: "orange",
+    //                 dueDate: "OCTOMBER 1, 2019",
+    //                 comment: 8,
+    //                 users: [
+    //                     "images/avatar/avatar-13.png"
+    //                 ]
+    //             },
+    //             {
+    //                 id: "2_3",
+    //                 title: "Application Design",
+    //                 border: "cyan"
+    //             },
+    //             {
+    //                 id: "2_4",
+    //                 title: "BBQ Logo Design 😱",
+    //                 border: "blue-grey",
+    //                 dueDate: "OCTOMBER 6, 2019",
+    //                 comment: 10,
+    //                 attachment: 1,
+    //                 badgeContent: "AK",
+    //                 badgeColor: "red"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: "3",
+    //         title: "IN REVIEW",
+    //         headerBg: "red",
+    //         item: [
+    //             {
+    //                 id: "3_1",
+    //                 title: "Database Management System (DBMS) is a collection of programs",
+    //                 border: "light-blue",
+    //                 dueDate: "MARCH 1, 2019",
+    //                 comment: 10,
+    //                 users: [
+    //                     "images/avatar/avatar-14.png"
+    //                 ]
+    //             },
+    //             {
+    //                 id: "3_2",
+    //                 title: "Admin Dashboard 🙂",
+    //                 border: "cyan",
+    //                 dueDate: "MARCH 6, 2019",
+    //                 comment: 7,
+    //                 badgeContent: "AD",
+    //                 badgeColor: "blue"
+    //             },
+    //             {
+    //                 id: "3_3",
+    //                 title: "Fix bootstrap progress bar with & issue",
+    //                 border: "red",
+    //                 dueDate: "MARCH 9, 2019",
+    //                 users: [
+    //                     "images/avatar/avatar-15.png"
+    //                 ]
+    //             }
+    //         ]
+    //     },
+    // ];
+
+    var kanban_board_data = boards;
+
+    $(document).on("focusout", ".kanban-title-board", function () {
+        $(this).attr("contenteditable", "true");
+        $(this).addClass("line-ellipsis");
+
+        $.ajax({
+            url: '/kanban/board/' + $(this).closest('.kanban-board').data('id') + '/update',
+            method: 'post',
+            data: {
+                title: $(this).text(),
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: (response) => {
+
+            }
+        })
+        return false;
+    });
 
     // Kanban Board
     var KanbanExample = new jKanban({
         element: "#kanban-app", // selector of the kanban container
-        buttonContent: "+ Add New Item", // text or html content of the board button
+        buttonContent: "+ Создать задачу", // text or html content of the board button
         widthBoard: '300px',
         // click on current kanban-item
         click: function (el) {
-            // kanban-overlay and sidebar display block on click of kanban-item
-            $(".kanban-overlay").addClass("show");
-            $(".kanban-sidebar").addClass("show");
-
-            // Set el to var kanban_curr_el, use this variable when updating title
-            kanban_curr_el = el;
-
-            // Extract  the kan ban item & id and set it to respective vars
-            kanban_item_title = $(el).contents()[0].data;
-            kanban_curr_item_id = $(el).attr("data-eid");
-            // set edit title
-            $(".edit-kanban-item .edit-kanban-item-title").val(kanban_item_title);
+            // // kanban-overlay and sidebar display block on click of kanban-item
+            // $(".kanban-overlay").addClass("show");
+            // $(".kanban-sidebar").addClass("show");
+            //
+            // // Set el to var kanban_curr_el, use this variable when updating title
+            // kanban_curr_el = el;
+            //
+            // // Extract  the kan ban item & id and set it to respective vars
+            // kanban_item_title = $(el).contents()[0].data;
+            // kanban_curr_item_id = $(el).attr("data-eid");
+            // // set edit title
+            // $(".edit-kanban-item .edit-kanban-item-title").val(kanban_item_title);
         },
+        dropEl: function (el, target, source, sibling) {
+            let taskId = $(el).data('eid');
+            let boardId = KanbanExample.getParentBoardID(taskId);
 
+            let data = {};
+            $(el).closest('.kanban-board').find('.kanban-item').each((index, item) => {
+                data[$(item).data('eid')] = index + 1
+            })
+            $.ajax({
+                url: '/kanban/board/' + boardId + '/task/change-board',
+                method: 'post',
+                data: {
+                    task_id: taskId,
+                    tasks: data,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: (response) => {
+
+                }
+            })
+        },
+        dragendBoard: function (el) {
+            let data = {};
+            $('.kanban-board').each((index, board) => {
+                data[$(board).data('id')] = $(board).data('order')
+            })
+            $.ajax({
+                url: '/kanban/board/sort',
+                method: 'post',
+                data: {
+                    boards: data,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: (response) => {
+
+                }
+            })
+        },
         buttonClick: function (el, boardId) {
             // create a form to add add new element
             var formItem = document.createElement("form");
@@ -168,10 +225,36 @@ $(document).ready(function () {
             formItem.addEventListener("submit", function (e) {
                 e.preventDefault();
                 var text = e.target[0].value;
-                KanbanExample.addElement(boardId, {
-                    title: text
-                });
-                formItem.parentNode.removeChild(formItem);
+                let board = kanban_board_data.filter((element) => {
+                    if (element.id === boardId) {
+                        return element;
+                    }
+                })
+
+                $.ajax({
+                    url: '/kanban/board/' + board[0].id + '/task/store',
+                    method: 'post',
+                    data: {
+                        title: text,
+                        order: $('.kanban-item').length + 1,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (response) => {
+                        if (response.success) {
+                            KanbanExample.addElement(boardId, {
+                                title: response.task.title,
+                                id: response.task.id
+                            });
+                            formItem.parentNode.removeChild(formItem);
+                        } else {
+                            M.toast({
+                                html: response.message,
+                                classes: 'red'
+                            })
+                        }
+                    }
+                })
+                return false;
             });
             $(document).on("click", "#CancelBtn", function () {
                 $(this).closest(formItem).remove();
@@ -295,29 +378,48 @@ $(document).ready(function () {
     var i = 1;
 
     addBoardDefault.addEventListener("click", function () {
-        KanbanExample.addBoards([
-            {
-                id: "kanban-" + i, // generate random id for each new kanban
-                title: "Default Title"
+        let boardsCount = $('.kanban-board').length + 1;
+        $.ajax({
+            url: '/kanban/board/store',
+            method: 'post',
+            data: {
+                title: "Доска №" + boardsCount,
+                order: boardsCount,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: (response) => {
+                if (response.success) {
+                    KanbanExample.addBoards([
+                        {
+                            id: response.board.id, // generate random id for each new kanban
+                            title: response.board.title
+                        }
+                    ]);
+                    var kanbanNewBoard = KanbanExample.findBoard(response.board.id)
+                    if (kanbanNewBoard) {
+                        var kanban_dropdown = document.createElement("div");
+                        kanban_dropdown.setAttribute("class", "dropdown");
+                        kanbanNewBoardData = '<div class="dropdown">' +
+                            '<a class="dropdown-trigger" href="#" data-target="kan_' + response.board.id + '" > <i class="material-icons white-text">more_vert</i></a>' +
+                            '<ul id="kan_' + response.board.id + '" class="dropdown-content">' +
+                            '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Скопировать ссылку</span></a></li>' +
+                            '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Удалить</span></a></li>' +
+                            '</ul></div>';
+                        var kanbanNewDropdown = $(kanbanNewBoard).find("header");
+                        $(kanbanNewDropdown).append(kanbanNewBoardData);
+                        $(".dropdown-trigger").dropdown({
+                            constrainWidth: false
+                        });
+                    }
+                    i++;
+                } else {
+                    M.toast({
+                        html: response.message,
+                        classes: 'red'
+                    })
+                }
             }
-        ]);
-        var kanbanNewBoard = KanbanExample.findBoard("kanban-" + i)
-        if (kanbanNewBoard) {
-            var kanban_dropdown = document.createElement("div");
-            kanban_dropdown.setAttribute("class", "dropdown");
-            kanbanNewBoardData = '<div class="dropdown">' +
-                '<a class="dropdown-trigger" href="#" data-target="kan' + i + '" > <i class="material-icons white-text">more_vert</i></a>' +
-                '<ul id="kan' + i + '" class="dropdown-content">' +
-                '<li><a href="#!"><i class="material-icons">link</i><span class="menu-item">Copy Link</span></a></li>' +
-                '<li class="kanban-delete"><a href="#!"><i class="material-icons">delete</i><span class="menu-item">Delete</span></a></li>' +
-                '</ul></div>';
-            var kanbanNewDropdown = $(kanbanNewBoard).find("header");
-            $(kanbanNewDropdown).append(kanbanNewBoardData);
-            $(".dropdown-trigger").dropdown({
-                constrainWidth: false
-            });
-        }
-        i++;
+        })
     });
 
     // Delete kanban board
@@ -327,7 +429,19 @@ $(document).ready(function () {
             .closest(".kanban-board")
             .attr("data-id");
         addEventListener("click", function () {
-            KanbanExample.removeBoard($id);
+            $.ajax({
+                url: '/kanban/board/' + $id + '/destroy',
+                success: (response) => {
+                    if (response.success) {
+                        KanbanExample.removeBoard($id);
+                    } else {
+                        M.toast({
+                            html: response.message,
+                            classes: 'red'
+                        })
+                    }
+                }
+            })
         });
     });
 
@@ -370,13 +484,13 @@ $(document).ready(function () {
 
     // Kanban Quill Editor
     // -------------------
-    var composeMailEditor = new Quill(".snow-container .compose-editor", {
-        modules: {
-            toolbar: ".compose-quill-toolbar"
-        },
-        placeholder: "Write a Comment... ",
-        theme: "snow"
-    });
+    // var composeMailEditor = new Quill(".snow-container .compose-editor", {
+    //     modules: {
+    //         toolbar: ".compose-quill-toolbar"
+    //     },
+    //     placeholder: "Write a Comment... ",
+    //     theme: "snow"
+    // });
 
     // Making Title of Board editable
     // ------------------------------
@@ -392,10 +506,10 @@ $(document).ready(function () {
         });
     }
     // set unique id on all dropdown trigger
-    for (var i = 1; i <= $(".kanban-board").length; i++) {
-        $(".kanban-board[data-id='" + i + "']").find(".kanban-board-header .dropdown-trigger").attr("data-target", i);
-        $(".kanban-board[data-id='" + i + "']").find("ul").attr("id", i);
-    }
+    $(".kanban-board").each((index, board) => {
+        $(".kanban-board[data-id='" + $(board).data('id') + "']").find(".kanban-board-header .dropdown-trigger").attr("data-target", index + 1)
+        $(".kanban-board[data-id='" + $(board).data('id') + "']").find("ul").attr("id", index + 1);
+    })
     // materialise dropdown initialize
     $('.dropdown-trigger').dropdown({
         constrainWidth: false
