@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use App\Traits\ConvertCurrency;
+use App\Traits\SumOperations;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ class Transaction extends Model
 {
     use ConvertCurrency;
     use Uuids;
+    use SumOperations;
     public $keyType      = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
@@ -387,18 +389,5 @@ class Transaction extends Model
      * @param $sum
      * @return string
      */
-    public static function sidebarIndicatorsFormatting($sum)
-    {
-        $postfix = '';
 
-        if ($sum >= 1000000) {
-            $sum = $sum / 1000000;
-            $postfix = 'KK';
-        } elseif ($sum >= 1000) {
-            $sum = $sum / 1000;
-            $postfix = 'K';
-        }
-
-        return number_format(floor($sum), 0, '.', ',') . $postfix;
-    }
 }

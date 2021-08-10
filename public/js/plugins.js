@@ -141,10 +141,21 @@ $(function () {
     coverTrigger: true,
     alignment: "left"
   });
-  $(".notification-button").on("click", function (e) {
-    $(this).find('.notification-badge').text(0).remove();
-  }); // Notification, Profile, Translation, Settings Dropdown & Horizontal Dropdown
+  $("#notifications-dropdown a.black-text").on('click', function (e) {
+    e.preventDefault();
+    var $count = parseInt($(".notification-button").find('.notification-badge').text());
 
+    if ($count > 0) {
+      $count--;
+      $(".notification-button").find('.notification-badge').text($count);
+
+      if ($count == 0) {
+        $(".notification-button").find('.notification-badge').remove();
+      }
+    } else {
+      $(".notification-button").find('.notification-badge').remove();
+    }
+  });
   $(".notification-button, .profile-button, .translation-button, .dropdown-settings").dropdown({
     inDuration: 300,
     outDuration: 225,
@@ -152,7 +163,8 @@ $(function () {
     hover: false,
     gutter: 0,
     coverTrigger: false,
-    alignment: "right"
+    alignment: "right",
+    closeOnClick: false
   });
   $(".dropdown-menu").dropdown({
     inDuration: 300,

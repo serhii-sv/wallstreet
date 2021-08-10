@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use App\Models\CloudFile;
+use App\Models\Deposit;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -44,7 +45,11 @@ class SidebarComposer
                 'transactions_amount' => cache()->remember('counts.transactions_amount', now()->addHour(), function() {
                     $sum = Transaction::sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);
-                })
+                }),
+                'deposits_active_amount' => cache()->remember('counts.deposits_active_amount', now()->addHour(), function() {
+                    $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('create_dep')->id)->sum('main_currency_amount');
+                    return Transaction::sidebarIndicatorsFormatting($sum);
+                }),
 
             ]);
 

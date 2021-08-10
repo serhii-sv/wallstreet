@@ -75,7 +75,6 @@
   display: none;
 }
 .sidebar .sidebar-content .sidebar-menu#sidebar-list {
-  position: absolute;
   overflow: hidden;
   margin-left: -1.4rem;
   padding-left: 1.4rem;
@@ -173,7 +172,6 @@
     margin-left: 0rem;
   }
   .sidebar .sidebar-content .sidebar-menu#sidebar-list {
-    position: absolute;
     height: calc( 100% - 56px) !important;
     overflow: hidden;
     top: 56px;

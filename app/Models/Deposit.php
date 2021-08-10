@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\SumOperations;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +38,8 @@ use Illuminate\Support\Facades\Auth;
 class Deposit extends Model
 {
     use Uuids;
-
+    use SumOperations;
+    
     /** @var bool $incrementing */
     public $incrementing = false;
     public $keyType      = 'string';
@@ -66,6 +68,11 @@ class Deposit extends Model
     public function total_assessed() {
         return $this->transactions()
             ->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)
+            ->sum('main_currency_amount');
+    }
+    public function total_created_sum() {
+        return $this->transactions()
+            ->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)
             ->sum('main_currency_amount');
     }
     /**
