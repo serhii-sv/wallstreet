@@ -15,69 +15,40 @@ use Illuminate\Queue\SerializesModels;
 
 /**
  * Class NotificationMail
+ *
  * @package App\Mail
  */
 class NotificationMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-
+    
     /** @var int $tries */
     public $tries = 1;
-
+    
     /** @var User $user */
     protected $user;
-
-    /** @var string $code */
-    protected $code;
-
+    
     /** @var array $data */
     protected $data;
-
-    /**
-     * Notification constructor.
-     * @param User $user
-     * @param string $code
-     * @param array|null $data
-     */
-    public function __construct(User $user, string $code, array $data=null)
-    {
-        $this->user     = $user;
-        $this->data     = $data;
-        $this->code     = $code;
+    
+    protected $email_text;
+    public    $subject;
+    
+    // User $user, string $code, array $data=null
+    public function __construct(User $user, $subject, $email_text) {
+        $this->email_text = $email_text;
+        $this->user = $user;
+        $this->subject = $subject;
+        //        $this->data     = $data;
+        //        $this->code     = $code;
     }
-
-    /**
-     * @return NotificationMail|null
-     * @throws \Throwable
-     */
-    public function build()
-    {
-        $subjectView    = 'mail.subject.'.$this->code;
-        $bodyView       = 'mail.body.'.$this->code;
-
-        if (!view()->exists($subjectView) || !view()->exists($bodyView)) {
-            \Log::info('View for mail not found - '.$subjectView.' OR '.$bodyView);
-            return null;
-        }
-
-        $html = view('mail.body.'.$this->code, array_merge([
-            'user'      => $this->user,
-            'subject'   => $this->subject,
-        ], $this->data))->render();
-
-        if (empty($html)) {
-            return null;
-        }
-
-        return $this->from(Setting::getValue('support-email'))
-            ->to($this->user->email)
-            ->subject(view($subjectView, array_merge([
-                'user'      => $this->user,
-                'subject'   => $this->subject,
-            ], $this->data))->render())
-            ->view('mail.body.'.$this->code, array_merge([
-                'user'      => $this->user,
-                'subject'   => $this->subject,
-            ], $this->data));
+    
+    
+    public function build() {
+        
+        return $this->from('fnxrus@gmail.com')->subject($this->subject)->markdown('mail.markdown', [
+                'user' => $this->user,
+                'email_text' => $this->email_text,
+            ]);
     }
 }

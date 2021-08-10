@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web']], function () {
         //'role:root|admin'
         Route::group(['middleware' => ['role:root|admin']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
+            Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
 
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');

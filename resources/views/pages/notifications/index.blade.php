@@ -74,9 +74,9 @@
                   <td style=" padding-left: 20px;">@if($notification->name){{ $notification->name }} @else Не указано @endif</td>
                   
                   <td>{{ $notification->created_at->format('d-m-Y H:i') }}</td>
-                  <td class="center-align">
-                    <a href="{{ route('notifications.show', $notification->id) }}">Open</a>
-                  </td>
+{{--                  <td class="center-align">--}}
+{{--                    <a href="{{ route('notifications.show', $notification->id) }}">Open</a>--}}
+{{--                  </td>--}}
                 </tr>
               @empty
                 <tr>
