@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
             Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
-          
+
             Route::resource('/notifications', NotificationsController::class);
 
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
-            
+
             Route::post('/users/referrals-redistribution/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'referralsRedistribution'])->name('users.referrals-redistribution');
             Route::post('/users/add-referral/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'addReferral'])->name('users.add-referral');
 
@@ -117,6 +117,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/cloud_files', [\App\Http\Controllers\CloudFilesController::class, 'upload'])->name('cloud_files.upload');
             Route::get('/cloud_files/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'destroy'])->name('cloud_files.destroy');
             Route::get('/cloud_files/{id}', [\App\Http\Controllers\CloudFilesController::class, 'open'])->name('cloud_files.open');
+            Route::post('/cloud_files/folder/create', [\App\Http\Controllers\CloudFilesController::class, 'folderCreate'])->name('cloud_files.folder.create');
+            Route::get('/cloud_files/folder/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'folderDestroy'])->name('cloud_files.folder.destroy');
         });
 
         Route::group(['middleware' => ['role:root']], function () {

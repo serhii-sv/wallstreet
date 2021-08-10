@@ -7,6 +7,7 @@
 {{-- vendor styles --}}
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/flag-icon/css/flag-icon.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
 @endsection
 
 {{-- page styles --}}
@@ -36,11 +37,35 @@
                             <i class="material-icons">add</i>
                             <span>Загрузить файл</span>
                         </button>
+
+                        <button class="add-folder btn-small btn-block waves-effect waves-light mb-5">
+                            <i class="material-icons">create_new_folder</i>
+                            <span>Добавить папку</span>
+                        </button>
+
+                        <form id="newFolder" style="display: none" action="{{ route('cloud_files.folder.create') }}" method="post">
+                            @csrf
+                            <div>
+                          <span class="users-view-status">
+                            <input
+                                class="lighten-5 chip"
+                                name="folder_name"
+                                type="text"
+                                placeholder="Имя папки"
+                                style="color: black">
+                          </span>
+                            </div>
+                            <div >
+                                <button class="width-100 btn-small waves-effect">
+                                    Добавить
+                                </button>
+                            </div>
+                        </form>
                         <!-- file input  -->
 
                         <form action="{{ route('cloud_files.upload') }}" id="uploadForm" method="POST" target="_top" enctype="multipart/form-data">
                             {{ @csrf_field() }}
-
+                            <input type="hidden" name="folder_id" value="{{ request()->folder }}">
                             <div class="getfileInput">
                                 <input type="file" name="file" id="getFile">
                             </div>
@@ -50,37 +75,22 @@
                         <!-- App File Left Sidebar - Drive Content Starts -->
                         <span class="app-file-label">Файлы</span>
                         <div class="collection file-manager-drive mt-3">
-                            <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action active">
+                            <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action {{ is_null(request()->folder) ? 'active' : '' }}">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
                                 <span>Все файлы</span>
-                                <span class="chip red lighten-5 float-right red-text">{{ count($files) }}</span>
+                                <span class="chip red lighten-5 float-right red-text">{{ $filesTotalCount }}</span>
                             </a>
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">computer</i>--}}
-{{--                                </div>--}}
-{{--                                <span>My Devices</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">schedule</i>--}}
-{{--                                </div>--}}
-{{--                                <span>Recents</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">star_border</i>--}}
-{{--                                </div>--}}
-{{--                                <span>Important</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">delete</i>--}}
-{{--                                </div>--}}
-{{--                                <span> Deleted Files</span>--}}
-{{--                            </a>--}}
+                            @foreach($filesByFolders as $item)
+                                <a href="{{ route('cloud_files.manager', ['folder' => $item['folder']->id]) }}" class="collection-item file-item-action {{ request()->folder == $item['folder']->id ? 'active' : '' }}">
+                                    <div class="fonticon-wrap display-inline mr-3">
+                                        <i class="material-icons">folder</i>
+                                    </div>
+                                    <span>{{ $item['folder']->folder_name }}</span>
+                                    <span class="chip red lighten-5 float-right red-text">{{ $item['totalCount'] }}</span>
+                                </a>
+                            @endforeach
                         </div>
                         <!-- App File Left Sidebar - Drive Content Ends -->
 
@@ -180,7 +190,19 @@
 
                 <!-- App File Content Starts -->
                 <div class="app-file-content">
-                    <h6 class="font-weight-700 mb-3">Файлы</h6>
+                    <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center">
+                        <div>
+                            <h6 class="font-weight-700 mb-3">Файлы</h6>
+                        </div>
+                        @if(!is_null( request()->folder))
+                            <div>
+                                <a href="{{ route('cloud_files.folder.destroy', request()->folder) }}" class="btn-small remove-folder waves-effect">
+                                    <i class="material-icons">clear</i>
+                                    Удалить папку
+                                </a>
+                            </div>
+                        @endif
+                    </div>
 
                     <!-- App File - Recent Accessed Files Section Starts -->
                     <span class="app-file-label">Все файлы в облаке</span>
@@ -223,7 +245,7 @@
                     <div class="card-header display-flex justify-content-between align-items-center">
                         <h6 class="m-0">{{ $file->name }}</h6>
                         <div class="app-file-action-icons display-flex align-items-center">
-                            <a href="{{ route('cloud_files.destroy', ['id' => $file->id]) }}">
+                            <a href="{{ route('cloud_files.destroy', ['id' => $file->id, 'folder_id' => request()->folder]) }}">
                                 <i class="material-icons mr-10">delete</i>
                             </a>
                             <i class="material-icons close-icon">close</i>
@@ -278,6 +300,7 @@
 
 {{-- vendor scripts --}}
 @section('vendor-script')
+    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}
@@ -289,6 +312,39 @@
             $('#getFile').change(function() {
                 $('#uploadForm').submit();
             });
+
+            $('.add-folder').click(function () {
+                $('#newFolder').fadeIn('slow')
+            })
+
+            $('.remove-folder').click(function () {
+                swal({
+                    title: "Вы уверены?",
+                    text: "Все файлы в папке будут безвозвратно удалены!",
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: "Отменить",
+                            value: null,
+                            visible: true,
+                            className: "",
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: "Подтвердить",
+                            value: true,
+                            visible: true,
+                            className: "",
+                            closeModal: true
+                        }
+                    }
+                }).then((result) => {
+                    if (result) {
+                        location.href = $(this).attr('href')
+                    }
+                })
+                return false;
+            })
         });
     </script>
 @endsection
