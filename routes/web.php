@@ -119,6 +119,14 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/cloud_files/{id}', [\App\Http\Controllers\CloudFilesController::class, 'open'])->name('cloud_files.open');
             Route::post('/cloud_files/folder/create', [\App\Http\Controllers\CloudFilesController::class, 'folderCreate'])->name('cloud_files.folder.create');
             Route::get('/cloud_files/folder/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'folderDestroy'])->name('cloud_files.folder.destroy');
+
+            Route::get('kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
+            Route::post('kanban/board/store', [\App\Http\Controllers\KanbanController::class, 'boardStore'])->name('kanban.board.store');
+            Route::post('kanban/board/{id}/task/store', [\App\Http\Controllers\KanbanController::class, 'taskStore'])->name('kanban.board.task.store');
+            Route::post('kanban/board/{id}/task/change-board', [\App\Http\Controllers\KanbanController::class, 'changeBoard'])->name('kanban.board.task.change-board');
+            Route::post('kanban/board/sort', [\App\Http\Controllers\KanbanController::class, 'sortBoards'])->name('kanban.board.sort-boards');
+            Route::post('kanban/board/{id}/update', [\App\Http\Controllers\KanbanController::class, 'updateBoard'])->name('kanban.board.update');
+            Route::get('kanban/board/{id}/destroy', [\App\Http\Controllers\KanbanController::class, 'destroyBoard'])->name('kanban.board.destroy');
         });
 
         Route::group(['middleware' => ['role:root']], function () {
