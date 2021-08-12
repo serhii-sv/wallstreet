@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestDashboardBonusUser;
+use App\Models\ActivityLog;
 use App\Models\Currency;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
@@ -42,6 +43,8 @@ class DashboardController extends Controller
         $weeks_period_withdraw_transactions = [];
         $month_period_enter_transactions = [];
         $month_period_withdraw_transactions = [];
+
+        $userActivity = ActivityLog::getActivityLog();
 
         $month_period = $this->getMonthPeriod();
         $weeks_period = $this->getWeeksPeriod();
@@ -187,6 +190,7 @@ class DashboardController extends Controller
                         return $carry + $item->main_currency_amount;
                     }, 0);
             }),
+            'userActivity' => $userActivity
         ]);
     }
 

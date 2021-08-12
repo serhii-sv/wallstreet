@@ -232,4 +232,20 @@ class User extends Authenticatable
 
         return $this;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function kanbanBoards()
+    {
+        return $this->hasMany(KanbanBoard::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }

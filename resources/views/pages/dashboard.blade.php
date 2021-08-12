@@ -369,7 +369,8 @@
               
               <div class="row" style="text-align: center;">
                 <div class="input-field col s12" style="text-align:center;">
-                  <button class="btn blue waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i></button>
+                  <button class="btn blue waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i>
+                  </button>
                 </div>
               </div>
             </form>
@@ -511,6 +512,22 @@
           </table>
         </div>
       </div>
+      <div class="col s12 m4 l4">
+        <!-- Current Balance -->
+        <div class="card animate fadeLeft">
+          <div class="card-content">
+            <h6 class="mb-0 mt-0 display-flex justify-content-between">Время активности
+              <i class="material-icons float-right">more_vert</i>
+            </h6>
+            {{--                    <p class="medium-small">Активность за сегодня</p>--}}
+            <div class="current-balance-container">
+              <div id="current-balance-donut-chart" class="current-balance-shadow"></div>
+            </div>
+            <h5 class="center-align">{{ $userActivity['time'] }}</h5>
+            <p class="medium-small center-align">Активность за сегодня</p>
+          </div>
+        </div>
+      </div>
     </div>
   
   </div>
@@ -520,8 +537,12 @@
 @section('vendor-script')
   <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
+  <<<<<<< HEAD
   <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
   {{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
+  =======
+  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>
+  >>>>>>> 0af982bfbae323b97d4a87cdc29517436dc68832
   <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
 @endsection
 
@@ -903,6 +924,37 @@
         data: cityStatsChartData
       };
       
+      var CurrentBalanceDonutChart = new Chartist.Pie(
+          "#current-balance-donut-chart",
+          {
+            labels: [1, 2],
+            series: [
+              {meta: "Completed", value: {{ $userActivity['percentage'] }} },
+              {meta: "Remaining", value: 100 - {{ $userActivity['percentage'] }} }
+            ]
+          },
+          
+          {
+            donut: true,
+            donutWidth: 8,
+            showLabel: false,
+            plugins: [
+              Chartist.plugins.tooltip({
+                class: "current-balance-tooltip",
+                appendToBody: true
+              }),
+              Chartist.plugins.fillDonut({
+                items: [
+                  {
+                    content: '<h5 class="mt-0 mb-0">{{ $userActivity['time'] }}</h5>'
+                  }
+                ]
+              })
+            ]
+          }
+      )
+      
+      CurrentBalanceDonutChart.update();
       
       window.onload = function () {
         
@@ -911,6 +963,7 @@
         var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
         var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
+        
         
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
           
@@ -975,7 +1028,7 @@
           }
         });
       });
-     
+      
     });
   </script>
 @endsection

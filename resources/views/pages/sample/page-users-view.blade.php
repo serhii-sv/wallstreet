@@ -7,6 +7,7 @@
 {{-- page style --}}
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-users.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker.css')}}">
 @endsection
 
 {{-- page content  --}}
@@ -178,11 +179,106 @@
     </div>
     <!-- users view card details ends -->
 
+      <div class="card">
+          <div class="card-content">
+              <div class="row">
+                  <div class="col s12">
+                      <ul id="issues-collection" class="collection z-depth-1  fadeRight">
+                          <div style="display: flex; justify-content: space-between;"  class="issues-collection-header">
+                              <div>
+                                  <li class="collection-item avatar">
+                                      <i class="material-icons red accent-2 circle">access_time</i>
+                                      <h6 class="collection-header m-0">Время активности</h6>
+                                      <p>Пользователя @ {{ $user->login }}</p>
+                                  </li>
+                              </div>
+                              <div style="margin-top: 15px;margin-right: 15px">
+                                  <i class="material-icons right grey-text lighten-3" id="datepicker">date_range</i>
+                              </div>
+                          </div>
+                          <li class="collection-item">
+                              <div class="row">
+                                  <div class="col s7">
+                                      <p class="collections-title">Активность за сегодня</p>
+                                  </div>
+                                  <div class="col s2"><span class="task-cat deep-orange accent-2">{{ $userActivityDay['time'] }}</span></div>
+                                  <div class="col s3">
+                                      <div class="progress">
+                                          <div class="determinate" style="width: {{ $userActivityDay['percentage'] }}%"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li class="collection-item">
+                              <div class="row">
+                                  <div class="col s7">
+                                      <p class="collections-title">Активность за последние 7 дней</p>
+                                  </div>
+                                  <div class="col s2"><span class="task-cat deep-orange accent-2">{{ $userActivityWeek['time'] }}</span></div>
+                                  <div class="col s3">
+                                      <div class="progress">
+                                          <div class="determinate" style="width: {{ $userActivityWeek['percentage'] }}%"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                          <li class="collection-item">
+                              <div class="row">
+                                  <div class="col s7">
+                                      <p class="collections-title">Активность за последние 30 дней</p>
+                                  </div>
+                                  <div class="col s2"><span class="task-cat deep-orange accent-2">{{ $userActivityMonth['time'] }}</span></div>
+                                  <div class="col s3">
+                                      <div class="progress">
+                                          <div class="determinate" style="width: {{ $userActivityMonth['percentage'] }}%"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+              <!-- </div> -->
+          </div>
+      </div>
+
   </div>
   <!-- users view ends -->
 @endsection
 
 {{-- page script --}}
 @section('page-script')
-  <script src="{{asset('js/scripts/page-users.js')}}"></script>
+  <script src="{{asset('js/moment.js')}}"></script>
+  <script src="{{asset('js/daterangepicker.js')}}"></script>
+    <script>
+        $('#datepicker').dateRangePicker({
+            format: 'DD-MM-YYYY HH:mm',
+            separator: '/',
+            language: 'auto',
+            startOfWeek: 'monday',
+            time: {
+                enabled: true
+            }
+        }).bind('datepicker-apply', function(event, obj) {
+            $.ajax({
+                url: '/users/activity-by-date',
+                data: {
+                    date: obj.value,
+                    user_id: '{{ $user->id }}'
+                },
+                success: (response) => {
+                    if (response.success) {
+                        $('#issues-collection li:not(.issues-collection-header li)').remove()
+                        $('#issues-collection').append(response.html)
+                    } else {
+                        M.toast({
+                            html: response.message,
+                            classes: 'red'
+                        })
+                    }
+                }
+            })
+            return false;
+        });
+    </script>
 @endsection

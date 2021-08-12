@@ -16,14 +16,21 @@ class CloudFile extends Model
 {
     use Uuids;
 
+    /**
+     * @var bool
+     */
     public $incrementing = false;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'created_by',
         'name',
         'ext',
         'mime',
         'url',
+        'cloud_file_folder_id',
         'last_access',
         'size',
     ];
@@ -39,6 +46,14 @@ class CloudFile extends Model
         return $author;
 
     }//end author()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function folder()
+    {
+        return $this->belongsTo(CloudFileFolder::class);
+    }
 
 
 }//end class

@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadFileRequest;
 use App\Models\CloudFile;
+use App\Models\CloudFileFolder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,6 @@ use Illuminate\Support\Facades\Storage;
  */
 class CloudFilesController extends Controller
 {
-
-
     /**
      * Manage files
      *
@@ -34,10 +33,27 @@ class CloudFilesController extends Controller
             $files->where('name', 'like', '%'.strtolower($request->search).'%');
         }
 
-        $files = $files->paginate(50);
+        if ($request->has('folder')) {
+            $files = CloudFileFolder::findOrFail($request->folder)->files()->paginate(50);
+        } else {
+            $files = $files->paginate(50);
+        }
+
+        $filesTotalCount = CloudFile::count();
+
+        $filesByFolders = [];
+
+        foreach (CloudFileFolder::all() as $folder) {
+            $filesByFolders[] = [
+                'folder' => $folder,
+                'totalCount' => $folder->files->count()
+            ];
+        }
 
         return view('pages.cloud_files.manager', [
             'files' => $files,
+            'filesByFolders' => $filesByFolders,
+            'filesTotalCount' => $filesTotalCount
         ]);
 
     }//end manager()
@@ -50,11 +66,20 @@ class CloudFilesController extends Controller
     public function upload(UploadFileRequest $request)
     {
         $file       = $request->file('file');
+        $folder_id   = $request->folder_id;
         $newName    = md5($file->getClientOriginalName().rand(0, 1000000).microtime()).'.'.$file->getExtension();
 
         try {
-            DB::transaction(function() use($newName, $file) {
-                $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
+            DB::transaction(function() use($newName, $file, $folder_id) {
+                if (!is_null($folder_id)) {
+                    $folder = CloudFileFolder::findOrFail($folder_id);
+
+                    $upload = Storage::disk('do_spaces')->putFileAs(
+                    $folder->folder_name, $file, $newName
+                );
+                } else {
+                    $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
+                }
 
                 /** @var User $createdBy */
                 $createdBy = auth()->user();
@@ -65,6 +90,7 @@ class CloudFilesController extends Controller
                     'ext'           => $file->getExtension(),
                     'mime'          => $file->getMimeType(),
                     'url'           => $upload,
+                    'cloud_file_folder_id' => $folder_id,
                     'last_access'   => null,
                     'size'          => $file->getSize(),
                 ]);
@@ -75,7 +101,8 @@ class CloudFilesController extends Controller
         }
 
         // TODO: make controller notifications
-        return redirect()->route('cloud_files.manager')->with('success', 'Файл успешно загружен');
+        return redirect()->route('cloud_files.manager', !is_null($folder_id) ? ['folder' => $folder_id] : [])
+            ->with('success_short', 'Файл успешно загружен');
     }//end upload()
 
     /**
@@ -94,7 +121,7 @@ class CloudFilesController extends Controller
             $file->delete();
 
             // TODO: make controller notifications
-            return redirect()->route('cloud_files.manager')->with('error', 'Файл не найден в облаке. По этому мы его сейчас удалили из базы данных.');
+            return redirect()->route('cloud_files.manager')->with('error_short', 'Файл не найден в облаке. По этому мы его сейчас удалили из базы данных.');
         }
 
         $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
@@ -123,15 +150,57 @@ class CloudFilesController extends Controller
             $file->delete();
 
             // TODO: make controller notifications
-            return redirect()->route('cloud_files.manager')->with('error', 'Файл не найден в облаке. По этому мы его сейчас удалили из базы данных.');
+            return redirect()->route('cloud_files.manager')->with('error_short', 'Файл не найден в облаке. По этому мы его сейчас удалили из базы данных.');
         }
 
         $deleteFromStorage = Storage::disk('do_spaces')->delete($file->url);
         $file->delete();
 
         // TODO: make controller notifications
-        return redirect()->route('cloud_files.manager')->with('success', 'Файл успешно удален');
+        return redirect()->route('cloud_files.manager', !is_null($request->folder_id) ? ['folder' => $request->folder_id] : [])
+            ->with('success_short', 'Файл успешно удален');
     }//end destroy()
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function folderCreate(Request $request)
+    {
+        $folder = CloudFileFolder::where('folder_name', $request->folder_name)->first();
+
+        if (!is_null($folder)) {
+            return redirect()->route('cloud_files.manager')->with('error_short', 'Такая папка уже существует.');
+        }
+
+        CloudFileFolder::create([
+            'folder_name' => $request->folder_name
+        ]);
+
+        Storage::disk('do_spaces')->makeDirectory($request->folder_name);
+
+        return redirect()->route('cloud_files.manager')->with('success_short', 'Папка успешно добавлена.');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function folderDestroy($id)
+    {
+        $folder = CloudFileFolder::findOrFail($id);
+
+        if (is_null($folder)) {
+            return redirect()->route('cloud_files.manager')->with('error_short', 'Такой папки не существует.');
+        }
+
+        $folder->files()->delete();
+        $folder->delete();
+
+        Storage::disk('do_spaces')->deleteDirectory($folder->folder_name);
+
+        return redirect()->route('cloud_files.manager')->with('success_short', 'Папка успешно удалена.');
+    }
 
 
 }//end class

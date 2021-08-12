@@ -8,15 +8,15 @@
             <img class="hide-on-med-and-down" src="{{asset($configData['largeScreenLogo'])}}" alt="materialize logo" />
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['smallScreenLogo'])}}"
                 alt="materialize logo" />
-
+          
           @elseif($configData['mainLayoutType']=== 'vertical-menu-nav-dark')
             <img src="{{asset($configData['smallScreenLogo'])}}" alt="materialize logo" />
-
+          
           @elseif($configData['mainLayoutType']=== 'vertical-gradient-menu')
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['largeScreenLogo'])}}"
                 alt="materialize logo" />
             <img class="hide-on-med-and-down" src="{{asset($configData['smallScreenLogo'])}}" alt="materialize logo" />
-
+          
           @elseif($configData['mainLayoutType']=== 'vertical-dark-menu')
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['largeScreenLogo'])}}"
                 alt="materialize logo" />
@@ -35,14 +35,14 @@
     </h1>
   </div>
   <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active' : '') }}" href="{{ route('home') }}">
         <i class="material-icons">dashboard</i>
         <span class="menu-title" data-i18n="Дашборд">Дашборд</span>
       </a>
     </li>
-
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('users.*') ? 'active' : '') }}" href="{{ route('users.index') }}">
         <i class="material-icons">people</i>
@@ -50,8 +50,8 @@
         <span class="badge badge pill purple float-right mr-3">{{ $counts['users'] }}</span>
       </a>
     </li>
-
-
+    
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active' : '') }}" href="{{ route('withdrawals.index') }}">
         <i class="material-icons">receipt</i>
@@ -59,7 +59,7 @@
         <span class="badge badge pill purple float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
       </a>
     </li>
-
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active' : '') }}" href="{{ route('replenishments.index') }}">
         <i class="material-icons">receipt</i>
@@ -67,7 +67,7 @@
         <span class="badge badge pill purple float-right mr-3">${{ $counts['replenishments_amount'] }}</span>
       </a>
     </li>
-
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active' : '') }}" href="{{ route('transactions.index') }}">
         <i class="material-icons">receipt</i>
@@ -75,7 +75,7 @@
         <span class="badge badge pill purple float-right mr-3">${{ $counts['transactions_amount'] }}</span>
       </a>
     </li>
-
+    
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active' : '') }}" href="{{ route('deposits.index') }}">
         <i class="material-icons">receipt</i>
@@ -100,7 +100,13 @@
         <span class="menu-title" data-i18n="Уведомления">Уведомления</span>
       </a>
     </li>
-
+    
+    <li class="bold">
+      <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active' : '') }}" href="{{ route('kanban.index') }}">
+        <i class="material-icons">developer_board</i>
+        <span class="menu-title" data-i18n="Задачи">Задачи</span>
+      </a>
+    </li>
     <li class="bold">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="material-icons">photo_filter</i>
@@ -135,7 +141,7 @@
     {{--                </ul>--}}
     {{--            </div>--}}
     {{--        </li>--}}
-
+  
   </ul>
   <div class="navigation-background"></div>
   <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"

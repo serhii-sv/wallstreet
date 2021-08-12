@@ -30,7 +30,7 @@
   </head>
   <!-- END: Head-->
   <body class="@yield('body.class')" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
-    
+
     <!-- BEGIN: Header-->
   @include('admin.layouts.app-header')
   <!-- END: Header-->
@@ -54,20 +54,20 @@
         </a>
       </li>
     </ul>
-    
+
     <!-- BEGIN: SideNav-->
   @include('admin.layouts.app-menu')
   <!-- END: SideNav-->
-    
+
     <!-- BEGIN: Page Main-->
     <div id="main">
       <div class="row">
         <div class="content-wrapper-before gradient-45deg-indigo-purple"></div>
         <div class="col s12">
           <div class="container">
-            
+
             @yield('content')
-            
+
             <!-- START RIGHT SIDEBAR NAV -->
             @include('admin.layouts.app-right-sidebar')
             <!-- END RIGHT SIDEBAR NAV -->
@@ -77,15 +77,15 @@
       </div>
     </div>
     <!-- END: Page Main-->
-    
+
     <!-- Theme Customizer -->
   @include('admin.layouts.app-customize-btn')
   @include('admin.layouts.app-customize')
   <!--/ Theme Customizer -->
-    
+
     <!-- BEGIN: Footer-->
   @include('admin.layouts.app-footer')
-  
+
   <!-- END: Footer-->
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('admin/js/vendors.min.js') }}"></script>
@@ -103,7 +103,7 @@
     <script src="{{ asset('admin/js/scripts/customizer.js') }}"></script>
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
-    
+
 {{--    <script src="{{ asset('admin/js/scripts/dashboard-modern.js') }}"></script>--}}
   {{--    <script src="{{ asset('admin/js/scripts/intro.js') }}"></script>--}}
   <!-- END PAGE LEVEL JS-->
