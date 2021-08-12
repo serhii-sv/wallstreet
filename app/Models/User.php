@@ -240,4 +240,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(KanbanBoard::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
