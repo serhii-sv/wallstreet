@@ -70,11 +70,14 @@ mix.js('resources/js/materialize.js', 'public/js')
     .js('resources/js/plugins.js', 'public/js')
     .js('resources/js/search.js', 'public/js/')
     .sass('resources/sass/style-rtl.scss', 'public/css')
-    .sass('resources/sass/laravel-custom.scss', 'public/css');
+    .sass('resources/sass/laravel-custom.scss', 'public/css')
+    .css('resources/sass/daterangepicker.css', 'public/css');
 
 
 mix.copy('resources/js/vendors.min.js', 'public/js/vendors.min.js');
 mix.copy('resources/js/jquery.js', 'public/js/jquery.js');
+mix.copy('resources/js/daterangepicker.js', 'public/js/daterangepicker.js');
+mix.copy('resources/js/moment.js', 'public/js/moment.js');
 mix.copy('resources/js/bootstrap-colorpicker.min.js', 'public/js/bootstrap-colorpicker.min.js');
 
 mix.then(() => {
