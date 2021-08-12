@@ -73,13 +73,22 @@ class ReftreeController extends Controller
             ]);
         }
 
+        if ($referral->id == $user->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нельзя стать собственным рефералом'
+            ]);
+        }
+
         if (in_array($referral->id, $user->referrals()->pluck('id')->toArray())) {
             return response()->json([
                 'success' => false,
                 'message' => 'Пользователь уже является рефералом'
             ]);
         }
-      
+
+        $referral->referrals()->detach($user->id);
+
         $user->referrals()->attach($referral->id);
 
         return response()->json([
