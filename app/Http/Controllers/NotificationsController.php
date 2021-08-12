@@ -113,11 +113,11 @@ class NotificationsController extends Controller
     
     public function showPreview(Request $request) {
         return view('mail.preview', [
-            'preview' => $this->makeMessageHtml(Auth::user(), $request->get('preview'))
+            'preview' => $this->makeMessageHtml(Auth::user(), $request->get('preview')),
         ]);
     }
-    private function makeMessageHtml(User $user, $preview)
-    {
+    
+    private function makeMessageHtml(User $user, $preview) {
         $markdown = Container::getInstance()->make(Markdown::class);
         
         return $markdown->render('mail.markdown', [
@@ -141,5 +141,28 @@ class NotificationsController extends Controller
     
     public function destroy($id) {
         //
+    }
+    
+    public function setReadStatus(Request $request) {
+        $id = $request->get('id');
+        $user_notification = NotificationUser::where('id', $id)->where('user_id', Auth::user()->id)->where('is_read', false)->first();
+        if (empty($user_notification))
+            return json_encode([
+                'status' => 'bad',
+                'msg' => 'Такого уведомления не существует',
+            ]);
+        $user_notification->is_read = true;
+        if ($user_notification->save()){
+            return json_encode([
+                'status' => 'good',
+                'msg' => 'Статус уведомления изменён!',
+                'notification_count' => NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
+            ]);
+        }
+    
+        return json_encode([
+            'status' => 'bad',
+            'msg' => 'Неведомая ошибка',
+        ]);
     }
 }

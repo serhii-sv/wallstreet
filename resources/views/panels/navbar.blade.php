@@ -31,7 +31,7 @@
         <li>
           <a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);"
             data-target="notifications-dropdown">
-            <i class="material-icons">notifications_none<small class="notification-badge">5</small></i>
+            <i class="material-icons">notifications_none @if($counts['notifications'] > 0)<small class="notification-badge">{{ $counts['notifications'] ?? 0 }}</small>@endif</i>
           </a>
         </li>
         <li>
@@ -78,44 +78,29 @@
       <!-- notifications-dropdown-->
       <ul class="dropdown-content" id="notifications-dropdown">
         <li>
-          <h6>NOTIFICATIONS<span class="new badge">5</span></h6>
+          <h6>NOTIFICATIONS @if($counts['notifications'] > 0) <span class="new badge">{{ $counts['notifications'] ?? 0 }}</span> @endif</h6>
         </li>
         <li class="divider"></li>
-        <li>
-          <a class="black-text" href="">
-            <span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span>
-            A new order has been placed!
+        @forelse($navbar_notifications as $item)
+        <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
+          <a class="black-text" href="" style="display: flex; align-items: flex-start">
+            <span class="material-icons icon-bg-circle red small " style="display: block;">notifications</span>
+            <small style="font-size: 14px; display: block;">
+            {{ $item->notification->text }}
+            </small>
           </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
+          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00" style="margin-left: 30px;top: 0;">
+            {{ $item->notification->created_at->diffForHumans() }}
+          </time>
         </li>
-        <li>
-          <a class="black-text" href="">
-            <span class="material-icons icon-bg-circle red small">stars</span>
-            Completed the task
-          </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
-        </li>
-        <li>
-          <a class="black-text" href="">
-            <span class="material-icons icon-bg-circle teal small">settings</span>
-            Settings updated
-          </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
-        </li>
-        <li>
-          <a class="black-text" href="">
-            <span class="material-icons icon-bg-circle deep-orange small">today</span>
-            Director meeting started
-          </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
-        </li>
-        <li>
-          <a class="black-text" href="">
-            <span class="material-icons icon-bg-circle amber small">trending_up</span>
-            Generate monthly report
-          </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
-        </li>
+        @empty
+          <li>
+            <a class="black-text" href="">
+              <span class="material-icons icon-bg-circle red small">notifications_none</span>
+              Уведомлений нет!
+            </a>
+          </li>
+        @endforelse
       </ul>
       <!-- profile-dropdown-->
       <style>

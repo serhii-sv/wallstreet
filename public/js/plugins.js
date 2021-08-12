@@ -141,19 +141,42 @@ $(function () {
     coverTrigger: true,
     alignment: "left"
   });
-  $("#notifications-dropdown a.black-text").on('click', function (e) {
+  $("#notifications-dropdown li.notification").on('click', function (e) {
     e.preventDefault();
+    var $notification_count;
     var $count = parseInt($(".notification-button").find('.notification-badge').text());
 
     if ($count > 0) {
-      $count--;
-      $(".notification-button").find('.notification-badge').text($count);
+      var $id = parseInt($(this).attr('data-id'));
+      $.ajax({
+        url: "/ajax/notification/status/read",
+        method: 'post',
+        data: 'id=' + $id,
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(data) {
+          var $data = $.parseJSON(data);
+          console.log($data);
 
-      if ($count == 0) {
-        $(".notification-button").find('.notification-badge').remove();
-      }
+          if ($data['status'] == 'good') {
+            $("#notifications-dropdown li.notification[data-id='" + $id + "']").remove();
+            $notification_count = $data['notification_count'];
+            $(".notification-button").find('.notification-badge').text($notification_count);
+            $("#notifications-dropdown").find('h6 span.badge').text($notification_count);
+            $(".notification-button").find('.notification-badge').text($notification_count);
+
+            if ($notification_count == 0) {
+              $(".notification-button").find('.notification-badge').remove();
+              $("#notifications-dropdown").find('h6 span.badge').remove();
+              $("#notifications-dropdown").append('<li><a class="black-text" href="" style="display: flex; align-items: flex-start">' + ' <span class="material-icons icon-bg-circle red small " style="display: block;">notifications_none</span>' + '  <small style="font-size: 14px; display: block;">' + '  Уведомлений больше нет' + ' </small>' + '</a></li>');
+            }
+          }
+        }
+      });
     } else {
       $(".notification-button").find('.notification-badge').remove();
+      $("#notifications-dropdown").find('h6 span.badge').remove();
     }
   });
   $(".notification-button, .profile-button, .translation-button, .dropdown-settings").dropdown({

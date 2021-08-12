@@ -3,12 +3,8 @@
 namespace App\Http\ViewComposers;
 
 use App\Models\CloudFile;
-use App\Models\Deposit;
 use App\Models\Transaction;
 use App\Models\TransactionType;
-use App\Models\User;
-use DateTime;
-use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class SidebarComposer
@@ -29,7 +25,7 @@ class SidebarComposer
         $view
             ->with('counts', [
                 'users' => cache()->remember('counts.users', now()->addHour(), function() {
-                    return \App\User::count();
+                    return \App\Models\User::count();
                 }),
                 'files' => cache()->remember('counts.files', now()->addHour(), function() {
                     return CloudFile::count();
