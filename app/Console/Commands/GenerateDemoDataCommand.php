@@ -144,6 +144,7 @@ class GenerateDemoDataCommand extends Command
                 'name' => $this->faker->name,
                 'email' => $this->faker->email,
                 'login' => $this->faker->word . '.' . $this->faker->word,
+                'unhashed_password' => 'demopassword',
                 'password' => bcrypt('demopassword'),
                 'partner_id' => !empty($partnerId) ? $partnerId->my_id : null,
                 'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',

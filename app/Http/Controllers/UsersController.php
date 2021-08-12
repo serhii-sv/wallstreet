@@ -208,12 +208,6 @@ class UsersController extends Controller
         }
     }
     
-    /**
-     * @param User $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy(User $user) {
         if ($user->delete()) {
             return redirect()->route('admin.users.index')->with('success', __('User has been deleted'));

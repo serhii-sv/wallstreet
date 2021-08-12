@@ -20,9 +20,9 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-
+    
     <div id="chart-dashboard">
-
+      
       <div id="card-stats" class="pt-0">
         <div class="row">
           <div class="col s12 m6 l6 xl3">
@@ -95,8 +95,8 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
+      
+      <div class="row mt-2">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
             <div class="card-move-up waves-effect waves-block waves-light">
@@ -236,240 +236,240 @@
         </div>
       </div>
     </div>
-
-
-      <div class="row">
-          <div class="col s12 m12 l6">
-              <div class="card">
-                  @if(session()->has('success'))
-                      <div class="card-alert card green mb-0">
-                          <div class="card-content white-text">
+    
+    
+    <div class="row">
+      <div class="col s12 m12 l6">
+        <div class="card">
+          @if(session()->has('success'))
+            <div class="card-alert card green mb-0">
+              <div class="card-content white-text">
                   <span class="card-title white-text darken-1 mb-0">
                     <i class="material-icons">notifications</i> @lang(session()->get('success'))</span>
-                              {{--<p>Пользователю начислен бонус </p>--}}
-                          </div>
-                          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                          </button>
-                      </div>
-                  @endif
-                      @if(session()->has('error'))
-                          <div class="card-alert card red mb-0">
-                              <div class="card-content white-text">
+                {{--<p>Пользователю начислен бонус </p>--}}
+              </div>
+              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          @endif
+          @if(session()->has('error'))
+            <div class="card-alert card red mb-0">
+              <div class="card-content white-text">
                   <span class="card-title white-text darken-1 mb-0">
                     <i class="material-icons">notifications</i> @lang(session()->get('error'))</span>
-                                  {{--<p>Пользователю начислен бонус </p>--}}
-                              </div>
-                              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">×</span>
-                              </button>
-                          </div>
-                      @endif
-                  @if ($errors->any())
-                      <div class="card-alert card red lighten-2 mb-0">
-                          <div class="card-content text-white">
+                {{--<p>Пользователю начислен бонус </p>--}}
+              </div>
+              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          @endif
+          @if ($errors->any())
+            <div class="card-alert card red lighten-2 mb-0">
+              <div class="card-content text-white">
                      <span class="card-title white-text darken-1 mb-0">
                     <i class="material-icons">notifications</i> {{ __("Error") }}</span>
-                              @foreach ($errors->all() as $error)
-                                  <p class="white-text darken-5">{{ $error }}</p>
-                              @endforeach
-                          </div>
-                          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                          </button>
-                      </div>
-                  @endif
-                  <div class="card-content">
-                      <h4 class="card-title mb-4">Начислить бонус</h4>
-                      <form method="post" action="{{ route('dashboard.add_bonus') }}">
-                          {{ csrf_field() }}
-
-                          <div class="row" style="margin-top:20px; text-align: center;">
-                              <div class="input-field col s12">
-                                  <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="{{ old('login') }}" style="font-weight: bold; text-align: center;">
-                              </div>
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="text-align: center; margin-top:20px;">
+                @foreach ($errors->all() as $error)
+                  <p class="white-text darken-5">{{ $error }}</p>
+                @endforeach
+              </div>
+              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          @endif
+          <div class="card-content">
+            <h4 class="card-title mb-4">Начислить бонус</h4>
+            <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
+              {{ csrf_field() }}
+              
+              <div class="row" style="margin-top:20px; text-align: center;">
+                <div class="input-field col s12">
+                  <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="{{ old('login') }}" style="font-weight: bold; text-align: center;">
+                </div>
+              </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="text-align: center; margin-top:20px;">
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
                                   </label>
                               </span>
-                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Вывод средств</span>
                                   </label>
                               </span>
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="text-align: center; margin-top:20px;">
-                              @foreach($currencies as $currency)
-                                  @if($loop->index % 2 && $loop->index > 1)
-                                      <br><br>
-                                  @endif
-                                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+              </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="text-align: center; margin-top:20px;">
+                @foreach($currencies as $currency)
+                  @if($loop->index % 2 && $loop->index > 1)
+                    <br><br>
+                  @endif
+                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
                                   </label>
                               </span>
-                              @endforeach
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="margin-top:20px; text-align: center;">
-                              @foreach($payment_system as $ps)
-                                  @if($loop->index % 2 && $loop->index > 1)
-                                      <br><br>
-                                  @endif
-                                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                @endforeach
+              </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="margin-top:20px; text-align: center;">
+                @foreach($payment_system as $ps)
+                  @if($loop->index % 2 && $loop->index > 1)
+                    <br><br>
+                  @endif
+                  <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
                                   </label>
                               </span>
-                              @endforeach
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="margin-top:20px; text-align: center;">
+                @endforeach
+              </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="margin-top:20px; text-align: center;">
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Реал</span>
                                   </label>
                               </span>
-
-                              <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                
+                <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Фейк</span>
                                   </label>
                               </span>
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="margin-top:20px; text-align: center;">
-                              <div class="input-field col s12">
-                                  <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}" style="font-weight: bold; text-align: center;">
-                              </div>
-                          </div>
-
-                          <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-
-                          <div class="row" style="text-align: center;">
-                              <div class="input-field col s12" style="text-align:center;">
-                                  <button class="btn blue waves-effect waves-light" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i></button>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
               </div>
-          </div>
-
-          <div class="col s12 m12 l6">
-              <div id="striped-table" class="card card card-default scrollspy">
-                  <div class="card-content">
-                      <h4 class="card-title">Статистика</h4>
-                      <p class="mb-2"></p>
-                      <div class="row">
-                          <div class="col s12">
-                          </div>
-                          <div class="col s12">
-                              <table class="striped">
-                                  <thead>
-                                  <tr>
-                                      <th data-field="name">Система</th>
-                                      <th data-field="plus">Пополнений</th>
-                                      <th data-field="minus">Выплат</th>
-                                      <th data-field="sum">Сумма</th>
-                                      <th data-field="percent">В процентах</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  @forelse($payment_system as $item)
-                                      <tr>
-                                          <td>{{ $item->name }}</td>
-                                          <td class="green-text">
-                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
-                                          </td>
-                                          <td class="red-text">
-                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
-                                          </td>
-                                          <td class="blue-grey-text">
-                                              <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
-                                          </td>
-                                          <td>@if($item->transaction_sum)
-                                                  {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
-                                              @else
-                                                  0
-                                              @endif
-                                              %
-                                          </td>
-                                      </tr>
-                                  @empty
-                                      <tr>
-                                          <td colspan="3" style="text-align: center">Пусто</td>
-                                      </tr>
-                                  @endforelse
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                  </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="margin-top:20px; text-align: center;">
+                <div class="input-field col s12">
+                  <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}" style="font-weight: bold; text-align: center;">
+                </div>
               </div>
-          </div>
-
-          <div class="col s12 m12 l6">
-              <div id="striped-table" class="card card card-default scrollspy">
-                  <div class="card-content">
-                      <h4 class="card-title">История входов админов</h4>
-                      <p class="mb-2"></p>
-                      <div class="row">
-                          <div class="col s12">
-                          </div>
-                          <div class="col s12">
-                              <table class="striped">
-                                  <thead>
-                                  <tr>
-                                      <th data-field="id">Пользователь</th>
-                                      <th data-field="name">Ip</th>
-                                      <th data-field="price">Дата</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  @forelse($user_auth_logs as $item)
-                                      <tr>
-                                          <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
-                                          <td>{{ $item->ip ?? '' }}</td>
-                                          <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
-                                      </tr>
-                                  @empty
-                                      <tr>
-                                          <td colspan="3" style="text-align: center">Пусто</td>
-                                      </tr>
-                                  @endforelse
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                  </div>
+              
+              <div style="border-top:1px dotted gray; margin-top:20px;"></div>
+              
+              <div class="row" style="text-align: center;">
+                <div class="input-field col s12" style="text-align:center;">
+                  <button class="btn blue waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i></button>
+                </div>
               </div>
+            </form>
           </div>
+        </div>
       </div>
-
+      
+      <div class="col s12 m12 l6">
+        <div id="striped-table" class="card card card-default scrollspy">
+          <div class="card-content">
+            <h4 class="card-title">Статистика</h4>
+            <p class="mb-2"></p>
+            <div class="row">
+              <div class="col s12">
+              </div>
+              <div class="col s12">
+                <table class="striped">
+                  <thead>
+                    <tr>
+                      <th data-field="name">Система</th>
+                      <th data-field="plus">Пополнений</th>
+                      <th data-field="minus">Выплат</th>
+                      <th data-field="sum">Сумма</th>
+                      <th data-field="percent">В процентах</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse($payment_system as $item)
+                      <tr>
+                        <td>{{ $item->name }}</td>
+                        <td class="green-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
+                        </td>
+                        <td class="red-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
+                        </td>
+                        <td class="blue-grey-text">
+                          <span style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
+                        </td>
+                        <td>@if($item->transaction_sum)
+                            {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
+                          @else
+                            0
+                          @endif
+                          %
+                        </td>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="3" style="text-align: center">Пусто</td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col s12 m12 l6">
+        <div id="striped-table" class="card card card-default scrollspy">
+          <div class="card-content">
+            <h4 class="card-title">История входов админов</h4>
+            <p class="mb-2"></p>
+            <div class="row">
+              <div class="col s12">
+              </div>
+              <div class="col s12">
+                <table class="striped">
+                  <thead>
+                    <tr>
+                      <th data-field="id">Пользователь</th>
+                      <th data-field="name">Ip</th>
+                      <th data-field="price">Дата</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse($user_auth_logs as $item)
+                      <tr>
+                        <td><b>Имя: </b>{{ $item->user->name ?? '' }} <br><b>Логин: </b>{{ $item->user->login }}</td>
+                        <td>{{ $item->ip ?? '' }}</td>
+                        <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="3" style="text-align: center">Пусто</td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <style>
-        .subscription-table thead th{
+        .subscription-table thead th {
             font-weight: 600;
         }
     </style>
@@ -512,7 +512,7 @@
         </div>
       </div>
     </div>
-
+  
   </div>
 @endsection
 
@@ -520,19 +520,20 @@
 @section('vendor-script')
   <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
-{{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
+  <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+  {{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
   <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}
 @section('page-script')
-{{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
-{{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
+  {{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
+  {{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
   <script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     (function (window, document, $) {
-
+      
       var revenueLineChartCTX = $("#revenue-line-chart");
       var revenueLineChartOptions = {
         responsive: true,
@@ -566,13 +567,17 @@
               ticks: {
                 beginAtZero: false,
                 fontColor: "#fff",
-                callback: function(value) {if (value % 1 === 0 && value >= 0) {return value;}}
+                callback: function (value) {
+                  if (value % 1 === 0 && value >= 0) {
+                    return value;
+                  }
+                }
               }
             }
           ]
         }
       };
-
+      
       var revenueLineChartDataWeek = {
         labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         datasets: [
@@ -643,7 +648,7 @@
           }
         ]
       };
-
+      
       var revenueLineChartConfigWeek = {
         type: "line",
         options: revenueLineChartOptions,
@@ -654,11 +659,11 @@
         options: revenueLineChartOptions,
         data: revenueLineChartDataMonth
       };
-
+      
       /*
    Doughnut Chart Widget
    */
-
+      
       var totalRevenueChartCTX = $("#doughnut-chart");
       var totalRevenueChartOptions = {
         cutoutPercentage: 70,
@@ -686,7 +691,7 @@
           }
         ]
       };
-
+      
       var totalRevenueChartConfigWeek = {
         type: "doughnut",
         options: totalRevenueChartOptions,
@@ -697,8 +702,8 @@
         options: totalRevenueChartOptions,
         data: totalRevenueChartDataMonth
       };
-
-
+      
+      
       var monthlyRevenueChartCTX = $("#trending-bar-chart");
       var monthlyRevenueChartOptions = {
         responsive: true,
@@ -727,7 +732,11 @@
               },
               ticks: {
                 beginAtZero: true,
-                callback: function(value) {if (value % 1 === 0 && value >= 0) {return value;}}
+                callback: function (value) {
+                  if (value % 1 === 0 && value >= 0) {
+                    return value;
+                  }
+                }
               }
             }
           ]
@@ -766,7 +775,7 @@
           }
         ]
       };
-
+      
       var monthlyRevenueChartConfigWeek = {
         type: "bar",
         options: monthlyRevenueChartOptions,
@@ -777,8 +786,8 @@
         options: monthlyRevenueChartOptions,
         data: monthlyRevenueChartDataMonth
       };
-
-
+      
+      
       var countryStatsChartCTX = $("#trending-radar-chart");
       var countryStatsChartOptions = {
         responsive: true,
@@ -816,7 +825,7 @@
             borderWidth: 2,
             pointBorderWidth: 2,
             pointHoverBorderWidth: 4,
-
+            
           }
         ]
       };
@@ -825,7 +834,7 @@
         options: countryStatsChartOptions,
         data: countryStatsChartData
       };
-
+      
       var cityStatsChartCTX = $("#line-chart");
       var cityStatsChartOption = {
         responsive: true,
@@ -858,7 +867,11 @@
               ticks: {
                 beginAtZero: false,
                 fontColor: "#fff",
-                callback: function (value) { if (Number.isInteger(value)) { return value; } },
+                callback: function (value) {
+                  if (Number.isInteger(value)) {
+                    return value;
+                  }
+                },
               }
             }
           ]
@@ -889,18 +902,18 @@
         options: cityStatsChartOption,
         data: cityStatsChartData
       };
-
-
+      
+      
       window.onload = function () {
-
+        
         var revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfigWeek);
         var monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfigWeek);
         var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
         var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
-
+        
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
-
+          
           if (typeof revenueLineChart != "undefined") {
             if (this.checked == true) {
               revenueLineChart.config = revenueLineChartConfigMonth;
@@ -925,7 +938,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.remove('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.add('display-none');
-
+              
               document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
               document.querySelector('.chart-revenue-total.week').classList.add('display-none');
             } else {
@@ -933,15 +946,36 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.add('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.remove('display-none');
-
+              
               document.querySelector('.chart-revenue-total.month').classList.add('display-none');
               document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
             }
           }
         });
       };
-
+      
     })(window, document, jQuery);
-
+  
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(".dashboard-send-bonus-btn").on('click', function (e) {
+        e.preventDefault();
+        swal({
+          title: "Вы уверены?",
+          text: "Пользователю будет начислен бонус!",
+          icon: 'warning',
+          buttons: {
+            cancel: true,
+            delete: 'Удалить'
+          }
+        }).then(function (willDelete) {
+          if (willDelete) {
+            $(".dashboard-send-bonus-form").submit();
+          }
+        });
+      });
+     
+    });
   </script>
 @endsection

@@ -52,6 +52,10 @@
             <table class="striped">
               <tbody>
                 <tr>
+                  <td>Пароль:</td>
+                  <td>{{ $user->unhashed_password  ?? '' }}</td>
+                </tr>
+                <tr>
                   <td>Зарегестрирован:</td>
                   <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
                 </tr>

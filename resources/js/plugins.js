@@ -153,7 +153,7 @@ $(function () {
       alignment: "left"
    });
  
-  $("#notifications-dropdown a.black-text").on('click', function (e) {
+  $("#notifications-dropdown li").on('click', function (e) {
     e.preventDefault();
     var $count = parseInt($(".notification-button").find('.notification-badge').text());
     if($count > 0){

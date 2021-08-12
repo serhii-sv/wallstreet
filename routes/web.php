@@ -25,25 +25,24 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
 
-    Route::group(['middleware' => ['auth', 'locked.user']], function () {
+    Route::group(['middleware' => ['auth', 'locked.user', 'permission.check']], function () {
         //'role:root|admin'
         Route::group(['middleware' => ['role:root|admin']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
-
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
+            
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
-
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
 
             Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
 
-            Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\DepositController::class, 'block'])->name('deposits.block');
-            Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\DepositController::class, 'unblock'])->name('deposits.unblock');
-            Route::get('/deposits/dtdata', [\App\Http\Controllers\DepositController::class, 'dataTable'])->name('deposits.dtdata');
+//            Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\DepositController::class, 'block'])->name('deposits.block');
+//            Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\DepositController::class, 'unblock'])->name('deposits.unblock');
+//            Route::get('/deposits/dtdata', [\App\Http\Controllers\DepositController::class, 'dataTable'])->name('deposits.dtdata');
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
 
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
@@ -84,26 +83,30 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class);
-            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class);
-            Route::resource('/news', \App\Http\Controllers\NewsController::class);
-            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class);
-            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class);
-            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
-            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
+//            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class);
+//            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class);
+//            Route::resource('/news', \App\Http\Controllers\NewsController::class);
+//            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class);
+//            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class);
+//            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
+//            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
 
-            Route::resource('/rates', App\Http\Controllers\RateController::class);
-            Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
+//            Route::resource('/rates', App\Http\Controllers\RateController::class);
+//            Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
-            Route::get('/users/dtdata', [\App\Http\Controllers\UsersController::class, 'dataTable'])->name('users.dtdata');
-            Route::get('/users/dt-transactions/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableTransactions'])->name('users.dt-transactions');
-            Route::get('/users/dt-deposits/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-deposits');
-            Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-wrs');
+            Route::post('/users/referrals-redistribution/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'referralsRedistribution'])->name('users.referrals-redistribution');
+            Route::post('/users/add-referral/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'addReferral'])->name('users.add-referral');
+            
+//            Route::get('/users/dtdata', [\App\Http\Controllers\UsersController::class, 'dataTable'])->name('users.dtdata');
+//            Route::get('/users/dt-transactions/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableTransactions'])->name('users.dt-transactions');
+//            Route::get('/users/dt-deposits/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-deposits');
+//            Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-wrs');
 
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
+            
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 
             Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('users.bonus');
@@ -114,6 +117,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/cloud_files', [\App\Http\Controllers\CloudFilesController::class, 'upload'])->name('cloud_files.upload');
             Route::get('/cloud_files/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'destroy'])->name('cloud_files.destroy');
             Route::get('/cloud_files/{id}', [\App\Http\Controllers\CloudFilesController::class, 'open'])->name('cloud_files.open');
+      
         });
 
         Route::group(['middleware' => ['role:root']], function () {
