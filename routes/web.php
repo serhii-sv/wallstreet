@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['middleware' => ['web', 'activity-log']], function () {
+Route::group(['middleware' => ['web']], function () {
     Auth::routes([
         'register' => false,
         'reset' => false,
@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
 
     Route::group(['middleware' => ['auth', 'locked.user']], function () {
         //'role:root|admin'
-        Route::group(['middleware' => ['role:root|admin']], function () {
+        Route::group(['middleware' => ['role:root|admin', 'activity-log']], function () {
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
@@ -130,7 +130,7 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
             Route::get('kanban/board/{id}/destroy', [\App\Http\Controllers\KanbanController::class, 'destroyBoard'])->name('kanban.board.destroy');
         });
 
-        Route::group(['middleware' => ['role:root']], function () {
+        Route::group(['middleware' => ['role:root', 'activity-log']], function () {
             Route::get('/backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
             Route::get('/backup/backupDB', [\App\Http\Controllers\BackupController::class, 'backupDB'])->name('backup.backupDB');
             Route::get('/backup/backupFiles', [\App\Http\Controllers\BackupController::class, 'backupFiles'])->name('backup.backupFiles');
