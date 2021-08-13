@@ -47,8 +47,8 @@ class UserTransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($transaction_id);
         if ($transaction->delete()) {
-            return redirect()->to(route('user-transactions.index', $user_id));
+            return redirect()->to(route('user-transactions.index', $user_id))->with('success_short', 'Транзакция успешно удалена.');
         }
-        return back()->with('error', __('ERROR:').' Транзакция не была удалена');
+        return back()->with('error_ырщке', __('ERROR:').' Транзакция не была удалена.');
     }
 }

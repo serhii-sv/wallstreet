@@ -43,7 +43,7 @@
                       <i class="material-icons">mail_outline</i>
                   </a>
                   <a href="{{ route('users.show', $user) }}" class="btn-small indigo">Профиль</a>
-                  <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
+                  <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Рефералы</a>
               </div>
           </div>
       </div>
