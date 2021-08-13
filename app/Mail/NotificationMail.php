@@ -31,12 +31,12 @@ class NotificationMail extends Mailable implements ShouldQueue
     /** @var array $data */
     protected $data;
     
-    protected $email_text;
+    protected $text;
     public    $subject;
     
     // User $user, string $code, array $data=null
-    public function __construct(User $user, $subject, $email_text) {
-        $this->email_text = $email_text;
+    public function __construct(User $user, $subject, $text) {
+        $this->text = $text;
         $this->user = $user;
         $this->subject = $subject;
         //        $this->data     = $data;
@@ -48,7 +48,8 @@ class NotificationMail extends Mailable implements ShouldQueue
         
         return $this->from('fnxrus@gmail.com')->subject($this->subject)->markdown('mail.markdown', [
                 'user' => $this->user,
-                'email_text' => $this->email_text,
+                'text' => $this->text,
             ]);
     }
+    
 }

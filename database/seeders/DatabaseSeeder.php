@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             LanguagesTableSeeder::class,
             RolesAndPermissionsSeeder::class,
             TransactionTypesSeeder::class,
+            PermissionsSeeder::class,
         ]);
     }
 }

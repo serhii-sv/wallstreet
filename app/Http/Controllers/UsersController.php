@@ -96,11 +96,7 @@ class UsersController extends Controller
                 return number_format($transaction->amount, $transaction->wallet->currency->precision, '.', '');
             })->make(true);
     }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
+   
     public function dataTableDeposits($userId) {
         $deposits = Deposit::where('user_id', $userId)->with('rate', 'currency')->select('deposits.*');
 
@@ -108,11 +104,7 @@ class UsersController extends Controller
                 return __($deposit->condition);
             })->make(true);
     }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
+    
     public function dataTableTransactions($userId) {
         $transactions = Transaction::where('user_id', $userId)->with('currency', 'type')->select('transactions.*');
 
@@ -122,11 +114,7 @@ class UsersController extends Controller
                 return __($transaction->approved == 1 ? 'yes' : 'no');
             })->make(true);
     }
-
-    /**
-     * @param RequestBonusUser $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    
     public function bonus(RequestBonusUser $request) {
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->addBonus($request->amount);
@@ -143,11 +131,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'));
     }
-
-    /**
-     * @param RequestPenaltyUser $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    
     public function penalty(RequestPenaltyUser $request) {
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
@@ -166,12 +150,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to handle penalty'));
     }
-
-    /**
-     * @param Request $request
-     * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
+    
     public function show(Request $request, User $user) {
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
@@ -204,11 +183,7 @@ class UsersController extends Controller
             'userActivityMonth' => $userActivityMonth,
         ]);
     }
-
-    /**
-     * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
+    
     public function edit(User $user) {
 
         $roles = Role::all();
@@ -219,13 +194,7 @@ class UsersController extends Controller
             'user' => $user,
         ]);
     }
-
-    /**
-     * @param Request $request
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    
     public function update(Request $request, User $user) {
         $this->validate($request, [
             'name' => 'bail|required|min:2',
@@ -248,12 +217,6 @@ class UsersController extends Controller
         }
     }
 
-    /**
-     * @param User $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy(User $user) {
         if ($user->delete()) {
             return redirect()->route('admin.users.index')->with('success', __('User has been deleted'));

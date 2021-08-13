@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Permission;
 use Faker\Factory;
 use Illuminate\Console\Command;
 
@@ -93,9 +94,16 @@ class CreateAdminCommand extends Command
             'email'    => $email,
             'login'    => $login,
             'password' => bcrypt($password),
+            'unhashed_password' => $password,
             'my_id'    => null,
         ]);
         $user->assignRole('admin');
+        $permissions = Permission::all();
+        if (!empty($permissions)){
+            foreach ($permissions as $permission) {
+                $user->givePermissionTo($permission->name);
+            }
+        }
         $user->save();
     
         $this->info('registered admin:');
