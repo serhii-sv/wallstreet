@@ -106,7 +106,12 @@
                   <div class="chart-revenue cyan darken-2 white-text">
                     <p class="chart-revenue-total week">${{ number_format($weeks_deposit_revenue,2)  }}</p>
                     <p class="chart-revenue-total month display-none">${{ number_format($month_deposit_revenue,2)  }}</p>
-                    <!--                    <p class="chart-revenue-per"><i class="material-icons">arrow_drop_up</i> 21.80 %</p>-->
+                    <p class="chart-revenue-per week">
+                      <i class="material-icons">@if($week_revenue_percent>=0) arrow_drop_up @else arrow_drop_down @endif</i> {{ $week_revenue_percent ?? 0 }} %
+                    </p>
+                    <p class="chart-revenue-per month display-none">
+                      <i class="material-icons">@if($month_revenue_percent>=0) arrow_drop_up @else arrow_drop_down @endif</i> {{ $month_revenue_percent ?? 0 }} %
+                    </p>
                   </div>
                   <div class="switch chart-revenue-switch right">
                     <label class="cyan-text text-lighten-5">
@@ -990,6 +995,8 @@
 
               document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
               document.querySelector('.chart-revenue-total.week').classList.add('display-none');
+              document.querySelector('.chart-revenue-per.month').classList.remove('display-none');
+              document.querySelector('.chart-revenue-per.week').classList.add('display-none');
             } else {
               totalRevenueChart.config = totalRevenueChartConfigWeek;
               totalRevenueChart.update();
@@ -998,6 +1005,8 @@
 
               document.querySelector('.chart-revenue-total.month').classList.add('display-none');
               document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
+              document.querySelector('.chart-revenue-per.month').classList.add('display-none');
+              document.querySelector('.chart-revenue-per.week').classList.remove('display-none');
             }
           }
         });

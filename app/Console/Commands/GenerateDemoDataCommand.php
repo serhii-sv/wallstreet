@@ -250,51 +250,54 @@ class GenerateDemoDataCommand extends Command
             return;
         }
         
+        $currencies = Currency::all();
         /** @var Rate $randomRate */
-        foreach ($randomRates as $randomRate) {
-            /** @var Wallet $wallet */
-            $wallet = $user->wallets()->where('currency_id', $randomRate->currency_id)->first();
-            
-            if (null === $wallet) {
-                return;
+        foreach ($currencies as $currency) {
+            foreach ($randomRates as $randomRate) {
+                $wallet = $user->wallets()->where('currency_id', $currency->id)->first();
+                
+                if (null === $wallet) {
+                    return;
+                }
+                
+                $enterTransaction = TransactionType::getByName('create_dep');
+                $externalWallet = 'W' . $this->faker->randomNumber(5);
+                $transactionData = [
+                    'amount' => $randomRate->max,
+                    'type_id' => $enterTransaction->id,
+                    'user_id' => $wallet->user_id,
+                    'wallet_id' => $wallet->id,
+                    'currency_id' => $currency->id,
+                    'payment_system_id' => $wallet->payment_system_id,
+                    'result' => 'completed',
+                    'batch_id' => 'B' . $this->faker->randomNumber(5),
+                    'approved' => 1,
+                    'log' => $this->faker->text,
+                    'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
+                ];
+                $wallet->refill($transactionData['amount'], $externalWallet);
+                
+                /** @var Transaction $transaction */
+                $transaction = Transaction::create($transactionData);
+                
+                $min = $randomRate->min == 0 ? 1 : $randomRate->min;
+                $depositAmount = $this->faker->numberBetween($min, $randomRate->max);
+                $depositData = [
+                    'wallet_id' => $wallet->id,
+                    'currency_id' => $currency->id,
+                    'rate_id' => $randomRate->id,
+                    'amount' => $depositAmount,
+                    'active' => $this->faker->boolean,
+                    'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
+                    'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
+                    'user' => $wallet->user()->first(),
+                ];
+                
+                /** @var Deposit $deposit */
+                $deposit = Deposit::addDeposit($depositData, $currency, true);
+                
+                $this->info('deposit created ' . $deposit->id);
             }
-            
-            $enterTransaction = TransactionType::getByName('create_dep');
-            $externalWallet = 'W' . $this->faker->randomNumber(5);
-            $transactionData = [
-                'amount' => $randomRate->max,
-                'type_id' => $enterTransaction->id,
-                'user_id' => $wallet->user_id,
-                'wallet_id' => $wallet->id,
-                'currency_id' => $wallet->currency_id,
-                'payment_system_id' => $wallet->payment_system_id,
-                'result' => 'completed',
-                'batch_id' => 'B' . $this->faker->randomNumber(5),
-                'approved' => 1,
-                'log' => $this->faker->text,
-                'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-            ];
-            $wallet->refill($transactionData['amount'], $externalWallet);
-            
-            /** @var Transaction $transaction */
-            $transaction = Transaction::create($transactionData);
-            
-            $min = $randomRate->min == 0 ? 1 : $randomRate->min;
-            $depositAmount = $this->faker->numberBetween($min, $randomRate->max);
-            $depositData = [
-                'wallet_id' => $wallet->id,
-                'rate_id' => $randomRate->id,
-                'amount' => $depositAmount,
-                'active' => $this->faker->boolean,
-                'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
-                'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                'user' => $wallet->user()->first(),
-            ];
-            
-            /** @var Deposit $deposit */
-            $deposit = Deposit::addDeposit($depositData, true);
-            
-            $this->info('deposit created ' . $deposit->id);
         }
     }
     
