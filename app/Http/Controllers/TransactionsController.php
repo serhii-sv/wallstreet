@@ -59,24 +59,26 @@ class TransactionsController extends Controller
     }
 
     /**
-     * @param Transaction $transaction
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Transaction $transaction)
+    public function show($id)
     {
+        $transaction = Transaction::findOrFail($id);
         return view('pages.transactions.show', [
             'transaction' => $transaction
         ]);
     }
 
     /**
-     * @param Transaction $transaction
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($id)
     {
+        $transaction = Transaction::findOrFail($id);
         if ($transaction->delete()) {
-            return redirect()->to(route('transactions.index'));
+            return redirect()->to(route('transactions.index'))->with('success_short', 'Транзакция успешно удалена.');
         }
         return back()->with('error', __('ERROR:').' Транзакция не была удалена');
     }

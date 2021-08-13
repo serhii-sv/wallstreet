@@ -41,7 +41,8 @@
             <i class="material-icons">mail_outline</i>
           </a>
           <a href="{{ route('users.edit', $user) }}" class="btn-small indigo">Редактировать</a>
-            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
+            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Рефералы</a>
+            <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
         </div>
       </div>
     </div>
