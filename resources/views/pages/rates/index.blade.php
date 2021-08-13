@@ -87,7 +87,6 @@
  * Form Validation
  */
         $(function () {
-            console.log($('.delete-rate'))
             $(document).on('click', '.delete-rate', function () {
                 swal({
                     title: "Вы уверены что хотите удалить этот тариф?",
