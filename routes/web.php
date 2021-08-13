@@ -26,14 +26,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
 
     Route::group(['middleware' => ['auth', 'locked.user', 'permission.check']], function () {
-        //'role:root|admin'
-        Route::group(['middleware' => ['role:root|admin', 'activity-log']], function () {
+        Route::group(['middleware' => ['activity-log']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
-            
+
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
 
@@ -118,7 +117,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
-            
+
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 
             Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('users.bonus');
@@ -142,7 +141,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('kanban/board/{id}/destroy', [\App\Http\Controllers\KanbanController::class, 'destroyBoard'])->name('kanban.board.destroy');
         });
 
-        Route::group(['middleware' => ['role:root', 'activity-log']], function () {
+        Route::group(['middleware' => ['activity-log']], function () {
             Route::get('/backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
             Route::get('/backup/backupDB', [\App\Http\Controllers\BackupController::class, 'backupDB'])->name('backup.backupDB');
             Route::get('/backup/backupFiles', [\App\Http\Controllers\BackupController::class, 'backupFiles'])->name('backup.backupFiles');
