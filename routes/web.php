@@ -92,8 +92,16 @@ Route::group(['middleware' => ['web']], function () {
 //            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
 //            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
 
-//            Route::resource('/rates', App\Http\Controllers\RateController::class);
-//            Route::get('/rates/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('rates.destroy');
+            Route::prefix('rates')->as('rates.')->group(function () {
+                Route::get('/', [App\Http\Controllers\RateController::class, 'index'])->name('index');
+
+                Route::get('/edit/{id}', [App\Http\Controllers\RateController::class, 'edit'])->name('edit');
+                Route::post('/update/{id}', [App\Http\Controllers\RateController::class, 'update'])->name('update');
+
+                Route::get('/create', [App\Http\Controllers\RateController::class, 'create'])->name('create');
+                Route::post('/store', [App\Http\Controllers\RateController::class, 'store'])->name('store');
+                Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
+            });
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
 

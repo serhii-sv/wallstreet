@@ -100,13 +100,19 @@
         <span class="menu-title" data-i18n="Уведомления">Уведомления</span>
       </a>
     </li>
-    
-    <li class="bold">
-      <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active' : '') }}" href="{{ route('kanban.index') }}">
-        <i class="material-icons">developer_board</i>
-        <span class="menu-title" data-i18n="Задачи">Задачи</span>
-      </a>
-    </li>
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active' : '') }}" href="{{ route('kanban.index') }}">
+              <i class="material-icons">developer_board</i>
+              <span class="menu-title" data-i18n="Задачи">Задачи</span>
+          </a>
+      </li>
+
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active' : '') }}" href="{{ route('rates.index') }}">
+              <i class="material-icons">show_chart</i>
+              <span class="menu-title" data-i18n="Тарифы">Тарифы</span>
+          </a>
+      </li>
     <li class="bold">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="material-icons">photo_filter</i>

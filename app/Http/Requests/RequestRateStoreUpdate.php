@@ -34,7 +34,7 @@ class RequestRateStoreUpdate extends FormRequest
      */
     public function authorize()
     {
-        return return true;;
+        return true;
     }
 
     /**
@@ -46,16 +46,9 @@ class RequestRateStoreUpdate extends FormRequest
     {
         return [
             'name'        => 'required|min:3|max:60',
-            'currency_id' => 'required|exists:currencies,id',
             'min'         => 'numeric|min:0',
             'max'         => 'numeric|min:0',
             'daily'       => 'numeric|min:0',
-            'overall'     => 'numeric|min:0',
-            'duration'    => 'required|numeric|min:1',
-            'payout'      => 'nullable|numeric|min:0',
-            'reinvest'    => 'nullable|int',
-            'autoclose'   => 'nullable|int',
-            'active'      => 'nullable|int',
         ];
     }
 
