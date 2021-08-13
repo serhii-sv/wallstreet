@@ -194,7 +194,7 @@ class GenerateDemoDataCommand extends Command
                     'payment_system_id' => $wallet->payment_system_id,
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
-                    'approved' => 1,
+                    'approved' => $this->faker->boolean,
                     'log' => $this->faker->text,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
                 ];
@@ -271,7 +271,7 @@ class GenerateDemoDataCommand extends Command
                     'payment_system_id' => $wallet->payment_system_id,
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
-                    'approved' => 1,
+                    'approved' => $this->faker->boolean,
                     'log' => $this->faker->text,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
                 ];
