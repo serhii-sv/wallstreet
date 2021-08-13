@@ -33,7 +33,6 @@ class Currency extends Model
         'code',
         'precision',
         'symbol',
-        'currency_id',
     ];
 
     /**
@@ -71,10 +70,10 @@ class Currency extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function rates()
-    {
-        return $this->hasMany(Rate::class, 'currency_id');
-    }
+//    public function rates()
+//    {
+//        return $this->hasMany(Rate::class, 'currency_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

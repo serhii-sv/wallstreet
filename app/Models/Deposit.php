@@ -142,13 +142,16 @@ class Deposit extends Model
     {
         return $value;
     }
-
+    
     /**
-     * @param $field
+     * @param                      $field
+     * @param \App\Models\Currency $currency
+     * @param bool                 $force
+     *
      * @return Deposit|null
-     * @throws \Exception
+     * @throws \Throwable
      */
-    public static function addDeposit($field, bool $force=false)
+    public static function addDeposit($field,Currency $currency, bool $force=false)
     {
         /** @var User $user */
         $user     = isset($field['user']) ? $field['user'] : Auth::user();
@@ -157,11 +160,11 @@ class Deposit extends Model
         $rate     = Rate::findOrFail($field['rate_id']);
 
         /** @var Wallet $wallet */
-        $wallet   = Wallet::where('user_id', $user->id)->where('currency_id', $rate->currency_id)->firstOrFail();
+        $wallet   = Wallet::where('user_id', $user->id)->where('currency_id', $currency->id)->firstOrFail();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
 
-        if ($rate->currency_id != $wallet->currency_id) {
+        if ($currency->id != $wallet->currency_id) {
             throw new \Exception('Wrong currency ID');
         }
 
@@ -175,8 +178,6 @@ class Deposit extends Model
             }
         }
 
-        /** @var Currency $currency */
-        $currency = $rate->currency()->first();
 
         /**
          * LUMINEX SPECIAL
@@ -210,7 +211,7 @@ class Deposit extends Model
 
         $deposit                    = new Deposit;
         $deposit->rate_id           = $rate->id;
-        $deposit->currency_id       = $rate->currency_id;
+        $deposit->currency_id       = $currency->id;
         $deposit->wallet_id         = $wallet->id;
         $deposit->user_id           = $user->id;
         $deposit->invested          = $amount;
