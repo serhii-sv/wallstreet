@@ -20,9 +20,9 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-    
+
     <div id="chart-dashboard">
-      
+
       <div id="card-stats" class="pt-0">
         <div class="row">
           <div class="col s12 m6 l6 xl3">
@@ -95,7 +95,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row mt-2">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
@@ -241,8 +241,8 @@
         </div>
       </div>
     </div>
-    
-    
+
+
     <div class="row">
       <div class="col s12 m12 l6">
         <div class="card">
@@ -288,15 +288,15 @@
             <h4 class="card-title mb-4">Начислить бонус</h4>
             <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
               {{ csrf_field() }}
-              
+
               <div class="row" style="margin-top:20px; text-align: center;">
                 <div class="input-field col s12">
                   <input id="login" type="text" name="login" placeholder="Логин, айди, или почта" value="{{ old('login') }}" style="font-weight: bold; text-align: center;">
                 </div>
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="text-align: center; margin-top:20px;">
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
@@ -311,9 +311,9 @@
                                   </label>
                               </span>
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="text-align: center; margin-top:20px;">
                 @foreach($currencies as $currency)
                   @if($loop->index % 2 && $loop->index > 1)
@@ -327,9 +327,9 @@
                               </span>
                 @endforeach
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="margin-top:20px; text-align: center;">
                 @foreach($payment_system as $ps)
                   @if($loop->index % 2 && $loop->index > 1)
@@ -343,9 +343,9 @@
                               </span>
                 @endforeach
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="margin-top:20px; text-align: center;">
                               <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
@@ -353,7 +353,7 @@
                                     <span style="color:white; font-weight: bold;">Реал</span>
                                   </label>
                               </span>
-                
+
                 <span class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
@@ -361,17 +361,17 @@
                                   </label>
                               </span>
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="margin-top:20px; text-align: center;">
                 <div class="input-field col s12">
                   <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}" style="font-weight: bold; text-align: center;">
                 </div>
               </div>
-              
+
               <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-              
+
               <div class="row" style="text-align: center;">
                 <div class="input-field col s12" style="text-align:center;">
                   <button class="btn blue waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i>
@@ -382,7 +382,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col s12 m12 l6">
         <div id="striped-table" class="card card card-default scrollspy">
           <div class="card-content">
@@ -435,7 +435,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col s12 m12 l6">
         <div id="striped-table" class="card card card-default scrollspy">
           <div class="card-content">
@@ -473,7 +473,7 @@
         </div>
       </div>
     </div>
-    
+
     <style>
         .subscription-table thead th {
             font-weight: 600;
@@ -534,7 +534,7 @@
         </div>
       </div>
     </div>
-  
+
   </div>
 @endsection
 
@@ -542,12 +542,8 @@
 @section('vendor-script')
   <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
-  <<<<<<< HEAD
   <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
   {{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
-  =======
-  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>
-  >>>>>>> 0af982bfbae323b97d4a87cdc29517436dc68832
   <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
 @endsection
 
@@ -559,7 +555,7 @@
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     (function (window, document, $) {
-      
+
       var revenueLineChartCTX = $("#revenue-line-chart");
       var revenueLineChartOptions = {
         responsive: true,
@@ -603,7 +599,7 @@
           ]
         }
       };
-      
+
       var revenueLineChartDataWeek = {
         labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         datasets: [
@@ -674,7 +670,7 @@
           }
         ]
       };
-      
+
       var revenueLineChartConfigWeek = {
         type: "line",
         options: revenueLineChartOptions,
@@ -685,11 +681,11 @@
         options: revenueLineChartOptions,
         data: revenueLineChartDataMonth
       };
-      
+
       /*
    Doughnut Chart Widget
    */
-      
+
       var totalRevenueChartCTX = $("#doughnut-chart");
       var totalRevenueChartOptions = {
         cutoutPercentage: 70,
@@ -717,7 +713,7 @@
           }
         ]
       };
-      
+
       var totalRevenueChartConfigWeek = {
         type: "doughnut",
         options: totalRevenueChartOptions,
@@ -728,8 +724,8 @@
         options: totalRevenueChartOptions,
         data: totalRevenueChartDataMonth
       };
-      
-      
+
+
       var monthlyRevenueChartCTX = $("#trending-bar-chart");
       var monthlyRevenueChartOptions = {
         responsive: true,
@@ -801,7 +797,7 @@
           }
         ]
       };
-      
+
       var monthlyRevenueChartConfigWeek = {
         type: "bar",
         options: monthlyRevenueChartOptions,
@@ -812,8 +808,8 @@
         options: monthlyRevenueChartOptions,
         data: monthlyRevenueChartDataMonth
       };
-      
-      
+
+
       var countryStatsChartCTX = $("#trending-radar-chart");
       var countryStatsChartOptions = {
         responsive: true,
@@ -851,7 +847,7 @@
             borderWidth: 2,
             pointBorderWidth: 2,
             pointHoverBorderWidth: 4,
-            
+
           }
         ]
       };
@@ -860,7 +856,7 @@
         options: countryStatsChartOptions,
         data: countryStatsChartData
       };
-      
+
       var cityStatsChartCTX = $("#line-chart");
       var cityStatsChartOption = {
         responsive: true,
@@ -928,7 +924,7 @@
         options: cityStatsChartOption,
         data: cityStatsChartData
       };
-      
+
       var CurrentBalanceDonutChart = new Chartist.Pie(
           "#current-balance-donut-chart",
           {
@@ -938,7 +934,7 @@
               {meta: "Remaining", value: 100 - {{ $userActivity['percentage'] }} }
             ]
           },
-          
+
           {
             donut: true,
             donutWidth: 8,
@@ -958,20 +954,20 @@
             ]
           }
       )
-      
+
       CurrentBalanceDonutChart.update();
-      
+
       window.onload = function () {
-        
+
         var revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfigWeek);
         var monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfigWeek);
         var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
         var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
-        
-        
+
+
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
-          
+
           if (typeof revenueLineChart != "undefined") {
             if (this.checked == true) {
               revenueLineChart.config = revenueLineChartConfigMonth;
@@ -996,7 +992,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.remove('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.add('display-none');
-              
+
               document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
               document.querySelector('.chart-revenue-total.week').classList.add('display-none');
               document.querySelector('.chart-revenue-per.month').classList.remove('display-none');
@@ -1006,7 +1002,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.add('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.remove('display-none');
-              
+
               document.querySelector('.chart-revenue-total.month').classList.add('display-none');
               document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
               document.querySelector('.chart-revenue-per.month').classList.add('display-none');
@@ -1015,9 +1011,9 @@
           }
         });
       };
-      
+
     })(window, document, jQuery);
-  
+
   </script>
   <script>
     $(document).ready(function () {
@@ -1037,7 +1033,7 @@
           }
         });
       });
-      
+
     });
   </script>
 @endsection

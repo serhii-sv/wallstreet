@@ -22,7 +22,8 @@ class RateController extends Controller
      */
     public function index()
     {
-        return view('admin/rates/index');
+        $rates = Rate::all();
+        return view('pages.rates.index', compact('rates'));
     }
 
     /**
@@ -30,7 +31,7 @@ class RateController extends Controller
      */
     public function create()
     {
-        return view('admin/rates/create');
+        return view('pages.rates.create');
     }
 
     /**
@@ -39,76 +40,68 @@ class RateController extends Controller
      */
     public function store(RequestRateStoreUpdate $request)
     {
-        $rate = Rate::create($request->except(['reinvest', 'autoclose', 'active']));
+        $rate = Rate::create($request->all());
 
         if (!$rate) {
-            return back()->with('error', __('Unable to create tariff plan'))->withInput();
+            return back()->with('error_short', __('Невозможно созать тариф'))->withInput();
         }
 
-        $rate->reinvest = !empty($request->reinvest) ? 1 : 0;
-        $rate->autoclose = !empty($request->autoclose) ? 1 : 0;
-        $rate->active = !empty($request->active) ? 1 : 0;
-        $rate->save();
-
-        return redirect()->route('admin.rates.index')->with('success', __('Deposit plan has been created'));
+        return redirect()->route('rates.index')->with('success_short', __('Тариф создан успешно'));
     }
 
     /**
-     * @param Rate $rate
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Rate $rate)
+    public function show($id)
     {
-        return view('admin.rates.show', [
+        $rate = Rate::findOrFail($id);
+        return view('pages.rates.show', [
             'rate' => $rate
         ]);
     }
 
     /**
-     * @param Rate $rate
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Rate $rate)
+    public function edit($id)
     {
-        return view('admin/rates/edit', [
+        $rate = Rate::findOrFail($id);
+        return view('pages.rates.edit', [
             'rate' => $rate
         ]);
     }
 
     /**
      * @param RequestRateStoreUpdate $request
-     * @param Rate $rate
-     * @return $this|RedirectResponse
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(RequestRateStoreUpdate $request, Rate $rate)
+    public function update(RequestRateStoreUpdate $request, $id)
     {
-        $rate->update($request->except(['reinvest', 'autoclose', 'active']));
+        $rate = Rate::findOrFail($id);
+        $rate->update($request->all());
 
         if (!$rate) {
-            return back()->with('error', __('Unable to update deposit plan'))->withInput();
+            return back()->with('error_short', __('Невозможно обновить тариф'))->withInput();
         }
 
-        $rate->reinvest = !empty($request->reinvest) ? 1 : 0;
-        $rate->autoclose = !empty($request->autoclose) ? 1 : 0;
-        $rate->active = !empty($request->active) ? 1 : 0;
-        $rate->save();
-
-        return redirect()->route('admin.rates.edit', ['id' => $rate->id])->with('success', __('Deposit plan has been updated'));
+        return redirect()->route('rates.index')->with('success_short', __('Тариф успешно обновлен'));
     }
 
     /**
-     * @param Rate $rate
+     * @param $id
      * @return RedirectResponse
-     * @throws \Exception
      */
-    public function destroy($rate)
+    public function destroy($id)
     {
-        $rate = Rate::find($rate);
+        $rate = Rate::findOrFail($id);
 
         if ($rate->delete()) {
-            return redirect()->route('admin.rates.index')->with('success', __('Deposit plan has been deleted'));
+            return redirect()->route('rates.index')->with('success_short', __('Тариф был успешно удален'));
         }
 
-        return redirect()->route('admin.rates.index')->with('error', __('Unable to delete deposit plan'));
+        return redirect()->route('rates.index')->with('error_short', __('Невозможно удалить тариф'));
     }
 }
