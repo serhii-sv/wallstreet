@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deposit;
+use App\Models\Rate;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,17 @@ class DepositController extends Controller
         $deposits_status = ['Не активные' => 'false', 'Активные' => 'true'];
         $deposits_count = Deposit::count();
         $filter_status = $request->get('status') ? $request->get('status') : false;
+        $filter_rates = $request->get('rate') ? $request->get('rate') : false;
         $deposits = Deposit::when($filter_status, function($query) use ($filter_status){
             return $query->where('active', $filter_status);
+        })->when($filter_rates, function($query) use ($filter_rates){
+            return $query->where('rate_id', $filter_rates);
         })->orderByDesc('created_at')->paginate(10);
         return view('pages.deposits.index', [
             'deposits' => $deposits,
             'deposits_count' => $deposits_count,
             'deposits_status' => $deposits_status,
+            'deposits_rates' => Rate::all(),
         ]);
     }
 

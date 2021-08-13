@@ -25,6 +25,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             ['panels.sidebar'], 'App\Http\ViewComposers\SidebarComposer'
         );
+        View::composer(
+            ['panels.navbar'], 'App\Http\ViewComposers\NavbarComposer'
+        );
     }
 
     /**

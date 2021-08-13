@@ -57,6 +57,28 @@
             </ul>
           </div>
         </div>
+        <div id="sidebar-list" class=" sidebar-menu list-group position-relative animate fadeLeft delay-1" style="position:relative !important;">
+          <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
+            <ul class="contact-list display-grid">
+              <li class="sidebar-title">Тарифные планы</li>
+              <li @if(empty(request()->get('rate'))) class="active" @endif>
+                <a href="{{ route('deposits.index') }}" class="text-sub">
+                  <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
+                  Все
+                </a>
+              </li>
+              @forelse($deposits_rates as $key => $rate)
+                <li @if(request()->get('rate') === $rate->id) class="active" @endif>
+                  <a href="{{ route('deposits.index', array_add(request()->except('page', 'rate'),'rate', $rate->id ) ) }}" class="text-sub">
+                    <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
+                    {{ $rate->name }}
+                  </a>
+                </li>
+              @empty
+              @endforelse
+            </ul>
+          </div>
+        </div>
         <a href="#" data-target="contact-sidenav" class="sidenav-trigger hide-on-large-only"><i
               class="material-icons">menu</i></a>
       </div>

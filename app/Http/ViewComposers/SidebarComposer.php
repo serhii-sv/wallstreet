@@ -5,9 +5,6 @@ namespace App\Http\ViewComposers;
 use App\Models\CloudFile;
 use App\Models\Transaction;
 use App\Models\TransactionType;
-use App\Models\User;
-use DateTime;
-use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class SidebarComposer
@@ -28,7 +25,7 @@ class SidebarComposer
         $view
             ->with('counts', [
                 'users' => cache()->remember('counts.users', now()->addHour(), function() {
-                    return \App\User::count();
+                    return \App\Models\User::count();
                 }),
                 'files' => cache()->remember('counts.files', now()->addHour(), function() {
                     return CloudFile::count();
@@ -44,7 +41,11 @@ class SidebarComposer
                 'transactions_amount' => cache()->remember('counts.transactions_amount', now()->addHour(), function() {
                     $sum = Transaction::sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);
-                })
+                }),
+                'deposits_active_amount' => cache()->remember('counts.deposits_active_amount', now()->addHour(), function() {
+                    $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('create_dep')->id)->sum('main_currency_amount');
+                    return Transaction::sidebarIndicatorsFormatting($sum);
+                }),
 
             ]);
 
