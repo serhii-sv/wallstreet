@@ -78,7 +78,7 @@ class TransactionsController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         if ($transaction->delete()) {
-            return redirect()->to(route('transactions.index'));
+            return redirect()->to(route('transactions.index'))->with('success_short', 'Транзакция успешно удалена.');
         }
         return back()->with('error', __('ERROR:').' Транзакция не была удалена');
     }
