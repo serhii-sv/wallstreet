@@ -26,7 +26,6 @@ class AlterTableCloudFilesAddFolderIdField extends Migration
     public function down()
     {
         Schema::table('cloud_files', function (Blueprint $table) {
-            $table->dropForeign(['cloud_file_folder_id']);
             $table->dropColumn('cloud_file_folder_id');
         });
     }
