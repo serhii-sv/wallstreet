@@ -538,7 +538,7 @@
   <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
   <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
-  {{--  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>--}}
+    <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>
   <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
 @endsection
 

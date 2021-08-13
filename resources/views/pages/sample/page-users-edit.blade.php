@@ -18,7 +18,35 @@
 {{-- page content --}}
 @section('content')
   <!-- users edit start -->
-  <div class="section users-edit">
+  <div class="section users-edit users-view">
+      <div class="card-panel">
+          @include('panels.inform')
+          <div class="row">
+              <div class="col s12 m6">
+                  <div class="display-flex media">
+                      <a href="#" class="avatar">
+                          <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle" height="64" width="64">
+                      </a>
+                      <div class="media-body">
+                          <h6 class="media-heading">
+                              <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
+                              <span class="grey-text">@</span>
+                              <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
+                          </h6>
+                          <span>ID:</span>
+                          <span class="users-view-id">{{ $user->id ?? 'Не указан' }}</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center pt-2">
+                  <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo">
+                      <i class="material-icons">mail_outline</i>
+                  </a>
+                  <a href="{{ route('users.show', $user) }}" class="btn-small indigo">Профиль</a>
+                  <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
+              </div>
+          </div>
+      </div>
     <div class="card">
       <div class="card-content">
         <!-- <div class="card-body"> -->
@@ -58,7 +86,7 @@
               </div>
               <!-- users edit media object ends -->
               <!-- users edit account form start -->
-              
+
               <div class="row">
                 <div class="col s12 m6">
                   <div class="row">
@@ -143,9 +171,9 @@
             </div>
             <div class="col s12" id="information">
               <!-- users edit Info form start -->
-              
+
               <div class="row">
-               
+
                 <div class="col s12 m6">
                   <div class="row">
                     <div class="col s12">
@@ -191,7 +219,7 @@
                   <a href="{{ route('users.show', $user) }}" type="button" class="btn btn-light">Назад</a>
                 </div>
               </div>
-              
+
               <!-- users edit Info form ends -->
             </div>
           </div>
