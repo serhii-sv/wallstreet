@@ -18,7 +18,7 @@
                         <div class="card-title">
                             <div class="row">
                                 <div class="col s12 m6 l10">
-                                    <h4 class="card-title">Добавть тариф</h4>
+                                    <h4 class="card-title">Добавить тариф</h4>
                                 </div>
                             </div>
                         </div>
