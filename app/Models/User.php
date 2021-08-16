@@ -248,4 +248,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(ActivityLog::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function themeSettings()
+    {
+        return $this->hasOne(UserThemeSetting::class);
+    }
 }

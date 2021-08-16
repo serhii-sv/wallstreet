@@ -2,7 +2,7 @@
   <nav
     class="{{$configData['navbarMainClass']}} @if($configData['isNavbarDark']=== true) {{'navbar-dark'}} @elseif($configData['isNavbarDark']=== false) {{'navbar-light'}} @elseif(!empty($configData['navbarBgColor'])) {{$configData['navbarBgColor']}} @else {{$configData['navbarMainColor']}} @endif">
     <div class="nav-wrapper">
-      <div class="header-search-wrapper hide-on-med-and-down">
+      <div class="header-search-wrapper hide-on-med-and-down" style="{{ $configData['isMenuCollapsed'] ? 'width:calc(100% - 400px)' : '' }}">
         <i class="material-icons">search</i>
         <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Explore Materialize"
           data-search="template-list">
@@ -10,7 +10,7 @@
       </div>
       <ul class="navbar-list right">
         <li>
-          <span class=" badge gradient-45deg-light-blue-cyan">{{ now()->format('d-m-Y H:i') }}</span>
+          <span class="badge">{{ now()->format('d-m-Y H:i') }}</span>
         </li>
 {{--        <li class="dropdown-language">--}}
 {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}

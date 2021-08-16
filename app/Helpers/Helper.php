@@ -1,38 +1,39 @@
 <?php // Code within app\Helpers\Helper.php
 namespace App\Helpers;
 
-use Config;
+use App\Models\UserThemeSetting;
 use Illuminate\Support\Str;
 
 class Helper
 {
     public static function applClasses()
     {
+        $userThemeSettings = UserThemeSetting::getThemeSettings();
         // default data value
         $dataDefault = [
             'mainLayoutType' => 'vertical-modern-menu',
             'pageHeader' => false,
             'bodyCustomClass' => '',
             'navbarLarge' => true,
-            'navbarBgColor' => '',
-            'isNavbarDark' => null,
-            'isNavbarFixed' => true,
+            'navbarBgColor' => $userThemeSettings['navbar-color'] ?? '',
+            'isNavbarDark' => isset($userThemeSettings['navbar-dark']) ? $userThemeSettings['navbar-dark'] == 'true' : null,
+            'isNavbarFixed' => isset($userThemeSettings['navbar-fixed']) ? $userThemeSettings['navbar-fixed'] == 'true' : true,
             'activeMenuColor' => '',
-            'isMenuDark' => null,
-            'isMenuCollapsed' => false,
-            'activeMenuType' => '',
-            'isFooterDark' => null,
-            'isFooterFixed' => false,
+            'isMenuDark' => isset($userThemeSettings['menu-dark']) ? $userThemeSettings['menu-dark'] == 'true' : null,
+            'isMenuCollapsed' => isset($userThemeSettings['menu-collapsed']) ? $userThemeSettings['menu-collapsed'] == 'true' : false,
+            'activeMenuType' => isset($userThemeSettings['menu-selection']) ? $userThemeSettings['menu-selection'] : '',
+            'isFooterDark' => isset($userThemeSettings['footer-dark']) ? $userThemeSettings['footer-dark'] == 'true' : null,
+            'isFooterFixed' => isset($userThemeSettings['footer-fixed']) ? $userThemeSettings['footer-fixed'] == 'true' : false,
             'templateTitle' => '',
             'isCustomizer' => true,
-            'defaultLanguage'=>'ru',
+            'defaultLanguage' => 'en',
             'largeScreenLogo' => 'images/logo/materialize-logo-color.png',
             'smallScreenLogo' => 'images/logo/materialize-logo.png',
-            'isFabButton'=>false,
+            'isFabButton' => false,
             'direction' => env('MIX_CONTENT_DIRECTION', 'rlt'),
         ];
         // if any key missing of array from custom.php file it will be merge and set a default value from dataDefault array and store in data variable
-        $data = array_merge($dataDefault, config('custom.custom'));
+        $data = array_merge(config('custom.custom'), $dataDefault);
         // all available option of materialize template
         $allOptions = [
             'mainLayoutType' => array('vertical-modern-menu', 'vertical-menu-nav-dark', 'vertical-gradient-menu', 'vertical-dark-menu', 'horizontal-menu'),
