@@ -91,6 +91,8 @@ Route::group(['middleware' => ['web']], function () {
 //            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
 //            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
 
+            Route::post('/theme-settings', [\App\Http\Controllers\UserThemeSettingController::class, 'store'])->name('theme-settings');
+
             Route::prefix('rates')->as('rates.')->group(function () {
                 Route::get('/', [App\Http\Controllers\RateController::class, 'index'])->name('index');
 

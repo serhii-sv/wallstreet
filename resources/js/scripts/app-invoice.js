@@ -1,49 +1,106 @@
 $(document).ready(function () {
-  /********Invoice List ********/
-  /* --------------------------- */
-  /* init data table */
-  if ($(".invoice-data-table").length) {
-    var dataListView = $(".invoice-data-table").DataTable({
-      columnDefs: [
-        {
-          targets: 0,
-          className: "control"
-        },
-        {
-          orderable: true,
-          targets: 1,
-            render: function ( data, type, row ) {
-                if ( type === 'display' ) {
-                    return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + row[1] + '" />';
+    /********Invoice List ********/
+    /* --------------------------- */
+
+    /* init data table */
+    if ($(".invoice-data-table").length) {
+        var dataListView = $(".invoice-data-table").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            // "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "aoColumns": [
+                {
+                    data: 'empty',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'id',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'email',
+                    searchable: false,
+                    bSortable: true
+                },
+                {
+                    data: 'amount',
+                    searchable: false,
+                    bSortable: true
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'appliner',
+                    searchable: false,
+                    bSortable: true
+                },
+                {
+                    data: 'approved',
+                    searchable: false,
+                    bSortable: true
+                },
+                {
+                    data: 'actions',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'empty3',
+                    searchable: false,
+                    bSortable: false
+                },
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {},
+            columnDefs: [
+                {
+                    targets: 0,
+                    className: "control"
+                },
+                {
+                    orderable: true,
+                    targets: 1,
+                    render: function (data, type, row) {
+                        if (type === 'display') {
+                            return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + row[1] + '" />';
+                        }
+                        return data;
+                    },
+                    checkboxes: {selectRow: true}
+                },
+                {
+                    targets: [0, 1],
+                    orderable: false
                 }
-                return data;
+            ],
+            order: [2, 'asc'],
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                search: "",
+                searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
+                processing: "Загрузка"
             },
-          checkboxes: { selectRow: true }
-        },
-        {
-          targets: [0, 1],
-          orderable: false
-        },
-        { "orderable": false, "targets": 8 },
-      ],
-      order: [2, 'asc'],
-      dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
-      language: {
-        search: "",
-        searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
-      },
-      select: {
-        style: "multi",
-        selector: "td:first-child>",
-        items: "row"
-      },
-      responsive: {
-        details: {
-          type: "column",
-          target: 0
-        }
-      }
-    });
+            select: {
+                style: "multi",
+                selector: "td:first-child>",
+                items: "row"
+            },
+            responsive: {
+                details: {
+                    type: "column",
+                    target: 0
+                }
+            }
+        });
 
     // To append actions dropdown inside action-btn div
     var invoiceFilterAction = $(".invoice-filter-action");
@@ -61,7 +118,7 @@ $(document).ready(function () {
 
       $(document).on('click', '.dt-checkboxes-select-all', function() {
           $('tbody .select-checkbox').map((index, checkbox) => {
-              $(checkbox).prop('checked', !$(this).prop('checked'))
+              $(checkbox).prop('checked', $(this).find('input[type="checkbox"]').prop('checked'))
           })
       })
 
