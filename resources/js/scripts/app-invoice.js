@@ -71,7 +71,7 @@ $(document).ready(function () {
                     targets: 1,
                     render: function (data, type, row) {
                         if (type === 'display') {
-                            return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + row[1] + '" />';
+                            return '<input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="' + data + '" />';
                         }
                         return data;
                     },
@@ -87,7 +87,11 @@ $(document).ready(function () {
             language: {
                 search: "",
                 searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
-                processing: "Загрузка"
+                processing: "Загрузка",
+                paginate: {
+                    previous: "<",
+                    next: ">",
+                }
             },
             select: {
                 style: "multi",
