@@ -28,7 +28,7 @@
           @yield('content')
           {{-- right sidebar  --}}
           @include('pages.sidebar.right-sidebar')
-          
+
           @if($configData["isFabButton"] === true)
             @include('pages.sidebar.fab-menu')
           @endif
@@ -47,7 +47,7 @@
     @include('pages.partials.customizer')
     <!--/ Theme Customizer -->
     {{-- buy now button section --}}
-    @include('pages.partials.buy-now')
+{{--    @include('pages.partials.buy-now')--}}
   @endif
 
 

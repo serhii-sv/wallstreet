@@ -7,6 +7,7 @@
 @php
 // confiData variable layoutClasses array in Helper.php file.
   $configData = \App\Helpers\Helper::applClasses();
+  $themeSettings = \App\Models\UserThemeSetting::getThemeSettings();
 @endphp
 <!--
 Template Name: Materialize - Material Design Admin Template
