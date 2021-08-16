@@ -37,7 +37,7 @@
                                         <small class="errorTxt2"></small>
                                     </div>
                                     <div class="input-field col s12">
-                                        <label for="password">Максимальный депозит *</label>
+                                        <label for="max">Максимальный депозит *</label>
                                         <input id="max" type="number" name="max" data-error=".errorTxt3">
                                         <small class="errorTxt3"></small>
                                     </div>
