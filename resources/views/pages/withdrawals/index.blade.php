@@ -53,10 +53,10 @@
             </a>
             <!-- Dropdown Structure -->
             <ul id='btn-filter' class='dropdown-content'>
-                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'order' => 'desc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'desc' ? 'active' : '' }}">Дата по убыванию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'order' => 'asc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'asc' ? 'active' : '' }}">Дата по возростанию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'order' => 'desc']) }}" class="{{ request()->field == 'amount' && request()->order == 'desc' ? 'active' : '' }}">Сумма по убыванию</a></li>
-                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'order' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'desc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'desc' ? 'active' : '' }}">Дата по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'asc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'asc' ? 'active' : '' }}">Дата по возростанию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'desc']) }}" class="{{ request()->field == 'amount' && request()->order == 'desc' ? 'active' : '' }}">Сумма по убыванию</a></li>
+                <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a></li>
             </ul>
         </div>
         <div class="responsive-table">
@@ -83,64 +83,64 @@
                     </thead>
 
                     <tbody>
-                    @foreach($transactions as $transaction)
-                        <tr style="color: {{ implode(',', ($transaction->user->roles->pluck('color')->toArray() ?? [])) }}">
-                            <td></td>
-                            <td>{{ $transaction->id }}</td>
-                            <td>
-                                {{ $transaction->user->email }}
-                            </td>
-                            <td>
-                                <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span>
-                            </td>
-                            <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
-                            <td>
-                                <span class="invoice-customer">{{ !is_null($transaction->user->partner) ? $transaction->user->partner->email : 'Без аплайнера' }}</span>
-                            </td>
-                            <td>
-                                @switch($transaction->approved)
-                                    @case(0)
-                                    <span class="chip lighten-5 orange orange-text">Не оплаченная заявка</span>
-                                    @break
-                                    @case(1)
-                                    <span class="chip lighten-5 green green-text">Оплаченная заявка</span>
-                                    @break
-                                    @case(2)
-                                    <span class="chip lighten-5 red red-text">Отклоненная заявка</span>
-                                    @break
-                                @endswitch
-                            </td>
-                            <td style="width: 130px">
-                                <div class="invoice-action">
-                                    <a href="{{ route('withdrawals.show', $transaction->id) }}" data-position="bottom" data-tooltip="Показать"
-                                       class="invoice-action-view mr-4 tooltipped">
-                                        <i class="material-icons">remove_red_eye</i>
-                                    </a>
-                                    @if(request()->type == 0 || is_null(request()->type))
-                                        <a href="{{ route('withdrawals.approve', $transaction->id) }}"
-                                           data-action_type="approve" data-position="bottom" data-tooltip="Подтвердить"
-                                           class="invoice-action-view mr-4 tooltipped">
-                                            <i class="material-icons">check</i>
-                                        </a>
-                                        <a href="{{ route('withdrawals.approveManually', $transaction->id) }}"
-                                           data-action_type="approveManually" data-position="bottom" data-tooltip="Подтвердить вручную"
-                                           class="invoice-action-view mr-4 tooltipped">
-                                            <i class="material-icons">done_all</i>
-                                        </a>
-                                        <a href="{{ route('withdrawals.reject', $transaction->id) }}"
-                                           data-action_type="reject" data-position="bottom" data-tooltip="Отклонить"
-                                           class="invoice-action-view mr-4 tooltipped">
-                                            <i class="material-icons">clear</i>
-                                        </a>
-                                    @endif
-                                    {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
-                                    {{--                                        <i class="material-icons">edit</i>--}}
-                                    {{--                                    </a>--}}
-                                </div>
-                            </td>
-                            <td></td>
-                        </tr>
-                    @endforeach
+{{--                    @foreach($transactions as $transaction)--}}
+{{--                        <tr style="color: {{ implode(',', ($transaction->user->roles->pluck('color')->toArray() ?? [])) }}">--}}
+{{--                            <td></td>--}}
+{{--                            <td>{{ $transaction->id }}</td>--}}
+{{--                            <td>--}}
+{{--                                {{ $transaction->user->email }}--}}
+{{--                            </td>--}}
+{{--                            <td>--}}
+{{--                                <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span>--}}
+{{--                            </td>--}}
+{{--                            <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>--}}
+{{--                            <td>--}}
+{{--                                <span class="invoice-customer">{{ !is_null($transaction->user->partner) ? $transaction->user->partner->email : 'Без аплайнера' }}</span>--}}
+{{--                            </td>--}}
+{{--                            <td>--}}
+{{--                                @switch($transaction->approved)--}}
+{{--                                    @case(0)--}}
+{{--                                    <span class="chip lighten-5 orange orange-text">Не оплаченная заявка</span>--}}
+{{--                                    @break--}}
+{{--                                    @case(1)--}}
+{{--                                    <span class="chip lighten-5 green green-text">Оплаченная заявка</span>--}}
+{{--                                    @break--}}
+{{--                                    @case(2)--}}
+{{--                                    <span class="chip lighten-5 red red-text">Отклоненная заявка</span>--}}
+{{--                                    @break--}}
+{{--                                @endswitch--}}
+{{--                            </td>--}}
+{{--                            <td style="width: 130px">--}}
+{{--                                <div class="invoice-action">--}}
+{{--                                    <a href="{{ route('withdrawals.show', $transaction->id) }}" data-position="bottom" data-tooltip="Показать"--}}
+{{--                                       class="invoice-action-view mr-4 tooltipped">--}}
+{{--                                        <i class="material-icons">remove_red_eye</i>--}}
+{{--                                    </a>--}}
+{{--                                    @if(request()->type == 0 || is_null(request()->type))--}}
+{{--                                        <a href="{{ route('withdrawals.approve', $transaction->id) }}"--}}
+{{--                                           data-action_type="approve" data-position="bottom" data-tooltip="Подтвердить"--}}
+{{--                                           class="invoice-action-view mr-4 tooltipped">--}}
+{{--                                            <i class="material-icons">check</i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="{{ route('withdrawals.approveManually', $transaction->id) }}"--}}
+{{--                                           data-action_type="approveManually" data-position="bottom" data-tooltip="Подтвердить вручную"--}}
+{{--                                           class="invoice-action-view mr-4 tooltipped">--}}
+{{--                                            <i class="material-icons">done_all</i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="{{ route('withdrawals.reject', $transaction->id) }}"--}}
+{{--                                           data-action_type="reject" data-position="bottom" data-tooltip="Отклонить"--}}
+{{--                                           class="invoice-action-view mr-4 tooltipped">--}}
+{{--                                            <i class="material-icons">clear</i>--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                    --}}{{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
+{{--                                    --}}{{--                                        <i class="material-icons">edit</i>--}}
+{{--                                    --}}{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </td>--}}
+{{--                            <td></td>--}}
+{{--                        </tr>--}}
+{{--                    @endforeach--}}
                     </tbody>
                 </table>
             </form>
