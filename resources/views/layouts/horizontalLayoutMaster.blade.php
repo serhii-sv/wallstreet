@@ -1,7 +1,7 @@
 <body
   class="{{$configData['mainLayoutTypeClass']}} @if(!empty($configData['bodyCustomClass']) && isset($configData['bodyCustomClass'])) {{$configData['bodyCustomClass']}} @endif"
   data-open="click" data-menu="horizontal-menu" data-col="2-columns">
-
+@include('panels.loader')
   <!-- BEGIN: Header-->
   <header class="page-topbar" id="header">
     @include('panels.horizontalNavbar')
@@ -57,4 +57,5 @@
 
   {{-- vendors and page scripts file   --}}
   @include('panels.scripts')
+@include('panels.loader')
 </body>
