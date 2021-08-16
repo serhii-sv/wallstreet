@@ -41,22 +41,6 @@ class UsersController extends Controller
         return view('pages.sample.app-contacts', compact('users', 'users_count', 'roles'));
     }
 
-//    /**
-//     * @return mixed
-//     * @throws \Exception
-//     */
-//    public function dataTable() {
-//        $users = User::orderBy('created_at', 'desc');
-//
-//        return Datatables::of($users)->addColumn('show', function ($user) {
-//            return route('admin.users.show', ['id' => $user->id]);
-//        })->addColumn('edit', function ($user) {
-//            return route('admin.users.edit', ['id' => $user->id]);
-//        })->make(true);
-//    }
-
-
-
     /**
      * @param Request $request
      * @param string  $id
@@ -96,7 +80,7 @@ class UsersController extends Controller
                 return number_format($transaction->amount, $transaction->wallet->currency->precision, '.', '');
             })->make(true);
     }
-   
+
     public function dataTableDeposits($userId) {
         $deposits = Deposit::where('user_id', $userId)->with('rate', 'currency')->select('deposits.*');
 
@@ -104,7 +88,7 @@ class UsersController extends Controller
                 return __($deposit->condition);
             })->make(true);
     }
-    
+
     public function dataTableTransactions($userId) {
         $transactions = Transaction::where('user_id', $userId)->with('currency', 'type')->select('transactions.*');
 
@@ -114,7 +98,7 @@ class UsersController extends Controller
                 return __($transaction->approved == 1 ? 'yes' : 'no');
             })->make(true);
     }
-    
+
     public function bonus(RequestBonusUser $request) {
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->addBonus($request->amount);
@@ -131,7 +115,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'));
     }
-    
+
     public function penalty(RequestPenaltyUser $request) {
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
@@ -150,7 +134,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to handle penalty'));
     }
-    
+
     public function show(Request $request, User $user) {
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
@@ -183,7 +167,7 @@ class UsersController extends Controller
             'userActivityMonth' => $userActivityMonth,
         ]);
     }
-    
+
     public function edit(User $user) {
 
         $roles = Role::all();
@@ -194,7 +178,7 @@ class UsersController extends Controller
             'user' => $user,
         ]);
     }
-    
+
     public function update(Request $request, User $user) {
         $this->validate($request, [
             'name' => 'bail|required|min:2',
@@ -280,6 +264,23 @@ class UsersController extends Controller
             'success' => true,
             'html' => view('pages.partials.user-activity-item', compact('dateFrom', 'dateTo', 'userActivity'))->render()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function massRoleChange(Request $request)
+    {
+        $users = User::whereIn('id', $request->list)->get();
+
+        $role = Role::findOrFail($request->role_id);
+
+        foreach ($users as $user) {
+            $user->roles()->sync([$role->id]);
+        }
+
+        return back()->with('success_short', 'Пользователям назначена роль: ' . $role->name);
     }
 
 }

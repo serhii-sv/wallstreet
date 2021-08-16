@@ -7,6 +7,27 @@ $(document).ready(function () {
       return $(window).height() - 380 + "px";
    };
 
+    $(document).on('click', 'thead .select-checkbox.dt-checkboxes', function() {
+        $('tbody .select-checkbox').map((index, checkbox) => {
+            $(checkbox).prop('checked', $(this).prop('checked'))
+        })
+    })
+
+    $(document).on('click', '.select-checkbox.dt-checkboxes', function () {
+        let wrap = $('.new-role-selection');
+
+        if ($('tbody .select-checkbox.dt-checkboxes:checked').length) {
+            wrap.addClass('display-grid').removeClass('display-none')
+        } else {
+            wrap.addClass('display-none').removeClass('display-grid')
+        }
+    })
+
+    $('.new-role-selection a').click(function () {
+        $('#usersForm input[name="role_id"]').val($(this).data('role_id'));
+        $('#usersForm').submit()
+    })
+
    // var table = $("#data-table-contact").DataTable({
    //    scrollY: calcDataTableHeight(),
    //    scrollCollapse: true,
