@@ -80,9 +80,11 @@ class CloudFilesController extends Controller
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
                 }
-
+                
+                $user = auth()->user();
+                
                 /** @var User $createdBy */
-                $createdBy = auth()->user();
+                $createdBy = $user;
 
                 $cloudFile = CloudFile::create([
                     'created_by'    => $createdBy->id,
