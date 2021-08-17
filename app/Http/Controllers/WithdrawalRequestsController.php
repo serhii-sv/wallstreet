@@ -22,6 +22,10 @@ use Illuminate\Http\Request;
 class WithdrawalRequestsController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         if (request()->ajax()) {
@@ -41,11 +45,7 @@ class WithdrawalRequestsController extends Controller
                 $transactions->where(function ($query) use ($request) {
                     foreach ($request->columns as $column) {
                         if ($column["searchable"] == "true") {
-                            if ($column['data'] == 'email'){
-                                $query->where('user.' . $column["data"], 'like', '%' . $request->search['value'] . '%');
-                            } else {
-                                $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
-                            }
+                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
                         }
                     }
                 });
@@ -67,12 +67,6 @@ class WithdrawalRequestsController extends Controller
                     'approved' => view('pages.withdrawals.partials.transaction-status', compact('transaction'))->render(),
                     'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
                     'empty3' => ''
-//                    'broker_main_contact' => '',
-//                    'broker_email' => $broker->email,
-//                    'broker_phone' => $broker->phone_number,
-//                    'employer_count' => 0,
-//                    'ach' => '<input type="checkbox" class="checkbox-blue margin-auto">',
-//                    'action' => view('admin.brokers.action-list', ['broker' => $broker])->render()
                 ];
             }
 
@@ -85,32 +79,6 @@ class WithdrawalRequestsController extends Controller
         } else {
             return view('pages.withdrawals.index');
         }
-    }
-
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    public function dataTable()
-    {
-//        /** @var TransactionType $transactionWithdrawType */
-//        $transactionWithdrawType    = TransactionType::getByName('withdraw');
-//        $wrs                        = Transaction::select('transactions.*')->with([
-//            'currency',
-//            'paymentSystem',
-//            'wallet',
-//            'user',
-//        ])
-//            ->where('approved', 0)
-//            ->where('type_id', $transactionWithdrawType->id);
-//
-//        return Datatables::of($wrs)->editColumn('status', function ($wr) {
-//            return $wr->approved == 1 ? __('approved') : __('new');
-//        })->editColumn('amount', function (Transaction $wr) {
-//            return number_format($wr->amount, $wr->wallet->currency->precision, '.', '');
-//        })->addColumn('external', function (Transaction $wr) {
-//            return $wr->wallet->external;
-//        })->make(true);
     }
 
     /**

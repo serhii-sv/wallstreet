@@ -18,7 +18,7 @@
                         <div class="card-title">
                             <div class="row">
                                 <div class="col s12 m6 l10">
-                                    <h4 class="card-title">Добавть тариф</h4>
+                                    <h4 class="card-title">Добавить тариф</h4>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                         <small class="errorTxt2"></small>
                                     </div>
                                     <div class="input-field col s12">
-                                        <label for="password">Максимальный депозит *</label>
+                                        <label for="max">Максимальный депозит *</label>
                                         <input id="max" type="number" name="max" data-error=".errorTxt3">
                                         <small class="errorTxt3"></small>
                                     </div>

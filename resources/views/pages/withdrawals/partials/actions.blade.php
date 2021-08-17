@@ -20,7 +20,4 @@
             <i class="material-icons">clear</i>
         </a>
     @endif
-    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">
-        <i class="material-icons">edit</i>
-    </a>
 </div>

@@ -14,25 +14,61 @@ class ReplenishmentController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        $transactionWithdrawType = TransactionType::getByName('enter');
+        if (request()->ajax()) {
+            $transactionWithdrawType = TransactionType::getByName('enter');
 
-        $transactions = Transaction::select('transactions.*')->with([
-            'user',
-        ])
-            ->where('type_id', $transactionWithdrawType->id)
-            ->where('approved', $request->type ?? 0);
+            $transactions = Transaction::select('transactions.*')->with([
+                'user',
+            ])
+                ->where('type_id', $transactionWithdrawType->id)
+                ->where('approved', $request->only('type') ?? 0);
 
-        if (!is_null($request->field) && !is_null($request->order)) {
-            $transactions = $transactions->orderBy($request->field, $request->order);
+            if (!is_null($request->field) && !is_null($request->sort)) {
+                $transactions = $transactions->orderBy($request->field, $request->sort);
+            }
+
+            if (isset($request->search['value']) && !is_null($request->search['value'])) {
+                $transactions->where(function ($query) use ($request) {
+                    foreach ($request->columns as $column) {
+                        if ($column["searchable"] == "true") {
+                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
+                        }
+                    }
+                });
+            }
+
+            $recordsFiltered = $transactions->count();
+            $transactions->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($transactions->get() as $transaction) {
+                $data[] = [
+                    'empty' => '',
+                    'empty2' => '',
+                    'id' => $transaction->id,
+                    'email' => $transaction->user->email,
+                    'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),
+                    'created_at' => $transaction->created_at->format('d-m-Y H:i'),
+                    'appliner' => $transaction->user->partner->email ?? 'Без аплайнера',
+                    'approved' => view('pages.withdrawals.partials.transaction-status', compact('transaction'))->render(),
+                    'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
+                    'empty3' => ''
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' => Transaction::select('transactions.*')->where('type_id', $transactionWithdrawType->id)->where('approved', $request->only('type') ?? 0)->count(),
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            return view('pages.replenishments.index');
         }
-
-        $transactions = $transactions->get();
-
-        return view('pages.replenishments.index', compact('transactions'));
     }
 
     /**

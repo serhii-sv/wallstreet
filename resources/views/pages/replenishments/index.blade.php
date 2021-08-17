@@ -76,52 +76,7 @@
                     </thead>
 
                     <tbody>
-                    @foreach($transactions as $transaction)
-                        <tr style="color: {{ implode(',', ($transaction->user->roles->pluck('color')->toArray() ?? [])) }}">
-                            <td></td>
-                            <td>{{ $transaction->id }}</td>
-                            <td>
-                                {{ $transaction->user->email }}
-                            </td>
-                            <td>
-                                <span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, 2, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, ',', ' ') }})</span>
-                            </td>
-                            <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
-                            <td>
-                                <span class="invoice-customer">{{ !is_null($transaction->user->partner) ? $transaction->user->partner->email : 'Без аплайнера' }}</span>
-                            </td>
-                            <td>
-                                @switch($transaction->approved)
-                                    @case(0)
-                                    <span class="chip lighten-5 orange orange-text">Не оплаченная заявка</span>
-                                    @break
-                                    @case(1)
-                                    <span class="chip lighten-5 green green-text">Оплаченная заявка</span>
-                                    @break
-                                    @case(2)
-                                    <span class="chip lighten-5 red red-text">Отклоненная заявка</span>
-                                    @break
-                                @endswitch
-                            </td>
-                            <td>
-                                <div class="invoice-action">
-                                    <a href="{{ route('replenishments.show', $transaction->id) }}" data-position="bottom" data-tooltip="Показать" class="invoice-action-view mr-4 tooltipped">
-                                        <i class="material-icons">remove_red_eye</i>
-                                    </a>
-                                    @if(request()->type == 0 || is_null(request()->type))
-                                        <a href="{{ route('replenishments.approveManually', $transaction->id) }}" data-action_type="approveManually" data-position="bottom" data-tooltip="Подтвердить вручную"
-                                           class="invoice-action-view mr-4 tooltipped">
-                                            <i class="material-icons">done_all</i>
-                                        </a>
-                                    @endif
-                                    {{--                                    <a href="{{asset('app-invoice-edit')}}" class="invoice-action-edit">--}}
-                                    {{--                                        <i class="material-icons">edit</i>--}}
-                                    {{--                                    </a>--}}
-                                </div>
-                            </td>
-                            <td></td>
-                        </tr>
-                    @endforeach
+
                     </tbody>
                 </table>
             </form>
