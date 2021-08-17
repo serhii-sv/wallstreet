@@ -423,14 +423,13 @@
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
 
                                     <div class="row" style="text-align: center; margin-top:20px;">
-                              <button class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                              <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
                                   </label>
                               </button>
-                                        <button class="badge blue"
-                                              style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
+                                        <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
                                   <label>
                                     <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Вывод средств</span>
@@ -445,7 +444,7 @@
                                             @if($loop->index % 2 && $loop->index > 1)
                                                 <br><br>
                                             @endif
-                                            <button class="badge blue"
+                                            <button type="button" class="badge blue"
                                                   style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
@@ -462,7 +461,7 @@
                                             @if($loop->index % 2 && $loop->index > 1)
                                                 <br><br>
                                             @endif
-                                            <button class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
+                                            <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
                                   <label>
                                     <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
@@ -474,14 +473,14 @@
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
 
                                     <div class="row" style="margin-top:20px; text-align: center;">
-                              <button class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                              <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
                                     <span style="color:white; font-weight: bold;">Реал</span>
                                   </label>
                               </button>
 
-                                        <button class="badge blue"
+                                        <button type="button" class="badge blue"
                                               style="padding:8px 15px 8px 15px; border-radius: 10px;">
                                   <label>
                                     <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />

@@ -16,29 +16,59 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
-use Webpatser\Countries\Countries;
 use Yajra\Datatables\Datatables;
 
 class UsersController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function index(Request $request) {
-        $filter_role = $request->get('roles') ? $request->get('roles') : false;
-        $users = User::when($filter_role, function ($query) use ($filter_role) {
-            return $query->role($filter_role);
-        })->orderByDesc('created_at')->paginate(10);
         $users_count = User::count();
-        $roles = Role::all();
-        return view('pages.sample.app-contacts', compact('users', 'users_count', 'roles'));
+        if (request()->ajax()) {
+            $filter_role = $request->get('roles') ? $request->get('roles') : false;
+            $users = User::when($filter_role, function ($query) use ($filter_role) {
+                return $query->role($filter_role);
+            })->orderByDesc('created_at');
+
+            if (isset($request->search['value']) && !is_null($request->search['value'])) {
+                $users->where(function ($query) use ($request) {
+                    foreach ($request->columns as $column) {
+                        if ($column["searchable"] == "true") {
+                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
+                        }
+                    }
+                });
+            }
+
+            $recordsFiltered = $users->count();
+            $users->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($users->get() as $user) {
+                $data[] = [
+                    'empty' => view('pages.users.partials.checkbox', compact('user'))->render(),
+                    'user' => view('pages.users.partials.avatar')->render(),
+                    'name' => $user->name ?? 'Не указано',
+                    'email' => $user->email ?? 'Не указано',
+                    'country' => $user->country ?? 'Не указано',
+                    'actions' => view('pages.users.partials.actions', compact('user'))->render()
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' =>  $users_count,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            $roles = Role::all();
+            return view('pages.sample.app-contacts', compact('users_count', 'roles'));
+        }
     }
 
     /**

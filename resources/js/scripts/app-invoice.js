@@ -89,8 +89,8 @@ $(document).ready(function () {
                 searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
                 processing: "Загрузка",
                 paginate: {
-                    previous: "<",
-                    next: ">",
+                    previous: "‹",
+                    next: "›",
                 }
             },
             select: {

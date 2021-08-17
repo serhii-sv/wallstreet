@@ -119,12 +119,11 @@
             @csrf
             <input type="hidden" name="role_id">
             <div class="app-wrapper">
-                <div id="button-trigger" class="card card card-default scrollspy border-radius-6 fixed-width">
                     <div class="card-content p-0">
-                        <table id="data-table-contact" class="display" style="width:100%;">
+                        <table id="data-table-contact" class="display card card card-default scrollspy border-radius-6">
                             <thead>
                             <tr>
-                                <th style=" padding-left: 20px;">
+                                <th>
                                     <label>
                                         <input type="checkbox"  class="select-checkbox dt-checkboxes" />
                                         <span></span>
@@ -138,35 +137,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($users as $user)
-                                <tr>
-                                    <td style=" padding-left: 20px;">
-                                        <label>
-                                            <input type="checkbox" name="list[]" class="select-checkbox dt-checkboxes" value="{{ $user->id }}"/>
-                                            <span></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                  <span class="avatar-contact avatar-online">
-                                    <img src="{{asset('images/avatar/user.svg')}}" alt="avatar">
-                                  </span>
-                                    </td>
-                                    <td>{{ $user->name ?? "Не указано" }}</td>
-                                    <td>{{ $user->email ?? "Не указана" }}</td>
-                                    <td>{{ $user->country ?? "Не указана" }}</td>
-                                    <td>
-                                        <a href="{{ route('users.show', $user) }}">Перейти</a>
-                                    </td>
-                                </tr>
-                            @empty
-                            @endforelse
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div>
-                    {{ $users->appends(request()->except('page'))->links() }}
-                </div>
             </div>
         </form>
     </div>

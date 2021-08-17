@@ -28,38 +28,64 @@ $(document).ready(function () {
         $('#usersForm').submit()
     })
 
-   // var table = $("#data-table-contact").DataTable({
-   //    scrollY: calcDataTableHeight(),
-   //    scrollCollapse: true,
-   //    scrollX: false,
-   //    paging: true,
-   //    responsive: true,
-   //    lengthMenu: [15],
-   //    aoColumns: [
-   //       {
-   //          bSortable: false
-   //       },
-   //       {
-   //          bSortable: false
-   //       },
-   //       null,
-   //       null,
-   //       null,
-   //       {
-   //          bSortable: false
-   //       },
-   //       {
-   //          bSortable: false
-   //       }
-   //    ],
-   //    "fnInitComplete": function () {
-   //       var ps_datatable = new PerfectScrollbar('.dataTables_scrollBody');
-   //    },
-   //    //on paginition page 2,3.. often scroll shown, so reset it and assign it again
-   //    "fnDrawCallback": function (oSettings) {
-   //       var ps_datatable = new PerfectScrollbar('.dataTables_scrollBody');
-   //    }
-   // });
+   var table = $("#data-table-contact").DataTable({
+       paging: true,
+       lengthChange: false,
+       searching: false,
+       ordering: true,
+       info: true,
+       autoWidth: false,
+       order: [2, 'asc'],
+       aoColumns: [
+           {
+               data: 'empty',
+               searchable: false,
+               bSortable: false
+           },
+           {
+               data: 'user',
+               searchable: false,
+               bSortable: false
+           },
+           {
+               data: 'name',
+               searchable: true,
+               bSortable: true
+           },
+           {
+               data: 'email',
+               searchable: true,
+               bSortable: true
+           },
+           {
+               data: 'country',
+               searchable: true,
+               bSortable: true
+           },
+           {
+               data: 'actions',
+               searchable: false,
+               bSortable: false
+           },
+       ],
+       processing: true,
+       serverSide: true,
+       ajax: {},
+       dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+       language: {
+           processing: "Загрузка",
+           paginate: {
+               previous: "‹",
+               next: "›",
+           }
+       },
+       columnDefs: [
+           {
+               targets: 0,
+               className: "control"
+           },
+       ],
+   });
 
    // Custom search
    // function filterGlobal() {
