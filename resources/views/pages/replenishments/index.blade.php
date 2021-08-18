@@ -81,6 +81,7 @@
                 </table>
             </form>
         </div>
+      {{ $transactions->appends(request()->except('page'))->links() }}
     </section>
 @endsection
 

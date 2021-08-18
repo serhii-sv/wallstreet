@@ -165,6 +165,7 @@ class UsersController extends Controller
             'userActivityDay' => $userActivityDay,
             'userActivityWeek' => $userActivityWeek,
             'userActivityMonth' => $userActivityMonth,
+            'user_permissions' => $user->permissions()->paginate(8,['*'],'permissions'),
         ]);
     }
 

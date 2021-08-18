@@ -12,6 +12,7 @@
 
 {{-- page content  --}}
 @section('content')
+  фыв
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object start -->
@@ -91,7 +92,7 @@
                 </tr>
               </thead>
               <tbody>
-                @forelse($user->permissions as $role)
+                @forelse($user_permissions as $role)
                   <tr>
                     <td>
                       <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
@@ -105,6 +106,7 @@
                 @endforelse
               </tbody>
             </table>
+            {{ $user_permissions->appends(request()->except('permissions'))->links() }}
           </div>
         </div>
       </div>
