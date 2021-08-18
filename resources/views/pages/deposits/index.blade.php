@@ -85,66 +85,48 @@
     </div>
   </div>
   <!-- Sidebar Area Ends -->
-  
+
   <!-- Content Area Starts -->
   <div class="content-area content-right">
     <div class="app-wrapper">
-      <div id="button-trigger" class="card card card-default scrollspy border-radius-6 fixed-width">
         <div class="card-content p-0">
-          <table id="data-table-contact" class="display subscription-table responsive-table highlight" style="width:100%;">
+          <table id="deposits" class="display card card card-default scrollspy border-radius-6" style="width:100%;">
             <thead>
               <tr>
-                <th style=" padding-left: 20px;">Пользователь</th>
+                <th>Пользователь</th>
                 <th>Сумма инвестиций</th>
                 <th>Начислено</th>
                 <th>Осталось начислить</th>
                 <th>Следующее начисление</th>
                 <th>Дата открытия</th>
-                <th></th>
+                <th>Ссылка</th>
               </tr>
             </thead>
             <tbody>
-              @if(isset($deposits) && !empty($deposits))
-                @foreach($deposits as $item)
-                  <tr>
-                    <td style=" padding-left: 20px;">@if($item->user->email)
-                        <a href="{{ route('users.show', $item->user->id) }}">
-                          {{ $item->user->email }}
-                        </a>
-                      @else Не указано @endif
-                    </td>
-                    <td>{{ "$ " . number_format($item->invested, 2, '.', ',') ?? 0  ?? 'Не указано' }}</td>
-                    <td>
-                      <span class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($item->total_assessed(), 2, '.', ',') ?? 0 }}</span>
-                    </td>
-                    <td>{{  '?' }}</td>
-                    <td>{{  '?' }}</td>
-                    <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
-                    <td class="center-align">
-                      <a href="{{ route('deposits.show', $item->id) }}">Открыть</a>
-                    </td>
-                  </tr>
-                @endforeach
-              @endif
+
             </tbody>
           </table>
         </div>
       </div>
-      <div>
-                {{ $deposits->appends(request()->except('page'))->links() }}
-      </div>
     </div>
   </div>
   <!-- Content Area Ends -->
-
 @endsection
 
 {{-- vendor scripts --}}
 @section('vendor-script')
-  <script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('vendors/data-tables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}
 @section('page-script')
   <script src="{{asset('js/scripts/app-contacts.js')}}"></script>
+  <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
 @endsection
+
+<style>
+    #deposits th {
+        white-space: break-spaces;
+    }
+</style>

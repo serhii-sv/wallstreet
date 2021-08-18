@@ -119,27 +119,27 @@
             @csrf
             <input type="hidden" name="role_id">
             <div class="app-wrapper">
-                    <div class="card-content p-0">
-                        <table id="data-table-contact" class="display card card card-default scrollspy border-radius-6">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <label>
-                                        <input type="checkbox"  class="select-checkbox dt-checkboxes" />
-                                        <span></span>
-                                    </label>
-                                </th>
-                                <th>Пользователь</th>
-                                <th>Имя</th>
-                                <th>Email</th>
-                                <th>Страна</th>
-                                <th>Ссылка</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="card-content p-0">
+                    <table id="users" class="display card card card-default scrollspy border-radius-6">
+                        <thead>
+                        <tr>
+                            <th>
+                                <label>
+                                    <input type="checkbox" class="select-checkbox dt-checkboxes"/>
+                                    <span></span>
+                                </label>
+                            </th>
+                            <th>Пользователь</th>
+                            <th>Имя</th>
+                            <th>Email</th>
+                            <th>Страна</th>
+                            <th>Ссылка</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </form>
     </div>

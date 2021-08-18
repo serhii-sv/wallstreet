@@ -20,42 +20,46 @@ class TransactionsController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        $filter_type = $request->get('type') ? $request->get('type') : false;
-        $transactions = Transaction::when($filter_type, function($query) use ($filter_type){
-            return $query->where('type_id', $filter_type);
-        })->orderByDesc('created_at')->paginate(10);
-
         $transaction_types = TransactionType::all();
 
         $transactions_count = Transaction::count();
+        if (request()->ajax()) {
+            $filter_type = $request->get('type') ? $request->get('type') : false;
+            $transactions = Transaction::when($filter_type, function($query) use ($filter_type){
+                return $query->where('type_id', $filter_type);
+            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
 
-        return view('pages.transactions.index', compact(
-            'transactions',
-            'transaction_types',
-            'transactions_count'
-        ));
-    }
+            $recordsFiltered = $transactions->count();
+            $transactions->limit($request->length)->offset($request->start);
+            $data = [];
 
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    public function dataTable()
-    {
-//        $transactions = Transaction::with('user', 'currency', 'type')
-//            ->select('transactions.*');
-//
-//        return Datatables::of($transactions)
-//            ->addColumn('type_name', function ($transaction) {
-//                return __($transaction->type->name);
-//            })->editColumn('amount', function ($transaction) {
-//                return number_format($transaction->amount, $transaction->currency->precision, '.', '');
-//            })
-//            ->make(true);
+            foreach ($transactions->get() as $transaction) {
+                $data[] = [
+                    'user_email' => view('pages.transactions.partials.user-email', compact('transaction'))->render(),
+                    'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
+                    'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
+                    'paymentSystem_name' => $operation->paymentSystem->name ?? 'Не указано',
+                    'created_at' => $transaction->created_at->format('d-m-Y H:i'),
+                    'actions' => view('pages.transactions.partials.actions', compact('transaction'))->render()
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' =>  $transactions_count,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            return view('pages.transactions.index', compact(
+                'transaction_types',
+                'transactions_count'
+            ));
+        }
     }
 
     /**

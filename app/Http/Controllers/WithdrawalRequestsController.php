@@ -35,7 +35,8 @@ class WithdrawalRequestsController extends Controller
                 'user',
             ])
                 ->where('type_id', $transactionWithdrawType->id)
-                ->where('approved', $request->only('type') ?? 0);
+                ->where('approved', $request->only('type') ?? 0)
+                ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
 
             if (!is_null($request->field) && !is_null($request->sort)) {
                 $transactions = $transactions->orderBy($request->field, $request->sort);

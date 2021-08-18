@@ -36,7 +36,6 @@ class DashboardController extends Controller
     public function index() {
         //   Currency::where('code', 'RUR')->update(['code'=> 'RUB']);
 
-//        dd(\App\Models\UserThemeSetting::getThemeSettings());
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 
@@ -119,7 +118,7 @@ class DashboardController extends Controller
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
 
         $curr_to_prev_month = $month_previous_period_enter_transactions - $month_previous_period_withdraw_transactions;
-        $month_revenue_percent = number_format(($curr_to_prev_month / $month_deposit_revenue) * 100, 2, '.', ',');
+        $month_revenue_percent = number_format(($curr_to_prev_month / ($month_deposit_revenue ? $month_deposit_revenue : 1)) * 100, 2, '.', ',');
 
         $countries_stat->map(function ($country) use ($id_enter) {
             $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {

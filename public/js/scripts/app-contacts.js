@@ -28,7 +28,7 @@ $(document).ready(function () {
         $('#usersForm').submit()
     })
 
-   var table = $("#data-table-contact").DataTable({
+   var table = $("#users").DataTable({
        paging: true,
        lengthChange: false,
        searching: false,
