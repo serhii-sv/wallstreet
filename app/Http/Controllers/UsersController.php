@@ -16,36 +16,62 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
-use Webpatser\Countries\Countries;
 use Yajra\Datatables\Datatables;
 
 class UsersController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
-    public function index(Request $request) {
-        $filter_role = $request->get('roles') ? $request->get('roles') : false;
-        $users = User::when($filter_role, function ($query) use ($filter_role) {
-            return $query->role($filter_role);
-        })->orderByDesc('created_at')->paginate(10);
+    public function index(Request $request)
+    {
         $users_count = User::count();
-        $roles = Role::all();
-        return view('pages.sample.app-contacts', compact('users', 'users_count', 'roles'));
+        if (request()->ajax()) {
+            $filter_role = $request->get('roles') ? $request->get('roles') : false;
+            $users = User::when($filter_role, function ($query) use ($filter_role) {
+                return $query->role($filter_role);
+            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+
+            $recordsFiltered = $users->count();
+            $users->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($users->get() as $user) {
+                $data[] = [
+                    'empty' => view('pages.users.partials.checkbox', compact('user'))->render(),
+                    'user' => view('pages.users.partials.avatar')->render(),
+                    'name' => $user->name ?? 'Не указано',
+                    'email' => $user->email ?? 'Не указано',
+                    'country' => $user->country ?? 'Не указано',
+                    'actions' => view('pages.users.partials.actions', compact('user'))->render()
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' => $users_count,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            $roles = Role::all();
+            return view('pages.sample.app-contacts', compact('users_count', 'roles'));
+        }
     }
 
     /**
      * @param Request $request
-     * @param string  $id
+     * @param string $id
      */
-    public function updateStat(Request $request, string $id) {
+    public function updateStat(Request $request, string $id)
+    {
         /** @var User $user */
         $user = User::findOrFail($id);
 
@@ -58,48 +84,11 @@ class UsersController extends Controller
     }
 
     /**
-     * @param $userId
-     *
-     * @return mixed
-     * @throws \Exception
+     * @param RequestBonusUser $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function dataTableWrs($userId) {
-        /** @var TransactionType $transactionWithdrawalType */
-        $transactionWithdrawalType = TransactionType::getByName('withdraw');
-        /** @var Transaction $wrs */
-        $wrs = Transaction::select('transactions.*')->with([
-            'currency',
-            'paymentSystem',
-            'user',
-            'wallet',
-        ])->where('type_id', $transactionWithdrawalType->id)->where('user_id', $userId);
-
-        return Datatables::of($wrs)->addColumn('status', function (Transaction $transaction) {
-                return $transaction->isApproved() ? __('approved') : __('new');
-            })->editColumn('amount', function (Transaction $transaction) {
-                return number_format($transaction->amount, $transaction->wallet->currency->precision, '.', '');
-            })->make(true);
-    }
-
-    public function dataTableDeposits($userId) {
-        $deposits = Deposit::where('user_id', $userId)->with('rate', 'currency')->select('deposits.*');
-
-        return Datatables::of($deposits)->editColumn('condition', function ($deposit) {
-                return __($deposit->condition);
-            })->make(true);
-    }
-
-    public function dataTableTransactions($userId) {
-        $transactions = Transaction::where('user_id', $userId)->with('currency', 'type')->select('transactions.*');
-
-        return Datatables::of($transactions)->addColumn('type_name', function ($transaction) {
-                return __($transaction->type->name);
-            })->editColumn('approved', function ($transaction) {
-                return __($transaction->approved == 1 ? 'yes' : 'no');
-            })->make(true);
-    }
-
-    public function bonus(RequestBonusUser $request) {
+    public function bonus(RequestBonusUser $request)
+    {
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->addBonus($request->amount);
         if ($wallet) {
@@ -116,7 +105,12 @@ class UsersController extends Controller
         return back()->with('error', __('Unable to accrue bonus'));
     }
 
-    public function penalty(RequestPenaltyUser $request) {
+    /**
+     * @param RequestPenaltyUser $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function penalty(RequestPenaltyUser $request)
+    {
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->removeAmount($request->amount);
@@ -135,7 +129,13 @@ class UsersController extends Controller
         return back()->with('error', __('Unable to handle penalty'));
     }
 
-    public function show(Request $request, User $user) {
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function show(Request $request, User $user)
+    {
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
@@ -168,7 +168,12 @@ class UsersController extends Controller
         ]);
     }
 
-    public function edit(User $user) {
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit(User $user)
+    {
 
         $roles = Role::all();
         $permissions = Permission::all();
@@ -179,7 +184,14 @@ class UsersController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user) {
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, User $user)
+    {
         $this->validate($request, [
             'name' => 'bail|required|min:2',
             'email' => 'required|email',
@@ -195,13 +207,18 @@ class UsersController extends Controller
             if ($request->permissions) {
                 $user->syncPermissions($request->permissions);
             }
-            return redirect()->route('users.show', $user)->with('success','Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
+            return redirect()->route('users.show', $user)->with('success', 'Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {
             return back()->with('error', __('Unable to update user'))->withInput();
         }
     }
 
-    public function destroy(User $user) {
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(User $user)
+    {
         if ($user->delete()) {
             return redirect()->route('admin.users.index')->with('success', __('User has been deleted'));
         }
@@ -211,7 +228,8 @@ class UsersController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function lockUser() {
+    public function lockUser()
+    {
         Session::put('locked', true);
         return redirect()->route('user.locked');
     }
@@ -219,7 +237,8 @@ class UsersController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function lockedUser() {
+    public function lockedUser()
+    {
         return view('pages.sample.user-lock-screen');
     }
 
@@ -227,16 +246,17 @@ class UsersController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function unlockUser(Request $request) {
+    public function unlockUser(Request $request)
+    {
         $user_id = $request->get('user_id');
         $password = $request->get('password');
         $user = User::find($user_id);
 
-        if (Hash::check($password, $user->password)){
+        if (Hash::check($password, $user->password)) {
             Session::forget('locked');
             Session::put('last_activity', now());
             return redirect()->route('home');
-        }else{
+        } else {
             return redirect()->back()->withErrors(['Попробуй заново!']);
         }
     }

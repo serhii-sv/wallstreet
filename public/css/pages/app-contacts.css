@@ -110,7 +110,6 @@
 }
 .content-area .app-wrapper .dataTables_wrapper .dataTables_paginate {
   padding-bottom: 0.75rem;
-  margin-right: 3.8rem;
 }
 .content-area .app-wrapper .dataTables_wrapper .dataTables_paginate .paginate_button {
   padding: 0.25em 0.65em;
@@ -277,4 +276,7 @@
     border-bottom: none;
     height: 850px;
   }
+}
+table.dataTable.no-footer {
+  border-bottom: unset;
 }

@@ -134,7 +134,8 @@ $(document).ready(function () {
         $(".navbar-color .navbar-color-option").removeClass("selected");
         $(this).addClass("selected");
         var navbar_color = $(this).attr("data-color");
-        navbarDark(true);
+        // navbarDark(true);
+        $(".navbar-dark-checkbox").data('unset_dark', true);
         navbarColor(navbar_color);
 
         saveThemeSettings();
@@ -246,19 +247,24 @@ $(document).ready(function () {
 });
 
 function saveThemeSettings() {
-    let data = {}
+    let navDarkCheckbox = $('.navbar-dark-checkbox');
+
+    let navBarDark = null;
+    if (navDarkCheckbox.data('unset_dark') === undefined) {
+        navBarDark = navDarkCheckbox.prop('checked')
+    }
 
     $.ajax({
         url: '/theme-settings',
         method: 'post',
         data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
+            '_token': $('meta[name="csrf-token"]').attr('content'),
             'menu-color': $('.menu-color-option.selected').data('color'),
             'menu-dark': $('.menu-dark-checkbox').prop('checked'),
             'menu-collapsed': $('.menu-collapsed-checkbox').prop('checked'),
             'menu-selection': $('.menu-selection-radio:checked').val(),
             'navbar-color': $('.navbar-color-option.selected').data('color'),
-            'navbar-dark': $('.navbar-dark-checkbox').prop('checked'),
+            'navbar-dark': navBarDark,
             'navbar-fixed': $('.navbar-fixed-checkbox').prop('checked'),
             'footer-dark': $('.footer-dark-checkbox').prop('checked'),
             'footer-fixed': $('.footer-fixed-checkbox').prop('checked'),

@@ -40,9 +40,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
 
-//            Route::get('/deposits/block/{deposit}', [\App\Http\Controllers\DepositController::class, 'block'])->name('deposits.block');
-//            Route::get('/deposits/unblock/{deposit}', [\App\Http\Controllers\DepositController::class, 'unblock'])->name('deposits.unblock');
-//            Route::get('/deposits/dtdata', [\App\Http\Controllers\DepositController::class, 'dataTable'])->name('deposits.dtdata');
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
 
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
@@ -83,11 +80,7 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-//            Route::resource('/currencies', \App\Http\Controllers\CurrenciesController::class);
-//            Route::resource('/payment-systems', \App\Http\Controllers\PaymentSystemsController::class);
-//            Route::resource('/news', \App\Http\Controllers\NewsController::class);
-//            Route::resource('/reviews', \App\Http\Controllers\ReviewsController::class);
-//            Route::resource('/faqs', \App\Http\Controllers\FaqsController::class);
+            Route::resource('/news', \App\Http\Controllers\NewsController::class);
 //            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
 //            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
 
@@ -116,10 +109,6 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::post('/users/mass-role-change', [\App\Http\Controllers\UsersController::class, 'massRoleChange'])->name('users.mass-role-change');
             Route::get('/users/activity-by-date', [\App\Http\Controllers\UsersController::class, 'activityByDate'])->name('users.activity-by-date');
-            Route::get('/users/dt-transactions/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableTransactions'])->name('users.dt-transactions');
-            Route::get('/users/dt-deposits/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-deposits');
-            Route::get('/users/dt-wrs/{user_id}', [\App\Http\Controllers\UsersController::class, 'dataTableDeposits'])->name('users.dt-wrs');
-
 
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',

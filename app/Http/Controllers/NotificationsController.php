@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\NotificationMail;
 use App\Models\Notification;
-use App\Models\NotificationTemplates;
-use App\Models\NotificationType;
 use App\Models\NotificationUser;
 use App\Models\User;
 use Illuminate\Container\Container;
@@ -13,36 +11,74 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
 
 class NotificationsController extends Controller
 {
-    
-    public function index(Request $request) {
-        $filter_type = $request->get('type') ? $request->get('type') : false;
-        $notifications = Notification::when($filter_type, function ($query) use ($filter_type) {
-            return $query->where('type_id', $filter_type);
-        })->orderByDesc('created_at')->paginate(10);
-        
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
         $notifications_count = Notification::count();
-        
-        return view('pages.notifications.index', compact('notifications', 'notifications_count',
-        
-        ));
+
+        if (request()->ajax()) {
+
+            $filter_type = $request->get('type') ? $request->get('type') : false;
+            $notifications = Notification::when($filter_type, function ($query) use ($filter_type) {
+                return $query->where('type_id', $filter_type);
+            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+
+            if (isset($request->search['value']) && !is_null($request->search['value'])) {
+                $notifications->where(function ($query) use ($request) {
+                    foreach ($request->columns as $column) {
+                        if ($column["searchable"] == "true") {
+                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
+                        }
+                    }
+                });
+            }
+
+            $recordsFiltered = $notifications->count();
+            $notifications->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($notifications->get() as $notification) {
+                $data[] = [
+                    'name' => $notification->name,
+                    'created_at' => $notification->created_at->format('d-m-Y H:i'),
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' => $notifications_count,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            return view('pages.notifications.index', compact('notifications_count'));
+        }
     }
-    
-    
-    public function create() {
+
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
         $notifications = new Notification();
         $notification_types = $notifications->getTypes();
         return view('pages.notifications.create', compact('notification_types'));
     }
-    
-    
-    public function store(Request $request) {
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'subject' => 'required',
@@ -110,40 +146,40 @@ class NotificationsController extends Controller
             return redirect()->back()->with('error', 'Произошла ошибка! ' . $exception->getMessage())->withInput();
         }
     }
-    
-    public function showPreview(Request $request) {
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showPreview(Request $request)
+    {
         return view('mail.preview', [
             'preview' => $this->makeMessageHtml(Auth::user(), $request->get('preview')),
         ]);
     }
-    
-    private function makeMessageHtml(User $user, $preview) {
+
+    /**
+     * @param User $user
+     * @param $preview
+     * @return \Illuminate\Support\HtmlString
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    private function makeMessageHtml(User $user, $preview)
+    {
         $markdown = Container::getInstance()->make(Markdown::class);
-        
+
         return $markdown->render('mail.markdown', [
             'text' => $preview,
             'user' => $user,
         ]);
     }
-    
-    public function show($id) {
-        //
-    }
-    
-    
-    public function edit($id) {
-        //
-    }
-    
-    public function update(Request $request, $id) {
-        //
-    }
-    
-    public function destroy($id) {
-        //
-    }
-    
-    public function setReadStatus(Request $request) {
+
+    /**
+     * @param Request $request
+     * @return false|string
+     */
+    public function setReadStatus(Request $request)
+    {
         $id = $request->get('id');
         $user_notification = NotificationUser::where('id', $id)->where('user_id', Auth::user()->id)->where('is_read', false)->first();
         if (empty($user_notification))
@@ -152,14 +188,14 @@ class NotificationsController extends Controller
                 'msg' => 'Такого уведомления не существует',
             ]);
         $user_notification->is_read = true;
-        if ($user_notification->save()){
+        if ($user_notification->save()) {
             return json_encode([
                 'status' => 'good',
                 'msg' => 'Статус уведомления изменён!',
                 'notification_count' => NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
             ]);
         }
-    
+
         return json_encode([
             'status' => 'bad',
             'msg' => 'Неведомая ошибка',

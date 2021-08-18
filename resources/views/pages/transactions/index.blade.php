@@ -8,7 +8,8 @@
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/flag-icon/css/flag-icon.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/jquery.dataTables.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
 @endsection
 
 {{-- page styles --}}
@@ -25,7 +26,8 @@
             <div class="sidebar-content">
                 <div class="sidebar-header">
                     <div class="sidebar-details">
-                        <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">receipt</i> Транзакции
+                        <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">receipt</i>
+                            Транзакции
                         </h5>
                         <div class="mt-10 pt-2">
                             <p class="m-0 subtitle font-weight-700">Общее количество транзакций</p>
@@ -45,7 +47,8 @@
                             </li>
                             @forelse($transaction_types as $type)
                                 <li @if(request()->get('type') === $type->id) class="active" @endif>
-                                    <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}" class="text-sub">
+                                    <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}"
+                                       class="text-sub">
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
                                         {{  __('locale.' . $type->name)}}
                                     </a>
@@ -65,42 +68,22 @@
     <!-- Content Area Starts -->
     <div class="content-area content-right">
         <div class="app-wrapper">
-            <div id="button-trigger" class="card card card-default scrollspy border-radius-6 fixed-width">
-                <div class="card-content p-0">
-                    <table id="data-table-contact" class="display subscription-table responsive-table highlight" style="width:100%;">
-                        <thead>
-                        <tr>
-                           <th style=" padding-left: 20px;">Пользователь</th>
-                            <th>Тип</th>
-                            <th>Сумма</th>
-                            <th>Платёжная система</th>
-                            <th>Дата операции</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($transactions) && !empty($transactions))
-                            @foreach($transactions as $operation)
-                                <tr>
-                                    <td style=" padding-left: 20px;">@if($operation->user->email)<a href="{{ route('users.show', $operation->user->id) }}">{{ $operation->user->email }}</a> @else Не указано @endif</td>
-                                    <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
-                                    <td>
-                                        <span class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
-                                    </td>
-                                    <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                                    <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
-                                    <td class="center-align">
-                                        <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div>
-                {{ $transactions->appends(request()->except('page'))->links() }}
+            <div class="card-content p-0">
+                <table id="transactions" class="display card card card-default scrollspy border-radius-6">
+                    <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Тип</th>
+                        <th>Сумма</th>
+                        <th>Платёжная система</th>
+                        <th>Дата операции</th>
+                        <th>Ссылка</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -117,4 +100,5 @@
 {{-- page scripts --}}
 @section('page-script')
     <script src="{{asset('js/scripts/app-contacts.js')}}"></script>
+    <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
 @endsection

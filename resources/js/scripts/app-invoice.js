@@ -5,13 +5,13 @@ $(document).ready(function () {
     /* init data table */
     if ($(".invoice-data-table").length) {
         var dataListView = $(".invoice-data-table").DataTable({
-            "paging": true,
-            "lengthChange": false,
+            paging: true,
+            lengthChange: false,
             // "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "aoColumns": [
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            aoColumns: [
                 {
                     data: 'empty',
                     searchable: false,
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 {
                     data: 'email',
                     searchable: false,
-                    bSortable: true
+                    bSortable: false
                 },
                 {
                     data: 'amount',
@@ -58,9 +58,9 @@ $(document).ready(function () {
                     bSortable: false
                 },
             ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": {},
+            processing: true,
+            serverSide: true,
+            ajax: {},
             columnDefs: [
                 {
                     targets: 0,
@@ -82,15 +82,15 @@ $(document).ready(function () {
                     orderable: false
                 }
             ],
-            order: [2, 'asc'],
+            order: [4, 'asc'],
             dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
             language: {
                 search: "",
                 searchPlaceholder: window.location.pathname === '/withdrawals' ? "Поиск выводов" : 'Поиск пополнений',
                 processing: "Загрузка",
                 paginate: {
-                    previous: "<",
-                    next: ">",
+                    previous: "‹",
+                    next: "›",
                 }
             },
             select: {
@@ -161,9 +161,126 @@ $(document).ready(function () {
       })
   }
 
-  $('.tabs a').click(function () {
+    $('.tabs a').click(function () {
       window.location.replace($(this).attr('href'))
   })
+
+    if ($('#transactions').length) {
+        $("#transactions").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            order: [4, 'asc'],
+            aoColumns: [
+                {
+                    data: 'user_email',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'type_name',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'amount',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'paymentSystem_name',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'actions',
+                    searchable: false,
+                    bSortable: false
+                },
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {},
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                processing: "Загрузка",
+                paginate: {
+                    previous: "‹",
+                    next: "›",
+                }
+            }
+        });
+
+    }
+
+    if ($('#deposits').length) {
+         $("#deposits").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            order: [5, 'asc'],
+            aoColumns: [
+                {
+                    data: 'user_email',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'invested',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'total_assessed',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'remains_to_accrue',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'next_charge',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'created_at',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'actions',
+                    searchable: false,
+                    bSortable: false
+                },
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {},
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                processing: "Загрузка",
+                paginate: {
+                    previous: "‹",
+                    next: "›",
+                }
+            }
+        });
+
+    }
 
   /* Invoice edit */
   /* ------------*/
