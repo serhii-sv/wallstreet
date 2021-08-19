@@ -18,9 +18,9 @@ class AlterTableNews extends Migration
                 $table->dropColumn('subject');
             }
 
-            $table->text('short_content')->after('content');
+            $table->text('short_content')->nullable()->after('content');
             $table->string('image')->nullable()->after('short_content');
-            $table->string('title')->after('id');
+            $table->string('title')->nullable()->after('id');
         });
     }
 
