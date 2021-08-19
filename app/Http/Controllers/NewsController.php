@@ -7,10 +7,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use App\Models\NewsLang;
 use App\Models\Language;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -19,11 +18,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = NewsLang::where('lang_id', Language::getDefault()->id)->get();
+        $news = News::paginate(9);
 
-        return view('admin.news.index', [
-            'allNews' => $news
-        ]);
+        return view('pages.news.index', compact('news'));
     }
 
     /**
@@ -31,7 +28,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        $languages = Language::all();
+        return view('pages.news.create', compact('languages'));
     }
 
     /**
@@ -41,25 +39,49 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $slug = str_slug($request->input('title_' . Language::getDefault()->code));
+        $defaultLanguage = Language::where('default', 1)->first();
 
-        if ($parentNews = News::create(['slug' => $slug])) {
-            foreach (getLanguagesArray() as $lang) {
-                NewsLang::create([
-                    'title' => $request->input('title_' . $lang['code']),
-                    'teaser' => $request->input('teaser_' . $lang['code']),
-                    'text' => $request->input('text_' . $lang['code']),
-                    'lang_id' => $request->input('lang_id_' . $lang['code']),
-                    'news_id' => $parentNews->id,
-                ]);
-            }
+        $rules = [];
+        $fields = ['title', 'short_content', 'content'];
 
-            if ($request->hasFile('img')) {
-                $parentNews->addImg($request->file('img'));
-            }
-            return redirect()->route('admin.news.index')->with('success', __('News has been created'));
+        foreach ($fields as $field) {
+            $rules[$field . '.' . $defaultLanguage->code] = 'required';
         }
-        return back()->with('error', __('Unable to create news'))->withInput();
+
+        $request->validate($rules);
+
+        $item = News::create($request->except(['_token']));
+
+        if ($request->has('image') && $item) {
+            $image = $request->file('image');
+            $newName = md5($image->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $image->getExtension();
+
+            $upload = Storage::disk('do_spaces')->putFileAs(
+                'news', $image, $newName
+            );
+
+            Storage::disk('do_spaces')->setVisibility($upload, 'public');
+
+            $item->update([
+                'image' => $upload
+            ]);
+        }
+
+        if ($item) {
+            return redirect(route('news.index'))->with('success_short', 'Новость создана');
+        }
+
+        return back()->with('error_short', 'Новость не создана')->withInput();
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function show($id)
+    {
+        $item = News::findOrFail($id);
+        return view('pages.news.show', compact('item'));
     }
 
     /**
