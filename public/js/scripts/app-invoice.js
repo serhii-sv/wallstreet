@@ -215,7 +215,8 @@ $(document).ready(function () {
                 paginate: {
                     previous: "‹",
                     next: "›",
-                }
+                },
+                emptyTable: 'Нет записей'
             }
         });
 

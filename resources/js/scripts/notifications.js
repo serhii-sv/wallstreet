@@ -27,7 +27,8 @@ $(function () {
             paginate: {
                 previous: "‹",
                 next: "›",
-            }
+            },
+            emptyTable: 'Нет записей'
         },
     });
 

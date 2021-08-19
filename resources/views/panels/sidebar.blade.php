@@ -100,6 +100,12 @@
       </a>
     </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('news.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('news*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('news.index') }}">
+              <i class="material-icons">list</i>
+              <span class="menu-title" data-i18n="Новости">Новости</span>
+          </a>
+      </li>
+      <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
               <i class="material-icons">developer_board</i>
               <span class="menu-title" data-i18n="Задачи">Задачи</span>

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 /*
  * Cloud files in Digital Ocean. Visual uploading/downloading/viewing.
  */
+
 class CloudFilesController extends Controller
 {
     /**
@@ -30,7 +31,7 @@ class CloudFilesController extends Controller
         $files = CloudFile::orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
-            $files->where('name', 'like', '%'.strtolower($request->search).'%');
+            $files->where('name', 'like', '%' . strtolower($request->search) . '%');
         }
 
         if ($request->has('folder')) {
@@ -65,18 +66,18 @@ class CloudFilesController extends Controller
      */
     public function upload(UploadFileRequest $request)
     {
-        $file       = $request->file('file');
-        $folder_id   = $request->folder_id;
-        $newName    = md5($file->getClientOriginalName().rand(0, 1000000).microtime()).'.'.$file->getExtension();
+        $file = $request->file('file');
+        $folder_id = $request->folder_id;
+        $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
 
         try {
-            DB::transaction(function() use($newName, $file, $folder_id) {
+            DB::transaction(function () use ($newName, $file, $folder_id) {
                 if (!is_null($folder_id)) {
                     $folder = CloudFileFolder::findOrFail($folder_id);
 
                     $upload = Storage::disk('do_spaces')->putFileAs(
-                    $folder->folder_name, $file, $newName
-                );
+                        $folder->folder_name, $file, $newName
+                    );
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
                 }
@@ -85,14 +86,14 @@ class CloudFilesController extends Controller
                 $createdBy = auth()->user();
 
                 $cloudFile = CloudFile::create([
-                    'created_by'    => $createdBy->id,
-                    'name'          => strtolower($file->getClientOriginalName()),
-                    'ext'           => $file->getExtension(),
-                    'mime'          => $file->getMimeType(),
-                    'url'           => $upload,
+                    'created_by' => $createdBy->id,
+                    'name' => strtolower($file->getClientOriginalName()),
+                    'ext' => $file->getExtension(),
+                    'mime' => $file->getMimeType(),
+                    'url' => $upload,
                     'cloud_file_folder_id' => $folder_id,
-                    'last_access'   => null,
-                    'size'          => $file->getSize(),
+                    'last_access' => null,
+                    'size' => $file->getSize(),
                 ]);
             });
         } catch (\Exception $exception) {
