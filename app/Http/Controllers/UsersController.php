@@ -50,7 +50,8 @@ class UsersController extends Controller
                     'name' => $user->name ?? 'Не указано',
                     'email' => $user->email ?? 'Не указано',
                     'country' => $user->country ?? 'Не указано',
-                    'actions' => view('pages.users.partials.actions', compact('user'))->render()
+                    'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                    'color' => $user->roles->first()->color ?? ''
                 ];
             }
 

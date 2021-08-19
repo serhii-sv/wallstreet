@@ -1,5 +1,3 @@
-@if($deposit->user->email)
-    <a href="{{ route('users.show', $deposit->user->id) }}">
-        {{ $deposit->user->email }}
-    </a>
-@else Не указано @endif
+<a href="{{ route('deposits.show', $deposit->id) }}">
+    {{ $deposit->user->email ?? 'Не указано' }}
+</a>

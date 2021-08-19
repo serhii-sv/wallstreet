@@ -8,6 +8,7 @@ $(document).ready(function () {
             paging: true,
             lengthChange: false,
             // "searching": false,
+            scrollX: true,
             ordering: true,
             info: true,
             autoWidth: false,
@@ -170,7 +171,8 @@ $(document).ready(function () {
             paging: true,
             lengthChange: false,
             searching: false,
-            ordering: true,
+            ordering: false,
+            pageLength: 15,
             info: true,
             autoWidth: false,
             order: [4, 'asc'],
@@ -188,21 +190,18 @@ $(document).ready(function () {
                 {
                     data: 'amount',
                     searchable: true,
-                    bSortable: false
+                    bSortable: false,
+                    width: '50px'
                 },
                 {
                     data: 'paymentSystem_name',
                     searchable: true,
-                    bSortable: false
+                    bSortable: false,
+                    width: '100px'
                 },
                 {
                     data: 'created_at',
                     searchable: true,
-                    bSortable: true
-                },
-                {
-                    data: 'actions',
-                    searchable: false,
                     bSortable: false
                 },
             ],
@@ -227,7 +226,8 @@ $(document).ready(function () {
             paging: true,
             lengthChange: false,
             searching: false,
-            ordering: true,
+             ordering: false,
+             pageLength: 15,
             info: true,
             autoWidth: false,
             order: [5, 'asc'],
@@ -261,11 +261,6 @@ $(document).ready(function () {
                     data: 'created_at',
                     searchable: true,
                     bSortable: true
-                },
-                {
-                    data: 'actions',
-                    searchable: false,
-                    bSortable: false
                 },
             ],
             processing: true,

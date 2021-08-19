@@ -77,7 +77,6 @@
                         <th>Сумма</th>
                         <th>Платёжная система</th>
                         <th>Дата операции</th>
-                        <th>Ссылка</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -102,3 +101,10 @@
     <script src="{{asset('js/scripts/app-contacts.js')}}"></script>
     <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
 @endsection
+
+<style>
+    #transactions th {
+        white-space: break-spaces;
+    }
+</style>
+

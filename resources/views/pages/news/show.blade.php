@@ -34,7 +34,7 @@
                                                  style="width: auto; max-height: 600px; max-width: 100%">
                                         </div>
                                     @endif
-                                    <div class="content mt-3">
+                                    <div class="content {{ $item->image ? 'mt-3' : '' }}">
                                         {!! $item->content[\App\Models\Language::getDefault()->code] ?? '' !!}
                                     </div>
                                 </div>

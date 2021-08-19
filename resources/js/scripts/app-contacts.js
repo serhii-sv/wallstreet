@@ -86,6 +86,9 @@ $(document).ready(function () {
                className: "control"
            },
        ],
+       createdRow: function( row, data, dataIndex){
+           $(row).css({'color': data.color})
+       }
    });
 
    // Custom search

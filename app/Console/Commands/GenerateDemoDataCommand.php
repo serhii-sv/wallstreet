@@ -301,17 +301,24 @@ class GenerateDemoDataCommand extends Command
         }
     }
 
-    public function generateNews() {
+    public function generateNews()
+    {
         for ($i = 0; $i < 10; $i++) {
+            $defaultLanguage = Language::getDefault()->code;
             $data = [
-                'subject' => $this->faker->title,
-                'content' => $this->faker->text,
-
-                'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
+                'title' => [
+                    $defaultLanguage => $this->faker->sentence(10)
+                ],
+                'short_content' => [
+                    $defaultLanguage => $this->faker->sentence(50)
+                ],
+                'content' => [
+                    $defaultLanguage => $this->faker->sentence(1000)
+                ],
             ];
 
             News::create($data);
-            $this->comment('news ' . $data['subject'] . ' generated');
+            $this->comment('news ' . $data['title'][$defaultLanguage] . ' generated');
         }
     }
 

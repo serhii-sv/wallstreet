@@ -1,1 +1,1 @@
-@if($transaction->user->email)<a href="{{ route('users.show', $transaction->user->id) }}">{{ $transaction->user->email }}</a> @else Не указано @endif
+<a href="{{ route('transactions.show', $transaction->id) }}">{{ $transaction->user->email ?? 'Не указано' }}</a>

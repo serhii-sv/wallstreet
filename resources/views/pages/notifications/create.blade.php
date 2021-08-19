@@ -35,36 +35,10 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Contact Sidenav -->
       <div id="sidebar-list" class="row contact-sidenav ml-0 mr-0">
         <div class="col s12 m12 l4">
-          <!-- Sidebar Area Starts -->
-          <div class="sidebar-left sidebar-fixed">
-            <div class="sidebar">
-              <div class="sidebar-content">
-                <div class="sidebar-menu list-group position-relative">
-                  <div class="sidebar-list-padding app-sidebar contact-app-sidebar" id="contact-sidenav">
-                    <ul class="contact-list display-grid">
-                      <li>
-                        <h5 class="m-0">What will be next step?</h5>
-                      </li>
-                      <li>
-                        <h6 class="mt-5 line-height">You are one step closer to build your perfect product</h6>
-                      </li>
-                      <li>
-                        <hr class="mt-5">
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <a href="#" data-target="contact-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-              
-              </div>
-            </div>
-          </div>
-          <!-- Sidebar Area Ends -->
         </div>
         <div class="col s12 m12 l8 contact-form margin-top-contact">
           <div class="row">
@@ -139,7 +113,7 @@
                   <button class="notification-preview-btn btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow mt-2">Предпросмотр</button>
                 </div>
               </div>
-              
+
             </form>
             <form action="{{ route('notifications.preview') }}" class="notification-preview-form" method="post">
               @csrf

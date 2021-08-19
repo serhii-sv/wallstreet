@@ -67,7 +67,8 @@ class WithdrawalRequestsController extends Controller
                     'appliner' => $transaction->user->partner->email ?? 'Без аплайнера',
                     'approved' => view('pages.withdrawals.partials.transaction-status', compact('transaction'))->render(),
                     'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
-                    'empty3' => ''
+                    'empty3' => '',
+                    'color' => $transaction->user->roles->first()->color ?? ''
                 ];
             }
 

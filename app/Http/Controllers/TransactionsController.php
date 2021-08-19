@@ -31,7 +31,7 @@ class TransactionsController extends Controller
             $filter_type = $request->get('type') ? $request->get('type') : false;
             $transactions = Transaction::when($filter_type, function($query) use ($filter_type){
                 return $query->where('type_id', $filter_type);
-            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+            })->orderBy('created_at', 'desc');
 
             $recordsFiltered = $transactions->count();
             $transactions->limit($request->length)->offset($request->start);
@@ -43,8 +43,7 @@ class TransactionsController extends Controller
                     'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
                     'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
                     'paymentSystem_name' => $operation->paymentSystem->name ?? 'Не указано',
-                    'created_at' => $transaction->created_at->format('d-m-Y H:i'),
-                    'actions' => view('pages.transactions.partials.actions', compact('transaction'))->render()
+                    'created_at' => $transaction->created_at->format('d-m-Y'),
                 ];
             }
 

@@ -34,7 +34,7 @@ class DepositController extends Controller
                 return $query->where('active', $filter_status);
             })->when($filter_rates, function($query) use ($filter_rates){
                 return $query->where('rate_id', $filter_rates);
-            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+            })->orderBy('created_at', 'desc');
 
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
                 $deposits->where(function ($query) use ($request) {
@@ -53,12 +53,11 @@ class DepositController extends Controller
             foreach ($deposits->get() as $deposit) {
                 $data[] = [
                     'user_email' => view('pages.deposits.partials.user-email', compact('deposit'))->render(),
-                    'invested' => "$ " . number_format($deposit->invested, 2, '.', ',') ?? 0  ?? 'Не указано',
+                    'invested' => "$ " . number_format($deposit->invested, 0, '.', ',') ?? 0  ?? 'Не указано',
                     'total_assessed' => view('pages.deposits.partials.total-assessed', compact('deposit'))->render(),
                     'remains_to_accrue' => '?',
                     'next_charge' => '?',
-                    'created_at' => $deposit->created_at->format('d-m-Y H:i'),
-                    'actions' => view('pages.deposits.partials.actions', compact('deposit'))->render(),
+                    'created_at' => $deposit->created_at->format('d-m-Y'),
                 ];
             }
 
