@@ -29,7 +29,17 @@
                             <h6 class="deep-purple-text text-darken-3 mt-5">
                                 <a href="{{ route('news.show', $item->id) }}">{{ $item->title[\App\Models\Language::getDefault()->code] ?? '' }}</a>
                             </h6>
-                            <span>{!! $item->short_content[\App\Models\Language::getDefault()->code] ?? ''  !!}</span>
+                            <span>{!! $item->short_content[\App\Models\Language::getDefault()->code] ?? '' !!}</span>
+                            <div class="display-flex justify-content-between flex-wrap mt-4">
+                                <div class="display-flex mt-3 right-align social-icon">
+                                    <a href="{{ route('news.edit', $item) }}">
+                                        <span class="material-icons">create</span>
+                                    </a>
+                                    <a href="{{ route('news.destroy', $item) }}">
+                                        <span class="material-icons">delete</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>
