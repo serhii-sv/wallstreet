@@ -30,7 +30,8 @@
                                         <div class="image center">
                                             <img class="border-radius-8"
                                                  src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}"
-                                                 alt="">
+                                                 alt=""
+                                                 style="width: 100%">
                                         </div>
                                     @endif
                                     <div class="content mt-3">

@@ -45,7 +45,7 @@
                                     Все
                                 </a>
                             </li>
-                            @if(auth()->user()->hasRole('root'))
+{{--                            @if(auth()->user()->hasRole('root'))--}}
                                 @forelse($roles as $role)
                                     <li @if(request()->get('roles') === $role->name) class="active" @endif>
                                         <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}"
@@ -57,7 +57,7 @@
                                     </li>
                                 @empty
                                 @endforelse
-                            @endif
+{{--                            @endif--}}
                             {{--            <li><a href="" class="text-sub ">--}}
                             {{--                <i class="blue-grey-text material-icons small-icons mr-2">fiber_manual_record</i>--}}
                             {{--                Engineering</a>--}}
@@ -76,7 +76,7 @@
                         </ul>
                         <ul class="contact-list display-none new-role-selection">
                             <li class="sidebar-title">Назначит роль всем выделенным пользователям</li>
-                            @if(auth()->user()->hasRole('root'))
+{{--                            @if(auth()->user()->hasRole('root'))--}}
                                 @forelse($roles as $role)
                                     <li @if(request()->get('roles') === $role->name) class="active" @endif>
                                         <a href="#" data-role_id="{{ $role->id }}" class="text-sub">
@@ -87,7 +87,7 @@
                                     </li>
                                 @empty
                                 @endforelse
-                            @endif
+{{--                            @endif--}}
                             {{--            <li><a href="" class="text-sub ">--}}
                             {{--                <i class="blue-grey-text material-icons small-icons mr-2">fiber_manual_record</i>--}}
                             {{--                Engineering</a>--}}
@@ -106,8 +106,9 @@
                         </ul>
                     </div>
                 </div>
-                <a href="#" data-target="contact-sidenav" class="sidenav-trigger hide-on-large-only"><i
-                        class="material-icons">menu</i></a>
+                <a href="#" data-target="contact-sidenav" class="sidenav-trigger hide-on-large-only">
+                    <i class="material-icons">menu</i>
+                </a>
             </div>
         </div>
     </div>
