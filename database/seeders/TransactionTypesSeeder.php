@@ -31,6 +31,8 @@ class TransactionTypesSeeder extends Seeder
             'close_dep',
             'penalty',
             'reinvest',
+            'transfer_in',
+            'transfer_out',
         ];
 
         foreach ($transactionTypes as $type) {
