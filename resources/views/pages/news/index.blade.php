@@ -7,6 +7,7 @@
 {{-- page style --}}
 @section('page-style')
     <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-blog.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
 @endsection
 
 {{-- page content --}}
@@ -22,20 +23,18 @@
                     <div class="col s12 m6 l4">
                         <div class="card-panel border-radius-6 mt-10 card-animation-1">
                             @if($item->image)
-                                <img class="responsive-img border-radius-8 z-depth-4 image-n-margin"
-                                     src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}"
-                                     alt="">
+                                <img class="responsive-img border-radius-8 z-depth-4 image-n-margin" src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}" alt="">
                             @endif
                             <h6 class="deep-purple-text text-darken-3 mt-5">
                                 <a href="{{ route('news.show', $item->id) }}">{{ $item->title[\App\Models\Language::getDefault()->code] ?? '' }}</a>
                             </h6>
                             <span>{!! $item->short_content[\App\Models\Language::getDefault()->code] ?? '' !!}</span>
-                            <div class="display-flex justify-content-between flex-wrap mt-4">
-                                <div class="display-flex mt-3 right-align social-icon">
+                            <div class="display-flex justify-content-end flex-wrap mt-4">
+                                <div class="display-flex mt-3 right-align justify-content-end social-icon">
                                     <a href="{{ route('news.edit', $item) }}">
                                         <span class="material-icons">create</span>
                                     </a>
-                                    <a href="{{ route('news.destroy', $item) }}">
+                                    <a href="{{ route('news.destroy', $item) }}" class="delete-news-item">
                                         <span class="material-icons">delete</span>
                                     </a>
                                 </div>
@@ -49,4 +48,14 @@
             {{ $news->links() }}
         </div>
     </div>
+@endsection
+
+{{-- vendor script --}}
+@section('vendor-script')
+    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+@endsection
+
+{{-- page script --}}
+@section('page-script')
+    <script src="{{asset('js/scripts/news.js')}}"></script>
 @endsection

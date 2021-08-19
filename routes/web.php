@@ -80,7 +80,8 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
-            Route::resource('/news', \App\Http\Controllers\NewsController::class);
+            Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
+            Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy');
 //            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
 //            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
 
