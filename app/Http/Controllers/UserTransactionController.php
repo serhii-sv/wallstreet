@@ -12,30 +12,51 @@ class UserTransactionController extends Controller
     /**
      * @param Request $request
      * @param $user_id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
     public function index(Request $request, $user_id)
     {
-        $user = User::findOrFail($user_id);
-
-        $filter_type = $request->get('type') ? $request->get('type') : false;
-        $transactions = Transaction::when($filter_type, function($query) use ($filter_type){
-            return $query->where('type_id', $filter_type);
-        })
-            ->where('user_id', $user->id)
-            ->orderByDesc('created_at')
-            ->paginate(10);
 
         $transaction_types = TransactionType::all();
 
-        $transactions_count = Transaction::where('user_id', $user->id)->count();
+        $transactions_count = Transaction::count();
+        $user = User::findOrFail($user_id);
 
-        return view('pages.users.user-transactions', compact(
-            'transactions',
-            'transaction_types',
-            'transactions_count',
-            'user'
-        ));
+        if (request()->ajax()) {
+            $filter_type = $request->get('type') ? $request->get('type') : false;
+            $transactions = Transaction::when($filter_type, function($query) use ($filter_type){
+                return $query->where('type_id', $filter_type);
+            })
+                ->where('user_id', $user->id)
+                ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+
+            $recordsFiltered = $transactions->count();
+            $transactions->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($transactions->get() as $transaction) {
+                $data[] = [
+                    'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
+                    'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
+                    'paymentSystem_name' => $operation->paymentSystem->name ?? 'Не указано',
+                    'created_at' => $transaction->created_at->format('d-m-Y H:i'),
+                    'actions' => view('pages.users.partials.user-transaction-actions', compact('transaction', 'user'))->render()
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' =>  $transactions_count,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            return view('pages.users.user-transactions', compact(
+                'transaction_types',
+                'transactions_count',
+                'user'
+            ));
+        }
     }
 
     /**
