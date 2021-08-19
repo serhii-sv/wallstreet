@@ -67,8 +67,8 @@
                   <label for="name">Название</label>
                 </div>
                 <div class="input-field col m6 s12">
-                  <input id="name" type="text" class="validate" name="subject" value="{{ old('subject') ?? '' }}">
-                  <label for="name">Тема</label>
+                  <input id="subject" type="text" class="validate" name="subject" value="{{ old('subject') ?? '' }}">
+                  <label for="subject">Тема</label>
                 </div>
               </div>
               <style>

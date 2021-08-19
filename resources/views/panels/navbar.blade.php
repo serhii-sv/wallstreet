@@ -90,7 +90,7 @@
             </small>
           </a>
           <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00" style="margin-left: 30px;top: 0;">
-            {{ $item->notification->created_at->diffForHumans() }}
+            @if($item->notification->created_at){{ $item->notification->created_at->diffForHumans() }}@endif
           </time>
         </li>
         @empty
