@@ -53,7 +53,7 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}">
-        <i class="material-icons">receipt</i>
+        <i class="material-icons">monetization_on</i>
         <span class="menu-title" data-i18n="Выводы">Выводы</span>
         <span class="badge badge pill purple float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
       </a>
@@ -61,7 +61,7 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('replenishments*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('replenishments.index') }}">
-        <i class="material-icons">receipt</i>
+        <i class="material-icons">forward</i>
         <span class="menu-title" data-i18n="Пополнения">Пополнения</span>
         <span class="badge badge pill purple float-right mr-3">${{ $counts['replenishments_amount'] }}</span>
       </a>
@@ -69,7 +69,7 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('transactions*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('transactions.index') }}">
-        <i class="material-icons">receipt</i>
+        <i class="material-icons">swap_calls</i>
         <span class="menu-title" data-i18n="Трпнзакции">Транзакции</span>
         <span class="badge badge pill purple float-right mr-3">${{ $counts['transactions_amount'] }}</span>
       </a>
@@ -77,7 +77,7 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}">
-        <i class="material-icons">receipt</i>
+        <i class="material-icons">attach_money</i>
         <span class="menu-title" data-i18n="Трпнзакции">Депозиты</span>
         <span class="badge badge pill purple float-right mr-3">${{ $counts['deposits_active_amount'] }}</span>
 

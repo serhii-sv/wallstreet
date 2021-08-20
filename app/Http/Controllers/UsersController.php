@@ -46,7 +46,7 @@ class UsersController extends Controller
             foreach ($users->get() as $user) {
                 $data[] = [
                     'empty' => view('pages.users.partials.checkbox', compact('user'))->render(),
-                    'user' => view('pages.users.partials.avatar')->render(),
+                    'user' => view('pages.users.partials.avatar', compact('user'))->render(),
                     'name' => $user->name ?? 'Не указано',
                     'email' => $user->email ?? 'Не указано',
                     'country' => $user->country ?? 'Не указано',

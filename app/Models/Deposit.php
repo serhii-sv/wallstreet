@@ -39,9 +39,12 @@ class Deposit extends Model
 {
     use Uuids;
     use SumOperations;
-    
+
     /** @var bool $incrementing */
     public $incrementing = false;
+    /**
+     * @var string
+     */
     public $keyType      = 'string';
     /**
      * @var array $fillable
@@ -64,12 +67,19 @@ class Deposit extends Model
         'datetime_closing',
         'created_at',
     ];
-    
+
+    /**
+     * @return int|mixed
+     */
     public function total_assessed() {
         return $this->transactions()
             ->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)
             ->sum('main_currency_amount');
     }
+
+    /**
+     * @return int|mixed
+     */
     public function total_created_sum() {
         return $this->transactions()
             ->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)
@@ -142,7 +152,7 @@ class Deposit extends Model
     {
         return $value;
     }
-    
+
     /**
      * @param                      $field
      * @param \App\Models\Currency $currency
@@ -449,5 +459,42 @@ class Deposit extends Model
                 : $item->balance;
         }
         return $balances;
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function depositQueue()
+    {
+        return $this->hasMany(DepositQueue::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activeCharges()
+    {
+        return $this->depositQueue()
+            ->where('done', false)
+            ->where('type', DepositQueue::TYPE_ACCRUE)
+            ->orderBy('available_at');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function nextPayment()
+    {
+        return $this->activeCharges()
+            ->first();
+    }
+
+    /**
+     * @return float|int
+     */
+    public function needToCharge()
+    {
+        return $this->daily * $this->activeCharges()->count();
     }
 }

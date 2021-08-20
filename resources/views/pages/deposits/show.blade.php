@@ -22,7 +22,7 @@
                         <!-- header section -->
                         <div class="row invoice-date-number">
                             <div class="col xl4 s12">
-                                <span class="invoice-number mr-1">Транзакция</span>
+                                <span class="invoice-number mr-1">Депозит</span>
 {{--                                <span>{{ $transaction->id }}</span>--}}
                             </div>
                             <div class="col xl8 s12">
@@ -54,28 +54,37 @@
                             <div class="col m6 s12">
 {{--                                <h6 class="invoice-from">Bill From</h6>--}}
                                 <div class="invoice-address">
-                                    <span># Транзакции</span>
+                                    <span># Депозита</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Тип транзации</span>
+{{--                                    <span>Тип транзации</span>--}}
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Email пользователя</span>
+{{--                                    <span>Email пользователя</span>--}}
                                 </div>
                                 <div class="invoice-address">
                                     <span>Платежная система</span>
                                 </div>
                                 <div class="invoice-address">
+                                    <span>Тариф</span>
+                                </div>
+                                <div class="invoice-address">
                                     <span>Валюта</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Сумма</span>
+                                    <span>% в день</span>
                                 </div>
                                 <div class="invoice-address">
                                     <span>Кошелек</span>
                                 </div>
+{{--                                <div class="invoice-address">--}}
+{{--                                    <span>Сумма в $</span>--}}
+{{--                                </div>--}}
                                 <div class="invoice-address">
-                                    <span>Сумма в $</span>
+                                    <span>Дата следующего начисления</span>
+                                </div>
+                                <div class="invoice-address">
+                                    <span>Всего осталось начислить</span>
                                 </div>
                             </div>
                             <div class="col m6 s12">
@@ -94,16 +103,22 @@
                                     <span>{{ $deposit->paymentSystem->name }}</span>
                                 </div>
                                 <div class="invoice-address">
+                                    <span>{{ $deposit->rate->name }}</span>
+                                </div>
+                                <div class="invoice-address">
                                     <span>{{ $deposit->currency->symbol }} ({{ $deposit->currency->name }})</span>
                                 </div>
                                 <div class="invoice-address">
-{{--                                    <span>{{ number_format($deposit->amount, 2, ',', ' ') }}</span>--}}
+                                    <span>{{ $deposit->daily }}</span>
                                 </div>
                                 <div class="invoice-address">
                                     <span>{{ $deposit->wallet_id }}</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>{{ number_format($deposit->main_currency_amount, 2, ',', ' ') }}</span>
+                                    <span>{{ !is_null($deposit->nextPayment()) ? $deposit->nextPayment()->created_at->format('d-m-Y H:i') : '-' }}</span>
+                                </div>
+                                <div class="invoice-address">
+                                    <span>≈ {{ $deposit->needToCharge() }}</span>
                                 </div>
                             </div>
                         </div>
