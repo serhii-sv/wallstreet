@@ -6,8 +6,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Console\Commands\GenerateDemoDataCommand;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestDashboardBonusUser;
 use App\Models\ActivityLog;
 use App\Models\Currency;
@@ -17,8 +15,6 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
-use App\Modules\Parsers\FixerModule;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 

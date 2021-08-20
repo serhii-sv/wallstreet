@@ -204,7 +204,7 @@ class GenerateDemoDataCommand extends Command
 
                 $wallet->refill($transaction->amount, $externalWallet);
 
-                $this->info('balance updated ' . $wallet->id);
+                dump('balance updated ' . $wallet->id);
             }
         }
     }
@@ -234,7 +234,7 @@ class GenerateDemoDataCommand extends Command
                 $transaction->save();
             }
 
-            $this->info('withdrawals created ' . $wallet->id);
+            dump('withdrawals created ' . $wallet->id);
         }
     }
 
@@ -296,7 +296,7 @@ class GenerateDemoDataCommand extends Command
                 /** @var Deposit $deposit */
                 $deposit = Deposit::addDeposit($depositData, $currency, true);
 
-                $this->info('deposit created ' . $deposit->id);
+                dump('deposit created ' . $deposit->id);
             }
         }
     }
