@@ -343,7 +343,7 @@
                                         @forelse($user_auth_logs as $item)
                                             <tr>
                                                 <td><b>Имя: </b>{{ $item->user->name ?? '' }}
-                                                    <br><b>Логин: </b>{{ $item->user->login }}</td>
+                                                    <br><b>Логин: </b>{{ $item->user->login ?? '' }}</td>
                                                 <td>{{ $item->ip ?? '' }}</td>
                                                 <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
                                             </tr>
