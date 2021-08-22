@@ -65,6 +65,7 @@ class User extends Authenticatable
         'unhashed_password',
         'ip',
         'is_locked',
+        'documents_verified'
     ];
 
     /**
@@ -255,5 +256,13 @@ class User extends Authenticatable
     public function themeSettings()
     {
         return $this->hasOne(UserThemeSetting::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function verifiedDocuments()
+    {
+        return $this->hasMany(UserVerification::class);
     }
 }
