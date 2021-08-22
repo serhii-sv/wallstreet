@@ -98,6 +98,13 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
             });
 
+            Route::prefix('verification-requests')->as('verification-requests.')->group(function () {
+                Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
+
+                Route::get('/show/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'show'])->name('show');
+                Route::post('/update/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'update'])->name('update');
+            });
+
             Route::prefix('user-transactions')->as('user-transactions.')->group(function () {
                 Route::get('/{transaction_id}', [App\Http\Controllers\UserTransactionController::class, 'index'])->name('index');
                 Route::get('/{user_id}/destroy/{transaction_id}', [\App\Http\Controllers\UserTransactionController::class, 'destroy'])->name('destroy');

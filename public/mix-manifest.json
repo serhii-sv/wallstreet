@@ -134,6 +134,7 @@
     "/js/scripts/ui-alerts.js": "/js/scripts/ui-alerts.js",
     "/js/scripts/ui-chips.js": "/js/scripts/ui-chips.js",
     "/js/scripts/ui-navbar.js": "/js/scripts/ui-navbar.js",
+    "/js/scripts/user-verification-requests.js": "/js/scripts/user-verification-requests.js",
     "/js/custom/custom-script.js": "/js/custom/custom-script.js",
     "/js/custom/custom-script.min.js": "/js/custom/custom-script.min.js",
     "/vendors/imagesloaded.pkgd.min.js": "/vendors/imagesloaded.pkgd.min.js",

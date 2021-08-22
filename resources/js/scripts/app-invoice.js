@@ -8,7 +8,6 @@ $(document).ready(function () {
             paging: true,
             lengthChange: false,
             // "searching": false,
-            scrollX: true,
             ordering: true,
             info: true,
             autoWidth: false,
