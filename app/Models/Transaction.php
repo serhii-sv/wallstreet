@@ -257,7 +257,6 @@ class Transaction extends Model
         $referralId   = null !== $referral ? $referral->id : '';
 
         return $transaction->save() ? $transaction : null;
-
     }
 
     /**
