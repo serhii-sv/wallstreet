@@ -105,6 +105,12 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/update/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'update'])->name('update');
             });
 
+            Route::prefix('tasks')->as('tasks.')->group(function () {
+                Route::post('/store', [App\Http\Controllers\TaskController::class, 'store'])->name('store');
+                Route::post('/update/{id}', [App\Http\Controllers\TaskController::class, 'update'])->name('update');
+                Route::get('/destroy/{id}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('destroy');
+            });
+
             Route::prefix('user-transactions')->as('user-transactions.')->group(function () {
                 Route::get('/{transaction_id}', [App\Http\Controllers\UserTransactionController::class, 'index'])->name('index');
                 Route::get('/{user_id}/destroy/{transaction_id}', [\App\Http\Controllers\UserTransactionController::class, 'destroy'])->name('destroy');

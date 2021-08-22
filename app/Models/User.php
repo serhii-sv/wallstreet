@@ -265,4 +265,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserVerification::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

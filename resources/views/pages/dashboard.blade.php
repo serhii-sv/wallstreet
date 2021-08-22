@@ -576,6 +576,41 @@
                     </div>
                 </div>
             </div>
+            <div class="col s12 m6 l4">
+                <ul id="task-card" class="collection with-header animate fadeLeft">
+                    <li class="collection-header cyan">
+                        <h5 class="task-card-title mb-3">Задачи</h5>
+                    </li>
+                    @foreach(auth()->user()->tasks as $task)
+                        <li class="collection-item dismissable">
+                            <label for="{{ $task->id }}">
+                                <input type="checkbox" id="{{ $task->id }}" {{ $task->done ? 'checked' : '' }} />
+                                <span class="width-100">{{ $task->content }}</span>
+                                <div class="display-flex justify-content-end">
+                                    <a href="{{ route('tasks.destroy', $task) }}" class="secondary-content">
+                                    <span class="ultra-small">
+                                        <i class="material-icons dp48">delete</i>
+                                    </span>
+                                    </a>
+                                </div>
+                            </label>
+                        </li>
+                    @endforeach
+                    <li class="collection-item dismissable">
+                        <form action="{{ route('tasks.store') }}" method="post">
+                            @csrf
+                            <label for="task_content">
+                                <input type="text" id="task_content" name="task_content" placeholder="Новая задача" value="{{ old('task_content') }}" />
+                                <span class="width-100">
+                                <button class="btn btn-small">
+                                    <span class="ultra-small">Сохранить</span>
+                                </button>
+                            </span>
+                            </label>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -598,6 +633,42 @@
     {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
     <script>
         (function (window, document, $) {
+
+            $("#task-card input:checkbox").change(function () {
+                $.ajax({
+                    url: '/tasks/update/' + $(this).attr('id'),
+                    method: 'post',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (response) => {
+                        M.toast({
+                            html: response.message,
+                            classes: response.success ? 'green' : 'red'
+                        })
+                        if (response.success) {
+                            checkbox_check(this);
+                        }
+                    }
+                })
+            });
+
+            // Check Uncheck function
+            function checkbox_check(el) {
+                if (!$(el).is(":checked")) {
+                    $(el)
+                        .next()
+                        .css("text-decoration", "none"); // or addClass
+                } else {
+                    $(el)
+                        .next()
+                        .css("text-decoration", "line-through"); //or addClass
+                }
+            }
+
+            $("#task-card input:checkbox").each(function () {
+                checkbox_check(this);
+            });
 
             var revenueLineChartCTX = $("#revenue-line-chart");
             var revenueLineChartOptions = {
