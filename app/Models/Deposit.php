@@ -308,6 +308,7 @@ class Deposit extends Model
         $toCurrency = Currency::where('code', 'USD')->first();
         
         $amount_in_currency = $wallet->convertToCurrency($toCurrency, $this->currency()->first(), abs($amountToWallet));
+        $amountReinvest_in_currency = $wallet->convertToCurrency($toCurrency, $this->currency()->first(), abs($amountReinvest));
         
         $dividend = Transaction::dividend($wallet, $amount_in_currency);
         if ($dividend) {
@@ -321,8 +322,8 @@ class Deposit extends Model
             ];
             Notification::sendNotification($notification_data, 'new_charge');
         }
-        $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
-        $this->addBalance($amountReinvest);
+        $wallet->addAmountWithAccrueToPartner($amount_in_currency, 'deposit');
+        $this->addBalance($amountReinvest_in_currency);
         
         $dividend->update(['approved' => true]);
         
