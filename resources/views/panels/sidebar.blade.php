@@ -124,6 +124,12 @@
               <span class="menu-title" data-i18n="Подтверждение личности">Подтверждение личности</span>
           </a>
       </li>
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('support-tasks.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('support-tasks*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('support-tasks.index') }}">
+              <i class="material-icons">verified_user</i>
+              <span class="menu-title" data-i18n="Тех Поддержка">Тех Поддержка</span>
+          </a>
+      </li>
     <li class="bold">
       <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
         <i class="material-icons">photo_filter</i>

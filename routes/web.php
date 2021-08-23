@@ -81,6 +81,16 @@ Route::group(['middleware' => ['web']], function () {
                 ],
             ]);
 
+            Route::prefix('support-tasks')->as('support-tasks.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\SupportTaskController::class, 'index'])->name('index');
+                Route::get('/show/{id}', [\App\Http\Controllers\SupportTaskController::class, 'show'])->name('show');
+                Route::get('/close/{id}', [\App\Http\Controllers\SupportTaskController::class, 'close'])->name('close');
+
+                Route::prefix('messages')->as('messages.')->group(function () {
+                    Route::post('{id}/store', [\App\Http\Controllers\SupportTaskMessageController::class, 'store'])->name('store');
+                });
+            });
+
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
             Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy');
 //            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
