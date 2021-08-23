@@ -9,7 +9,9 @@
 <script src="{{asset('js/search.js')}}"></script>
 <script src="{{ asset('js/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('js/custom/custom-script.js')}}"></script>
-<script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
+<script src="{{ asset('js/scripts/ui-alerts.js') }}">
+
+</script><script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 @if ($configData['isCustomizer']=== true)
   <script src="{{asset('js/scripts/customizer.js')}}"></script>
 @endif
@@ -50,15 +52,15 @@
             }
           });
         };
-        
+
         var onSuccess = function (geoipResponse) {
           updateCityText(geoipResponse);
         };
-        
+
         var onError = function (error) {
           console.log(error);
         };
-        
+
         return function () {
           if (typeof geoip2 !== 'undefined') {
             geoip2.city(onSuccess, onError);
@@ -71,6 +73,59 @@
     });
   </script>
 @endif
+
+<script>
+    $(function () {
+        $('input[name="disable_client_site"]').change(function () {
+            let checkboxChecked = $(this).prop('checked');
+            swal({
+                title: "Вы уверены?",
+                // text: "You will not be able to recover this imaginary file!",
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: "Отменить",
+                        value: null,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Подтвердить",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: true
+                    }
+                }
+            }).then((result) => {
+                if (result) {
+                    $.ajax({
+                        url: '/settings/change-client-site-status',
+                        method: 'post',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            disable_client_site: checkboxChecked
+                        },
+                        success: (response) => {
+                            M.toast({
+                                html: response.message,
+                                classes: response.success ? 'green' : 'red'
+                            })
+
+                            if (!response.success) {
+                                $(this).prop('checked', !checkboxChecked)
+                            }
+                        }
+                    })
+                } else {
+                    $(this).prop('checked', !checkboxChecked)
+                }
+            })
+            return false;
+        })
+    })
+</script>
 
 <!-- END THEME  JS-->
 <!-- BEGIN PAGE LEVEL JS-->

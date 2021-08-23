@@ -47,4 +47,23 @@ class SettingsController extends Controller
 
         return back()->with('success', __('Settings updated'));
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function clientSite(Request $request)
+    {
+        $result = Setting::setValue('disable_client_site', $request->disable_client_site);
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Статус клиентского сайта изменен'
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Статус клиентского сайта не изменен'
+        ]);
+    }
 }

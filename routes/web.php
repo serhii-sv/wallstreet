@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
+            Route::post('/settings/change-client-site-status', [\App\Http\Controllers\SettingsController::class, 'clientSite'])->name('settings.change-client-site-status');
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
 

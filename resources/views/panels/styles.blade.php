@@ -28,4 +28,5 @@
 <!-- BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('css/laravel-custom.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/custom/custom.css')}}">
+<script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 <!-- END: Custom CSS-->
