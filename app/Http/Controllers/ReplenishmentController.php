@@ -51,12 +51,11 @@ class ReplenishmentController extends Controller
                     'empty' => '',
                     'empty2' => '',
                     'id' => $transaction->id,
-                    'email' => $transaction->user->email,
+                    'email' => view('pages.replenishments.partials.user-item', compact('transaction'))->render(),
                     'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
-                    'appliner' => $transaction->user->partner->email ?? 'Без аплайнера',
-                    'approved' => view('pages.withdrawals.partials.transaction-status', compact('transaction'))->render(),
-                    'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
+                    'approved' => view('pages.replenishments.partials.transaction-status', compact('transaction'))->render(),
+                    'actions' => view('pages.replenishments.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',
                     'color' => $transaction->user->roles->first()->color ?? ''
                 ];
@@ -168,11 +167,30 @@ class ReplenishmentController extends Controller
     }
 
     /**
-     * @param Transaction $transaction
+     * @param $transaction
+     * @param false $massMode
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|\Illuminate\Http\RedirectResponse|string|null
+     */
+    public function remove($transaction, $massMode = false)
+    {
+        /** @var Transaction $transaction */
+        $transaction = Transaction::find($transaction);
+
+        $transaction->delete();
+
+        if (true === $massMode) {
+            return __('Пополнение удалено');
+        }
+        return back()->with('success_short', __('Попоплнение удалено'));
+    }
+
+    /**
+     * @param $transaction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($transaction)
     {
+        $transaction = Transaction::find($transaction);
         if ($transaction->delete()) {
             return redirect()->to(route('replenishments.index'));
         }

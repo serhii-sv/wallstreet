@@ -8,4 +8,9 @@
             <i class="material-icons">done_all</i>
         </a>
     @endif
+    <a href="{{ route('replenishments.destroy', $transaction->id) }}"
+       data-action_type="destroy" data-position="bottom" data-tooltip="Удалить бесследно"
+       class="invoice-action-view mr-4 tooltipped">
+        <i class="material-icons">delete</i>
+    </a>
 </div>

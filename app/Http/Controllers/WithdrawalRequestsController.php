@@ -61,10 +61,9 @@ class WithdrawalRequestsController extends Controller
                     'empty' => '',
                     'empty2' => '',
                     'id' => $transaction->id,
-                    'email' => $transaction->user->email,
+                    'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
                     'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
-                    'appliner' => $transaction->user->partner->email ?? 'Без аплайнера',
                     'approved' => view('pages.withdrawals.partials.transaction-status', compact('transaction'))->render(),
                     'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',
@@ -115,9 +114,13 @@ class WithdrawalRequestsController extends Controller
             foreach ($request->list as $item) {
                 $messages[] = $this->reject($item, true);
             }
+        } elseif ($request->type == 'destroy') {
+            foreach ($request->list as $item) {
+                $messages[] = $this->remove($item, true);
+            }
         }
 
-        return back()->with('success_short', __('List of withdrawal requests processed.').implode(', ', $messages));
+        return back()->with('success_short', __('List of withdrawal requests processed.') . implode(', ', $messages));
     }
 
     /**
@@ -126,7 +129,7 @@ class WithdrawalRequestsController extends Controller
      * @return array|\Illuminate\Http\RedirectResponse|null|string
      * @throws \Exception
      */
-    public function reject($transaction, $massMode=false)
+    public function reject($transaction, $massMode = false)
     {
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -139,14 +142,14 @@ class WithdrawalRequestsController extends Controller
         }
 
         /** @var Wallet $wallet */
-        $wallet         = $transaction->wallet()->first();
+        $wallet = $transaction->wallet()->first();
         /** @var User $user */
-        $user           = $wallet->user()->first();
+        $user = $wallet->user()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem = $wallet->paymentSystem()->first();
         /** @var Currency $currency */
-        $currency       = $wallet->currency()->first();
-        $amount         = $transaction->amount;
+        $currency = $wallet->currency()->first();
+        $amount = $transaction->amount;
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
             throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal reject.');
@@ -157,8 +160,8 @@ class WithdrawalRequestsController extends Controller
 
         $data = [
             'withdraw_amount' => $amount,
-            'currency'        => $currency,
-            'payment_system'  => $paymentSystem
+            'currency' => $currency,
+            'payment_system' => $paymentSystem
         ];
 //        $user->sendNotification('rejected_withdrawal', $data);
 
@@ -170,11 +173,29 @@ class WithdrawalRequestsController extends Controller
 
     /**
      * @param $transaction
+     * @param false $massMode
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|\Illuminate\Http\RedirectResponse|string|null
+     */
+    public function remove($transaction, $massMode = false)
+    {
+        /** @var Transaction $transaction */
+        $transaction = Transaction::find($transaction);
+
+        $transaction->delete();
+
+        if (true === $massMode) {
+            return __('Вывод удален');
+        }
+        return back()->with('success_short', __('Вывод удален'));
+    }
+
+    /**
+     * @param $transaction
      * @param bool $massMode
      * @return \Illuminate\Http\RedirectResponse|string
      * @throws \Exception
      */
-    public static function approve($transaction, $massMode=false)
+    public static function approve($transaction, $massMode = false)
     {
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -187,13 +208,13 @@ class WithdrawalRequestsController extends Controller
         }
 
         /** @var Wallet $wallet */
-        $wallet         = $transaction->wallet()->first();
+        $wallet = $transaction->wallet()->first();
         /** @var User $user */
-        $user           = $wallet->user()->first();
+        $user = $wallet->user()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem = $wallet->paymentSystem()->first();
         /** @var Currency $currency */
-        $currency       = $wallet->currency()->first();
+        $currency = $wallet->currency()->first();
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
             throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
@@ -203,18 +224,18 @@ class WithdrawalRequestsController extends Controller
 
         if (empty($wallet->external)) {
             if (true === $massMode) {
-                return __('ERROR:').' wallet is empty';
+                return __('ERROR:') . ' wallet is empty';
             }
-            return back()->with('error_short', __('ERROR:').' wallet is empty');
+            return back()->with('error_short', __('ERROR:') . ' wallet is empty');
         }
 
         try {
             $batchId = $ps::transfer($transaction);
         } catch (\Exception $e) {
             if (true === $massMode) {
-                return __('ERROR:').' ' . $e->getMessage();
+                return __('ERROR:') . ' ' . $e->getMessage();
             }
-            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:') . ' ' . $e->getMessage());
         }
 
         if (empty($batchId)) {
@@ -233,8 +254,8 @@ class WithdrawalRequestsController extends Controller
 
         $data = [
             'withdraw_amount' => $transaction->amount,
-            'currency'        => $currency,
-            'payment_system'  => $paymentSystem
+            'currency' => $currency,
+            'payment_system' => $paymentSystem
         ];
 //        $user->sendNotification('approved_withdrawal', $data);
 
@@ -242,15 +263,15 @@ class WithdrawalRequestsController extends Controller
             $ps::getBalances();
         } catch (\Exception $e) {
             if (true === $massMode) {
-                return __('ERROR:').' ' . $e->getMessage();
+                return __('ERROR:') . ' ' . $e->getMessage();
             }
-            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:') . ' ' . $e->getMessage());
         }
 
         if (true === $massMode) {
-            return $transaction->amount.$currency->symbol.' - '.__('Request approved, money transferred to user wallet');
+            return $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet');
         }
-        return back()->with('success_short', $transaction->amount.$currency->symbol.' - '.__('Request approved, money transferred to user wallet'));
+        return back()->with('success_short', $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet'));
     }
 
     /**
@@ -259,7 +280,7 @@ class WithdrawalRequestsController extends Controller
      * @return \Illuminate\Http\RedirectResponse|string
      * @throws \Exception
      */
-    public function approveManually($transaction, $massMode=false)
+    public function approveManually($transaction, $massMode = false)
     {
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -272,13 +293,13 @@ class WithdrawalRequestsController extends Controller
         }
 
         /** @var Wallet $wallet */
-        $wallet         = $transaction->wallet()->first();
+        $wallet = $transaction->wallet()->first();
         /** @var User $user */
-        $user           = $wallet->user()->first();
+        $user = $wallet->user()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem = $wallet->paymentSystem()->first();
         /** @var Currency $currency */
-        $currency       = $wallet->currency()->first();
+        $currency = $wallet->currency()->first();
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
             throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
@@ -286,9 +307,9 @@ class WithdrawalRequestsController extends Controller
 
         if (empty($wallet->external)) {
             if (true === $massMode) {
-                return __('ERROR:').' wallet is empty';
+                return __('ERROR:') . ' wallet is empty';
             }
-            return back()->with('error_short', __('ERROR:').' wallet is empty');
+            return back()->with('error_short', __('ERROR:') . ' wallet is empty');
         }
 
         $transaction->update([
@@ -296,9 +317,9 @@ class WithdrawalRequestsController extends Controller
         ]);
 
         $data = [
-            'withdraw_amount'   => $transaction->amount,
-            'currency'          => $currency,
-            'payment_system'    => $paymentSystem
+            'withdraw_amount' => $transaction->amount,
+            'currency' => $currency,
+            'payment_system' => $paymentSystem
         ];
 //        $user->sendNotification('approved_withdrawal', $data);
 
@@ -308,26 +329,27 @@ class WithdrawalRequestsController extends Controller
             $ps::getBalances();
         } catch (\Exception $e) {
             if (true === $massMode) {
-                return __('ERROR:').' ' . $e->getMessage();
+                return __('ERROR:') . ' ' . $e->getMessage();
             }
-            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:') . ' ' . $e->getMessage());
         }
 
         if (true === $massMode) {
-            return $transaction->amount.$currency->symbol.' - '.__('Request approved.');
+            return $transaction->amount . $currency->symbol . ' - ' . __('Request approved.');
         }
-        return back()->with('success_short', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
+        return back()->with('success_short', $transaction->amount . $currency->symbol . ' - ' . __('Request approved.'));
     }
 
     /**
-     * @param Transaction $transaction
+     * @param $transaction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($transaction)
     {
+        $transaction = Transaction::findOrFail($transaction);
         if ($transaction->delete()) {
             return redirect()->to(route('withdrawals.index'));
         }
-        return back()->with('error_short', __('ERROR:').' Вывод не был удален');
+        return back()->with('error_short', __('ERROR:') . ' Вывод не был удален');
     }
 }

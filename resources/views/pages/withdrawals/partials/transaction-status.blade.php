@@ -1,11 +1,11 @@
 @switch($transaction->approved)
 @case(0)
-<span class="chip lighten-5 orange orange-text">Не оплаченная заявка</span>
+<span class="chip lighten-5 orange orange-text">Охижение</span>
 @break
 @case(1)
-<span class="chip lighten-5 green green-text">Оплаченная заявка</span>
+<span class="chip lighten-5 green green-text">Закрыта</span>
 @break
 @case(2)
-<span class="chip lighten-5 red red-text">Отклоненная заявка</span>
+<span class="chip lighten-5 red red-text">Отменена</span>
 @break
 @endswitch

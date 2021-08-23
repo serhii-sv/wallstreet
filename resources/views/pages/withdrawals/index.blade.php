@@ -75,7 +75,6 @@
                         </th>
                         <th>Сумма</th>
                         <th>Дата</th>
-                        <th>Аплайнер</th>
                         <th>Статус</th>
                         <th style="width: 120px !important;">Действия</th>
                         <th></th>

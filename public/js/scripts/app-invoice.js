@@ -38,11 +38,6 @@ $(document).ready(function () {
                     bSortable: true
                 },
                 {
-                    data: 'appliner',
-                    searchable: false,
-                    bSortable: true
-                },
-                {
                     data: 'approved',
                     searchable: false,
                     bSortable: true
@@ -50,7 +45,8 @@ $(document).ready(function () {
                 {
                     data: 'actions',
                     searchable: false,
-                    bSortable: false
+                    bSortable: false,
+                    width: '100%'
                 },
                 {
                     data: 'empty3',

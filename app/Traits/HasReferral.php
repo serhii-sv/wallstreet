@@ -256,4 +256,13 @@ trait HasReferral
 
         $this->partners()->sync($parent_array);
     }
+
+    /**
+     * @return mixed|null
+     */
+    public function partner()
+    {
+        return $this->partners()->first();
+    }
+
 }

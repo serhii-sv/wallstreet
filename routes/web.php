@@ -55,12 +55,12 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
             Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
-            Route::get('/withdrawals/dtdata', [\App\Http\Controllers\WithdrawalRequestsController::class, 'dataTable'])->name('withdrawals.dtdata');
-            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class);
+            Route::get('/withdrawals/destroy/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'destroy'])->name('withdrawals.destroy');
+            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class)->except('destroy');
 
             Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
-
-            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class);
+            Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
+            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
 
             Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);

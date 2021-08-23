@@ -129,11 +129,11 @@
               </h6>
             </div>
           @endif
-          @if(!empty($user->partner))
+          @if(!empty($user->partner()))
             <div class="col s12 m4 users-view-timeline">
               <h6 class="indigo-text m-0">Пригласил:
                 <span>
-                  <a href="{{ route('users.show', $user->partner->id) }}">{{ $user->partner->name ?? '' }}</a>
+                  <a href="{{ route('users.show', $user->partner()->id) }}">{{ $user->partner()->name ?? '' }}</a>
               </span>
               </h6>
             </div>

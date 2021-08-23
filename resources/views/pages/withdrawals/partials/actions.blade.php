@@ -5,7 +5,7 @@
     </a>
     @if(request()->type == 0 || is_null(request()->type))
         <a href="{{ route('withdrawals.approve', $transaction->id) }}"
-           data-action_type="approve" data-position="bottom" data-tooltip="Подтвердить"
+           data-action_type="approve" data-position="bottom" data-tooltip="Подтвердить через мерчант"
            class="invoice-action-view mr-4 tooltipped">
             <i class="material-icons">check</i>
         </a>
@@ -15,9 +15,14 @@
             <i class="material-icons">done_all</i>
         </a>
         <a href="{{ route('withdrawals.reject', $transaction->id) }}"
-           data-action_type="reject" data-position="bottom" data-tooltip="Отклонить"
+           data-action_type="reject" data-position="bottom" data-tooltip="Отменить с возвратом на баланс"
            class="invoice-action-view mr-4 tooltipped">
             <i class="material-icons">clear</i>
+        </a>
+        <a href="{{ route('withdrawals.destroy', $transaction->id) }}"
+           data-action_type="destroy" data-position="bottom" data-tooltip="Удалить бесследно"
+           class="invoice-action-view mr-4 tooltipped">
+            <i class="material-icons">delete</i>
         </a>
     @endif
 </div>
