@@ -34,7 +34,7 @@ class TaskController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id)
     {
@@ -45,15 +45,9 @@ class TaskController extends Controller
         ]);
 
         if ($task) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Задача завершена'
-            ]);
+            return back()->with('success_short', 'Задача завершена');
         }
-        return response()->json([
-            'success' => true,
-            'message' => 'Задача не завершена'
-        ]);
+        return back()->with('error_short', 'Задача не завершена');
     }
 
     /**

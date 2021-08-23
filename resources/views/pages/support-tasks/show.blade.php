@@ -31,9 +31,11 @@
                             <div class="chat-content-area animate fadeUp">
                                 <!-- Chat header -->
                                 <div class="chat-header display-flex" style="justify-content: flex-end !important;">
-                                    <div class="float-right">
-                                        <a class="btn btn-small" href="{{ route('support-tasks.close', $supportTask->id) }}"> Закрыть задачу</a>
-                                    </div>
+                                    @if($supportTask->status !== \App\Models\SupportTask::CLOSED_STATUS)
+                                        <div class="float-right">
+                                            <a class="btn btn-small" href="{{ route('support-tasks.close', $supportTask->id) }}"> Закрыть задачу</a>
+                                        </div>
+                                    @endif
                                 </div>
                                 <!--/ Chat header -->
 
