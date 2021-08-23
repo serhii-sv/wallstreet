@@ -8,12 +8,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
+use App\Models\Notification;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class WithdrawalRequestsController
@@ -105,6 +107,7 @@ class WithdrawalRequestsController extends Controller
         if ($request->type == 'approve') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approve($item, true);
+
             }
         } elseif ($request->type == 'approveManually') {
             foreach ($request->list as $item) {
@@ -157,7 +160,13 @@ class WithdrawalRequestsController extends Controller
 
         $wallet->returnFromRejectedWithdrawal($transaction);
         $transaction->update(['approved' => Transaction::TRANSACTION_REJECTED]);
-
+        $notification_data = [
+            'notification_name' => 'Вывод средств',
+            'user' => $user,
+            'amount' => $transaction->amount . $currency->symbol,
+            'status' => 'отклонён'
+        ];
+        Notification::sendNotification($notification_data, 'new_withdrawal');
         $data = [
             'withdraw_amount' => $amount,
             'currency' => $currency,
@@ -229,28 +238,36 @@ class WithdrawalRequestsController extends Controller
             return back()->with('error_short', __('ERROR:') . ' wallet is empty');
         }
 
-        try {
-            $batchId = $ps::transfer($transaction);
-        } catch (\Exception $e) {
-            if (true === $massMode) {
-                return __('ERROR:') . ' ' . $e->getMessage();
-            }
-            return back()->with('error_short', __('ERROR:') . ' ' . $e->getMessage());
-        }
+//        try {
+//            $batchId = $ps::transfer($transaction);
+//        } catch (\Exception $e) {
+//            if (true === $massMode) {
+//                return __('ERROR:').' ' . $e->getMessage();
+//            }
+//            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+//        }
 
-        if (empty($batchId)) {
-            $batchErr = __('Unable to approve request, payment system transfer is failed ..');
+//        if (empty($batchId)) {
+//            $batchErr = __('Unable to approve request, payment system transfer is failed ..');
+//
+//            if (true === $massMode) {
+//                return __($batchErr);
+//            }
+//            return back()->with('error_short', __($batchErr));
+//        }
 
-            if (true === $massMode) {
-                return __($batchErr);
-            }
-            return back()->with('error_short', __($batchErr));
-        }
 
         $transaction->update([
-            'batch_id' => $batchId,
+//            'batch_id' => $batchId,
             'approved' => true,
         ]);
+        $notification_data = [
+            'notification_name' => 'Вывод средств',
+            'user' => $user,
+            'amount' => $transaction->amount . $currency->symbol,
+            'status' => 'одобрен'
+        ];
+        Notification::sendNotification($notification_data, 'new_withdrawal');
 
         $data = [
             'withdraw_amount' => $transaction->amount,
@@ -315,7 +332,13 @@ class WithdrawalRequestsController extends Controller
         $transaction->update([
             'approved' => true
         ]);
-
+        $notification_data = [
+            'notification_name' => 'Вывод средств',
+            'user' => $user,
+            'amount' => $transaction->amount . $currency->symbol,
+            'status' => 'одобрен'
+        ];
+        Notification::sendNotification($notification_data, 'new_withdrawal');
         $data = [
             'withdraw_amount' => $transaction->amount,
             'currency' => $currency,
