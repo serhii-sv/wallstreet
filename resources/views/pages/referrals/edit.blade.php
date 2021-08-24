@@ -78,9 +78,7 @@
                                         </div>
                                     </div>
                                     <div class="input-field col s12">
-                                        <button class="btn waves-effect waves-light right submit" type="submit" name="action">Сохранить
-                                            <i class="material-icons right">send</i>
-                                        </button>
+                                        <button class="btn waves-effect waves-light right submit" type="submit" name="action">Сохранить</button>
                                     </div>
                                 </div>
                             </form>

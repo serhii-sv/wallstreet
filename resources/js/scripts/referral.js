@@ -57,4 +57,33 @@ $(function () {
             emptyTable: 'Нет записей'
         }
     });
+
+    $(document).on('click', '.delete', function () {
+        swal({
+            title: "Вы уверены?",
+            // text: "You will not be able to recover this imaginary file!",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Отменить",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Подтвердить",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    closeModal: true
+                }
+            }
+        }).then((result) => {
+            if (result) {
+                window.location.replace($(this).attr('href'))
+            }
+        })
+        return false;
+    })
 })

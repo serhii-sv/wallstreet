@@ -119,6 +119,12 @@
           </a>
       </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('products*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('products.index') }}">
+              <i class="material-icons">phonelink</i>
+              <span class="menu-title" data-i18n="Продукты">Продукты</span>
+          </a>
+      </li>
+      <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('referrals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('referrals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals.index') }}">
               <i class="material-icons">signal_cellular_null</i>
               <span class="menu-title" data-i18n="Тарифы">Реферальные уровни</span>
@@ -133,7 +139,7 @@
       <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('support-tasks.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('support-tasks*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('support-tasks.index') }}">
               <i class="material-icons">info</i>
-              <span class="menu-title" data-i18n="Тех Поддержка">Тех Поддержка</span>
+              <span class="menu-title" data-i18n="Тех поддержка">Тех поддержка</span>
           </a>
       </li>
     <li class="bold">

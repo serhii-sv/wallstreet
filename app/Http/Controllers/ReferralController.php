@@ -132,9 +132,9 @@ class ReferralController extends Controller
         $referral = Referral::find($referral);
 
         if ($referral->delete()) {
-            return redirect()->route('admin.referrals.index')->with('success_short', __('Referral level has been deleted'));
+            return redirect()->route('referrals.index')->with('success_short', __('Referral level has been deleted'));
         }
 
-        return redirect()->route('admin.referrals.index')->with('error_short', __('Unable to delete referral level'));
+        return redirect()->route('referrals.index')->with('error_short', __('Unable to delete referral level'));
     }
 }

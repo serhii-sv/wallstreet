@@ -110,6 +110,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
             });
 
+            Route::prefix('products')->as('products.')->group(function () {
+                Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
+
+                Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
+                Route::post('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
+
+                Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create');
+                Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store');
+                Route::get('/destroy/{id}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
+            });
+
             Route::prefix('verification-requests')->as('verification-requests.')->group(function () {
                 Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
 

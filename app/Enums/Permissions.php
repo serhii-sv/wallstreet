@@ -63,7 +63,6 @@ final class Permissions extends Enum
     const TRANSACTIONS_DESTROY = 'transactions.destroy';
 
     const NEWS_INDEX   = 'news.index';
-    const NEWS_EDIT    = 'news.edit';
     const NEWS_DESTROY = 'news.destroy';
     const NEWS_STORE = 'news.store';
     const NEWS_UPDATE = 'news.update';
@@ -91,6 +90,21 @@ final class Permissions extends Enum
     const VERIFICATION_REQUESTS_INDEX = 'verification-requests.index';
     const VERIFICATION_REQUESTS_SHOW = 'verification-requests.show';
     const VERIFICATION_REQUESTS_UPDATE = 'verification-requests.update';
+
+    const SUPPORT_TASKS_INDEX = 'support-tasks.index';
+    const SUPPORT_TASKS_SHOW = 'support-tasks.show';
+    const SUPPORT_TASKS_CLOSE = 'support-tasks.close';
+    const SUPPORT_TASKS_MESSAGES_STORE = 'support-tasks.messages.store';
+
+    const REFERRALS_INDEX = 'referrals.index';
+    const REFERRALS_STORE = 'referrals.store';
+    const REFERRALS_DESTROY = 'referrals.destroy';
+    const REFERRALS_UPDATE = 'referrals.update';
+
+    const PRODUCTS_INDEX = 'products.index';
+    const PRODUCTS_STORE = 'products.store';
+    const PRODUCTS_DESTROY = 'products.destroy';
+    const PRODUCTS_UPDATE = 'products.update';
 
     protected static $data = [
         self::APP_INIT => 'App init',
@@ -153,8 +167,7 @@ final class Permissions extends Enum
 
         self::NEWS_INDEX => 'Список новостей',
         self::NEWS_DESTROY => 'Удаление новостей',
-        self::NEWS_EDIT => 'Редактирование новостей',
-        self::NEWS_STORE => 'Создание новостей',
+        self::NEWS_STORE => 'Добавление новостей',
         self::NEWS_UPDATE => 'Изменение новостей',
 
         self::CLOUD_FILES => 'Список файлов в облачном хранилище',
@@ -173,12 +186,27 @@ final class Permissions extends Enum
         self::KANBAN_BOARD_DESTROY => 'Удаление доски из Kanban панели',
 
         self::RATES_INDEX => 'Список тарифов',
-        self::RATES_STORE => 'Создание тарифов',
+        self::RATES_STORE => 'Добавление тарифов',
         self::RATES_UPDATE => 'Изменение тарифов',
         self::RATES_DESTROY => 'Удаление тарифов',
 
         self::VERIFICATION_REQUESTS_INDEX => 'Список заявок на подтверждение личности',
         self::VERIFICATION_REQUESTS_SHOW => 'Просмотр заявок на подтверждение личности',
         self::VERIFICATION_REQUESTS_UPDATE => 'Изменеие заявок на подтверждение личности',
+
+        self::PRODUCTS_INDEX => 'Список продуктов',
+        self::PRODUCTS_STORE => 'Добавление продуктов',
+        self::PRODUCTS_DESTROY => 'Удаление продуктов',
+        self::PRODUCTS_UPDATE => 'Изменение продуктов',
+
+        self::SUPPORT_TASKS_INDEX => 'Список топиков тех поддержки',
+        self::SUPPORT_TASKS_SHOW => 'Просмотр топиков тех поддержки',
+        self::SUPPORT_TASKS_CLOSE => 'Закрывание топиков тех поддержки',
+        self::SUPPORT_TASKS_MESSAGES_STORE => 'Ответ на топик тех поддержки',
+
+        self::REFERRALS_INDEX => 'Список уровней рефералов',
+        self::REFERRALS_STORE => 'Добавление уровней рефералов',
+        self::REFERRALS_DESTROY => 'Удаление уровней рефералов',
+        self::REFERRALS_UPDATE => 'Изменеие уровней рефералов',
     ];
 }
