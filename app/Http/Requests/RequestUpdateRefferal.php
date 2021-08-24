@@ -24,7 +24,7 @@ class RequestUpdateRefferal extends FormRequest
      */
     public function authorize()
     {
-        return \return true;;
+        return true;
     }
 
     /**
@@ -35,8 +35,8 @@ class RequestUpdateRefferal extends FormRequest
     public function rules()
     {
         return [
-            'level'   => 'bail|required|integer|min:0',
-            'percent' => 'numeric|min:0',
+            'level'   => 'required|integer|min:0',
+            'percent' => 'numeric|min:0|required',
         ];
     }
 

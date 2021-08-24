@@ -24,7 +24,7 @@ class RequestStoreReferral extends FormRequest
      */
     public function authorize()
     {
-        return \return true;;
+        return true;
     }
 
     /**
@@ -35,8 +35,8 @@ class RequestStoreReferral extends FormRequest
     public function rules()
     {
         return [
-            'level'   => 'bail|required|integer|unique:referrals|min:0',
-            'percent' => 'numeric|min:0',
+            'level'   => 'required|integer|unique:referrals|min:0',
+            'percent' => 'numeric|min:0|required',
         ];
     }
 

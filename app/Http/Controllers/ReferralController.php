@@ -9,7 +9,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestStoreReferral;
 use App\Http\Requests\RequestUpdateRefferal;
 use App\Models\Referral;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
  * Class ReferralController
@@ -18,11 +18,39 @@ use App\Http\Controllers\Controller;
 class ReferralController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.referrals.index');
+        if (request()->ajax()) {
+            $referrals = Referral::orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+
+            $recordsFiltered = $referrals->count();
+            $referrals->limit($request->length)->offset($request->start);
+            $data = [];
+
+            foreach ($referrals->get() as $referral) {
+                $data[] = [
+                    'empty' => '',
+                    'level' => $referral->level,
+                    'percent' => $referral->percent . '%',
+                    'on_load' => $referral->on_load ? 'Да' : 'Нет',
+                    'on_profit' => $referral->on_profit ? 'Да' : 'Нет',
+                    'on_task' => $referral->on_task ? 'Да' : 'Нет',
+                    'actions' => view('pages.referrals.partials.actions', compact('referral'))->render(),
+                ];
+            }
+
+            return response()->json([
+                'draw' => $request->draw,
+                'recordsTotal' => Referral::count(),
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
+        } else {
+            return view('pages.referrals.index');
+        }
     }
 
     /**
@@ -30,7 +58,7 @@ class ReferralController extends Controller
      */
     public function create()
     {
-        return view('admin.referrals.create');
+        return view('pages.referrals.create');
     }
 
     /**
@@ -46,7 +74,7 @@ class ReferralController extends Controller
         ]));
 
         if (!$referral) {
-            return back()->with('error', __('Unable to create referral level'))->withInput();
+            return back()->with('error_short', __('Unable to create referral level'))->withInput($request->input());
         }
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
@@ -54,27 +82,29 @@ class ReferralController extends Controller
         $referral->on_task = !empty($request->on_task) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('admin.referral.index')->with('success', __('Referral level has been created'));
+        return redirect()->route('referrals.index')->with('success_short', __('Referral level has been created'));
     }
 
     /**
-     * @param Referral $referral
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $referral
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Referral $referral)
+    public function edit($referral)
     {
-        return view('admin.referrals.edit', [
+        $referral = Referral::findOrFail($referral);
+        return view('pages.referrals.edit', [
             'referral' => $referral
         ]);
     }
 
     /**
      * @param RequestUpdateRefferal $request
-     * @param Referral $referral
+     * @param $referral
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(RequestUpdateRefferal $request, Referral $referral)
+    public function update(RequestUpdateRefferal $request, $referral)
     {
+        $referral = Referral::findOrFail($referral);
         $referral->update($request->except([
             'on_load',
             'on_profit',
@@ -82,7 +112,7 @@ class ReferralController extends Controller
         ]));
 
         if (!$referral) {
-            return back()->with('error', __('Unable to update referral level'))->withInput();
+            return back()->with('error_short', __('Unable to update referral level'))->withInput($request->input());
         }
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
@@ -90,7 +120,7 @@ class ReferralController extends Controller
         $referral->on_task = !empty($request->on_task) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('admin.referral.edit', ['id' => $referral->id])->with('success', __('Referral level has been updated'));
+        return redirect()->route('referrals.index')->with('success_short', __('Referral level has been updated'));
     }
 
     /**
@@ -102,9 +132,9 @@ class ReferralController extends Controller
         $referral = Referral::find($referral);
 
         if ($referral->delete()) {
-            return redirect()->route('admin.referral.index')->with('success', __('Referral level has been deleted'));
+            return redirect()->route('admin.referrals.index')->with('success_short', __('Referral level has been deleted'));
         }
 
-        return redirect()->route('admin.referral.index')->with('error', __('Unable to delete referral level'));
+        return redirect()->route('admin.referrals.index')->with('error_short', __('Unable to delete referral level'));
     }
 }

@@ -95,7 +95,7 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('notifications.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('notifications*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('notifications.index') }}">
-        <i class="material-icons">cloud_download</i>
+        <i class="material-icons">notifications</i>
         <span class="menu-title" data-i18n="Уведомления">Уведомления</span>
       </a>
     </li>
@@ -119,6 +119,12 @@
           </a>
       </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('referrals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('referrals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals.index') }}">
+              <i class="material-icons">signal_cellular_null</i>
+              <span class="menu-title" data-i18n="Тарифы">Реферальные уровни</span>
+          </a>
+      </li>
+      <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}">
               <i class="material-icons">verified_user</i>
               <span class="menu-title" data-i18n="Подтверждение личности">Подтверждение личности</span>
@@ -126,7 +132,7 @@
       </li>
       <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('support-tasks.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('support-tasks*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('support-tasks.index') }}">
-              <i class="material-icons">verified_user</i>
+              <i class="material-icons">info</i>
               <span class="menu-title" data-i18n="Тех Поддержка">Тех Поддержка</span>
           </a>
       </li>

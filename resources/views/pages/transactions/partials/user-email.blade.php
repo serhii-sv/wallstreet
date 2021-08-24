@@ -1,1 +1,1 @@
-<a href="{{ route('transactions.show', $transaction->id) }}">{{ $transaction->user->email ?? 'Не указано' }}</a>
+<a href="{{ route('transactions.show', $transaction->id) }}">{{ $transaction->user->login ?? 'Не указано' }}</a>

@@ -93,8 +93,9 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
             Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy');
-//            Route::resource('/referral', \App\Http\Controllers\ReferralController::class);
-//            Route::get('/referral/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referral.destroy');
+
+            Route::get('/referrals/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referrals.destroy');
+            Route::resource('/referrals', \App\Http\Controllers\ReferralController::class)->except('destroy');
 
             Route::post('/theme-settings', [\App\Http\Controllers\UserThemeSettingController::class, 'store'])->name('theme-settings');
 
