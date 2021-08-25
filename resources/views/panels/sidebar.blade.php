@@ -125,6 +125,12 @@
           </a>
       </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('banners.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('banners*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('banners.index') }}">
+              <i class="material-icons">aspect_ratio</i>
+              <span class="menu-title" data-i18n="Продукты">Банеры</span>
+          </a>
+      </li>
+      <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('referrals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('referrals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals.index') }}">
               <i class="material-icons">signal_cellular_null</i>
               <span class="menu-title" data-i18n="Тарифы">Реферальные уровни</span>

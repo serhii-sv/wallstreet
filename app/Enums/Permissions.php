@@ -106,6 +106,11 @@ final class Permissions extends Enum
     const PRODUCTS_DESTROY = 'products.destroy';
     const PRODUCTS_UPDATE = 'products.update';
 
+    const BANNERS_INDEX = 'banners.index';
+    const BANNERS_STORE = 'banners.store';
+    const BANNERS_DESTROY = 'banners.destroy';
+    const BANNERS_UPDATE = 'banners.update';
+
     protected static $data = [
         self::APP_INIT => 'App init',
         self::DASHBOARD_ADD_BONUS => 'Начислить бонус на главной',
@@ -208,5 +213,10 @@ final class Permissions extends Enum
         self::REFERRALS_STORE => 'Добавление уровней рефералов',
         self::REFERRALS_DESTROY => 'Удаление уровней рефералов',
         self::REFERRALS_UPDATE => 'Изменеие уровней рефералов',
+
+        self::BANNERS_INDEX => 'Список банеров',
+        self::BANNERS_STORE => 'Добавление банеров',
+        self::BANNERS_DESTROY => 'Удаление банеров',
+        self::BANNERS_UPDATE => 'Изменеие банеров',
     ];
 }

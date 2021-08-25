@@ -121,6 +121,17 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/destroy/{id}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
             });
 
+            Route::prefix('banners')->as('banners.')->group(function () {
+                Route::get('/', [App\Http\Controllers\BannerController::class, 'index'])->name('index');
+
+                Route::get('/edit/{id}', [App\Http\Controllers\BannerController::class, 'edit'])->name('edit');
+                Route::post('/update/{id}', [App\Http\Controllers\BannerController::class, 'update'])->name('update');
+
+                Route::get('/create', [App\Http\Controllers\BannerController::class, 'create'])->name('create');
+                Route::post('/store', [App\Http\Controllers\BannerController::class, 'store'])->name('store');
+                Route::get('/destroy/{id}', [\App\Http\Controllers\BannerController::class, 'destroy'])->name('destroy');
+            });
+
             Route::prefix('verification-requests')->as('verification-requests.')->group(function () {
                 Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
 

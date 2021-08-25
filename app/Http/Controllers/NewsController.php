@@ -48,6 +48,8 @@ class NewsController extends Controller
             $rules[$field . '.' . $defaultLanguage->code] = 'required';
         }
 
+        $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+
         $request->validate($rules);
 
         $item = News::create($request->except(['_token']));
@@ -106,6 +108,8 @@ class NewsController extends Controller
         foreach ($fields as $field) {
             $rules[$field . '.' . $defaultLanguage->code] = 'required';
         }
+
+        $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
 
         $request->validate($rules);
 
