@@ -23,6 +23,7 @@ class UserVerificationRequestController extends Controller
 
             foreach ($verificationRequests->get() as $verificationRequest) {
                 $data[] = [
+                    'empty' => '',
                     'email' => $verificationRequest->user->email,
                     'created_at' => $verificationRequest->created_at->format('d-m-Y H:i'),
                     'actions' => view('pages.user-verification-requests.partials.actions', compact('verificationRequest'))->render()

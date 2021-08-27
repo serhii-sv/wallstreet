@@ -41,6 +41,26 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="responsive-table">
+            <table id="users" class="table white border-radius-4 pt-1">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Пользователь</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Страна</th>
+                    <th>Количество рефералов</th>
+                    <th>Ссылка</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </section>
 
 @endsection

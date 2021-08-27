@@ -26,6 +26,7 @@
             <table class="table verification-requests white border-radius-4 pt-1">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>
                         <span>Email#</span>
                     </th>

@@ -6,8 +6,13 @@ $(function () {
         ordering: true,
         info: true,
         autoWidth: false,
-        order: [1, 'desc'],
+        order: [2, 'desc'],
         aoColumns: [
+            {
+                data: 'empty',
+                searchable: false,
+                bSortable: false
+            },
             {
                 data: 'email',
                 searchable: false,

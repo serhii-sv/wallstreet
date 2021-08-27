@@ -37,7 +37,8 @@ class UsersController extends Controller
             $filter_role = $request->get('roles') ? $request->get('roles') : false;
             $users = User::when($filter_role, function ($query) use ($filter_role) {
                 return $query->role($filter_role);
-            })->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
+            })->withCount('referrals')
+                ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
 
             $recordsFiltered = $users->count();
             $users->limit($request->length)->offset($request->start);
@@ -45,10 +46,11 @@ class UsersController extends Controller
 
             foreach ($users->get() as $user) {
                 $data[] = [
-                    'empty' => view('pages.users.partials.checkbox', compact('user'))->render(),
+                    'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
                     'user' => view('pages.users.partials.avatar', compact('user'))->render(),
                     'name' => $user->name ?? 'Не указано',
                     'email' => $user->email ?? 'Не указано',
+                    'referrals_count' => $user->referrals_count,
                     'country' => $user->country ?? 'Не указано',
                     'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                     'color' => $user->roles->first()->color ?? ''
