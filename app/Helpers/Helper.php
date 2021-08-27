@@ -9,6 +9,8 @@ class Helper
     public static function applClasses()
     {
         $userThemeSettings = UserThemeSetting::getThemeSettings();
+
+//        dd($userThemeSettings);
         // default data value
         $dataDefault = [
             'mainLayoutType' => 'vertical-modern-menu',
@@ -19,6 +21,7 @@ class Helper
             'isNavbarDark' => isset($userThemeSettings['navbar-dark']) ? $userThemeSettings['navbar-dark'] == 'true' : null,
             'isNavbarFixed' => isset($userThemeSettings['navbar-fixed']) ? $userThemeSettings['navbar-fixed'] == 'true' : true,
             'activeMenuColor' => '',
+            'menuBgColor' => isset($userThemeSettings['menu-bg-color']) ? $userThemeSettings['menu-bg-color'] . ' sidenav-gradient' :  '',
             'isMenuDark' => isset($userThemeSettings['menu-dark']) ? $userThemeSettings['menu-dark'] == 'true' : null,
             'isMenuCollapsed' => isset($userThemeSettings['menu-collapsed']) ? $userThemeSettings['menu-collapsed'] == 'true' : false,
             'activeMenuType' => isset($userThemeSettings['menu-selection']) ? $userThemeSettings['menu-selection'] : '',
@@ -164,6 +167,7 @@ class Helper
             'isNavbarDark' => $data['isNavbarDark'],
             'isNavbarFixed' => $data['isNavbarFixed'],
             'activeMenuColor' => $data['activeMenuColor'],
+            'menuBgColor' => $data['menuBgColor'],
             'isMenuDark' => $data['isMenuDark'],
             'sidenavMainColor' => $sidenavMainColor[$data['mainLayoutType']],
             'isMenuCollapsed' => $data['isMenuCollapsed'],

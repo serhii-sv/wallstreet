@@ -15,7 +15,8 @@ $(document).ready(function () {
     });
 
     if ($("body").hasClass("vertical-modern-menu") || $("body").hasClass("vertical-menu-nav-dark")) {
-        $(".menu-bg-color").hide();
+        // $(".menu-bg-color").hide();
+        menuBgDefault = true;
     } else if ($("body").hasClass("vertical-gradient-menu") || $("body").hasClass("vertical-dark-menu")) {
         $(".menu-color").hide();
         menuBgDefault = true;
@@ -27,18 +28,23 @@ $(document).ready(function () {
     // ------------
 
     //Set menu color on select color
-    $(".menu-color-option, .menu-bg-color-option").click(function (e) {
-        $(".menu-color .menu-color-option, .menu-bg-color .menu-bg-color-option").removeClass("selected");
+    $(".menu-color-option").click(function (e) {
+        $(".menu-color .menu-color-option").removeClass("selected");
         $(this).addClass("selected");
         var menu_color = $(this).attr("data-color");
 
         saveThemeSettings();
-        if (menuBgDefault) {
-            menuDark(true);
-            menuBGColor(menu_color);
-        } else {
-            menuColor(menu_color);
-        }
+        menuColor(menu_color);
+    });
+
+    $(".menu-bg-color-option").click(function (e) {
+        $(".menu-bg-color .menu-bg-color-option").removeClass("selected");
+        $(this).addClass("selected");
+        var menu_color = $(this).attr("data-color");
+
+        saveThemeSettings();
+        menuDark(true);
+        menuBGColor(menu_color);
     });
 
     //Set menu dark/light
@@ -261,6 +267,7 @@ function saveThemeSettings() {
             '_token': $('meta[name="csrf-token"]').attr('content'),
             'menu-color': $('.menu-color-option.selected').data('color'),
             'menu-dark': $('.menu-dark-checkbox').prop('checked'),
+            'menu-bg-color': $('.menu-bg-color-option.selected').data('color'),
             'menu-collapsed': $('.menu-collapsed-checkbox').prop('checked'),
             'menu-selection': $('.menu-selection-radio:checked').val(),
             'navbar-color': $('.navbar-color-option.selected').data('color'),

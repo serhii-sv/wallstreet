@@ -1,4 +1,4 @@
-<aside class="{{$configData['sidenavMain']}} @if(!empty($configData['activeMenuType'])) {{$configData['activeMenuType']}} @else {{$configData['activeMenuTypeClass']}}@endif @if(($configData['isMenuDark']) === true) {{'sidenav-dark'}} @elseif(($configData['isMenuDark']) === false){{'sidenav-light'}}  @else {{$configData['sidenavMainColor']}}@endif">
+<aside class="{{$configData['sidenavMain']}} @if(!empty($configData['activeMenuType'])) {{$configData['activeMenuType']}} @else {{$configData['activeMenuTypeClass']}}@endif @if(($configData['isMenuDark']) === true) {{'sidenav-dark'}} @elseif(($configData['isMenuDark']) === false){{'sidenav-light'}}  @else {{$configData['sidenavMainColor']}}@endif {{ $configData['menuBgColor'] }}">
   <div class="brand-sidebar">
     <h1 class="logo-wrapper">
       <a class="brand-logo darken-1" href="{{asset('/')}}">
@@ -122,12 +122,6 @@
           <a class="waves-effect waves-cyan {{ (Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('products*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('products.index') }}">
               <i class="material-icons">phonelink</i>
               <span class="menu-title" data-i18n="Продукты">Продукты</span>
-          </a>
-      </li>
-      <li class="bold">
-          <a class="waves-effect waves-cyan {{ (Route::is('banners.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('banners*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('banners.index') }}">
-              <i class="material-icons">aspect_ratio</i>
-              <span class="menu-title" data-i18n="Продукты">Банеры</span>
           </a>
       </li>
       <li class="bold">

@@ -124,8 +124,7 @@ $(function () {
             {
                 data: 'referrals_count',
                 searchable: true,
-                bSortable: true,
-                className: "text-center"
+                bSortable: true
             },
             {
                 data: 'actions',
