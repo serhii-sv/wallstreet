@@ -22,6 +22,8 @@ class TransactionTypesSeeder extends Seeder
     public function run()
     {
         $transactionTypes = [
+            'exchange_in',
+            'exchange_out',
             'transfer_in',
             'transfer_out',
             'enter',
