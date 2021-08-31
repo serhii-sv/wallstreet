@@ -21,7 +21,7 @@ class CreateHyipiumSettingsTable extends Migration
             Schema::create('settings', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('s_key')->unique();
-                $table->text('s_value')->default('');
+                $table->text('s_value')->nullable();
                 $table->timestamps();
             });
         }

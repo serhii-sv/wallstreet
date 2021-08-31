@@ -55,8 +55,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:currency_rates')->twiceDaily()->withoutOverlapping();
 
         // Backups
-        $schedule->command('backup:clean')->hourly();
-        $schedule->command('backup:run', ['--only-db'])->hourly();
+//        $schedule->command('backup:clean')->hourly();
+        $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
     }
 
     /**

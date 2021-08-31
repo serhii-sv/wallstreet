@@ -189,10 +189,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['middleware' => ['activity-log']], function () {
             Route::get('/backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
             Route::get('/backup/backupDB', [\App\Http\Controllers\BackupController::class, 'backupDB'])->name('backup.backupDB');
-            Route::get('/backup/backupFiles', [\App\Http\Controllers\BackupController::class, 'backupFiles'])->name('backup.backupFiles');
-            Route::get('/backup/backupAll', [\App\Http\Controllers\BackupController::class, 'backupAll'])->name('backup.backupAll');
-            Route::get('/backup/destroy/{file}', [\App\Http\Controllers\BackupController::class, 'destroy'])->where('file', '(.*(?:%2F:)?.*)')->name('backup.destroy');
-            Route::post('/backup/download', [\App\Http\Controllers\BackupController::class, 'download'])->name('backup.download');
+            Route::get('/backup/destroy/{id}', [\App\Http\Controllers\BackupController::class, 'destroy'])->name('backup.destroy');
+            Route::get('/backup/download/{id}', [\App\Http\Controllers\BackupController::class, 'download'])->name('backup.download');
 
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
         });

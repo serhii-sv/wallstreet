@@ -813,7 +813,7 @@
                     {
                         label: "Sales",
                         data: [{{ $weeks_total_enter ?? 0 }}, {{ $weeks_total_withdraw ?? 0 }}],
-                        backgroundColor: ["#46BFBD", "#FDB45C"]
+                        backgroundColor: ["#46BFBD", "#f7464a"]
                     }
                 ]
             };
@@ -823,7 +823,7 @@
                     {
                         label: "Sales",
                         data: [{{ $month_total_enter ?? 0 }}, {{ $month_total_withdraw ?? 0 }}],
-                        backgroundColor: ["#46BFBD", "#FDB45C"]
+                        backgroundColor: ["#46BFBD", "#f7464a"]
                     }
                 ]
             };

@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Backup;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,11 +24,9 @@ class BackupController extends Controller
      */
     public function index()
     {
-        $files = Storage::files($path = preg_replace('/[^a-zA-Z0-9.]/', '-', env('APP_NAME', $_SERVER['HTTP_HOST'])));
+        $backups = Backup::all();
 
-        return view('admin.backup.index', [
-            'files' => $files,
-        ]);
+        return view('pages.backups.index', compact('backups'));
     }
 
     /**
@@ -35,51 +34,46 @@ class BackupController extends Controller
      */
     public function backupDB()
     {
-        Artisan::call('backup:run', ['--only-db' => true]);
-        return back()->with('success', __('DB backup was created'));
+        Artisan::call('make:backup', ['--mode' => 'only-db']);
+        return back()->with('success_short', 'Резервная копия создана');
     }
 
     /**
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function backupFiles()
+    public function destroy($id)
     {
-        Artisan::call('backup:run', ['--only-files' => true]);
-        return back()->with('success', __('Files backup was created'));
-    }
+        $backup = Backup::findOrFail($id);
+        $checkExists = Storage::disk('do_spaces')->exists($backup->path);
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function backupAll()
-    {
-        Artisan::call('backup:run');
-        return back()->with('success', __('Full backup was created'));
-    }
+        if (false === $checkExists) {
+            $backup->delete();
 
-    /**
-     * @param $file
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy($file)
-    {
-        Storage::delete($file);
-        return back()->with('success', __('Backup has been removed'));
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Throwable
-     */
-    public function download(Request $request)
-    {
-        if (!$request->has('file')) {
-            return back()->with('error', __('File not found'));
+            return redirect()->route('backup.index')->with('error_short', 'Файл не найден');
         }
-        User::notifyAdminsViaNotificationBot('notification_bot.backup_downloading', [
-            'requester' => \Auth::user(),
-        ]);
-        return Storage::download($request->file);
+
+        Storage::disk('do_spaces')->delete($backup->path);
+        $backup->delete();
+
+        return back()->with('success_short', 'Резервная копия удалена');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function download($id)
+    {
+        $backup = Backup::findOrFail($id);
+        $checkExists = Storage::disk('do_spaces')->exists($backup->path);
+
+        if (false === $checkExists) {
+            $backup->delete();
+
+            return redirect()->route('backup.index')->with('error_short', 'Резервная копия не найдена');
+        }
+
+        return redirect()->to(Storage::disk('do_spaces')->url($backup->path));
     }
 }

@@ -164,6 +164,12 @@
       </div>
     </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('backup.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('backup*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('backup.index') }}">
+              <i class="material-icons">backup</i>
+              <span class="menu-title" data-i18n="Резервные копии">Резервные копии</span>
+          </a>
+      </li>
+      <li class="bold">
           <label class="ml-10">
               <input type="checkbox" name="disable_client_site" {{ \App\Models\Setting::getValue('disable_client_site') == 'true' ? 'checked' : '' }}/>
               <span>Отключить сайт</span>
