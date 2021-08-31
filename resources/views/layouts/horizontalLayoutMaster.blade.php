@@ -47,7 +47,7 @@
     @include('pages.partials.customizer')
     <!--/ Theme Customizer -->
     {{-- buy now button section --}}
-{{--    @include('pages.partials.buy-now')--}}
+    @include('pages.partials.buy-now')
   @endif
 
 

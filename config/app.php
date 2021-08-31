@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'client_site_url' => env('CLIENT_SITE_URL', 'https://sprintbank.us/'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

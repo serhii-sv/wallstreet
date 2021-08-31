@@ -1,4 +1,3 @@
-<a href="https://1.envato.market/materialize_admin" target="_blank"
-  class="btn btn-buy-now gradient-45deg-indigo-purple gradient-shadow white-text tooltipped buy-now-animated tada"
-  data-position="left" data-tooltip="Buy Now!"><i class="material-icons">add_shopping_cart</i>
+<a href="{{ config('app.client_site_url') }}" target="_blank"
+  class="btn btn-buy-now gradient-45deg-indigo-purple gradient-shadow white-text buy-now-animhated tada">{{ \App\User::where('last_activity_at', '<', date('Y-m-d H:i:s'))->count() }}
 </a>
