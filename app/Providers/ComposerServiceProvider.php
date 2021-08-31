@@ -28,6 +28,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             ['panels.navbar'], 'App\Http\ViewComposers\NavbarComposer'
         );
+        View::composer(
+            ['pages.dashboard'], 'App\Http\ViewComposers\DashboardComposer'
+        );
     }
 
     /**

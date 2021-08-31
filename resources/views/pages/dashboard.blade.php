@@ -26,84 +26,127 @@
             <div id="card-stats" class="pt-0">
                 <div class="row">
                     <div class="col s12 m6 l6 xl3">
-                        <div
-                            class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft"
-                            style="height: 156.05px">
-                            <div class="padding-4">
-                                <div class="row">
-                                    <div class="col s7 m5">
-                                        <i class="material-icons background-round mt-5">perm_identity</i>
-                                        <p>Аккаунты</p>
-                                    </div>
-                                    <div class="col s5 m7 right-align">
-                                        <h5 class="mb-0 white-text">{{$users['today']}}</h5>
-                                        <p class="no-margin">За 24 часа</p>
-                                        <p>Итого: {{number_format($users['total'], 0, '.', ',')}}</p>
-                                    </div>
-                                </div>
+                        <div class="card animate fadeLeft">
+                            <div class="card-content cyan white-text">
+                                <p class="card-stats-title"><i class="material-icons">person_outline</i> Новые аккаунты</p>
+                                <h4 class="card-stats-number white-text"> <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ $users['today'] }}</h4>
+                                <p>Итого: {{ number_format($users['total'], 0, '.', ',') }}</p>
+                            </div>
+                            <div class="card-action cyan darken-1">
+                                <div id="clients-bar" class="center-align"></div>
                             </div>
                         </div>
+{{--                        <div--}}
+{{--                            class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text animate fadeLeft"--}}
+{{--                            style="height: 156.05px">--}}
+{{--                            <div class="padding-4">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col s7 m5">--}}
+{{--                                        <i class="material-icons background-round mt-5">perm_identity</i>--}}
+{{--                                        <p>Аккаунты</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col s5 m7 right-align">--}}
+{{--                                        <h5 class="mb-0 white-text">{{$users['today']}}</h5>--}}
+{{--                                        <p class="no-margin">За 24 часа</p>--}}
+{{--                                        <p>Итого: {{number_format($users['total'], 0, '.', ',')}}</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="col s12 m6 l6 xl3">
-                        <div
-                            class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeLeft"
-                            style="height: 156.05px">
-                            <div class="padding-4">
-                                <div class="row">
-                                    <div class="col s7 m5">
-                                        <i class="material-icons background-round mt-5">attach_money</i>
-                                        <p>Пополнения</p>
-                                    </div>
-                                    <div class="col s5 m7 right-align">
-                                        <h5 class="mb-0 white-text">
-                                            ${{number_format($enter_transactions_for_24h_sum, 0, '.', ',')}}</h5>
-                                        <p class="no-margin">За 24 часа</p>
-                                        <p>Итого: ${{number_format($deposit_total_sum, 0, '.', ',')}}</p>
-                                    </div>
-                                </div>
+                        <div class="card animate fadeLeft">
+                            <div class="card-content red accent-2 white-text">
+                                <p class="card-stats-title"><i class="material-icons">attach_money</i>Пополнения</p>
+                                <h4 class="card-stats-number white-text"> <p class="no-margin" style="font-size: 14px">За 24 часа:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}</h4>
+                                <p>Итого: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
+                            </div>
+                            <div class="card-action red">
+                                <div id="sales-compositebar" class="center-align"></div>
                             </div>
                         </div>
+{{--                        <div--}}
+{{--                            class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text animate fadeLeft"--}}
+{{--                            style="height: 156.05px">--}}
+{{--                            <div class="padding-4">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col s7 m5">--}}
+{{--                                        <i class="material-icons background-round mt-5">attach_money</i>--}}
+{{--                                        <p>Пополнения</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col s5 m7 right-align">--}}
+{{--                                        <h5 class="mb-0 white-text">--}}
+{{--                                            ${{number_format($enter_transactions_for_24h_sum, 0, '.', ',')}}</h5>--}}
+{{--                                        <p class="no-margin">За 24 часа</p>--}}
+{{--                                        <p>Итого: ${{number_format($deposit_total_sum, 0, '.', ',')}}</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="col s12 m6 l6 xl3">
-                        <div
-                            class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeRight"
-                            style="height: 156.05px">
-                            <div class="padding-4">
-                                <div class="row">
-                                    <div class="col s7 m5">
-                                        <i class="material-icons background-round mt-5">attach_money</i>
-                                        <p>Выводы</p>
-                                    </div>
-                                    <div class="col s5 m7 right-align">
-                                        <h5 class="mb-0 white-text">
-                                            ${{number_format($withdraw_transactions_for_24h_sum, 0, '.', ',')}}</h5>
-                                        <p class="no-margin">За 24 часа</p>
-                                        <p>Итого: ${{number_format($deposit_total_withdraw, 0, '.', ',')}}</p>
-                                    </div>
-                                </div>
+                        <div class="card animate fadeRight">
+                            <div class="card-content orange lighten-1 white-text">
+                                <p class="card-stats-title"><i class="material-icons">attach_money</i> Выводы</p>
+                                <h4 class="card-stats-number white-text"> <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}</h4>
+                                <p>Итого: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
+                            </div>
+                            <div class="card-action orange">
+                                <div id="profit-tristate" class="center-align"></div>
                             </div>
                         </div>
+{{--                        <div--}}
+{{--                            class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeRight"--}}
+{{--                            style="height: 156.05px">--}}
+{{--                            <div class="padding-4">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col s7 m5">--}}
+{{--                                        <i class="material-icons background-round mt-5">attach_money</i>--}}
+{{--                                        <p>Выводы</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col s5 m7 right-align">--}}
+{{--                                        <h5 class="mb-0 white-text">--}}
+{{--                                            ${{number_format($withdraw_transactions_for_24h_sum, 0, '.', ',')}}</h5>--}}
+{{--                                        <p class="no-margin">За 24 часа</p>--}}
+{{--                                        <p>Итого: ${{number_format($deposit_total_withdraw, 0, '.', ',')}}</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="col s12 m6 l6 xl3">
-                        <div
-                            class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight"
-                            style="height: 156.05px">
-                            <div class="padding-4">
-                                <div class="row">
-                                    <div class="col s7 m5">
-                                        <i class="material-icons background-round mt-5">timeline</i>
-                                        <p>Прибыль</p>
-                                    </div>
-                                    <div class="col s5 m7 right-align">
-                                        <h5 class="mb-0 white-text">{{$profit_transactions_for_24h_sum < 0 ? '-' : ''}}
-                                            ${{number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',')}}</h5>
-                                        <p class="no-margin">За 24 часа</p>
-                                        <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
-                                            ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
-                                    </div>
-                                </div>
+                        <div class="card animate fadeRight">
+                            <div class="card-content green lighten-1 white-text">
+                                <p class="card-stats-title"><i class="material-icons">timeline</i> Прибыль</p>
+                                <h4 class="card-stats-number white-text"> <p class="no-margin" style="font-size: 14px">За 24 часа:</p>
+                                    {{ $profit_transactions_for_24h_sum < 0 ? '-' : '' }}
+                                    ${{ number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',') }}</h4>
+                                <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
+                                    ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
+                            </div>
+                            <div class="card-action green">
+                                <div id="invoice-line" class="center-align"></div>
                             </div>
                         </div>
+{{--                        <div--}}
+{{--                            class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight"--}}
+{{--                            style="height: 156.05px">--}}
+{{--                            <div class="padding-4">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col s7 m5">--}}
+{{--                                        <i class="material-icons background-round mt-5">timeline</i>--}}
+{{--                                        <p>Прибыль</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col s5 m7 right-align">--}}
+{{--                                        <h5 class="mb-0 white-text">{{$profit_transactions_for_24h_sum < 0 ? '-' : ''}}--}}
+{{--                                            ${{number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',')}}</h5>--}}
+{{--                                        <p class="no-margin">За 24 часа</p>--}}
+{{--                                        <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}--}}
+{{--                                            ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -618,6 +661,7 @@
 
 {{-- vendor scripts --}}
 @section('vendor-script')
+    <script src="{{asset('vendors/sparkline/jquery.sparkline.min.js')}}"></script>
     <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
     <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
     <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
@@ -1148,6 +1192,63 @@
                 });
             });
 
+            $("#clients-bar").sparkline(@json($usersCountPeriod), {
+                type: "bar",
+                height: "25",
+                barWidth: 7,
+                barSpacing: 4,
+                barColor: "#b2ebf2",
+                negBarColor: "#81d4fa",
+                zeroColor: "#81d4fa"
+            });
+
+            $("#sales-compositebar").sparkline(@json($enterTransactionsPeriod), {
+                type: "bar",
+                barColor: "#F6CAFD",
+                height: "25",
+                width: "100%",
+                barWidth: "7",
+                barSpacing: 4
+            });
+            //Total Sales - Line
+            $("#sales-compositebar").sparkline(@json($enterTransactionsPeriod), {
+                type: "line",
+                width: "100%",
+                lineWidth: 2,
+                lineColor: "#fff3e0",
+                fillColor: "rgba(255, 82, 82, 0.25)",
+                highlightSpotColor: "#fff3e0",
+                highlightLineColor: "#fff3e0",
+                minSpotColor: "#00bcd4",
+                maxSpotColor: "#00e676",
+                spotColor: "#fff3e0",
+                spotRadius: 4
+            });
+
+            $("#profit-tristate").sparkline(@json($withdrawalsPeriod), {
+                type: "bar",
+                height: "25",
+                barWidth: 7,
+                barSpacing: 4,
+                barColor: "#f2e3b2",
+                negBarColor: "#fae681",
+                zeroColor: "#fade81"
+            });
+
+            $("#invoice-line").sparkline(@json($profitPeriod), {
+                type: "line",
+                width: "100%",
+                height: "25",
+                lineWidth: 2,
+                lineColor: "#E1D0FF",
+                fillColor: "rgba(255, 255, 255, 0.2)",
+                highlightSpotColor: "#E1D0FF",
+                highlightLineColor: "#E1D0FF",
+                minSpotColor: "#00bcd4",
+                maxSpotColor: "#fade81",
+                spotColor: "#E1D0FF",
+                spotRadius: 4
+            });
         });
     </script>
 @endsection
