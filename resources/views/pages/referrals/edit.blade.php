@@ -64,19 +64,6 @@
                                             <small class="errorTxt6"></small>
                                         </div>
                                     </div>
-                                    <div class="col s12">
-                                        <label for="on_task">При перезарядке задачи</label>
-                                        <p>
-                                            <label>
-                                                <input type="hidden" name="on_task" value="0">
-                                                <input type="checkbox" name="on_task" id="on_task" {{ $referral->on_task ? 'checked' : '' }} value="1"/>
-                                                <span>Да/Нет</span>
-                                            </label>
-                                        </p>
-                                        <div class="input-field">
-                                            <small class="errorTxt7"></small>
-                                        </div>
-                                    </div>
                                     <div class="input-field col s12">
                                         <button class="btn waves-effect waves-light right submit" type="submit" name="action">Сохранить</button>
                                     </div>

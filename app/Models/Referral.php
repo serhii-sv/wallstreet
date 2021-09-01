@@ -26,19 +26,20 @@ use Illuminate\Database\Eloquent\Model;
 class Referral extends Model
 {
     use Uuids;
-    
+
     /** @var bool $incrementing */
     public $incrementing = false;
+
     public $keyType      = 'string';
+
     /** @var array $fillable */
     protected $fillable = [
         'level',
         'percent',
         'on_load',
-        'on_profit',
-        'on_task',
+        'on_profit'
     ];
-    
+
     /**
      * @param $level
      *
@@ -51,9 +52,9 @@ class Referral extends Model
             return 0;
         }
         return 0;
-        
+
     }
-    
+
     /**
      * @param $level
      *
@@ -62,20 +63,6 @@ class Referral extends Model
     public static function getOnProfit($level) {
         if ($referral = self::where('level', $level)->first()) {
             if ($referral->on_profit)
-                return $referral->percent;
-            return 0;
-        }
-        return 0;
-    }
-    
-    /**
-     * @param $level
-     *
-     * @return int
-     */
-    public static function getOnTask($level) {
-        if ($referral = self::where('level', $level)->first()) {
-            if ($referral->on_task)
                 return $referral->percent;
             return 0;
         }

@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div class="col s12">
-                                        <label for="on_profit">При пополнении прибыли</label>
+                                        <label for="on_profit">При начислении прибыли</label>
                                         <p>
                                             <label>
                                                 <input type="hidden" name="on_profit" value="0">
@@ -61,19 +61,6 @@
                                         </p>
                                         <div class="input-field">
                                             <small class="errorTxt6"></small>
-                                        </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <label for="on_task">При перезарядке задачи</label>
-                                        <p>
-                                            <label>
-                                                <input type="hidden" name="on_task" value="0">
-                                                <input type="checkbox" name="on_task" id="on_task" value="1"/>
-                                                <span>Да/Нет</span>
-                                            </label>
-                                        </p>
-                                        <div class="input-field">
-                                            <small class="errorTxt7"></small>
                                         </div>
                                     </div>
                                     <div class="input-field col s12">

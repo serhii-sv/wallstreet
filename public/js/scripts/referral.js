@@ -34,11 +34,6 @@ $(function () {
                 bSortable: true
             },
             {
-                data: 'on_task',
-                searchable: true,
-                bSortable: true
-            },
-            {
                 data: 'actions',
                 searchable: false,
                 bSortable: false
