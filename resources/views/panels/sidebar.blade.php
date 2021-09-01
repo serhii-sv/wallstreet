@@ -106,6 +106,12 @@
           </a>
       </li>
       <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('banners.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('banners*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('banners.index') }}">
+              <i class="material-icons">blur_linear</i>
+              <span class="menu-title" data-i18n="Баннеры">Баннеры</span>
+          </a>
+      </li>
+      <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
               <i class="material-icons">developer_board</i>
               <span class="menu-title" data-i18n="Задачи">Задачи</span>
