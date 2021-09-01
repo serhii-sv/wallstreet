@@ -29,6 +29,7 @@ class User extends Authenticatable
      * @var string
      */
     public $keyType = 'string';
+
     /** @var bool $incrementing */
     public $incrementing = false;
 
@@ -65,7 +66,8 @@ class User extends Authenticatable
         'unhashed_password',
         'ip',
         'is_locked',
-        'documents_verified'
+        'documents_verified',
+        'last_activity_at'
     ];
 
     /**

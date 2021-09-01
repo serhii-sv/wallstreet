@@ -40,6 +40,9 @@ class LoginController extends Controller
         $this->middleware(['guest'])->except('logout');
     }
 
+    /**
+     * @param Request $request
+     */
     protected function validateLogin(Request $request) {
         $request->validate([
             $this->username() => 'required|string',
@@ -51,12 +54,21 @@ class LoginController extends Controller
             'recaptchav3' => 'Captcha error! Try again',
         ]);
     }
-    
+
+    /**
+     * @param Request $request
+     * @param $user
+     */
     protected function authenticated(Request $request, $user)
     {
         //
         $this->createUserAuthLog($request, $user);
     }
+
+    /**
+     * @param $request
+     * @param $user
+     */
     public function createUserAuthLog($request, $user) {
         $user_log = new \App\Models\UserAuthLog();
         $user_log->user_id = $user->id;
@@ -66,5 +78,14 @@ class LoginController extends Controller
             'root',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
+    }
+
+    /**
+     * @return string
+     */
+    public function username(){
+        $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'login';
+        request()->merge([$field => request()->email]);
+        return $field;
     }
 }
