@@ -17,12 +17,16 @@ class SupportTaskMessageController extends Controller
         $supportTask = SupportTask::findOrFail($id);
 
         $request->validate([
-            'message' => 'required|string|min:10'
+            'message' => 'required|string|min:1'
         ]);
 
         $result = $supportTask->messages()->create([
             'message' => $request->message,
             'user_id' => auth()->user()->id
+        ]);
+
+        $supportTask->update([
+            'status' => SupportTask::ANSWERED_STATUS
         ]);
 
         if ($result) {
