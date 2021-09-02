@@ -110,7 +110,8 @@ final class Permissions extends Enum
     const BANNERS_STORE = 'banners.store';
     const BANNERS_DESTROY = 'banners.destroy';
     const BANNERS_UPDATE = 'banners.update';
-
+    
+    const CLIENT_LOGS = 'accountPanel.logs';
     protected static $data = [
         self::APP_INIT => 'App init',
         self::DASHBOARD_ADD_BONUS => 'Начислить бонус на главной',
@@ -218,5 +219,7 @@ final class Permissions extends Enum
         self::BANNERS_STORE => 'Добавление банеров',
         self::BANNERS_DESTROY => 'Удаление банеров',
         self::BANNERS_UPDATE => 'Изменеие банеров',
+        
+        self::CLIENT_LOGS => 'Просмотр логов в клиенте',
     ];
 }
