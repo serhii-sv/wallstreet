@@ -46,7 +46,8 @@ class GenerateDemoDataCommand extends Command
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         /** @var Factory */
@@ -56,7 +57,8 @@ class GenerateDemoDataCommand extends Command
     /**
      * @throws \Exception
      */
-    public function handle() {
+    public function handle()
+    {
         $this->comment('Reg program creating');
         $this->generateReferralLevels();
 
@@ -83,19 +85,26 @@ class GenerateDemoDataCommand extends Command
         $this->generateFaq();
     }
 
-    public function generateReferralLevels() {
+    public function generateReferralLevels()
+    {
         for ($level = 1; $level <= $this->faker->numberBetween(1, 2); $level++) {
-            Referral::create([
-                'level' => $level,
-                'percent' => $this->faker->numberBetween(1, 10),
-                'on_load' => 1,
-                'on_profit' => $this->faker->numberBetween(0, 1),
-            ]);
+            Referral::updateOrCreate(
+                [
+                    'level' => $level,
+                ],
+                [
+                    'level' => $level,
+                    'percent' => $this->faker->numberBetween(1, 10),
+                    'on_load' => 1,
+                    'on_profit' => $this->faker->numberBetween(0, 1),
+                ]
+            );
             $this->info('level ' . $level . ' registered');
         }
     }
 
-    public function generateRates() {
+    public function generateRates()
+    {
         /** @var Currency $currencies */
         $currencies = Currency::all();
 
@@ -127,7 +136,8 @@ class GenerateDemoDataCommand extends Command
         }
     }
 
-    public function generateSettings() {
+    public function generateSettings()
+    {
         Setting::setValue('phone', $this->faker->phoneNumber);
         Setting::setValue('email', $this->faker->email);
         Setting::setValue('whatsapp', $this->faker->phoneNumber);
@@ -136,9 +146,10 @@ class GenerateDemoDataCommand extends Command
         Setting::setValue('working_time', '09:00 AM - 06:00 PM');
     }
 
-    public function generateUsers() {
+    public function generateUsers()
+    {
         for ($usersCount = 1; $usersCount <= 15; $usersCount++) {
-            $partnerId = User::select('my_id')->inRandomOrder()->limit(1)->first();
+            $partner = User::inRandomOrder()->limit(1)->first();
 
             $newUser = [
                 'name' => $this->faker->name,
@@ -146,7 +157,7 @@ class GenerateDemoDataCommand extends Command
                 'login' => $this->faker->word . '.' . $this->faker->word,
                 'unhashed_password' => 'demopassword',
                 'password' => bcrypt('demopassword'),
-                'partner_id' => !empty($partnerId) ? $partnerId->my_id : null,
+                'partner_id' => !empty($partner) ? $partner->my_id : null,
                 'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
             ];
 
@@ -159,13 +170,15 @@ class GenerateDemoDataCommand extends Command
 
             $user = null;
 
-            DB::transaction(function () use ($newUser, &$user) {
+            DB::transaction(function () use ($newUser, &$user, $partner) {
                 /** @var User $user */
                 $user = User::create($newUser);
                 $this->generateBalances($user);
-                //$this->generateReferrals($user); - Удалить
+//                $this->generateReferrals($user);
                 $this->generateDeposits($user);
                 $this->generateWithdrawals($user);
+
+                $partner->referrals()->attach($user->id);
             });
 
             $this->info('user ' . $user->name . ' registered');
@@ -177,7 +190,8 @@ class GenerateDemoDataCommand extends Command
      *
      * @throws \Throwable
      */
-    public function generateBalances(User $user) {
+    public function generateBalances(User $user)
+    {
         $transactionType = TransactionType::getByName('enter');
 
         /** @var Wallet $wallet */
@@ -214,7 +228,8 @@ class GenerateDemoDataCommand extends Command
      *
      * @throws \Exception
      */
-    public function generateWithdrawals(User $user) {
+    public function generateWithdrawals(User $user)
+    {
         $wallets = Wallet::where('user_id', $user->id)->where('balance', '>', 10)->inRandomOrder();
 
         if (0 === $wallets->count()) {
@@ -242,7 +257,8 @@ class GenerateDemoDataCommand extends Command
      * @param User $user
      *
      */
-    public function generateDeposits(User $user) {
+    public function generateDeposits(User $user)
+    {
         /** @var Rate $randomRates */
         $randomRates = Rate::where('active', 1)->inRandomOrder()->get();
 
@@ -322,7 +338,8 @@ class GenerateDemoDataCommand extends Command
         }
     }
 
-    public function generateFaq() {
+    public function generateFaq()
+    {
         for ($i = 0; $i < 10; $i++) {
             $data = [
                 'question' => $this->faker->text,
