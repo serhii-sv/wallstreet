@@ -208,10 +208,10 @@
 {{--                            </a>--}}
 {{--                        </div>--}}
                         <div class="invoice-action-btn">
-                            <form action="{{ route('transactions.destroy', $transaction->id) }}" class="display-flex align-items-center justify-content-center" method="post">
+                            <form id="deleteTransaction" action="{{ route('transactions.destroy', $transaction->id) }}" class="display-flex align-items-center justify-content-center" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
+                                <button type="button" class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
                                     <i class="material-icons mr-3">clear</i>
                                     <span class="text-nowrap">Удалить</span>
                                 </button>

@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/settings/change-client-site-status', [\App\Http\Controllers\SettingsController::class, 'clientSite'])->name('settings.change-client-site-status');
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
+            Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
 
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
@@ -62,9 +63,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
             Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
             Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
-
-            Route::get('/transactions/dtdata', [\App\Http\Controllers\TransactionsController::class, 'dataTable'])->name('transactions.dtdata');
-            Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
 
             Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');

@@ -21,6 +21,10 @@ use Illuminate\Http\Request;
 class DepositController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $deposits_status = ['Не активные' => 'false', 'Активные' => 'true', 'Закрываются в течении недели' => 'close_during_week'];
@@ -82,11 +86,25 @@ class DepositController extends Controller
     }
 
     /**
-     * @param Deposit $deposit
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Deposit $deposit)
+    public function show($id)
     {
+        $deposit = Deposit::findOrFail($id);
         return view('pages.deposits.show', ['deposit' => $deposit]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $deposit = Deposit::findOrFail($id);
+        if ($deposit->delete()) {
+            return redirect()->to(route('deposits.index'))->with('success_short', 'Депозит успешно удалена.');
+        }
+        return back()->with('error', __('ERROR:').' Депозит не была удалена');
     }
 }

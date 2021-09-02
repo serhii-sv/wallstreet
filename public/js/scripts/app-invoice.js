@@ -161,6 +161,35 @@ $(document).ready(function () {
       window.location.replace($(this).attr('href'))
   })
 
+    $(document).on('click', '#deleteTransaction button', function () {
+        swal({
+            title: "Вы уверены что хотите удалить эти данные?",
+            // text: "You will not be able to recover this imaginary file!",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Отменить",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Подтвердить",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    closeModal: true
+                }
+            }
+        }).then((result) => {
+            if (result) {
+                $('#deleteTransaction').submit();
+            }
+        })
+        return false;
+    })
+
     if ($('#transactions').length) {
         $("#transactions").DataTable({
             paging: true,
