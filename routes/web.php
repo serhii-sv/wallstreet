@@ -53,16 +53,17 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/notifications', NotificationsController::class);
             Route::post('/notifications/preview', [NotificationsController::class, 'showPreview'])->name('notifications.preview');
 
+            Route::post('/replenishments/approve-many', [\App\Http\Controllers\ReplenishmentController::class, 'approveMany'])->name('withdrawals.approve-many');
+            Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
+            Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
+            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
+
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
             Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
             Route::get('/withdrawals/destroy/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'destroy'])->name('withdrawals.destroy');
             Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class)->except('destroy');
-
-            Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
-            Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
-            Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
 
             Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');

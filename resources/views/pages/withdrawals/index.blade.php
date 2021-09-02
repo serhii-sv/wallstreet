@@ -59,6 +59,7 @@
                 <li><a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a></li>
             </ul>
         </div>
+        @include('panels.inform')
         <div class="responsive-table">
             <form id="transactionsForm" action="/withdrawals/approve-many" method="post">
                 @csrf
@@ -101,4 +102,14 @@
 {{-- page scripts --}}
 @section('page-script')
     <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
+    <script src="{{asset('js/plugins.js')}}"></script>
+    <script>
+        $(function () {
+            $(document).ready(function() {
+                $(document).on('mouseenter', '.tooltipped', function () {
+                    $(this).tooltip();
+                })
+            });
+        })
+    </script>
 @endsection

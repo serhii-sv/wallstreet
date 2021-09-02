@@ -97,7 +97,7 @@ class ReplenishmentController extends Controller
             }
         }
 
-        return back()->with('success_short', __('List of withdrawal requests processed.').implode(', ', $messages));
+        return back()->with('info', __('List of withdrawal requests processed.').implode(', ', $messages));
     }
 
     /**
@@ -115,7 +115,7 @@ class ReplenishmentController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error_short', __('This request already processed.'));
+            return back()->with('error', __('This request already processed.'));
         }
 
         /** @var Wallet $wallet */
@@ -135,7 +135,7 @@ class ReplenishmentController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' wallet is empty';
             }
-            return back()->with('error_short', __('ERROR:').' wallet is empty');
+            return back()->with('error', __('ERROR:').' wallet is empty');
         }
 
         $transaction->update([
@@ -157,13 +157,13 @@ class ReplenishmentController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' ' . $e->getMessage();
             }
-            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error', __('ERROR:').' ' . $e->getMessage());
         }
 
         if (true === $massMode) {
             return $transaction->amount.$currency->symbol.' - '.__('Request approved.');
         }
-        return back()->with('success_short', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
+        return back()->with('success', $transaction->amount.$currency->symbol.' - '.__('Request approved.'));
     }
 
     /**
@@ -181,7 +181,7 @@ class ReplenishmentController extends Controller
         if (true === $massMode) {
             return __('Пополнение удалено');
         }
-        return back()->with('success_short', __('Попоплнение удалено'));
+        return back()->with('success', __('Попоплнение удалено'));
     }
 
     /**
@@ -194,6 +194,6 @@ class ReplenishmentController extends Controller
         if ($transaction->delete()) {
             return redirect()->to(route('replenishments.index'));
         }
-        return back()->with('error_short', __('ERROR:').' Пополнение не было удалено');
+        return back()->with('error', __('ERROR:').' Пополнение не было удалено');
     }
 }
