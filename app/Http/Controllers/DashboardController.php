@@ -15,6 +15,7 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
+use Bintable\BintableApi;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
