@@ -48,7 +48,7 @@ class NewsController extends Controller
             $rules[$field . '.' . $defaultLanguage->code] = 'required';
         }
 
-        $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
 
         $request->validate($rules);
 
@@ -109,7 +109,7 @@ class NewsController extends Controller
             $rules[$field . '.' . $defaultLanguage->code] = 'required';
         }
 
-        $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
 
         $request->validate($rules);
 
