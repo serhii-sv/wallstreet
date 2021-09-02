@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KanbanBoard;
 use App\Models\KanbanBoardTask;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class KanbanController extends Controller
@@ -16,6 +17,17 @@ class KanbanController extends Controller
     {
         $user = auth()->user();
         $boards = $user->kanbanBoards()->orderBy('order')->with('item')->get();
+
+        $ru_month = array( 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' );
+        $en_month = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' );
+
+        $boards->each(function ($board) use ($ru_month, $en_month) {
+           $board->item->each(function (&$item) use ($ru_month, $en_month)  {
+               $item->dueDate = str_replace($en_month, $ru_month, $item->created_at->format('F j, Y'));
+               $item->border = "blue";
+           });
+        });
+
         return view('pages.kanban.index', compact('boards'));
     }
 
@@ -53,10 +65,16 @@ class KanbanController extends Controller
             ]);
         }
 
+        $ru_month = array( 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' );
+        $en_month = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' );
+
         $result = $board->item()->create([
             'title' => $request->title,
-            'order' => $request->order
+            'order' => $request->order,
         ]);
+
+        $result->dueDate = str_replace($en_month, $ru_month, $result->created_at->format('F j, Y'));
+        $result->border = "blue";
 
         return response()->json([
             'success' => (bool)$result,
@@ -80,7 +98,7 @@ class KanbanController extends Controller
             ]);
         }
 
-        $task = KanbanBoardTask::findOrFail($request->task_id);
+        $task = KanbanBoardTask::find($request->task_id);
 
         if (is_null($task)) {
             return response()->json([
@@ -136,7 +154,7 @@ class KanbanController extends Controller
      */
     public function updateBoard(Request $request, $id)
     {
-        $board = KanbanBoard::findOrFail($id);
+        $board = KanbanBoard::find($id);
 
         if (is_null($board)) {
             return response()->json([
@@ -160,7 +178,7 @@ class KanbanController extends Controller
      */
     public function destroyBoard($id)
     {
-        $board = KanbanBoard::findOrFail($id);
+        $board = KanbanBoard::find($id);
 
         if (is_null($board)) {
             return response()->json([
@@ -174,6 +192,36 @@ class KanbanController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @param $task_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroyTask($id, $task_id)
+    {
+        $board = KanbanBoard::find($id);
+
+        if (is_null($board)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Такой доски не существует.'
+            ]);
+        }
+
+        $task = $board->item()->where('id', $task_id)->first();
+
+        if (is_null($task)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Такой задачи не существует.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => $task->delete()
         ]);
     }
 }

@@ -183,6 +183,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('kanban/board/sort', [\App\Http\Controllers\KanbanController::class, 'sortBoards'])->name('kanban.board.sort-boards');
             Route::post('kanban/board/{id}/update', [\App\Http\Controllers\KanbanController::class, 'updateBoard'])->name('kanban.board.update');
             Route::get('kanban/board/{id}/destroy', [\App\Http\Controllers\KanbanController::class, 'destroyBoard'])->name('kanban.board.destroy');
+            Route::get('kanban/board/{id}/destroy/{item_id}', [\App\Http\Controllers\KanbanController::class, 'destroyTask'])->name('kanban.board.destroyTask');
 
             Route::get('bin-check', [\App\Http\Controllers\BinCheckController::class, 'index'])->name('bin-check.index');
         });

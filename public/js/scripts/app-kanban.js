@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users, kanban_curr_item_date;
+    var kanban_curr_el, kanban_curr_item_id, kanban_item_title, kanban_data, kanban_item, kanban_users,
+        kanban_curr_item_date;
     // Kanban Board and Item Data passed by json
 
     // var kanban_board_data = [
@@ -243,8 +244,12 @@ $(document).ready(function () {
                         if (response.success) {
                             KanbanExample.addElement(boardId, {
                                 title: response.task.title,
-                                id: response.task.id
+                                id: response.task.id,
+                                dueDate: response.task.dueDate,
+                                border: response.task.border,
                             });
+
+                            renderElement(response.task.id);
                             formItem.parentNode.removeChild(formItem);
                         } else {
                             M.toast({
@@ -275,102 +280,138 @@ $(document).ready(function () {
             var board_item_details = kanban_board_data[kanban_data].item[kanban_item]; // set item details
             board_item_id = $(board_item_details).attr("id"); // set 'id' attribute of kanban-item
 
-            (board_item_el = KanbanExample.findElement(board_item_id)), // find element of kanban-item by ID
-                (board_item_users = board_item_dueDate = board_item_comment = board_item_attachment = board_item_image = board_item_badge =
-                    " ");
-
-            // check if users are defined or not and loop it for getting value from user's array
-            if (typeof $(board_item_el).attr("data-users") !== "undefined") {
-                for (kanban_users in kanban_board_data[kanban_data].item[kanban_item].users) {
-                    board_item_users +=
-                        '<img class="circle" src=" ' +
-                        kanban_board_data[kanban_data].item[kanban_item].users[kanban_users] +
-                        '" alt="Avatar" height="24" width="24">';
-                }
-            }
-            // check if dueDate is defined or not
-            if (typeof $(board_item_el).attr("data-dueDate") !== "undefined") {
-                board_item_dueDate =
-                    '<div class="kanban-due-date center mb-5 lighten-5 ' + $(board_item_el).attr("data-border") + '"><span class="' + $(board_item_el).attr("data-border") + '-text center"> ' +
-                    $(board_item_el).attr("data-dueDate") +
-                    "</span>" +
-                    "</div>";
-            }
-            // check if comment is defined or not
-            if (typeof $(board_item_el).attr("data-comment") !== "undefined") {
-                board_item_comment =
-                    '<div class="kanban-comment display-flex">' +
-                    '<i class="material-icons font-size-small">chat_bubble_outline </i>' +
-                    '<span class="font-size-small">' +
-                    $(board_item_el).attr("data-comment") +
-                    "</span>" +
-                    "</div>";
-            }
-            // check if attachment is defined or not
-            if (typeof $(board_item_el).attr("data-attachment") !== "undefined") {
-                board_item_attachment =
-                    '<div class="kanban-attachment display-flex">' +
-                    '<i class="font-size-small material-icons">attach_file</i>' +
-                    '<span class="font-size-small">' +
-                    $(board_item_el).attr("data-attachment") +
-                    "</span>" +
-                    "</div>";
-            }
-            // check if Image is defined or not
-            if (typeof $(board_item_el).attr("data-image") !== "undefined") {
-                board_item_image =
-                    '<div class="kanban-image mb-1">' +
-                    '<img class="responsive-img border-radius-4" src=" ' +
-                    kanban_board_data[kanban_data].item[kanban_item].image +
-                    '" alt="kanban-image">';
-                ("</div>");
-            }
-            // check if Badge is defined or not
-            if (typeof $(board_item_el).attr("data-badgeContent") !== "undefined") {
-                board_item_badge =
-                    '<div class="kanban-badge circle lighten-4 ' +
-                    kanban_board_data[kanban_data].item[kanban_item].badgeColor +
-                    '">' +
-                    '<span class="' + kanban_board_data[kanban_data].item[kanban_item].badgeColor + '-text">' +
-                    kanban_board_data[kanban_data].item[kanban_item].badgeContent +
-                    "</span>";
-                ("</div>");
-            }
-            // add custom 'kanban-footer'
-            if (
-                typeof (
-                    $(board_item_el).attr("data-dueDate") ||
-                    $(board_item_el).attr("data-comment") ||
-                    $(board_item_el).attr("data-users") ||
-                    $(board_item_el).attr("data-attachment")
-                ) !== "undefined"
-            ) {
-                $(board_item_el).append(
-                    '<div class="kanban-footer mt-3">' +
-                    board_item_dueDate +
-                    '<div class="kanban-footer-left left display-flex pt-1">' +
-                    board_item_comment +
-                    board_item_attachment +
-                    "</div>" +
-                    '<div class="kanban-footer-right right">' +
-                    '<div class="kanban-users">' +
-                    board_item_badge +
-                    board_item_users +
-                    "</div>" +
-                    "</div>" +
-                    "</div>"
-                );
-            }
-            // add Image prepend to 'kanban-Item'
-            if (typeof $(board_item_el).attr("data-image") !== "undefined") {
-                $(board_item_el).prepend(board_item_image);
-            }
+            renderElement(board_item_id);
         }
     }
+
+    function renderElement(board_item_id) {
+        (board_item_el = KanbanExample.findElement(board_item_id)), // find element of kanban-item by ID
+            (board_item_users = board_item_dueDate = board_item_comment = board_item_attachment = board_item_image = board_item_badge =
+                " ");
+
+        // check if users are defined or not and loop it for getting value from user's array
+        if (typeof $(board_item_el).attr("data-users") !== "undefined") {
+            for (kanban_users in kanban_board_data[kanban_data].item[kanban_item].users) {
+                board_item_users +=
+                    '<img class="circle" src=" ' +
+                    kanban_board_data[kanban_data].item[kanban_item].users[kanban_users] +
+                    '" alt="Avatar" height="24" width="24">';
+            }
+        }
+        // check if dueDate is defined or not
+        if (typeof $(board_item_el).attr("data-dueDate") !== "undefined") {
+            board_item_dueDate =
+                '<div class="kanban-due-date center mb-5 lighten-5 ' + $(board_item_el).attr("data-border") + '"><span class="' + $(board_item_el).attr("data-border") + '-text center"> ' +
+                $(board_item_el).attr("data-dueDate") +
+                "</span>" +
+                "</div>";
+        }
+        // check if comment is defined or not
+        if (typeof $(board_item_el).attr("data-comment") !== "undefined") {
+            board_item_comment =
+                '<div class="kanban-comment display-flex">' +
+                '<i class="material-icons font-size-small">chat_bubble_outline </i>' +
+                '<span class="font-size-small">' +
+                $(board_item_el).attr("data-comment") +
+                "</span>" +
+                "</div>";
+        }
+        // check if attachment is defined or not
+        if (typeof $(board_item_el).attr("data-attachment") !== "undefined") {
+            board_item_attachment =
+                '<div class="kanban-attachment display-flex">' +
+                '<i class="font-size-small material-icons">attach_file</i>' +
+                '<span class="font-size-small">' +
+                $(board_item_el).attr("data-attachment") +
+                "</span>" +
+                "</div>";
+        }
+        // check if Image is defined or not
+        if (typeof $(board_item_el).attr("data-image") !== "undefined") {
+            board_item_image =
+                '<div class="kanban-image mb-1">' +
+                '<img class="responsive-img border-radius-4" src=" ' +
+                kanban_board_data[kanban_data].item[kanban_item].image +
+                '" alt="kanban-image">';
+            ("</div>");
+        }
+        // check if Badge is defined or not
+        if (typeof $(board_item_el).attr("data-badgeContent") !== "undefined") {
+            board_item_badge =
+                '<div class="kanban-badge circle lighten-4 ' +
+                kanban_board_data[kanban_data].item[kanban_item].badgeColor +
+                '">' +
+                '<span class="' + kanban_board_data[kanban_data].item[kanban_item].badgeColor + '-text">' +
+                kanban_board_data[kanban_data].item[kanban_item].badgeContent +
+                "</span>";
+            ("</div>");
+        }
+        // add custom 'kanban-footer'
+        if (
+            typeof (
+                $(board_item_el).attr("data-dueDate") ||
+                $(board_item_el).attr("data-comment") ||
+                $(board_item_el).attr("data-users") ||
+                $(board_item_el).attr("data-attachment")
+            ) !== "undefined"
+        ) {
+            $(board_item_el).html('<div class="display-flex justify-content-between align-items-start">\n' +
+                '    <div>\n' +
+                $(board_item_el).text() +
+                '    </div>\n' +
+                '    <div>\n' +
+                '        <i class="material-icons remove-kanban_item" style="cursor: pointer">clear</i>\n' +
+                '    </div>\n' +
+                '</div>')
+            $(board_item_el).append(
+                '<div class="kanban-footer mt-3">' +
+                board_item_dueDate +
+                '<div class="kanban-footer-left left display-flex pt-1">' +
+                board_item_comment +
+                board_item_attachment +
+                "</div>" +
+                '<div class="kanban-footer-right right">' +
+                '<div class="kanban-users">' +
+                board_item_badge +
+                board_item_users +
+                "</div>" +
+                "</div>" +
+                "</div>"
+            );
+        }
+        // add Image prepend to 'kanban-Item'
+        if (typeof $(board_item_el).attr("data-image") !== "undefined") {
+            $(board_item_el).prepend(board_item_image);
+        }
+    }
+
     kanban_board_data.map(function (obj) {
         $(".kanban-board[data-id='" + obj.id + "']").find(".kanban-board-header").addClass(obj.headerBg)
     })
 
+    $(document).on('click', '.remove-kanban_item', function () {
+        var $kanbanId = $(this)
+            .closest(".kanban-board")
+            .attr("data-id");
+
+        var $itemId = $(this)
+            .closest(".kanban-item")
+            .attr("data-eid");
+
+        $.ajax({
+            url: '/kanban/board/' + $kanbanId + '/destroy/' + $itemId,
+            success: (response) => {
+                if (response.success) {
+                    KanbanExample.removeElement($itemId)
+                } else {
+                    M.toast({
+                        html: response.message,
+                        classes: 'red'
+                    })
+                }
+            }
+        })
+    })
 
     // Add new kanban board
     //---------------------
@@ -451,6 +492,7 @@ $(document).ready(function () {
     var kanban_dropdown = document.createElement("div");
     kanban_dropdown.setAttribute("class", "dropdown");
     dropdownKanban();
+
     function dropdownKanban() {
         kanban_dropdown.innerHTML =
             '<a class="dropdown-trigger" href="#" data-target="" > <i class="material-icons white-text">more_vert</i></a>' +
