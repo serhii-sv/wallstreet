@@ -90,8 +90,19 @@ Route::group(['middleware' => ['web']], function () {
                 });
             });
 
+            Route::get('news-and-products', [\App\Http\Controllers\NewsAndProductController::class, 'index'])->name('news-and-products.index');
+
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
-            Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy');
+            Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy', 'index');
+
+            Route::prefix('products')->as('products.')->group(function () {
+                Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
+                Route::post('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
+
+                Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create');
+                Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store');
+                Route::get('/destroy/{id}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
+            });
 
             Route::get('/referrals/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referrals.destroy');
             Route::get('referrals/top-referrals', [\App\Http\Controllers\ReferralController::class, 'getTopReferrals'])->name('referrals.top-referrals');
@@ -108,17 +119,6 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/create', [App\Http\Controllers\RateController::class, 'create'])->name('create');
                 Route::post('/store', [App\Http\Controllers\RateController::class, 'store'])->name('store');
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
-            });
-
-            Route::prefix('products')->as('products.')->group(function () {
-                Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
-
-                Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
-                Route::post('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
-
-                Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('create');
-                Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('store');
-                Route::get('/destroy/{id}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
             });
 
             Route::prefix('banners')->as('banners.')->group(function () {

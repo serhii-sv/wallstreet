@@ -11,15 +11,6 @@ class ProductController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
-    {
-        $products = Product::orderBy('created_at', 'desc')->paginate(9);
-        return view('pages.products.index', compact('products'));
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function create()
     {
         return view('pages.products.create');
@@ -60,7 +51,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('products.index'))->with('success_short', 'Продукт добавлен');
+            return redirect()->to(route('news-and-products.index', ['#products']))->with('success_short', 'Продукт добавлен');
         }
 
         return back()->with('error_short', 'Продукт не добавлен');
@@ -104,7 +95,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('products.index'))->with('success_short', 'Продукт обновлен');
+            return redirect()->to(route('news-and-products.index', ['#products']))->with('success_short', 'Продукт обновлен');
         }
 
         return back()->with('error_short', 'Продукт не обновлен');
@@ -129,7 +120,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         if ($product->delete()) {
-            return redirect()->to(route('products.index'))->with('success_short', 'Продукт удален');
+            return redirect()->to(route('news-and-products.index', ['#products']))->with('success_short', 'Продукт удален');
         }
         return back()->with('error_short', 'Продукт не удален');
     }

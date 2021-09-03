@@ -100,9 +100,9 @@
       </a>
     </li>
       <li class="bold">
-          <a class="waves-effect waves-cyan {{ (Route::is('news.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('news*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('news.index') }}">
+          <a class="waves-effect waves-cyan {{ (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('news-and-products.index') }}">
               <i class="material-icons">list</i>
-              <span class="menu-title" data-i18n="Новости">Новости</span>
+              <span class="menu-title" data-i18n="Новости">Новости/Продукты</span>
           </a>
       </li>
       <li class="bold">
@@ -122,12 +122,6 @@
           <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rates.index') }}">
               <i class="material-icons">show_chart</i>
               <span class="menu-title" data-i18n="Тарифы">Тарифы</span>
-          </a>
-      </li>
-      <li class="bold">
-          <a class="waves-effect waves-cyan {{ (Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('products*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('products.index') }}">
-              <i class="material-icons">phonelink</i>
-              <span class="menu-title" data-i18n="Продукты">Продукты</span>
           </a>
       </li>
       <li class="bold">
