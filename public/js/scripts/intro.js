@@ -4,8 +4,17 @@ $(window).on('load', function () {
         'onOpenEnd': initCarouselModal,
     });
 
-    setTimeout(function () { $('.modal').modal('open'); }, 1800)
+    setTimeout(function () {
+            if (localStorage.getItem('showIntro') == null) {
+                $('.modal').modal('open');
+            }
+        }, 1800
+    )
 
+    $('.modal-close').click(function () {
+        localStorage.setItem('showIntro', 1)
+        return true;
+    })
 
     $('.btn-next').on('click', function (e) {
         $('.intro-carousel').carousel('next');
@@ -30,7 +39,7 @@ $(window).on('load', function () {
 
                 }
 
-                // When carousel is at 2nd or 3rd step 
+                // When carousel is at 2nd or 3rd step
 
                 else if ($('.carousel-item.active').index() > 1) {
 

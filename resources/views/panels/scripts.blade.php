@@ -74,6 +74,7 @@
   </script>
 @endif
 
+<script src="{{asset('js/scripts/intro.js')}}"></script>
 <script>
     $(function () {
         $('input[name="disable_client_site"]').change(function () {

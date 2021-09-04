@@ -63,6 +63,7 @@
   {{-- footer  --}}
   @include('panels.footer')
   {{-- vendor and page scripts --}}
+  @include('pages.sample.intro')
   @include('panels.scripts')
   @include('panels.loader')
 </body>
