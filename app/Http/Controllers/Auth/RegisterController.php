@@ -91,7 +91,7 @@ class RegisterController extends Controller
             'email'      => $data['email'],
             'login'      => $data['login'],
             'password'   => Hash::make($data['password']),
-            'partner_id' => null !== $partner ? $partner->my_id : null,
+            'partner_id' => null !== $partner ? $partner->my_id : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->firts()->email ?? null),
             'my_id'      => $myId,
         ]);
     }

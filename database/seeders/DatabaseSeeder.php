@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             TransactionTypesSeeder::class,
             PermissionsSeeder::class,
+            UsersSeeder::class
         ]);
     }
 }
