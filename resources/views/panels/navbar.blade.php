@@ -107,6 +107,9 @@
         .dropdown-content{
             width: 290px !important;
         }
+        .navbar-list li:first-child {
+            margin-right: -15px;
+        }
       </style>
       <ul class="dropdown-content" id="profile-dropdown">
         <li>
