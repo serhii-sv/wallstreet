@@ -86,6 +86,14 @@
     </li>
 
     <li class="bold">
+      <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}">
+        <i class="material-icons">attach_money</i>
+        <span class="menu-title" data-i18n="Трпнзакции">Обмен валют</span>
+        <span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>
+      </a>
+    </li>
+
+    <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('cloud_files*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('cloud_files.manager') }}">
         <i class="material-icons">cloud_download</i>
         <span class="menu-title" data-i18n="Менеджер файлов">Файлы</span>

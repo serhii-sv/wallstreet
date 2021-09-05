@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use App\Models\CloudFile;
+use App\Models\CurrencyExchange;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\View\View;
@@ -46,6 +47,9 @@ class SidebarComposer
                     $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('create_dep')->id)->sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);
                 }),
+                'currency_exchange_count' => cache()->remember('counts.currency_exchange_count', now()->addMinutes(30), function (){
+                    return CurrencyExchange::count();
+                })
 
             ]);
 
