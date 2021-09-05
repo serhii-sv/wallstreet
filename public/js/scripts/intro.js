@@ -5,14 +5,13 @@ $(window).on('load', function () {
     });
 
     setTimeout(function () {
-            if (localStorage.getItem('showIntro') == null) {
-                $('.modal').modal('open');
-            }
-        }, 1800
-    )
+        if (localStorage.getItem('showIntro') == null) {
+            $('.modal').modal('open');
+        }
+    }, 1800)
 
     $('.modal-close').click(function () {
-        localStorage.setItem('showIntro', 1)
+        localStorage.setItem('showIntro', 0)
         return true;
     })
 

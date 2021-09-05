@@ -41,7 +41,9 @@ $(function () {
         ],
         processing: true,
         serverSide: true,
-        ajax: {},
+        ajax: {
+            url: '/referrals'
+        },
         dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
         language: {
             processing: "Загрузка",

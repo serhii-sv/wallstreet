@@ -37,7 +37,7 @@
                                             <option value="" disabled selected>Выберите размер</option>
                                             @foreach(\App\Models\Banner::BANNERS as $banner)
                                                 <option value="{{ $banner['size'] }}" data-icon="{{ asset('/images/banners/' . $banner['image']) }}" class="circle">
-                                                    {{ $banner['name'] }}
+                                                    {{ $banner['name'] }} ({{ $banner['size'] }})
                                                 </option>
                                             @endforeach
                                         </select>

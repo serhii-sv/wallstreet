@@ -93,7 +93,7 @@ class BannerController extends Controller
         }
 
         if ($banner) {
-            return redirect(route('banners.index'))->with('success_short', 'Баннер добавлен');
+            return redirect(route('referrals-and-banners.index', ['#banners']))->with('success_short', 'Баннер добавлен');
         }
 
         return back()->with('error_short', 'Баннер не добавлен')->withInput($request->input());
@@ -134,9 +134,24 @@ class BannerController extends Controller
         }
 
         if ($banner) {
-            return redirect(route('banners.index'))->with('success_short', 'Баннер изменен');
+            return redirect(route('referrals-and-banners.index', ['#banners']))->with('success_short', 'Баннер изменен');
         }
 
         return back()->with('error_short', 'Баннер не изменен')->withInput($request->input());
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $banner = Banner::find($id);
+
+        if ($banner->delete()) {
+            return redirect()->route('referrals-and-banners.index', ['#banners'])->with('success_short', __('Баннер удален'));
+        }
+
+        return redirect()->route('referrals-and-banners.index', ['#banners'])->with('error_short', __('Баннер не удален'));
     }
 }
