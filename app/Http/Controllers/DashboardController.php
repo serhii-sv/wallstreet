@@ -41,8 +41,6 @@ class DashboardController extends Controller
         $month_period_enter_transactions = [];
         $month_period_withdraw_transactions = [];
 
-        $userActivity = ActivityLog::getActivityLog();
-
         $month_period = $this->getMonthPeriod();
         $weeks_period = $this->getWeeksPeriod();
 
@@ -217,7 +215,6 @@ class DashboardController extends Controller
                     return $carry + $item->main_currency_amount;
                 }, 0);
             }),
-            'userActivity' => $userActivity,
         ]);
     }
 

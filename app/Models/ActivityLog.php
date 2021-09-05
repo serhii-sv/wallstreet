@@ -56,7 +56,8 @@ class ActivityLog extends Model
             $lastActivity = $activities->last();
             $differenceInSeconds = $lastActivity->updated_at->diffInSeconds(Carbon::now());
 
-            if (Carbon::now()->format('H') !== $lastActivity->updated_at->format('H')) {
+            $now = Carbon::now()->format('H');
+            if ($now !== $lastActivity->updated_at->format('H') && $now !== $lastActivity->created_at->format('H')) {
                 $user->activities()->create([
                     'value' => 0
                 ]);

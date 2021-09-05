@@ -33,21 +33,28 @@ class TaskController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);
 
-        $task = $task->update([
-            'done' => true
+        $result = $task->update([
+            'done' => $request->status == 'true'
         ]);
 
-        if ($task) {
-            return back()->with('success_short', 'Задача завершена');
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => $request->status == 'true' ? 'Задача завершена' : 'Задача повторно открыта'
+            ]);
         }
-        return back()->with('error_short', 'Задача не завершена');
+        return response()->json([
+            'success' => false,
+            'message' => 'Задача не завершена'
+        ]);
     }
 
     /**

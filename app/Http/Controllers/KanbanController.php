@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\KanbanBoard;
 use App\Models\KanbanBoardTask;
 use App\User;
@@ -15,6 +16,8 @@ class KanbanController extends Controller
      */
     public function index()
     {
+        $userActivity = ActivityLog::getActivityLog();
+
         $user = auth()->user();
         $boards = $user->kanbanBoards()->orderBy('order')->with('item')->get();
 
@@ -28,7 +31,7 @@ class KanbanController extends Controller
            });
         });
 
-        return view('pages.kanban.index', compact('boards'));
+        return view('pages.kanban.index', compact('boards', 'userActivity'));
     }
 
     /**
