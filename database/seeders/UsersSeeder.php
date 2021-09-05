@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::where('email', 'jordan_belfort@gmail.com')->firts();
+        $user = \App\Models\User::where('email', 'jordan_belfort@gmail.com')->first();
 
         if (!is_null($user)) {
             $user = \App\Models\User::create([
