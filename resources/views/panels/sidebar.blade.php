@@ -46,7 +46,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('users.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('users.index') }}">
         <i class="material-icons">people</i>
         <span class="menu-title" data-i18n="Пользователи">Пользователи</span>
-        <span class="badge badge pill purple float-right mr-3">{{ $counts['users'] }}</span>
+        <span class="badge badge pill green float-right mr-3">{{ $counts['users'] }}</span>
       </a>
     </li>
 
@@ -55,7 +55,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}">
         <i class="material-icons">monetization_on</i>
         <span class="menu-title" data-i18n="Выводы">Выводы</span>
-        <span class="badge badge pill purple float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
+        <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
       </a>
     </li>
 
@@ -63,7 +63,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('replenishments*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('replenishments.index') }}">
         <i class="material-icons">forward</i>
         <span class="menu-title" data-i18n="Пополнения">Пополнения</span>
-        <span class="badge badge pill purple float-right mr-3">${{ $counts['replenishments_amount'] }}</span>
+        <span class="badge badge pill green float-right mr-3">${{ $counts['replenishments_amount'] }}</span>
       </a>
     </li>
 
@@ -71,7 +71,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('transactions*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('transactions.index') }}">
         <i class="material-icons">swap_calls</i>
         <span class="menu-title" data-i18n="Трпнзакции">Транзакции</span>
-        <span class="badge badge pill purple float-right mr-3">${{ $counts['transactions_amount'] }}</span>
+{{--        <span class="badge badge pill purple float-right mr-3">${{ $counts['transactions_amount'] }}</span>--}}
       </a>
     </li>
 
@@ -79,7 +79,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}">
         <i class="material-icons">attach_money</i>
         <span class="menu-title" data-i18n="Трпнзакции">Депозиты</span>
-        <span class="badge badge pill purple float-right mr-3">${{ $counts['deposits_active_amount'] }}</span>
+{{--        <span class="badge badge pill purple float-right mr-3">${{ $counts['deposits_active_amount'] }}</span>--}}
 
         {{--                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['replenishments_amount']), 0, ',', ' ') }}</span>--}}
       </a>
@@ -97,7 +97,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('cloud_files*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('cloud_files.manager') }}">
         <i class="material-icons">cloud_download</i>
         <span class="menu-title" data-i18n="Менеджер файлов">Файлы</span>
-        <span class="badge badge pill purple float-right mr-3">{{ $counts['files'] }}</span>
+{{--        <span class="badge badge pill purple float-right mr-3">{{ $counts['files'] }}</span>--}}
       </a>
     </li>
 
@@ -123,6 +123,7 @@
           <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
               <i class="material-icons">developer_board</i>
               <span class="menu-title" data-i18n="Задачи">Задачи</span>
+              <span class="badge badge pill orange float-right mr-3">{{ $counts['tasks'] }}</span>
           </a>
       </li>
 
