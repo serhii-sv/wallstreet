@@ -59,12 +59,16 @@ class UpdateCurrencyRatesCommand extends Command
             $rateInUsd = (float) round($response['data'][strtoupper($currency->code)]['quote']['USD']['price'], $currency->precision);
 
             $key = strtolower($currency->code).'_to_usd';
-            Setting::setValue($key, $rateInUsd);
-            $this->comment('updated '.$key.' = '.$rateInUsd);
+            if (Setting::where('s_key', $key)->first()->autoupdate) {
+                Setting::setValue($key, $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . $rateInUsd);
+            }
 
-            $key = 'usd_to_'.strtolower($currency->code);
-            Setting::setValue($key, 1/$rateInUsd);
-            $this->comment('updated '.$key.' = '.(1/$rateInUsd));
+            if (Setting::where('s_key', $key)->first()->autoupdate) {
+                $key = 'usd_to_' . strtolower($currency->code);
+                Setting::setValue($key, 1 / $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
+            }
         }
 
         $fiatCurrencies = Currency::whereIn('code', ['USD', 'UAH', 'RUB', 'EUR'])->get();
@@ -86,13 +90,18 @@ class UpdateCurrencyRatesCommand extends Command
             $response['rates'] = (array) $response['rates'];
 
             foreach ($response['rates'] as $code => $rate) {
-                $key = strtolower($currency->code).'_to_'.strtolower($code);
-                Setting::setValue($key, $rate);
-                $this->comment('updated '.$key.' = '.$rate);
 
-                $key = strtolower($code).'_to_'.strtolower($currency->code);
-                Setting::setValue($key, 1/$rate);
-                $this->comment('updated '.$key.' = '.(1/$rate));
+                if (Setting::where('s_key', $key)->first()->autoupdate) {
+                    $key = strtolower($currency->code) . '_to_' . strtolower($code);
+                    Setting::setValue($key, $rate);
+                    $this->comment('updated ' . $key . ' = ' . $rate);
+                }
+
+                if (Setting::where('s_key', $key)->first()->autoupdate) {
+                    $key = strtolower($code) . '_to_' . strtolower($currency->code);
+                    Setting::setValue($key, 1 / $rate);
+                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
+                }
             }
         }
     }

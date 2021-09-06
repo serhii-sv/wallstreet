@@ -20,7 +20,8 @@ class Setting extends Model
     /** @var array $fillable */
     protected $fillable = [
         's_key',
-        's_value'
+        's_value',
+        'autoupdate'
     ];
 
     /**
@@ -55,5 +56,14 @@ class Setting extends Model
             's_value' => $value
         ]);
         return $setting ? $setting->s_value : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyNameAttribute()
+    {
+        list($first_currency, $second_currency) = explode('_to_', $this->s_key);
+        return strtoupper($first_currency) . '/' . strtoupper($second_currency);
     }
 }
