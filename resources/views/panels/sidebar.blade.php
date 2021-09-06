@@ -95,9 +95,15 @@
 
     <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}">
-        <i class="material-icons">attach_money</i>
-        <span class="menu-title" data-i18n="Трпнзакции">Обмен валют</span>
+        <i class="material-icons">autorenew</i>
+        <span class="menu-title" data-i18n="Обмен валют">Обмен валют</span>
         <span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>
+      </a>
+    </li>
+      <li class="bold">
+      <a class="waves-effect waves-cyan {{ (Route::is('currency-rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('currency-rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-rates.index') }}">
+        <i class="material-icons">compare_arrows</i>
+        <span class="menu-title" data-i18n="Курс валют">Курс валют</span>
       </a>
     </li>
 

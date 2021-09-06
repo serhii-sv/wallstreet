@@ -59,7 +59,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/permissions', \App\Http\Controllers\PermissionsController::class)->except(['create', 'show', 'edit','destroy']);;
 
             Route::get('/currency-exchange', [CurrencyExchangesController::class, 'index'])->name('currency-exchange');
-            
+
             Route::resource('/notifications', NotificationsController::class);
             Route::post('/notifications/preview', [NotificationsController::class, 'showPreview'])->name('notifications.preview');
 
@@ -132,6 +132,13 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/referrals', \App\Http\Controllers\ReferralController::class)->except('destroy');
 
             Route::post('/theme-settings', [\App\Http\Controllers\UserThemeSettingController::class, 'store'])->name('theme-settings');
+
+            Route::prefix('currency-rates')->as('currency-rates.')->group(function () {
+                Route::get('/', [App\Http\Controllers\CurrencyRateController::class, 'index'])->name('index');
+
+                Route::get('/edit/{id}', [App\Http\Controllers\CurrencyRateController::class, 'edit'])->name('edit');
+                Route::post('/update/{id}', [App\Http\Controllers\CurrencyRateController::class, 'update'])->name('update');
+            });
 
             Route::prefix('rates')->as('rates.')->group(function () {
                 Route::get('/', [App\Http\Controllers\RateController::class, 'index'])->name('index');
