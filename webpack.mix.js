@@ -68,6 +68,7 @@ mix.copyDirectory('resources/json', 'public/json');
 
 mix.js('resources/js/materialize.js', 'public/js')
     .js('resources/js/plugins.js', 'public/js')
+    .js('resources/js/app.js', 'public/js')
     .js('resources/js/search.js', 'public/js/')
     .sass('resources/sass/style-rtl.scss', 'public/css')
     .sass('resources/sass/laravel-custom.scss', 'public/css')

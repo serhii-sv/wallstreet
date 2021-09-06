@@ -222,8 +222,7 @@ class User extends Authenticatable
             'permission_id'
         )->withTimestamps();
     }
-
-    /**
+      /**
      * @return User
      */
     public function generateMyId() : User

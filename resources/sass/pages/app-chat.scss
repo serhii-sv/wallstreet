@@ -149,7 +149,7 @@
 
 				// Sidebar List Content
 				.sidebar-chat {
-					height: calc(100vh - 365px);
+					height: calc(100vh - 220px);
 					overflow: hidden;
 					position: relative;
 
@@ -173,7 +173,7 @@
 								display: flex;
 								flex-direction: column;
 								align-items: flex-end;
-
+                width : 100px;
 								.star-timing {
 									display: flex;
 									justify-content: flex-end;
@@ -278,7 +278,7 @@
 				.chat-area {
 					background: url('../../images/gallery/chat-bg.jpg') repeat scroll 0 0;
 					padding: 1rem;
-					height: calc(100vh - 380px);
+					height: calc(100vh - 300px);
 					overflow: hidden;
 					position: relative;
 
@@ -338,6 +338,7 @@
 								.avatar {
 									img {
 										width: 40px;
+                    height : 40px;
 									}
 								}
 							}

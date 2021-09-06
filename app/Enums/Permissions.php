@@ -111,6 +111,10 @@ final class Permissions extends Enum
     const BANNERS_DESTROY = 'banners.destroy';
     const BANNERS_UPDATE = 'banners.update';
     
+    const CHAT_INDEX = 'chat';
+    const CHAT_SEND_MESSAGE = 'chat.send.message';
+    
+    
     const CLIENT_LOGS = 'accountPanel.logs';
     protected static $data = [
         self::APP_INIT => 'App init',
@@ -219,6 +223,9 @@ final class Permissions extends Enum
         self::BANNERS_STORE => 'Добавление банеров',
         self::BANNERS_DESTROY => 'Удаление банеров',
         self::BANNERS_UPDATE => 'Изменеие банеров',
+        
+        self::CHAT_INDEX => 'Просмотр админ чата',
+        self::CHAT_SEND_MESSAGE => 'Отправка сообщений в админ чат',
         
         self::CLIENT_LOGS => 'Просмотр логов в клиенте',
     ];

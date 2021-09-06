@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestBonusUser;
 use App\Http\Requests\RequestPenaltyUser;
 use App\Models\ActivityLog;
+use App\Models\CloudFile;
 use App\Models\Deposit;
 use App\Models\Permission;
 use App\Models\Transaction;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Yajra\Datatables\Datatables;
 
@@ -271,7 +273,7 @@ class UsersController extends Controller
      */
     public function activityByDate(Request $request)
     {
-        list($dateFrom, $dateTo) = explode('/', $request->date);
+        [$dateFrom, $dateTo] = explode('/', $request->date);
 
         $user = User::findOrFail($request->user_id);
 
@@ -306,5 +308,17 @@ class UsersController extends Controller
 
         return back()->with('success_short', 'Пользователям назначена роль: ' . $role->name);
     }
-
+    
+    public function getAvatar($id)
+    {
+        $avatar_id = User::findOrFail($id)->avatar;
+        
+        $file = CloudFile::findOrFail($avatar_id);
+        $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
+        
+        return response($fileFromStorage, 200, [
+            'Content-type' => $file->mime,
+        ]);
+    }
+    
 }

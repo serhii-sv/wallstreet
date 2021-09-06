@@ -6,6 +6,8 @@
 
 //use Illuminate\Routing\Route;
 
+use App\Http\Controllers\AccountPanel\ProfileController;
+use App\Http\Controllers\AdminChatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CurrencyExchangesController;
 use App\Http\Controllers\NotificationsController;
@@ -33,7 +35,12 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
-
+            
+            Route::get('/chat', [AdminChatController::class, 'index'])->name('chat');
+            Route::post('/chat/send-message', [AdminChatController::class, 'sendMessage'])->name('chat.send.message');
+            Route::get('/user/avatar/{id}', [UsersController::class, 'getAvatar'])->name('user.get.avatar');
+            
+            
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
 

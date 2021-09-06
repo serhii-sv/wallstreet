@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('private-chat', function ($user){
+    return true;
+});
+//Broadcast::channel('chat', function ($user){
+//    return true;
+//});
+Broadcast::channel('chat', function ($user) {
+    $avatar = $user->avatar ? route('user.get.avatar', $user->id) : asset('images/user.png');
+    return array('id' => $user->id, 'name' => $user->name, 'login' => $user->login, 'avatar' => $avatar);
+});

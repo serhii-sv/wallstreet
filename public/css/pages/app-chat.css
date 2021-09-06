@@ -140,7 +140,7 @@
   font-size: 1.45rem;
 }
 .chat-application .app-chat .chat-content .sidebar .sidebar-chat {
-  height: calc(100vh - 365px);
+  height: calc(100vh - 220px);
   overflow: hidden;
   position: relative;
 }
@@ -162,6 +162,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 100px;
 }
 .chat-application .app-chat .chat-content .sidebar .sidebar-chat .chat-list .chat-user .info-section .star-timing {
   display: flex;
@@ -234,7 +235,7 @@
 .chat-application .app-chat .chat-content .chat-content-area .chat-area {
   background: url(/images/chat-bg.jpg?c7b0d7c168b2285a81e7d7b4dc6d90fb) repeat scroll 0 0;
   padding: 1rem;
-  height: calc(100vh - 380px);
+  height: calc(100vh - 300px);
   overflow: hidden;
   position: relative;
 }
@@ -282,6 +283,7 @@
 }
 .chat-application .app-chat .chat-content .chat-content-area .chat-area .chats .chat .chat-avatar .avatar img {
   width: 40px;
+  height: 40px;
 }
 .chat-application .app-chat .chat-content .chat-content-area .chat-area .chats .chat .chat-body {
   display: flex;

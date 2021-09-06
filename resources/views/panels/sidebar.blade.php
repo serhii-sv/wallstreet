@@ -43,6 +43,14 @@
     </li>
 
     <li class="bold">
+      <a class="waves-effect waves-cyan {{ (Route::is('chat') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('chat') }}">
+        <i class="material-icons">chat</i>
+        <span class="menu-title" data-i18n="Пользователи">Чат</span>
+{{--        <span class="badge badge pill green float-right mr-3"></span>--}}
+      </a>
+    </li>
+
+    <li class="bold">
       <a class="waves-effect waves-cyan {{ (Route::is('users.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('users.index') }}">
         <i class="material-icons">people</i>
         <span class="menu-title" data-i18n="Пользователи">Пользователи</span>

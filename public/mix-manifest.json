@@ -1,6 +1,7 @@
 {
     "/js/materialize.js": "/js/materialize.js",
     "/js/plugins.js": "/js/plugins.js",
+    "/js/app.js": "/js/app.js",
     "/js/search.js": "/js/search.js",
     "/css/laravel-custom.css": "/css/laravel-custom.css",
     "/css/themes/vertical-modern-menu-template/style.css": "/css/themes/vertical-modern-menu-template/style.css",
