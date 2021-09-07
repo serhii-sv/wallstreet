@@ -307,7 +307,7 @@
 
 
         <div class="row">
-            <div class="col s12 m12 l8">
+            <div class="col s12 m12 l12">
                 <div class="row">
                     {{--                <div class="col s12 m12 l8">--}}
                     <div id="striped-table" class="card card card-default scrollspy">
@@ -404,6 +404,55 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <style>
+            .subscription-table thead th {
+                font-weight: 600;
+            }
+            button.badge {
+                border: none;
+            }
+        </style>
+        <div class="row">
+            <div class="col s12 m12 l8">
+                <div class="card subscriber-list-card animate fadeRight">
+                    <div class="card-content pb-1">
+                        <h4 class="card-title mb-0">Последние операции</h4>
+                    </div>
+                    <table class="subscription-table responsive-table highlight">
+                        <thead>
+                        <tr>
+                            <th>Пользователь</th>
+                            <th>Тип</th>
+                            <th>Сумма</th>
+                            <th>Платёжная система</th>
+                            <th>Дата операции</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if(isset($last_operations) && !empty($last_operations))
+                            @foreach($last_operations as $operation)
+                                <tr>
+                                    <td>{{ Str::limit( $operation->user->name, 13) ?? 'Не указано' }}</td>
+                                    <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
+                                    <td>
+                                        <span
+                                            class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+                                    </td>
+                                    <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
+                                    <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
+                                    <td class="center-align">
+                                        <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="col s12 m12 l4">
                 <div class="row">
                     <div class="col s12 m12">
@@ -466,18 +515,18 @@
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
 
                                     <div class="row" style="text-align: center; margin-top:20px;">
-                              <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                                  <label>
-                                    <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
-                                  </label>
-                              </button>
+                                        <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                            <label>
+                                                <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
+                                                <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
+                                            </label>
+                                        </button>
                                         <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
-                                  <label>
-                                    <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">Вывод средств</span>
-                                  </label>
-                              </button>
+                                            <label>
+                                                <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
+                                                <span style="color:white; font-weight: bold;">Вывод средств</span>
+                                            </label>
+                                        </button>
                                     </div>
 
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
@@ -488,12 +537,12 @@
                                                 <br><br>
                                             @endif
                                             <button type="button" class="badge blue"
-                                                  style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                                  <label>
-                                    <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
-                                  </label>
-                              </button>
+                                                    style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                                <label>
+                                                    <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
+                                                    <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
+                                                </label>
+                                            </button>
                                         @endforeach
                                     </div>
 
@@ -505,31 +554,31 @@
                                                 <br><br>
                                             @endif
                                             <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
-                                  <label>
-                                    <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
-                                  </label>
-                              </button>
+                                                <label>
+                                                    <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
+                                                    <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
+                                                </label>
+                                            </button>
                                         @endforeach
                                     </div>
 
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
 
                                     <div class="row" style="margin-top:20px; text-align: center;">
-                              <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                                  <label>
-                                    <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">Реал</span>
-                                  </label>
-                              </button>
+                                        <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                            <label>
+                                                <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
+                                                <span style="color:white; font-weight: bold;">Реал</span>
+                                            </label>
+                                        </button>
 
                                         <button type="button" class="badge blue"
-                                              style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                                  <label>
-                                    <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
-                                    <span style="color:white; font-weight: bold;">Фейк</span>
-                                  </label>
-                              </button>
+                                                style="padding:8px 15px 8px 15px; border-radius: 10px;">
+                                            <label>
+                                                <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
+                                                <span style="color:white; font-weight: bold;">Фейк</span>
+                                            </label>
+                                        </button>
                                     </div>
 
                                     <div style="border-top:1px dotted gray; margin-top:20px;"></div>
@@ -552,55 +601,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <style>
-            .subscription-table thead th {
-                font-weight: 600;
-            }
-            button.badge {
-                border: none;
-            }
-        </style>
-        <div class="row">
-            <div class="col s12 m12 l8">
-                <div class="card subscriber-list-card animate fadeRight">
-                    <div class="card-content pb-1">
-                        <h4 class="card-title mb-0">Последние операции</h4>
-                    </div>
-                    <table class="subscription-table responsive-table highlight">
-                        <thead>
-                        <tr>
-                            <th>Пользователь</th>
-                            <th>Тип</th>
-                            <th>Сумма</th>
-                            <th>Платёжная система</th>
-                            <th>Дата операции</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($last_operations) && !empty($last_operations))
-                            @foreach($last_operations as $operation)
-                                <tr>
-                                    <td>{{ Str::limit( $operation->user->name, 13) ?? 'Не указано' }}</td>
-                                    <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
-                                    <td>
-                                        <span
-                                            class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
-                                    </td>
-                                    <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                                    <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
-                                    <td class="center-align">
-                                        <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
