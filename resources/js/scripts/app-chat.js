@@ -6,7 +6,7 @@ $(document).ready(function () {
       $("#chat-sidenav").removeClass("sidenav");
    }
 
-   // Pefectscrollbar for sidebar and chat area
+  // Pefectscrollbar for sidebar and chat area
    if ($(".sidebar-chat").length > 0) {
       var ps_sidebar_chat = new PerfectScrollbar(".sidebar-chat", {
          theme: "dark"
@@ -38,9 +38,9 @@ $(document).ready(function () {
    });
 
    // Favorite star click
-   $(".favorite i").on("click", function () {
-      $(this).toggleClass("amber-text");
-   });
+   // $(".favorite i").on("click", function () {
+   //    $(this).toggleClass("amber-text");
+   // });
 
    // For chat sidebar on small screen
    if ($(window).width() < 900) {
@@ -49,57 +49,57 @@ $(document).ready(function () {
    }
 
    // chat search filter
-   $("#chat_filter").on("keyup", function () {
-      $('.chat-user').css('animation', 'none')
-      var value = $(this).val().toLowerCase();
-      if (value != "") {
-         $(".sidebar-chat .chat-list .chat-user").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-         });
-         var tbl_row = $(".chat-user:visible").length; //here tbl_test is table name
+   // $("#chat_filter").on("keyup", function () {
+   //    $('.chat-user').css('animation', 'none')
+   //    var value = $(this).val().toLowerCase();
+   //    if (value != "") {
+   //       $(".sidebar-chat .chat-list .chat-user").filter(function () {
+   //          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+   //       });
+   //       var tbl_row = $(".chat-user:visible").length; //here tbl_test is table name
+   //
+   //       //Check if table has row or not
+   //       if (tbl_row == 0) {
+   //          if (!$(".no-data-found").hasClass('show')) {
+   //             $(".no-data-found").addClass('show');
+   //          }
+   //       }
+   //       else {
+   //          $(".no-data-found").removeClass('show');
+   //       }
+   //    }
+   //    else {
+   //       // if search filter box is empty
+   //       $(".sidebar-chat .chat-list .chat-user").show();
+   //    }
+   // });
 
-         //Check if table has row or not
-         if (tbl_row == 0) {
-            if (!$(".no-data-found").hasClass('show')) {
-               $(".no-data-found").addClass('show');
-            }
-         }
-         else {
-            $(".no-data-found").removeClass('show');
-         }
-      }
-      else {
-         // if search filter box is empty
-         $(".sidebar-chat .chat-list .chat-user").show();
-      }
-   });
-
-   $(".chat-area").scrollTop($(".chat-area > .chats").height());
-   // for rtl
-   if ($("html[data-textdirection='rtl']").length > 0) {
-      // Toggle class of sidenav
-      $("#chat-sidenav").sidenav({
-         edge: "right",
-         onOpenStart: function () {
-            $("#sidebar-list").addClass("sidebar-show");
-         },
-         onCloseEnd: function () {
-            $("#sidebar-list").removeClass("sidebar-show");
-         }
-      });
-   }
+   // $(".chat-area").scrollTop($(".chat-area > .chats").height());
+   // // for rtl
+   // if ($("html[data-textdirection='rtl']").length > 0) {
+   //    // Toggle class of sidenav
+   //    $("#chat-sidenav").sidenav({
+   //       edge: "right",
+   //       onOpenStart: function () {
+   //          $("#sidebar-list").addClass("sidebar-show");
+   //       },
+   //       onCloseEnd: function () {
+   //          $("#sidebar-list").removeClass("sidebar-show");
+   //       }
+   //    });
+   // }
 });
 
 
 // Add message to chat
-function enter_chat(source) {
-   var message = $(".message").val();
-   if (message != "") {
-      var html = '<div class="chat-text">' + "<p>" + message + "</p>" + "</div>";
-      $(".message").val("");
-      $(".chat-area").scrollTop($(".chat-area > .chats").height());
-   }
-}
+// function enter_chat(source) {
+//    var message = $(".message").val();
+//    if (message != "") {
+//       var html = '<div class="chat-text">' + "<p>" + message + "</p>" + "</div>";
+//       $(".message").val("");
+//       $(".chat-area").scrollTop($(".chat-area > .chats").height());
+//    }
+// }
 
 $(window).on("resize", function () {
    if ($(window).width() > 899) {

@@ -113,6 +113,7 @@ final class Permissions extends Enum
     
     const CHAT_INDEX = 'chat';
     const CHAT_SEND_MESSAGE = 'chat.send.message';
+    const CHAT_COMMON_SEND_MESSAGE = 'chat.common.send.message';
     
     
     const CLIENT_LOGS = 'accountPanel.logs';
@@ -225,7 +226,8 @@ final class Permissions extends Enum
         self::BANNERS_UPDATE => 'Изменеие банеров',
         
         self::CHAT_INDEX => 'Просмотр админ чата',
-        self::CHAT_SEND_MESSAGE => 'Отправка сообщений в админ чат',
+        self::CHAT_SEND_MESSAGE => 'Отправка личных сообщений админам',
+        self::CHAT_COMMON_SEND_MESSAGE => 'Отправка сообщений в общий админ чат',
         
         self::CLIENT_LOGS => 'Просмотр логов в клиенте',
     ];

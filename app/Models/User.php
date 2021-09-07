@@ -24,24 +24,24 @@ class User extends Authenticatable
     use Uuids;
     use Impersonate;
     use HasReferral;
-
+    
     /**
      * @var string
      */
     public $keyType = 'string';
-
+    
     /** @var bool $incrementing */
     public $incrementing = false;
-
+    
     // Append additional fields to the model
     /**
      * @var string[]
      */
     protected $appends = [
         'short_name',
-        'last_activity'
+        'last_activity',
     ];
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -67,9 +67,9 @@ class User extends Authenticatable
         'ip',
         'is_locked',
         'documents_verified',
-        'last_activity_at'
+        'last_activity_at',
     ];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -79,207 +79,221 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function transactions()
-    {
+    public function transactions() {
         return $this->hasMany(Transaction::class, 'user_id');
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function wallets()
-    {
+    public function wallets() {
         return $this->hasMany(Wallet::class, 'user_id');
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function deposits()
-    {
+    public function deposits() {
         return $this->hasMany(Deposit::class, 'user_id');
     }
-
+    
     /**
      * @param boolean $useSymbols
-     * @param string $currencyId
+     * @param string  $currencyId
+     *
      * @return array
      */
-    public function getBalancesByCurrency($useSymbols = false, $currencyId = null): array
-    {
+    public function getBalancesByCurrency($useSymbols = false, $currencyId = null)
+    : array {
         $wallets = $this->wallets()->with([
-            'currency'
+            'currency',
         ]);
-
+        
         if (null !== $currencyId) {
             $wallets = $wallets->where('currency_id', $currencyId);
         }
-
+        
         $wallets = $wallets->get();
         $balances = [];
-
+        
         foreach ($wallets as $wallet) {
             $arrayKey = true === $useSymbols ? $wallet->currency->symbol : $wallet->currency->code;
-
+            
             if (!isset($balances[$arrayKey])) {
                 $balances[$arrayKey] = 0;
             }
-
+            
             $balances[$arrayKey] += round($wallet->balance, $wallet->currency->precision);
         }
-
+        
         return $balances;
     }
-
+    
     /**
      * Accessor for short name
      * On the right sidebar menu with all users sometimes names are too long
+     *
      * @return false|mixed|string
      */
-    public function getShortNameAttribute(){
-        if(strlen($this->name) <= 18)
+    public function getShortNameAttribute() {
+        if (strlen($this->name) <= 18)
             return $this->name;
-
-        if(explode(' ', $this->name)[0] <= 15)
+        
+        if (explode(' ', $this->name)[0] <= 15)
             return explode(' ', $this->name)[0] . " " . substr(explode(' ', $this->name)[1], 0, 1) . ".";
-
-        if(explode(' ', $this->name)[0] <= 18)
+        
+        if (explode(' ', $this->name)[0] <= 18)
             return explode(' ', $this->name)[0];
-
+        
         return substr($this->name, 0, 15) . "...";
     }
-
+    
     /**
      * Accessor for last activity field
      * Used at the moment for indicate if user is online for at least 2 minutes ago
+     *
      * @return array
      */
-    public function getLastActivityAttribute(){
-        if($this->last_activity_at === null)
+    public function getLastActivityAttribute() {
+        if ($this->last_activity_at === null)
             return [
                 'is_online' => false,
-                'last_seen' => 'Wait auth'
+                'last_seen' => 'Wait auth',
             ];
-
+        
         $currentDate = Carbon::make($this->last_activity_at);
-
-        if($currentDate->greaterThanOrEqualTo(Carbon::now()->startOfDay()))
+        
+        if ($currentDate->greaterThanOrEqualTo(Carbon::now()->startOfDay()))
             return [
                 'is_online' => Carbon::now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
-                'last_seen' => $currentDate->format("g.i A")
+                'last_seen' => $currentDate->format("g.i A"),
             ];
-
+        
         return [
             'is_online' => false,
-            'last_seen' => $currentDate->format("j \of M")
+            'last_seen' => $currentDate->format("j \of M"),
         ];
     }
-
+    
     /**
      * Mutator for last activity field
+     *
      * @param \DateTime|null $time
+     *
      * @return User
      */
-    public function setLastActivity(\DateTime $time = null){
+    public function setLastActivity(\DateTime $time = null) {
         $this->last_activity_at = $time;
-
-        if($time === null)
+        
+        if ($time === null)
             $this->last_activity_at = new \DateTime();
-
+        
         $this->save();
-
+        
         return $this;
     }
-
+    
     /**
      * @return BelongsToMany
      */
-    public function roles(): BelongsToMany
-    {
-        return $this->morphToMany(
-            config('permission.models.role'),
-            'model',
-            config('permission.table_names.model_has_roles'),
-            config('permission.column_names.model_morph_key'),
-            'role_id'
-        )->withTimestamps();
+    public function roles()
+    : BelongsToMany {
+        return $this->morphToMany(config('permission.models.role'), 'model', config('permission.table_names.model_has_roles'), config('permission.column_names.model_morph_key'), 'role_id')->withTimestamps();
     }
-
+    
     /**
      * @return BelongsToMany
      */
-    public function permissions(): BelongsToMany
-    {
-        return $this->morphToMany(
-            config('permission.models.permission'),
-            'model',
-            config('permission.table_names.model_has_permissions'),
-            config('permission.column_names.model_morph_key'),
-            'permission_id'
-        )->withTimestamps();
+    public function permissions()
+    : BelongsToMany {
+        return $this->morphToMany(config('permission.models.permission'), 'model', config('permission.table_names.model_has_permissions'), config('permission.column_names.model_morph_key'), 'permission_id')->withTimestamps();
     }
-      /**
+    
+    /**
      * @return User
      */
-    public function generateMyId() : User
-    {
+    public function generateMyId()
+    : User {
         $maxExists = \App\Models\User::max('my_id');
-        $maxExists = $maxExists > 0 ? $maxExists+1 : rand(500000, 2000000);
-
+        $maxExists = $maxExists > 0 ? $maxExists + 1 : rand(500000, 2000000);
+        
         $this->my_id = $maxExists;
-
+        
         return $this;
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function kanbanBoards()
-    {
+    public function kanbanBoards() {
         return $this->hasMany(KanbanBoard::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function activities()
-    {
+    public function activities() {
         return $this->hasMany(ActivityLog::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function themeSettings()
-    {
+    public function themeSettings() {
         return $this->hasOne(UserThemeSetting::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function verifiedDocuments()
-    {
+    public function verifiedDocuments() {
         return $this->hasMany(UserVerification::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tasks()
-    {
+    public function tasks() {
         return $this->hasMany(Task::class);
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function supportTasks()
-    {
+    public function supportTasks() {
         return $this->hasMany(SupportTask::class);
+    }
+    
+    public function getChatId() {
+        if ($this->id == auth()->user()->id) {
+            return '';
+        }
+        $user_1 = $this->id;
+        $user_2 = auth()->user()->id;
+        $chat = AdminChat::where(function ($query) use ($user_1, $user_2) {
+            $query->where('user_1', $user_1)->Where('user_2', $user_2);
+        })
+            ->orWhere(function ($query) use ($user_1, $user_2) {
+                $query->where('user_1', $user_2)->Where('user_2', $user_1);
+        })
+            ->first();
+        if (empty($chat)){
+            $chat = new AdminChat();
+            $chat->user_1 = $user_1;
+            $chat->user_2 = $user_2;
+            $chat->save();
+        }
+        return $chat->id;
+    }
+    
+    public function getUnreadCommonChatMessagesCount() {
+        return AdminCommonChatUsers::where('user_id', $this->id)->where('is_read', false)->count();
+    }
+    public function getUnreadChatMessagesCount($chat_id) {
+        return AdminChatMessage::where('chat_id', $chat_id)->where('user_id', $this->id)->where('is_read', false)->count();
     }
 }

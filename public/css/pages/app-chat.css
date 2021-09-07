@@ -16,6 +16,16 @@
 1. @import "../themes/vertical-gradient-menu-template/variables"; 
 2. @import "../themes/vertical-gradient-menu-template/theme-variables";
 */
+.status-circle {
+  border-radius: 50%;
+}
+
+.user-chat-status {
+  padding: 5px !important;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
 .chat-application .chat-content-head {
   height: 65px;
   position: relative;
@@ -61,7 +71,6 @@
 }
 .chat-application .app-chat .chat-content .sidebar .info-text {
   overflow: hidden;
-  width: 175px;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: #616161;
@@ -157,6 +166,9 @@
 }
 .chat-application .app-chat .chat-content .sidebar .sidebar-chat .chat-list .chat-user:hover {
   background-color: #fafafa;
+}
+.chat-application .app-chat .chat-content .sidebar .sidebar-chat .chat-list .chat-user .user-section {
+  width: 260px;
 }
 .chat-application .app-chat .chat-content .sidebar .sidebar-chat .chat-list .chat-user .info-section {
   display: flex;

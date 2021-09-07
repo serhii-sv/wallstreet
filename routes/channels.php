@@ -27,3 +27,7 @@ Broadcast::channel('chat', function ($user) {
     $avatar = $user->avatar ? route('user.get.avatar', $user->id) : asset('images/user.png');
     return array('id' => $user->id, 'name' => $user->name, 'login' => $user->login, 'avatar' => $avatar);
 });
+Broadcast::channel('chat.{id}', function ($user) {
+    $avatar = $user->avatar ? route('user.get.avatar', $user->id) : asset('images/user.png');
+    return array('id' => $user->id, 'name' => $user->name, 'login' => $user->login, 'avatar' => $avatar);
+});

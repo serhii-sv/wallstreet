@@ -2,7 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\AdminChatMessage;
+use App\Models\ChatMessage;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,27 +17,40 @@ class AdminChat implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
     public $message;
-    public $user_id;
     public $message_id;
+    public $user;
+    public $chat_id;
+    public $type;
     
-    public function __construct($message, $user_id, $message_id = null) {
-        $this->message = $message;
-        $this->user_id = $user_id;
-        $this->message_id = $message_id;
+    public function __construct($user, $message_id, $type = "message", $chat_id = '') {
+        if ($type == 'delete') {
+            $this->chat_id = $chat_id;
+            $this->message = 'Удалено';
+            $this->message_id = $message_id;
+            $this->user = $user;
+            $this->type = $type;
+        }
+        if ($type == 'message') {
+            $chatMessage = AdminChatMessage::find($message_id);
+            $this->chat_id = $chatMessage->chat_id;
+            $this->user = $chatMessage->user_id;
+            $this->message = $chatMessage->message;
+            $this->message_id = $chatMessage->id;
+            $this->type = $type;
+        }
     }
     
-    
     public function broadcastOn() {
-        return new PresenceChannel('chat');
+        return new PresenceChannel('chat.' . $this->chat_id);
     }
     
     public function broadcastWith() {
         return [
-            'user_id' => $this->user_id,
+            'user' => $this->user,
+            'type' => $this->type,
+            'chat_id' => $this->chat_id,
             'message' => $this->message,
             'message_id' => $this->message_id,
-            'avatar' => User::where('id', $this->user_id)->first()->avatar ? route('user.get.avatar', $this->user_id) : asset('images/user.png'),
         ];
     }
-    
 }
