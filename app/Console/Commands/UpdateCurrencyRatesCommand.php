@@ -59,17 +59,17 @@ class UpdateCurrencyRatesCommand extends Command
             $rateInUsd = (float) round($response['data'][strtoupper($currency->code)]['quote']['USD']['price'], $currency->precision);
 
             $key = strtolower($currency->code).'_to_usd';
-            $rate = Setting::where('s_key', $key)->first();
+            $currencyRate = Setting::where('s_key', $key)->first();
 
-            if (isset($rate->autoupdate) && $rate->autoupdate) {
+            if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
                 Setting::setValue($key, $rateInUsd);
                 $this->comment('updated ' . $key . ' = ' . $rateInUsd);
             }
 
             $key = 'usd_to_' . strtolower($currency->code);
-            $rate = Setting::where('s_key', $key)->first();
+            $currencyRate = Setting::where('s_key', $key)->first();
 
-            if (isset($rate->autoupdate) && $rate->autoupdate) {
+            if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
                 Setting::setValue($key, 1 / $rateInUsd);
                 $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
             }
@@ -96,17 +96,17 @@ class UpdateCurrencyRatesCommand extends Command
             foreach ($response['rates'] as $code => $rate) {
 
                 $key = strtolower($currency->code) . '_to_' . strtolower($code);
-                $rate = Setting::where('s_key', $key)->first();
+                $currencyRate = Setting::where('s_key', $key)->first();
 
-                if (isset($rate->autoupdate) && $rate->autoupdate) {
+                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
                     Setting::setValue($key, $rate);
                     $this->comment('updated ' . $key . ' = ' . $rate);
                 }
 
                 $key = strtolower($code) . '_to_' . strtolower($currency->code);
-                $rate = Setting::where('s_key', $key)->first();
+                $currencyRate = Setting::where('s_key', $key)->first();
 
-                if (isset($rate->autoupdate) && $rate->autoupdate) {
+                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
                     Setting::setValue($key, 1 / $rate);
                     $this->comment('updated ' . $key . ' = ' . (1 / $rate));
                 }
