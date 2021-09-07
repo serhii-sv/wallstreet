@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Permissions;
 use App\Http\Requests\RequestDashboardBonusUser;
 use App\Models\ActivityLog;
 use App\Models\Currency;

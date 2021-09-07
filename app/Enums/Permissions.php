@@ -62,11 +62,6 @@ final class Permissions extends Enum
     const TRANSACTIONS_SHOW    = 'transactions.show';
     const TRANSACTIONS_DESTROY = 'transactions.destroy';
 
-    const NEWS_INDEX   = 'news.index';
-    const NEWS_DESTROY = 'news.destroy';
-    const NEWS_STORE = 'news.store';
-    const NEWS_UPDATE = 'news.update';
-
     const CLOUD_FILES = 'cloud_files.manager';
     const CLOUD_FILES_UPLOAD = 'cloud_files.upload';
     const CLOUD_FILES_DESTROY = 'cloud_files.destroy';
@@ -96,28 +91,44 @@ final class Permissions extends Enum
     const SUPPORT_TASKS_CLOSE = 'support-tasks.close';
     const SUPPORT_TASKS_MESSAGES_STORE = 'support-tasks.messages.store';
 
-    const REFERRALS_INDEX = 'referrals.index';
+    const REFERRALS_BANNERS_INDEX = 'referrals-and-banners.index';
+
     const REFERRALS_STORE = 'referrals.store';
     const REFERRALS_DESTROY = 'referrals.destroy';
     const REFERRALS_UPDATE = 'referrals.update';
 
-    const PRODUCTS_INDEX = 'products.index';
+    const BANNERS_STORE = 'banners.store';
+    const BANNERS_DESTROY = 'banners.destroy';
+    const BANNERS_UPDATE = 'banners.update';
+
+    const NEWS_PRODUCTS_INDEX   = 'news-and-products.index';
+
+    const NEWS_DESTROY = 'news.destroy';
+    const NEWS_STORE = 'news.store';
+    const NEWS_UPDATE = 'news.update';
+
     const PRODUCTS_STORE = 'products.store';
     const PRODUCTS_DESTROY = 'products.destroy';
     const PRODUCTS_UPDATE = 'products.update';
 
-    const BANNERS_INDEX = 'banners.index';
-    const BANNERS_STORE = 'banners.store';
-    const BANNERS_DESTROY = 'banners.destroy';
-    const BANNERS_UPDATE = 'banners.update';
-    
+    const CURRENCY_RATES_UPDATE = 'currency-rates.update';
+    const CURRENCY_RATES_INDEX = 'currency-rates.index';
+
+    const CURRENCY_EXCHANGE_INDEX = 'currency-exchange.index';
+
     const CHAT_INDEX = 'chat';
     const CHAT_SEND_MESSAGE = 'chat.send.message';
     const CHAT_COMMON_SEND_MESSAGE = 'chat.common.send.message';
     
     
     const CLIENT_LOGS = 'accountPanel.logs';
-    protected static $data = [
+
+    const BACKUPS_INDEX = 'backup.index';
+    const BACKUPS_STORE = 'backup.backupDB';
+    const BACKUPS_DESTROY = 'backup.destroy';
+    const BACKUPS_DOWNLOAD = 'backup.download';
+
+    public static $data = [
         self::APP_INIT => 'App init',
         self::DASHBOARD_ADD_BONUS => 'Начислить бонус на главной',
 
@@ -176,11 +187,6 @@ final class Permissions extends Enum
         self::TRANSACTIONS_SHOW => 'Просмотр данных транзакции',
         self::TRANSACTIONS_DESTROY => 'Удаление транзакции',
 
-        self::NEWS_INDEX => 'Список новостей',
-        self::NEWS_DESTROY => 'Удаление новостей',
-        self::NEWS_STORE => 'Добавление новостей',
-        self::NEWS_UPDATE => 'Изменение новостей',
-
         self::CLOUD_FILES => 'Список файлов в облачном хранилище',
         self::CLOUD_FILES_UPLOAD => 'Загрузка файлов в облачное хранилище',
         self::CLOUD_FILES_DESTROY => 'Удаление файлов из облачного хранилища',
@@ -205,7 +211,12 @@ final class Permissions extends Enum
         self::VERIFICATION_REQUESTS_SHOW => 'Просмотр заявок на подтверждение личности',
         self::VERIFICATION_REQUESTS_UPDATE => 'Изменеие заявок на подтверждение личности',
 
-        self::PRODUCTS_INDEX => 'Список продуктов',
+        self::NEWS_PRODUCTS_INDEX => 'Раздел новостей и продуктов',
+
+        self::NEWS_DESTROY => 'Удаление новостей',
+        self::NEWS_STORE => 'Добавление новостей',
+        self::NEWS_UPDATE => 'Изменение новостей',
+
         self::PRODUCTS_STORE => 'Добавление продуктов',
         self::PRODUCTS_DESTROY => 'Удаление продуктов',
         self::PRODUCTS_UPDATE => 'Изменение продуктов',
@@ -215,20 +226,30 @@ final class Permissions extends Enum
         self::SUPPORT_TASKS_CLOSE => 'Закрывание топиков тех поддержки',
         self::SUPPORT_TASKS_MESSAGES_STORE => 'Ответ на топик тех поддержки',
 
-        self::REFERRALS_INDEX => 'Список уровней рефералов',
+        self::REFERRALS_BANNERS_INDEX => 'Раздел уровней рефералов и промо',
+
         self::REFERRALS_STORE => 'Добавление уровней рефералов',
         self::REFERRALS_DESTROY => 'Удаление уровней рефералов',
         self::REFERRALS_UPDATE => 'Изменеие уровней рефералов',
 
-        self::BANNERS_INDEX => 'Список банеров',
         self::BANNERS_STORE => 'Добавление банеров',
         self::BANNERS_DESTROY => 'Удаление банеров',
         self::BANNERS_UPDATE => 'Изменеие банеров',
-        
+
         self::CHAT_INDEX => 'Просмотр админ чата',
         self::CHAT_SEND_MESSAGE => 'Отправка личных сообщений админам',
         self::CHAT_COMMON_SEND_MESSAGE => 'Отправка сообщений в общий админ чат',
         
         self::CLIENT_LOGS => 'Просмотр логов в клиенте',
+
+        self::CURRENCY_RATES_UPDATE => 'Изменения курса валют',
+        self::CURRENCY_RATES_INDEX => 'Список курвсов валют',
+
+        self::CURRENCY_EXCHANGE_INDEX => 'Список обменов валют',
+
+        self::BACKUPS_INDEX => 'Список резервных копий',
+        self::BACKUPS_STORE => 'Добавление резервной копии',
+        self::BACKUPS_DESTROY => 'Удаление резервной копии',
+        self::BACKUPS_DOWNLOAD => 'Скачивание резервной копии',
     ];
 }

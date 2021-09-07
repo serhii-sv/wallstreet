@@ -26,6 +26,8 @@ class CurrencyRateController extends Controller
                     'empty' => '',
                     'currency_rate' => $rate->currency_name,
                     'rate' => number_format($rate->s_value, 2, '.',','),
+                    'updated_at' => $rate->updated_at->format('d-m-Y H:i'),
+                    'data_source' => 'CoinMarketCap',
                     'autoupdate' => $rate->autoupdate ? 'Да' : 'Нет',
                     'actions' => view('pages.currency-rates.partials.actions', compact('rate'))->render(),
                 ];

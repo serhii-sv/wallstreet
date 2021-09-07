@@ -23,6 +23,16 @@ $(document).ready(function () {
                 bSortable: false
             },
             {
+                data: 'updated_at',
+                searchable: false,
+                bSortable: false
+            },
+            {
+                data: 'data_source',
+                searchable: false,
+                bSortable: false
+            },
+            {
                 data: 'autoupdate',
                 searchable: false,
                 bSortable: false
