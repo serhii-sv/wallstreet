@@ -15,4 +15,3 @@ yarn-error.log
 /.vscode
 /resources/lang/*.json
 laradock-*
-/app/Console/Commands/GenerateDemoDataCommand.php
