@@ -66,10 +66,20 @@ class UpdateCurrencyRatesCommand extends Command
                 $this->comment('updated ' . $key . ' = ' . $rateInUsd);
             }
 
+            if (is_null($currencyRate)) {
+                Setting::setValue($key, $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . $rateInUsd);
+            }
+
             $key = 'usd_to_' . strtolower($currency->code);
             $currencyRate = Setting::where('s_key', $key)->first();
 
             if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
+                Setting::setValue($key, 1 / $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
+            }
+
+            if (is_null($currencyRate)) {
                 Setting::setValue($key, 1 / $rateInUsd);
                 $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
             }
@@ -103,10 +113,20 @@ class UpdateCurrencyRatesCommand extends Command
                     $this->comment('updated ' . $key . ' = ' . $rate);
                 }
 
+                if (is_null($currencyRate)) {
+                    Setting::setValue($key, $rate);
+                    $this->comment('updated ' . $key . ' = ' . $rate);
+                }
+
                 $key = strtolower($code) . '_to_' . strtolower($currency->code);
                 $currencyRate = Setting::where('s_key', $key)->first();
 
                 if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
+                    Setting::setValue($key, 1 / $rate);
+                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
+                }
+
+                if (is_null($currencyRate)) {
                     Setting::setValue($key, 1 / $rate);
                     $this->comment('updated ' . $key . ' = ' . (1 / $rate));
                 }
