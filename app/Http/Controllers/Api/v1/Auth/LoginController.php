@@ -50,15 +50,7 @@ use Illuminate\Http\Request;
  *                 example="The email field is required.",
  *              )
  *           ),
- *           @OA\Property(
- *              property="password",
- *              type="array",
- *              collectionFormat="multi",
- *              @OA\Items(
- *                 type="string",
- *                 example="The password field is required.",
- *              )
- *           ),
+ *
  *        ),
  *     )
  *  )
