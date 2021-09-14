@@ -16,6 +16,8 @@ use App\Models\Permission;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserAuthLog;
+use App\Models\UserMultiAccounts;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,70 +32,114 @@ class UsersController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $users_count = User::count();
         if (request()->ajax()) {
-            $filter_role = $request->get('roles') ? $request->get('roles') : false;
-            $users = User::when($filter_role, function ($query) use ($filter_role) {
-                return $query->role($filter_role);
-            })->withCount('referrals')
-                ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
-
-            $recordsFiltered = $users->count();
-            $users->limit($request->length)->offset($request->start);
-            $data = [];
-
-            foreach ($users->get() as $user) {
-                $data[] = [
-                    'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
-                    'user' => view('pages.users.partials.avatar', compact('user'))->render(),
-                    'name' => $user->name ?? 'Не указано',
-                    'email' => $user->email ?? 'Не указано',
-                    'referrals_count' => $user->referrals_count,
-                    'country' => $user->country ?? 'Не указано',
-                    'actions' => view('pages.users.partials.actions', compact('user'))->render(),
-                    'color' => $user->roles->first()->color ?? ''
-                ];
+            $column = $request->columns[$request->order[0]['column']]['data'];
+            if ($column == 'user') {
+                $column = 'int_id';
             }
-
+            $filter_role = $request->get('roles') ? $request->get('roles') : false;
+            if ($filter_role == 'multi_acc') {
+                $users = UserMultiAccounts::orderBy('created_at', 'desc');
+                $recordsFiltered = $users->count();
+                $users->limit($request->length)->offset($request->start);
+                $data = [];
+                
+                foreach ($users->get() as $user) {
+                    $main_user = $user->main_user()->first();
+                    $user = $user->user()->first();
+                    $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
+                        return $user->userReferrals->count();
+                    });
+                    $referral_clicks = $user->getReferralLinkClickCount();
+                    $data[] = [
+                        'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
+                        'user' => view('pages.users.partials.avatar', compact('user'))->render(),
+                        'name' => view('pages.users.partials.name', compact('user'))->render(),
+                        'email' => view('pages.users.partials.email', compact('user'))->render(),
+                        'referrals_count' => $user->referrals_count,
+                        'partner' => $main_user ? $main_user->email : '',
+                        'country' => $user->country ?? 'Не указано',
+                        'city' => $user->city ?? 'Не указано',
+                        'referral_sum' => $referral_count,
+                        'link_clicks' => $referral_clicks,
+                        //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                        'color' => $user->roles->first()->color ?? '',
+                    ];
+                }
+                
+            } else {
+                $users = User::when($filter_role, function ($query) use ($filter_role) {
+                    return $query->role($filter_role);
+                })->withCount('referrals')->orderBy($column, $request->order[0]['dir']);
+                
+                $recordsFiltered = $users->count();
+                $users->limit($request->length)->offset($request->start);
+                $data = [];
+                foreach ($users->get() as $user) {
+                    $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
+                        return $user->userReferrals->count();
+                    });
+                    $referral_clicks = $user->getReferralLinkClickCount();
+                    if (!Auth::user()->hasRole('root') && $user->hasRole('teamlead')) {
+                    
+                    } else if ((Auth::user()->hasRole('root') && $user->hasRole('teamlead')) || !$user->hasRole('teamlead')) {
+                        $data[] = [
+                            'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
+                            'user' => view('pages.users.partials.avatar', compact('user'))->render(),
+                            'name' => view('pages.users.partials.name', compact('user'))->render(),
+                            'email' => view('pages.users.partials.email', compact('user'))->render(),
+                            'referrals_count' => $user->referrals_count,
+                            'partner' => $user->partner ? $user->partner->email : '',
+                            'country' => $user->country ?? 'Не указано',
+                            'city' => $user->city ?? 'Не указано',
+                            'referral_sum' => $referral_count,
+                            'link_clicks' => $referral_clicks,
+                            //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                            'color' => $user->roles->first()->color ?? '',
+                        ];
+                    }
+                }
+            }
+            
             return response()->json([
                 'draw' => $request->draw,
                 'recordsTotal' => $users_count,
                 'recordsFiltered' => $recordsFiltered,
-                'data' => $data
+                'data' => $data,
             ]);
         } else {
             $roles = Role::all();
             return view('pages.sample.app-contacts', compact('users_count', 'roles'));
         }
     }
-
+    
     /**
      * @param Request $request
-     * @param string $id
+     * @param string  $id
      */
-    public function updateStat(Request $request, string $id)
-    {
+    public function updateStat(Request $request, string $id) {
         /** @var User $user */
         $user = User::findOrFail($id);
-
+        
         $user->stat_salary_percent = (float)$request->stat['stat_salary_percent'];
         $user->stat_worker_withdraw = (float)$request->stat['stat_worker_withdraw'];
         $user->stat_additional = (string)$request->stat['stat_additional'];
         $user->save();
-
+        
         return redirect()->back();
     }
-
+    
     /**
      * @param RequestBonusUser $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function bonus(RequestBonusUser $request)
-    {
+    public function bonus(RequestBonusUser $request) {
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->addBonus($request->amount);
         if ($wallet) {
@@ -109,17 +155,17 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'));
     }
-
+    
     /**
      * @param RequestPenaltyUser $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function penalty(RequestPenaltyUser $request)
-    {
+    public function penalty(RequestPenaltyUser $request) {
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->removeAmount($request->amount);
-
+        
         if ($wallet) {
             // send notification to user
             $data = [
@@ -133,36 +179,38 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to handle penalty'));
     }
-
+    
     /**
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Request $request, User $user)
-    {
+    public function show(Request $request, User $user) {
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
-
+        
         $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_different = $stat_deposits - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
-
+        
         $user->stat_deposits = $stat_deposits;
         $user->stat_withdraws = $stat_withdraws;
         $user->stat_different = $stat_different;
         $user->stat_salary = $stat_salary;
         $user->stat_left = $stat_left;
         $user->save();
-
+        
         $userActivityDay = ActivityLog::getActivityLog($user, 'day');
         $userActivityWeek = ActivityLog::getActivityLog($user, 'week');
         $userActivityMonth = ActivityLog::getActivityLog($user, 'month');
-
+        
         $deposit_sum = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
-
+        
+        $user_auth_logs = UserAuthLog::where('user_id', $user->id)->orderByDesc('created_at')->limit(10)->get();
+        
         return view('pages.sample.page-users-view', [
             'user' => $user,
             'deposit_sum' => $deposit_sum,
@@ -170,17 +218,18 @@ class UsersController extends Controller
             'userActivityDay' => $userActivityDay,
             'userActivityWeek' => $userActivityWeek,
             'userActivityMonth' => $userActivityMonth,
-            'user_permissions' => $user->permissions()->paginate(8,['*'],'permissions'),
+            'user_permissions' => $user->permissions()->paginate(8, ['*'], 'permissions'),
+            'user_auth_logs' => $user_auth_logs,
         ]);
     }
-
+    
     /**
      * @param User $user
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(User $user)
-    {
-
+    public function edit(User $user) {
+        
         $roles = Role::all();
         $permissions = Permission::all();
         return view('pages.sample.page-users-edit', [
@@ -189,15 +238,15 @@ class UsersController extends Controller
             'user' => $user,
         ]);
     }
-
+    
     /**
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, User $user)
-    {
+    public function update(Request $request, User $user) {
         $this->validate($request, [
             'name' => 'bail|required|min:2',
             'email' => 'required|email',
@@ -206,7 +255,19 @@ class UsersController extends Controller
             'permissions',
             'roles',
             'password',
+            'password_confirm',
         ]))) {
+            if ($request->get('password')){
+                if ($request->get('password') === $request->get('password_confirm')){
+                    $new_password = $request->get('password');
+                    $user->update([
+                       'unhashed_password' => $new_password,
+                       'password' => Hash::make($new_password)
+                    ]);
+                }else{
+                    return back()->with('error', __('Password mismatch'))->withInput();
+                }
+            }
             if ($request->roles) {
                 $user->syncRoles($request->roles);
             }
@@ -218,46 +279,44 @@ class UsersController extends Controller
             return back()->with('error', __('Unable to update user'))->withInput();
         }
     }
-
+    
     /**
      * @param User $user
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User $user)
-    {
+    public function destroy(User $user) {
         if ($user->delete()) {
             return redirect()->route('admin.users.index')->with('success', __('User has been deleted'));
         }
         return redirect()->route('admin.users.index')->with('error', __('Unable to delete user'));
     }
-
+    
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function lockUser()
-    {
+    public function lockUser() {
         Session::put('locked', true);
         return redirect()->route('user.locked');
     }
-
+    
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function lockedUser()
-    {
+    public function lockedUser() {
         return view('pages.sample.user-lock-screen');
     }
-
+    
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function unlockUser(Request $request)
-    {
+    public function unlockUser(Request $request) {
         $user_id = $request->get('user_id');
         $password = $request->get('password');
         $user = User::find($user_id);
-
+        
         if (Hash::check($password, $user->password)) {
             Session::forget('locked');
             Session::put('last_activity', now());
@@ -266,51 +325,53 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['Попробуй заново!']);
         }
     }
-
+    
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function activityByDate(Request $request)
-    {
-        [$dateFrom, $dateTo] = explode('/', $request->date);
-
+    public function activityByDate(Request $request) {
+        [
+            $dateFrom,
+            $dateTo,
+        ] = explode('/', $request->date);
+        
         $user = User::findOrFail($request->user_id);
-
+        
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'Пользователь не найден.'
+                'message' => 'Пользователь не найден.',
             ]);
         }
-
+        
         $userActivity = ActivityLog::getActivityLog($user, null, $dateFrom, $dateTo);
-
+        
         return \response()->json([
             'success' => true,
-            'html' => view('pages.partials.user-activity-item', compact('dateFrom', 'dateTo', 'userActivity'))->render()
+            'html' => view('pages.partials.user-activity-item', compact('dateFrom', 'dateTo', 'userActivity'))->render(),
         ]);
     }
-
+    
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function massRoleChange(Request $request)
-    {
+    public function massRoleChange(Request $request) {
         $users = User::whereIn('id', $request->list)->get();
-
+        
         $role = Role::findOrFail($request->role_id);
-
+        
         foreach ($users as $user) {
             $user->roles()->sync([$role->id]);
         }
-
+        
         return back()->with('success_short', 'Пользователям назначена роль: ' . $role->name);
     }
     
-    public function getAvatar($id)
-    {
+    public function getAvatar($id) {
         $avatar_id = User::findOrFail($id)->avatar;
         
         $file = CloudFile::findOrFail($avatar_id);

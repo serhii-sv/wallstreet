@@ -41,17 +41,22 @@ class RolesController extends Controller
             'name.unique' => 'Название роли уже занята',
         ]);
         $role = Role::findById($id);
-        
+        if($role->is_fixed){
+            return redirect()->back()->with('error', 'Эту роль нельзя изменять!');
+        }
         if ($role->update($request->except('method', '_token'))) {
             return redirect()->back()->with('success', 'Роль успешно обновлена!');
         } else {
-            return redirect()->back()->with('errors', 'Ошибка! Попробуйте заново');
+            return redirect()->back()->with('error', 'Ошибка! Попробуйте заново');
         }
     }
     
     public function delete($id) {
         $role = Role::findById($id);
         $users = User::role($role->name)->get();
+        if($role->is_fixed){
+            return redirect()->back()->with('error', 'Эту роль нельзя изменять!');
+        }
         DB::beginTransaction();
         try {
             if (!empty($users)) {

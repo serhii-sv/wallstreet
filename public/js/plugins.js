@@ -378,10 +378,11 @@ $(function () {
 
   $(".slide-out-right-sidenav-chat").sidenav({
     edge: "right"
-  }); // check for if touch device
+  }); //
+  // // check for if touch device
 
   if (!is_touch_device()) {
-    // Right side slide-out (Chat, settings & timeline)
+    //   // Right side slide-out (Chat, settings & timeline)
     if ($("#slide-out.leftside-navigation").length > 0) {
       if (!$("#slide-out.leftside-navigation").hasClass("native-scroll")) {
         var ps_leftside_nav = new PerfectScrollbar(".leftside-navigation", {
@@ -396,33 +397,31 @@ $(function () {
       var ps_slideout_right = new PerfectScrollbar(".slide-out-right-body #messages, .chat-body .collection", {
         suppressScrollX: true,
         wheelPropagation: false
-      });
-      var ps_slideout_right = new PerfectScrollbar(".slide-out-right-body #settings", {
-        suppressScrollX: true,
-        wheelPropagation: false
-      });
+      }); //     var ps_slideout_right = new PerfectScrollbar(".slide-out-right-body #settings", {
+      //       suppressScrollX: true,
+      //       wheelPropagation: false
+      //     });
+
       var ps_slideout_right = new PerfectScrollbar(".slide-out-right-body #activity", {
         suppressScrollX: true,
         wheelPropagation: false
       });
-    }
+    } //   if ($(".chat-body .collection").length > 0) {
+    //     var ps_slideout_chat = new PerfectScrollbar(".chat-body .collection", {
+    //       suppressScrollX: true
+    //     });
+    //   }
+    //   // for horizonatal nav scroll
+    //   if ($("#ul-horizontal-nav").length > 0) {
+    //     var ps_horizontal_nav = new PerfectScrollbar("#ul-horizontal-nav", {
+    //       wheelPropagation: false,
+    //     });
+    //   }
+    //
+    //   $("#ul-horizontal-nav").on("mouseenter", function () {
+    //     ps_horizontal_nav.update();
+    //   })
 
-    if ($(".chat-body .collection").length > 0) {
-      var ps_slideout_chat = new PerfectScrollbar(".chat-body .collection", {
-        suppressScrollX: true
-      });
-    } // for horizonatal nav scroll
-
-
-    if ($("#ul-horizontal-nav").length > 0) {
-      var ps_horizontal_nav = new PerfectScrollbar("#ul-horizontal-nav", {
-        wheelPropagation: false
-      });
-    }
-
-    $("#ul-horizontal-nav").on("mouseenter", function () {
-      ps_horizontal_nav.update();
-    });
   } else {
     $('.leftside-navigation,.slide-out-right-body, .chat-body .collection, #ul-horizontal-nav').css('overflow', "scroll");
   } //Chat search filter
@@ -475,7 +474,8 @@ $(function () {
     }
   }
 
-  $(".toggle-fullscreen").click(function () {
+  $(".toggle-fullscreen").click(function (e) {
+    e.preventDefault();
     toggleFullScreen();
   }); // Detect touch screen and enable scrollbar if necessary
 

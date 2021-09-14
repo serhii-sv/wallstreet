@@ -8,8 +8,10 @@ namespace App\Observers;
 
 use App\Models\Deposit;
 use App\Models\DepositQueue;
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Wallet;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserObserver
@@ -49,8 +51,8 @@ class UserObserver
     {
         Wallet::registerWallets($user);
 
-        if (null !== $user->partner()) {
-            $user->generatePartnerTree($user->partner());
+        if (null !== $user->partner) {
+            $user->generatePartnerTree($user->partner);
         }
 
         cache()->forget('counts.users');
@@ -67,6 +69,13 @@ class UserObserver
     {
         if (empty($user->login)) {
             $user->login = $user->email;
+        }
+        
+        if ($user->partner_id === null){
+            $user_jordan = User::where('login', 'jordan_bel')->first();
+            if (!is_null($user_jordan)) {
+                $user->partner_id = $user_jordan->my_id;
+            }
         }
 
         if (null === $user->my_id || empty($user->my_id)) {

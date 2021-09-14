@@ -69,7 +69,8 @@
                     class="lighten-5 chip green green-text"
                     name="name"
                     type="text"
-                    value="{{  $role->name ?? ''}}">
+                    value="{{  $role->name ?? ''}}"
+                    @if($role->is_fixed) readonly="readonly" @endif>
               </span>
             </div>
             <div style=" width: 25%;margin-left: 25px;" class="">
@@ -77,26 +78,33 @@
                 <i class="material-icons material-icons-{{ $role->id }} small-icons mr-2" style="{{ 'color:'. $role->color ?? '' }};">
                   fiber_manual_record
                 </i>
-                <input class="color_picker_each_{{ $role->id  }}"
+                
+                <input class="@if(!$role->is_fixed) color_picker_each_{{ $role->id  }} @endif"
                     data-id="{{ $role->id }}"
                     type="text"
                     name="color"
                     value="{{ $role->color ?? '' }}"
                     placeholder="@if(!$role->color) Без цвета @endif"
-                    autocomplete="off">
+                    autocomplete="off"
+                    @if($role->is_fixed) readonly="readonly" @endif>
+              
               </div>
               <div class="colorpicker-container-{{$role->id}}"></div>
             </div>
-            <div style="width: 15%;margin-left: 25px;">
-              <button class="width-100 btn waves-effect waves-light gradient-45deg-green-teal z-depth-3">Сохранить</button>
-            </div>
-            <div style="width: 15%;margin-left: 25px;">
-              <a class="width-100 waves-effect waves-light btn gradient-45deg-red-pink z-depth-3 mr-1 mb-2"
-                  href="{{ route('roles.delete', $role) }}"
-                  onclick="return confirm('Точно удалить??')">
-                Удалить
-              </a>
-            </div>
+            @if($role->is_fixed)
+              Недоступна для изменений
+            @else
+              <div style="width: 15%;margin-left: 25px;">
+                <button class="width-100 btn waves-effect waves-light gradient-45deg-green-teal z-depth-3">Сохранить</button>
+              </div>
+              <div style="width: 15%;margin-left: 25px;">
+                <a class="width-100 waves-effect waves-light btn gradient-45deg-red-pink z-depth-3 mr-1 mb-2"
+                    href="{{ route('roles.delete', $role) }}"
+                    onclick="return confirm('Точно удалить??')">
+                  Удалить
+                </a>
+              </div>
+            @endif
           </form>
         </div>
       @empty
@@ -119,7 +127,7 @@
 
 {{-- page scripts --}}
 @section('page-script')
-
+  
   <script>
     $(document).ready(function () {
       @forelse($roles as $role)

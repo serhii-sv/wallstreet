@@ -18,11 +18,11 @@
 {{--            <span class="flag-icon flag-icon-gb"></span>--}}
 {{--          </a>--}}
 {{--        </li>--}}
-{{--        <li class="hide-on-med-and-down">--}}
-{{--          <a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);">--}}
-{{--            <i class="material-icons">settings_overscan</i>--}}
-{{--          </a>--}}
-{{--        </li>--}}
+        <li class="hide-on-med-and-down">
+          <a class="waves-effect waves-block waves-light toggle-fullscreen" href="">
+            <i class="material-icons">settings_overscan</i>
+          </a>
+        </li>
         <li class="hide-on-large-only search-input-wrapper">
           <a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);">
             <i class="material-icons">search</i>
@@ -108,7 +108,7 @@
             width: 290px !important;
         }
         .navbar-list li:first-child {
-            margin-right: -15px;
+            margin-right: 0;
         }
       </style>
       <ul class="dropdown-content" id="profile-dropdown">

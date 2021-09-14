@@ -9,9 +9,9 @@
 <script src="{{asset('js/search.js')}}"></script>
 <script src="{{ asset('js/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{asset('js/custom/custom-script.js')}}"></script>
-<script src="{{ asset('js/scripts/ui-alerts.js') }}">
-
-</script><script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
+<script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{ asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 @if ($configData['isCustomizer']=== true)
   <script src="{{asset('js/scripts/customizer.js')}}"></script>
 @endif

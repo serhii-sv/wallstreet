@@ -65,6 +65,18 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'    => '₽',
                 'precision' => 2,
             ],
+            'UAH' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('UAH [yes|no]', 'yes'),
+                'name'      => 'Ukraine hryvnia',
+                'symbol'    => '₴',
+                'precision' => 6,
+            ],
+            'KZT' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('KZT [yes|no]', 'yes'),
+                'name'      => 'Kazakhstani tenge',
+                'symbol'    => '₸',
+                'precision' => 6,
+            ],
             'BTC' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('BTC "bitcoin" [yes|no]', 'yes'),
                 'name'      => 'Bitcoins',
@@ -110,6 +122,12 @@ class RegisterCurrenciesCommand extends Command
             'DOGE' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Dogecoin "DOGE" [yes|no]', 'yes'),
                 'name'      => 'Dogecoin',
+                'symbol'    => 'Ð',
+                'precision' => 8,
+            ],
+            'BNB' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Binance Coin [yes|no]', 'yes'),
+                'name'      => 'Binance Coin',
                 'symbol'    => 'Ð',
                 'precision' => 8,
             ],

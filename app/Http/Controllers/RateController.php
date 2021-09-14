@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestRateStoreUpdate;
 use App\Models\Rate;
+use App\Models\RateGroup;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 
@@ -23,7 +24,8 @@ class RateController extends Controller
     public function index()
     {
         $rates = Rate::all();
-        return view('pages.rates.index', compact('rates'));
+        $rate_groups = RateGroup::all();
+        return view('pages.rates.index', compact('rates', 'rate_groups'));
     }
 
     /**
@@ -31,7 +33,8 @@ class RateController extends Controller
      */
     public function create()
     {
-        return view('pages.rates.create');
+        $rate_groups = RateGroup::all();
+        return view('pages.rates.create', compact( 'rate_groups'));
     }
 
     /**
@@ -57,7 +60,7 @@ class RateController extends Controller
     {
         $rate = Rate::findOrFail($id);
         return view('pages.rates.show', [
-            'rate' => $rate
+            'rate' => $rate,
         ]);
     }
 
@@ -68,8 +71,10 @@ class RateController extends Controller
     public function edit($id)
     {
         $rate = Rate::findOrFail($id);
+        $rate_groups = RateGroup::all();
         return view('pages.rates.edit', [
-            'rate' => $rate
+            'rate' => $rate,
+            'rate_groups' => $rate_groups,
         ]);
     }
 

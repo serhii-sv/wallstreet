@@ -296,4 +296,16 @@ class User extends Authenticatable
     public function getUnreadChatMessagesCount($chat_id) {
         return AdminChatMessage::where('chat_id', $chat_id)->where('user_id', $this->id)->where('is_read', false)->count();
     }
+    
+    public function partner() {
+        return $this->belongsTo(User::class, 'partner_id', 'my_id');
+    }
+    public function userReferrals() {
+        return $this->hasMany(User::class, 'partner_id', 'my_id');
+    }
+    
+    public function getReferralLinkClickCount() {
+        return $this->hasMany(ReferralLinkStat::class, 'partner_id','id')->sum('click_count');
+    }
+    
 }

@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             TransactionTypesSeeder::class,
             PermissionsSeeder::class,
-            UsersSeeder::class
+            UsersSeeder::class,
+            DepositBonusSeeder::class,
+            RateGroupsSeeder::class,
         ]);
     }
 }

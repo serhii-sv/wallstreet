@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserAuthLog;
+use App\Models\UserMultiAccounts;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,16 +24,16 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
+    
     use AuthenticatesUsers;
-
+    
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
+    
     /**
      * Create a new controller instance.
      *
@@ -39,7 +42,7 @@ class LoginController extends Controller
     public function __construct() {
         $this->middleware(['guest'])->except('logout');
     }
-
+    
     /**
      * @param Request $request
      */
@@ -47,29 +50,27 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => config('app.env') == 'production'
-                ? 'required|recaptchav3:login,0.5'
-                : '',
+            'g-recaptcha-response' => config('app.env') == 'production' ? 'required|recaptchav3:login,0.5' : '',
         ], [
             'recaptchav3' => 'Captcha error! Try again',
         ]);
     }
-
+    
     /**
      * @param Request $request
-     * @param $user
+     * @param         $user
      */
-    protected function authenticated(Request $request, $user)
-    {
+    protected function authenticated(Request $request, $user) {
         //
-        $this->createUserAuthLog($request, $user);
+         $this->createUserAuthLog($request, $user);
+        $this->checkForMultiAccounts($request, $user);
     }
-
+    
     /**
      * @param $request
      * @param $user
      */
-    public function createUserAuthLog($request, $user) {
+    public function createUserAuthLog(Request $request, $user) {
         $user_log = new \App\Models\UserAuthLog();
         $user_log->user_id = $user->id;
         $user_log->ip = $request->ip();
@@ -78,14 +79,36 @@ class LoginController extends Controller
             'root',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
+        
     }
-
+    
+    public function checkForMultiAccounts(Request $request, $user) {
+        $current_ip = $request->ip();
+        $main_user = User::where('ip', $current_ip)->where('id', '!=', $user->id)->first();
+        $main_user_log = UserAuthLog::where('ip', $current_ip)->where('user_id', '!=', $user->id)->first();
+        if (!empty($main_user->isEmpty)) {
+            $this->createMultiAccountRecord($user, $main_user, $current_ip);
+        } else if (!empty($main_user_log)) {
+            $this->createMultiAccountRecord($user, $main_user_log->user_id, $current_ip);
+        }
+    }
+    
     /**
      * @return string
      */
-    public function username(){
+    public function username() {
         $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'login';
         request()->merge([$field => request()->email]);
         return $field;
+    }
+    
+    public function createMultiAccountRecord($user, $main_user, $ip) {
+        if(!(UserMultiAccounts::where('user_id', $user->id)->where('main_user_id', $main_user)->count() > 0 )){
+            $multi_acc = new UserMultiAccounts();
+            $multi_acc->user_id = $user->id;
+            $multi_acc->main_user_id = $main_user;
+            $multi_acc->ip = $ip;
+            $multi_acc->save();
+        }
     }
 }

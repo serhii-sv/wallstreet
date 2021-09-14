@@ -69,7 +69,6 @@ class RegisterController extends Controller
         if (isset($_COOKIE['partner_id'])) {
             $partner_id = $_COOKIE['partner_id'];
         } elseif (isset($data['partner_id'])) {
-
             $partner_id = $data['partner_id'];
         } else {
             $partner_id = null;

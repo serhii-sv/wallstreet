@@ -50,7 +50,7 @@
                                                         @if($rate->upgradable)
                                                             <li class="collection-item">Возможность апгрейда</li>
                                                         @endif
-                                                        @if($rate->autoclose)
+                                                        @if($rate->overall)
                                                             <li class="collection-item">Возврат депозита в конце срока</li>
                                                         @endif
                                                     </ul>

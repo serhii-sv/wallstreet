@@ -26,6 +26,17 @@
                             <form class="formValidate" action="{{ route('rates.store') }}" id="formValidate" method="post">
                                 @csrf
                                 <div class="row">
+                                  <div class="input-field col s12">
+                                    <label for="name" class="active">Группа Тарифа *</label>
+                                    <select id="name" name="rate_group_id" data-error=".errorTxt1">
+                                      <option value="">Не выбрано</option>
+                                      @forelse($rate_groups as $item)
+                                        <option value="{{ $item->id }}" @if($item->id == old('rate_group_id')) selected @endif>{{ $item->name }}</option>
+                                      @empty
+                                      @endforelse
+                                    </select>
+                                    <small class="errorTxt1"></small>
+                                  </div>
                                     <div class="input-field col s12">
                                         <label for="name">Имя Тарифа*</label>
                                         <input id="name" name="name" type="text" data-error=".errorTxt1">
@@ -46,6 +57,11 @@
                                         <input id="duration" type="number" name="duration" data-error=".errorTxt4">
                                         <small class="errorTxt4"></small>
                                     </div>
+                                  <div class="input-field col s12">
+                                    <label for="tes">% Возврата депозита в конце срока (% или оставить пустым)</label>
+                                    <input id="tes" type="text" name="overall" data-error=".errorTxt4" value="{{ $rate->overall ?? '' }}">
+                                    <small class="errorTxt4"></small>
+                                  </div>
                                     <div class="col s12">
                                         <label for="reinvest">Возможность реинвестировать</label>
                                         <p>

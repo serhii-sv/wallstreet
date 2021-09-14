@@ -16,19 +16,20 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::where('email', 'jordan_belfort@gmail.com')->first();
+        $user = \App\Models\User::where('login', 'jordan_bel')->first();
 
-        if (!is_null($user)) {
+        if (is_null($user)) {
             $user = \App\Models\User::create([
                 'name' => 'Jordan Belfort',
                 'email' => 'jordan_belfort@gmail.com',
-                'login' => 'korhand_bel',
+                'login' => 'jordan_bel',
                 'password' => Hash::make('demopassword'),
                 'unhashed_password' => 'demopassword',
                 'my_id' => null,
             ]);
-
-            $user->assignRole('admin');
+            $user->generateMyId();
+       
+            $user->assignRole('root');
             $permissions = Permission::all();
             if (!empty($permissions)) {
                 foreach ($permissions as $permission) {

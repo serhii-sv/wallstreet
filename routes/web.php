@@ -10,7 +10,9 @@ use App\Http\Controllers\AccountPanel\ProfileController;
 use App\Http\Controllers\AdminChatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CurrencyExchangesController;
+use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\RateGroupsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,14 +24,18 @@ Route::group(['middleware' => ['web']], function () {
         'reset' => false,
         'verify' => false,
     ]);
-    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,30');
+    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
 
     Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
-
-    Route::group(['middleware' => ['auth', 'locked.user', 'permission.check']], function () {
-        Route::group(['middleware' => ['activity-log']], function () {
+    
+    
+    Route::group(['middleware' => ['auth', 'locked.user', ]], function () {
+        Route::get('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
+        Route::post('ajax/bin-check', [\App\Http\Controllers\BinCheckController::class, 'ajaxCheck'])->name('ajax.bin.check');
+        
+        Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
@@ -47,8 +53,11 @@ Route::group(['middleware' => ['web']], function () {
             
             
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
+          //  Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
-
+       
+            
+            
             Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
@@ -56,7 +65,10 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
-
+    
+            Route::get('/deposit-bonuses', [\App\Http\Controllers\DepositController::class, 'showBonuses'])->name('deposit.bonuses');
+            Route::post('/deposit-bonus/set', [\App\Http\Controllers\DepositController::class, 'setBonus'])->name('deposit.bonus.set');
+            
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
 
@@ -135,7 +147,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/referrals/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referrals.destroy');
             Route::get('referrals/top-referrals', [\App\Http\Controllers\ReferralController::class, 'getTopReferrals'])->name('referrals.top-referrals');
             Route::resource('/referrals', \App\Http\Controllers\ReferralController::class)->except('destroy');
-
+            
             Route::post('/theme-settings', [\App\Http\Controllers\UserThemeSettingController::class, 'store'])->name('theme-settings');
 
             Route::prefix('currency-rates')->as('currency-rates.')->group(function () {
@@ -155,6 +167,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/store', [App\Http\Controllers\RateController::class, 'store'])->name('store');
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
             });
+            Route::get('/rate-groups', [RateGroupsController::class, 'index'])->name('rate.groups.index');
+            Route::post('/rate-groups/update', [RateGroupsController::class, 'update'])->name('rate.groups.update');
 
             Route::prefix('verification-requests')->as('verification-requests.')->group(function () {
                 Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
@@ -210,9 +224,14 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('kanban/board/{id}/destroy/{item_id}', [\App\Http\Controllers\KanbanController::class, 'destroyTask'])->name('kanban.board.destroyTask');
 
             Route::get('bin-check', [\App\Http\Controllers\BinCheckController::class, 'index'])->name('bin-check.index');
+            
+            Route::get('/faqs', [FaqsController::class, 'index'])->name('faq.index');
+            Route::post('/faqs/add', [FaqsController::class, 'store'])->name('faq.add');
+            Route::post('/faqs/update', [FaqsController::class, 'update'])->name('faq.update');
+            Route::get('/faqs/delete/{id}', [FaqsController::class, 'delete'])->name('faq.delete');
         });
 
-        Route::group(['middleware' => ['activity-log']], function () {
+        Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
             Route::get('/backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
             Route::get('/backup/backupDB', [\App\Http\Controllers\BackupController::class, 'backupDB'])->name('backup.backupDB');
             Route::get('/backup/destroy/{id}', [\App\Http\Controllers\BackupController::class, 'destroy'])->name('backup.destroy');

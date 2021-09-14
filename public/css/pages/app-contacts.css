@@ -37,7 +37,7 @@
   border-color: rgba(0, 0, 0, 0.12);
 }
 .content-area .app-wrapper .dataTables_wrapper table.dataTable thead th {
-  min-width: 69px;
+  min-width: 40px;
   color: #616161;
 }
 .content-area .app-wrapper .dataTables_wrapper table.dataTable thead th.background-image-none {

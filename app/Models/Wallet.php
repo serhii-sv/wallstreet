@@ -274,20 +274,20 @@ class Wallet extends Model
                     $summaryAmount += $partnerAmount;
 
 
-                    $notificationActive = $partner->socialMeta()
-                        ->where('s_key', 'settings_notifications_referral '.$level.'_level')
-                        ->where('s_value', 1)
-                        ->count();
-
-                    if ($notificationActive > 0) {
-//                        $partner->sendNotification('affiliate_earnings', [
-//                            'amount'            => $partnerAmount,
-//                            'receiveWallet'     => $partnerWallet,
-//                            'sender'            => $user,
-//                            'receive'           => $partner,
-//                            'level'             => $level,
-//                        ]);
-                    }
+//                    $notificationActive = $partner->socialMeta()
+//                        ->where('s_key', 'settings_notifications_referral '.$level.'_level')
+//                        ->where('s_value', 1)
+//                        ->count();
+//
+//                    if ($notificationActive > 0) {
+////                        $partner->sendNotification('affiliate_earnings', [
+////                            'amount'            => $partnerAmount,
+////                            'receiveWallet'     => $partnerWallet,
+////                            'sender'            => $user,
+////                            'receive'           => $partner,
+////                            'level'             => $level,
+////                        ]);
+//                    }
 
                     break;
                 }
