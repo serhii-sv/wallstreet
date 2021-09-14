@@ -9,6 +9,7 @@ namespace App\Console\Commands;
 use App\Models\Permission;
 use Faker\Factory;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 /**
  * Class CreateRootCommand
@@ -104,6 +105,7 @@ class CreateRootCommand extends Command
             'password' => bcrypt($password),
             'unhashed_password' => $password,
             'my_id'    => null,
+            'api_token' => Str::random(60),
         ]);
         $user->assignRole('root');
         $permissions = Permission::all();

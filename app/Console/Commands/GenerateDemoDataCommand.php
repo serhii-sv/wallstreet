@@ -22,6 +22,7 @@ use App\Models\Wallet;
 use Illuminate\Console\Command;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class GenerateDemoDataCommand extends Command
 {
@@ -154,6 +155,7 @@ class GenerateDemoDataCommand extends Command
                 'email' => $this->faker->email,
                 'login' => $this->faker->word . '.' . $this->faker->word,
                 'unhashed_password' => 'demopassword',
+                'api_token' => Str::random(60),
                 'password' => bcrypt('demopassword'),
                 'partner_id' => !empty($partner) ? $partner->my_id : null,
                 'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
