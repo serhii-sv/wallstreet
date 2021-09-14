@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,38 +28,6 @@ use Illuminate\Support\Str;
  *       @OA\Property(property="name", type="string", example="John Doe")
  *    ),
  * ),
- *      @OA\Parameter(
- *      name="name",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
- *  @OA\Parameter(
- *      name="email",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
- *   @OA\Parameter(
- *      name="password",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
- *      @OA\Parameter(
- *      name="password_confirmation",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
  *     @OA\Response(
  *    response=200,
  *    description="Success",
@@ -66,9 +35,10 @@ use Illuminate\Support\Str;
  *      @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
  * @OA\Property(property="email", type="string", format="email", example="user@gmail.com"),
  * @OA\Property(property="name", type="string", maxLength=32, example="John Doe"),
- * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"),
- * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp"),
- * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp"),
+ * @OA\Property(property="login", type="string", maxLength=32, example="John_Doe"),
+ * @OA\Property(property="sex", type="string", maxLength=32, example="male"),
+ * @OA\Property(property="phone", type="string", maxLength=32, example="+7 333 3333"),
+ * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU")
  *        )
  *     ),
  * @OA\Response(
@@ -163,24 +133,43 @@ class RegisterController extends Controller
 
         $myId = Helper::generateMyId();
 
-        $user = User::create([
+        return User::create([
             'name'       => $data['name'] ?? '',
             'email'      => $data['email'],
             'login'      => $data['login'],
             'password'   => Hash::make($data['password']),
-            'partner_id' => null !== $partner ? $partner->my_id : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->firts()->email ?? null),
+            'partner_id' => null !== $partner ? $partner->my_id : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->first()->email ?? null),
             'my_id'      => $myId,
             'api_token' => Str::random(60),
         ]);
+    }
 
-        return [
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'api_token' => $user->api_token,
-                'created_at' => $user->created_at,
-                'updated_at' => $user->updated_at]
-        ];
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|mixed
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'login' => $user->login,
+            'sex' => $user->sex,
+            'phone' => $user->phone,
+            'password' => $user->password,
+            'api_token' => $user->api_token
+        ], 201);
     }
 }

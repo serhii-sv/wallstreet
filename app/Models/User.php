@@ -16,23 +16,6 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
-
-/**
- *
- * @OA\Schema(
- * required={"password"},
- * @OA\Xml(name="User"),
- * @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
- * @OA\Property(property="email", type="string", format="email", description="User unique email address", example="user@gmail.com"),
- * @OA\Property(property="name", type="string", maxLength=32, example="John Doe"),
- * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"),
- * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp"),
- * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp"),
- * )
- *
- * Class User
- *
- */
 class User extends Authenticatable
 {
     use Notifiable;

@@ -20,22 +20,6 @@ use Illuminate\Http\Request;
  *       @OA\Property(property="password", type="string", format="password", example="PassWord12345")
  *    ),
  * ),
- *  @OA\Parameter(
- *      name="email",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
- *   @OA\Parameter(
- *      name="password",
- *      in="query",
- *      required=true,
- *      @OA\Schema(
- *           type="string"
- *      )
- *   ),
  *     @OA\Response(
  *    response=200,
  *    description="Success",
@@ -43,11 +27,12 @@ use Illuminate\Http\Request;
  *       @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
  * @OA\Property(property="email", type="string", format="email", example="user@gmail.com"),
  * @OA\Property(property="name", type="string", maxLength=32, example="John Doe"),
- * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"),
- * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp"),
- * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp"),
- *        )
- *     ),
+ * @OA\Property(property="login", type="string", maxLength=32, example="John_Doe"),
+ * @OA\Property(property="sex", type="string", maxLength=32, example="male"),
+ * @OA\Property(property="phone", type="string", maxLength=32, example="+7 333 3333"),
+ * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU")
+ * )
+ * ),
  * @OA\Response(
  *     response=422,
  *     description="Validation error",
@@ -135,9 +120,11 @@ class LoginController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'api_token' => $user->api_token,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at
+            'login' => $user->login,
+            'sex' => $user->sex,
+            'phone' => $user->phone,
+            'password' => $user->password,
+            'api_token' => $user->api_token
         ];
     }
 

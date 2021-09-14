@@ -9,24 +9,6 @@
             "post": {
                 "summary": "Sign in",
                 "description": "Login by email/login, password",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "description": "Pass user credentials",
                     "required": true,
@@ -75,20 +57,25 @@
                                             "maxLength": 32,
                                             "example": "John Doe"
                                         },
+                                        "login": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "John_Doe"
+                                        },
+                                        "sex": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "male"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "+7 333 3333"
+                                        },
                                         "api_token": {
                                             "type": "string",
                                             "maxLength": 80,
                                             "example": "SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
-                                        },
-                                        "created_at": {
-                                            "description": "Initial creation timestamp",
-                                            "type": "string",
-                                            "format": "date-time"
-                                        },
-                                        "updated_at": {
-                                            "description": "Last update timestamp",
-                                            "type": "string",
-                                            "format": "date-time"
                                         }
                                     },
                                     "type": "object"
@@ -140,40 +127,6 @@
             "post": {
                 "summary": "Sign up",
                 "description": "User registration",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password_confirmation",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "description": "Request Body",
                     "required": true,
@@ -233,20 +186,25 @@
                                             "maxLength": 32,
                                             "example": "John Doe"
                                         },
+                                        "login": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "John_Doe"
+                                        },
+                                        "sex": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "male"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "maxLength": 32,
+                                            "example": "+7 333 3333"
+                                        },
                                         "api_token": {
                                             "type": "string",
                                             "maxLength": 80,
                                             "example": "SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
-                                        },
-                                        "created_at": {
-                                            "description": "Initial creation timestamp",
-                                            "type": "string",
-                                            "format": "date-time"
-                                        },
-                                        "updated_at": {
-                                            "description": "Last update timestamp",
-                                            "type": "string",
-                                            "format": "date-time"
                                         }
                                     },
                                     "type": "object"
@@ -299,51 +257,6 @@
                             }
                         }
                     }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "User": {
-                "required": [
-                    "password"
-                ],
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "example": "123e4567-e89b-12d3-a456-426655440000"
-                    },
-                    "email": {
-                        "description": "User unique email address",
-                        "type": "string",
-                        "format": "email",
-                        "example": "user@gmail.com"
-                    },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "example": "John Doe"
-                    },
-                    "api_token": {
-                        "type": "string",
-                        "maxLength": 80,
-                        "example": "SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
-                    },
-                    "created_at": {
-                        "description": "Initial creation timestamp",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "description": "Last update timestamp",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "User"
                 }
             }
         }
