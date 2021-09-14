@@ -16,6 +16,23 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
+
+/**
+ *
+ * @OA\Schema(
+ * required={"password"},
+ * @OA\Xml(name="User"),
+ * @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+ * @OA\Property(property="email", type="string", format="email", description="User unique email address", example="user@gmail.com"),
+ * @OA\Property(property="name", type="string", maxLength=32, example="John Doe"),
+ * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp"),
+ * )
+ *
+ * Class User
+ *
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -24,15 +41,15 @@ class User extends Authenticatable
     use Uuids;
     use Impersonate;
     use HasReferral;
-    
+
     /**
      * @var string
      */
     public $keyType = 'string';
-    
+
     /** @var bool $incrementing */
     public $incrementing = false;
-    
+
     // Append additional fields to the model
     /**
      * @var string[]
@@ -41,7 +58,7 @@ class User extends Authenticatable
         'short_name',
         'last_activity',
     ];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -68,8 +85,9 @@ class User extends Authenticatable
         'is_locked',
         'documents_verified',
         'last_activity_at',
+        'api_token'
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -79,28 +97,28 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transactions() {
         return $this->hasMany(Transaction::class, 'user_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function wallets() {
         return $this->hasMany(Wallet::class, 'user_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function deposits() {
         return $this->hasMany(Deposit::class, 'user_id');
     }
-    
+
     /**
      * @param boolean $useSymbols
      * @param string  $currencyId
@@ -112,27 +130,27 @@ class User extends Authenticatable
         $wallets = $this->wallets()->with([
             'currency',
         ]);
-        
+
         if (null !== $currencyId) {
             $wallets = $wallets->where('currency_id', $currencyId);
         }
-        
+
         $wallets = $wallets->get();
         $balances = [];
-        
+
         foreach ($wallets as $wallet) {
             $arrayKey = true === $useSymbols ? $wallet->currency->symbol : $wallet->currency->code;
-            
+
             if (!isset($balances[$arrayKey])) {
                 $balances[$arrayKey] = 0;
             }
-            
+
             $balances[$arrayKey] += round($wallet->balance, $wallet->currency->precision);
         }
-        
+
         return $balances;
     }
-    
+
     /**
      * Accessor for short name
      * On the right sidebar menu with all users sometimes names are too long
@@ -142,16 +160,16 @@ class User extends Authenticatable
     public function getShortNameAttribute() {
         if (strlen($this->name) <= 18)
             return $this->name;
-        
+
         if (explode(' ', $this->name)[0] <= 15)
             return explode(' ', $this->name)[0] . " " . substr(explode(' ', $this->name)[1], 0, 1) . ".";
-        
+
         if (explode(' ', $this->name)[0] <= 18)
             return explode(' ', $this->name)[0];
-        
+
         return substr($this->name, 0, 15) . "...";
     }
-    
+
     /**
      * Accessor for last activity field
      * Used at the moment for indicate if user is online for at least 2 minutes ago
@@ -164,21 +182,21 @@ class User extends Authenticatable
                 'is_online' => false,
                 'last_seen' => 'Wait auth',
             ];
-        
+
         $currentDate = Carbon::make($this->last_activity_at);
-        
+
         if ($currentDate->greaterThanOrEqualTo(Carbon::now()->startOfDay()))
             return [
                 'is_online' => Carbon::now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
                 'last_seen' => $currentDate->format("g.i A"),
             ];
-        
+
         return [
             'is_online' => false,
             'last_seen' => $currentDate->format("j \of M"),
         ];
     }
-    
+
     /**
      * Mutator for last activity field
      *
@@ -188,15 +206,15 @@ class User extends Authenticatable
      */
     public function setLastActivity(\DateTime $time = null) {
         $this->last_activity_at = $time;
-        
+
         if ($time === null)
             $this->last_activity_at = new \DateTime();
-        
+
         $this->save();
-        
+
         return $this;
     }
-    
+
     /**
      * @return BelongsToMany
      */
@@ -204,7 +222,7 @@ class User extends Authenticatable
     : BelongsToMany {
         return $this->morphToMany(config('permission.models.role'), 'model', config('permission.table_names.model_has_roles'), config('permission.column_names.model_morph_key'), 'role_id')->withTimestamps();
     }
-    
+
     /**
      * @return BelongsToMany
      */
@@ -212,7 +230,7 @@ class User extends Authenticatable
     : BelongsToMany {
         return $this->morphToMany(config('permission.models.permission'), 'model', config('permission.table_names.model_has_permissions'), config('permission.column_names.model_morph_key'), 'permission_id')->withTimestamps();
     }
-    
+
     /**
      * @return User
      */
@@ -220,54 +238,54 @@ class User extends Authenticatable
     : User {
         $maxExists = \App\Models\User::max('my_id');
         $maxExists = $maxExists > 0 ? $maxExists + 1 : rand(500000, 2000000);
-        
+
         $this->my_id = $maxExists;
-        
+
         return $this;
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function kanbanBoards() {
         return $this->hasMany(KanbanBoard::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activities() {
         return $this->hasMany(ActivityLog::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function themeSettings() {
         return $this->hasOne(UserThemeSetting::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function verifiedDocuments() {
         return $this->hasMany(UserVerification::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tasks() {
         return $this->hasMany(Task::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function supportTasks() {
         return $this->hasMany(SupportTask::class);
     }
-    
+
     public function getChatId() {
         if ($this->id == auth()->user()->id) {
             return '';
@@ -289,7 +307,7 @@ class User extends Authenticatable
         }
         return $chat->id;
     }
-    
+
     public function getUnreadCommonChatMessagesCount() {
         return AdminCommonChatUsers::where('user_id', $this->id)->where('is_read', false)->count();
     }
