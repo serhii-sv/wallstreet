@@ -245,7 +245,7 @@ class UserController extends BaseController
     /**
      * @OA\Get(
      * path="/api/v1/users",
-     * summary="User info",
+     * summary="Users list",
      * @OA\Parameter(
      *      name="api_token",
      *      in="query",
@@ -254,7 +254,7 @@ class UserController extends BaseController
      *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
      *      )
      *   ),
-     * description="User info",
+     * description="Users list",
      * @OA\Response(
      *    response=200,
      *    description="Success",
