@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -70,6 +69,7 @@ class RegisterController extends Controller
         if (isset($_COOKIE['partner_id'])) {
             $partner_id = $_COOKIE['partner_id'];
         } elseif (isset($data['partner_id'])) {
+
             $partner_id = $data['partner_id'];
         } else {
             $partner_id = null;
@@ -92,9 +92,8 @@ class RegisterController extends Controller
             'email'      => $data['email'],
             'login'      => $data['login'],
             'password'   => Hash::make($data['password']),
-            'partner_id' => null !== $partner ? $partner->my_id : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->first()->email ?? null),
+            'partner_id' => null !== $partner ? $partner->my_id : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->firts()->email ?? null),
             'my_id'      => $myId,
-            'api_token' => Str::random(60),
         ]);
     }
 }
