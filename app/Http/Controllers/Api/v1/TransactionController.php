@@ -11,17 +11,21 @@ class TransactionController extends BaseController
     /**
      * @OA\Get(
      * path="/api/v1/transactions",
-     * summary="Support tasks",
-     *
-     * description="Create support task",
+     * summary="Transactions",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     * description="Transactions list",
      *     @OA\Response(
      *    response=200,
      *    description="Success",
      *    @OA\JsonContent(
-     *       @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *       @OA\Property(property="title", type="string", example="Test support task title"),
-     *       @OA\Property(property="description", type="string", example="Test support task description"),
-     *       @OA\Property(property="status", type="string", example="pending")
+     *
      * )
      * )
      * )

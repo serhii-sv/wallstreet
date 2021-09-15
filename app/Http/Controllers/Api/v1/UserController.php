@@ -9,8 +9,27 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * @param Request $request
-     * @return mixed
+     * @OA\Get(
+     * path="/api/v1/user",
+     * summary="User info",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     * description="User info",
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *
+     * )
+     * )
+     * )
+     * )
      */
     public function user(Request $request)
     {
@@ -18,8 +37,27 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Put (
+     * path="/api/v1/user",
+     * summary="User info update",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     * description="Update user info",
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *
+     * )
+     * )
+     * )
+     * )
      */
     public function update(Request $request)
     {
@@ -55,8 +93,27 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Delete (
+     * path="/api/v1/user",
+     * summary="User delete",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     * description="Delete user",
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *
+     * )
+     * )
+     * )
+     * )
      */
     public function destroy(Request $request)
     {
