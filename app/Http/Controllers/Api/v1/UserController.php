@@ -187,12 +187,38 @@ class UserController extends Controller
      *      )
      *   ),
      * description="Delete user",
-     * @OA\Response(
+     *  @OA\Response(
      *    response=200,
      *    description="Success",
      *    @OA\JsonContent(
-     *
-     * )
+     *      @OA\Property(property="status", type="integer", example="200"),
+     *     )
+     * ),
+     *      @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Not authorized"),
+     *    )
+     * ),
+     *      @OA\Response(
+     *    response=400,
+     *    description="Error",
+     *    @OA\JsonContent(
+     *      @OA\Property(property="status", type="integer", example="400"),
+     *      @OA\Property(
+     *          property="errors",
+     *          type="object",
+     *      @OA\Property(
+     *              property="user",
+     *              type="array",
+     *              collectionFormat="multi",
+     *              @OA\Items(
+     *                 type="string",
+     *                 example="Нельзя удалить пользователя.",
+     *              )
+     *           ),
+     *      ),
      * )
      * )
      * )
@@ -203,8 +229,7 @@ class UserController extends Controller
 
         if ($user->delete()) {
             return response()->json([
-                'status' => 200,
-                'data' => []
+                'status' => 200
             ]);
         }
 

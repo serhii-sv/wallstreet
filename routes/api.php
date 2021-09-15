@@ -25,10 +25,14 @@ Route::group([
     Route::middleware('auth:api')->group(function() {
         Route::get('transactions', [\App\Http\Controllers\Api\v1\TransactionController::class, 'index']);
         Route::get('transaction-types', [\App\Http\Controllers\Api\v1\TransactionTypeController::class, 'index']);
+
         Route::post('/support-tasks', [\App\Http\Controllers\Api\v1\SupportTaskController::class, 'store']);
 
         Route::get('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'user']);
         Route::put('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'update']);
         Route::delete('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'destroy']);
+
+        Route::get('deposits', [\App\Http\Controllers\Api\v1\DepositController::class, 'index']);
+
     });
 });
