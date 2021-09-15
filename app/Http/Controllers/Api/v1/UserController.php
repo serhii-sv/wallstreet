@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * @OA\Get(
@@ -239,5 +240,46 @@ class UserController extends Controller
                 'user' => 'Нельзя удалить пользователя.'
             ]
         ], 400);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/api/v1/users",
+     * summary="User info",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     * description="User info",
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *      @OA\Property(property="status", type="integer", example="200"),
+     *      @OA\Property(
+     *          property="data",
+     *          type="object",
+     *      @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     * @OA\Property(property="email", type="string", format="email", example="user@gmail.com"),
+     * @OA\Property(property="name", type="string", maxLength=32, example="John Doe"),
+     * @OA\Property(property="login", type="string", maxLength=32, example="John_Doe"),
+     * @OA\Property(property="sex", type="string", maxLength=32, example="male"),
+     * @OA\Property(property="phone", type="string", maxLength=32, example="+7 333 3333"),
+     * @OA\Property(property="api_token", type="string", maxLength=80, example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU")
+     *      )
+     * )
+     * )
+     * )
+     */
+    public function users()
+    {
+        return response()->json([
+            'status' => 200,
+            'data' => User::paginate(self::API_PAGINATION)
+        ]);
     }
 }
