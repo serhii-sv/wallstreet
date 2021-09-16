@@ -43,7 +43,7 @@
     </li>
     
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CHAT_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::USERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
-      <li class="bold @if(Route::is('notifications.*') ||Route::is('chat') || Route::is('users.*') || Route::is('verification-requests.*')) active @endif">
+      <li class="bold @if(Route::is('notifications.*') || Route::is('referral.tree.*') || Route::is('chat') || Route::is('users.*') || Route::is('verification-requests.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">assignment_ind</i>
           <span class="menu-title" data-i18n="Пользователи">Пользователи</span>
@@ -59,6 +59,14 @@
                 </a>
               </li>
             @endif
+            
+            <li>
+              <a href="{{ route('referrals.tree.index') }}" class="@if(Route::is('referrals.tree.*')) active @endif">
+                <i class="material-icons">device_hub</i>
+                <span class="menu-title" data-i18n="Пользователи">Дерево рефералов</span>
+              </a>
+            </li>
+            
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
               <li>
                 <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}">
@@ -179,7 +187,7 @@
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]))
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('deposit.bonuses') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('deposit-bonuses.*') || Route::is('deposit.bonuses.*') || Route::is('deposit.bonuses.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposit.bonuses') }}">
-                  <i class="material-icons">stars</i>
+                  <i class="material-icons">new_releases</i>
                   <span class="menu-title" data-i18n="">Бонусы за оборот депозитов</span>
                 </a>
               </li>
@@ -230,40 +238,40 @@
                 </a>
               </li>
             @endif
-              @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]))
-                <li class="bold">
-                  <a class="waves-effect waves-cyan {{ (Route::is('faq.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('faq*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('faq.index') }}">
-                    <i class="material-icons">info</i>
-                    <span class="menu-title" data-i18n="Тех поддержка">Вопрос - ответ</span>
-                  </a>
-                </li>
-              @endif
+            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]))
+              <li class="bold">
+                <a class="waves-effect waves-cyan {{ (Route::is('faq.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('faq*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('faq.index') }}">
+                  <i class="material-icons">info</i>
+                  <span class="menu-title" data-i18n="Тех поддержка">Вопрос - ответ</span>
+                </a>
+              </li>
+            @endif
           </ul>
         </div>
       </li>
     @endif
-  {{--  @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATE_GROUPS_INDEX]))
-      <li class="bold">
-        <a class="waves-effect waves-cyan {{ (Route::is('rate.groups.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rate.groups*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rate.groups.index') }}">
-          <i class="material-icons">show_chart</i>
-          <span class="menu-title" data-i18n="Тарифы">Группы тарифов</span>
-        </a>
-      </li>
-    @endif--}}
-   {{-- <li class="bold">
-      <a class="waves-effect waves-cyan {{ (Route::is('bin-check.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('bin-check*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('bin-check.index') }}">
-        <i class="material-icons">credit_card</i>
-        <span class="menu-title" data-i18n="Проверка платежных карт">Анализ платежных карт</span>
-      </a>
-    </li>--}}
- {{--   @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::SUPPORT_TASKS_INDEX]))
-      <li class="bold">
-        <a class="waves-effect waves-cyan {{ (Route::is('support-tasks.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('support-tasks*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('support-tasks.index') }}">
-          <i class="material-icons">question_answer</i>
-          <span class="menu-title" data-i18n="Тех поддержка">Тех поддержка</span>
-        </a>
-      </li>
-    @endif--}}
+    {{--  @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATE_GROUPS_INDEX]))
+        <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('rate.groups.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rate.groups*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rate.groups.index') }}">
+            <i class="material-icons">show_chart</i>
+            <span class="menu-title" data-i18n="Тарифы">Группы тарифов</span>
+          </a>
+        </li>
+      @endif--}}
+    {{-- <li class="bold">
+       <a class="waves-effect waves-cyan {{ (Route::is('bin-check.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('bin-check*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('bin-check.index') }}">
+         <i class="material-icons">credit_card</i>
+         <span class="menu-title" data-i18n="Проверка платежных карт">Анализ платежных карт</span>
+       </a>
+     </li>--}}
+    {{--   @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::SUPPORT_TASKS_INDEX]))
+         <li class="bold">
+           <a class="waves-effect waves-cyan {{ (Route::is('support-tasks.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('support-tasks*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('support-tasks.index') }}">
+             <i class="material-icons">question_answer</i>
+             <span class="menu-title" data-i18n="Тех поддержка">Тех поддержка</span>
+           </a>
+         </li>
+       @endif--}}
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::ROLES_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PERMISSIONS_INDEX]))
       <li class="bold @if(Route::is('roles.*') || Route::is('permissions.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
@@ -274,7 +282,8 @@
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::ROLES_INDEX]))
               <li>
-                <a href="{{ route('roles.index') }}" class="{{ (Route::is('roles.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}"><i class="material-icons">transfer_within_a_station</i>
+                <a href="{{ route('roles.index') }}" class="{{ (Route::is('roles.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}">
+                  <i class="material-icons">transfer_within_a_station</i>
                   <span data-i18n="Second level">Роли</span>
                 </a>
               </li>

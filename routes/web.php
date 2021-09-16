@@ -13,6 +13,7 @@ use App\Http\Controllers\CurrencyExchangesController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\RateGroupsController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -199,7 +200,10 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
-
+            
+            Route::get('/referrals-tree', [ReferralController::class, 'show_referral_tree'])->name('referrals.tree.index');
+            Route::get('/referrals-tree/reftree', [ReferralController::class, 'reftree'])->name('referrals.reftree');
+            
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 
             Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('users.bonus');
