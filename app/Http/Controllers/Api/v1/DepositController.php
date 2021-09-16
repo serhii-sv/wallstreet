@@ -58,7 +58,7 @@ class DepositController extends BaseController
         })->when($filter_rates, function ($query) use ($filter_rates) {
             return $query->where('rate_id', $filter_rates);
         })->orderBy('created_at', 'desc')
-            ->load('currency', 'rate', 'wallet')
+            ->with('currency', 'rate', 'wallet')
             ->paginate(self::API_PAGINATION);
 
        return response()->json([
