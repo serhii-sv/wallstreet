@@ -122,6 +122,7 @@
       overflow-y: scroll !important;
    }
    a {
+     position : relative;
       line-height: 42px;
       height: 42px;
    }
@@ -184,7 +185,7 @@
    li .collapsible-body {
       background: transparent;
       a i {
-         font-size: 0.7rem;
+         font-size: 1rem;
       }
    }
    li {

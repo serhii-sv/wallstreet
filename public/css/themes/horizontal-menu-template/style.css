@@ -6950,6 +6950,7 @@ nav.display-none.search-sm .nav-wrapper form .input-field i {
   overflow-y: scroll !important;
 }
 .sidenav a {
+  position: relative;
   line-height: 42px;
   height: 42px;
 }
@@ -7012,7 +7013,7 @@ nav.display-none.search-sm .nav-wrapper form .input-field i {
   background: transparent;
 }
 .sidenav li .collapsible-body a i {
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 .sidenav li a.active {
   background: rgba(0, 0, 0, 0.04);

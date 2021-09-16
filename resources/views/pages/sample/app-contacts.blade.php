@@ -192,10 +192,4 @@
       $('.tooltipped').tooltip();
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/d3-hierarchy@3"></script>
-  <script>
-  
-    const tree = d3.treemap();
-
-  </script>
 @endsection
