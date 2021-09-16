@@ -8,6 +8,35 @@ use Illuminate\Http\Request;
 
 class DepositController extends BaseController
 {
+    /**
+     * @OA\Get(
+     * path="/api/v1/deposits",
+     * summary="Deposits",
+     * @OA\Parameter(
+     *      name="api_token",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *      )
+     *   ),
+     *     @OA\Parameter(
+     *      name="page",
+     *      in="query",
+     *      @OA\Schema(
+     *           type="integer", example="1"
+     *      )
+     *   ),
+     * description="Deposits list",
+     *     @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *
+     * )
+     * )
+     * )
+     */
     public function index(Request $request)
     {
         $user = $request->user();
@@ -29,7 +58,7 @@ class DepositController extends BaseController
         })->when($filter_rates, function ($query) use ($filter_rates) {
             return $query->where('rate_id', $filter_rates);
         })->orderBy('created_at', 'desc')
-            ->with('currency', 'user', 'rate', 'wallet')
+            ->load('currency', 'rate', 'wallet')
             ->paginate(self::API_PAGINATION);
 
        return response()->json([

@@ -31,7 +31,7 @@ Route::group([
         Route::get('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'user']);
         Route::put('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'update']);
         Route::delete('/user', [\App\Http\Controllers\Api\v1\UserController::class, 'destroy']);
-        Route::get('/users', [\App\Http\Controllers\Api\v1\UserController::class, 'users']);
+//        Route::get('/users', [\App\Http\Controllers\Api\v1\UserController::class, 'users']);
 
         Route::get('deposits', [\App\Http\Controllers\Api\v1\DepositController::class, 'index']);
 
