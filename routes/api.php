@@ -35,5 +35,7 @@ Route::group([
 
         Route::get('deposits', [\App\Http\Controllers\Api\v1\DepositController::class, 'index']);
 
+        Route::get('wallets', [\App\Http\Controllers\Api\v1\WalletController::class, 'index']);
+
     });
 });
