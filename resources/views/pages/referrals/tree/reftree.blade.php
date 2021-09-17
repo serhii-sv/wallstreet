@@ -15,12 +15,22 @@
   $(function() {
     
     var datascource = {!! json_encode($children) !!};
-    
+    // ajaxURLs = {
+    //   'children': '/orgchart/children/',
+    //   'parent': '/orgchart/parent/',
+    //   'siblings': function(nodeData) {
+    //     return '/orgchart/siblings/' + nodeData.id;
+    //   },
+    //   'families': function(nodeData) {
+    //     return '/orgchart/families/' + nodeData.id;
+    //   }
+    // };
     var oc = $('#chart-container').orgchart({
       'data' : datascource,
       'nodeContent': 'title',
-      'toggleSiblingsResp': true,
-      'direction': 'l2r'
+      // 'ajaxURL': ajaxURLs,
+   //   'toggleSiblingsResp': true,
+      //'depth': 2,
     });
     
   });

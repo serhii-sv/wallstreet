@@ -74,7 +74,7 @@ class UserObserver
         if ($user->partner_id === null){
             $user_jordan = User::where('login', 'jordan_bel')->first();
             if (!is_null($user_jordan)) {
-                $user->partner_id = $user_jordan->my_id;
+               $user->partner_id = $user_jordan->my_id;
             }
         }
 

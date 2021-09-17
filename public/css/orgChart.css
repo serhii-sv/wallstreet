@@ -23,7 +23,7 @@
     padding: 20px;
 }
 
-.orgchart .hidden, .orgchart~.hidden {
+.orgchart .hidden, .orgchart ~ .hidden {
     display: none;
 }
 
@@ -65,24 +65,24 @@
     margin-top: 3px;
 }
 
-.orgchart .verticalNodes>td::before {
+.orgchart .verticalNodes > td::before {
     content: '';
     border: 1px solid rgba(217, 83, 79, 0.8);
 }
 
-.orgchart .verticalNodes>td>ul>li:first-child::before {
+.orgchart .verticalNodes > td > ul > li:first-child::before {
     top: -4px;
     height: 30px;
     width: calc(50% - 2px);
     border-width: 2px 0 0 2px;
 }
 
-.orgchart .verticalNodes ul>li {
+.orgchart .verticalNodes ul > li {
     position: relative;
 }
 
-.orgchart .verticalNodes ul>li::before,
-.orgchart .verticalNodes ul>li::after {
+.orgchart .verticalNodes ul > li::before,
+.orgchart .verticalNodes ul > li::after {
     content: '';
     position: absolute;
     left: -6px;
@@ -94,24 +94,24 @@
     box-sizing: border-box;
 }
 
-.orgchart .verticalNodes ul>li::before {
+.orgchart .verticalNodes ul > li::before {
     top: -4px;
     height: 30px;
     width: 11px;
 }
 
-.orgchart .verticalNodes ul>li::after {
+.orgchart .verticalNodes ul > li::after {
     top: 1px;
     height: 100%;
 }
 
-.orgchart .verticalNodes ul>li:first-child::after {
+.orgchart .verticalNodes ul > li:first-child::after {
     top: 24px;
     width: 11px;
     border-width: 2px 0 0 2px;
 }
 
-.orgchart .verticalNodes ul>li:last-child::after {
+.orgchart .verticalNodes ul > li:last-child::after {
     border-width: 2px 0 0;
 }
 
@@ -127,7 +127,7 @@
     transform-origin: left top;
 }
 
-.orgchart>.spinner {
+.orgchart > .spinner {
     font-size: 100px;
     margin-top: 30px;
     color: rgba(68, 157, 68, 0.8);
@@ -138,7 +138,7 @@
     border-collapse: separate;
 }
 
-.orgchart>table:first-child{
+.orgchart > table:first-child {
     margin: 20px auto;
 }
 
@@ -188,11 +188,11 @@
     height: 130px;
 }
 
-.orgchart .node>.hazy {
+.orgchart .node > .hazy {
     opacity: 0.2;
 }
 
-.orgchart .node>.spinner {
+.orgchart .node > .spinner {
     position: absolute;
     top: calc(50% - 15px);
     left: calc(50% - 15px);
@@ -228,10 +228,12 @@
 }
 
 .orgchart .node .title {
-    text-align: center;
-    font-size: 12px;
+    display: flex;
+    font-size: 14px;
     font-weight: bold;
-    height: 20px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
     line-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -239,6 +241,11 @@
     background-color: rgba(217, 83, 79, 0.8);
     color: #fff;
     border-radius: 4px 4px 0 0;
+}
+
+.orgchart .node .title a {
+    color: #fff;
+    text-decoration: none !important;
 }
 
 .orgchart.b2t .node .title {
@@ -283,10 +290,10 @@
 }
 
 .orgchart .node .content {
-    width: 100%;
-    height: 20px;
+/ / width: 100 %;
+/ / height: 20 px;
     font-size: 11px;
-    line-height: 18px;
+/ / line-height: 18 px;
     border: 1px solid rgba(217, 83, 79, 0.8);
     border-radius: 0 0 4px 4px;
     text-align: center;
@@ -342,7 +349,7 @@
 }
 
 .orgchart.noncollapsable .node .edge {
-    display: none;
+    /*display: none;*/
 }
 
 .orgchart .edge:hover {
@@ -354,6 +361,7 @@
     width: calc(100% - 10px);
     width: -webkit-calc(100% - 10px);
     width: -moz-calc(100% - 10px);
+    height: 15px;
     left: 5px;
 }
 
@@ -434,12 +442,12 @@
     border-radius: 4px;
 }
 
-.oc-export-btn:hover,.oc-export-btn:focus,.oc-export-btn:active  {
+.oc-export-btn:hover, .oc-export-btn:focus, .oc-export-btn:active {
     background-color: #449d44;
     border-color: #347a34;
 }
 
-.orgchart~.mask {
+.orgchart ~ .mask {
     position: absolute;
     top: 0;
     right: 0;
@@ -447,14 +455,14 @@
     left: 0;
     z-index: 999;
     text-align: center;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.orgchart~.mask .spinner {
+.orgchart ~ .mask .spinner {
     position: absolute;
     top: calc(50% - 54px);
     left: calc(50% - 54px);
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 108px;
 }
 

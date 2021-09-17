@@ -48,6 +48,7 @@
           </a>
           <a href="{{ route('users.show', $user) }}" class="btn-small indigo">Профиль</a>
           <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Рефералы</a>
+          <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
         </div>
       </div>
     </div>

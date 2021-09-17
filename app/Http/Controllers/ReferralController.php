@@ -141,15 +141,31 @@ class ReferralController extends Controller
     
     
     public function show_referral_tree() {
-        
         return view('pages.referrals.tree.index');
+    }
+    
+    public function show_user_referral_tree($id) {
+        $user = User::find($id);
+        return view('pages.referrals.tree.user-index',[
+            'user' => $user,
+        ]);
+    }
+    
+    public function userReftree(Request $request, $id) {
+        /** @var \App\Models\User $user */
+        $user = User::find($id);
+        $children = $this->getChildrens($user, 5);
+        
+        return view('pages.referrals.tree.reftree', [
+            'user' => $user,
+            'children' => $children,
+        ]);
     }
     
     public function reftree(Request $request) {
         /** @var \App\Models\User $user */
         $user = User::where('login', 'jordan_bel')->first();
-        
-        $children = $this->getChildrens($user, 4);
+        $children = $this->getChildrens($user, 6);
         
         return view('pages.referrals.tree.reftree', [
             'user' => $user,
@@ -158,7 +174,7 @@ class ReferralController extends Controller
     }
     
     private function getChildrens(\App\Models\User $user, $limit = 3) {
-        if (!($limit > 0)) {
+        if ($limit === 0) {
             return [];
         }
         if (empty($user)) {
@@ -166,17 +182,17 @@ class ReferralController extends Controller
         }
         
         $referrals = [];
-        $referrals['name'] = $user->login;
-        $referrals['title'] = $user->email;
+        $referrals['name'] = '<a href="'. route('users.show', $user->id).'" target="_blank">' . $user->login . '</a>';
+        // $referrals['title'] = $user->email;
         
         if (!$user->hasReferrals()) {
             return $referrals;
         }
-   
-            foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
-                $referral = $this->getChildrens($r, $limit - 1);
-                $referrals['children'][] = $referral;
-            }
+        
+        foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
+            $referral = $this->getChildrens($r, $limit - 1);
+            $referrals['children'][] = $referral;
+        }
         
         return $referrals;
     }
