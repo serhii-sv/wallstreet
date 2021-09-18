@@ -127,6 +127,34 @@ class WalletController extends BaseController
      *              type="string", example="123e4567-e89b-12d3-a456-426655440000"
      *          )
      *      ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          description="Pass wallet data",
+     *          @OA\JsonContent(
+     *              required={"external"},
+     *              @OA\Property(property="external", type="string", example="@123123")
+     *          ),
+     *      ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Validation error",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="external",
+     *                      type="array",
+     *                      collectionFormat="multi",
+     *                      @OA\Items(
+     *                          type="string",
+     *                          example="The external field is required.",
+     *                      )
+     *                  ),
+     *              )
+     *          ),
+     *     ),
      *     @OA\Response(
      *          response=200,
      *          description="Success",
