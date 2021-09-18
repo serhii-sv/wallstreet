@@ -43,7 +43,7 @@ class TransactionsController extends Controller
                     'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
                     'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
                     'paymentSystem_name' => $operation->paymentSystem->name ?? 'Не указано',
-                    'created_at' => $transaction->created_at->format('d-m-Y'),
+                    'created_at' => $transaction->created_at->format('d-m-Y H:i:s'),
                 ];
             }
 

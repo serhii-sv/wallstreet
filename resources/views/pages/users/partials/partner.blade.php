@@ -1,0 +1,1 @@
+<a href="{{ route('users.show', $user) }}">{{ $partner->email ?? ''  }}</a>

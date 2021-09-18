@@ -9,6 +9,7 @@ class RateGroupsController extends Controller
 {
     //
     public function index() {
+
         return view('pages.rate-groups.index',[
             'rate_groups' => RateGroup::orderBy('id', 'desc')->get(),
         ]);

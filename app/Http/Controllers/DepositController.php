@@ -130,16 +130,11 @@ class DepositController extends Controller
                 'total_turnover' => 'required|numeric',
                 'reward' => 'required|numeric',
             ];
-            $status_name = $request->post('status_name');
-            $status_stage = $request->post('status_stage');
-            $personal_turnover = $request->post('personal_turnover');
-            $total_turnover = $request->post('total_turnover');
-            $reward = $request->post('reward');
             
             $id = $request->post('id');
             $validator = Validator::make($data, $rules);
             if ($validator->fails()) {
-                $messages = 'Ошибка! '. $status_name . ' - ' . $status_stage .' не изменён! <br>';
+                $messages = 'Ошибка! ' . $request->post('status_name') . ' - ' . $request->post('status_stage') . ' не изменён! <br>';
                 foreach ($validator->getMessageBag()->toArray() as $message) {
                     foreach ($message as $item) {
                         $messages .= $item . '<br>';
@@ -156,8 +151,54 @@ class DepositController extends Controller
             
             return json_encode([
                 'status' => 'good',
-                'msg' => $status_name . ' - ' . $status_stage . ' is updated!',
+                'msg' => $request->post('status_name') . ' - ' . $request->post('status_stage') . ' is updated!',
             ]);
         }
+    }
+    
+    public function addBonus(Request $request) {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $rules = [
+                'status_name' => 'required|string',
+                'status_stage' => 'required|string',
+                'personal_turnover' => 'required|numeric',
+                'total_turnover' => 'required|numeric',
+                'reward' => 'required|numeric',
+            ];
+            
+            $validator = Validator::make($data, $rules);
+            if ($validator->fails()) {
+                $messages = 'Ошибка! Бонус не добавлен! <br>';
+                foreach ($validator->getMessageBag()->toArray() as $message) {
+                    foreach ($message as $item) {
+                        $messages .= $item . '<br>';
+                    }
+                }
+                return json_encode([
+                    'status' => 'bad',
+                    'msg' => $messages,
+                ]);
+            }
+        
+            $deposit_bonus = new DepositBonus();
+            $deposit_bonus->create($request->post());
+        
+            return json_encode([
+                'status' => 'good',
+                'msg' => 'Bonus added!',
+                'id' => $deposit_bonus->id,
+            ]);
+        }
+    }
+    
+    public function deleteBonus(Request $request) {
+        $deposit_bonus = DepositBonus::where('id', $request->post('id'))->first();
+        $deposit_bonus->delete();
+    
+        return json_encode([
+            'status' => 'good',
+            'msg' => 'Bonus deleted!',
+        ]);
     }
 }

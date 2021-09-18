@@ -14,7 +14,7 @@
 
 {{-- page content  --}}
 @section('content')
- 
+  
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object start -->
@@ -38,15 +38,15 @@
             </div>
           </div>
         </div>
-        <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center pt-2">
-          <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo">
+        <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center display-flex flex-wrap">
+          <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo mb-2">
             <i class="material-icons">mail_outline</i>
           </a>
           @if(auth()->user()->id !== $user->id)
-            <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id }}" class="btn-small purple darken-4">Залогиниться</a>
+            <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id }}" class="btn-small purple darken-4 mb-2">Залогиниться</a>
           @endif
-          <a href="{{ route('users.edit', $user) }}" class="btn-small indigo">Редактировать</a>
-          <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan">Рефералы</a>
+          <a href="{{ route('users.edit', $user) }}" class="btn-small indigo mb-2">Редактировать</a>
+          <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan mb-2">Рефералы</a>
           <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
           <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
         </div>
@@ -86,6 +86,7 @@
                     @endforelse
                   </td>
                 </tr>
+              
               </tbody>
             </table>
           </div>
@@ -127,6 +128,9 @@
             <h6 class="indigo-text m-0">Денег на балансе:
               <span>{{ number_format($balance_usd, 2, '.', ',') }}$</span>
             </h6>
+            <h6 class="indigo-text m-0">Количество рефералов:
+              <span>{{ $referral_count ?? 0 }}</span>
+            </h6>
           </div>
           @if(!empty($user->deposits))
             <div class="col s12 m4 users-view-timeline">
@@ -137,10 +141,8 @@
           @endif
           @if(!empty($user->partner))
             <div class="col s12 m4 users-view-timeline">
-              <h6 class="indigo-text m-0">Пригласил:
-                <span>
-                  <a href="{{ route('users.show', $user->partner->id) }}">{{ $user->partner->name ?? '' }}</a>
-              </span>
+              <h6 class="indigo-text m-0">Переходы по реферальной ссылке:
+                <span>{{ $referral_clicks ?? 0 }}</span>
               </h6>
             </div>
           @endif

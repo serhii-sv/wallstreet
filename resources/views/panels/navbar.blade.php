@@ -4,7 +4,7 @@
     <div class="nav-wrapper">
       <div class="header-search-wrapper hide-on-med-and-down" style="{{ $configData['isMenuCollapsed'] ? 'width:calc(100% - 400px)' : '' }}">
         <i class="material-icons">search</i>
-        <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Explore Materialize"
+        <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
           data-search="template-list">
         <ul class="search-list collection display-none"></ul>
       </div>
@@ -112,12 +112,6 @@
         }
       </style>
       <ul class="dropdown-content" id="profile-dropdown">
-        <li>
-          <a class="grey-text text-darken-1" href="{{ route('home') }}">
-            <i class="material-icons">person_outline</i>
-            {{ __('Dashboard') }}
-          </a>
-        </li>
         <li class="divider"></li>
         <li>
           <a class="grey-text text-darken-1" href="{{ route('user.lock', Auth::user()) }}">
@@ -137,7 +131,7 @@
       <div class="nav-wrapper">
         <form id="navbarForm">
           <div class="input-field search-input-sm">
-            <input class="search-box-sm mb-0" type="search" required="" placeholder='Explore Materialize' id="search"
+            <input class="search-box-sm mb-0" type="search" required="" placeholder='Login/Email/Name' id="search"
               data-search="template-list">
             <label class="label-icon" for="search">
               <i class="material-icons search-sm-icon">search</i>

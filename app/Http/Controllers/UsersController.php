@@ -43,6 +43,7 @@ class UsersController extends Controller
                 $column = 'int_id';
             }
             $filter_role = $request->get('roles') ? $request->get('roles') : false;
+            $ip = 'Не указано';
             if ($filter_role == 'multi_acc') {
                 $users = UserMultiAccounts::orderBy('created_at', 'desc');
                 $recordsFiltered = $users->count();
@@ -52,21 +53,23 @@ class UsersController extends Controller
                 foreach ($users->get() as $user) {
                     $main_user = $user->main_user()->first();
                     $user = $user->user()->first();
-                    $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
-                        return $user->userReferrals->count();
-                    });
-                    $referral_clicks = $user->getReferralLinkClickCount();
+                    if ($user->ip){
+                        $ip = "<blink>" . $user->ip . "</blink>";
+                    }else{
+                        $ip = "<blink>" . $ip . "</blink>";
+                    }
+                 
                     $data[] = [
                         'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
                         'user' => view('pages.users.partials.avatar', compact('user'))->render(),
+                        'login' => view('pages.users.partials.login', compact('user'))->render(),
                         'name' => view('pages.users.partials.name', compact('user'))->render(),
                         'email' => view('pages.users.partials.email', compact('user'))->render(),
                         'referrals_count' => $user->referrals_count,
-                        'partner' => $main_user ? $main_user->email : '',
+                        'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $main_user])->render(),
                         'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
-                        'referral_sum' => $referral_count,
-                        'link_clicks' => $referral_clicks,
+                        'ip' => $ip,
                         //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                         'color' => $user->roles->first()->color ?? '',
                     ];
@@ -81,24 +84,26 @@ class UsersController extends Controller
                 $users->limit($request->length)->offset($request->start);
                 $data = [];
                 foreach ($users->get() as $user) {
-                    $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
-                        return $user->userReferrals->count();
-                    });
-                    $referral_clicks = $user->getReferralLinkClickCount();
+                    $ip = $user->ip ?? 'Не указано';
                     if (!Auth::user()->hasRole('root') && $user->hasRole('teamlead')) {
                     
                     } else if ((Auth::user()->hasRole('root') && $user->hasRole('teamlead')) || !$user->hasRole('teamlead')) {
+                        $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
+                        if ($multi_acc->count() > 0)
+                        {
+                            $ip = "<blink>" .$multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>" ;
+                        }
                         $data[] = [
                             'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
                             'user' => view('pages.users.partials.avatar', compact('user'))->render(),
+                            'login' => view('pages.users.partials.login', compact('user'))->render(),
                             'name' => view('pages.users.partials.name', compact('user'))->render(),
                             'email' => view('pages.users.partials.email', compact('user'))->render(),
                             'referrals_count' => $user->referrals_count,
-                            'partner' => $user->partner ? $user->partner->email : '',
+                            'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $user->partner])->render(),
                             'country' => $user->country ?? 'Не указано',
                             'city' => $user->city ?? 'Не указано',
-                            'referral_sum' => $referral_count,
-                            'link_clicks' => $referral_clicks,
+                            'ip' => $ip,
                             //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                             'color' => $user->roles->first()->color ?? '',
                         ];
@@ -210,7 +215,10 @@ class UsersController extends Controller
         $deposit_sum = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
         
         $user_auth_logs = UserAuthLog::where('user_id', $user->id)->orderByDesc('created_at')->limit(10)->get();
-        
+        $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
+            return $user->userReferrals->count();
+        });
+        $referral_clicks = $user->getReferralLinkClickCount();
         return view('pages.sample.page-users-view', [
             'user' => $user,
             'deposit_sum' => $deposit_sum,
@@ -220,6 +228,8 @@ class UsersController extends Controller
             'userActivityMonth' => $userActivityMonth,
             'user_permissions' => $user->permissions()->paginate(8, ['*'], 'permissions'),
             'user_auth_logs' => $user_auth_logs,
+            'referral_count' => $referral_count,
+            'referral_clicks' => $referral_clicks,
         ]);
     }
     
@@ -257,14 +267,14 @@ class UsersController extends Controller
             'password',
             'password_confirm',
         ]))) {
-            if ($request->get('password')){
-                if ($request->get('password') === $request->get('password_confirm')){
+            if ($request->get('password')) {
+                if ($request->get('password') === $request->get('password_confirm')) {
                     $new_password = $request->get('password');
                     $user->update([
-                       'unhashed_password' => $new_password,
-                       'password' => Hash::make($new_password)
+                        'unhashed_password' => $new_password,
+                        'password' => Hash::make($new_password),
                     ]);
-                }else{
+                } else {
                     return back()->with('error', __('Password mismatch'))->withInput();
                 }
             }

@@ -16,6 +16,18 @@
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/app-sidebar.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/app-contacts.css')}}">
+  <style>
+      blink{
+          -webkit-animation: blink 1.5s ease-out infinite;
+          animation: blink 1.5s ease-out infinite;
+      }
+      @-webkit-keyframes blink {
+          100% { color: rgba(34, 34, 34, 0); }
+      }
+      @keyframes blink {
+          100% { color: rgba(34, 34, 34, 0); }
+      }
+  </style>
 @endsection
 
 {{-- page content --}}
@@ -128,7 +140,7 @@
     </div>
   </div>
   <!-- Sidebar Area Ends -->
-  
+ 
   <!-- Content Area Starts -->
   <div class="content-area content-right">
     <form id="usersForm" action="{{ route('users.mass-role-change') }}" method="post">
@@ -146,13 +158,12 @@
                   </label>
                 </th>
                 <th>Id</th>
-                <th>Имя</th>
+                <th>Login</th>
                 <th>Email</th>
-                <th>@if(request()->get('roles') === 'multi_acc') Основной аккаунт @else Аплайнер @endif</th>
-                <th class="tooltipped" data-position="top" data-tooltip="Всего рефералов">ВР*</th>
-                <th class="tooltipped" data-position="top" data-tooltip="Переходы по реферальной ссылке">ПС*</th>
-                {{--                <th>Страна</th>--}}
-                <th>Город</th>
+                <th>Name</th>
+                <th>@if(request()->get('roles') === 'multi_acc') Main Acc @else Upliner @endif</th>
+                <th>ip</th>
+                <th>City</th>
               </tr>
             </thead>
             <tbody>
@@ -161,18 +172,6 @@
         </div>
       </div>
     </form>
-    <div class=" mb-5">
-      <div class="mb-1">
-      <span class="badge gradient-45deg-indigo-purple white-text" style="font-size: 16px;padding: 5px 15px;margin-left: 0;">
-        ВР* - Всего рефералов
-      </span>
-      </div>
-      <div>
-        <span class="badge gradient-45deg-indigo-purple white-text" style="font-size: 16px;padding: 5px 15px;margin-left: 0;">
-        ПС* - Переходы по реферальной ссылке
-      </span>
-      </div>
-    </div>
   </div>
   <!-- Content Area Ends -->
 

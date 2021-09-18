@@ -35,6 +35,7 @@
       var cityName, country, ip;
       var fillInPage = (function () {
         var updateCityText = function (geoipResponse) {
+          
           cityName = geoipResponse.city.names.ru || 'Неизвестный';
           country = geoipResponse.country.names.ru || 'Неизвестная';
           ip = geoipResponse.traits.ip_address || 'ip';
@@ -54,6 +55,7 @@
         };
 
         var onSuccess = function (geoipResponse) {
+          console.log(geoipResponse);
           updateCityText(geoipResponse);
         };
 
