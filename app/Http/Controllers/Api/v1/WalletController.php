@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WalletController extends BaseController
@@ -252,5 +253,73 @@ class WalletController extends BaseController
                 'wallet' => 'Нельзя изменить кошелек'
             ]
         ], 400);
+    }
+
+    /**
+     *  @OA\Get (
+     *      path="/api/v1/wallets/{wallet_id}/currency-rates",
+     *      summary="Wallet currency rate change data",
+     *      description="Wallet currency rate change data",
+     *      @OA\Parameter(
+     *          name="api_token",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="wallet_id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string", example="123e4567-e89b-12d3-a456-426655440000"
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="integer", example="200"),
+     *              @OA\Property(
+     *              property="data",
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *             )
+     *          )
+     *        )
+     *     )
+     *  )
+     */
+    public function currencyRate(Request $request, $id)
+    {
+        $wallet = $request->user()->wallets()->where('id', $id)->first();
+
+        if (is_null($wallet)) {
+            return response()->json([
+                'status' => 403,
+                'errors' => [
+                    'wallet' => 'Это не ваш кошелек'
+                ]
+            ], 403);
+        }
+
+        $logData = $wallet
+                ->currency
+                ->rateLog()
+                ->where('date', '>=', Carbon::now()->subDays(7))
+                ->orderBy('date', 'asc')
+                ->get();
+
+       return response()->json([
+           'status' => 200,
+           'data'  => $logData
+       ]);
     }
 }

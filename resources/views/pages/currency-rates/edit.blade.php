@@ -32,6 +32,11 @@
                                         <input id="rate" name="rate" type="number" step="0.1" data-error=".errorTxt1" value="{{ $rate->s_value }}">
                                         <small class="errorTxt1"></small>
                                     </div>
+                                    <div class="input-field col s12">
+                                        <label for="date">Дата*</label>
+                                        <input id="date" type="text" name="date" class="datepicker">
+                                        <small class="errorTxt1"></small>
+                                    </div>
                                     <div class="col s12">
                                         <label for="autoupdate">Автообновление</label>
                                         <p>

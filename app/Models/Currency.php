@@ -25,9 +25,18 @@ class Currency extends Model
 {
     use Uuids;
 
+    /**
+     * @var bool
+     */
     public $incrementing = false;
+    /**
+     * @var string
+     */
     public $keyType = 'string';
-    
+
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'code',
@@ -96,6 +105,14 @@ class Currency extends Model
             return isset($balances)? $balances : [];
         });
     }
-    
-   
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rateLog()
+    {
+        return $this->hasMany(CryptoCurrencyRateLog::class);
+    }
+
+
 }

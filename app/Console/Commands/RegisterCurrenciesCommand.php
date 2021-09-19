@@ -131,6 +131,12 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'    => 'Ð',
                 'precision' => 8,
             ],
+            'SPRINT' => [
+                'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Sprint Coin [yes|no]', 'yes'),
+                'name'      => 'Sprint Token',
+                'symbol'    => '',
+                'precision' => 8,
+            ],
         ];
 
         foreach ($questions as $currencyKey => $data) {

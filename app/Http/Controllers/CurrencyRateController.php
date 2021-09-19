@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CryptoCurrencyRateLog;
 use App\Models\Currency;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -65,13 +66,18 @@ class CurrencyRateController extends Controller
 
         $request->validate([
             'rate' => 'required|numeric',
-            'autoypdate' => 'in:1,0'
+            'autoypdate' => 'in:1,0',
+            'date' => 'nullable|date'
         ]);
 
-        $result = $rate->update([
-            's_value' => $request->rate,
-            'autoupdate' => $request->autoupdate == '1'
-        ]);
+        if ($request->date) {
+            CryptoCurrencyRateLog::setRateLog($rate, $request->date);
+        } else {
+            $result = $rate->update([
+                's_value' => $request->rate,
+                'autoupdate' => $request->autoupdate == '1'
+            ]);
+        }
 
         if ($result) {
             return redirect()->route('currency-rates.index')->with('success_short', 'Курс обновлен');

@@ -16,3 +16,4 @@ yarn-error.log
 /resources/lang/*.json
 laradock-*
 storage/api-docs/api-docs.json
+/storage/logs/*.log

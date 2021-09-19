@@ -8,6 +8,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\CreateAdminCommand;
+use App\Console\Commands\CryptoCurrencyRateLog;
 use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Console\Commands\CreateRootCommand;
@@ -33,6 +34,7 @@ class Kernel extends ConsoleKernel
         RegisterPaymentSystemsCommand::class,
         CheckPaymentSystemsConnectionsCommand::class,
         DepositQueueCommand::class,
+        CryptoCurrencyRateLog::class
     ];
 
     /**
@@ -45,6 +47,7 @@ class Kernel extends ConsoleKernel
     {
         // Logs
         $schedule->command('log:clear')->daily()->withoutOverlapping();
+        $schedule->command('make:rate_log')->daily();
 
         // Jobs
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
