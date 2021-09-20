@@ -8,15 +8,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\Permissions;
 use App\Http\Requests\RequestDashboardBonusUser;
-use App\Models\ActivityLog;
 use App\Models\Currency;
+use App\Models\DeviceStat;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\Wallet;
-use Bintable\BintableApi;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +24,7 @@ class DashboardController extends Controller
     protected $users;
 
     public function __construct(User $users) {
+        
         $this->users = $users;
     }
 
@@ -129,8 +129,9 @@ class DashboardController extends Controller
                     return $user->transactions()->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
-
         });
+        
+        $device_stat = DeviceStat::orderBy('count', 'desc')->limit(5)->get();
 
         $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
         $cities_stat->map(function ($city) use ($id_enter) {
@@ -171,7 +172,7 @@ class DashboardController extends Controller
                 return $carry + $item->main_currency_amount;
             }, 0);
         });
-
+        
         return view('pages.dashboard', [
             'week_revenue_percent' => $week_revenue_percent,
             'month_revenue_percent' => $month_revenue_percent,
@@ -192,6 +193,7 @@ class DashboardController extends Controller
             'payment_system' => $payment_system,
             'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
             'countries_stat' => $countries_stat,
+            'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,
             'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
             'withdraw_transactions_for_24h_sum' => $withdraw_transactions_for_24h_sum,
@@ -290,7 +292,7 @@ class DashboardController extends Controller
             $wallet->save();
         });
 
-        return back()->with('success', 'Операция успешно проведена')->withInput();
+        return back()->with('success', 'Операция успешно проведена');
     }
 
     public function getMonthPeriod() {

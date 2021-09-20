@@ -39,16 +39,20 @@
           </div>
         </div>
         <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center display-flex flex-wrap">
-          <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo mb-2">
-            <i class="material-icons">mail_outline</i>
-          </a>
-          @if(auth()->user()->id !== $user->id)
-            <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id }}" class="btn-small purple darken-4 mb-2">Залогиниться</a>
-          @endif
-          <a href="{{ route('users.edit', $user) }}" class="btn-small indigo mb-2">Редактировать</a>
-          <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan mb-2">Рефералы</a>
-          <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
-          <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
+          <div class="mb-2 width-100 display-flex justify-content-end">
+            <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo ">
+              <i class="material-icons">mail_outline</i>
+            </a>
+            @if(auth()->user()->id !== $user->id)
+              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id }}" class="btn-small purple darken-4 ">Залогиниться</a>
+            @endif
+            <a href="{{ route('users.edit', $user) }}" class="btn-small indigo ">Редактировать</a>
+            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan ">Рефералы</a>
+          </div>
+          <div>
+            <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
+            <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
+          </div>
         </div>
       </div>
     </div>
@@ -125,27 +129,26 @@
       <div class="card-content">
         <div class="row indigo lighten-5 border-radius-4 mb-2">
           <div class="col s12 m4 users-view-timeline">
-            <h6 class="indigo-text m-0">Денег на балансе:
+            <h6 class="indigo-text mb-3">Денег на балансе:
               <span>{{ number_format($balance_usd, 2, '.', ',') }}$</span>
             </h6>
             <h6 class="indigo-text m-0">Количество рефералов:
               <span>{{ $referral_count ?? 0 }}</span>
             </h6>
           </div>
-          @if(!empty($user->deposits))
-            <div class="col s12 m4 users-view-timeline">
-              <h6 class="indigo-text m-0">Сумма депозитов:
+          <div class="col s12 m4 users-view-timeline">
+            @if(!empty($user->deposits))
+              <h6 class="indigo-text mb-3">Сумма депозитов:
                 <span>{{ $deposit_sum ?? 0 }}$</span>
               </h6>
-            </div>
-          @endif
-          @if(!empty($user->partner))
-            <div class="col s12 m4 users-view-timeline">
+            @endif
+            @if(!empty($user->partner))
               <h6 class="indigo-text m-0">Переходы по реферальной ссылке:
                 <span>{{ $referral_clicks ?? 0 }}</span>
               </h6>
-            </div>
-          @endif
+            @endif
+          </div>
+        
         </div>
         <div class="row">
           <div class="col s12">

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceStat;
 use App\Models\UserAuthLog;
+use App\Models\UserDevice;
 use App\Models\UserMultiAccounts;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use hisorange\BrowserDetect\Parser;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -62,7 +65,8 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user) {
         //
-         $this->createUserAuthLog($request, $user);
+        $this->createUserAuthLog($request, $user);
+        $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
     }
     
@@ -80,6 +84,41 @@ class LoginController extends Controller
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
         
+    }
+    
+    public function createUserAuthDevice(Request $request, $user) {
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $device_stats = DeviceStat::where('browser', $browser)->first();
+        if ($device_stats === null){
+            $device_stats = new DeviceStat([
+                'browser' => $browser,
+                'count' => 0,
+            ]);
+        }
+        $device_stats->update(['count' => $device_stats->count + 1]);
+        
+        $user_device_count = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->count();
+        if ($user_device_count > 0) {
+            return false;
+        }
+        $user_device = new UserDevice();
+        $user_device->user_id = $user->id;
+        $user_device->ip = $request->ip();
+        $user_device->browser = $browser;
+        $user_device->browser_version = $browser_version;
+        $user_device->device_platform = $device_platform;
+        if (Parser::isMobile()) {
+            $user_device->is_mobile = true;
+        } else if (Parser::isTablet()) {
+            $user_device->is_tablet = true;
+        } else if (Parser::isDesktop()) {
+            $user_device->is_desktop = true;
+        } else if (Parser::is_bot()) {
+            $user_device->is_bot = true;
+        }
+        $user_device->save();
     }
     
     public function checkForMultiAccounts(Request $request, $user) {
@@ -103,7 +142,7 @@ class LoginController extends Controller
     }
     
     public function createMultiAccountRecord($user, $main_user, $ip) {
-        if(!(UserMultiAccounts::where('user_id', $user->id)->where('main_user_id', $main_user)->count() > 0 )){
+        if (!(UserMultiAccounts::where('user_id', $user->id)->where('main_user_id', $main_user)->count() > 0)) {
             $multi_acc = new UserMultiAccounts();
             $multi_acc->user_id = $user->id;
             $multi_acc->main_user_id = $main_user;

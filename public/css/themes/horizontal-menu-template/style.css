@@ -6649,6 +6649,9 @@ span.badge.pill {
 .navbar .navbar-light ul a {
   color: rgba(0, 0, 0, 0.87);
 }
+.navbar .navbar-light .time {
+  color: rgba(0, 0, 0, 0.87);
+}
 .navbar .navbar-light .header-search-wrapper i {
   color: rgba(0, 0, 0, 0.87);
 }
@@ -6675,6 +6678,9 @@ span.badge.pill {
   background: #37474f;
 }
 .navbar .navbar-dark ul a {
+  color: #fff;
+}
+.navbar .navbar-dark .time {
   color: #fff;
 }
 .navbar .navbar-dark .header-search-wrapper i {

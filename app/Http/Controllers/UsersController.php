@@ -242,10 +242,12 @@ class UsersController extends Controller
         
         $roles = Role::all();
         $permissions = Permission::all();
+        $wallets = Wallet::where('user_id', $user->id)->orderBy('payment_system_id', 'asc')->get();
         return view('pages.sample.page-users-edit', [
             'roles' => $roles,
             'permissions' => $permissions,
             'user' => $user,
+            'wallets' => $wallets,
         ]);
     }
     
@@ -392,4 +394,18 @@ class UsersController extends Controller
         ]);
     }
     
+    public function requisitesUpdate(Request $request) {
+        $this->validate($request, [
+            'user_id' => 'required',
+            'wallet_id' => 'required',
+        ]);
+        $wallet = Wallet::where('user_id', $request->get('user_id'))->where('id', $request->get('wallet_id'))->first();
+        if ($wallet === null){
+            return back()->with('error', 'Ошибка!');
+        }
+        if ($wallet->update($request->all())) {
+            return redirect()->back()->with('success', 'Данные кошелька успешно изменены!');
+        }
+        
+    }
 }

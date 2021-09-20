@@ -16,21 +16,153 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/dashboard-modern.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/intro.css')}}">
   <style>
-      .dashboard-operations-switch{
+      .dashboard-operations-switch {
           margin-top: 30px;
           padding-right: 15px;
           position: relative;
           z-index: 5;
       }
-      .dashboard-operations-wrapper{
+
+      .dashboard-operations-wrapper {
           position: relative;
       }
+
       .subscription-table thead th {
           font-weight: 600;
       }
 
       button.badge {
           border: none;
+      }
+  </style>
+  <style>
+
+      :root {
+          --white: #ffffff;
+          --light: #f0eff3;
+          --black: #000000;
+          --dark-blue: #1f2029;
+          --dark-light: #353746;
+          --red: #da2c4d;
+          --yellow: #f8ab37;
+          --grey: #ecedf3;
+      }
+
+      .checkbox-tools:checked + label,
+      .checkbox-tools:not(:checked) + label{
+          position: relative;
+          display: inline-block;
+          padding: 10px 20px;
+          /*width: 110px;*/
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 1px;
+          margin: 0 auto;
+          text-align: center;
+          border-radius: 4px;
+          overflow: hidden;
+          cursor: pointer;
+          text-transform: uppercase;
+          color: var(--white);
+          -webkit-transition: all 300ms linear;
+          transition: all 300ms linear;
+      }
+      .checkbox-tools:not(:checked) + label{
+          background-color: var(--dark-light);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      }
+      .checkbox-tools:checked + label{
+          background-color: transparent;
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      .checkbox-tools:not(:checked) + label:hover{
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      .checkbox-tools:checked + label::before,
+      .checkbox-tools:not(:checked) + label::before{
+          position: absolute;
+          content: '';
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 4px;
+          background-image: linear-gradient(298deg, var(--red), var(--yellow));
+          z-index: -1;
+      }
+      .checkbox-tools:checked + label .uil,
+      .checkbox-tools:not(:checked) + label .uil{
+          font-size: 24px;
+          line-height: 24px;
+          display: block;
+          padding-bottom: 10px;
+      }
+
+      .checkbox:checked ~ .section .container .row .col-12 .checkbox-tools:not(:checked) + label{
+          background-color: var(--light);
+          color: var(--dark-blue);
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      [type="checkbox"]:checked,
+      [type="checkbox"]:not(:checked),
+      [type="radio"]:checked,
+      [type="radio"]:not(:checked){
+          position: absolute;
+          left: -9999px;
+          width: 0;
+          height: 0;
+          visibility: hidden;
+      }
+      .checkbox:checked + label,
+      .checkbox:not(:checked) + label{
+          position: relative;
+          /*width: 70px;*/
+          display: inline-block;
+          padding: 0;
+          margin: 0 auto;
+          text-align: center;
+          height: 6px;
+          border-radius: 4px;
+          background-image: linear-gradient(298deg, var(--red), var(--yellow));
+          z-index: 100 !important;
+      }
+      .checkbox:checked + label:before,
+      .checkbox:not(:checked) + label:before {
+          position: absolute;
+          font-family: 'unicons';
+          cursor: pointer;
+          top: -17px;
+          z-index: 2;
+          font-size: 20px;
+          line-height: 40px;
+          text-align: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          -webkit-transition: all 300ms linear;
+          transition: all 300ms linear;
+      }
+      .checkbox:not(:checked) + label:before {
+          content: '\eac1';
+          left: 0;
+          color: var(--grey);
+          background-color: var(--dark-light);
+          box-shadow: 0 4px 4px rgba(0,0,0,0.15), 0 0 0 1px rgba(26,53,71,0.07);
+      }
+      .checkbox:checked + label:before {
+          content: '\eb8f';
+          left: 30px;
+          color: var(--yellow);
+          background-color: var(--dark-blue);
+          box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
+      }
+
+      .checkbox:checked ~ .section .container .row .col-12 p{
+          color: var(--dark-blue);
+      }
+      .dashboard-send-bonus-btn{
+          background-image: linear-gradient(298deg, var(--red), var(--yellow));
       }
   </style>
 @endsection
@@ -106,7 +238,7 @@
         </div>
       </div>
       
-      <div class="row mt-2">
+      <div class="row mt-1">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
             <div class="card-move-up waves-effect waves-block waves-light">
@@ -136,7 +268,7 @@
                   </div>
                 </div>
                 <div class="trending-line-chart-wrapper mt-3">
-                  <canvas id="revenue-line-chart" height="70"></canvas>
+                  <canvas id="revenue-line-chart" height="61"></canvas>
                 </div>
               </div>
             </div>
@@ -221,7 +353,7 @@
               </a>
               <div class="line-chart-wrapper">
                 <p class="margin white-text">Популярность по городам</p>
-                <canvas id="line-chart" height="114"></canvas>
+                <canvas id="line-chart" height="113"></canvas>
               </div>
             </div>
             <div class="card-reveal">
@@ -250,15 +382,154 @@
                   @endforelse
                 </tbody>
               </table>
+                  <span class="card-title grey-text text-darken-4 mt-3">Популярность по браузерам <i
+                        class="material-icons right">close</i>
+                  </span>
+              <table class="responsive-table ">
+                <thead>
+                  <tr>
+                    <th data-field="country-name">Браузер</th>
+                    <th data-field="item-sold">Количество юзеров</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @forelse($device_stat as $item)
+                    <tr>
+                      <td width="50%">{{ $item->browser ?? '' }}</td>
+                      <td width="50%">{{ $item->count ?? '' }}</td>
+                    </tr>
+                  @empty
+                    <tr>
+                      <td colspan="2" style="text-align: center">Пусто</td>
+                    </tr>
+                  @endforelse
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-    
+  
+   
     <div class="row">
       <div class="col s12 m12 l12">
+        
+        <div class="row">
+          <div class="col-12">
+            <div class="card-content">
+              <h4 class="card-title mt-2 mb-1" style="text-align: center">Начислить бонус</h4>
+              <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
+                {{ csrf_field() }}
+                
+                
+                
+                
+                <div class="row" style="text-align: center; margin-top:20px;">
+                  <div class="col-12">
+                    <input class="checkbox-tools" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} id="enter">
+                    <label class="for-checkbox-tools" for="enter">Ввод средств в систему</label>
+                    <input class="checkbox-tools" name="type" value="withdraw" type="radio"  id="withdraw" {{ old('type') == 'withdraw' ? 'checked' : '' }}>
+                    <label class="for-checkbox-tools" for="withdraw">Вывод средств</label>
+                  </div>
+                </div>
+                
+                <div class="row" style="text-align: center; margin-top:20px;">
+                  <div class="col-12 ">
+                    @foreach($currencies as $currency)
+                      @if($loop->index % 7 == 0 && $loop->index > 1)
+                        <br>
+                      @endif
+                        <input class="checkbox-tools" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }}  name="currency" id="currency-{{ $currency->id }}">
+                        <label class="for-checkbox-tools" for="currency-{{ $currency->id }}">
+                          {{ $currency->code }}
+                        </label>
+                    @endforeach
+                   
+                  </div>
+{{--                  @foreach($currencies as $currency)--}}
+{{--                    @if($loop->index % 7 == 0 && $loop->index > 1)--}}
+{{--                      <br><br>--}}
+{{--                    @endif--}}
+{{--                    <button type="button" class="badge blue"--}}
+{{--                        style="padding:8px 15px 8px 15px; border-radius: 10px;">--}}
+{{--                      <label>--}}
+{{--                        <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />--}}
+{{--                        <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>--}}
+{{--                      </label>--}}
+{{--                    </button>--}}
+{{--                    --}}
+{{--                  @endforeach--}}
+                </div>
+                
+                
+                <div class="row" style="margin-top:20px; text-align: center;">
+                  @foreach($payment_system as $ps)
+    
+                    <input class="checkbox-tools" name="payment_system" value="{{ $ps->id }}" type="radio" id="payment_system-{{ $ps->id }}" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }}>
+                    <label class="for-checkbox-tools" for="payment_system-{{ $ps->id }}">
+                      {{ $ps->name }}
+                    </label>
+{{--                    <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">--}}
+{{--                      <label>--}}
+{{--                        <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />--}}
+{{--                        <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>--}}
+{{--                      </label>--}}
+{{--                    </button>--}}
+                  @endforeach
+                </div>
+                
+                
+                <div class="row" style="margin-top:20px; text-align: center;">
+                  <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
+                  <label class="for-checkbox-tools" for="is_real1">Реал</label>
+                  <input class="checkbox-tools" name="is_real" value="0" type="radio" id="is_real0" {{ old('is_real') == '0' ? 'checked' : '' }} >
+                  <label class="for-checkbox-tools" for="is_real0">Фейк</label>
+{{--                  <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">--}}
+{{--                    <label>--}}
+{{--                      <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />--}}
+{{--                      <span style="color:white; font-weight: bold;">Реал</span>--}}
+{{--                    </label>--}}
+{{--                  </button>--}}
+{{--                  --}}
+{{--                  <button type="button" class="badge blue"--}}
+{{--                      style="padding:8px 15px 8px 15px; border-radius: 10px;">--}}
+{{--                    <label>--}}
+{{--                      <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />--}}
+{{--                      <span style="color:white; font-weight: bold;">Фейк</span>--}}
+{{--                    </label>--}}
+{{--                  </button>--}}
+                </div>
+  
+                <div class="row" style=" text-align: center;">
+                  <div class="input-field col s12 text-center">
+                    <div >
+                      <input id="login" type="text" name="login"
+                          placeholder="Логин, айди, или почта" value="{{ old('login') }}"
+                          style="font-weight: bold; text-align: center;width: 320px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style=" text-align: center;">
+                  <div class="input-field col s12">
+                    <div class="text-center">
+                      <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}"
+                          style="font-weight: 500; text-align: center; width: 320px;">
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <div class="row" style="text-align: center;">
+                  <div class="input-field col s12" style="text-align:center;">
+                    <button class="btn  waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
         
         <div class="row">
           <div class="col s12 m12 l12 dashboard-operations-wrapper">
@@ -362,7 +633,7 @@
             </div>
           </div>
           
-          <div class="col s12 m12 l12" >
+          <div class="col s12 m12 l12">
             <div id="striped-table" class="card card card-default scrollspy">
               <div class="card-content">
                 <h4 class="card-title">История входов админов</h4>
@@ -404,7 +675,7 @@
       </div>
     </div>
     
-   
+    
     <div class="row">
       <div class="col s12 m12 l8">
       
@@ -452,107 +723,7 @@
                   </button>
                 </div>
               @endif
-              <div class="card-content">
-                <h4 class="card-title mb-4">Начислить бонус</h4>
-                <form method="post" class="dashboard-send-bonus-form"
-                    action="{{ route('dashboard.add_bonus') }}">
-                  {{ csrf_field() }}
-                  
-                  <div class="row" style="margin-top:20px; text-align: center;">
-                    <div class="input-field col s12">
-                      <input id="login" type="text" name="login"
-                          placeholder="Логин, айди, или почта" value="{{ old('login') }}"
-                          style="font-weight: bold; text-align: center;">
-                    </div>
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="text-align: center; margin-top:20px;">
-                    <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                      <label>
-                        <input class="with-gap" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} />
-                        <span style="color:white; font-weight: bold;">Ввод средств в систему</span>
-                      </label>
-                    </button>
-                    <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
-                      <label>
-                        <input class="with-gap" name="type" value="withdraw" type="radio" {{ old('type') == 'withdraw' ? 'checked' : '' }} />
-                        <span style="color:white; font-weight: bold;">Вывод средств</span>
-                      </label>
-                    </button>
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="text-align: center; margin-top:20px;">
-                    @foreach($currencies as $currency)
-{{--                      @if($loop->index % 5 && $loop->index > 1)--}}
-{{--                        <br><br>--}}
-{{--                      @endif--}}
-                      <button type="button" class="badge blue"
-                          style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                        <label>
-                          <input class="with-gap" name="currency" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }} />
-                          <span style="color:white; font-weight: bold;">{{ $currency->code }}</span>
-                        </label>
-                      </button>
-                    @endforeach
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="margin-top:20px; text-align: center;">
-                    @foreach($payment_system as $ps)
-                      @if($loop->index % 2 && $loop->index > 1)
-                        <br><br>
-                      @endif
-                      <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px; margin-top: 15px">
-                        <label>
-                          <input class="with-gap" name="payment_system" value="{{ $ps->id }}" type="radio" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }} />
-                          <span style="color:white; font-weight: bold;">{{ $ps->name }}</span>
-                        </label>
-                      </button>
-                    @endforeach
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="margin-top:20px; text-align: center;">
-                    <button type="button" class="badge blue" style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                      <label>
-                        <input class="with-gap" name="is_real" value="1" type="radio" {{ old('is_real', '1') == '1' ? 'checked' : '' }} />
-                        <span style="color:white; font-weight: bold;">Реал</span>
-                      </label>
-                    </button>
-                    
-                    <button type="button" class="badge blue"
-                        style="padding:8px 15px 8px 15px; border-radius: 10px;">
-                      <label>
-                        <input class="with-gap" name="is_real" value="0" type="radio" {{ old('is_real') == '0' ? 'checked' : '' }} />
-                        <span style="color:white; font-weight: bold;">Фейк</span>
-                      </label>
-                    </button>
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="margin-top:20px; text-align: center;">
-                    <div class="input-field col s12">
-                      <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}" style="font-weight: bold; text-align: center;">
-                    </div>
-                  </div>
-                  
-                  <div style="border-top:1px dotted gray; margin-top:20px;"></div>
-                  
-                  <div class="row" style="text-align: center;">
-                    <div class="input-field col s12" style="text-align:center;">
-                      <button class="btn blue waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            
             </div>
           </div>
         </div>
@@ -1054,7 +1225,7 @@
           icon: 'warning',
           buttons: {
             cancel: true,
-            delete: 'Удалить'
+            delete: 'Выполнить операцию?'
           }
         }).then(function (willDelete) {
           if (willDelete) {
@@ -1127,10 +1298,10 @@
     //last-operations-block
     $(".dashboard-operations-switch-input").on('change', function (e) {
       e.preventDefault();
-      if ($(this).prop('checked')){
+      if ($(this).prop('checked')) {
         $("#stats-block").addClass('display-none');
         $("#last-operations-block").removeClass('display-none');
-      }else{
+      } else {
         $("#stats-block").removeClass('display-none');
         $("#last-operations-block").addClass('display-none');
       }
