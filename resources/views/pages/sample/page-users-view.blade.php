@@ -145,24 +145,36 @@
       <div class="card-content">
         <div class="row indigo lighten-5 border-radius-4 mb-2">
           <div class="col s12 m4 users-view-timeline">
-            <h6 class="indigo-text mb-3">Денег на балансе:
-              <span>{{ number_format($balance_usd, 2, '.', ',') }}$</span>
-            </h6>
-            <h6 class="indigo-text m-0">Количество рефералов:
-              <span>{{ $referral_count ?? 0 }}</span>
-            </h6>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Баланс аккаунта:
+              <span class="badge pink " style="font-size: 18px">{{ number_format($balance_usd, 2, '.', ',') }}$</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма пополнений:
+              <span class="badge pink" style="font-size: 18px">{{ number_format($stat_deposits, 2, '.', ',') }}$</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма депозитов:
+              <span class="badge pink " style="font-size: 18px">{{ number_format($stat_create_dep, 2, '.', ',') }}$</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма выплат:
+              <span class="badge pink " style="font-size: 18px">{{ number_format($stat_withdraws, 2, '.', ',') }}$</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма переводов:
+              <span class="badge pink " style="font-size: 18px">{{ number_format($stat_transfer, 2, '.', ',') }}$</span>
+            </div>
           </div>
           <div class="col s12 m4 users-view-timeline">
-            @if(!empty($user->deposits))
-              <h6 class="indigo-text mb-3">Сумма депозитов:
-                <span>{{ $deposit_sum ?? 0 }}$</span>
-              </h6>
-            @endif
-            @if(!empty($user->partner))
-              <h6 class="indigo-text m-0">Переходы по реферальной ссылке:
-                <span>{{ $referral_clicks ?? 0 }}</span>
-              </h6>
-            @endif
+            
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество регистраций:
+              <span class="badge pink " style="font-size: 18px">{{ $registered_referrals ?? 0 }}</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество активных партнёров:
+              <span class="badge pink " style="font-size: 18px">{{ $active_referrals ?? 0 }}</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Оборот структуры:
+              <span class="badge pink " style="font-size: 18px">{{ number_format($structure_turnover, 2, '.', ',') }}$</span>
+            </div>
+            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество переходов по реф. ссылке:
+              <span class="badge pink " style="font-size: 18px">{{ $referral_clicks ?? 0 }}</span>
+            </div>
           </div>
         
         </div>

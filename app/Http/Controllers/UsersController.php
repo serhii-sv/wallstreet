@@ -13,6 +13,7 @@ use App\Models\ActivityLog;
 use App\Models\CloudFile;
 use App\Models\Deposit;
 use App\Models\Permission;
+use App\Models\ReferralLinkStat;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -197,6 +198,8 @@ class UsersController extends Controller
         
         $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
+        $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
+        $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_different = $stat_deposits - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
@@ -219,7 +222,13 @@ class UsersController extends Controller
             return $user->userReferrals->count();
         });
         $referral_clicks = $user->getReferralLinkClickCount();
-
+        
+        $referrals_ids = $user->referrals()->distinct('id')->pluck('id')->toArray();
+        $structure_turnover = Deposit::whereIn('user_id', $referrals_ids)->where('condition', '!=', 'closed')->sum('invested');
+        $registered_referrals = ReferralLinkStat::whereIn('user_id', $referrals_ids)->count();
+        $active_referrals=$user->referrals()->distinct('id')->whereHas('deposits', function ($query){
+            $query->where('condition', '!=', 'closed');
+        })->count();
         return view('pages.sample.page-users-view', [
             'user' => $user,
             'deposit_sum' => $deposit_sum,
@@ -232,6 +241,13 @@ class UsersController extends Controller
             'referral_count' => $referral_count,
             'referral_clicks' => $referral_clicks,
             'user_first_upliner' => $user->firstPartner($user),
+            'stat_deposits' => $stat_deposits,
+            'stat_withdraws' => $stat_withdraws,
+            'stat_create_dep' => $stat_create_dep,
+            'stat_transfer' => $stat_transfer,
+            'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
+            'registered_referrals' => $registered_referrals,
+            'active_referrals' => $active_referrals,
         ]);
     }
     

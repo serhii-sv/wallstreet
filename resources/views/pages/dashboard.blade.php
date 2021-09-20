@@ -382,9 +382,7 @@
                   @endforelse
                 </tbody>
               </table>
-                  <span class="card-title grey-text text-darken-4 mt-3">Популярность по браузерам <i
-                        class="material-icons right">close</i>
-                  </span>
+                  <span class="card-title grey-text text-darken-4 mt-3">Популярность по браузерам</span>
               <table class="responsive-table ">
                 <thead>
                   <tr>

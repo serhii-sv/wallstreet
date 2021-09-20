@@ -67,7 +67,7 @@
                <div class="switch">
                   Темное меню
                   <label class="float-right">
-                      <input class="menu-dark-checkbox" type="checkbox" {{ ($themeSettings['menu-dark'] ?? null) == 'true' ? 'checked' : '' }} />
+                      <input class="menu-dark-checkbox" type="checkbox" {{ ($themeSettings['menu-dark'] ?? null) == 'true' ? 'checked' : 'checked' }} />
                       <span class="lever ml-0"></span>
                   </label>
                </div>

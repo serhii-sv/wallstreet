@@ -22,7 +22,7 @@ class Helper
             'isNavbarFixed' => isset($userThemeSettings['navbar-fixed']) ? $userThemeSettings['navbar-fixed'] == 'true' : true,
             'activeMenuColor' => '',
             'menuBgColor' => isset($userThemeSettings['menu-bg-color']) ? $userThemeSettings['menu-bg-color'] . ' sidenav-gradient' :  '',
-            'isMenuDark' => isset($userThemeSettings['menu-dark']) ? $userThemeSettings['menu-dark'] == 'true' : null,
+            'isMenuDark' => isset($userThemeSettings['menu-dark']) ? $userThemeSettings['menu-dark'] == 'true' : true,
             'isMenuCollapsed' => isset($userThemeSettings['menu-collapsed']) ? $userThemeSettings['menu-collapsed'] == 'true' : false,
             'activeMenuType' => isset($userThemeSettings['menu-selection']) ? $userThemeSettings['menu-selection'] : '',
             'isFooterDark' => isset($userThemeSettings['footer-dark']) ? $userThemeSettings['footer-dark'] == 'true' : null,
