@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -76,6 +77,18 @@ class WalletController extends BaseController
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                      ),
+     *                      @OA\Property(
+     *                          property="cyrrency_rate_log",
+     *                          type="array",
+     *                          @OA\Items(
+     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                              @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                              @OA\Property(property="rate", type="string", example="200.45"),
+     *                              @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                         )
+     *                     )
      *                  )
      *              ),
      *              @OA\Property(property="first_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
@@ -100,6 +113,18 @@ class WalletController extends BaseController
         $wallets = $user->wallets()
             ->with('currency', 'paymentSystem')
             ->paginate(self::API_PAGINATION);
+
+        $wallets->each(function ($wallet) {
+            $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
+            $wallet->currency->current_rate = $rate->s_value ?? 0;
+
+            $wallet->cyrrency_rate_log = $wallet
+                ->currency
+                ->rateLog()
+                ->where('date', '>=', Carbon::now()->subDays(7))
+                ->orderBy('date', 'asc')
+                ->get();
+        });
 
         return response()->json([
             'status' => 200,
@@ -187,6 +212,7 @@ class WalletController extends BaseController
      *                          @OA\Property(property="code", type="string", example="USD"),
      *                          @OA\Property(property="symbol", type="string", example="$"),
      *                          @OA\Property(property="precision", type="integer", example="2"),
+     *                          @OA\Property(property="current_rate", type="string", example="124123.123123"),
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                      ),
@@ -204,6 +230,18 @@ class WalletController extends BaseController
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                      ),
+     *                      @OA\Property(
+     *                          property="cyrrency_rate_log",
+     *                          type="array",
+     *                          @OA\Items(
+     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                              @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                              @OA\Property(property="rate", type="string", example="200.45"),
+     *                              @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                         )
+     *                     )
      *                  )
      *              ),
      *              @OA\Property(property="first_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
@@ -241,6 +279,16 @@ class WalletController extends BaseController
         $wallet->fill($request->only('external'));
 
         if ($wallet->save()) {
+            $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
+            $wallet->currency->current_rate = $rate->s_value ?? 0;
+
+            $wallet->cyrrency_rate_log = $wallet
+                ->currency
+                ->rateLog()
+                ->where('date', '>=', Carbon::now()->subDays(7))
+                ->orderBy('date', 'asc')
+                ->get();
+
             return response()->json([
                 'status' => 200,
                 'data' => $wallet
