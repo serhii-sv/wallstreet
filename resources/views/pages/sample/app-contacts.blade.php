@@ -27,6 +27,12 @@
       @keyframes blink {
           100% { color: rgba(34, 34, 34, 0); }
       }
+      .control{
+          width: 30px;
+      }
+      .table.dataTable thead th{
+          min-width: 30px;
+      }
   </style>
 @endsection
 
@@ -163,7 +169,7 @@
                 <th>Name</th>
                 <th>@if(request()->get('roles') === 'multi_acc') Main Acc @else Upliner @endif</th>
                 <th>ip</th>
-                <th>City</th>
+                <th>Country</th>
               </tr>
             </thead>
             <tbody>

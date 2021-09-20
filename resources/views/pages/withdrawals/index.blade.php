@@ -91,6 +91,14 @@
         <li>
           <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a>
         </li>
+        @forelse($filter_users as $user)
+        <li>
+          <a href="{{ request()->fullUrlWithQuery(['user'=> $user->id]) }}" class="{{ request()->user == $user->id ? 'active' : '' }}">
+            {{ $user->name }}
+          </a>
+        </li>
+        @empty
+        @endforelse
       </ul>
     </div>
     @include('panels.inform')
@@ -107,6 +115,9 @@
               <th></th>
               <th>
                 <span>Email#</span>
+              </th>
+              <th>
+                <span>Login#</span>
               </th>
               <th>Сумма</th>
               <th>Дата</th>

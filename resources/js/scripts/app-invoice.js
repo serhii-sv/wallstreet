@@ -28,6 +28,11 @@ $(document).ready(function () {
                     bSortable: false
                 },
                 {
+                    data: 'login',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
                     data: 'amount',
                     searchable: false,
                     bSortable: true

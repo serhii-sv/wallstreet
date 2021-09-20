@@ -65,6 +65,22 @@
             <table class="striped">
               <tbody>
                 <tr>
+                  <td>Upliner:</td>
+                  <td>
+                    @if($user->partner)
+                      <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank">{{ $user->partner->email  ?? '' }}</a>
+                      @else
+                      No
+                    @endif
+                  </td>
+                </tr>
+                <tr>
+                  <td>First upliner:</td>
+                  <td>
+                    <a href="{{ route('users.show', $user_first_upliner->id) }}" target="_blank">{{ $user_first_upliner->email  ?? '' }}</a>
+                  </td>
+                </tr>
+                <tr>
                   <td>Пароль:</td>
                   <td>{{ $user->unhashed_password  ?? '' }}</td>
                 </tr>

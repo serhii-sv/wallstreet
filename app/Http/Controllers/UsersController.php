@@ -219,6 +219,7 @@ class UsersController extends Controller
             return $user->userReferrals->count();
         });
         $referral_clicks = $user->getReferralLinkClickCount();
+
         return view('pages.sample.page-users-view', [
             'user' => $user,
             'deposit_sum' => $deposit_sum,
@@ -230,6 +231,7 @@ class UsersController extends Controller
             'user_auth_logs' => $user_auth_logs,
             'referral_count' => $referral_count,
             'referral_clicks' => $referral_clicks,
+            'user_first_upliner' => $user->firstPartner($user),
         ]);
     }
     

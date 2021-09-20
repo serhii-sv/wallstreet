@@ -79,7 +79,7 @@ $(document).ready(function () {
       //     bSortable: true
       // },
       {
-        data: 'city',
+        data: 'country',
         searchable: false,
         bSortable: false
       },

@@ -53,6 +53,11 @@
                                         <small class="errorTxt3"></small>
                                     </div>
                                     <div class="input-field col s12">
+                                        <label for="daily">Суточный процент *</label>
+                                        <input id="daily" type="text" name="daily" data-error=".errorTxt55">
+                                        <small class="errorTxt55"></small>
+                                    </div>
+                                    <div class="input-field col s12">
                                         <label for="duration">Срок действия депозита *</label>
                                         <input id="duration" type="number" name="duration" data-error=".errorTxt4">
                                         <small class="errorTxt4"></small>

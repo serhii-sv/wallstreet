@@ -1,6 +1,7 @@
 <div class="display-flex align-items-center">
-  <div class="mr-10">
-    {{ $user->int_id }}
+  <div class="" style="margin-right: 15px;">
+ 
+    <a href="{{ route('users.show', $user) }}">{{ $user->int_id ?? 'Не указано' }}</a>
   </div>
     <div>
         <span class="avatar-contact avatar-online">

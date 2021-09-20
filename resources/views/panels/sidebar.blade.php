@@ -96,8 +96,8 @@
       </li>
     @endif
     
-    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REPLENISHMENTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSACTIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
-      <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*') || Route::is('rates.*') ) active @endif">
+    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REPLENISHMENTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSACTIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]) )
+      <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*')  ) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">account_balance</i>
           <span class="menu-title" data-i18n="Пользователи">Финансы</span>
@@ -155,21 +155,13 @@
                 </a>
               </li>
             @endif
-            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
-              <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rates.index') }}">
-                  <i class="material-icons">show_chart</i>
-                  <span class="menu-title" data-i18n="Тарифы">Тарифы</span>
-                </a>
-              </li>
-            @endif
           </ul>
         </div>
       </li>
     @endif
     
-    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
-      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) active @endif">
+    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
+      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
           <span class="menu-title" data-i18n="Пользователи">Маркетинг</span>
@@ -192,6 +184,14 @@
                 </a>
               </li>
             @endif
+              @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
+                <li class="bold">
+                  <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rates.index') }}">
+                    <i class="material-icons">show_chart</i>
+                    <span class="menu-title" data-i18n="Тарифы">Тарифы</span>
+                  </a>
+                </li>
+              @endif
           </ul>
         </div>
       </li>

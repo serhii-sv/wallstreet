@@ -1,0 +1,1 @@
+<a href="{{ route('users.show', $transaction->user->id) }}">{{ $transaction->user->login }}</a>

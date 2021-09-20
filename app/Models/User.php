@@ -309,4 +309,15 @@ class User extends Authenticatable
         return $this->hasMany(ReferralLinkStat::class, 'partner_id','id')->sum('click_count');
     }
     
+    public function hasPartner() {
+        return $this->belongsTo(User::class, 'partner_id', 'my_id')->count() ? true : false;
+    }
+    public function firstPartner($user) {
+        if ($user->hasPartner())
+        {
+            return $user->firstPartner($user->partner()->first());
+        }else{
+            return $user;
+        }
+    }
 }

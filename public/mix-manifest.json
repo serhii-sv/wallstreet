@@ -87,6 +87,7 @@
     "/js/scripts/app-file-manager.js": "/js/scripts/app-file-manager.js",
     "/js/scripts/app-invoice.js": "/js/scripts/app-invoice.js",
     "/js/scripts/app-kanban.js": "/js/scripts/app-kanban.js",
+    "/js/scripts/app-replenishment.js": "/js/scripts/app-replenishment.js",
     "/js/scripts/app-todo.js": "/js/scripts/app-todo.js",
     "/js/scripts/banners.js": "/js/scripts/banners.js",
     "/js/scripts/card-advanced.js": "/js/scripts/card-advanced.js",
