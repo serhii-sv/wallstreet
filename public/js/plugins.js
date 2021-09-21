@@ -395,7 +395,7 @@ $(function () {
 
     if ($(".carousel-slider").length > 0) {
       if (!$(".carousel-slider").hasClass("native-scroll")) {
-        var ps_leftside_nav = new PerfectScrollbar(".carousel-slider", {
+        var ps_modal_slider = new PerfectScrollbar(".carousel-slider", {
           wheelSpeed: 2,
           wheelPropagation: false,
           minScrollbarLength: 20

@@ -463,13 +463,14 @@ $(function () {
     }
     if ($(".carousel-slider").length > 0) {
       if (!$(".carousel-slider").hasClass("native-scroll")) {
-        var ps_leftside_nav = new PerfectScrollbar(".carousel-slider", {
+        var ps_modal_slider = new PerfectScrollbar(".carousel-slider", {
           wheelSpeed: 2,
           wheelPropagation: false,
           minScrollbarLength: 20
         });
       }
     }
+    
     if ($(".slide-out-right-body").length > 0) {
       var ps_slideout_right = new PerfectScrollbar(".slide-out-right-body #messages, .chat-body .collection", {
         suppressScrollX: true,
