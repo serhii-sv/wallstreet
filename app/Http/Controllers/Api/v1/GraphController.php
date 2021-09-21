@@ -26,6 +26,25 @@ class GraphController extends Controller
      *          )
      *      ),
      *     @OA\Response(
+     *          response=404,
+     *          description="Currency not found",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="currency",
+     *                      type="array",
+     *                      collectionFormat="multi",
+     *                      @OA\Items(
+     *                          type="string",
+     *                          example="Валюта не найдена",
+     *                      )
+     *                  ),
+     *              )
+     *          ),
+     *     ),
+     *     @OA\Response(
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
@@ -135,6 +154,15 @@ class GraphController extends Controller
             'month6' => '6 months',
             'year' => '1 year'
         ];
+
+        if (is_null($currency)) {
+            return response()->json([
+                'status' => 404,
+                'errors' => [
+                    'currency' => 'Валюта не найдена'
+                ]
+            ], 404);
+        }
 
         $data = [];
 
