@@ -60,12 +60,12 @@
               </li>
             @endif
             
-            <li>
-              <a href="{{ route('referrals.tree.index') }}" class="@if(Route::is('referrals.tree.*')) active @endif">
-                <i class="material-icons">device_hub</i>
-                <span class="menu-title" data-i18n="Пользователи">Дерево рефералов</span>
-              </a>
-            </li>
+{{--            <li>--}}
+{{--              <a href="{{ route('referrals.tree.index') }}" class="@if(Route::is('referrals.tree.*')) active @endif">--}}
+{{--                <i class="material-icons">device_hub</i>--}}
+{{--                <span class="menu-title" data-i18n="Пользователи">Дерево рефералов</span>--}}
+{{--              </a>--}}
+{{--            </li>--}}
             
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
               <li>

@@ -178,44 +178,44 @@
           </div>
         
         </div>
-        <div class="row">
-          <div class="col s12">
-            <h6 class="mb-2 mt-2"><i class="material-icons">error_outline</i> Информация и пользователе</h6>
-            <table class="striped">
-              <tbody>
-                <tr>
-                  <td>E-mail:</td>
-                  <td class="users-view-email">{{ $user->email ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>Телефон:</td>
-                  <td class="users-view-email">{{ $user->phone ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>Skype:</td>
-                  <td class="users-view-email">{{ $user->skype ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>Пол:</td>
-                  <td class="users-view-email">{{ $user->sex ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>Страна:</td>
-                  <td>{{ $user->country ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>Город:</td>
-                  <td>{{ $user->city ?? 'Не указано' }}</td>
-                </tr>
-                <tr>
-                  <td>IP:</td>
-                  <td>{{ $user->ip ?? 'Не указано' }}</td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
+{{--        <div class="row">--}}
+{{--          <div class="col s12">--}}
+{{--            <h6 class="mb-2 mt-2"><i class="material-icons">error_outline</i> Информация и пользователе</h6>--}}
+{{--            <table class="striped">--}}
+{{--              <tbody>--}}
+{{--                <tr>--}}
+{{--                  <td>E-mail:</td>--}}
+{{--                  <td class="users-view-email">{{ $user->email ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>Телефон:</td>--}}
+{{--                  <td class="users-view-email">{{ $user->phone ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>Skype:</td>--}}
+{{--                  <td class="users-view-email">{{ $user->skype ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>Пол:</td>--}}
+{{--                  <td class="users-view-email">{{ $user->sex ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>Страна:</td>--}}
+{{--                  <td>{{ $user->country ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>Город:</td>--}}
+{{--                  <td>{{ $user->city ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                  <td>IP:</td>--}}
+{{--                  <td>{{ $user->ip ?? 'Не указано' }}</td>--}}
+{{--                </tr>--}}
+{{--              --}}
+{{--              </tbody>--}}
+{{--            </table>--}}
+{{--          </div>--}}
+{{--        </div>--}}
         <!-- </div> -->
       </div>
     </div>

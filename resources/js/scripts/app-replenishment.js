@@ -33,6 +33,11 @@ $(document).ready(function () {
           bSortable: false
         },
         {
+          data: 'partner',
+          searchable: false,
+          bSortable: false
+        },
+        {
           data: 'amount',
           searchable: false,
           bSortable: true

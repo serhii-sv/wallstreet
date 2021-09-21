@@ -79,18 +79,18 @@
       </a>
       <!-- Dropdown Structure -->
       <ul id='btn-filter' class='dropdown-content'>
-        <li>
-          <a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'desc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'desc' ? 'active' : '' }}">Дата по убыванию</a>
-        </li>
-        <li>
-          <a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'asc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'asc' ? 'active' : '' }}">Дата по возростанию</a>
-        </li>
-        <li>
-          <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'desc']) }}" class="{{ request()->field == 'amount' && request()->order == 'desc' ? 'active' : '' }}">Сумма по убыванию</a>
-        </li>
-        <li>
-          <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a>
-        </li>
+{{--        <li>--}}
+{{--          <a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'desc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'desc' ? 'active' : '' }}">Дата по убыванию</a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--          <a href="{{ request()->fullUrlWithQuery(['field' => 'created_at', 'sort' => 'asc']) }}" class="{{ request()->field == 'created_at' && request()->order == 'asc' ? 'active' : '' }}">Дата по возростанию</a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--          <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'desc']) }}" class="{{ request()->field == 'amount' && request()->order == 'desc' ? 'active' : '' }}">Сумма по убыванию</a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--          <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'sort' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a>--}}
+{{--        </li>--}}
         @forelse($filter_users as $user)
         <li>
           <a href="{{ request()->fullUrlWithQuery(['user'=> $user->id]) }}" class="{{ request()->user == $user->id ? 'active' : '' }}">
@@ -118,6 +118,9 @@
               </th>
               <th>
                 <span>Login#</span>
+              </th>
+              <th>
+                <span>Upliner</span>
               </th>
               <th>Сумма</th>
               <th>Дата</th>

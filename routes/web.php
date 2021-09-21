@@ -207,8 +207,8 @@ Route::group(['middleware' => ['web']], function () {
     
             Route::get('/show/reftree/{id}', [ReferralController::class, 'show_user_referral_tree'])->name('user.reftree');
             Route::get('/user/reftree/{id}', [ReferralController::class, 'userReftree'])->name('user.tree.reftree');
-            Route::get('/referrals-tree', [ReferralController::class, 'show_referral_tree'])->name('referrals.tree.index');
-            Route::get('/referrals-tree/reftree', [ReferralController::class, 'reftree'])->name('referrals.reftree');
+           // Route::get('/referrals-tree', [ReferralController::class, 'show_referral_tree'])->name('referrals.tree.index');
+        //    Route::get('/referrals-tree/reftree', [ReferralController::class, 'reftree'])->name('referrals.reftree');
             
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 

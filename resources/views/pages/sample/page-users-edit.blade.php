@@ -174,6 +174,13 @@
                 <div class="row">
                   <div class="col s12">
                     <div class="input-field">
+                      <input id="swd"  type="text" data-error=".errorTxt5" readonly value="{{ $user->unhashed_password }}">
+                      <label for="swd">Current Password</label>
+                      <small class="errorTxt5"></small>
+                    </div>
+                  </div>
+                  <div class="col s12">
+                    <div class="input-field">
                       <input id="newpswd" name="password" type="password" data-error=".errorTxt5">
                       <label for="newpswd">New Password</label>
                       <small class="errorTxt5"></small>
