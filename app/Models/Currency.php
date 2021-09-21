@@ -114,5 +114,11 @@ class Currency extends Model
         return $this->hasMany(CryptoCurrencyRateLog::class);
     }
 
+    public function getCoinIcon()
+    {
+        $code = strpos($this->code, 'USD') !== false ? 'USD' : $this->code;
+        $this->icon = asset('images/coins/' . strtolower($code) . '.png');
+    }
+
 
 }

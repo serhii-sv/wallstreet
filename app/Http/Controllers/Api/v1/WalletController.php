@@ -59,7 +59,9 @@ class WalletController extends BaseController
      *                          @OA\Property(property="name", type="string", example="U.S dollars"),
      *                          @OA\Property(property="code", type="string", example="USD"),
      *                          @OA\Property(property="symbol", type="string", example="$"),
+     *                          @OA\Property(property="icon", type="string", example="http://localhost:8000/images/coins/usd.png"),
      *                          @OA\Property(property="precision", type="integer", example="2"),
+     *                          @OA\Property(property="current_rate", type="string", example="124123.123123"),
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                      ),
@@ -117,6 +119,8 @@ class WalletController extends BaseController
         $wallets->each(function ($wallet) {
             $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
             $wallet->currency->current_rate = $rate->s_value ?? 0;
+
+            $wallet->currency->getCoinIcon();
 
             $wallet->cyrrency_rate_log = $wallet
                 ->currency
@@ -212,6 +216,7 @@ class WalletController extends BaseController
      *                          @OA\Property(property="code", type="string", example="USD"),
      *                          @OA\Property(property="symbol", type="string", example="$"),
      *                          @OA\Property(property="precision", type="integer", example="2"),
+     *                          @OA\Property(property="icon", type="string", example="http://localhost:8000/images/coins/usd.png"),
      *                          @OA\Property(property="current_rate", type="string", example="124123.123123"),
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
@@ -281,6 +286,8 @@ class WalletController extends BaseController
         if ($wallet->save()) {
             $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
             $wallet->currency->current_rate = $rate->s_value ?? 0;
+
+            $wallet->currency->getCoinIcon();
 
             $wallet->cyrrency_rate_log = $wallet
                 ->currency
