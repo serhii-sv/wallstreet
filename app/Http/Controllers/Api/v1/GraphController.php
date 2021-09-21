@@ -207,12 +207,22 @@ class GraphController extends Controller
      *              @OA\Property(property="status", type="integer", example="200"),
      *              @OA\Property(
      *              property="data",
-     *              type="array",
-     *              @OA\Items(
-     *                  @OA\Property(property="day", type="string", example="Tue"),
-     *                  @OA\Property(property="replenishments", type="string", example="200.000"),
-     *                  @OA\Property(property="withdrawals", type="string", example="200.000"),
+     *              type="object",
+     *              @OA\Property(
+     *                  property="days",
+     *                  type="array",
+     *                  @OA\Items(type="string", example="Mon"),
      *              ),
+     *              @OA\Property(
+     *                  property="replenishments",
+     *                  type="array",
+     *                  @OA\Items(type="string", example="123.123"),
+     *              ),
+     *              @OA\Property(
+     *                  property="withdrawals",
+     *                  type="array",
+     *                  @OA\Items(type="string", example="123.123"),
+     *              )
      *            )
      *         )
      *     )
@@ -247,11 +257,9 @@ class GraphController extends Controller
                 ->where('created_at', '<=', $date->format('Y-m-d 23:59:59'))
                 ->get();
 
-            $transactionsData[] = [
-                'day' => $date->format('D'),
-                'replenishments' => $replenishments->sum('main_currency_amount'),
-                'withdrawals' => $withdrawals->sum('main_currency_amount'),
-            ];
+            $transactionsData['days'][] = $date->format('D');
+            $transactionsData['replenishments'][] = $replenishments->sum('main_currency_amount');
+            $transactionsData['withdrawals'][] = $withdrawals->sum('main_currency_amount');
         }
 
         return response()->json([
