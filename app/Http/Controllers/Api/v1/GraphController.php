@@ -61,6 +61,7 @@ class GraphController extends Controller
      *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                         )
      *                     )
+     *                  )
      *              ),
      *         )
      *     )
