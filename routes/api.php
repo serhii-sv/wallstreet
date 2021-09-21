@@ -40,5 +40,6 @@ Route::group([
         Route::get('wallets/{wallet_id}/currency-rates', [\App\Http\Controllers\Api\v1\WalletController::class, 'currencyRate']);
 
         Route::get('graphs/sprint-token', [\App\Http\Controllers\Api\v1\GraphController::class, 'sprintToken']);
+        Route::get('graphs/transactions', [\App\Http\Controllers\Api\v1\GraphController::class, 'transactions']);
     });
 });
