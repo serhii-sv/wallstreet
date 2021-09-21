@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\CryptoCurrencyRateLog;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,12 +84,8 @@ class WalletController extends BaseController
      *                          property="cyrrency_rate_log",
      *                          type="array",
      *                          @OA\Items(
-     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="rate", type="string", example="200.45"),
-     *                              @OA\Property(property="date", type="date-time", example="2021-09-07"),
-     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              @OA\Property(property="key", type="string", example="Mon"),
+     *                              @OA\Property(property="value", type="string", example="234.234"),
      *                         )
      *                     )
      *                  )
@@ -122,12 +119,7 @@ class WalletController extends BaseController
 
             $wallet->currency->getCoinIcon();
 
-            $wallet->cyrrency_rate_log = $wallet
-                ->currency
-                ->rateLog()
-                ->where('date', '>=', Carbon::now()->subDays(7))
-                ->orderBy('date', 'asc')
-                ->get();
+            $wallet->cyrrency_rate_log = CryptoCurrencyRateLog::getChartData($wallet);
         });
 
         return response()->json([
@@ -239,13 +231,9 @@ class WalletController extends BaseController
      *                          property="cyrrency_rate_log",
      *                          type="array",
      *                          @OA\Items(
-     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="rate", type="string", example="200.45"),
-     *                              @OA\Property(property="date", type="date-time", example="2021-09-07"),
-     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                         )
+     *                              @OA\Property(property="key", type="string", example="Mon"),
+     *                              @OA\Property(property="value", type="string", example="234.234"),
+     *                          )
      *                     )
      *                  )
      *              ),
@@ -289,12 +277,7 @@ class WalletController extends BaseController
 
             $wallet->currency->getCoinIcon();
 
-            $wallet->cyrrency_rate_log = $wallet
-                ->currency
-                ->rateLog()
-                ->where('date', '>=', Carbon::now()->subDays(7))
-                ->orderBy('date', 'asc')
-                ->get();
+            $wallet->cyrrency_rate_log = CryptoCurrencyRateLog::getChartData($wallet);
 
             return response()->json([
                 'status' => 200,
@@ -340,12 +323,8 @@ class WalletController extends BaseController
      *              property="data",
      *              type="array",
      *              @OA\Items(
-     *                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                  @OA\Property(property="rate", type="string", example="200.45"),
-     *                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
-     *                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                  @OA\Property(property="key", type="string", example="Mon"),
+     *                  @OA\Property(property="value", type="string", example="234.234"),
      *             )
      *          )
      *        )
@@ -365,12 +344,7 @@ class WalletController extends BaseController
             ], 403);
         }
 
-        $logData = $wallet
-                ->currency
-                ->rateLog()
-                ->where('date', '>=', Carbon::now()->subDays(7))
-                ->orderBy('date', 'asc')
-                ->get();
+        $logData = CryptoCurrencyRateLog::getChartData($wallet);
 
        return response()->json([
            'status' => 200,

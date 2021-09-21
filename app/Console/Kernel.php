@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
     {
         // Logs
         $schedule->command('log:clear')->daily()->withoutOverlapping();
-        $schedule->command('make:rate_log')->daily();
+        $schedule->command('make:rate_log')->hourly();
 
         // Jobs
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
