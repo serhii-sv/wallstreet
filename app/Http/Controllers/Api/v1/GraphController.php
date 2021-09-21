@@ -25,13 +25,6 @@ class GraphController extends Controller
      *              type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
      *          )
      *      ),
-     *     @OA\Parameter(
-     *          name="period",
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string", example="1 month"
-     *          )
-     *      ),
      *     @OA\Response(
      *          response=200,
      *          description="Success",
@@ -51,41 +44,114 @@ class GraphController extends Controller
      *                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                  @OA\Property(
      *                          property="cyrrency_rate_log",
-     *                          type="array",
-     *                          @OA\Items(
-     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="rate", type="string", example="200.45"),
-     *                              @OA\Property(property="date", type="date-time", example="2021-09-07"),
-     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                         )
+     *                          type="object",
+     *                          @OA\Property(
+     *                              property="day",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(
+     *                              property="week",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(
+     *                              property="month",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(
+     *                              property="month3",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(
+     *                              property="month6",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(
+     *                              property="year",
+     *                              type="array",
+     *                              @OA\Items(
+     *                                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                                  @OA\Property(property="rate", type="string", example="200.45"),
+     *                                  @OA\Property(property="date", type="date-time", example="2021-09-07"),
+     *                                  @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                                  @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
+     *                              )
+     *                          ),
      *                  )
      *              ),
      *         )
      *     )
      *  )
      */
-    public function sprintToken(Request $request)
+    public function sprintToken()
     {
         $currency = Currency::where('code', 'SPRINT')->first();
 
-        $period = '1 month';
+        $periods = [
+            'day' => '1 day',
+            'week' => '1 week',
+            'month' => '1 month',
+            'month3' => '3 months',
+            'month6' => '6 months',
+            'year' => '1 year'
+        ];
 
-        if ($request->period) {
-            $period = $request->period;
-        }
+        $data = [];
 
         $currency->getCoinIcon();
 
         $rate = Setting::where('s_key', 'like', strtolower($currency->code) . '%')->first();
         $currency->current_rate = $rate->s_value ?? 0;
 
-        $currency->cyrrency_rate_log = $currency
-            ->rateLog()
-            ->where('date', '>=', date('Y-m-d', strtotime( '- ' . $period)))
-            ->orderBy('date', 'asc')
-            ->get();
+       foreach ($periods as $period_label => $period_value) {
+           $data[$period_label] = $currency
+               ->rateLog()
+               ->where('date', '>=', date('Y-m-d', strtotime( '- ' . $period_value)))
+               ->orderBy('date', 'asc')
+               ->get();
+       }
+
+        $currency->cyrrency_rate_log = $data;
 
         return response()->json([
             'status' => 200,
