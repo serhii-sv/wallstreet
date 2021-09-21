@@ -42,7 +42,7 @@ class CryptoCurrencyRateLog extends Command
         $rates = Setting::where('s_key', 'like', '%_to_%')->get();
 
         foreach ($rates as $rate) {
-            CryptoCurrencyRateLog::setRateLog($rate);
+            \App\Models\CryptoCurrencyRateLog::setRateLog($rate);
 
             $this->info('Create rate log for ' . $rate->s_key);
         }
