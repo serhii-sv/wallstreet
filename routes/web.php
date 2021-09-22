@@ -43,15 +43,16 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
             
-            Route::get('/chat/{id?}', [AdminChatController::class, 'index'])->name('chat');
+/*            Route::get('/chat/{id?}', [AdminChatController::class, 'index'])->name('chat');
             Route::post('/chat/common/send-message', [AdminChatController::class, 'sendCommonMessage'])->name('chat.common.send.message');
             Route::post('/chat/common/read-message', [AdminChatController::class, 'readCommonChatMessage'])->name('chat.common.read.message');
             Route::post('/chat/common/delete-message', [AdminChatController::class, 'deleteCommonMessage'])->name('chat.common.delete.message');
             Route::post('/chat/send-message', [AdminChatController::class, 'sendMessage'])->name('chat.send.message');
             Route::post('/chat/read-message', [AdminChatController::class, 'readMessage'])->name('chat.read.message');
-            Route::post('/chat/delete-message', [AdminChatController::class, 'deleteMessage'])->name('chat.delete.message');
+            Route::post('/chat/delete-message', [AdminChatController::class, 'deleteMessage'])->name('chat.delete.message');*/
             Route::get('/user/avatar/{id}', [UsersController::class, 'getAvatar'])->name('user.get.avatar');
-            
+    
+            Route::get('/chat/{id?}', [AdminChatController::class, 'chatList'])->name('chat');
             
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
           //  Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');

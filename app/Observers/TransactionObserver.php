@@ -70,6 +70,8 @@ class TransactionObserver
             } else {
                 $transaction->main_currency_amount = $transaction->convertToCurrency($currency, $mainCurrency, $amount);
             }
+        }else{
+            $transaction->main_currency_amount = $amount;
         }
     }
 }

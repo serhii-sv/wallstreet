@@ -9,6 +9,7 @@ use App\Models\AdminChat;
 use App\Models\AdminChatMessage;
 use App\Models\AdminCommonChatMessage;
 use App\Models\AdminCommonChatUsers;
+use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\ModelHasPermission;
 use App\Models\Notification;
@@ -16,6 +17,7 @@ use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 
 class AdminChatController extends Controller
 {
@@ -158,5 +160,37 @@ class AdminChatController extends Controller
             broadcast(new \App\Events\AdminChat($user_id, $message_id, "delete", $chat_id));
             return 'deleted';
         }
+    }
+    
+    public function chatList($chat_id = null) {
+     
+        $chat_list = Chat::paginate(10);
+        if ($chat_id !== null && Uuid::isValid($chat_id)) {
+            $chat = Chat::where('id', $chat_id)->first();
+            
+            if ($chat->checkUser(Auth::user()->id)) {
+                if ($chat->getUnreadMessagesCount(Auth::user()->id) > 0) {
+                    foreach ($chat->getUnreadMessages(Auth::user()->id) as $item) {
+                        $item->update(['is_read' => true]);
+                    }
+                }
+               
+                $chat_messages = ChatMessage::where('chat_id', $chat->id)->orderBy('created_at', 'asc')->limit(250)->get();
+            } else {
+                $chat = false;
+                $chat_messages = false;
+            }
+        } else {
+          
+            $chat = false;
+            $chat_messages = false;
+        }
+        return view('pages.chat.list', [
+            'chat_id' => $chat_id,
+            'chat_messages' => $chat_messages,
+            'messages' => $chat_messages,
+            'chat' => $chat,
+            'chat_list' => $chat_list,
+        ]);
     }
 }

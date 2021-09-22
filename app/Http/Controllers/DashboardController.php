@@ -191,7 +191,7 @@ class DashboardController extends Controller
             'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
             'currencies' => Currency::all(),
             'payment_system' => $payment_system,
-            'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(10)->get(),
+            'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(5)->get(),
             'countries_stat' => $countries_stat,
             'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,

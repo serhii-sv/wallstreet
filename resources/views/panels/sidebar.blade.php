@@ -35,7 +35,7 @@
   </div>
   <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
     
-    <li class="bold">
+    <li class="bold ">
       <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}">
         <i class="material-icons">dashboard</i>
         <span class="menu-title" data-i18n="Дашборд">Дашборд</span>
@@ -87,7 +87,7 @@
               <li>
                 <a class="waves-effect waves-cyan {{ (Route::is('chat') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('chat') }}">
                   <i class="material-icons">chat</i>
-                  <span class="menu-title" data-i18n="Пользователи">Чат</span>
+                  <span class="menu-title" data-i18n="Пользователи">Чаты</span>
                 </a>
               </li>
             @endif
