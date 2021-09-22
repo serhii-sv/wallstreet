@@ -300,7 +300,7 @@
         var $message_id = $data.message_id;
         
         
-        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ $chat_el->user_partner()->first()->id }}") {
+        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ $chat->user_partner()->first()->id }}") {
           $(".chat-msg-list").append('<li>' +
               '<div class="message my-message mb-0">' +
               '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +
