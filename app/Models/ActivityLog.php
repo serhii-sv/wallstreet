@@ -7,6 +7,25 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\ActivityLog
+ *
+ * @property string $id
+ * @property string $user_id
+ * @property int $value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ActivityLog whereValue($value)
+ * @mixin \Eloquent
+ */
 class ActivityLog extends Model
 {
     use HasFactory;

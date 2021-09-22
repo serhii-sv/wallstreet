@@ -12,14 +12,34 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Currency
- * @package App\Models
  *
- * @property string id
- * @property string name
- * @property string code
- * @property integer precision
- * @property string symbol
+ * @package App\Models
+ * string id
+ * string name
+ * string code
+ * integer precision
+ * string symbol
  * @property string|null currency_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CryptoCurrencyRateLog[] $rateLog
+ * @property-read int|null $rate_log_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency wherePrecision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereSymbol($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Currency whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @property string $id
+ * @property string|null $name
+ * @property string $code
+ * @property string|null $symbol
+ * @property int|null $precision
  */
 class Currency extends Model
 {
@@ -44,37 +64,37 @@ class Currency extends Model
         'symbol',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function paymentSystems()
-    {
-        return $this->belongsToMany(PaymentSystem::class, 'currency_payment_system', 'currency_id', 'payment_system_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function deposits()
-    {
-        return $this->hasMany(Deposit::class, 'currency_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tasks()
-    {
-        return $this->hasMany(Tasks::class, 'currency_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class, 'currency_id');
-    }
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+//     */
+//    public function paymentSystems()
+//    {
+//        return $this->belongsToMany(PaymentSystem::class, 'currency_payment_system', 'currency_id', 'payment_system_id');
+//    }
+//
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function deposits()
+//    {
+//        return $this->hasMany(Deposit::class, 'currency_id');
+//    }
+//
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function tasks()
+//    {
+//        return $this->hasMany(Tasks::class, 'currency_id');
+//    }
+//
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function transactions()
+//    {
+//        return $this->hasMany(Transaction::class, 'currency_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -87,10 +107,10 @@ class Currency extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function wallets()
-    {
-        return $this->hasMany(Wallet::class, 'currency_id');
-    }
+//    public function wallets()
+//    {
+//        return $this->hasMany(Wallet::class, 'currency_id');
+//    }
 
     /**
      * @return array

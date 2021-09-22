@@ -185,7 +185,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*

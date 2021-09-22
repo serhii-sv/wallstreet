@@ -25,7 +25,7 @@ class RequestSendToken extends FormRequest
      */
     public function authorize()
     {
-        return return true;;
+        return true;
     }
 
     /**

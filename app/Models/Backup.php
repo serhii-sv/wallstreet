@@ -6,6 +6,24 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Backup
+ *
+ * @property string $id
+ * @property string $path
+ * @property string $size
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Backup whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Backup extends Model
 {
     use HasFactory;

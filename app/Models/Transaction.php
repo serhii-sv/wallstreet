@@ -12,6 +12,59 @@ use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Transaction
+ *
+ * @property string $id
+ * @property string $type_id
+ * @property string $user_id
+ * @property string $currency_id
+ * @property string|null $rate_id
+ * @property string|null $deposit_id
+ * @property string $wallet_id
+ * @property string|null $payment_system_id
+ * @property float $amount
+ * @property float $main_currency_amount
+ * @property string|null $source
+ * @property string|null $result
+ * @property string|null $batch_id
+ * @property float|null $commission
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $is_real
+ * @property int $approved
+ * @property int $int_id
+ * @property-read \App\Models\Currency $currency
+ * @property-read \App\Models\Deposit|null $deposit
+ * @property-read \App\Models\PaymentSystem|null $paymentSystem
+ * @property-read \App\Models\Rate|null $rate
+ * @property-read \App\Models\TransactionType $type
+ * @property-read \App\Models\User $user
+ * @property-read \App\Models\Wallet $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereApproved($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereBatchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCommission($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDepositId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereIntId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereIsReal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereMainCurrencyAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePaymentSystemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereRateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereResult($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereWalletId($value)
+ * @mixin \Eloquent
+ */
 class Transaction extends Model
 {
     use ConvertCurrency;

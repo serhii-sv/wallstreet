@@ -53,7 +53,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        if ($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
         Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();

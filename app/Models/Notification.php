@@ -5,6 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Notification
+ *
+ * @property int $id
+ * @property bool $type_browser
+ * @property bool $type_sms
+ * @property string $name
+ * @property string|null $subject
+ * @property string $text
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereTypeBrowser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereTypeSms($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Notification extends Model
 {
     use HasFactory;

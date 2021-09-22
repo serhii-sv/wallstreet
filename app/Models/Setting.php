@@ -10,10 +10,27 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Setting
- * @package App\Models
  *
- * @property string s_key
- * @property string s_value
+ * @package App\Models
+ * string s_key
+ * string s_value
+ * @property int $id
+ * @property string $s_key
+ * @property string|null $s_value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $autoupdate
+ * @property-read string $currency_name
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereAutoupdate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereSKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereSValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Setting extends Model
 {

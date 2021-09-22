@@ -11,19 +11,42 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PaymentSystem
- * @package App\Models
+ * App\Models\PaymentSystem
  *
- * @property string id
- * @property string name
- * @property string code
- * @property string instant_limit
- * @property string created_at
- * @property string updated_at
- * @property string external_balances
- * @property int connected
- * @property string minimum_topup
- * @property string minimum_withdraw
+ * @property string $id
+ * @property string $name
+ * @property string $code
+ * @property mixed|null $instant_limit
+ * @property mixed|null $external_balances
+ * @property mixed|null $minimum_topup
+ * @property mixed|null $minimum_withdraw
+ * @property bool $connected
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Currency[] $currencies
+ * @property-read int|null $currencies_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions_enter
+ * @property-read int|null $transactions_enter_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions_withdraw
+ * @property-read int|null $transactions_withdraw_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wallet[] $wallets
+ * @property-read int|null $wallets_count
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereConnected($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereExternalBalances($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereInstantLimit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereMinimumTopup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereMinimumWithdraw($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class PaymentSystem extends Model
 {
@@ -76,13 +99,13 @@ class PaymentSystem extends Model
         return $this->hasMany(Transaction::class, 'payment_system_id')->whereIn('type_id', [TransactionType::where('name', 'withdraw')->select('id')->get()->toArray()]);
     }
 
-    /**
+   /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tasks()
-    {
-        return $this->hasMany(Tasks::class, 'payment_system_id');
-    }
+    */
+//    public function tasks()
+//    {
+//        return $this->hasMany(Tasks::class, 'payment_system_id');
+//    }
 
     /**
      * @param string $code

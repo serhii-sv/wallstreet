@@ -16,25 +16,76 @@ use Illuminate\Support\Facades\Auth;
  * Class Deposit
  *
  * @package App\Models
- *
- * @property string id
- * @property string currency_id валюта
- * @property string wallet_id кошелек с которого создается депозит, на него же возвращается при закрытии
- * @property string user_id
- * @property string rate_id ИД тарифного плана
- * @property float  daily процент ежедневных начислений
- * @property float  overall процент на начальную сумму при закрытии
- * @property int    duration продолжительность действия депозита (в днях) равно кол-ву ежедневных начислений
- * @property float  payout выплата начальной суммы в процентах
- * @property float  invested начальная сумма депозита
- * @property float  balance текущий баланс (с учетом начислений)
- * @property int    reinvest ставка реинвестирования
- * @property int    autoclose закрываем депозит по графику
- * @property int    active статус
- * @property string condition последнее действие
- * @property Carbon datetime_closing
- * @property Carbon created_at
- * @property Carbon updated_at
+ * string id
+ * string currency_id валюта
+ * string wallet_id кошелек с которого создается депозит, на него же возвращается при закрытии
+ * string user_id
+ * string rate_id ИД тарифного плана
+ * float  daily процент ежедневных начислений
+ * float  overall процент на начальную сумму при закрытии
+ * int    duration продолжительность действия депозита (в днях) равно кол-ву ежедневных начислений
+ * float  payout выплата начальной суммы в процентах
+ * float  invested начальная сумма депозита
+ * float  balance текущий баланс (с учетом начислений)
+ * int    reinvest ставка реинвестирования
+ * int    autoclose закрываем депозит по графику
+ * int    active статус
+ * string condition последнее действие
+ * Carbon datetime_closing
+ * Carbon created_at
+ * Carbon updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DepositQueue[] $activeCharges
+ * @property-read int|null $active_charges_count
+ * @property-read \App\Models\Currency $currency
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DepositQueue[] $depositQueue
+ * @property-read int|null $deposit_queue_count
+ * @property-read \App\Models\Rate $rate
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @property-read \App\Models\User $user
+ * @property-read \App\Models\Wallet $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereAutoclose($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCondition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDaily($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDatetimeClosing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereIntId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereInvested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereOverall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit wherePayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereRateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereReinvest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereWalletId($value)
+ * @mixin \Eloquent
+ * @property string $id
+ * @property string $currency_id
+ * @property string $rate_id
+ * @property string $user_id
+ * @property string $wallet_id
+ * @property float|null $daily
+ * @property float|null $overall
+ * @property int|null $duration
+ * @property float|null $payout
+ * @property float $invested
+ * @property float $balance
+ * @property bool $autoclose
+ * @property bool $active
+ * @property string $condition
+ * @property string $datetime_closing
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $reinvest
+ * @property int $int_id
  */
 class Deposit extends Model
 {

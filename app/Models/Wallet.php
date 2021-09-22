@@ -11,6 +11,39 @@ use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Wallet
+ *
+ * @property string $id
+ * @property string $user_id
+ * @property string $currency_id
+ * @property string $payment_system_id
+ * @property string|null $external
+ * @property float $balance
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property float $main_currency_amount
+ * @property-read \App\Models\Currency $currency
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Deposit[] $deposits
+ * @property-read int|null $deposits_count
+ * @property-read \App\Models\PaymentSystem $paymentSystem
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereExternal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereMainCurrencyAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet wherePaymentSystemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Wallet extends Model
 {
     use ConvertCurrency;

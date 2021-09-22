@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\CryptoCurrencyRateLog
+ *
+ * @property-read \App\Models\Currency $currency
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog query()
+ * @mixin \Eloquent
+ */
 class CryptoCurrencyRateLog extends Model
 {
     use HasFactory;
