@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class WalletController extends BaseController
 {
     /**
-     *  @OA\Get(
+     * @OA\Get(
      *      path="/api/v1/wallets",
      *      summary="Wallets",
      *      description="Wallets list",
@@ -60,6 +60,7 @@ class WalletController extends BaseController
      *                          @OA\Property(property="name", type="string", example="U.S dollars"),
      *                          @OA\Property(property="code", type="string", example="USD"),
      *                          @OA\Property(property="symbol", type="string", example="$"),
+     *                          @OA\Property(property="rate_exchange_percentage", type="string", example="22.4"),
      *                          @OA\Property(property="icon", type="string", example="http://localhost:8000/images/coins/usd.png"),
      *                          @OA\Property(property="precision", type="integer", example="2"),
      *                          @OA\Property(property="current_rate", type="string", example="124123.123123"),
@@ -117,6 +118,7 @@ class WalletController extends BaseController
             $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
             $wallet->currency->current_rate = $rate->s_value ?? 0;
 
+            $wallet->currency->getRisePercentage();
             $wallet->currency->getCoinIcon();
 
             $wallet->cyrrency_rate_log = CryptoCurrencyRateLog::getChartData($wallet);
@@ -129,7 +131,7 @@ class WalletController extends BaseController
     }
 
     /**
-     *  @OA\Put(
+     * @OA\Put(
      *      path="/api/v1/wallets/{wallet_id}",
      *      summary="Update wallet",
      *      description="Update wallet",
@@ -208,6 +210,7 @@ class WalletController extends BaseController
      *                          @OA\Property(property="code", type="string", example="USD"),
      *                          @OA\Property(property="symbol", type="string", example="$"),
      *                          @OA\Property(property="precision", type="integer", example="2"),
+     *                          @OA\Property(property="rate_exchange_percentage", type="string", example="22.4"),
      *                          @OA\Property(property="icon", type="string", example="http://localhost:8000/images/coins/usd.png"),
      *                          @OA\Property(property="current_rate", type="string", example="124123.123123"),
      *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
@@ -275,6 +278,7 @@ class WalletController extends BaseController
             $rate = Setting::where('s_key', 'like', strtolower($wallet->currency->code) . '%')->first();
             $wallet->currency->current_rate = $rate->s_value ?? 0;
 
+            $wallet->currency->getRisePercentage();
             $wallet->currency->getCoinIcon();
 
             $wallet->cyrrency_rate_log = CryptoCurrencyRateLog::getChartData($wallet);
@@ -294,7 +298,7 @@ class WalletController extends BaseController
     }
 
     /**
-     *  @OA\Get (
+     * @OA\Get (
      *      path="/api/v1/wallets/{wallet_id}/currency-rates",
      *      summary="Wallet currency rate change data",
      *      description="Wallet currency rate change data",
@@ -346,9 +350,9 @@ class WalletController extends BaseController
 
         $logData = CryptoCurrencyRateLog::getChartData($wallet);
 
-       return response()->json([
-           'status' => 200,
-           'data'  => $logData
-       ]);
+        return response()->json([
+            'status' => 200,
+            'data' => $logData
+        ]);
     }
 }

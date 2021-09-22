@@ -34,7 +34,9 @@ class CryptoCurrencyRateLog extends Model
         'currency_id',
         'rate',
         'date',
-        'time'
+        'time',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -85,19 +87,14 @@ class CryptoCurrencyRateLog extends Model
             ->get();
 
         $data = [];
-        $chartData = [];
 
         foreach ($rateLog as $item) {
-            $data[$item->date][] = $item;
+            $data[] = [
+                'key' => Carbon::parse($item->date)->format('D'),
+                'value' => $item->rate
+            ];
         }
 
-       foreach ($data as $date => $items) {
-           $chartData[] = [
-               'key' => Carbon::parse($date)->format('D'),
-               'value' => collect($items)->last()->rate
-           ];
-       }
-
-       return $chartData;
+       return $data;
     }
 }
