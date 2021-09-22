@@ -301,20 +301,6 @@
         
         
         if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ $chat->user_partner()->first()->id }}") {
-  
-          $(".chat-wrapper").append('<div class="chat chat-right" data-id="' + $data.message_id + '">' +
-              '<div class="chat-avatar">' +
-              ' <a class="avatar">' +
-              '<img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">' +
-              '</a>' +
-              '</div>' +
-              '<div class="chat-body">' +
-              ' <div class="chat-text">' +
-              ' <p> ' + $data.message + '</p>' +
-              '</div>' +
-              ' </div>' +
-              ' </div>');
-        } else {
           $(".chat-wrapper").append('<div class="chat">' +
               '<div class="chat-avatar">' +
               ' <a class="avatar">' +
@@ -324,6 +310,19 @@
               '<div class="chat-body">' +
               ' <div class="chat-text">' +
               ' <p>' + $data.message + '</p>' +
+              '</div>' +
+              ' </div>' +
+              ' </div>');
+        } else {
+          $(".chat-wrapper").append('<div class="chat chat-right" data-id="' + $data.message_id + '">' +
+              '<div class="chat-avatar">' +
+              ' <a class="avatar">' +
+              '<img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">' +
+              '</a>' +
+              '</div>' +
+              '<div class="chat-body">' +
+              ' <div class="chat-text">' +
+              ' <p> ' + $data.message + '</p>' +
               '</div>' +
               ' </div>' +
               ' </div>');
