@@ -23,6 +23,8 @@ Route::group([
     Route::post('register', [\App\Http\Controllers\Api\v1\Auth\RegisterController::class, 'register']);
 
     Route::middleware('auth:api')->group(function() {
+        Route::post('password-change', [\App\Http\Controllers\Api\v1\Auth\ChangePasswordController::class, 'changePassword']);
+
         Route::get('transactions', [\App\Http\Controllers\Api\v1\TransactionController::class, 'index']);
         Route::get('transaction-types', [\App\Http\Controllers\Api\v1\TransactionTypeController::class, 'index']);
 
