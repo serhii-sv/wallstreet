@@ -329,26 +329,26 @@
               ' </div>');
         }
         
-          $(".chat-msg-list").append('<li>' +
-              '<div class="message my-message mb-0">' +
-              '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +
-              '   <div class="message-data text-end">' +
-              '    <span class="message-data-time">' + $data.time + '</span>' +
-              '   </div>' +
-              $data.message +
-              '  </div>' +
-              '</li>');
-        } else {
-          $(".chat-msg-list").append('<li class="clearfix">' +
-              '<div class="message other-message pull-right">' +
-              '<img class="rounded-circle float-end chat-user-img img-30" src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +
-              '<div class="message-data">' +
-              '  <span class="message-data-time">' + $data.time + '</span>' +
-              ' </div>' +
-              $data.message +
-              ' </div>' +
-              '</li>');
-        }
+        {{--  $(".chat-msg-list").append('<li>' +--}}
+        {{--      '<div class="message my-message mb-0">' +--}}
+        {{--      '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +--}}
+        {{--      '   <div class="message-data text-end">' +--}}
+        {{--      '    <span class="message-data-time">' + $data.time + '</span>' +--}}
+        {{--      '   </div>' +--}}
+        {{--      $data.message +--}}
+        {{--      '  </div>' +--}}
+        {{--      '</li>');--}}
+        {{--} else {--}}
+        {{--  $(".chat-msg-list").append('<li class="clearfix">' +--}}
+        {{--      '<div class="message other-message pull-right">' +--}}
+        {{--      '<img class="rounded-circle float-end chat-user-img img-30" src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +--}}
+        {{--      '<div class="message-data">' +--}}
+        {{--      '  <span class="message-data-time">' + $data.time + '</span>' +--}}
+        {{--      ' </div>' +--}}
+        {{--      $data.message +--}}
+        {{--      ' </div>' +--}}
+        {{--      '</li>');--}}
+        {{--}--}}
         scrollChat();
       });
       @endif
