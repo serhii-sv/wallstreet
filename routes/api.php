@@ -43,5 +43,7 @@ Route::group([
 
         Route::get('graphs/sprint-token', [\App\Http\Controllers\Api\v1\GraphController::class, 'sprintToken']);
         Route::get('graphs/transactions', [\App\Http\Controllers\Api\v1\GraphController::class, 'transactions']);
+
+        Route::get('news', [\App\Http\Controllers\Api\v1\NewsController::class, 'index']);
     });
 });
