@@ -12,7 +12,7 @@ use App\Models\DepositBonus;
 use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\Wallet;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;

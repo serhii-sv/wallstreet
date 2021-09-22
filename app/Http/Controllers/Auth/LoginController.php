@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeviceStat;
+use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserDevice;
 use App\Models\UserMultiAccounts;
 use App\Providers\RouteServiceProvider;
-use App\User;
 use hisorange\BrowserDetect\Parser;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;

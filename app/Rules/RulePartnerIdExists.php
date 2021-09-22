@@ -6,7 +6,7 @@
 
 namespace App\Rules;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
 /**

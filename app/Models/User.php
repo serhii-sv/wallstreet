@@ -111,6 +111,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
  * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+ * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|User whereApiToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBlockioWalletBtc($value)
@@ -156,7 +157,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTfaToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUnhashedPassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 class User extends Authenticatable
 {

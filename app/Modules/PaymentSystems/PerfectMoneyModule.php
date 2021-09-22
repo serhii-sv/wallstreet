@@ -10,7 +10,7 @@ use App\Models\Currency;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\Wallet;
-use App\User;
+use App\Models\User;
 
 /**
  * Class PerfectMoneyModule

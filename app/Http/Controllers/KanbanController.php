@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ActivityLog;
 use App\Models\KanbanBoard;
 use App\Models\KanbanBoardTask;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

@@ -9,7 +9,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestStoreReferral;
 use App\Http\Requests\RequestUpdateRefferal;
 use App\Models\Referral;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
