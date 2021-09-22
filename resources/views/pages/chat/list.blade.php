@@ -213,10 +213,10 @@
                       @if(!empty($messages) && $chat)
                         @foreach($messages as $message)
                           @if($message->user_id == $chat->user_partner()->first()->id)
-                            <div class="chat chat-right" data-id="{{ $message->id }}">
+                            <div class="chat" data-id="{{ $message->id }}">
                               <div class="chat-avatar">
                                 <a class="avatar">
-                                  <img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
+                                  <img src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
                                 </a>
                               </div>
                               <div class="chat-body">
@@ -226,10 +226,10 @@
                               </div>
                             </div>
                           @else
-                            <div class="chat" data-id="{{ $message->id }}">
+                            <div class="chat chat-right" data-id="{{ $message->id }}">
                               <div class="chat-avatar">
                                 <a class="avatar">
-                                  <img src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
+                                  <img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
                                 </a>
                               </div>
                               <div class="chat-body">
