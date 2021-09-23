@@ -15,15 +15,18 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
     protected $users;
 
     public function __construct(User $users) {
+        
         $this->users = $users;
     }
 
@@ -31,7 +34,8 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-
+    
+       
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
 

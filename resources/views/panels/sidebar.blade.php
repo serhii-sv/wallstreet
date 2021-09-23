@@ -55,7 +55,7 @@
                 <a href="{{ route('users.index') }}" class="@if(Route::is('users.*')) active @endif">
                   <i class="material-icons">people</i>
                   <span class="menu-title" data-i18n="Пользователи">Все клиенты</span>
-                  <span class="badge badge pill green float-right mr-3">{{ $counts['users'] }}</span>
+                  @if($counts['users'])<span class="badge badge pill green float-right mr-3">{{ $counts['users'] }}</span>@endif
                 </a>
               </li>
             @endif
@@ -109,7 +109,7 @@
                 <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('replenishments*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('replenishments.index') }}">
                   <i class="material-icons">forward</i>
                   <span class="menu-title" data-i18n="Пополнения">Пополнения</span>
-                  <span class="badge badge pill green float-right mr-3">${{ $counts['replenishments_amount'] }}</span>
+                  @if($counts['replenishments_amount'])<span class="badge badge pill green float-right mr-3">${{ $counts['replenishments_amount'] }}</span>@endif
                 </a>
               </li>
             @endif
@@ -126,7 +126,7 @@
                 <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}">
                   <i class="material-icons">monetization_on</i>
                   <span class="menu-title" data-i18n="Выводы">Выводы</span>
-                  <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
+                  @if($counts['withdrawals_amount'])<span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>@endif
                 </a>
               </li>
             @endif
@@ -143,7 +143,7 @@
                 <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}">
                   <i class="material-icons">autorenew</i>
                   <span class="menu-title" data-i18n="Обмен валют">Обмен валют</span>
-                  <span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>
+                  @if($counts['currency_exchange_count'])<span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>@endif
                 </a>
               </li>
             @endif
@@ -202,7 +202,7 @@
         <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
           <i class="material-icons">developer_board</i>
           <span class="menu-title" data-i18n="Задачи">Задачи</span>
-          <span class="badge badge pill orange float-right mr-3">{{ $counts['tasks'] }}</span>
+          @if($counts['tasks'])<span class="badge badge pill orange float-right mr-3">{{ $counts['tasks'] }}</span>@endif
         </a>
       </li>
     @endif

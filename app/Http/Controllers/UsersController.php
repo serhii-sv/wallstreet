@@ -19,6 +19,7 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserMultiAccounts;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -119,6 +120,7 @@ class UsersController extends Controller
                 'data' => $data,
             ]);
         } else {
+            UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','count_users')->update(['sb_val' => 0]);
             $roles = Role::all();
             return view('pages.sample.app-contacts', compact('users_count', 'roles'));
         }

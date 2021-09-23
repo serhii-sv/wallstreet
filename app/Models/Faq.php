@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Faq
  *
  * @package App\Models
- * @property Language language_id
+ * language_id
  * @property string $id
  * @property string $question
  * @property string $answer

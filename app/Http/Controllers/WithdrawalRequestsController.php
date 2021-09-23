@@ -13,6 +13,7 @@ use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,7 +97,7 @@ class WithdrawalRequestsController extends Controller
             $filter_users = User::whereHas("roles", function ($q) {
                 $q->where("name", "root")->orWhere("name", "teamlead");
             })->orderBy('int_id', 'asc')->get();
-            
+            UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','withdrawals_amount')->update(['sb_val' => 0]);
             return view('pages.withdrawals.index', compact('filter_users'));
         }
     }

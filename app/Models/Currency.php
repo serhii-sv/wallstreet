@@ -40,6 +40,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property string|null $symbol
  * @property int|null $precision
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Deposit[] $deposits
+ * @property-read int|null $deposits_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PaymentSystem[] $paymentSystems
+ * @property-read int|null $payment_systems_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wallet[] $wallets
+ * @property-read int|null $wallets_count
  */
 class Currency extends Model
 {
@@ -64,21 +72,21 @@ class Currency extends Model
         'symbol',
     ];
 
-//    /**
-//     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-//     */
-//    public function paymentSystems()
-//    {
-//        return $this->belongsToMany(PaymentSystem::class, 'currency_payment_system', 'currency_id', 'payment_system_id');
-//    }
-//
-//    /**
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
-//    public function deposits()
-//    {
-//        return $this->hasMany(Deposit::class, 'currency_id');
-//    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function paymentSystems()
+    {
+        return $this->belongsToMany(PaymentSystem::class, 'currency_payment_system', 'currency_id', 'payment_system_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class, 'currency_id');
+    }
 //
 //    /**
 //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -88,17 +96,17 @@ class Currency extends Model
 //        return $this->hasMany(Tasks::class, 'currency_id');
 //    }
 //
-//    /**
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
-//    public function transactions()
-//    {
-//        return $this->hasMany(Transaction::class, 'currency_id');
-//    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'currency_id');
+    }
+
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
 //    public function rates()
 //    {
 //        return $this->hasMany(Rate::class, 'currency_id');
@@ -107,10 +115,10 @@ class Currency extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-//    public function wallets()
-//    {
-//        return $this->hasMany(Wallet::class, 'currency_id');
-//    }
+    public function wallets()
+    {
+        return $this->hasMany(Wallet::class, 'currency_id');
+    }
 
     /**
      * @return array

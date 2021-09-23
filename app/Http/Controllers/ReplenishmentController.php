@@ -7,6 +7,7 @@ use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -81,7 +82,7 @@ class ReplenishmentController extends Controller
             $filter_users = User::whereHas("roles", function ($q) {
                 $q->where("name", "root")->orWhere("name", "teamlead");
             })->orderBy('int_id', 'asc')->get();
-            
+            UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','replenishments_amount')->update(['sb_val' => 0]);
             return view('pages.replenishments.index', compact('filter_users'));
         }
     }

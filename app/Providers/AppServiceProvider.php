@@ -19,9 +19,11 @@ use App\Models\Referral;
 use App\Models\Reviews;
 use App\Models\Setting;
 //use App\Models\TplDefaultLang;
+use App\Models\Task;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use App\Observers\CloudFileObserver;
 use App\Observers\CurrencyObserver;
@@ -34,9 +36,11 @@ use App\Observers\RateObserver;
 use App\Observers\ReferralObserver;
 use App\Observers\ReviewsObserver;
 use App\Observers\SettingObserver;
+use App\Observers\TaskObserver;
 use App\Observers\TransactionObserver;
 use App\Observers\TransactionTypeObserver;
 use App\Observers\UserObserver;
+use App\Observers\UserSidebarPropertyObserver;
 use App\Observers\WalletObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
@@ -88,6 +92,8 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         \App\User::observe(UserObserver::class);
         Wallet::observe(WalletObserver::class);
+        UserSidebarProperties::observe(UserSidebarPropertyObserver::class);
+        //Task::observe(TaskObserver::class);
     }
 
     /**

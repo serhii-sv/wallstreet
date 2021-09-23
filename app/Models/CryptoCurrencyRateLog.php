@@ -15,6 +15,20 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog query()
  * @mixin \Eloquent
+ * @property string $id
+ * @property string $currency_id
+ * @property string $rate
+ * @property string $date
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string $time
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CryptoCurrencyRateLog whereUpdatedAt($value)
  */
 class CryptoCurrencyRateLog extends Model
 {
