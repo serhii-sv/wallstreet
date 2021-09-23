@@ -22,6 +22,9 @@ Route::group([
     Route::post('login', [\App\Http\Controllers\Api\v1\Auth\LoginController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\Api\v1\Auth\RegisterController::class, 'register']);
 
+    Route::post('password/forget', [\App\Http\Controllers\Api\v1\Auth\ForgotPasswordController::class, 'forget']);
+    Route::post('password/reset', [\App\Http\Controllers\Api\v1\Auth\ResetPasswordController::class, 'reset']);
+
     Route::middleware('auth:api')->group(function() {
         Route::post('password-change', [\App\Http\Controllers\Api\v1\Auth\ChangePasswordController::class, 'changePassword']);
 
