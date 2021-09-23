@@ -10,6 +10,45 @@ use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
 {
+    /**
+     * @OA\Post (
+     *      path="/api/v1/password/forget",
+     *      summary="Password forget",
+     *      description="Password forget",
+     *     @OA\RequestBody(
+     *          required=true,
+     *          description="Pass data",
+     *          @OA\JsonContent(
+     *              required={"email"},
+     *              @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *          ),
+     *      ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Validation error",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *               @OA\Property(
+     *                  property="email",
+     *                  type="array",
+     *                  collectionFormat="multi",
+     *                  @OA\Items(
+     *                      type="string",
+     *                      example="The email field is required.",
+     *                  )
+     *              ),
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="token", type="string", example="ksahbfdgyuegfa6sdfga7s6sda8s7dta6sd8as"),
+     *              @OA\Property(property="email", type="string", format="email", example="user@gmail.com")
+     *          )
+     *     ),
+     *  )
+     */
     public function forget(Request $request)
     {
         $request->validate([
@@ -26,7 +65,8 @@ class ForgotPasswordController extends Controller
 
         return response()->json([
             'status' => 200,
-            'token' => $token
+            'token' => $token,
+            'email' => $request->email
         ]);
     }
 }
