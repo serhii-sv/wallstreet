@@ -37,8 +37,8 @@ class WithdrawalRequestsController extends Controller
             
             $transactions = Transaction::select('transactions.*')->with([
                 'user',
-            ])->where('type_id', $transactionWithdrawType->id)->where('approved', $request->only('type') ?? 0);
-            //->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir'])
+            ])->where('type_id', $transactionWithdrawType->id)->where('approved', $request->only('type') ?? 0)
+            ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
             
             /*
              * Фильтрация, если выбрано
