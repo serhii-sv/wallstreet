@@ -22,7 +22,12 @@ Route::group([
     Route::post('login', [\App\Http\Controllers\Api\v1\Auth\LoginController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\Api\v1\Auth\RegisterController::class, 'register']);
 
+    Route::post('password/forget', [\App\Http\Controllers\Api\v1\Auth\ForgotPasswordController::class, 'forget']);
+    Route::post('password/reset', [\App\Http\Controllers\Api\v1\Auth\ResetPasswordController::class, 'reset']);
+
     Route::middleware('auth:api')->group(function() {
+        Route::post('password-change', [\App\Http\Controllers\Api\v1\Auth\ChangePasswordController::class, 'changePassword']);
+
         Route::get('transactions', [\App\Http\Controllers\Api\v1\TransactionController::class, 'index']);
         Route::get('transaction-types', [\App\Http\Controllers\Api\v1\TransactionTypeController::class, 'index']);
 
@@ -41,5 +46,10 @@ Route::group([
 
         Route::get('graphs/sprint-token', [\App\Http\Controllers\Api\v1\GraphController::class, 'sprintToken']);
         Route::get('graphs/transactions', [\App\Http\Controllers\Api\v1\GraphController::class, 'transactions']);
+
+        Route::get('news', [\App\Http\Controllers\Api\v1\NewsController::class, 'index']);
+        Route::get('news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
+
+        Route::get('ref-link', [\App\Http\Controllers\Api\v1\ReferralController::class, 'makeLink']);
     });
 });

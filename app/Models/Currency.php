@@ -150,16 +150,20 @@ class Currency extends Model
 
     public function getRisePercentage()
     {
-        list($lastRecordRate, $previousRecordRate) = $this->rateLog()->get()->reverse()->take(2)->pluck('rate')->toArray();
+        $data = $this->rateLog()->get()->reverse()->take(2)->pluck('rate')->toArray();
 
         $this->rate_exchange_percentage = 0;
 
-        if ($lastRecordRate > $previousRecordRate) {
-            $this->rate_exchange_percentage = round(($previousRecordRate / $lastRecordRate) * 100, 2);
-        }
+        if (count($data) == 2) {
+            list($lastRecordRate, $previousRecordRate) = $this->rateLog()->get()->reverse()->take(2)->pluck('rate')->toArray();
 
-        if ($previousRecordRate > $lastRecordRate) {
-            $this->rate_exchange_percentage = - round(($previousRecordRate / $lastRecordRate) * 100, 2);
+            if ($lastRecordRate > $previousRecordRate) {
+                $this->rate_exchange_percentage = round(($previousRecordRate / $lastRecordRate) * 100, 2);
+            }
+
+            if ($previousRecordRate > $lastRecordRate) {
+                $this->rate_exchange_percentage = -round(($previousRecordRate / $lastRecordRate) * 100, 2);
+            }
         }
     }
 }
