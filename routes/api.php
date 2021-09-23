@@ -48,5 +48,8 @@ Route::group([
         Route::get('graphs/transactions', [\App\Http\Controllers\Api\v1\GraphController::class, 'transactions']);
 
         Route::get('news', [\App\Http\Controllers\Api\v1\NewsController::class, 'index']);
+        Route::get('news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
+
+        Route::get('ref-link', [\App\Http\Controllers\Api\v1\ReferralController::class, 'makeLink']);
     });
 });
