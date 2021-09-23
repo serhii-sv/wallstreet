@@ -8,11 +8,12 @@
 
 // Typography
 // Google Fonts
-@import url(https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,500,600);
+//@import url(https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,500,600);
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
 // Font Variables
-$title: 'Muli', sans-serif;
-$font-stack: 'Muli', sans-serif;
-$content: 'Muli', sans-serif;
+$title: 'Comfortaa', sans-serif;
+$font-stack: 'Comfortaa', sans-serif;
+$content: 'Comfortaa', sans-serif;
 
 
 // Theme custom scss

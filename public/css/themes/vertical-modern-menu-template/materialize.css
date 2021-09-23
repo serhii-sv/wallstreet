@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,500,600);
+@import url(https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap);
 @charset "UTF-8";
 /*--------------------------------------------------------------
 	Materialize file contain extended material ui based on theme
@@ -2590,7 +2590,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: "Muli", sans-serif;
+  font-family: "Comfortaa", sans-serif;
 }
 
 ul:not(.browser-default) {
@@ -4216,7 +4216,7 @@ a {
 
 html {
   line-height: 1.5;
-  font-family: "Muli", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
 }
