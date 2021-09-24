@@ -68,20 +68,6 @@ class WalletController extends BaseController
      *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                      ),
      *                      @OA\Property(
-     *                          property="payment_system",
-     *                          type="object",
-     *                          @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                          @OA\Property(property="name", type="string", example="Perfect Money"),
-     *                          @OA\Property(property="code", type="string", example="perfectmoney"),
-     *                          @OA\Property(property="instant_limit", type="string", example="null"),
-     *                          @OA\Property(property="external_balances", type="string", example="null"),
-     *                          @OA\Property(property="minimum_topup", type="string", example="null"),
-     *                          @OA\Property(property="minimum_withdraw", type="string", example="null"),
-     *                          @OA\Property(property="connected", type="integer", example="0"),
-     *                          @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                          @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                      ),
-     *                      @OA\Property(
      *                          property="cyrrency_rate_log",
      *                          type="array",
      *                          @OA\Items(
@@ -111,7 +97,7 @@ class WalletController extends BaseController
         $user = $request->user();
 
         $wallets = $user->wallets()
-            ->with('currency', 'paymentSystem')
+            ->with('currency')
             ->paginate(self::API_PAGINATION);
 
         $wallets->each(function ($wallet) {
@@ -187,13 +173,7 @@ class WalletController extends BaseController
      *              @OA\Property(
      *                  property="data",
      *                  type="object",
-     *                  @OA\Property(property="current_page", type="integer", example="1"),
-     *                  @OA\Property(
-     *                      property="data",
-     *                      type="array",
-     *                      @OA\Items(
-     *                          type="object",
-     *                          @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
+     *                  @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
      *                          @OA\Property(property="user_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
      *                          @OA\Property(property="currency_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
      *                          @OA\Property(property="payment_system_id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
@@ -217,20 +197,6 @@ class WalletController extends BaseController
      *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
      *                          ),
      *                          @OA\Property(
-     *                              property="payment_system",
-     *                              type="object",
-     *                              @OA\Property(property="id", type="string", example="123e4567-e89b-12d3-a456-426655440000"),
-     *                              @OA\Property(property="name", type="string", example="Perfect Money"),
-     *                              @OA\Property(property="code", type="string", example="perfectmoney"),
-     *                              @OA\Property(property="instant_limit", type="string", example="null"),
-     *                              @OA\Property(property="external_balances", type="string", example="null"),
-     *                              @OA\Property(property="minimum_topup", type="string", example="null"),
-     *                              @OA\Property(property="minimum_withdraw", type="string", example="null"),
-     *                              @OA\Property(property="connected", type="integer", example="0"),
-     *                              @OA\Property(property="created_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                              @OA\Property(property="updated_at", type="date-time", example="2021-09-07T05:44:44.000000Z"),
-     *                          ),
-     *                          @OA\Property(
      *                              property="cyrrency_rate_log",
      *                              type="array",
      *                              @OA\Items(
@@ -238,18 +204,7 @@ class WalletController extends BaseController
      *                                  @OA\Property(property="value", type="string", example="234.234"),
      *                              )
      *                          )
-     *                  )
-     *              ),
-     *              @OA\Property(property="first_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
-     *              @OA\Property(property="from", type="integer", example="1"),
-     *              @OA\Property(property="last_page", type="integer", example="1"),
-     *              @OA\Property(property="last_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
-     *              @OA\Property(property="next_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
-     *              @OA\Property(property="path", type="string", example="http://localhost:8000/api/v1/wallets"),
-     *              @OA\Property(property="per_page", type="integer", example="10"),
-     *              @OA\Property(property="prev_page_url", type="string", example="http://localhost:8000/api/v1/wallets?page=1"),
-     *              @OA\Property(property="to", type="integer", example="8"),
-     *              @OA\Property(property="total", type="integer", example="8"),
+     *                  ),
      *             )
      *         )
      *     )
