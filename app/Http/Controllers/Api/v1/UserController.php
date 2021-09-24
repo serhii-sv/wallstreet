@@ -294,7 +294,7 @@ class UserController extends BaseController
         $user = $request->user();
         $structureIdsList = $user->getAllReferralsIds($user->getAllReferrals()['referrals']);
 
-        $investment_amount_of_partners = Transaction::whereIn('user_di')->where('type_id',
+        $investment_amount_of_partners = Transaction::whereIn('user_id', $structureIdsList)->where('type_id',
             TransactionType::where('name', 'create_dep')
                 ->first()
                 ->id
