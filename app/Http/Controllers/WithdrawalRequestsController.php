@@ -52,7 +52,7 @@ class WithdrawalRequestsController extends Controller
              */
             if (!is_null($request->user)) {
                 $user = User::where('id', $request->user)->first();
-                $referrals = $user->referrals()->distinct('id')->pluck('id')->toArray();
+                $referrals = $user->referrals()->where('line','<',2)->distinct('id')->pluck('id')->toArray();
                 $transactions->whereIn('user_id', $referrals);
             }
             

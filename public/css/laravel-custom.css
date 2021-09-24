@@ -1220,6 +1220,14 @@
   color: #00b8d4 !important;
 }
 
+.dark {
+  background-color: #2c323f !important;
+}
+
+.dark-text {
+  color: #2c323f !important;
+}
+
 .teal {
   background-color: #009688 !important;
 }

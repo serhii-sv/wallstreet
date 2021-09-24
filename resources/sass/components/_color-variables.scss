@@ -12,7 +12,9 @@ $materialize-red: (
   "darken-3":   #a21318,
   "darken-4":   #8b1014,
 );
-
+$dark: (
+  "base": #2c323f,
+);
 $red: (
   "base":       #F44336,
   "lighten-5":  #FFEBEE,
@@ -340,6 +342,7 @@ $colors: (
   "blue": $blue,
   "light-blue": $light-blue,
   "cyan": $cyan,
+  "dark": $dark,
   "teal": $teal,
   "green": $green,
   "light-green": $light-green,

@@ -31,8 +31,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $transactions_enter_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions_withdraw
  * @property-read int|null $transactions_withdraw_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wallet[] $wallets
- * @property-read int|null $wallets_count
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentSystem query()
@@ -74,14 +72,14 @@ class PaymentSystem extends Model
     {
         return $this->belongsToMany(Currency::class, 'currency_payment_system', 'payment_system_id', 'currency_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function wallets()
-    {
-        return $this->hasMany(Wallet::class, 'payment_system_id');
-    }
+//
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function wallets()
+//    {
+//        return $this->hasMany(Wallet::class, 'payment_system_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

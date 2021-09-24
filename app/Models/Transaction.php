@@ -163,13 +163,15 @@ class Transaction extends Model
     {
         return $value;
     }
-
+    
     /**
-     * @param $wallet
-     * @param $amount
+     * @param      $wallet
+     * @param      $amount
+     * @param null $payment_system_id
+     *
      * @return mixed
      */
-    public static function enter($wallet, $amount)
+    public static function enter($wallet, $amount, $payment_system_id = null)
     {
         $type = TransactionType::getByName('enter');
         $transaction = self::create([
@@ -178,7 +180,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'payment_system_id' => $payment_system_id,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -190,7 +192,7 @@ class Transaction extends Model
      * @return Transaction|null
      * @throws \Exception
      */
-    public static function withdraw(Wallet $wallet, float $amount)
+    public static function withdraw(Wallet $wallet, float $amount, $payment_system_id)
     {
         $amount         = (float) abs($amount);
         /** @var TransactionType $type */
@@ -200,7 +202,7 @@ class Transaction extends Model
         /** @var Currency $currency */
         $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem  = $payment_system_id;
 
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
@@ -253,7 +255,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+          //  'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -275,18 +277,19 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            // 'payment_system_id' => $payment_system_id,
             'amount' => $amount,
             'source' => $referral->id,
             'approved' => true,
         ]);
         return $transaction->save() ? $transaction : null;
     }
-
+    
     /**
-     * @param $wallet
-     * @param $amount
+     * @param      $wallet
+     * @param      $amount
      * @param null $referral
+     *
      * @return null
      */
     public static function dividend($wallet, $amount, $referral = null)
@@ -298,7 +301,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+           // 'payment_system_id' => $payment_system_id,
             'amount' => $amount,
             'source' => null !== $referral
                 ? $referral->id
@@ -311,12 +314,14 @@ class Transaction extends Model
 
         return $transaction->save() ? $transaction : null;
     }
-
+    
     /**
-     * @param $deposit
+     * @param      $deposit
+     * @param null $payment_system_id
+     *
      * @return null
      */
-    public static function createDeposit($deposit)
+    public static function createDeposit($deposit, $payment_system_id = null)
     {
         $type = TransactionType::getByName('create_dep');
         $transaction = self::create([
@@ -327,7 +332,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
+            'payment_system_id' => $payment_system_id,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;

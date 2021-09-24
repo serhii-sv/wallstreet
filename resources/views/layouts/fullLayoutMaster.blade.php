@@ -32,7 +32,7 @@ License: You must have a valid license purchased only from themeforest(the above
   <title>@yield('title') | Materialize - Material Design Admin Template</title>
   <link rel="apple-touch-icon" href="{{asset('images/favicon/apple-touch-icon-152x152.png')}}">
   <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/favicon/favicon-32x32.png')}}">
-
+  <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
   <!-- Include core + vendor Styles -->
   @include('panels.styles')
 

@@ -36,6 +36,7 @@ class TransactionsController extends Controller
             $recordsFiltered = $transactions->count();
             $transactions->limit($request->length)->offset($request->start);
             $data = [];
+            
 
             foreach ($transactions->get() as $transaction) {
                 $data[] = [

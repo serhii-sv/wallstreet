@@ -979,6 +979,14 @@
   color: #00b8d4 !important;
 }
 
+.dark {
+  background-color: #2c323f !important;
+}
+
+.dark-text {
+  color: #2c323f !important;
+}
+
 .teal {
   background-color: #009688 !important;
 }
@@ -3309,8 +3317,8 @@ table span.badge {
   }
 }
 .col .row {
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
 }
 
 .section {

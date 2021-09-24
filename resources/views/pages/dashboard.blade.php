@@ -177,13 +177,13 @@
         <div class="row">
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeLeft">
-              <div class="card-content cyan white-text">
+              <div class="card-content orange lighten-1 white-text">
                 <p class="card-stats-title"><i class="material-icons">person_outline</i> Новые аккаунты</p>
                 <h4 class="card-stats-number white-text">
                   <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ $users['today'] }}</h4>
                 <p>Итого: {{ number_format($users['total'], 0, '.', ',') }}</p>
               </div>
-              <div class="card-action cyan darken-1">
+              <div class="card-action orange">
                 <div id="clients-bar" class="center-align"></div>
               </div>
             </div>
@@ -191,14 +191,14 @@
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeLeft">
-              <div class="card-content red accent-2 white-text">
+              <div class="card-content green lighten-1 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i>Пополнения</p>
                 <h4 class="card-stats-number white-text">
                   <p class="no-margin" style="font-size: 14px">За 24 часа:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
                 <p>Итого: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
               </div>
-              <div class="card-action red">
+              <div class="card-action green ">
                 <div id="sales-compositebar" class="center-align"></div>
               </div>
             </div>
@@ -206,14 +206,14 @@
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
-              <div class="card-content orange lighten-1 white-text">
+              <div class="card-content red accent-2 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i> Выводы</p>
                 <h4 class="card-stats-number white-text">
                   <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
                 <p>Итого: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
               </div>
-              <div class="card-action orange">
+              <div class="card-action red">
                 <div id="profit-tristate" class="center-align"></div>
               </div>
             </div>
@@ -221,7 +221,7 @@
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
-              <div class="card-content green lighten-1 white-text">
+              <div class="card-content cyan  white-text">
                 <p class="card-stats-title"><i class="material-icons">timeline</i> Прибыль</p>
                 <h4 class="card-stats-number white-text"><p class="no-margin" style="font-size: 14px">За 24 часа:</p>
                   {{ $profit_transactions_for_24h_sum < 0 ? '-' : '' }}
@@ -229,7 +229,7 @@
                 <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
                   ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
               </div>
-              <div class="card-action green">
+              <div class="card-action cyan darken-1">
                 <div id="invoice-line" class="center-align"></div>
               </div>
             </div>

@@ -169,12 +169,13 @@ class Deposit extends Model
         return $this->belongsTo(Wallet::class, 'wallet_id');
     }
 
-    /**
+   /**
      * @return mixed
      */
-    public function paymentSystem() {
-        return $this->wallet ? $this->wallet->first()->paymentSystem() : null;
-    }
+    /*
+     public function paymentSystem() {
+         return $this->wallet ? $this->wallet->first()->paymentSystem() : null;
+     }*/
 
     /**
      * @param $value

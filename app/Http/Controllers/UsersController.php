@@ -155,7 +155,6 @@ class UsersController extends Controller
             $data = [
                 'bonus_amount' => $request->amount,
                 'currency' => $wallet->currency,
-                'payment_system' => $wallet->paymentSystem,
                 'balance' => $wallet->balance,
             ];
             //            $wallet->user->sendNotification('bonus_accrued', $data);
@@ -179,7 +178,6 @@ class UsersController extends Controller
             $data = [
                 'bonus_amount' => $request->amount,
                 'currency' => $wallet->currency,
-                'payment_system' => $wallet->paymentSystem,
                 'balance' => $wallet->balance,
             ];
             //            $wallet->user->sendNotification('penalty_accrued', $data);
@@ -231,6 +229,7 @@ class UsersController extends Controller
         $active_referrals=$user->referrals()->distinct('id')->whereHas('deposits', function ($query){
             $query->where('condition', '!=', 'closed');
         })->count();
+        
         return view('pages.sample.page-users-view', [
             'user' => $user,
             'deposit_sum' => $deposit_sum,

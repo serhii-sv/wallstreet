@@ -11,6 +11,7 @@ use App\Models\Deposit;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\News;
+use App\Models\PaymentSystem;
 use App\Models\Rate;
 use App\Models\RateGroup;
 use App\Models\Referral;
@@ -196,7 +197,7 @@ class GenerateDemoDataCommand extends Command
      */
     public function generateBalances(User $user) {
         $transactionType = TransactionType::getByName('enter');
-
+        $payment_systems = PaymentSystem::all();
         /** @var Wallet $wallet */
         foreach ($user->wallets()->get() as $wallet) {
             for ($i = 1; $i <= 5; $i++) {
@@ -208,7 +209,7 @@ class GenerateDemoDataCommand extends Command
                     'user_id' => $wallet->user_id,
                     'wallet_id' => $wallet->id,
                     'currency_id' => $wallet->currency_id,
-                    'payment_system_id' => $wallet->payment_system_id,
+                    'payment_system_id' => $payment_systems->random(1)->first()->id,
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
                     'approved' => $this->faker->boolean,
@@ -233,17 +234,17 @@ class GenerateDemoDataCommand extends Command
      */
     public function generateWithdrawals(User $user) {
         $wallets = Wallet::where('user_id', $user->id)->where('balance', '>', 10)->inRandomOrder();
-
+        $payment_systems = PaymentSystem::all();
         if (0 === $wallets->count()) {
             return;
         }
-
+        
         /** @var Wallet $wallet */
         foreach ($wallets->get() as $wallet) {
             $amount = $wallet->balance / 10;
-
+            
             /** @var Transaction $transaction */
-            $transaction = Transaction::withdraw($wallet, $amount);
+            $transaction = Transaction::withdraw($wallet, $amount, $payment_systems->random(1)->first());
 
             if (null !== $transaction && $this->faker->boolean) {
                 $transaction->created_at = $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00';
@@ -266,7 +267,7 @@ class GenerateDemoDataCommand extends Command
         if (null === $randomRates) {
             return;
         }
-
+        $payment_systems = PaymentSystem::all();
         $currencies = Currency::all();
         /** @var Rate $randomRate */
         foreach ($currencies as $currency) {
@@ -277,7 +278,7 @@ class GenerateDemoDataCommand extends Command
                     return;
                 }
 
-                $enterTransaction = TransactionType::getByName('create_dep');
+                $enterTransaction = TransactionType::getByName('enter');
                 $externalWallet = 'W' . $this->faker->randomNumber(5);
                 $transactionData = [
                     'amount' => $randomRate->max,
@@ -285,7 +286,7 @@ class GenerateDemoDataCommand extends Command
                     'user_id' => $wallet->user_id,
                     'wallet_id' => $wallet->id,
                     'currency_id' => $currency->id,
-                    'payment_system_id' => $wallet->payment_system_id,
+                    'payment_system_id' => $payment_systems->random(1)->first()->id,
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
                     'approved' => $this->faker->boolean,

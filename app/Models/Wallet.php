@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $id
  * @property string $user_id
  * @property string $currency_id
- * @property string $payment_system_id
  * @property string|null $external
  * @property float $balance
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -26,7 +25,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Deposit[] $deposits
  * @property-read int|null $deposits_count
- * @property-read \App\Models\PaymentSystem $paymentSystem
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
  * @property-read int|null $transactions_count
  * @property-read \App\Models\User $user
@@ -56,12 +54,11 @@ class Wallet extends Model
     protected $fillable = [
         'user_id',
         'currency_id',
-        'payment_system_id',
         'main_currency_amount',
         'external',
         'balance',
     ];
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -70,13 +67,13 @@ class Wallet extends Model
         return $this->belongsTo(Currency::class, 'currency_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function paymentSystem()
-    {
-        return $this->belongsTo(PaymentSystem::class, 'payment_system_id');
-    }
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
+//    public function paymentSystem()
+//    {
+//        return $this->belongsTo(PaymentSystem::class, 'payment_system_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -177,15 +174,13 @@ class Wallet extends Model
     /**
      * @param $user
      * @param $currency
-     * @param $paymentSystem
      * @return mixed
      */
-    public static function newWallet($user, $currency, $paymentSystem)
+    public static function newWallet($user, $currency)
     {
         return self::create([
             'user_id' => $user->id,
             'currency_id' => $currency->id,
-            'payment_system_id' => $paymentSystem->id,
         ]);
 
     }
@@ -293,7 +288,7 @@ class Wallet extends Model
 
             if ($partnerWallets->count() == 0) {
                 /** @var Wallet $newPartnerWallet */
-                $newPartnerWallet = self::newWallet($partner, $this->currency, $this->paymentSystem);
+                $newPartnerWallet = self::newWallet($partner, $this->currency);
                 $newPartnerWallet->referralRefill($partnerAmount, $this, $type);
             }
 
@@ -301,7 +296,7 @@ class Wallet extends Model
 
             /** @var Wallet $partnerWallet */
             foreach ($partnerWallets as $partnerWallet) {
-                if ($partnerWallet->currency == $this->currency && $partnerWallet->paymentSystem == $this->paymentSystem) {
+                if ($partnerWallet->currency == $this->currency) {
                     $partnerWallet->referralRefill($partnerAmount, $this, $type);
                     \Log::info('Referral refill: '.$partnerAmount.', '.$type);
                     $summaryAmount += $partnerAmount;
@@ -360,11 +355,21 @@ class Wallet extends Model
      */
     public static function registerWallets(User $user)
     {
-        $paymentSystems = PaymentSystem::with([
-            'currencies'
-        ])->get();
-
-        foreach ($paymentSystems as $paymentSystem) {
+        $currencies = Currency::all();
+    
+        foreach ($currencies as $currency) {
+                $checkExists = Wallet::where('user_id', $user->id)
+                    ->where('currency_id', $currency->id)
+                    ->get()
+                    ->count();
+            
+                if ($checkExists > 0) {
+                    continue;
+                }
+            
+                self::newWallet($user, $currency);
+        }
+        /*foreach ($paymentSystems as $paymentSystem) {
             foreach ($paymentSystem->currencies as $currency) {
                 $checkExists = Wallet::where('user_id', $user->id)
                     ->where('payment_system_id', $paymentSystem->id)
@@ -378,7 +383,7 @@ class Wallet extends Model
 
                 self::newWallet($user, $currency, $paymentSystem);
             }
-        }
+        }*/
     }
 
 
