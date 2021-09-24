@@ -135,8 +135,9 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/destroy/{id}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
             });
 
-            Route::get('/referrals-and-banners', [App\Http\Controllers\BannersAndReferralsController::class, 'index'])->name('referrals-and-banners.index');
-
+            Route::get('/referrals-and-banners', [App\Http\Controllers\BannersAndReferralsController::class, 'referrals'])->name('referrals-and-banners.referrals');
+            Route::get('/banners-all', [App\Http\Controllers\BannersAndReferralsController::class, 'banners'])->name('referrals-and-banners.banners.all');
+            
             Route::prefix('banners')->as('banners.')->group(function () {
                 Route::get('/', [App\Http\Controllers\BannerController::class, 'index'])->name('index');
 

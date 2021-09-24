@@ -16,6 +16,7 @@ use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserSidebarProperties;
+use App\Models\UserThemeSetting;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -176,6 +177,7 @@ class DashboardController extends Controller
         });
         
         return view('pages.dashboard', [
+            'themeSettings' => UserThemeSetting::getThemeSettings(),
             'week_revenue_percent' => $week_revenue_percent,
             'month_revenue_percent' => $month_revenue_percent,
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,

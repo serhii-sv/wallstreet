@@ -60,19 +60,18 @@ class UsersController extends Controller
                     }else{
                         $ip = "<blink>" . $ip . "</blink>";
                     }
-                 
                     $data[] = [
                         'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
                         'user' => view('pages.users.partials.avatar', compact('user'))->render(),
                         'login' => view('pages.users.partials.login', compact('user'))->render(),
                         'name' => view('pages.users.partials.name', compact('user'))->render(),
                         'email' => view('pages.users.partials.email', compact('user'))->render(),
-                        'referrals_count' => $user->referrals_count,
+                        'referrals_count' => $user->referrals()->distinct('id')->count(),
                         'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $main_user])->render(),
                         'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
                         'ip' => $ip,
-                        //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                          'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                         'color' => $user->roles->first()->color ?? '',
                     ];
                 }
@@ -101,12 +100,12 @@ class UsersController extends Controller
                             'login' => view('pages.users.partials.login', compact('user'))->render(),
                             'name' => view('pages.users.partials.name', compact('user'))->render(),
                             'email' => view('pages.users.partials.email', compact('user'))->render(),
-                            'referrals_count' => $user->referrals_count,
+                            'referrals_count' => $user->referrals()->distinct('id')->count(),
                             'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $user->partner])->render(),
                             'country' => $user->country ?? 'Не указано',
                             'city' => $user->city ?? 'Не указано',
                             'ip' => $ip,
-                            //  'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                              'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                             'color' => $user->roles->first()->color ?? '',
                         ];
                     }

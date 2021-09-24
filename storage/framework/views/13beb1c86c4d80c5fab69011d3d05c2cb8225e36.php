@@ -1,20 +1,20 @@
-{{-- layout extend --}}
-@extends('layouts.contentLayoutMaster')
 
-{{-- page title --}}
-@section('title','Dashboard Modern')
 
-{{-- vendor styles --}}
-@section('vendor-style')
-  <link rel="stylesheet" type="text/css" href="{{asset('vendors/animate-css/animate.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('vendors/chartist-js/chartist.min.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('vendors/chartist-js/chartist-plugin-tooltip.css')}}">
-@endsection
 
-{{-- page styles --}}
-@section('page-style')
-  <link rel="stylesheet" type="text/css" href="{{asset('css/pages/dashboard-modern.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/pages/intro.css')}}">
+
+<?php $__env->startSection('title','Dashboard Modern'); ?>
+
+
+<?php $__env->startSection('vendor-style'); ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendors/animate-css/animate.css')); ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendors/chartist-js/chartist.min.css')); ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendors/chartist-js/chartist-plugin-tooltip.css')); ?>">
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('page-style'); ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/pages/dashboard-modern.css')); ?>">
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/pages/intro.css')); ?>">
   <style>
       .dashboard-operations-switch {
           margin-top: 30px;
@@ -165,10 +165,10 @@
          /* background-image: linear-gradient(45deg, #303f9f, #1976D2);*/
       }
   </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-{{-- page content --}}
-@section('content')
+
+<?php $__env->startSection('content'); ?>
   <div class="section">
     
     <div id="chart-dashboard">
@@ -180,8 +180,8 @@
               <div class="card-content orange lighten-1 white-text">
                 <p class="card-stats-title"><i class="material-icons">person_outline</i> Новые аккаунты</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ $users['today'] }}</h4>
-                <p>Итого: {{ number_format($users['total'], 0, '.', ',') }}</p>
+                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> <?php echo e($users['today']); ?></h4>
+                <p>Итого: <?php echo e(number_format($users['total'], 0, '.', ',')); ?></p>
               </div>
               <div class="card-action orange">
                 <div id="clients-bar" class="center-align"></div>
@@ -194,9 +194,10 @@
               <div class="card-content green lighten-1 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i>Пополнения</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}
+                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> $<?php echo e(number_format($enter_transactions_for_24h_sum, 0, '.', ',')); ?>
+
                 </h4>
-                <p>Итого: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
+                <p>Итого: $<?php echo e(number_format($deposit_total_sum, 0, '.', ',')); ?></p>
               </div>
               <div class="card-action green ">
                 <div id="sales-compositebar" class="center-align"></div>
@@ -209,9 +210,10 @@
               <div class="card-content red accent-2 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i> Выводы</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}
+                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> <?php echo e(number_format($withdraw_transactions_for_24h_sum, 0, '.', ',')); ?>
+
                 </h4>
-                <p>Итого: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
+                <p>Итого: <?php echo e(number_format($deposit_total_withdraw, 0, '.', ',')); ?></p>
               </div>
               <div class="card-action red">
                 <div id="profit-tristate" class="center-align"></div>
@@ -224,10 +226,12 @@
               <div class="card-content cyan  white-text">
                 <p class="card-stats-title"><i class="material-icons">timeline</i> Прибыль</p>
                 <h4 class="card-stats-number white-text"><p class="no-margin" style="font-size: 14px">За 24 часа:</p>
-                  {{ $profit_transactions_for_24h_sum < 0 ? '-' : '' }}
-                  ${{ number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',') }}</h4>
-                <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
-                  ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
+                  <?php echo e($profit_transactions_for_24h_sum < 0 ? '-' : ''); ?>
+
+                  $<?php echo e(number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',')); ?></h4>
+                <p>Сегодня: <?php echo e($profit_transactions_for_today_sum < 0 ? '-' : ''); ?>
+
+                  $<?php echo e(number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')); ?></p>
               </div>
               <div class="card-action cyan darken-1">
                 <div id="invoice-line" class="center-align"></div>
@@ -247,16 +251,16 @@
                   <span class="chart-title white-text">Статистика</span>
                   <div class="chart-revenue cyan darken-2 white-text">
                     <p class="chart-revenue-total week">
-                      ${{ $weeks_deposit_revenue  }}</p>
+                      $<?php echo e($weeks_deposit_revenue); ?></p>
                     <p class="chart-revenue-total month display-none">
-                      ${{ $month_deposit_revenue  }}</p>
+                      $<?php echo e($month_deposit_revenue); ?></p>
                     <p class="chart-revenue-per week">
-                      <i class="material-icons">@if($week_revenue_percent>=0) arrow_drop_up @else
-                          arrow_drop_down @endif</i> {{ $week_revenue_percent ?? 0 }} %
+                      <i class="material-icons"><?php if($week_revenue_percent>=0): ?> arrow_drop_up <?php else: ?>
+                          arrow_drop_down <?php endif; ?></i> <?php echo e($week_revenue_percent ?? 0); ?> %
                     </p>
                     <p class="chart-revenue-per month display-none">
-                      <i class="material-icons">@if($month_revenue_percent>=0) arrow_drop_up @else
-                          arrow_drop_down @endif</i> {{ $month_revenue_percent ?? 0 }} %
+                      <i class="material-icons"><?php if($month_revenue_percent>=0): ?> arrow_drop_up <?php else: ?>
+                          arrow_drop_down <?php endif; ?></i> <?php echo e($month_revenue_percent ?? 0); ?> %
                     </p>
                   </div>
                   <div class="switch chart-revenue-switch right">
@@ -281,12 +285,12 @@
                   <canvas id="doughnut-chart" height="200"></canvas>
                   <div class="doughnut-chart-status week">
                     <p class="center-align font-weight-600 mt-4">
-                      ${{ $weeks_deposit_revenue ?? 0 }}</p>
+                      $<?php echo e($weeks_deposit_revenue ?? 0); ?></p>
                     <p class="ultra-small center-align">Прибыль</p>
                   </div>
                   <div class="doughnut-chart-status month display-none">
                     <p class="center-align font-weight-600 mt-4">
-                      ${{ $month_deposit_revenue ?? 0 }}</p>
+                      $<?php echo e($month_deposit_revenue ?? 0); ?></p>
                     <p class="ultra-small center-align">Прибыль</p>
                   </div>
                 </div>
@@ -323,17 +327,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse($month_period as $key => $item)
+                  <?php $__empty_1 = true; $__currentLoopData = $month_period; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                      <td>{{ $loop->index }}</td>
-                      <td>{{ $item['start']->format('d M') . '-' . $item['end']->format('d M') }}</td>
+                      <td><?php echo e($loop->index); ?></td>
+                      <td><?php echo e($item['start']->format('d M') . '-' . $item['end']->format('d M')); ?></td>
                       <td>
-                        $ {{ number_format($month_period_enter_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0 }}</td>
+                        $ <?php echo e(number_format($month_period_enter_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0); ?></td>
                       <td>
-                        $ {{ number_format($month_period_withdraw_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0 }}</td>
+                        $ <?php echo e(number_format($month_period_withdraw_transactions[$item['start']->format('d M') . '-' . $item['end']->format('d M')], 2, ',', '.') ?? 0); ?></td>
                     </tr>
-                  @empty
-                  @endforelse
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -369,17 +373,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse($countries_stat as $item)
+                  <?php $__empty_1 = true; $__currentLoopData = $countries_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                      <td>{{ $item->name ?? '' }}</td>
-                      <td>{{ $item->count ?? '' }}</td>
-                      <td>${{ $item->invested ?? '' }}</td>
+                      <td><?php echo e($item->name ?? ''); ?></td>
+                      <td><?php echo e($item->count ?? ''); ?></td>
+                      <td>$<?php echo e($item->invested ?? ''); ?></td>
                     </tr>
-                  @empty
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                       <td colspan="3" style="text-align: center">Пусто</td>
                     </tr>
-                  @endforelse
+                  <?php endif; ?>
                 </tbody>
               </table>
                   <span class="card-title grey-text text-darken-4 mt-3">Популярность по браузерам</span>
@@ -391,16 +395,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse($device_stat as $item)
+                  <?php $__empty_1 = true; $__currentLoopData = $device_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
-                      <td width="50%">{{ $item->browser ?? '' }}</td>
-                      <td width="50%">{{ $item->count ?? '' }}</td>
+                      <td width="50%"><?php echo e($item->browser ?? ''); ?></td>
+                      <td width="50%"><?php echo e($item->count ?? ''); ?></td>
                     </tr>
-                  @empty
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                       <td colspan="2" style="text-align: center">Пусто</td>
                     </tr>
-                  @endforelse
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -417,51 +421,54 @@
           <div class="col-12">
             <div class="card-content">
               <h4 class="card-title mt-2 mb-1" style="text-align: center">Начислить бонус</h4>
-              <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
-                {{ csrf_field() }}
+              <form method="post" class="dashboard-send-bonus-form" action="<?php echo e(route('dashboard.add_bonus')); ?>">
+                <?php echo e(csrf_field()); ?>
+
                 
                 
                 
                 
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12">
-                    <input class="checkbox-tools" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} id="enter">
+                    <input class="checkbox-tools" name="type" value="enter" type="radio" <?php echo e(old('type', 'enter') == 'enter' ? 'checked' : ''); ?> id="enter">
                     <label class="for-checkbox-tools" for="enter">Ввод средств в систему</label>
-                    <input class="checkbox-tools" name="type" value="withdraw" type="radio"  id="withdraw" {{ old('type') == 'withdraw' ? 'checked' : '' }}>
+                    <input class="checkbox-tools" name="type" value="withdraw" type="radio"  id="withdraw" <?php echo e(old('type') == 'withdraw' ? 'checked' : ''); ?>>
                     <label class="for-checkbox-tools" for="withdraw">Вывод средств</label>
                   </div>
                 </div>
                 
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12 ">
-                    @foreach($currencies as $currency)
-                      @if($loop->index % 8 == 0 && $loop->index > 1)
+                    <?php $__currentLoopData = $currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($loop->index % 8 == 0 && $loop->index > 1): ?>
                         <br>
-                      @endif
-                        <input class="checkbox-tools" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }}  name="currency" id="currency-{{ $currency->id }}">
-                        <label class="for-checkbox-tools" for="currency-{{ $currency->id }}">
-                          {{ $currency->code }}
+                      <?php endif; ?>
+                        <input class="checkbox-tools" value="<?php echo e($currency->id); ?>" type="radio" <?php echo e(old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : ''); ?>  name="currency" id="currency-<?php echo e($currency->id); ?>">
+                        <label class="for-checkbox-tools" for="currency-<?php echo e($currency->id); ?>">
+                          <?php echo e($currency->code); ?>
+
                         </label>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                    
                   </div>
                 </div>
  
                 
                 <div class="row" style="margin-top:20px; text-align: center;">
-                  @foreach($payment_system as $ps)
-                    <input class="checkbox-tools" name="payment_system" value="{{ $ps->id }}" type="radio" id="payment_system-{{ $ps->id }}" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }}>
-                    <label class="for-checkbox-tools" for="payment_system-{{ $ps->id }}">
-                      {{ $ps->name }}
+                  <?php $__currentLoopData = $payment_system; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ps): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <input class="checkbox-tools" name="payment_system" value="<?php echo e($ps->id); ?>" type="radio" id="payment_system-<?php echo e($ps->id); ?>" <?php echo e(old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : ''); ?>>
+                    <label class="for-checkbox-tools" for="payment_system-<?php echo e($ps->id); ?>">
+                      <?php echo e($ps->name); ?>
+
                     </label>
-                  @endforeach
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
                 
                 
                 <div class="row" style="margin-top:20px; text-align: center;">
-                  <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
+                  <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" <?php echo e(old('is_real', '1') == '1' ? 'checked' : ''); ?>>
                   <label class="for-checkbox-tools" for="is_real1">Реал</label>
-                  <input class="checkbox-tools" name="is_real" value="0" type="radio" id="is_real0" {{ old('is_real') == '0' ? 'checked' : '' }} >
+                  <input class="checkbox-tools" name="is_real" value="0" type="radio" id="is_real0" <?php echo e(old('is_real') == '0' ? 'checked' : ''); ?> >
                   <label class="for-checkbox-tools" for="is_real0">Фейк</label>
                 </div>
   
@@ -469,7 +476,7 @@
                   <div class="input-field col s12 text-center">
                     <div >
                       <input id="login" type="text" name="login"
-                          placeholder="Логин, айди, или почта" value="{{ old('login') }}"
+                          placeholder="Логин, айди, или почта" value="<?php echo e(old('login')); ?>"
                           style="font-weight: bold; text-align: center;width: 320px;">
                     </div>
                   </div>
@@ -477,7 +484,7 @@
                 <div class="row" style=" text-align: center;">
                   <div class="input-field col s12">
                     <div class="text-center">
-                      <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}"
+                      <input id="amount" type="text" name="amount" placeholder="Сумма" value="<?php echo e(old('amount')); ?>"
                           style="font-weight: 500; text-align: center; width: 320px;">
                     </div>
                   </div>
@@ -524,40 +531,44 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($payment_system as $item)
+                        <?php $__empty_1 = true; $__currentLoopData = $payment_system; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                           <tr>
-                            <td>{{ $item->name }}</td>
+                            <td><?php echo e($item->name); ?></td>
                             <td class="green-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
+                                                        style="font-weight: 900;">$</span><?php echo e(number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0); ?>
+
                             </td>
                             <td class="red-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
+                                                        style="font-weight: 900;">$</span><?php echo e(number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0); ?>
+
                             </td>
                             <td class="blue-grey-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
+                                                        style="font-weight: 900;">$</span><?php echo e(number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0); ?>
+
                             </td>
-                            <td>@if($item->transaction_sum)
-                                {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
-                              @else
+                            <td><?php if($item->transaction_sum): ?>
+                                <?php echo e(number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0); ?>
+
+                              <?php else: ?>
                                 0
-                              @endif
+                              <?php endif; ?>
                               %
                             </td>
                           </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                           <tr>
                             <td colspan="3" style="text-align: center">Пусто</td>
                           </tr>
-                        @endforelse
+                        <?php endif; ?>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              {{--                    </div>--}}
+              
             </div>
             <div id="last-operations-block" class="card subscriber-list-card animate fadeUp display-none">
               <div class="card-content pb-1">
@@ -575,23 +586,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if(isset($last_operations) && !empty($last_operations))
-                    @foreach($last_operations as $operation)
+                  <?php if(isset($last_operations) && !empty($last_operations)): ?>
+                    <?php $__currentLoopData = $last_operations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $operation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                       <tr>
-                        <td>{{ Str::limit( $operation->user->name, 13) ?? 'Не указано' }}</td>
-                        <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
+                        <td><?php echo e(Str::limit( $operation->user->name, 13) ?? 'Не указано'); ?></td>
+                        <td><?php echo e(__('locale.' . $operation->type->name) ?? 'Не указано'); ?></td>
                         <td>
                                         <span
-                                            class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+                                            class="badge  green-text  lighten-5 text-accent-4">$ <?php echo e(number_format($operation->main_currency_amount, 2, '.', ',') ?? 0); ?></span>
                         </td>
-                        <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                        <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
+                        <td><?php echo e($operation->paymentSystem->name ?? 'Не указано'); ?></td>
+                        <td><?php echo e($operation->created_at->format('d-m-Y H:i')); ?></td>
                         <td class="center-align">
-                          <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
+                          <a href="<?php echo e(route('transactions.show', $operation->id)); ?>">Open</a>
                         </td>
                       </tr>
-                    @endforeach
-                  @endif
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -615,24 +626,25 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($user_auth_logs as $item)
+                        <?php $__empty_1 = true; $__currentLoopData = $user_auth_logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                           <tr>
-                            <td><b>Имя: </b>{{ $item->user->name ?? '' }}
-                              <br><b>Логин: </b>{{ $item->user->login ?? '' }}</td>
-                            <td>{{ $item->ip ?? '' }}</td>
-                            <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
+                            <td><b>Имя: </b><?php echo e($item->user->name ?? ''); ?>
+
+                              <br><b>Логин: </b><?php echo e($item->user->login ?? ''); ?></td>
+                            <td><?php echo e($item->ip ?? ''); ?></td>
+                            <td><?php echo e($item->created_at->format('d.m.Y H:i:s') ?? ''); ?></td>
                           </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                           <tr>
                             <td colspan="3" style="text-align: center">Пусто</td>
                           </tr>
-                        @endforelse
+                        <?php endif; ?>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              {{--                    </div>--}}
+              
             </div>
           </div>
         </div>
@@ -648,45 +660,45 @@
         <div class="row">
           <div class="col s12 m12">
             <div class="card">
-              @if(session()->has('success'))
+              <?php if(session()->has('success')): ?>
                 <div class="card-alert card green mb-0">
                   <div class="card-content white-text">
                                   <span class="card-title white-text darken-1 mb-0">
-                                    <i class="material-icons">notifications</i> @lang(session()->get('success'))</span>
+                                    <i class="material-icons">notifications</i> <?php echo app('translator')->get(session()->get('success')); ?></span>
                   </div>
                   <button type="button" class="close white-text" data-dismiss="alert"
                       aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-              @endif
-              @if(session()->has('error'))
+              <?php endif; ?>
+              <?php if(session()->has('error')): ?>
                 <div class="card-alert card red mb-0">
                   <div class="card-content white-text">
                                   <span class="card-title white-text darken-1 mb-0">
-                                    <i class="material-icons">notifications</i> @lang(session()->get('error'))</span>
+                                    <i class="material-icons">notifications</i> <?php echo app('translator')->get(session()->get('error')); ?></span>
                   </div>
                   <button type="button" class="close white-text" data-dismiss="alert"
                       aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-              @endif
-              @if ($errors->any())
+              <?php endif; ?>
+              <?php if($errors->any()): ?>
                 <div class="card-alert card red lighten-2 mb-0">
                   <div class="card-content text-white">
                                      <span class="card-title white-text darken-1 mb-0">
-                                    <i class="material-icons">notifications</i> {{ __("Error") }}</span>
-                    @foreach ($errors->all() as $error)
-                      <p class="white-text darken-5">{{ $error }}</p>
-                    @endforeach
+                                    <i class="material-icons">notifications</i> <?php echo e(__("Error")); ?></span>
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <p class="white-text darken-5"><?php echo e($error); ?></p>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </div>
                   <button type="button" class="close white-text" data-dismiss="alert"
                       aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-              @endif
+              <?php endif; ?>
             
             </div>
           </div>
@@ -695,24 +707,24 @@
     </div>
   
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-{{-- vendor scripts --}}
-@section('vendor-script')
-  <script src="{{asset('vendors/sparkline/jquery.sparkline.min.js')}}"></script>
-  <script src="{{asset('vendors/chartjs/chart.min.js')}}"></script>
-  <script src="{{asset('vendors/chartist-js/chartist.min.js')}}"></script>
-  <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
-  <script src="{{asset('vendors/chartist-js/chartist-plugin-tooltip.js')}}"></script>
-  <script src="{{asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')}}"></script>
-@endsection
 
-{{-- page scripts --}}
-@section('page-script')
-  {{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
-  {{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
-  <script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>
-  {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
+<?php $__env->startSection('vendor-script'); ?>
+  <script src="<?php echo e(asset('vendors/sparkline/jquery.sparkline.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('vendors/chartjs/chart.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('vendors/chartist-js/chartist.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('vendors/sweetalert/sweetalert.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('vendors/chartist-js/chartist-plugin-tooltip.js')); ?>"></script>
+  <script src="<?php echo e(asset('vendors/chartist-js/chartist-plugin-fill-donut.min.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('page-script'); ?>
+  
+  
+  <script src="<?php echo e(asset('js/scripts/ui-alerts.js')); ?>"></script>
+  
   <script>
     (function (window, document, $) {
       
@@ -797,11 +809,11 @@
       };
       
       var revenueLineChartDataWeek = {
-        labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
+        labels: [<?php $__currentLoopData = $weeks_period; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>"<?php echo e($item['start']->format('d M')); ?>",<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
         datasets: [
           {
             label: "Deposit",
-            data: [@foreach($weeks_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $weeks_period_enter_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             //data: [150, 50, 20, 40, 80, 50, 80],
             backgroundColor: "rgba(128, 222, 234, 0.6)",
             borderColor: "#d1faff",
@@ -816,7 +828,7 @@
           },
           {
             label: "Withdraw",
-            data: [@foreach($weeks_period_withdraw_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $weeks_period_withdraw_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             borderDash: [15, 5],
             backgroundColor: "rgba(128, 222, 234, 0.2)",
             borderColor: "#80deea",
@@ -832,11 +844,11 @@
         ]
       };
       var revenueLineChartDataMonth = {
-        labels: [@foreach($month_period as $key => $item)"{{ $item['start']->format('d M') .'-'.$item['end']->format('d M') }}",@endforeach],
+        labels: [<?php $__currentLoopData = $month_period; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>"<?php echo e($item['start']->format('d M') .'-'.$item['end']->format('d M')); ?>",<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
         datasets: [
           {
             label: "Deposit",
-            data: [@foreach($month_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $month_period_enter_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             //data: [150, 50, 20, 40, 80, 50, 80],
             backgroundColor: "rgba(128, 222, 234, 0.6)",
             borderColor: "#d1faff",
@@ -851,7 +863,7 @@
           },
           {
             label: "Withdraw",
-            data: [@foreach($month_period_withdraw_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $month_period_withdraw_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             borderDash: [15, 5],
             backgroundColor: "rgba(128, 222, 234, 0.2)",
             borderColor: "#80deea",
@@ -894,7 +906,7 @@
         datasets: [
           {
             label: "Sales",
-            data: [{{ $weeks_total_enter ?? 0 }}, {{ $weeks_total_withdraw ?? 0 }}],
+            data: [<?php echo e($weeks_total_enter ?? 0); ?>, <?php echo e($weeks_total_withdraw ?? 0); ?>],
             backgroundColor: ["#46BFBD", "#f7464a"]
           }
         ]
@@ -904,7 +916,7 @@
         datasets: [
           {
             label: "Sales",
-            data: [{{ $month_total_enter ?? 0 }}, {{ $month_total_withdraw ?? 0 }}],
+            data: [<?php echo e($month_total_enter ?? 0); ?>, <?php echo e($month_total_withdraw ?? 0); ?>],
             backgroundColor: ["#46BFBD", "#f7464a"]
           }
         ]
@@ -969,25 +981,25 @@
         }
       };
       var monthlyRevenueChartDataWeek = {
-        labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
+        labels: [<?php $__currentLoopData = $weeks_period; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>"<?php echo e($item['start']->format('d M')); ?>",<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
         //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
         datasets: [
           {
             label: "Внесено",
             //data: [6, 9, 8, 4, 6, 7, 9, 4, 8],
-            data: [@foreach($weeks_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $weeks_period_enter_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             backgroundColor: "#46BFBD",
             hoverBackgroundColor: "#009688"
           }
         ]
       };
       var monthlyRevenueChartDataMonth = {
-        labels: [@foreach($month_period as $key => $item)"{{ $item['start']->format('d M') .'-'.$item['end']->format('d M') }}",@endforeach],
+        labels: [<?php $__currentLoopData = $month_period; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>"<?php echo e($item['start']->format('d M') .'-'.$item['end']->format('d M')); ?>",<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
         //labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept"],
         datasets: [
           {
             label: "Внесено",
-            data: [@foreach($month_period_enter_transactions as $key => $item){{ $item }},@endforeach],
+            data: [<?php $__currentLoopData = $month_period_enter_transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($item); ?>,<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>],
             backgroundColor: "#46BFBD",
             hoverBackgroundColor: "#009688"
           }
@@ -1028,11 +1040,11 @@
         }
       };
       var countryStatsChartData = {
-        labels: [@forelse($countries_stat as $country)"{{ $country->name }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
+        labels: [<?php $__empty_1 = true; $__currentLoopData = $countries_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>"<?php echo e($country->name); ?>"<?php if(!$loop->last): ?>, <?php endif; ?> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?> "Пусто" <?php endif; ?>],
         datasets: [
           {
             label: "Count",
-            data: [@forelse($countries_stat as $country)"{{ intval($country->count) }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
+            data: [<?php $__empty_1 = true; $__currentLoopData = $countries_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>"<?php echo e(intval($country->count)); ?>"<?php if(!$loop->last): ?>, <?php endif; ?> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?> "Пусто" <?php endif; ?>],
             fill: true,
             fillColor: "rgba(255,255,255,0.2)",
             borderColor: "#fff",
@@ -1096,11 +1108,11 @@
         }
       };
       var cityStatsChartData = {
-        labels: [@forelse($cities_stat as $country)"{{ $country->name }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
+        labels: [<?php $__empty_1 = true; $__currentLoopData = $cities_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>"<?php echo e($country->name); ?>"<?php if(!$loop->last): ?>, <?php endif; ?> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?> "Пусто" <?php endif; ?>],
         datasets: [
           {
             label: "Users",
-            data: [@forelse($cities_stat as $country)"{{ $country->count }}"@if(!$loop->last), @endif @empty "Пусто" @endforelse],
+            data: [<?php $__empty_1 = true; $__currentLoopData = $cities_stat; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>"<?php echo e($country->count); ?>"<?php if(!$loop->last): ?>, <?php endif; ?> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?> "Пусто" <?php endif; ?>],
             fill: false,
             lineTension: 0,
             borderColor: "#fff",
@@ -1198,7 +1210,7 @@
         });
       });
       
-      $("#clients-bar").sparkline(@json($usersCountPeriod), {
+      $("#clients-bar").sparkline(<?php echo json_encode($usersCountPeriod, 15, 512) ?>, {
         type: "bar",
         height: "25",
         barWidth: 7,
@@ -1208,7 +1220,7 @@
         zeroColor: "#81d4fa"
       });
       
-      $("#sales-compositebar").sparkline(@json($enterTransactionsPeriod), {
+      $("#sales-compositebar").sparkline(<?php echo json_encode($enterTransactionsPeriod, 15, 512) ?>, {
         type: "bar",
         barColor: "#F6CAFD",
         height: "25",
@@ -1217,7 +1229,7 @@
         barSpacing: 4
       });
       //Total Sales - Line
-      $("#sales-compositebar").sparkline(@json($enterTransactionsPeriod), {
+      $("#sales-compositebar").sparkline(<?php echo json_encode($enterTransactionsPeriod, 15, 512) ?>, {
         type: "line",
         width: "100%",
         lineWidth: 2,
@@ -1231,7 +1243,7 @@
         spotRadius: 4
       });
       
-      $("#profit-tristate").sparkline(@json($withdrawalsPeriod), {
+      $("#profit-tristate").sparkline(<?php echo json_encode($withdrawalsPeriod, 15, 512) ?>, {
         type: "bar",
         height: "25",
         barWidth: 7,
@@ -1241,7 +1253,7 @@
         zeroColor: "#fade81"
       });
       
-      $("#invoice-line").sparkline(@json($profitPeriod), {
+      $("#invoice-line").sparkline(<?php echo json_encode($profitPeriod, 15, 512) ?>, {
         type: "line",
         width: "100%",
         height: "25",
@@ -1278,4 +1290,6 @@
       });
     });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.contentLayoutMaster', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/pages/dashboard.blade.php ENDPATH**/ ?>
