@@ -185,10 +185,12 @@ class Transaction extends Model
         ]);
         return $transaction->save() ? $transaction : null;
     }
-
+    
     /**
      * @param Wallet $wallet
-     * @param float $amount
+     * @param float  $amount
+     * @param        $payment_system_id
+     *
      * @return Transaction|null
      * @throws \Exception
      */
