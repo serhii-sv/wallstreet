@@ -7,14 +7,14 @@
 {{-- page style --}}
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-account-settings.css')}}">
-  
+
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-users.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker.css')}}">
 @endsection
 
 {{-- page content  --}}
 @section('content')
-  
+
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object start -->
@@ -44,7 +44,7 @@
               <i class="material-icons">mail_outline</i>
             </a>
             @if(auth()->user()->id !== $user->id)
-              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id }}" class="btn-small purple darken-4 ">Залогиниться</a>
+              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . \App\Models\User::impersonateTokenGenerate() }}" class="btn-small purple darken-4 ">Залогиниться</a>
             @endif
             <a href="{{ route('users.edit', $user) }}" class="btn-small indigo ">Редактировать</a>
             <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan ">Рефералы</a>
@@ -106,7 +106,7 @@
                     @endforelse
                   </td>
                 </tr>
-              
+
               </tbody>
             </table>
           </div>
@@ -139,7 +139,7 @@
       </div>
     </div>
     <!-- users view card data ends -->
-    
+
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
@@ -162,7 +162,7 @@
             </div>
           </div>
           <div class="col s12 m4 users-view-timeline">
-            
+
             <div class="indigo-text mb-3 " style="font-size: 18px;">Количество регистраций:
               <span class="badge pink " style="font-size: 18px">{{ $registered_referrals ?? 0 }}</span>
             </div>
@@ -176,7 +176,7 @@
               <span class="badge pink " style="font-size: 18px">{{ $referral_clicks ?? 0 }}</span>
             </div>
           </div>
-        
+
         </div>
 {{--        <div class="row">--}}
 {{--          <div class="col s12">--}}
@@ -220,7 +220,7 @@
       </div>
     </div>
     <!-- users view card details ends -->
-    
+
     <div class="card">
       <div class="card-content">
         <div class="row">
@@ -287,7 +287,7 @@
           </div>
           <div class="col s12 l4">
             <ul id="issues-collection" class="collection z-depth-1  fadeRight">
-              
+
               <li class="collection-item avatar" style="min-height: auto">
                 <i class="material-icons blue accent-2 circle">computer</i>
                 <h6 class="collection-header m-0">Последние ip адреса</h6>
@@ -309,7 +309,7 @@
         <!-- </div> -->
       </div>
     </div>
-  
+
   </div>
   <!-- users view ends -->
 @endsection
@@ -317,7 +317,7 @@
 {{-- page script --}}
 @section('page-script')
   <script src="{{asset('js/scripts/page-account-settings.js')}}"></script>
-  
+
   <script src="{{asset('js/moment.js')}}"></script>
   <script src="{{asset('js/daterangepicker.js')}}"></script>
   <script>

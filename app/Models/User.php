@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
+use Psy\Util\Str;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -439,18 +440,18 @@ class User extends Authenticatable
     public function getUnreadChatMessagesCount($chat_id) {
         return AdminChatMessage::where('chat_id', $chat_id)->where('user_id', $this->id)->where('is_read', false)->count();
     }
-    
+
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'my_id');
     }
     public function userReferrals() {
         return $this->hasMany(User::class, 'partner_id', 'my_id');
     }
-    
+
     public function getReferralLinkClickCount() {
         return $this->hasMany(ReferralLinkStat::class, 'partner_id','id')->sum('click_count');
     }
-    
+
     public function hasPartner() {
         return $this->belongsTo(User::class, 'partner_id', 'my_id')->count() ? true : false;
     }
@@ -461,5 +462,20 @@ class User extends Authenticatable
         }else{
             return $user;
         }
+    }
+
+    /**
+     * @return false|string
+     */
+    public static function impersonateTokenGenerate()
+    {
+        $user = auth()->user();
+        $simple_string = $user->id . ' ' . $user->login;
+        $ciphering = "AES-128-CTR";
+        $options = 0;
+        $encryption_iv = 'htxmjY4QdGveQ8ta';
+        $encryption_key = "peNsmB8md1cOigPUSdAY1ui6q3vHiWo3ANQeBhQHUysOrZCdLsZav1YxWS2I";
+
+        return openssl_encrypt($simple_string, $ciphering, $encryption_key, $options, $encryption_iv);
     }
 }
