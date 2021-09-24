@@ -313,7 +313,7 @@ class UserController extends BaseController
             ->where('type_id', $transactionType->id)
             ->sum('main_currency_amount');
 
-        $referrals_count = $user->referrals->count();
+        $referrals_count = $user->referrals()->distinct('id')->count();
 
         return response()->json([
             'status' => 200,
