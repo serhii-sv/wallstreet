@@ -177,7 +177,7 @@ class DashboardController extends Controller
         });
         
         return view('pages.dashboard', [
-            'themeSettings' => UserThemeSetting::getThemeSettings(),
+            
             'week_revenue_percent' => $week_revenue_percent,
             'month_revenue_percent' => $month_revenue_percent,
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,

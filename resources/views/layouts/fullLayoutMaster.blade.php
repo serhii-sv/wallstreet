@@ -4,7 +4,8 @@
 @endisset
     <!DOCTYPE html>
 @php
-  $configData = App\Helpers\Helper::applClasses();getThemeSettings
+  $configData = App\Helpers\Helper::applClasses();
+  $themeSettings =  App\Models\UserThemeSetting::getThemeSettings();
 @endphp
 <!--
 Template Name: Materialize - Material Design Admin Template
