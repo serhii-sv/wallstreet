@@ -5,6 +5,7 @@ namespace App\Traits;
 
 
 use App\Models\Deposit;
+use App\Models\Permission;
 use App\Models\Referral;
 use App\Models\User;
 
@@ -197,7 +198,7 @@ trait HasReferral
             'referrals' => []
         ];
 
-        if ($flag > 100) {
+        if ($flag > 1000) {
             return $result;
         }
 
@@ -205,6 +206,25 @@ trait HasReferral
             foreach ($referrals as $ref) {
                 $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $flag
+     * @return array
+     */
+    public function getAllReferralsIds($referrals, $flag = 1)
+    {
+        $result = [];
+
+        foreach ($referrals as $referral) {
+            if (!isset($referral->id)) {
+                $referral = $referral['self'];
+            }
+            $result[] = $referral->id;
+            $this->getAllReferralsIds($referral['referrals'], $flag + 1);
         }
 
         return $result;

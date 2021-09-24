@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ReferralController extends Controller
+class ReferralController extends BaseController
 {
     /**
      * @OA\Get(
@@ -43,5 +43,12 @@ class ReferralController extends Controller
                 'link' => url('/ref/' . $user->my_id)
             ]
         ]);
+    }
+
+    public function referralsList(Request $request)
+    {
+        $user = $request->user();
+
+
     }
 }

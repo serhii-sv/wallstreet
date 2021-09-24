@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
+use App\Models\ReferralLinkStat;
+use App\Models\Transaction;
+use App\Models\TransactionType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -242,5 +246,109 @@ class UserController extends BaseController
                 'user' => 'Нельзя удалить пользователя.'
             ]
         ], 400);
+    }
+
+    /**
+     * @OA\Get (
+     *      path="/api/v1/user/statistic",
+     *      summary="User statistic",
+     *      description="User statistic",
+     *      @OA\Parameter(
+     *          name="api_token",
+     *          in="query",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string", example="SYejxLCIpdK3RU7ed2ijjqfIyM0mrbtuiY5ccQA6J0f5ipuSGmupRt3tnmbU"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="integer", example="200"),
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  @OA\Property(property="my_appliner", type="object",
+     *                      @OA\Property(property="label", type="string", example="Ваш аплйнер (тот кто пригласил)"),
+     *                      @OA\Property(property="value", type="string", example="AplinerLogin"),
+     *                  ),
+     *                  @OA\Property(property="referrals_count", type="object",
+     *                      @OA\Property(property="label", type="string", example="Количество рефералов"),
+     *                      @OA\Property(property="value", type="integer", example="5"),
+     *                  ),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Returns when user is not authenticated",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Not authorized"),
+     *          )
+     *      ),
+     * )
+     */
+    public function stats(Request $request)
+    {
+        $user = $request->user();
+        $structureIdsList = $user->getAllReferralsIds($user->getAllReferrals()['referrals']);
+
+        $investment_amount_of_partners = Deposit::whereIn('user_id', $structureIdsList)->sum('invested');
+
+        $earned_on_referrals = $user->transactions()
+            ->where('type_id',
+                TransactionType::where('name', 'partner')
+                    ->first()
+                    ->id
+            )->sum('main_currency_amount');
+
+        $transactionType = TransactionType::where('name', 'enter')->first();
+
+        $partners_replenishment_amount = Transaction::whereIn('user_id', $structureIdsList)
+            ->where('type_id', $transactionType->id)
+            ->sum('main_currency_amount');
+
+        $referrals_count = $user->referrals->count();
+
+        return response()->json([
+            'status' => 200,
+            'data' => [
+                'my_appliner' => [
+                    'label' => 'Ваш аплйнер (тот кто пригласил)',
+                    'value' => $user->partner->login ?? null
+                ],
+                'referrals_count' => [
+                    'label' => 'Количество рефералов',
+                    'value' => $referrals_count
+                ],
+                'referrals_link_clicks' => [
+                    'label' => 'Количество переходов по реферальной ссылке',
+                    'value' => ReferralLinkStat::where('partner_id', $user->my_id)->sum('click_count')
+                ],
+                'earned_on_referrals' => [
+                    'label' => 'Заработано на рефералах',
+                    'value' => number_format($earned_on_referrals, 2, '.', ',')
+                ],
+                'investment_amount_of_partners' => [
+                    'label' => 'Сумма инвестиций партнеров',
+                    'value' => number_format($investment_amount_of_partners, 2, '.', ',')
+                ],
+                'active_partners' => [
+                    'label' => 'Активных партнеров',
+                    'value' => $user->referrals()->whereHas('deposits', function ($q) {
+                        $q->where('active', 1);
+                    })->count()
+                ],
+                'partners_replenishment_amount' => [
+                    'label' => 'Сумма пополнений партнеров',
+                    'value' => number_format($partners_replenishment_amount, 2, '.', ',')
+                ],
+                'registered_partners_count' => [
+                    'label' => 'Зарегистрированных партнеров',
+                    'value' => $referrals_count
+                ]
+            ]
+        ]);
     }
 }
