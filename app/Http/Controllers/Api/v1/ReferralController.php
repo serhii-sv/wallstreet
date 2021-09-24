@@ -49,7 +49,7 @@ class ReferralController extends BaseController
 
     /**
      * @OA\Get(
-     *      path="/api/v1/referrals-list",
+     *      path="/api/v1/referrals/referrals-list",
      *      summary="Referrals list",
      *      description="Referrals list",
      *      @OA\Parameter(
