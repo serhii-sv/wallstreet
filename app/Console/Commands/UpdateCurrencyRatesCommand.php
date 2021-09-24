@@ -87,74 +87,74 @@ class UpdateCurrencyRatesCommand extends Command
                 $this->comment('updated ' . $key . ' = ' . $rateInUsd);
             }
 
-//            $key = 'usd_to_' . strtolower($currency->code);
-//            $currencyRate = Setting::where('s_key', $key)->first();
-//
-//            if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
-//                Setting::setValue($key, 1 / $rateInUsd);
-//                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
-//            }
-//
-//            if (is_null($currencyRate)) {
-//                Setting::setValue($key, 1 / $rateInUsd);
-//                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
-//            }
+            $key = 'usd_to_' . strtolower($currency->code);
+            $currencyRate = Setting::where('s_key', $key)->first();
+
+            if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
+                Setting::setValue($key, 1 / $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
+            }
+
+            if (is_null($currencyRate)) {
+                Setting::setValue($key, 1 / $rateInUsd);
+                $this->comment('updated ' . $key . ' = ' . (1 / $rateInUsd));
+            }
         }
 
-//        $fiatCurrencies = Currency::whereIn('code', [
-//            'USD',
-//            'UAH',
-//            'RUB',
-//            'EUR',
-//            'KZT',
-//        ])->get();
+        $fiatCurrencies = Currency::whereIn('code', [
+            'USD',
+            'UAH',
+            'RUB',
+            'EUR',
+            'KZT',
+        ])->get();
 
         /** @var Currency $currency */
-//        foreach ($fiatCurrencies as $currency) {
-//            $response = FixerModule::getRate(strtoupper($currency->code), [
-//                'USD',
-//                'UAH',
-//                'RUB',
-//                'EUR',
-//                'KZT',
-//            ]);
-//
-//            if (!isset($response->rates)) {
-//                \Log::error('Error getting rate for ' . $currency->code);
-//                continue;
-//            }
-//
-//            $response = (array)$response;
-//            $response['rates'] = (array)$response['rates'];
+        foreach ($fiatCurrencies as $currency) {
+            $response = FixerModule::getRate(strtoupper($currency->code), [
+                'USD',
+                'UAH',
+                'RUB',
+                'EUR',
+                'KZT',
+            ]);
 
-//            foreach ($response['rates'] as $code => $rate) {
-//
-//                $key = strtolower($currency->code) . '_to_' . strtolower($code);
-//                $currencyRate = Setting::where('s_key', $key)->first();
-//
-//                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
-//                    Setting::setValue($key, $rate);
-//                    $this->comment('updated ' . $key . ' = ' . $rate);
-//                }
-//
-//                if (is_null($currencyRate)) {
-//                    Setting::setValue($key, $rate);
-//                    $this->comment('updated ' . $key . ' = ' . $rate);
-//                }
+            if (!isset($response->rates)) {
+                \Log::error('Error getting rate for ' . $currency->code);
+                continue;
+            }
 
-//                $key = strtolower($code) . '_to_' . strtolower($currency->code);
-//                $currencyRate = Setting::where('s_key', $key)->first();
-//
-//                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
-//                    Setting::setValue($key, 1 / $rate);
-//                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
-//                }
-//
-//                if (is_null($currencyRate)) {
-//                    Setting::setValue($key, 1 / $rate);
-//                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
-//                }
-//            }
-//        }
+            $response = (array)$response;
+            $response['rates'] = (array)$response['rates'];
+
+            foreach ($response['rates'] as $code => $rate) {
+
+                $key = strtolower($currency->code) . '_to_' . strtolower($code);
+                $currencyRate = Setting::where('s_key', $key)->first();
+
+                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
+                    Setting::setValue($key, $rate);
+                    $this->comment('updated ' . $key . ' = ' . $rate);
+                }
+
+                if (is_null($currencyRate)) {
+                    Setting::setValue($key, $rate);
+                    $this->comment('updated ' . $key . ' = ' . $rate);
+                }
+
+                $key = strtolower($code) . '_to_' . strtolower($currency->code);
+                $currencyRate = Setting::where('s_key', $key)->first();
+
+                if (isset($currencyRate->autoupdate) && $currencyRate->autoupdate) {
+                    Setting::setValue($key, 1 / $rate);
+                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
+                }
+
+                if (is_null($currencyRate)) {
+                    Setting::setValue($key, 1 / $rate);
+                    $this->comment('updated ' . $key . ' = ' . (1 / $rate));
+                }
+            }
+        }
     }
 }
