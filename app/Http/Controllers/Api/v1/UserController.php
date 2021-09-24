@@ -328,7 +328,7 @@ class UserController extends BaseController
                 ],
                 'referrals_link_clicks' => [
                     'label' => 'Количество переходов по реферальной ссылке',
-                    'value' => ReferralLinkStat::where('partner_id', $user->my_id)->sum('click_count')
+                    'value' => ReferralLinkStat::where('partner_id', $user->id)->sum('click_count')
                 ],
                 'earned_on_referrals' => [
                     'label' => 'Заработано на рефералах',
