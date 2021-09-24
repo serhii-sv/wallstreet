@@ -52,5 +52,6 @@ Route::group([
         Route::get('news/{id}', [\App\Http\Controllers\NewsController::class, 'show']);
 
         Route::get('ref-link', [\App\Http\Controllers\Api\v1\ReferralController::class, 'makeLink']);
+        Route::get('referrals/referrals-list', [\App\Http\Controllers\Api\v1\ReferralController::class, 'referralsList']);
     });
 });

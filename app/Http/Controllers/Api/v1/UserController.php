@@ -294,7 +294,11 @@ class UserController extends BaseController
         $user = $request->user();
         $structureIdsList = $user->getAllReferralsIds($user->getAllReferrals()['referrals']);
 
-        $investment_amount_of_partners = Deposit::whereIn('user_id', $structureIdsList)->sum('invested');
+        $investment_amount_of_partners = Transaction::whereIn('user_di')->where('type_id',
+            TransactionType::where('name', 'create_dep')
+                ->first()
+                ->id
+        )->sum('main_currency_amount');
 
         $earned_on_referrals = $user->transactions()
             ->where('type_id',
