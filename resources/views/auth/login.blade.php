@@ -28,6 +28,7 @@
         </div>
       </div>
       <div class="row margin">
+        <div class="mb-3">@include('panels.inform')</div>
         <div class="input-field col s12">
           <i class="material-icons prefix pt-2">person_outline</i>
           <input id="email" type="text" class=" @error('email') is-invalid @enderror" name="email"
