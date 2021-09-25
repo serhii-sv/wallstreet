@@ -416,7 +416,6 @@
    
     <div class="row">
       <div class="col s12 m12 l12">
-        
         <div class="row">
           <div class="col-12">
             <div class="card-content">
@@ -440,7 +439,7 @@
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12 ">
                     <?php $__currentLoopData = $currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <?php if($loop->index % 8 == 0 && $loop->index > 1): ?>
+                      <?php if($loop->index % 7 == 0 && $loop->index > 1): ?>
                         <br>
                       <?php endif; ?>
                         <input class="checkbox-tools" value="<?php echo e($currency->id); ?>" type="radio" <?php echo e(old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : ''); ?>  name="currency" id="currency-<?php echo e($currency->id); ?>">
@@ -721,6 +720,9 @@
 
 
 <?php $__env->startSection('page-script'); ?>
+  <script>
+  
+  </script>
   
   
   <script src="<?php echo e(asset('js/scripts/ui-alerts.js')); ?>"></script>

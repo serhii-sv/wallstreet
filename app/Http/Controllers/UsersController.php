@@ -55,9 +55,9 @@ class UsersController extends Controller
                 foreach ($users->get() as $user) {
                     $main_user = $user->main_user()->first();
                     $user = $user->user()->first();
-                    if ($user->ip){
+                    if ($user->ip) {
                         $ip = "<blink>" . $user->ip . "</blink>";
-                    }else{
+                    } else {
                         $ip = "<blink>" . $ip . "</blink>";
                     }
                     $data[] = [
@@ -67,11 +67,14 @@ class UsersController extends Controller
                         'name' => view('pages.users.partials.name', compact('user'))->render(),
                         'email' => view('pages.users.partials.email', compact('user'))->render(),
                         'referrals_count' => $user->referrals()->distinct('id')->count(),
-                        'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $main_user])->render(),
+                        'partner' => view('pages.users.partials.partner', [
+                            'user' => $user,
+                            'partner' => $main_user,
+                        ])->render(),
                         'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
                         'ip' => $ip,
-                          'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                        'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                         'color' => $user->roles->first()->color ?? '',
                     ];
                 }
@@ -90,9 +93,8 @@ class UsersController extends Controller
                     
                     } else if ((Auth::user()->hasRole('root') && $user->hasRole('teamlead')) || !$user->hasRole('teamlead')) {
                         $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
-                        if ($multi_acc->count() > 0)
-                        {
-                            $ip = "<blink>" .$multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>" ;
+                        if ($multi_acc->count() > 0) {
+                            $ip = "<blink>" . $multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>";
                         }
                         $data[] = [
                             'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
@@ -101,11 +103,14 @@ class UsersController extends Controller
                             'name' => view('pages.users.partials.name', compact('user'))->render(),
                             'email' => view('pages.users.partials.email', compact('user'))->render(),
                             'referrals_count' => $user->referrals()->distinct('id')->count(),
-                            'partner' => view('pages.users.partials.partner', ['user'=>$user, 'partner' => $user->partner])->render(),
+                            'partner' => view('pages.users.partials.partner', [
+                                'user' => $user,
+                                'partner' => $user->partner,
+                            ])->render(),
                             'country' => $user->country ?? 'Не указано',
                             'city' => $user->city ?? 'Не указано',
                             'ip' => $ip,
-                              'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                            'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                             'color' => $user->roles->first()->color ?? '',
                         ];
                     }
@@ -119,7 +124,7 @@ class UsersController extends Controller
                 'data' => $data,
             ]);
         } else {
-            UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','count_users')->update(['sb_val' => 0]);
+            UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop', 'count_users')->update(['sb_val' => 0]);
             $roles = Role::all();
             return view('pages.sample.app-contacts', compact('users_count', 'roles'));
         }
@@ -225,7 +230,7 @@ class UsersController extends Controller
         $referrals_ids = $user->referrals()->distinct('id')->pluck('id')->toArray();
         $structure_turnover = Deposit::whereIn('user_id', $referrals_ids)->where('condition', '!=', 'closed')->sum('invested');
         $registered_referrals = ReferralLinkStat::whereIn('user_id', $referrals_ids)->count();
-        $active_referrals=$user->referrals()->distinct('id')->whereHas('deposits', function ($query){
+        $active_referrals = $user->referrals()->distinct('id')->whereHas('deposits', function ($query) {
             $query->where('condition', '!=', 'closed');
         })->count();
         
@@ -345,15 +350,17 @@ class UsersController extends Controller
     public function unlockUser(Request $request) {
         $user_id = $request->get('user_id');
         $password = $request->get('password');
-        $user = User::find($user_id);
-        
-        if (Hash::check($password, $user->password)) {
-            Session::forget('locked');
-            Session::put('last_activity', now());
-            return redirect()->route('home');
-        } else {
-            return redirect()->back()->withErrors(['Попробуй заново!']);
+        $user = User::where('id', $user_id)->first();
+        if ($user !== null) {
+            if (Hash::check($password, $user->password)) {
+                Session::forget('locked');
+                Session::put('last_activity', now());
+                return redirect()->route('home');
+            } else {
+                return redirect()->back()->withErrors(['Что-то пошло не так! Попробуй заново!']);
+            }
         }
+        return redirect()->back()->withErrors(['Такого пользователя не существует!']);
     }
     
     /**
@@ -418,7 +425,7 @@ class UsersController extends Controller
             'wallet_id' => 'required',
         ]);
         $wallet = Wallet::where('user_id', $request->get('user_id'))->where('id', $request->get('wallet_id'))->first();
-        if ($wallet === null){
+        if ($wallet === null) {
             return back()->with('error', 'Ошибка!');
         }
         if ($wallet->update($request->all())) {

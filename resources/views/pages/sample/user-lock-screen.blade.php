@@ -13,13 +13,16 @@
 @section('content')
   <div id="lock-screen" class="row">
     <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 forgot-card bg-opacity-8">
+      <div class="mt-3">
+        @include('panels.inform')
+      </div>
       <form class="login-form" method="post" action="{{ route('user.unlock') }}">
         @csrf
         <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
         <div class="row">
           <div class="input-field col s12 center-align mt-10">
             <img class="z-depth-4 circle responsive-img" width="100" src="{{asset('images/avatar/user.svg')}}" alt="">
-            <h5>{{ Auth::user()->name ?? "Пользователь" }}</h5>
+            <h5>{{ Auth::user()->login ?? "Пользователь" }}</h5>
           </div>
         </div>
         <div class="row margin">
@@ -27,11 +30,7 @@
             <i class="material-icons prefix pt-2">lock_outline</i>
             <input id="password" type="password" name="password">
             <label for="password">Password</label>
-            @error('password')
-            <small class="red-text ml-7">
-              {{ $message }}
-            </small>
-            @enderror
+            
           </div>
         </div>
         <div class="row">

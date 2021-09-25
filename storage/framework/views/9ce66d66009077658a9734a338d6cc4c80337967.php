@@ -1,0 +1,2 @@
+<a href="<?php echo e(route('transactions.show', $transaction->id)); ?>"><?php echo e($transaction->user->login ?? 'Не указано'); ?></a>
+<?php /**PATH /var/www/resources/views/pages/transactions/partials/user-email.blade.php ENDPATH**/ ?>

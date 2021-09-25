@@ -412,7 +412,6 @@
    
     <div class="row">
       <div class="col s12 m12 l12">
-        
         <div class="row">
           <div class="col-12">
             <div class="card-content">
@@ -435,7 +434,7 @@
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12 ">
                     @foreach($currencies as $currency)
-                      @if($loop->index % 8 == 0 && $loop->index > 1)
+                      @if($loop->index % 7 == 0 && $loop->index > 1)
                         <br>
                       @endif
                         <input class="checkbox-tools" value="{{ $currency->id }}" type="radio" {{ old('currency', $currencies[0]->id ?? '') == $currency->id ? 'checked' : '' }}  name="currency" id="currency-{{ $currency->id }}">
@@ -709,6 +708,9 @@
 
 {{-- page scripts --}}
 @section('page-script')
+  <script>
+  
+  </script>
   {{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
   {{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
   <script src="{{ asset('js/scripts/ui-alerts.js') }}"></script>

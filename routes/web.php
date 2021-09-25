@@ -27,9 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
 
-    Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
-    Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
-    Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
+   
     
     
     Route::group(['middleware' => ['auth', 'locked.user', ]], function () {
@@ -253,4 +251,8 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    
+    Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
+    Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
+    Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');
 });
