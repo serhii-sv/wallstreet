@@ -1,1 +1,0 @@
-<a href="<?php echo e(route('users.show', $transaction->user->id)); ?>"><?php echo e($transaction->user->login); ?></a><?php /**PATH /var/www/resources/views/pages/withdrawals/partials/login.blade.php ENDPATH**/ ?>

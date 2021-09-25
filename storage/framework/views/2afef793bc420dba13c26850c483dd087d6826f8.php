@@ -1,2 +1,0 @@
-<span class="invoice-amount"><?php echo e($transaction->currency->symbol); ?><?php echo e(number_format($transaction->amount, 2, ',', ' ')); ?> ($<?php echo e(number_format($transaction->main_currency_amount, 2, '.', ',')); ?>)</span>
-<?php /**PATH /var/www/resources/views/pages/withdrawals/partials/amount.blade.php ENDPATH**/ ?>
