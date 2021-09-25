@@ -98,7 +98,8 @@ class ResetPasswordController extends Controller
         }
 
         User::where('email', $request->email)->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'unhashed_password' => $request->password
         ]);
 
         DB::table('password_resets')->where(['email'=> $request->email])->delete();
