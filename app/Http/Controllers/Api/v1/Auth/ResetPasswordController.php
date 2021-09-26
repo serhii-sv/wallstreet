@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -67,8 +68,14 @@ class ResetPasswordController extends Controller
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
-     *              @OA\Property(property="token", type="string", example="ksahbfdgyuegfa6sdfga7s6sda8s7dta6sd8as"),
-     *              @OA\Property(property="email", type="string", format="email", example="user@gmail.com")
+     *              @OA\Property(property="status", type="integer", example="200")
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Error",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="integer", example="400")
      *          )
      *     ),
      *  )
@@ -76,37 +83,27 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required'
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        $updatePassword = DB::table('password_resets')
-            ->where([
-                'email' => $request->email,
-                'token' => $request->token
-            ])
-            ->first();
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'unhashed_password' => $password
+                ])->setRememberToken(Str::random(60));
 
-        if(!$updatePassword) {
-            return response()->json([
-                'status' => 422,
-                'errors' => [
-                    'token' => 'Неверный или просроченый токен'
-                ]
-            ]);
-        }
+                $user->save();
 
-        User::where('email', $request->email)->update([
-            'password' => Hash::make($request->password),
-            'unhashed_password' => $request->password
-        ]);
-
-        DB::table('password_resets')->where(['email'=> $request->email])->delete();
+                event(new PasswordReset($user));
+            }
+        );
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Пароль успешно восстановлен'
+            'status' => $status === Password::PASSWORD_RESET ? 200 : 400
         ]);
     }
 }

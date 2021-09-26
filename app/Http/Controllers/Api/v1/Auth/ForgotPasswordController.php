@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
@@ -43,8 +44,14 @@ class ForgotPasswordController extends Controller
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
-     *              @OA\Property(property="token", type="string", example="ksahbfdgyuegfa6sdfga7s6sda8s7dta6sd8as"),
-     *              @OA\Property(property="email", type="string", format="email", example="user@gmail.com")
+     *              @OA\Property(property="status", type="integer", example="200")
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Error",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="integer", example="400")
      *          )
      *     ),
      *  )
@@ -55,18 +62,12 @@ class ForgotPasswordController extends Controller
             'email' => 'required|email|exists:users',
         ]);
 
-        $token = Str::random(64);
-
-        DB::table('password_resets')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now()
-        ]);
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
 
         return response()->json([
-            'status' => 200,
-            'token' => $token,
-            'email' => $request->email
+            'status' => $status === Password::RESET_LINK_SENT ? 200 : 400
         ]);
     }
 }
