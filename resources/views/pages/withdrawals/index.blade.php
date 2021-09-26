@@ -8,8 +8,7 @@
 @section('vendor-style')
   <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/jquery.dataTables.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
-  <link rel="stylesheet" type="text/css"
-      href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/dataTables.checkboxes.css')}}">
 @endsection
 

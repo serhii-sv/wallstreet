@@ -40,6 +40,7 @@ class TransactionsController extends Controller
 
             foreach ($transactions->get() as $transaction) {
                 $data[] = [
+                    'email' => view('pages.transactions.partials.email', compact('transaction'))->render(),
                     'user_email' => view('pages.transactions.partials.user-email', compact('transaction'))->render(),
                     'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
                     'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),

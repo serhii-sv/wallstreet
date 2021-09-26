@@ -4,9 +4,9 @@
       <a class="brand-logo darken-1" href="{{asset('/')}}">
         @if(!empty($configData['mainLayoutType']) && isset($configData['mainLayoutType']))
           @if($configData['mainLayoutType']=== 'vertical-modern-menu')
-            <img class="hide-on-med-and-down" src="{{asset($configData['largeScreenLogo'])}}" alt="materialize logo" />
+          {{--  <img class="hide-on-med-and-down" src="{{asset($configData['largeScreenLogo'])}}" alt="materialize logo" />
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['smallScreenLogo'])}}"
-                alt="materialize logo" />
+                alt="materialize logo" />--}}
           
           @elseif($configData['mainLayoutType']=== 'vertical-menu-nav-dark')
             <img src="{{asset($configData['smallScreenLogo'])}}" alt="materialize logo" />

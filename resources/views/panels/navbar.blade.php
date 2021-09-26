@@ -9,7 +9,7 @@
         <ul class="search-list collection display-none"></ul>
       </div>
       <ul class="navbar-list right">
-        <li>
+        <li class="hide-on-med-and-down">
           <span class="badge time">{{ now()->format('d-m-Y H:i') }}</span>
         </li>
 {{--        <li class="dropdown-language">--}}
@@ -35,9 +35,8 @@
           </a>
         </li>
         <li>
-          <a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);"
-            data-target="profile-dropdown">
-            <span class="avatar-status avatar-online">
+          <a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" style="height: 64px;display: flex;align-items: center; justify-content: center;" data-target="profile-dropdown">
+            <span class="avatar-status avatar-online" style="width: 28px;height: 28px;">
               <img src="{{asset('images/avatar/IMG_3735.JPG')}}" alt="avatar"><i></i>
             </span>
           </a>

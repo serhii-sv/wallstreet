@@ -1,5 +1,4 @@
 <!-- BEGIN VENDOR JS-->
-<script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
 <script src="{{asset('js/vendors.min.js')}}"></script>
 <!-- BEGIN VENDOR JS-->
 <!-- BEGIN PAGE VENDOR JS-->

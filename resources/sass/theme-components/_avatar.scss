@@ -40,7 +40,7 @@ $avatar-away-color:      color("amber", "accent-3") !default;
   i {
     position: absolute;
     right: -2px;
-    bottom: 18px;
+    bottom: 0;
     width: $avatar-status-size !important;
     height: $avatar-status-size !important;
     border: 1px solid $white;

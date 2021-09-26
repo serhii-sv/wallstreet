@@ -6199,7 +6199,7 @@ li.home:before {
 .avatar-status i {
   position: absolute;
   right: -2px;
-  bottom: 18px;
+  bottom: 0;
   width: 9px !important;
   height: 9px !important;
   border: 1px solid #fff;

@@ -8,8 +8,7 @@
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/flag-icon/css/flag-icon.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/css/jquery.dataTables.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css')}}">
 @endsection
 
 {{-- page styles --}}
@@ -64,7 +63,11 @@
         </div>
     </div>
     <!-- Sidebar Area Ends -->
-
+    <style>
+      #transactions_wrapper{
+          overflow: auto;
+      }
+    </style>
     <!-- Content Area Starts -->
     <div class="content-area content-right">
         <div class="app-wrapper">
