@@ -203,6 +203,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
+            Route::post('/user/wallet/charge/{id}', [UsersController::class, 'userWalletCharge'])->name('user.wallet.charge');
+            
             Route::post('/user/requisites/update', [UsersController::class, 'requisitesUpdate'])->name('user.requisites.update');
     
             Route::get('/show/reftree/{id}', [ReferralController::class, 'show_user_referral_tree'])->name('user.reftree');

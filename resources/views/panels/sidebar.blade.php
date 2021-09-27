@@ -180,7 +180,7 @@
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.banners.all') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.banners.all') }}">
                   <i class="material-icons">blur_linear</i>
-                  <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Баннеры</span>
+                  <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Промо (Баннеры)</span>
                 </a>
               </li>
             @endif
