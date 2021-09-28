@@ -7,14 +7,14 @@
 {{-- page style --}}
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-account-settings.css')}}">
-
+  <link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-users.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker.css')}}">
 @endsection
 
 {{-- page content  --}}
 @section('content')
-
+  
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object start -->
@@ -69,7 +69,7 @@
                   <td>
                     @if($user->partner)
                       <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank">{{ $user->partner->email  ?? '' }}</a>
-                      @else
+                    @else
                       No
                     @endif
                   </td>
@@ -106,40 +106,68 @@
                     @endforelse
                   </td>
                 </tr>
-
+              
               </tbody>
             </table>
           </div>
           <div class="col s12 m8">
-            <table class="responsive-table">
-              <thead>
-                <tr>
-                  <th>Все права</th>
-                  <th style="text-align: right">Дата выдачи</th>
-                </tr>
-              </thead>
-              <tbody>
-                @forelse($user_permissions as $role)
-                  <tr>
-                    <td>
-                      <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
-                    </td>
-                    <td style="text-align: right">{{ $role->pivot->created_at ?? ''}}</td>
-                  </tr>
-                @empty
-                  <td colspan="2">
-                    <span class="users-view-status chip red lighten-5 red-text">Никаких прав нет</span>
-                  </td>
-                @endforelse
-              </tbody>
-            </table>
-            {{ $user_permissions->appends(request()->except('permissions'))->links() }}
+            {{--            <table class="responsive-table">
+                          <thead>
+                            <tr>
+                              <th>Все права</th>
+                              <th style="text-align: right">Дата выдачи</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @forelse($user_permissions as $role)
+                              <tr>
+                                <td>
+                                  <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
+                                </td>
+                                <td style="text-align: right">{{ $role->pivot->created_at ?? ''}}</td>
+                              </tr>
+                            @empty
+                              <td colspan="2">
+                                <span class="users-view-status chip red lighten-5 red-text">Никаких прав нет</span>
+                              </td>
+                            @endforelse
+                          </tbody>
+                        </table>
+                        {{ $user_permissions->appends(request()->except('permissions'))->links() }}--}}
+            <div class="row">
+              @forelse($wallets as $wallet)
+                <div class="col s12 m6 l4 card-width">
+                  <div class="card row dark white-text padding-4 mt-5">
+                    <div class="col s4 m4">
+                      <i class="material-icons background-round mt-5 mb-5">attach_money</i>
+                    </div>
+                    <div class="col s8 m8 right-align">
+                      <p>{{ $wallet->currency->name }}</p>
+                      <h5 class="mb-0 white-text"> {{ $wallet->balance }} {{ $wallet->currency->symbol }}</h5>
+                    </div>
+                    <div class="col s12">
+                      <form action="{{ route('user.wallet.charge', $wallet->id) }}" method="post" data-id="{{$wallet->id}}" class="user-charge-form display-flex flex-wrap justify-content-end">
+                        @csrf
+                        <input class="white-text" name="amount" type="text">
+                        <div class="mt-1 display-flex align-items-center justify-content-between width-100">
+                          <button class="btn green darken-2 darken-3" name="bonus"  data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-right: 5px;">Бонус</button>
+                          <button class="btn red" name="penalty" data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-left: 5px;">Штраф</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              @empty
+              @endforelse
+              {{--{{ (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : 'dark') }}--}}
+            </div>
+            {{ $wallets->appends(request()->except('page'))->links() }}
           </div>
         </div>
       </div>
     </div>
     <!-- users view card data ends -->
-
+    
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
@@ -162,7 +190,7 @@
             </div>
           </div>
           <div class="col s12 m4 users-view-timeline">
-
+            
             <div class="indigo-text mb-3 " style="font-size: 18px;">Количество регистраций:
               <span class="badge pink " style="font-size: 18px">{{ $registered_referrals ?? 0 }}</span>
             </div>
@@ -176,51 +204,51 @@
               <span class="badge pink " style="font-size: 18px">{{ $referral_clicks ?? 0 }}</span>
             </div>
           </div>
-
+        
         </div>
-{{--        <div class="row">--}}
-{{--          <div class="col s12">--}}
-{{--            <h6 class="mb-2 mt-2"><i class="material-icons">error_outline</i> Информация и пользователе</h6>--}}
-{{--            <table class="striped">--}}
-{{--              <tbody>--}}
-{{--                <tr>--}}
-{{--                  <td>E-mail:</td>--}}
-{{--                  <td class="users-view-email">{{ $user->email ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>Телефон:</td>--}}
-{{--                  <td class="users-view-email">{{ $user->phone ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>Skype:</td>--}}
-{{--                  <td class="users-view-email">{{ $user->skype ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>Пол:</td>--}}
-{{--                  <td class="users-view-email">{{ $user->sex ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>Страна:</td>--}}
-{{--                  <td>{{ $user->country ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>Город:</td>--}}
-{{--                  <td>{{ $user->city ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                  <td>IP:</td>--}}
-{{--                  <td>{{ $user->ip ?? 'Не указано' }}</td>--}}
-{{--                </tr>--}}
-{{--              --}}
-{{--              </tbody>--}}
-{{--            </table>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-        <!-- </div> -->
+      {{--        <div class="row">--}}
+      {{--          <div class="col s12">--}}
+      {{--            <h6 class="mb-2 mt-2"><i class="material-icons">error_outline</i> Информация и пользователе</h6>--}}
+      {{--            <table class="striped">--}}
+      {{--              <tbody>--}}
+      {{--                <tr>--}}
+      {{--                  <td>E-mail:</td>--}}
+      {{--                  <td class="users-view-email">{{ $user->email ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>Телефон:</td>--}}
+      {{--                  <td class="users-view-email">{{ $user->phone ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>Skype:</td>--}}
+      {{--                  <td class="users-view-email">{{ $user->skype ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>Пол:</td>--}}
+      {{--                  <td class="users-view-email">{{ $user->sex ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>Страна:</td>--}}
+      {{--                  <td>{{ $user->country ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>Город:</td>--}}
+      {{--                  <td>{{ $user->city ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--                <tr>--}}
+      {{--                  <td>IP:</td>--}}
+      {{--                  <td>{{ $user->ip ?? 'Не указано' }}</td>--}}
+      {{--                </tr>--}}
+      {{--              --}}
+      {{--              </tbody>--}}
+      {{--            </table>--}}
+      {{--          </div>--}}
+      {{--        </div>--}}
+      <!-- </div> -->
       </div>
     </div>
     <!-- users view card details ends -->
-
+    
     <div class="card">
       <div class="card-content">
         <div class="row">
@@ -287,7 +315,7 @@
           </div>
           <div class="col s12 l4">
             <ul id="issues-collection" class="collection z-depth-1  fadeRight">
-
+              
               <li class="collection-item avatar" style="min-height: auto">
                 <i class="material-icons blue accent-2 circle">computer</i>
                 <h6 class="collection-header m-0">Последние ip адреса</h6>
@@ -309,7 +337,7 @@
         <!-- </div> -->
       </div>
     </div>
-
+  
   </div>
   <!-- users view ends -->
 @endsection
@@ -317,7 +345,7 @@
 {{-- page script --}}
 @section('page-script')
   <script src="{{asset('js/scripts/page-account-settings.js')}}"></script>
-
+  
   <script src="{{asset('js/moment.js')}}"></script>
   <script src="{{asset('js/daterangepicker.js')}}"></script>
   <script>
@@ -349,6 +377,69 @@
         }
       })
       return false;
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('.btn[name="bonus"]').click(function (e) {
+        e.preventDefault();
+        var $id = $(this).attr('data-id');
+        swal({
+          title: "Вы уверены?",
+          text: "Пользователю будет начслен бонус!",
+          icon: 'warning',
+          dangerMode: true,
+          buttons: {
+            cancel: 'No, Please!',
+            delete: 'Yes, Delete It'
+          }
+        }).then(function (willDelete) {
+          if (willDelete) {
+            $(".user-charge-form[data-id='"+$id+"']").addHidden('action', 'bonus').submit();
+            swal("Пользователю будет начислен бонус!", {
+              icon: "success",
+            });
+          } else {
+            swal("Правильное решение!", {
+              title: 'Cancelled',
+              icon: "error",
+            });
+          }
+        });
+      });
+      $('.btn[name="penalty"]').click(function (e) {
+        e.preventDefault();
+        var $id = $(this).attr('data-id');
+        swal({
+          title: "Вы уверены?",
+          text: "Пользователю будет начслен штраф!",
+          icon: 'warning',
+          dangerMode: true,
+          buttons: {
+            cancel: 'No, Please!',
+            delete: 'Yes, Delete It'
+          }
+        }).then(function (willDelete) {
+          if (willDelete) {
+            $(".user-charge-form[data-id='"+$id+"']").addHidden('action', 'penalty').submit();
+            swal("Пользователю будет начислен штраф!", {
+              icon: "success",
+            });
+          } else {
+            swal("Правильное решение!", {
+              title: 'Cancelled',
+              icon: "error",
+            });
+          }
+        });
+      });
+  
+      jQuery.fn.addHidden = function (name, value) {
+        return this.each(function () {
+          var input = $("<input>").attr("type", "hidden").attr("name", name).val(value);
+          $(this).append($(input));
+        });
+      };
     });
   </script>
 @endsection

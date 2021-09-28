@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserMultiAccounts;
 use App\Models\UserSidebarProperties;
+use App\Models\UserThemeSetting;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -235,6 +236,7 @@ class UsersController extends Controller
         })->count();
         
         return view('pages.sample.page-users-view', [
+            'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
             'deposit_sum' => $deposit_sum,
             'balance_usd' => $user->wallets()->sum('main_currency_amount'),
@@ -253,6 +255,7 @@ class UsersController extends Controller
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
+            'wallets' => Wallet::where('user_id', $user->id)->with('currency')->orderBy('currency_id', 'desc')->paginate(6),
         ]);
     }
     
@@ -432,5 +435,29 @@ class UsersController extends Controller
             return redirect()->back()->with('success', 'Данные кошелька успешно изменены!');
         }
         
+    }
+    
+    public function userWalletCharge(Request $request, $id) {
+        $this->validate($request, [
+            'amount' => 'required',
+            'action' => 'required',
+        ]);
+        if ($request->post('action') == 'bonus'){
+            $wallet = Wallet::find($id);
+            $wallet = $wallet->addBonus($request->amount);
+            if ($wallet) {
+                return back()->with('success', __('Bonus accrued'));
+            }
+            return back()->with('error', __('Unable to accrue bonus'));
+        }
+        if ($request->post('action') == 'penalty'){
+            $wallet = Wallet::find($id);
+            $wallet = $wallet->removeAmount($request->amount);
+            if ($wallet) {
+                return back()->with('success', __('Penalty handled'));
+            }
+            return back()->with('error', __('Unable to handle penalty'));
+        }
+        return redirect()->back()->with('error', 'Что-то пошло не так!');
     }
 }

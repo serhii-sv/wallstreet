@@ -55,7 +55,7 @@ class Kernel extends ConsoleKernel
         // Financial
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
-        $schedule->command('update:currency_rates')->cron('*/30 * * * * *');
+        $schedule->command('update:currency_rates')->cron('*/30 * * * *');
 
         // Backups
 //        $schedule->command('backup:clean')->hourly();
