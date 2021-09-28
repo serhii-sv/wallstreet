@@ -49,7 +49,8 @@ class News extends Model
         'content',
         'title',
         'short_content',
-        'image'
+        'image',
+        'likes'
     ];
 
     /**

@@ -58,6 +58,10 @@
                                                 @endforeach
                                             </div>
                                             <div class="input-field col s12">
+                                                <label for="likes">Лайки*</label>
+                                                <input id="likes" name="likes" type="number" data-error=".errorTxt1" value="0">
+                                            </div>
+                                            <div class="input-field col s12">
                                                 <div class="font-weight-500 mb-2">Картинка</div>
                                                 <input type="file" id="input-file-events" class="dropify-event" name="image" />
                                             </div>

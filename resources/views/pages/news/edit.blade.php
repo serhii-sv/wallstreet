@@ -59,6 +59,10 @@
                                                 @endforeach
                                             </div>
                                             <div class="input-field col s12">
+                                                <label for="likes">Лайки*</label>
+                                                <input id="likes" name="likes" type="number" data-error=".errorTxt1" value="{{ $item->likes }}">
+                                            </div>
+                                            <div class="input-field col s12">
                                                 <div class="font-weight-500 mb-2">Картинка</div>
                                                 @if($item->image)
                                                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}" width="300">
