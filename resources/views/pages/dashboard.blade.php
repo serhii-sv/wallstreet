@@ -98,12 +98,6 @@
           padding-bottom: 10px;
       }
 
-      .checkbox:checked ~ .section .container .row .col-12 .checkbox-tools:not(:checked) + label{
-          background-color: var(--light);
-          color: var(--dark-blue);
-          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
-      }
-
       [type="checkbox"]:checked,
       [type="checkbox"]:not(:checked),
       [type="radio"]:checked,
@@ -114,55 +108,56 @@
           height: 0;
           visibility: hidden;
       }
-      .checkbox:checked + label,
-      .checkbox:not(:checked) + label{
-          position: relative;
-          /*width: 70px;*/
-          display: inline-block;
-          padding: 0;
-          margin: 0 auto;
-          text-align: center;
-          height: 6px;
-          border-radius: 4px;
-         /* background-image: linear-gradient(298deg, var(--red), var(--yellow));*/
-          z-index: 100 !important;
-      }
-      .checkbox:checked + label:before,
-      .checkbox:not(:checked) + label:before {
-          position: absolute;
-          font-family: 'unicons';
-          cursor: pointer;
-          top: -17px;
-          z-index: 2;
-          font-size: 20px;
-          line-height: 40px;
-          text-align: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          -webkit-transition: all 300ms linear;
-          transition: all 300ms linear;
-      }
-      .checkbox:not(:checked) + label:before {
-          content: '\eac1';
-          left: 0;
-          color: var(--grey);
-          background-color: var(--dark-light);
-          box-shadow: 0 4px 4px rgba(0,0,0,0.15), 0 0 0 1px rgba(26,53,71,0.07);
-      }
-      .checkbox:checked + label:before {
-          content: '\eb8f';
-          left: 30px;
-          color: var(--yellow);
-          background-color: var(--dark-blue);
-          box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
-      }
-
-      .checkbox:checked ~ .section .container .row .col-12 p{
-          color: var(--dark-blue);
-      }
+      /*  .checkbox:checked + label,
+        .checkbox:not(:checked) + label{
+            position: relative;
+            !*width: 70px;*!
+            display: inline-block;
+            padding: 0;
+            margin: 0 auto;
+            text-align: center;
+            height: 6px;
+            border-radius: 4px;
+            !* background-image: linear-gradient(298deg, var(--red), var(--yellow));*!
+            z-index: 100 !important;
+        }
+        .checkbox:checked + label:before,
+        .checkbox:not(:checked) + label:before {
+            display: block;
+            position: absolute;
+            font-family: 'unicons';
+            cursor: pointer;
+            top: -17px;
+            z-index: 2;
+            font-size: 20px;
+            line-height: 40px;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            -webkit-transition: all 300ms linear;
+            transition: all 300ms linear;
+        }
+        .checkbox:not(:checked) + label:before {
+            content: '\eac1';
+            left: 0;
+            color: var(--grey);
+            background-color: var(--dark-light);
+            box-shadow: 0 4px 4px rgba(0,0,0,0.15), 0 0 0 1px rgba(26,53,71,0.07);
+        }
+        .checkbox:checked + label:before {
+            content: '\eb8f';
+            left: 30px;
+            color: var(--yellow);
+            background-color: var(--dark-blue);
+            box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
+        }
+    
+        .checkbox:checked ~ .section .container .row .col-12 p{
+            color: var(--dark-blue);
+        }*/
       .dashboard-send-bonus-btn{
-         /* background-image: linear-gradient(45deg, #303f9f, #1976D2);*/
+          /* background-image: linear-gradient(45deg, #303f9f, #1976D2);*/
       }
   </style>
 @endsection
@@ -419,9 +414,6 @@
               <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
                 {{ csrf_field() }}
                 
-                
-                
-                
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12">
                     <input class="checkbox-tools" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} id="enter">
@@ -458,10 +450,12 @@
                 
                 
                 <div class="row" style="margin-top:20px; text-align: center;">
+                  <div class="col-12">
                   <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
                   <label class="for-checkbox-tools" for="is_real1">Реал</label>
                   <input class="checkbox-tools" name="is_real" value="0" type="radio" id="is_real0" {{ old('is_real') == '0' ? 'checked' : '' }} >
                   <label class="for-checkbox-tools" for="is_real0">Фейк</label>
+                  </div>
                 </div>
   
                 <div class="row" style=" text-align: center;">

@@ -75,6 +75,7 @@
                 <table id="transactions" class="display card card card-default scrollspy border-radius-6">
                     <thead>
                     <tr>
+                        <th>id</th>
                         <th>Пользователь</th>
                         <th>Тип</th>
                         <th>Сумма</th>

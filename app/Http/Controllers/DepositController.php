@@ -68,6 +68,7 @@ class DepositController extends Controller
             
             foreach ($deposits->get() as $deposit) {
                 $data[] = [
+                    'id' => view('pages.deposits.partials.id', compact('deposit'))->render(),
                     'email' => view('pages.deposits.partials.email', compact('deposit'))->render(),
                     'invested' => "$ " . number_format($deposit->invested, 0, '.', ',') ?? 0 ?? 'Не указано',
                     'total_assessed' => view('pages.deposits.partials.total-assessed', compact('deposit'))->render(),

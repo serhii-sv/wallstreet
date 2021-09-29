@@ -15,6 +15,7 @@ use App\Console\Commands\CreateRootCommand;
 use App\Console\Commands\InstallScriptCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
+use App\Console\Commands\SetRateNonFixedCurrency;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -34,7 +35,8 @@ class Kernel extends ConsoleKernel
         RegisterPaymentSystemsCommand::class,
         CheckPaymentSystemsConnectionsCommand::class,
         DepositQueueCommand::class,
-        CryptoCurrencyRateLog::class
+        CryptoCurrencyRateLog::class,
+        SetRateNonFixedCurrency::class,
     ];
 
     /**
@@ -56,6 +58,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('update:currency_rates')->cron('*/30 * * * *');
+        
+        $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
 
         // Backups
 //        $schedule->command('backup:clean')->hourly();

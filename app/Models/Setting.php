@@ -38,7 +38,8 @@ class Setting extends Model
     protected $fillable = [
         's_key',
         's_value',
-        'autoupdate'
+        'autoupdate',
+        'is_fixed'
     ];
 
     /**
@@ -81,6 +82,6 @@ class Setting extends Model
     public function getCurrencyNameAttribute()
     {
         list($first_currency, $second_currency) = explode('_to_', $this->s_key);
-        return strtoupper($first_currency) . '/' . strtoupper($second_currency);
+        return strtoupper($first_currency) . ' - ' . strtoupper($second_currency);
     }
 }

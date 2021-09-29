@@ -209,8 +209,13 @@ $(document).ready(function () {
       pageLength: 15,
       info: true,
       autoWidth: false,
-      order: [4, 'asc'],
+      order: [5, 'desc'],
       aoColumns: [
+        {
+          data: 'id',
+          searchable: false,
+          bSortable: false
+        },
         {
           data: 'email',
           searchable: true,
@@ -264,8 +269,13 @@ $(document).ready(function () {
       pageLength: 15,
       info: true,
       autoWidth: false,
-      order: [5, 'asc'],
+      order: [5, 'desc'],
       aoColumns: [
+        {
+          data: 'id',
+          searchable: false,
+          bSortable: false
+        },
         {
           data: 'email',
           searchable: true,

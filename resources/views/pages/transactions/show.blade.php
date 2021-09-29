@@ -80,7 +80,6 @@
                             </div>
                             <div class="col m6 s12">
                                 <div class="divider show-on-small hide-on-med-and-up mb-3"></div>
-{{--                                <h6 class="invoice-to">Bill To</h6>--}}
                                 <div class="invoice-address">
                                     <span>{{ $transaction->id }}</span>
                                 </div>
@@ -91,7 +90,7 @@
                                     <span><a href="{{ route('users.show', $transaction->user->id) }}">{{ $transaction->user->email }}</a></span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>{{ $transaction->paymentSystem->name }}</span>
+                                    <span>{{ $transaction->paymentSystem->name ?? 'Не указано' }}</span>
                                 </div>
                                 <div class="invoice-address">
                                     <span>{{ $transaction->currency->symbol }} ({{ $transaction->currency->name }})</span>
