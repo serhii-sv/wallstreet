@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Вопросы - ответы')
+@section('title','Videos')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -67,6 +67,11 @@
       .card-content .button-block {
           width: 270px;
       }
+
+      .frame-block iframe {
+          max-width: 200px;
+          max-height: 120px;
+      }
   </style>
 @endsection
 
@@ -124,10 +129,13 @@
         <div class="card-content pt-2">
           <div class="body">
             @forelse($videos as $video)
-              <form action="{{ route('video.save', $video->id) }}" method="post">
+              <form action="{{ route('video.save', $video->id) }}" method="post" class="mb-1">
                 @csrf
                 <div class="user">
                   <a href="{{ route('users.show', $video->user->id) }}">{{ $video->user->login }}</a>
+                  <div>
+                    <div class="frame-block mt-3">{!! htmlspecialchars_decode($video->link) !!}</div>
+                  </div>
                 </div>
                 <div class="input">
                   <textarea name="link" style="padding: 10px;height: auto;" name="link" rows="4">{!! $video->link !!}</textarea>
@@ -144,7 +152,7 @@
                   <a class="btn waves-effect waves-light cyan " href="{{ route('video.index', $video->id) }}" target="_blank" style="padding: 0 15px;">
                     <i class="material-icons dp48">remove_red_eye</i>
                   </a>
-                  <button class="btn waves-effect waves-light purple lighten-1 "  style="padding: 0 15px;">
+                  <button class="btn waves-effect waves-light purple lighten-1 " style="padding: 0 15px;">
                     <i class="material-icons">save</i>
                   </button>
                   <a class="btn waves-effect waves-light green darken-1 @if($video->approved) disabled @endif" href="{{ route('video.confirm', $video->id) }}" onclick="return confirm('Are you sure?')" style="padding: 0 15px;">
@@ -180,7 +188,7 @@
 {{-- page scripts --}}
 @section('page-script')
   <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
     
     });
   </script>

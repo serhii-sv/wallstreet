@@ -27,7 +27,7 @@ class UserVideoController extends Controller
         ]);
         $video = UserVideo::findOrFail($id);
         $video->update([
-            'link' => $request->get('link')
+            'link' => htmlspecialchars($request->get('link'))
         ]);
         return back()->with('success', 'Сохранено');
     }

@@ -111,7 +111,7 @@
       
         <div class="card-content pt-2">
           <div class="body">
-            {!! $video->link !!}
+            {!! htmlspecialchars_decode($video->link) !!}
           </div>
         </div>
       </div>
