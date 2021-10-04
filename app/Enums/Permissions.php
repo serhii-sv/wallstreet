@@ -82,8 +82,8 @@ final class Permissions extends Enum
     const RATES_UPDATE  = 'rates.update';
     const RATES_DESTROY = 'rates.destroy';
     
-    const RATE_GROUPS_INDEX   = 'rate.groups.index';
-    const RATE_GROUPS_UPDATE   = 'rate.groups.update';
+    const RATE_GROUPS_INDEX  = 'rate.groups.index';
+    const RATE_GROUPS_UPDATE = 'rate.groups.update';
     
     const VERIFICATION_REQUESTS_INDEX  = 'verification-requests.index';
     const VERIFICATION_REQUESTS_SHOW   = 'verification-requests.show';
@@ -141,6 +141,14 @@ final class Permissions extends Enum
     const FAQ_ADD    = 'faq.add';
     const FAQ_UPDATE = 'faq.update';
     const FAQ_DELETE = 'faq.delete';
+    
+    
+    const VIDEO_INDEX   = 'video.index';
+    const VIDEO_CONFIRM = 'video.confirm';
+    const VIDEO_CANCEL  = 'video.cancel';
+    const VIDEO_DELETE  = 'video.delete';
+    const VIDEO_SAVE    = 'video.save';
+    
     
     public static $data = [
         self::APP_INIT => 'App init',
@@ -278,5 +286,11 @@ final class Permissions extends Enum
         self::FAQ_ADD => 'Добавление вопрос-ответа',
         self::FAQ_UPDATE => 'Изменение вопрос-ответа',
         self::FAQ_DELETE => 'Удаление вопрос-ответа',
+        
+        self::VIDEO_INDEX => 'Просмотр всех видео',
+        self::VIDEO_CONFIRM => 'Подтверждение видео',
+        self::VIDEO_CANCEL => 'Отклонение видео',
+        self::VIDEO_DELETE => 'Удаление видео',
+        self::VIDEO_SAVE => 'Изменение видео',
     ];
 }

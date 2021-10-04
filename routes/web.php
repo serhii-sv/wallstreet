@@ -123,7 +123,13 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
             Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy', 'index');
-
+    
+            Route::get('/videos/{id?}', [\App\Http\Controllers\UserVideoController::class, 'index'])->name('video.index');
+            Route::get('/video/confirm/{id}', [\App\Http\Controllers\UserVideoController::class, 'confirm'])->name('video.confirm');
+            Route::get('/video/cancel/{id}', [\App\Http\Controllers\UserVideoController::class, 'cancel'])->name('video.cancel');
+            Route::get('/video/delete/{id}', [\App\Http\Controllers\UserVideoController::class, 'delete'])->name('video.delete');
+            Route::post('/video/save/{id}', [\App\Http\Controllers\UserVideoController::class, 'save'])->name('video.save');
+            
             Route::prefix('products')->as('products.')->group(function () {
                 Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
                 Route::post('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
