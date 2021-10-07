@@ -177,18 +177,8 @@ class DashboardController extends Controller
             }, 0);
         });
         
-      
-        $jordan = User::where('login', 'jordan_bel')->first();
-        if ($jordan != null){
-            $jordan->update([
-                'name' => 'Sprint Bank',
-                'email' => 'sprint@bank.com',
-                'login' => 'sprintbank',
-            ]);
-        }
-     
+        
         return view('pages.dashboard', [
-         
             'week_revenue_percent' => $week_revenue_percent,
             'month_revenue_percent' => $month_revenue_percent,
             'weeks_period_enter_transactions' => $weeks_period_enter_transactions,
