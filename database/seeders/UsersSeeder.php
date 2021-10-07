@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::where('login', 'sprintbank')->first();
+        /*$user = \App\Models\User::where('login', 'sprintbank')->first();
         // jordan_bel
         if (is_null($user)) {
             $user = \App\Models\User::create([
@@ -41,6 +41,6 @@ class UsersSeeder extends Seeder
             echo "Jordan Belfort (sprint@bank.com) registered.\n";
         } else {
             echo "Jordan Belfort (sprint@bank.com) already registered.\n";
-        }
+        }*/
     }
 }
