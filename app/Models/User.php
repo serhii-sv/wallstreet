@@ -211,7 +211,11 @@ class User extends Authenticatable
         'is_locked',
         'documents_verified',
         'last_activity_at',
-        'api_token'
+        'api_token',
+        'country_manual',
+        'city_manual',
+        'telegram',
+        'index',
     ];
 
     /**
