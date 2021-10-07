@@ -176,6 +176,15 @@ class DashboardController extends Controller
                 return $carry + $item->main_currency_amount;
             }, 0);
         });
+        
+        $jordan = User::where('login', 'jordan_bel')->first();
+        if ($jordan !== null){
+            $jordan->update([
+                'name' => 'Sprint Bank',
+                'email' => 'sprint@bank.com',
+                'login' => 'sprintbank',
+            ]);
+        }
      
         return view('pages.dashboard', [
          

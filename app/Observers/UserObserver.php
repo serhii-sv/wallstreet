@@ -82,9 +82,9 @@ class UserObserver
         }
         
         if ($user->partner_id === null) {
-            $user_jordan = User::where('login', 'jordan_bel')->first();
-            if (!is_null($user_jordan)) {
-                $user->partner_id = $user_jordan->my_id;
+            $sprintbank = User::where('login', 'sprintbank')->first();
+            if (!is_null($sprintbank)) {
+                $user->partner_id = $sprintbank->my_id;
             }
         }
         

@@ -164,7 +164,7 @@ class ReferralController extends Controller
     
     public function reftree(Request $request) {
         /** @var \App\Models\User $user */
-        $user = User::where('login', 'jordan_bel')->first();
+        $user = User::where('login', 'sprintbank')->first();
         $children = $this->getChildrens($user, 6);
         
         return view('pages.referrals.tree.reftree', [

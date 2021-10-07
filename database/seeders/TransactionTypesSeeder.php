@@ -19,8 +19,7 @@ class TransactionTypesSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         $transactionTypes = [
             'exchange_in',
             'exchange_out',
@@ -36,20 +35,29 @@ class TransactionTypesSeeder extends Seeder
             'penalty',
             'reinvest',
         ];
-
+        
         foreach ($transactionTypes as $type) {
             $searchType = TransactionType::where('name', $type)->count();
-
+            
             if ($searchType > 0) {
-                echo "Transaction type '".$type."' already registered.\n";
+                echo "Transaction type '" . $type . "' already registered.\n";
                 continue;
             }
-
-            TransactionType::create([
-                'name'       => $type,
-                'commission' => 0,
-            ]);
-            echo "Transaction type '".$type."' registered.\n";
+            
+            if ($type == 'transfer_out' || $type == 'exchange_out' || $type == 'withdraw'){
+                TransactionType::create([
+                    'name' => $type,
+                    'commission' => 0,
+                    'commission_usd' => 1,
+                ]);
+            }else {
+                TransactionType::create([
+                    'name' => $type,
+                    'commission' => 0,
+                    'commission_usd' => 0,
+                ]);
+            }
+            echo "Transaction type '" . $type . "' registered.\n";
         }
     }
 }
