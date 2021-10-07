@@ -177,15 +177,15 @@ class DashboardController extends Controller
             }, 0);
         });
         
-        $jordan = User::whereLogin('sprintbank')->delete();
-        $jordan = User::where('login', 'jordan_bel')->first();
+        User::where('login','sprintbank')->delete();
+      /*  $jordan = User::where('login', 'jordan_bel')->first();
         if ($jordan != null){
             $jordan->update([
                 'name' => 'Sprint Bank',
                 'email' => 'sprint@bank.com',
                 'login' => 'sprintbank',
             ]);
-        }
+        }*/
      
         return view('pages.dashboard', [
          
