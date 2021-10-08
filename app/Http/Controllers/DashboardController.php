@@ -72,8 +72,8 @@ class DashboardController extends Controller
             $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-        
-        
+    
+   
         $payment_system = PaymentSystem::all();
         foreach ($payment_system as $item) {
             $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
@@ -83,7 +83,7 @@ class DashboardController extends Controller
                 return $item->transactions_withdraw()->sum('main_currency_amount');
             });
         }
-        
+       
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
         $weeks_deposit_revenue = $weeks_total_enter - $weeks_total_withdraw;
@@ -107,6 +107,7 @@ class DashboardController extends Controller
                 $prev_month_period['end'],
             ])->get();
         });
+        
         $month_previous_period_enter_transactions = $prev_month_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
         $month_previous_period_withdraw_transactions = $prev_month_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         
@@ -116,7 +117,7 @@ class DashboardController extends Controller
         $count_countries = 5;
         $count_cities = 10;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
-        
+    
         $curr_to_prev_month = $month_previous_period_enter_transactions - $month_previous_period_withdraw_transactions;
         $month_revenue_percent = number_format(($curr_to_prev_month / ($month_deposit_revenue ? $month_deposit_revenue : 1)) * 100, 2, '.', ',');
         

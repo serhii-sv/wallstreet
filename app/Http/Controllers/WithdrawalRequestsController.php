@@ -44,7 +44,7 @@ class WithdrawalRequestsController extends Controller
              * Фильтрация, если выбрано
              */
             if (!is_null($request->field) && !is_null($request->sort)) {
-                $transactions = $transactions->orderBy($request->field, $request->sort);
+                $transactions = $transactions->with('paymentSystem')->orderBy($request->field, $request->sort);
             }
             
             /*

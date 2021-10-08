@@ -92,6 +92,7 @@ class Transaction extends Model
         'approved',
         'commission',
         'created_at',
+        'external',
     ];
 
     public const TRANSACTION_APPROVED = 1;
@@ -173,6 +174,10 @@ class Transaction extends Model
      */
     public static function enter($wallet, $amount, $payment_system_id = null)
     {
+        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $wallet->user->id)->where('payment_system_id', $payment_system_id)->first();
+        if ( $wallet_detail === null ){
+            return null;
+        }
         $type = TransactionType::getByName('enter');
         $transaction = self::create([
             'type_id' => $type->id,
@@ -182,6 +187,7 @@ class Transaction extends Model
             'wallet_id' => $wallet->id,
             'payment_system_id' => $payment_system_id,
             'amount' => $amount,
+            'external' => $wallet_detail->external,
         ]);
         return $transaction->save() ? $transaction : null;
     }
@@ -209,7 +215,12 @@ class Transaction extends Model
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
         }
-
+        
+        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $paymentSystem->id)->first();
+        if ( $wallet_detail === null ){
+            throw new \Exception(__('No requisites'));
+        }
+        
         $commission           = $type->commission;
         $amountWithCommission = $amount / ((100 - $commission) * 0.01);
 
@@ -232,6 +243,7 @@ class Transaction extends Model
             'payment_system_id' => $paymentSystem->id,
             'amount'            => $amountWithCommission,
             'approved'          => false,
+            'external'          => $wallet_detail->external,
         ]);
 
         $wallet->update([

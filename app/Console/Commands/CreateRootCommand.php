@@ -117,6 +117,7 @@ class CreateRootCommand extends Command
         $user->save();
         $generate_demo = new GenerateDemoDataCommand();
         $generate_demo->generateBalances($user);
+        $generate_demo->generateWalletDetails($user);
         $generate_demo->generateDeposits($user);
         $generate_demo->generateWithdrawals($user);
         $this->info('registered root:');

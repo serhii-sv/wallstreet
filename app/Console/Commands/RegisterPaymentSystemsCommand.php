@@ -69,9 +69,9 @@ class RegisterPaymentSystemsCommand extends Command
                     'XRP',
                 ],
             ],
-            'Bonus' => [
+            'bonus' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('bonus [yes|no]', 'yes'),
-                'name' => 'bonus',
+                'name' => 'Bonus',
                 'currencies' => [
                     'USD',
                     'EUR',
@@ -89,9 +89,9 @@ class RegisterPaymentSystemsCommand extends Command
                     'DOGE',
                 ],
             ],
-            'Manual' => [
+            'manual' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
-                'name' => 'manual',
+                'name' => 'Manual',
                 'currencies' => [
                     'USD',
                     'EUR',
@@ -107,6 +107,28 @@ class RegisterPaymentSystemsCommand extends Command
                     'XRP',
                     'BNB',
                     'DOGE',
+                ],
+            ],
+            'Яндекс Деньги' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
+                'name' => 'Manual',
+                'currencies' => [
+                    'USD',
+                    'EUR',
+                    'RUB',
+                    'UAH',
+                    'KZT',
+                ],
+            ],
+            'Visa/MasterCard' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
+                'name' => 'Manual',
+                'currencies' => [
+                    'USD',
+                    'EUR',
+                    'RUB',
+                    'UAH',
+                    'KZT',
                 ],
             ],
         ];
