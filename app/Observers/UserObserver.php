@@ -14,6 +14,7 @@ use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Hash;
 
+
 /**
  * Class UserObserver
  *
@@ -58,7 +59,6 @@ class UserObserver
         if (null !== $user->partner) {
             $user->generatePartnerTree($user->partner);
         }
-        
         $sidebar_user_count = UserSidebarProperties::where('sb_prop', 'count_users')->get();
         
         foreach ($sidebar_user_count as $item) {

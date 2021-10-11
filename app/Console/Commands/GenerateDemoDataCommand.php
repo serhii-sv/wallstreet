@@ -119,7 +119,8 @@ class GenerateDemoDataCommand extends Command
                 
                 $min = $this->faker->numberBetween(5, 20);
                 $max = $count * $this->faker->numberBetween(50, 400);
-                $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
+                $group->refund_deposit ? $overall= null : $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
+                
                 $newRate = [
                     //'currency_id' => $currency->id,
                     'name' => 'rate ' . $this->faker->domainWord,
@@ -324,7 +325,7 @@ class GenerateDemoDataCommand extends Command
                 $transactionData = [
                     'amount' => $randomRate->max,
                     'type_id' => $enterTransaction->id,
-                    'user_id' => $wallet->user_id,
+                    'user_id' => $user->id,
                     'wallet_id' => $wallet->id,
                     'currency_id' => $currency->id,
                     'payment_system_id' => $payment_system->id,
@@ -350,7 +351,7 @@ class GenerateDemoDataCommand extends Command
                     'active' => $this->faker->boolean,
                     'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                    'user' => $wallet->user()->first(),
+                    'user' => $user->id,
                 ];
                 
                 /** @var Deposit $deposit */

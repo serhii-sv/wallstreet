@@ -109,9 +109,9 @@ class RegisterPaymentSystemsCommand extends Command
                     'DOGE',
                 ],
             ],
-            'Яндекс Деньги' => [
-                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
-                'name' => 'Manual',
+            'yandex_money' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Яндекс Деньги [yes|no]', 'yes'),
+                'name' => 'Яндекс Деньги',
                 'currencies' => [
                     'USD',
                     'EUR',
@@ -120,9 +120,9 @@ class RegisterPaymentSystemsCommand extends Command
                     'KZT',
                 ],
             ],
-            'Visa/MasterCard' => [
-                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
-                'name' => 'Manual',
+            'visa_mastercard' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Visa/MasterCard [yes|no]', 'yes'),
+                'name' => 'Visa/MasterCard',
                 'currencies' => [
                     'USD',
                     'EUR',
