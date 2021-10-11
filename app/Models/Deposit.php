@@ -367,39 +367,40 @@ class Deposit extends Model
         /** @var User $user */
         $user = $this->user()->first();
         
-        $reinvest = $this->reinvest ?? 0;
         
-        /*$amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
+        $reinvest = $this->reinvest ?? 0;
+        $amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
         $amountToWallet = $this->balance * $this->daily * 0.01 - $amountReinvest;
-        $dividend = Transaction::dividend($wallet, $amountToWallet, $this);*/
-    
-        if ($reinvest){
-            $amountReinvest = ($this->balance - $this->invested) * $reinvest * 0.01;
-            $amountToWallet = ($this->invested + $amountReinvest) * $this->daily * 0.01;
-        }else{
-            $amountToWallet = $this->invested * $this->daily * 0.01;
-        }
-       
         $dividend = Transaction::dividend($wallet, $amountToWallet, $this);
         
         if ($dividend) {
             $amount = abs($dividend->amount);
-           
-            $notification_data = [
-                'notification_name' => 'Начисления по депозиту',
-                'user' => $user,
-                'deposit' => $this,
-                'amount' => $amount . $wallet->currency->symbol,
-                'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
-            ];
-            Notification::sendNotification($notification_data, 'new_charge');
-          
-            $wallet->addAmountWithAccrueToPartner($amount, 'deposit');
-            $this->addBalance($amount);
+            if ($amount > 0) {
+                $notification_data = [
+                    'notification_name' => 'Начисления по депозиту',
+                    'user' => $user,
+                    'deposit' => $this,
+                    'amount' => $amount . $wallet->currency->symbol,
+                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+                ];
+                Notification::sendNotification($notification_data, 'new_charge');
+            }
+            if ($amountReinvest > 0) {
+                $notification_data = [
+                    'notification_name' => 'Реинвестирование по депозиту',
+                    'user' => $user,
+                    'deposit' => $this,
+                    'amount' => $amountReinvest . $wallet->currency->symbol,
+                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+                ];
+                Notification::sendNotification($notification_data, 'new_reinvest');
+            }
             
-            $dividend->update(['approved' => true]);
         }
+        $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
+        $this->addBalance($amountReinvest);
         
+        $dividend->update(['approved' => true]);
         // send notification to user
         /*$data = [
             'dividend' => $dividend,
@@ -424,6 +425,7 @@ class Deposit extends Model
         /** @var User $user */
         $user = $this->user()->first();
         
+        
         if ($this->overall) {
             $amountOverall = $this->invested * $this->overall * 0.01;
             $transactionOverall = Transaction::dividend($wallet, $amountOverall, $this);
@@ -436,16 +438,13 @@ class Deposit extends Model
                 throw new \Exception("failed overall!");
             }
         }
-        $this->update([
-            //    'balance' => ($this->balance - $this->invested) + $this->invested * $this->overall * 0.01
-            'balance' => $this->balance - $this->invested
-        ]);
-        $amount = $this->balance + $this->invested * $this->overall * 0.01;
+        
+        $amount = $this->balance;
         $closeTransaction = Transaction::closeDeposit($this, $amount);
         
-        /*if (!$wallet->addAmountWithoutAccrueToPartner($amount)) {
+        if (!$wallet->addAmountWithoutAccrueToPartner($amount)) {
             throw new \Exception("deposit not close!");
-        }*/
+        }
         
         $closeTransaction->update(['approved' => true]);
         $this->update(['condition' => 'closed']);
