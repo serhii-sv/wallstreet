@@ -50,6 +50,7 @@ class News extends Model
         'title',
         'short_content',
         'image',
+        'views',
         'likes'
     ];
 
