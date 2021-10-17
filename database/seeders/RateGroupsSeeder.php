@@ -25,13 +25,13 @@ class RateGroupsSeeder extends Seeder
             RateGroup::create([
                 'name' => '2 test',
                 'description' => '2 тестовая группа',
-                'refund_deposit' => 0,
+                'refund_deposit' => 1,
                 'reinvest' => 1,
             ]);
             RateGroup::create([
                 'name' => '3 test',
                 'description' => '3 тестовая группа',
-                'refund_deposit' => 1,
+                'refund_deposit' => 0,
                 'reinvest' => 0,
             ]);
         }
