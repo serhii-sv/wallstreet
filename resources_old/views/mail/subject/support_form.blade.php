@@ -1,1 +1,0 @@
-{{ config('app.name') }} - Support form
