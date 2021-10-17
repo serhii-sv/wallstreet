@@ -19,7 +19,9 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserWalletDetail;
 use App\Models\Wallet;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Faker\Factory;
 use Illuminate\Support\Facades\Artisan;
@@ -34,17 +36,17 @@ class GenerateDemoDataCommand extends Command
      * @var string
      */
     protected $signature = 'generate:demo_data';
-
+    
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Generate demo data for the project';
-
+    
     /** @var Factory */
     private $faker;
-
+    
     /**
      * Create a new command instance.
      *
@@ -52,44 +54,44 @@ class GenerateDemoDataCommand extends Command
      */
     public function __construct() {
         parent::__construct();
-
+        
         /** @var Factory */
         $this->faker = Factory::create();
     }
-
+    
     /**
      * @throws \Exception
      */
     public function handle() {
         $this->comment('Reg program creating');
         $this->generateReferralLevels();
-
+        
         $this->comment('Rates creating');
         $this->generateRates();
-
+        
         $this->comment('Settings creating');
         $this->generateSettings();
-
+        
         try {
             $this->comment('Rates');
             $this->call('update:currency_rates');
         } catch (\Exception $e) {
             $this->warn('can not update currency rates');
         }
-
+        
         $this->comment('Users creating');
         $this->generateUsers();
-
+        
         $this->comment('News creating');
         $this->generateNews();
-
+        
         $this->comment('FAQ creating');
         $this->generateFaq();
-
+        
         $this->comment('Sprint Token rate change creating');
         $this->generateSprintTokenRateLog();
     }
-
+    
     public function generateReferralLevels() {
         for ($level = 1; $level <= $this->faker->numberBetween(1, 2); $level++) {
             Referral::updateOrCreate([
@@ -103,21 +105,22 @@ class GenerateDemoDataCommand extends Command
             $this->info('level ' . $level . ' registered');
         }
     }
-
+    
     public function generateRates() {
         /** @var Currency $currencies */
-       // $currencies = Currency::all();
+        // $currencies = Currency::all();
         $rate_groups = RateGroup::all();
         $rate_count_in_group = 4;
         $count = 1;
-
+        
         /** @var Currency $currency */
         foreach ($rate_groups as $group) {
             for ($i = 1; $i <= $rate_count_in_group; $i++) {
-
+                
                 $min = $this->faker->numberBetween(5, 20);
                 $max = $count * $this->faker->numberBetween(50, 400);
-                $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
+                $group->refund_deposit ? $overall= null : $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
+                
                 $newRate = [
                     //'currency_id' => $currency->id,
                     'name' => 'rate ' . $this->faker->domainWord,
@@ -132,16 +135,16 @@ class GenerateDemoDataCommand extends Command
                     'active' => $this->faker->boolean(100),
                     'rate_group_id' => $group->id,
                 ];
-
+                
                 /** @var Rate $rate */
                 $rate = Rate::create($newRate);
                 $this->info('rate ' . $rate->name . ' registered');
-
+                
                 $count++;
             }
         }
     }
-
+    
     public function generateSettings() {
         Setting::setValue('phone', $this->faker->phoneNumber);
         Setting::setValue('email', $this->faker->email);
@@ -150,11 +153,11 @@ class GenerateDemoDataCommand extends Command
         Setting::setValue('address', $this->faker->address);
         Setting::setValue('working_time', '09:00 AM - 06:00 PM');
     }
-
+    
     public function generateUsers() {
         for ($usersCount = 1; $usersCount <= 15; $usersCount++) {
             $partner = User::inRandomOrder()->limit(1)->first();
-
+            
             $newUser = [
                 'name' => $this->faker->name,
                 'email' => $this->faker->email,
@@ -165,31 +168,32 @@ class GenerateDemoDataCommand extends Command
                 'partner_id' => !empty($partner) ? $partner->my_id : null,
                 'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
             ];
-
+            
             $checkExists = User::where('login', $newUser['login'])->orWhere('email', $newUser['email'])->get()->count();
-
+            
             if ($checkExists > 0) {
                 $this->warn('found user with same login or email, skipping.');
                 continue;
             }
-
+            
             $user = null;
-
+            
             DB::transaction(function () use ($newUser, &$user, $partner) {
                 /** @var User $user */
                 $user = User::create($newUser);
                 $this->generateBalances($user);
+                $this->generateWalletDetails($user);
                 //                $this->generateReferrals($user);
                 $this->generateDeposits($user);
                 $this->generateWithdrawals($user);
-
+                
                 $partner->referrals()->attach($user->id);
             });
-
+            
             $this->info('user ' . $user->name . ' registered');
         }
     }
-
+    
     /**
      * @param User $user
      *
@@ -197,36 +201,56 @@ class GenerateDemoDataCommand extends Command
      */
     public function generateBalances(User $user) {
         $transactionType = TransactionType::getByName('enter');
-        $payment_systems = PaymentSystem::all();
         /** @var Wallet $wallet */
         foreach ($user->wallets()->get() as $wallet) {
-            for ($i = 1; $i <= 5; $i++) {
-                $amount = $this->faker->numberBetween(10, 1000);
-                $externalWallet = 'W' . $this->faker->randomNumber(5);
-                $transactionData = [
-                    'amount' => $amount,
-                    'type_id' => $transactionType->id,
-                    'user_id' => $wallet->user_id,
-                    'wallet_id' => $wallet->id,
-                    'currency_id' => $wallet->currency_id,
-                    'payment_system_id' => $payment_systems->random(1)->first()->id,
-                    'result' => 'completed',
-                    'batch_id' => 'B' . $this->faker->randomNumber(5),
-                    'approved' => $this->faker->boolean,
-                    'log' => $this->faker->text,
-                    'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                ];
-
-                /** @var Transaction $transaction */
-                $transaction = Transaction::create($transactionData);
-
-                $wallet->refill($transaction->amount, $externalWallet);
-
-                dump('balance updated ' . $wallet->id);
+            $payment_systems = $wallet->currency->paymentSystems()->get();
+            foreach ($payment_systems as $payment_system) {
+                for ($i = 1; $i <= 3; $i++) {
+                    $amount = $this->faker->numberBetween(10, 1000);
+                    
+                    $transactionData = [
+                        'amount' => $amount,
+                        'type_id' => $transactionType->id,
+                        'user_id' => $wallet->user_id,
+                        'wallet_id' => $wallet->id,
+                        'payment_system_id' => $payment_system->id,
+                        'currency_id' => $wallet->currency_id,
+                        'result' => 'completed',
+                        'batch_id' => 'B' . $this->faker->randomNumber(5),
+                        'approved' => $this->faker->boolean,
+                        'log' => $this->faker->text,
+                        'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
+                    ];
+                    
+                    /** @var Transaction $transaction */
+                    $transaction = Transaction::create($transactionData);
+                    
+                    $wallet->refill($transaction->amount);
+                    
+                    dump('balance updated ' . $wallet->id);
+                }
             }
         }
     }
-
+    
+    public function generateWalletDetails(User $user) {
+        $wallets = Wallet::whereUserId($user->id)->with('currency')->get();
+        foreach ($wallets as $wallet) {
+            dump('wallet - ' . $wallet->id);
+            $payment_systems = $wallet->currency->paymentSystems()->get();
+            foreach ($payment_systems as $payment_system) {
+                $wallet_details = new UserWalletDetail();
+                $wallet_details->wallet_id = $wallet->id;
+                $wallet_details->user_id = $user->id;
+                $wallet_details->payment_system_id = $payment_system->id;
+                $wallet_details->currency_id = $wallet->currency->id;
+                $wallet_details->external = $payment_system->code == 'manual' ? $this->faker->creditCardNumber() : 'W' . $this->faker->randomNumber(5);
+                $wallet_details->save();
+                dump('Реквизит создан: ' . $payment_system->name . ' - ' . $wallet_details->external);
+            }
+        }
+    }
+    
     /**
      * @param User $user
      *
@@ -234,28 +258,37 @@ class GenerateDemoDataCommand extends Command
      */
     public function generateWithdrawals(User $user) {
         $wallets = Wallet::where('user_id', $user->id)->where('balance', '>', 10)->inRandomOrder();
-        $payment_systems = PaymentSystem::all();
+        
         if (0 === $wallets->count()) {
             return;
         }
         
         /** @var Wallet $wallet */
         foreach ($wallets->get() as $wallet) {
-            $amount = $wallet->balance / 10;
-            
-            /** @var Transaction $transaction */
-            $transaction = Transaction::withdraw($wallet, $amount, $payment_systems->random(1)->first());
-
-            if (null !== $transaction && $this->faker->boolean) {
-                $transaction->created_at = $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00';
-                $transaction->approved = 1;
-                $transaction->save();
+            $payment_systems = $wallet->currency->paymentSystems()->get();
+            for ($i = 0; $i < 5; $i++) {
+                $amount = $wallet->balance / 10;
+                
+                if (!$payment_systems->isEmpty()) {
+                    $payment_system = $payment_systems->random(1)->first();
+                } else {
+                    return;
+                }
+                
+                /** @var Transaction $transaction */
+                $transaction = Transaction::withdraw($wallet, $amount, $payment_system);
+                
+                if (null !== $transaction && $this->faker->boolean) {
+                    $transaction->created_at = $this->faker->dateTimeThisMonth('now')->format('Y-m-d') . ' 12:00:00';
+                    $transaction->approved = 1;
+                    $transaction->save();
+                }
+                
+                dump('withdrawals created ' . $wallet->id);
             }
-
-            dump('withdrawals created ' . $wallet->id);
         }
     }
-
+    
     /**
      * @param User $user
      *
@@ -263,41 +296,51 @@ class GenerateDemoDataCommand extends Command
     public function generateDeposits(User $user) {
         /** @var Rate $randomRates */
         $randomRates = Rate::where('active', 1)->inRandomOrder()->get();
-
+        
         if (null === $randomRates) {
             return;
         }
-        $payment_systems = PaymentSystem::all();
         $currencies = Currency::all();
         /** @var Rate $randomRate */
         foreach ($currencies as $currency) {
             foreach ($randomRates as $randomRate) {
                 $wallet = $user->wallets()->where('currency_id', $currency->id)->first();
-
+                
                 if (null === $wallet) {
                     return;
                 }
-
+                $payment_systems = $currency->paymentSystems()->get();
+                if (!$payment_systems->isEmpty()) {
+                    $payment_system = $payment_systems->random(1)->first();
+                } else {
+                    return;
+                }
+                
+                $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $payment_system->id)->first();
+                if ($wallet_detail === null) {
+                    return;
+                }
+                
                 $enterTransaction = TransactionType::getByName('enter');
-                $externalWallet = 'W' . $this->faker->randomNumber(5);
                 $transactionData = [
                     'amount' => $randomRate->max,
                     'type_id' => $enterTransaction->id,
-                    'user_id' => $wallet->user_id,
+                    'user_id' => $user->id,
                     'wallet_id' => $wallet->id,
                     'currency_id' => $currency->id,
-                    'payment_system_id' => $payment_systems->random(1)->first()->id,
+                    'payment_system_id' => $payment_system->id,
+                    'external' => $wallet_detail->external ?? '',
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
                     'approved' => $this->faker->boolean,
                     'log' => $this->faker->text,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
                 ];
-                $wallet->refill($transactionData['amount'], $externalWallet);
-
+                $wallet->refill($transactionData['amount']);
+                
                 /** @var Transaction $transaction */
                 $transaction = Transaction::create($transactionData);
-
+                
                 $min = $randomRate->min == 0 ? 1 : $randomRate->min;
                 $depositAmount = $this->faker->numberBetween($min, $randomRate->max);
                 $depositData = [
@@ -308,17 +351,17 @@ class GenerateDemoDataCommand extends Command
                     'active' => $this->faker->boolean,
                     'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                    'user' => $wallet->user()->first(),
+                    'user' => $user->id,
                 ];
-
+                
                 /** @var Deposit $deposit */
                 $deposit = Deposit::addDeposit($depositData, $currency, true);
-
+                
                 dump('deposit created ' . $deposit->id);
             }
         }
     }
-
+    
     public function generateNews() {
         for ($i = 0; $i < 10; $i++) {
             $defaultLanguage = Language::getDefault()->code;
@@ -333,12 +376,12 @@ class GenerateDemoDataCommand extends Command
                     $defaultLanguage => $this->faker->sentence(1000),
                 ],
             ];
-
+            
             News::create($data);
             $this->comment('news ' . $data['title'][$defaultLanguage] . ' generated');
         }
     }
-
+    
     public function generateFaq() {
         for ($i = 0; $i < 10; $i++) {
             $data = [
@@ -346,14 +389,13 @@ class GenerateDemoDataCommand extends Command
                 'answer' => $this->faker->text,
                 'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
             ];
-
+            
             Faq::create($data);
             $this->comment('faq ' . $data['question'] . ' generated');
         }
     }
-
-    public function generateSprintTokenRateLog()
-    {
+    
+    public function generateSprintTokenRateLog() {
         Artisan::call('rate_log:generate');
     }
 }

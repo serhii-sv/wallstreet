@@ -66,6 +66,9 @@ class Notification extends Model
         'new_withdrawal' => [
             'view' => 'notifications.new_withdrawal',
         ],
+        'new_reinvest' => [
+            'view' => 'notifications.new_reinvest',
+        ],
     ];
     
     protected $guarded = ['_token'];

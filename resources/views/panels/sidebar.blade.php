@@ -161,7 +161,7 @@
     @endif
     
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
-      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
+      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*')  || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
           <span class="menu-title" data-i18n="Пользователи">Маркетинг</span>
@@ -172,18 +172,11 @@
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.referrals') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.referrals') }}">
                   <i class="material-icons">blur_linear</i>
-                  <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Реф уровни</span>
+                  <span class="menu-title" data-i18n="Реферальные уровни">Реф уровни</span>
                 </a>
               </li>
             @endif
-            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
-              <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.banners.all') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.banners.all') }}">
-                  <i class="material-icons">blur_linear</i>
-                  <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Промо (Баннеры)</span>
-                </a>
-              </li>
-            @endif
+   
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]))
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('deposit.bonuses') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('deposit-bonuses.*') || Route::is('deposit.bonuses.*') || Route::is('deposit.bonuses.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposit.bonuses') }}">
@@ -230,8 +223,8 @@
         <span class="menu-title" data-i18n="Новости">Моб. Приложение</span>
       </a>
     </li>
-    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_PRODUCTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]))
-      <li class="bold @if(Route::is('news-and-products.*') || Route::is('news.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*')) active @endif">
+    @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_PRODUCTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
+      <li class="bold @if(Route::is('news-and-products.*') || Route::is('news.*') || Route::is('banners.*') || Route::is('video.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">web</i>
           <span class="menu-title" data-i18n="Пользователи">Контент</span>
@@ -254,6 +247,24 @@
                 </a>
               </li>
             @endif
+              @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
+                <li class="bold">
+                  <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.banners.all') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.banners.all') }}">
+                    <i class="material-icons">blur_linear</i>
+                    <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Промо (Баннеры)</span>
+                  </a>
+                </li>
+              @endif
+            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]))
+              <li class="bold">
+                <a class="waves-effect waves-cyan {{ (Route::is('video.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}"
+                    style="{!! Route::is('video*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('video.index') }}">
+                  <i class="material-icons">info</i>
+                  <span class="menu-title" data-i18n="">Видеоролики</span>
+                </a>
+              </li>
+            @endif
+            
           </ul>
         </div>
       </li>

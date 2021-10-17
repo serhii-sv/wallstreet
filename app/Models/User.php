@@ -211,7 +211,11 @@ class User extends Authenticatable
         'is_locked',
         'documents_verified',
         'last_activity_at',
-        'api_token'
+        'api_token',
+        'country_manual',
+        'city_manual',
+        'telegram',
+        'index',
     ];
 
     /**
@@ -244,7 +248,25 @@ class User extends Authenticatable
     public function deposits() {
         return $this->hasMany(Deposit::class, 'user_id');
     }
-
+    
+    public function invested() {
+        return $this->hasMany(Deposit::class, 'user_id')->sum('invested');
+    }
+    
+    public function deposit_reward() {
+        $invested = $this->invested();
+        $deposit_bonus = DepositBonus::where('personal_turnover', '<', $invested)->orderByDesc('personal_turnover')->first();
+        if ($deposit_bonus !== null)
+            return $deposit_bonus->reward;
+        return 0;
+    }
+    
+    public function deposits_accruals() {
+        $invested = $this->deposits()->sum('invested');
+        $balance = $this->deposits()->sum('balance');
+        if ($balance > $invested)
+            return $balance - $invested;
+    }
     /**
      * @param boolean $useSymbols
      * @param string  $currencyId

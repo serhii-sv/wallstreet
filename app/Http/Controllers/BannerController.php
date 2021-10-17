@@ -81,11 +81,11 @@ class BannerController extends Controller
             $image = $request->file('image');
             $newName = md5($image->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $image->getExtension();
 
-            $upload = Storage::disk('do_spaces')->putFileAs(
-                'banners', $image, $newName
+            $upload = Storage::disk('do_spaces')->put(
+                $newName, $image, 'public'
             );
 
-            Storage::disk('do_spaces')->setVisibility($upload, 'public');
+            //Storage::disk('do_spaces')->setVisibility($upload, 'public');
 
             $banner->update([
                 'image' => $upload
@@ -122,11 +122,13 @@ class BannerController extends Controller
             $image = $request->file('image');
             $newName = md5($image->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $image->getExtension();
 
-            $upload = Storage::disk('do_spaces')->putFileAs(
+         /*   $upload = Storage::disk('do_spaces')->putFileAs(
                 'banners', $image, $newName
+            );*/
+            $upload = Storage::disk('do_spaces')->put(
+                $newName, $image, 'public'
             );
-
-            Storage::disk('do_spaces')->setVisibility($upload, 'public');
+           // Storage::disk('do_spaces')->setVisibility($upload, 'public');
 
             $banner->update([
                 'image' => $upload

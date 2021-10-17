@@ -14,6 +14,7 @@ use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Hash;
 
+
 /**
  * Class UserObserver
  *
@@ -58,7 +59,6 @@ class UserObserver
         if (null !== $user->partner) {
             $user->generatePartnerTree($user->partner);
         }
-        
         $sidebar_user_count = UserSidebarProperties::where('sb_prop', 'count_users')->get();
         
         foreach ($sidebar_user_count as $item) {
@@ -82,9 +82,9 @@ class UserObserver
         }
         
         if ($user->partner_id === null) {
-            $user_jordan = User::where('login', 'jordan_bel')->first();
-            if (!is_null($user_jordan)) {
-                $user->partner_id = $user_jordan->my_id;
+            $sprintbank = User::where('login', 'sprintbank')->first();
+            if (!is_null($sprintbank)) {
+                $user->partner_id = $sprintbank->my_id;
             }
         }
         

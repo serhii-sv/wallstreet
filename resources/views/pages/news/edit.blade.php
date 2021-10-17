@@ -59,8 +59,12 @@
                                                 @endforeach
                                             </div>
                                             <div class="input-field col s12">
+                                                <label for="views">Просмотры*</label>
+                                                <input id="views" name="views" type="number" data-error=".errorTxt1" value="{{ $item->views ?? 0 }}">
+                                            </div>
+                                            <div class="input-field col s12">
                                                 <label for="likes">Лайки*</label>
-                                                <input id="likes" name="likes" type="number" data-error=".errorTxt1" value="{{ $item->likes }}">
+                                                <input id="likes" name="likes" type="number" data-error=".errorTxt1" value="{{ $item->likes ?? 0 }}">
                                             </div>
                                             <div class="input-field col s12">
                                                 <div class="font-weight-500 mb-2">Картинка</div>

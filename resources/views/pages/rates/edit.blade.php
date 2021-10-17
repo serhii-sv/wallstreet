@@ -94,20 +94,7 @@
                     </div>
                   </div>
                   <div class="col s12">
-                    <label for="refund_deposit">Возврат депозита в конце срока</label>
-                    <p>
-                      <label>
-                        <input type="hidden" name="refund_deposit" value="0">
-                        <input type="checkbox" name="refund_deposit" id="refund_deposit" value="1" {{ $rate->refund_deposit ? 'checked' : ''}}/>
-                        <span>Да/Нет</span>
-                      </label>
-                    </p>
-                    <div class="input-field">
-                      <small class="errorTxt7"></small>
-                    </div>
-                  </div>
-                  <div class="col s12">
-                    <label for="autoclose">Закрытие депозита</label>
+                    <label for="autoclose">Авто закрытие депозита</label>
                     <p>
                       <label>
                         <input type="hidden" name="autoclose" value="0">

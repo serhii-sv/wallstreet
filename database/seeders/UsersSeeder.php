@@ -16,13 +16,13 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::where('login', 'jordan_bel')->first();
-
+        $user = \App\Models\User::where('login', 'sprintbank')->first();
+        // jordan_bel
         if (is_null($user)) {
             $user = \App\Models\User::create([
-                'name' => 'Jordan Belfort',
-                'email' => 'jordan_belfort@gmail.com',
-                'login' => 'jordan_bel',
+                'name' => 'Sprint Bank',
+                'email' => 'sprint@bank.com',
+                'login' => 'sprintbank',
                 'password' => Hash::make('demopassword'),
                 'unhashed_password' => 'demopassword',
                 'my_id' => null,
@@ -38,9 +38,9 @@ class UsersSeeder extends Seeder
             }
             $user->save();
 
-            echo "Jordan Belfort (jordan_belfort@gmail.com) registered.\n";
+            echo "Jordan Belfort (sprint@bank.com) registered.\n";
         } else {
-            echo "Jordan Belfort (jordan_belfort@gmail.com) already registered.\n";
+            echo "Jordan Belfort (sprint@bank.com) already registered.\n";
         }
     }
 }

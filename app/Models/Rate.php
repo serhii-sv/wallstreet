@@ -83,7 +83,6 @@ class Rate extends Model
         'autoclose',
         'active',
         'upgradable',
-        'refund_deposit',
         'overall',
         'rate_group_id',
     ];

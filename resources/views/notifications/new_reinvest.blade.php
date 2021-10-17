@@ -1,0 +1,1 @@
+На баланс депозита {{ $deposit->rate->name }} добавлено {{ $amount ?? 0 }} @if($days){{ $days }} @endif
