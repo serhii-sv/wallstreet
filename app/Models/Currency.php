@@ -70,6 +70,7 @@ class Currency extends Model
         'code',
         'precision',
         'symbol',
+        'image',
     ];
 
     /**

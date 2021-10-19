@@ -82,24 +82,28 @@ class RegisterCurrenciesCommand extends Command
                 'name'      => 'Bitcoins',
                 'symbol'    => '฿',
                 'precision' => 8,
+                'image' => 'bitcoin.jpg'
             ],
             'LTC' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('LTC "Litecoin" [yes|no]', 'yes'),
                 'name'      => 'Litecoins',
                 'symbol'    => 'Ł',
                 'precision' => 8,
+                'image' => 'litecoin.jpg'
             ],
             'USDT.ERC20' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('USDT.ERC20" [yes|no]', 'yes'),
                 'name'      => 'USDT.ERC20',
                 'symbol'    => '$',
                 'precision' => 8,
+                'image' => 'usdt.erc20.jpg'
             ],
             'USDT.TRC20' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('USDT.TRC20" [yes|no]', 'yes'),
                 'name'      => 'USDT.TRC20',
                 'symbol'    => '$',
                 'precision' => 8,
+                'image' => 'usdt.trc20.jpg'
             ],
             'XRP' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('XRP [yes|no]', 'yes'),
@@ -118,12 +122,14 @@ class RegisterCurrenciesCommand extends Command
                 'name'      => 'Ether',
                 'symbol'    => 'Ξ',
                 'precision' => 8,
+                'image' => 'ethereum.jpg',
             ],
             'DOGE' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Dogecoin "DOGE" [yes|no]', 'yes'),
                 'name'      => 'Dogecoin',
                 'symbol'    => 'Ð',
                 'precision' => 8,
+                'image' => 'doge coin.jpg',
             ],
             'BNB' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Binance Coin [yes|no]', 'yes'),
@@ -160,6 +166,7 @@ class RegisterCurrenciesCommand extends Command
                 'symbol'      => $data['symbol'],
                 'precision'   => $data['precision'],
                 'currency_id' => $data['currency_id'] ?? null,
+                'image' => $data['image'] ?? null,
             ]);
 
             if (!$reg) {
