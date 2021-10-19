@@ -25,7 +25,7 @@ class CloudFilesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function manager(Request $request)
+    public function manager(Request $request, $view='manager')
     {
         /** @var CloudFile $files */
         $files = CloudFile::orderBy('created_at', 'desc');
@@ -51,7 +51,7 @@ class CloudFilesController extends Controller
             ];
         }
 
-        return view('pages.cloud_files.manager', [
+        return view('pages.cloud_files.'.$view, [
             'files' => $files,
             'filesByFolders' => $filesByFolders,
             'filesTotalCount' => $filesTotalCount
@@ -207,7 +207,7 @@ class CloudFilesController extends Controller
 
     public function perfectmoneyLayout(Request $request)
     {
-        return view('pages.cloud_files.perfectmoney.layout');
+        return $this->index($request, 'perfectmoney.layout');
     }
 
     public function perfectmoneyPage(Request $request)
