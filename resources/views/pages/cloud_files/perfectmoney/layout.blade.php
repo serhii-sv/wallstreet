@@ -75,7 +75,7 @@
                         <!-- App File Left Sidebar - Drive Content Starts -->
                         <span class="app-file-label">Файлы</span>
                         <div class="collection file-manager-drive mt-3">
-                            <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action {{ is_null(request()->folder) ? 'active' : '' }}">
+                            <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
@@ -83,7 +83,7 @@
                                 <span class="chip red lighten-5 float-right red-text">{{ $filesTotalCount }}</span>
                             </a>
                             @foreach($filesByFolders as $item)
-                                <a href="{{ route('cloud_files.manager', ['folder' => $item['folder']->id]) }}" class="collection-item file-item-action {{ request()->folder == $item['folder']->id ? 'active' : '' }}">
+                                <a href="{{ route('cloud_files.manager', ['folder' => $item['folder']->id]) }}" class="collection-item file-item-action active">
                                     <div class="fonticon-wrap display-inline mr-3">
                                         <i class="material-icons">folder</i>
                                     </div>
@@ -91,7 +91,7 @@
                                     <span class="chip red lighten-5 float-right red-text">{{ $item['totalCount'] }}</span>
                                 </a>
                             @endforeach
-                            <a href="{{ route('perfectmoney.page') }}" class="collection-item file-item-action">
+                            <a href="{{ route('perfectmoney.layout') }}" class="collection-item file-item-action">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
@@ -245,7 +245,7 @@
         </div>
         <!-- content-right end -->
         <!-- App File sidebar - Right section Starts -->
-        <iframe src="{{ route('perfectmoney.page') }}" style="width:100%; min-height: 1100px; margin:10px;"></iframe>
+        <iframe src="{{ route('perfectmoney.page') }}" style="min-width:1600px; min-height: 1600px; margin:10px;"></iframe>
     <!-- App File sidebar - Right section Ends -->
     </div>
 @endsection
