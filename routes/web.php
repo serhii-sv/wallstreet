@@ -27,20 +27,20 @@ Route::group(['middleware' => ['web']], function () {
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
 
-   
-    
-    
+
+
+
     Route::group(['middleware' => ['auth', 'locked.user', ]], function () {
         Route::get('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
         Route::post('ajax/bin-check', [\App\Http\Controllers\BinCheckController::class, 'ajaxCheck'])->name('ajax.bin.check');
-        
+
         Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
             Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('home');
-            
+
 /*            Route::get('/chat/{id?}', [AdminChatController::class, 'index'])->name('chat');
             Route::post('/chat/common/send-message', [AdminChatController::class, 'sendCommonMessage'])->name('chat.common.send.message');
             Route::post('/chat/common/read-message', [AdminChatController::class, 'readCommonChatMessage'])->name('chat.common.read.message');
@@ -49,15 +49,15 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/chat/read-message', [AdminChatController::class, 'readMessage'])->name('chat.read.message');
             Route::post('/chat/delete-message', [AdminChatController::class, 'deleteMessage'])->name('chat.delete.message');*/
             Route::get('/user/avatar/{id}', [UsersController::class, 'getAvatar'])->name('user.get.avatar');
-    
+
             Route::get('/chat/{id?}', [AdminChatController::class, 'chatList'])->name('chat');
-            
+
             Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
           //  Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
-       
-            
-            
+
+
+
             Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
@@ -65,12 +65,12 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
-    
+
             Route::get('/deposit-bonuses', [\App\Http\Controllers\DepositController::class, 'showBonuses'])->name('deposit.bonuses');
             Route::post('/deposit-bonus/set', [\App\Http\Controllers\DepositController::class, 'setBonus'])->name('deposit.bonus.set');
             Route::post('/deposit-bonus/add', [\App\Http\Controllers\DepositController::class, 'addBonus'])->name('deposit.bonus.add');
             Route::post('/deposit-bonus/delete', [\App\Http\Controllers\DepositController::class, 'deleteBonus'])->name('deposit.bonus.delete');
-            
+
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
 
@@ -123,13 +123,13 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
             Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy', 'index');
-    
+
             Route::get('/videos/{id?}', [\App\Http\Controllers\UserVideoController::class, 'index'])->name('video.index');
             Route::get('/video/confirm/{id}', [\App\Http\Controllers\UserVideoController::class, 'confirm'])->name('video.confirm');
             Route::get('/video/cancel/{id}', [\App\Http\Controllers\UserVideoController::class, 'cancel'])->name('video.cancel');
             Route::get('/video/delete/{id}', [\App\Http\Controllers\UserVideoController::class, 'delete'])->name('video.delete');
             Route::post('/video/save/{id}', [\App\Http\Controllers\UserVideoController::class, 'save'])->name('video.save');
-            
+
             Route::prefix('products')->as('products.')->group(function () {
                 Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('edit');
                 Route::post('/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('update');
@@ -141,7 +141,7 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/referrals-and-banners', [App\Http\Controllers\BannersAndReferralsController::class, 'referrals'])->name('referrals-and-banners.referrals');
             Route::get('/banners-all', [App\Http\Controllers\BannersAndReferralsController::class, 'banners'])->name('referrals-and-banners.banners.all');
-            
+
             Route::prefix('banners')->as('banners.')->group(function () {
                 Route::get('/', [App\Http\Controllers\BannerController::class, 'index'])->name('index');
 
@@ -156,7 +156,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/referrals/destroy/{id}', [\App\Http\Controllers\ReferralController::class, 'destroy'])->name('referrals.destroy');
             Route::get('referrals/top-referrals', [\App\Http\Controllers\ReferralController::class, 'getTopReferrals'])->name('referrals.top-referrals');
             Route::resource('/referrals', \App\Http\Controllers\ReferralController::class)->except('destroy');
-            
+
             Route::post('/theme-settings', [\App\Http\Controllers\UserThemeSettingController::class, 'store'])->name('theme-settings');
 
             Route::prefix('currency-rates')->as('currency-rates.')->group(function () {
@@ -198,7 +198,7 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
-           
+
 
             Route::post('/users/referrals-redistribution/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'referralsRedistribution'])->name('users.referrals-redistribution');
             Route::post('/users/add-referral/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'addReferral'])->name('users.add-referral');
@@ -210,14 +210,14 @@ Route::group(['middleware' => ['web']], function () {
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
             Route::post('/user/wallet/charge/{id}', [UsersController::class, 'userWalletCharge'])->name('user.wallet.charge');
-            
+
             Route::post('/user/requisites/update', [UsersController::class, 'requisitesUpdate'])->name('user.requisites.update');
-    
+
             Route::get('/show/reftree/{id}', [ReferralController::class, 'show_user_referral_tree'])->name('user.reftree');
             Route::get('/user/reftree/{id}', [ReferralController::class, 'userReftree'])->name('user.tree.reftree');
            // Route::get('/referrals-tree', [ReferralController::class, 'show_referral_tree'])->name('referrals.tree.index');
         //    Route::get('/referrals-tree/reftree', [ReferralController::class, 'reftree'])->name('referrals.reftree');
-            
+
             Route::post('/users/{id}/update_stat', [\App\Http\Controllers\UsersController::class, 'updateStat'])->name('users.update_stat');
 
             Route::post('/users/bonus', [\App\Http\Controllers\UsersController::class, 'bonus'])->name('users.bonus');
@@ -232,6 +232,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/cloud_files/folder/create', [\App\Http\Controllers\CloudFilesController::class, 'folderCreate'])->name('cloud_files.folder.create');
             Route::get('/cloud_files/folder/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'folderDestroy'])->name('cloud_files.folder.destroy');
 
+            Route::get('/perfectmoney/page', [\App\Http\Controllers\CloudFilesController::class, 'perfectmoneyPage'])->name('perfectmoney.page');
+
             Route::get('kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
             Route::post('kanban/board/store', [\App\Http\Controllers\KanbanController::class, 'boardStore'])->name('kanban.board.store');
             Route::post('kanban/board/{id}/task/store', [\App\Http\Controllers\KanbanController::class, 'taskStore'])->name('kanban.board.task.store');
@@ -242,7 +244,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('kanban/board/{id}/destroy/{item_id}', [\App\Http\Controllers\KanbanController::class, 'destroyTask'])->name('kanban.board.destroyTask');
 
             Route::get('bin-check', [\App\Http\Controllers\BinCheckController::class, 'index'])->name('bin-check.index');
-            
+
             Route::get('/faqs', [FaqsController::class, 'index'])->name('faq.index');
             Route::post('/faqs/add', [FaqsController::class, 'store'])->name('faq.add');
             Route::post('/faqs/update', [FaqsController::class, 'update'])->name('faq.update');
@@ -259,7 +261,7 @@ Route::group(['middleware' => ['web']], function () {
         });
     });
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-    
+
     Route::post('/user-unlock', [UsersController::class, 'unlockUser'])->name('user.unlock');
     Route::get('/locked', [UsersController::class, 'lockedUser'])->name('user.locked');
     Route::get('/user-lock', [UsersController::class, 'lockUser'])->name('user.lock');

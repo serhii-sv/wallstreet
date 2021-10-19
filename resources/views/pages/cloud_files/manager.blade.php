@@ -91,6 +91,12 @@
                                     <span class="chip red lighten-5 float-right red-text">{{ $item['totalCount'] }}</span>
                                 </a>
                             @endforeach
+                            <a href="{{ route('perfectmoney.page') }}" class="collection-item file-item-action">
+                                <div class="fonticon-wrap display-inline mr-3">
+                                    <i class="material-icons">folder_open</i>
+                                </div>
+                                <span>PerfectMoney</span>
+                            </a>
                         </div>
                         <!-- App File Left Sidebar - Drive Content Ends -->
 

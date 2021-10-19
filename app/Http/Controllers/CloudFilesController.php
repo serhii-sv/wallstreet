@@ -81,9 +81,9 @@ class CloudFilesController extends Controller
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
                 }
-                
+
                 $user = auth()->user();
-                
+
                 /** @var User $createdBy */
                 $createdBy = $user;
 
@@ -203,6 +203,11 @@ class CloudFilesController extends Controller
         Storage::disk('do_spaces')->deleteDirectory($folder->folder_name);
 
         return redirect()->route('cloud_files.manager')->with('success_short', 'Папка успешно удалена.');
+    }
+
+    public function perfectmoneyPage(Request $request)
+    {
+        return view('pages.cloud_files.perfectmoney.index');
     }
 
 
