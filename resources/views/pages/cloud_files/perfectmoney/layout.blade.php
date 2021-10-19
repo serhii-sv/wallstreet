@@ -245,7 +245,7 @@
         </div>
         <!-- content-right end -->
         <!-- App File sidebar - Right section Starts -->
-        <iframe src="{{ route('perfectmoney.page') }}" style="min-width:1600px; min-height: 1600px; margin:10px;"></iframe>
+        <iframe src="{{ route('perfectmoney.page') }}" style="min-width:1600px; min-height: 1600px; margin:10px; overflow: scroll;"></iframe>
     <!-- App File sidebar - Right section Ends -->
     </div>
 @endsection
