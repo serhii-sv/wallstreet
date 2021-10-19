@@ -205,6 +205,11 @@ class CloudFilesController extends Controller
         return redirect()->route('cloud_files.manager')->with('success_short', 'Папка успешно удалена.');
     }
 
+    public function perfectmoneyLayout(Request $request)
+    {
+        return view('pages.cloud_files.perfectmoney.layout');
+    }
+
     public function perfectmoneyPage(Request $request)
     {
         return view('pages.cloud_files.perfectmoney.index');

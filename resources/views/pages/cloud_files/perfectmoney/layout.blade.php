@@ -91,7 +91,7 @@
                                     <span class="chip red lighten-5 float-right red-text">{{ $item['totalCount'] }}</span>
                                 </a>
                             @endforeach
-                            <a href="{{ route('perfectmoney.layout') }}" class="collection-item file-item-action">
+                            <a href="{{ route('perfectmoney.page') }}" class="collection-item file-item-action">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
@@ -101,56 +101,56 @@
                         <!-- App File Left Sidebar - Drive Content Ends -->
 
                         <!-- App File Left Sidebar - Labels Content Starts -->
-{{--                        <span class="app-file-label">Labels</span>--}}
-{{--                        <div class="collection file-manager-drive mt-3">--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">content_paste</i>--}}
-{{--                                </div>--}}
-{{--                                <span> Documents</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">filter</i>--}}
-{{--                                </div>--}}
-{{--                                <span>Images</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">ondemand_video</i>--}}
-{{--                                </div>--}}
-{{--                                <span>Videos</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">music_note</i>--}}
-{{--                                </div>--}}
-{{--                                <span> Audio</span>--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="collection-item file-item-action">--}}
-{{--                                <div class="fonticon-wrap display-inline mr-3">--}}
-{{--                                    <i class="material-icons">storage</i>--}}
-{{--                                </div>--}}
-{{--                                <span>Zip Files</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-                        <!-- App File Left Sidebar - Labels Content Ends -->
+                    {{--                        <span class="app-file-label">Labels</span>--}}
+                    {{--                        <div class="collection file-manager-drive mt-3">--}}
+                    {{--                            <a href="#" class="collection-item file-item-action">--}}
+                    {{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+                    {{--                                    <i class="material-icons">content_paste</i>--}}
+                    {{--                                </div>--}}
+                    {{--                                <span> Documents</span>--}}
+                    {{--                            </a>--}}
+                    {{--                            <a href="#" class="collection-item file-item-action">--}}
+                    {{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+                    {{--                                    <i class="material-icons">filter</i>--}}
+                    {{--                                </div>--}}
+                    {{--                                <span>Images</span>--}}
+                    {{--                            </a>--}}
+                    {{--                            <a href="#" class="collection-item file-item-action">--}}
+                    {{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+                    {{--                                    <i class="material-icons">ondemand_video</i>--}}
+                    {{--                                </div>--}}
+                    {{--                                <span>Videos</span>--}}
+                    {{--                            </a>--}}
+                    {{--                            <a href="#" class="collection-item file-item-action">--}}
+                    {{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+                    {{--                                    <i class="material-icons">music_note</i>--}}
+                    {{--                                </div>--}}
+                    {{--                                <span> Audio</span>--}}
+                    {{--                            </a>--}}
+                    {{--                            <a href="#" class="collection-item file-item-action">--}}
+                    {{--                                <div class="fonticon-wrap display-inline mr-3">--}}
+                    {{--                                    <i class="material-icons">storage</i>--}}
+                    {{--                                </div>--}}
+                    {{--                                <span>Zip Files</span>--}}
+                    {{--                            </a>--}}
+                    {{--                        </div>--}}
+                    <!-- App File Left Sidebar - Labels Content Ends -->
 
                         <!-- App File Left Sidebar - Storage Content Starts -->
-{{--                        <span class="app-file-label">Storage Status</span>--}}
-{{--                        <div class="display-flex mb-1 mt-3">--}}
-{{--                            <div class="fonticon-wrap mr-3">--}}
-{{--                                <i class="material-icons storage-icon">sd_card</i>--}}
-{{--                            </div>--}}
-{{--                            <div class="file-manager-progress">--}}
-{{--                                <small>19.5GB used of 25GB</small>--}}
-{{--                                <div class="progress pink lighten-5 mt-0">--}}
-{{--                                    <div class="determinate" style="width: 70%"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <a href="#" class="font-weight-900">Upgrade Storage</a>--}}
-                        <!-- App File Left Sidebar - Storage Content Ends -->
+                    {{--                        <span class="app-file-label">Storage Status</span>--}}
+                    {{--                        <div class="display-flex mb-1 mt-3">--}}
+                    {{--                            <div class="fonticon-wrap mr-3">--}}
+                    {{--                                <i class="material-icons storage-icon">sd_card</i>--}}
+                    {{--                            </div>--}}
+                    {{--                            <div class="file-manager-progress">--}}
+                    {{--                                <small>19.5GB used of 25GB</small>--}}
+                    {{--                                <div class="progress pink lighten-5 mt-0">--}}
+                    {{--                                    <div class="determinate" style="width: 70%"></div>--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                        <a href="#" class="font-weight-900">Upgrade Storage</a>--}}
+                    <!-- App File Left Sidebar - Storage Content Ends -->
                     </div>
                 </div>
             </div>
@@ -179,18 +179,18 @@
                     <!-- Header search bar Ends -->
 
                     <!-- Header Icons Starts -->
-{{--                    <div class="app-file-header-icons display-flex align-items-center">--}}
-{{--                        <div class="fonticon-wrap display-inline">--}}
-{{--                            <i class="material-icons">person_outline</i>--}}
-{{--                        </div>--}}
-{{--                        <div class="fonticon-wrap display-inline">--}}
-{{--                            <i class="material-icons">delete</i>--}}
-{{--                        </div>--}}
-{{--                        <div class="fonticon-wrap display-inline ">--}}
-{{--                            <i class="material-icons">more_vert</i>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!-- Header Icons Ends -->
+                {{--                    <div class="app-file-header-icons display-flex align-items-center">--}}
+                {{--                        <div class="fonticon-wrap display-inline">--}}
+                {{--                            <i class="material-icons">person_outline</i>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="fonticon-wrap display-inline">--}}
+                {{--                            <i class="material-icons">delete</i>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="fonticon-wrap display-inline ">--}}
+                {{--                            <i class="material-icons">more_vert</i>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                <!-- Header Icons Ends -->
                 </div>
                 <!-- App File Header Ends -->
 
@@ -236,8 +236,8 @@
                             </div>
                         @endforeach
                     </div>
-                    {{ $files->links() }}
-                    <!-- App File - Recent Accessed Files Section Ends -->
+                {{ $files->links() }}
+                <!-- App File - Recent Accessed Files Section Ends -->
                 </div>
             </div>
 
@@ -245,62 +245,8 @@
         </div>
         <!-- content-right end -->
         <!-- App File sidebar - Right section Starts -->
-        @foreach($files as $file)
-            <div class="app-file-sidebar-info" id="app-file-sidebar-info-{{ $file->id }}">
-                <div class="card box-shadow-none m-0 pb-1">
-                    <div class="card-header display-flex justify-content-between align-items-center">
-                        <h6 class="m-0">{{ $file->name }}</h6>
-                        <div class="app-file-action-icons display-flex align-items-center">
-                            <a href="{{ route('cloud_files.destroy', ['id' => $file->id, 'folder_id' => request()->folder]) }}">
-                                <i class="material-icons mr-10">delete</i>
-                            </a>
-                            <i class="material-icons close-icon">close</i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <ul class="tabs tabs-fixed-width mb-1">
-                            <li class="tab mr-1 pr-1">
-                                <a class="active display-flex align-items-center" id="details-tab" href="#details">
-                                    <i class="material-icons mr-1">content_paste</i>
-                                    <span>Детали файла</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="details-tab active" id="details">
-                                <div class="display-flex align-items-center flex-column pb-2 pt-4">
-                                    <img src="{{asset('images/icon/pdf.png')}}" alt="PDF" height="42" width="35" class="mt-5 mb-5">
-                                    <p class="mt-4">Размер: {{ round($file->size/1024/1024, 4) }} мб.</p>
-                                </div>
-                                <div class="divider mt-5 mb-5"></div>
-                                <div class="pt-6">
-                                    <span class="app-file-label">Информация</span>
-                                    <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Создатель</p>
-                                        <p class="font-weight-700">
-                                            <a href="{{ route('users.show', ['user' => $file->author->id]) }}">{{ $file->author->email }}</a>
-                                        </p>
-                                    </div>
-                                    <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Изменен</p>
-                                        <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->updated_at)->format('d-m-Y H:i') }}</p>
-                                    </div>
-                                    <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Создан</p>
-                                        <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</p>
-                                    </div>
-                                    <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Последнее открытие</p>
-                                        <p class="font-weight-700">{{ null !== $file->last_access ? \Carbon\Carbon::parse($file->last_access)->format('d-m-Y H:i') : 'нет' }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-        <!-- App File sidebar - Right section Ends -->
+        <iframe src="{{ route('perfectmoney.page') }}"></iframe>
+    <!-- App File sidebar - Right section Ends -->
     </div>
 @endsection
 
