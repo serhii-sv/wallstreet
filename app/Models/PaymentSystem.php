@@ -63,6 +63,9 @@ class PaymentSystem extends Model
         'connected',
         'minimum_topup',
         'minimum_withdraw',
+        'image',
+        'image_alt',
+        'image_title',
     ];
 
     /**

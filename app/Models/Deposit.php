@@ -225,9 +225,10 @@ class Deposit extends Model
         
         /** @var Rate $rate */
         $rate = Rate::findOrFail($field['rate_id']);
-        
         /** @var Wallet $wallet */
-        $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency->id)->firstOrFail();
+        $wallet = Wallet::where('user_id', $user->id)
+            ->where('currency_id', $currency->id)
+            ->firstOrFail();
         $amount = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
         

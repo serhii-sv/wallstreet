@@ -119,7 +119,7 @@ class GenerateDemoDataCommand extends Command
                 
                 $min = $this->faker->numberBetween(5, 20);
                 $max = $count * $this->faker->numberBetween(50, 400);
-                $group->refund_deposit ? $overall= null : $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
+                $group->refund_deposit ? $overall = 0 : $overall = $this->faker->numberBetween(100, 200) * $this->faker->numberBetween(0, 1);
                 
                 $newRate = [
                     //'currency_id' => $currency->id,
@@ -236,7 +236,6 @@ class GenerateDemoDataCommand extends Command
     public function generateWalletDetails(User $user) {
         $wallets = Wallet::whereUserId($user->id)->with('currency')->get();
         foreach ($wallets as $wallet) {
-            dump('wallet - ' . $wallet->id);
             $payment_systems = $wallet->currency->paymentSystems()->get();
             foreach ($payment_systems as $payment_system) {
                 $wallet_details = new UserWalletDetail();
@@ -296,7 +295,6 @@ class GenerateDemoDataCommand extends Command
     public function generateDeposits(User $user) {
         /** @var Rate $randomRates */
         $randomRates = Rate::where('active', 1)->inRandomOrder()->get();
-        
         if (null === $randomRates) {
             return;
         }
@@ -351,7 +349,7 @@ class GenerateDemoDataCommand extends Command
                     'active' => $this->faker->boolean,
                     'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                    'user' => $user->id,
+                    'user' => $user,
                 ];
                 
                 /** @var Deposit $deposit */
