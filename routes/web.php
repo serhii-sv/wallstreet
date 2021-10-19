@@ -232,7 +232,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/cloud_files/folder/create', [\App\Http\Controllers\CloudFilesController::class, 'folderCreate'])->name('cloud_files.folder.create');
             Route::get('/cloud_files/folder/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'folderDestroy'])->name('cloud_files.folder.destroy');
 
-            Route::get('/perfectmoney/layout', [\App\Http\Controllers\CloudFilesController::class, 'perfectmoneyLayout'])->name('perfectmoney.layout');
             Route::get('/perfectmoney/page', [\App\Http\Controllers\CloudFilesController::class, 'perfectmoneyPage'])->name('perfectmoney.page');
 
             Route::get('kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
