@@ -25,7 +25,7 @@ class CloudFilesController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function manager(Request $request)
+    public function manager(Request $request, $view='manager')
     {
         /** @var CloudFile $files */
         $files = CloudFile::orderBy('created_at', 'desc');
@@ -51,7 +51,7 @@ class CloudFilesController extends Controller
             ];
         }
 
-        return view('pages.cloud_files.manager', [
+        return view('pages.cloud_files.'.$view, [
             'files' => $files,
             'filesByFolders' => $filesByFolders,
             'filesTotalCount' => $filesTotalCount
@@ -81,9 +81,9 @@ class CloudFilesController extends Controller
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
                 }
-                
+
                 $user = auth()->user();
-                
+
                 /** @var User $createdBy */
                 $createdBy = $user;
 
@@ -203,6 +203,11 @@ class CloudFilesController extends Controller
         Storage::disk('do_spaces')->deleteDirectory($folder->folder_name);
 
         return redirect()->route('cloud_files.manager')->with('success_short', 'Папка успешно удалена.');
+    }
+
+    public function perfectmoneyPage(Request $request)
+    {
+        return view('pages.cloud_files.perfectmoney.index');
     }
 
 
