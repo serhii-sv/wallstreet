@@ -207,7 +207,7 @@ class CloudFilesController extends Controller
 
     public function perfectmoneyLayout(Request $request)
     {
-        return $this->index($request, 'perfectmoney.layout');
+        return $this->manager($request, 'perfectmoney.layout');
     }
 
     public function perfectmoneyPage(Request $request)
