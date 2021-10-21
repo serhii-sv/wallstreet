@@ -110,12 +110,14 @@ class RegisterCurrenciesCommand extends Command
                 'name'      => 'XRP',
                 'symbol'    => '$',
                 'precision' => 8,
+                'image' => 'xripple.jpg',
             ],
             'BCH' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('BCH "Bitcoin Cash" [yes|no]', 'yes'),
                 'name'      => 'Bitcoin Cash',
                 'symbol'    => 'Ƀ',
                 'precision' => 8,
+                'image' => 'bitcoin cash.jpg',
             ],
             'ETH' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('ETH "Ether" [yes|no]', 'yes'),
@@ -136,6 +138,7 @@ class RegisterCurrenciesCommand extends Command
                 'name'      => 'Binance Coin',
                 'symbol'    => 'Ð',
                 'precision' => 8,
+                'image' => 'binance coin.jpg',
             ],
             'SPRINT' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('Sprint Coin [yes|no]', 'yes'),

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\CloudFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
@@ -84,11 +86,20 @@ class BannerController extends Controller
             $upload = Storage::disk('do_spaces')->put(
                 $newName, $image, 'public'
             );
-
+            $cloudFile = CloudFile::create([
+                'created_by' => Auth::user()->id,
+                'name' => strtolower($image->getClientOriginalName()),
+                'ext' => $image->getExtension(),
+                'mime' => $image->getMimeType(),
+                'url' => $upload,
+                'cloud_file_folder_id' => null,
+                'last_access' => null,
+                'size' => $image->getSize(),
+            ]);
             //Storage::disk('do_spaces')->setVisibility($upload, 'public');
 
             $banner->update([
-                'image' => $upload
+                'image' => $cloudFile->id
             ]);
         }
 
@@ -129,9 +140,16 @@ class BannerController extends Controller
                 $newName, $image, 'public'
             );
            // Storage::disk('do_spaces')->setVisibility($upload, 'public');
-
+            $cloudFile = CloudFile::findOrFail($banner->image);
+            $cloudFile->update([
+                'name' => strtolower($image->getClientOriginalName()),
+                'ext' => $image->getExtension(),
+                'mime' => $image->getMimeType(),
+                'url' => $upload,
+                'size' => $image->getSize(),
+            ]);
             $banner->update([
-                'image' => $upload
+                'image' => $cloudFile->id
             ]);
         }
 
