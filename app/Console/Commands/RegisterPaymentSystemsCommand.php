@@ -71,7 +71,7 @@ class RegisterPaymentSystemsCommand extends Command
                 ],
                 'image' => '',
             ],
-            'bonus' => [
+           /* 'bonus' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('bonus [yes|no]', 'yes'),
                 'name' => 'Bonus',
                 'currencies' => [
@@ -91,7 +91,7 @@ class RegisterPaymentSystemsCommand extends Command
                     'DOGE',
                 ],
                 'image' => '',
-            ],
+            ],*/
          /*   'manual' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('manual [yes|no]', 'yes'),
                 'name' => 'Manual',

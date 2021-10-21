@@ -53,7 +53,7 @@ class ReplenishmentController extends Controller
             }
             
             $recordsFiltered = $transactions->count();
-            $transactions->limit($request->length)->offset($request->start);
+            $transactions->limit($request->length)->offset($request->start)->orderBy('created_at','desc');
             $data = [];
             
             foreach ($transactions->get() as $transaction) {
