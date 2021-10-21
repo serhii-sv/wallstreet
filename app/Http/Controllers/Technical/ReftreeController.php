@@ -43,6 +43,7 @@ class ReftreeController extends Controller
      */
     public function referralsRedistribution(Request $request, $id)
     {
+        /** @var User $user */
         $user = User::findOrFail($id);
 
         return response()->json($user->referralsRedistribution($request->referrals));

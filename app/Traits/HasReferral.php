@@ -250,7 +250,15 @@ trait HasReferral
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
-        $this->referrals()->sync($ids);
+
+//        $this->referrals()->sync($ids);
+
+        foreach ($ids as $id) {
+            $findRef = User::find($id);
+            $findRef->partner_id = $this->id;
+            $findRef->save();
+        }
+
         return [
             'success' => true,
             'message' => 'Сохранено'
