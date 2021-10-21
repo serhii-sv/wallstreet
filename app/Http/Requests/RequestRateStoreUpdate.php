@@ -45,7 +45,7 @@ class RequestRateStoreUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|min:3|max:60',
+            'name'        => 'required|min:1|max:60',
             'min'         => 'numeric|min:0',
             'max'         => 'numeric|min:0',
             'daily'       => 'numeric|min:0',
