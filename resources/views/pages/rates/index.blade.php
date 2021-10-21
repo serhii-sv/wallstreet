@@ -31,6 +31,7 @@
               <div class="row">
                 <div class="plans-container" style="display: flex; flex-wrap: wrap;">
                     @foreach($rate_groups as $key => $rate_group)
+                        <div style="clear:both;"></div>
                         <hr style="margin:30px 0 30px 0;">
                         <h3>{{ $rate_group->name }}</h3>
                         @php($rates = \App\Models\Rate::where('rate_group_id', $rate_group->id)->orderBy('min')->get())
