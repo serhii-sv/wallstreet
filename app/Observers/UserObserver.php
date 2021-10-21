@@ -31,19 +31,19 @@ class UserObserver
         foreach ($user->transactions()->get() as $transaction) {
             $transaction->delete();
         }
-        
+
         /** @var Deposit $deposit */
         foreach ($user->deposits()->get() as $deposit) {
             DepositQueue::where('deposit_id', $deposit->id)->delete();
             $deposit->delete();
         }
-        
+
         foreach ($user->wallets()->get() as $wallet) {
             $wallet->delete();
         }
-        
+
     }
-    
+
     /**
      * Listen to the User created event.
      *
@@ -55,19 +55,19 @@ class UserObserver
     public function created(User $user) {
         $this->setSidebarProperties($user);
         Wallet::registerWallets($user);
-        
+
         if (null !== $user->partner) {
             $user->generatePartnerTree($user->partner);
         }
         $sidebar_user_count = UserSidebarProperties::where('sb_prop', 'count_users')->get();
-        
+
         foreach ($sidebar_user_count as $item) {
             $item->sb_val = $item->sb_val + 1;
             $item->save();
         }
         // cache()->forget('counts.users');
     }
-    
+
     /**
      * Listen to the User creating event.
      *
@@ -80,26 +80,26 @@ class UserObserver
         if (empty($user->login)) {
             $user->login = $user->email;
         }
-        
+
         if ($user->partner_id === null) {
             $sprintbank = User::where('login', 'sprintbank')->first();
             if (!is_null($sprintbank)) {
                 $user->partner_id = $sprintbank->my_id;
             }
         }
-        
+
         if (null === $user->my_id || empty($user->my_id)) {
             $user->generateMyId();
         }
     }
-    
+
     /**
      * @param User $user
      */
     public function saved(User $user) {
 
     }
-    
+
     /**
      * Listen to the User deleting event.
      *
@@ -112,11 +112,15 @@ class UserObserver
         $this->deleteSidebarProperties();
         cache()->forget('counts.users');
     }
-    
+
     public function updated(User $user) {
+        if (null !== $user->partner_id) {
+            $user->generatePartnerTree($user->partner);
+        }
+
         $this->setSidebarProperties($user);
     }
-    
+
     protected function setSidebarProperties(User $user) {
         if ($user->hasAnyRole([
             'root',
