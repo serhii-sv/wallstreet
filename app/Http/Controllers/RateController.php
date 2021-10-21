@@ -23,9 +23,8 @@ class RateController extends Controller
      */
     public function index()
     {
-        $rates = Rate::all();
         $rate_groups = RateGroup::all();
-        return view('pages.rates.index', compact('rates', 'rate_groups'));
+        return view('pages.rates.index', compact('rate_groups'));
     }
 
     /**
