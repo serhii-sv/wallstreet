@@ -33,7 +33,7 @@
                     @foreach($rate_groups as $key => $rate_group)
                         <hr style="margin:30px 0 30px 0;">
                         <h3>{{ $rate_group->name }}</h3>
-                        @php($rates = \App\Models\Rate::where('rate_group_id', $rate_group->id))
+                        @php($rates = \App\Models\Rate::where('rate_group_id', $rate_group->id)->orderBy('min')->get())
                         @foreach($rates as $rate)
                             <div class="col s12 m6 l4" style=" margin-bottom: 30px;/*max-width: 365px;flex-basis: calc(33.333% - 20px);margin-left: 20px;min-height: 489px*/">
                                 <div class="card z-depth-1 animate fadeLeft" style="height: 100%">
