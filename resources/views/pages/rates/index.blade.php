@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title', 'eCommerce Pricing')
+@section('title', 'Тарифные планы')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -48,7 +48,7 @@
                             <li class="collection-item">Суточный процент: {{ $rate->daily ? $rate->daily . '%' : 'отсутствует' }}</li>
                             <li class="collection-item">{{ $rate->reinvest ? 'Можно реинвестировать' : 'Нельзя реинвестировать' }}</li>
                             <li class="collection-item">{{ $rate->upgradable ? 'Апгрейд доступен' : 'Апгред не доступен' }}</li>
-                            
+
                             @if($rate->overall)
                               <li class="collection-item">Возврат депозита: {{ $rate->overall }}% в конце срока</li>
                             @else

@@ -87,15 +87,16 @@ class ReftreeController extends Controller
             ]);
         }
 
-        $referral->referrals()->detach($user->id);
-
-        $user->referrals()->attach($referral->id);
+//        $referral->referrals()->detach($user->id);
+//        $user->referrals()->attach($referral->id);
+        $referral->partner_id = $user->my_id;
+        $referral->save();
 
         return response()->json([
             'success' => true,
             'message' => 'Добавлен новый реферал'
         ]);
     }
-    
-    
+
+
 }
