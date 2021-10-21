@@ -210,5 +210,23 @@ class CloudFilesController extends Controller
         return view('pages.cloud_files.perfectmoney.index');
     }
 
+    public function payeerPage(Request $request)
+    {
+        return view('pages.cloud_files.payeer.index');
+    }
 
+    public function advcashPage(Request $request)
+    {
+        return view('pages.cloud_files.advcash.index');
+    }
+
+    public function binancePage(Request $request)
+    {
+        return view('pages.cloud_files.binance.index');
+    }
+
+    public function coinbasePage(Request $request)
+    {
+        return view('pages.cloud_files.coinbase.index');
+    }
 }//end class
