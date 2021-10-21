@@ -255,7 +255,7 @@ trait HasReferral
 
         foreach ($ids as $id) {
             $findRef = User::find($id);
-            $findRef->partner_id = $this->id;
+            $findRef->partner_id = $this->my_id;
             $findRef->save();
         }
 
