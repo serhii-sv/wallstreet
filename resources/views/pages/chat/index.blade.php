@@ -78,7 +78,11 @@
   <div class="chat-application">
     <div class="chat-content-head">
       <div class="header-details">
-        <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">mail_outline</i> Chat</h5>
+        <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">mail_outline</i> @if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name='Chat' contenteditable="true">{{ __('Chat') }}</editor_block>
+          @else
+            {{ __('Chat') }}
+            @endif</h5>
       </div>
     </div>
     <div class="app-chat">
@@ -122,8 +126,16 @@
                                     <img src="{{ asset('images/chat.jpg') }}" alt="" class="circle z-depth-2 responsive-img" style="height: 40px;width: 40px;">
                                   </div>
                                   <div class="col s9 pl-0">
-                                    <p class="m-0 blue-grey-text text-darken-4 font-weight-700">Общий чат</p>
-                                    <p class="m-0 info-text">Пользователей в чате:
+                                    <p class="m-0 blue-grey-text text-darken-4 font-weight-700">@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='General chat' contenteditable="true">{{ __('General chat') }}</editor_block>
+                                      @else
+                                        {{ __('General chat') }}
+                                      @endif</p>
+                                    <p class="m-0 info-text">@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Users in chat' contenteditable="true">{{ __('Users in chat') }}</editor_block>
+                                      @else
+                                        {{ __('Users in chat') }}
+                                      @endif:
                                       <span class="chat_total_user_count">1</span>
                                     </p>
                                   </div>
@@ -148,7 +160,11 @@
                                       </div>
                                       <div class="col s9 pl-0 pr-0">
                                         <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $user->login ?? '' }}</p>
-                                        <p class="m-0 info-text">Last seen: {{ $user->getLastActivityAttribute()['last_seen'] }}</p>
+                                        <p class="m-0 info-text">@if(canEditLang() && checkRequestOnEdit())
+                                            <editor_block data-name='Last seen' contenteditable="true">{{ __('Last seen') }}</editor_block>
+                                          @else
+                                            {{ __('Last seen') }}
+                                            @endif: {{ $user->getLastActivityAttribute()['last_seen'] }}</p>
                                       </div>
                                     </div>
                                   </div>
@@ -168,7 +184,11 @@
                           
                           </div>
                           <div class="no-data-found">
-                            <h6 class="center">No Results Found</h6>
+                            <h6 class="center">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='No Results Found' contenteditable="true">{{ __('No Results Found') }}</editor_block>
+                              @else
+                                {{ __('No Results Found') }}
+                                @endif</h6>
                           </div>
                         </div>
                         <!--/ Sidebar Content List -->
@@ -191,15 +211,27 @@
                       </div>
                       <div class="col">
                         <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $companion->name ?? '' }} ({{ $companion->login ?? '' }})</p>
-                        <p class="m-0 chat-text truncate">Last seen: {{ $user->getLastActivityAttribute()['last_seen'] }}</p>
+                        <p class="m-0 chat-text truncate">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Last seen' contenteditable="true">{{ __('Last seen') }}</editor_block>
+                          @else
+                            {{ __('Last seen') }}
+                            @endif: {{ $user->getLastActivityAttribute()['last_seen'] }}</p>
                       </div>
                     @else
                       <div class="col media-image online pr-0">
                         <img src="{{ asset('images/chat.jpg') }}" alt="" class="circle z-depth-2 responsive-img">
                       </div>
                       <div class="col">
-                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">Общий чат</p>
-                        <p class="m-0 chat-text truncate">Пользователей в чате:
+                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='General chat' contenteditable="true">{{ __('General chat') }}</editor_block>
+                          @else
+                            {{ __('General chat') }}
+                          @endif</p>
+                        <p class="m-0 chat-text truncate">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Users in chat' contenteditable="true">{{ __('Users in chat') }}</editor_block>
+                          @else
+                            {{ __('Users in chat') }}
+                          @endif:
                           <span class="chat_total_user_count">1</span>
                         </p>
                       </div>
@@ -226,7 +258,11 @@
                                   <p>{{ $message->message }}</p>
                                 </div>
                                 <div class="chat-del-link">
-                                  <button class="chat-del-link-btn" data-id="{{ $message->id }}">Удалить</button>
+                                  <button class="chat-del-link-btn" data-id="{{ $message->id }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                                      <editor_block data-name='Delete' contenteditable="true">{{ __('Delete') }}</editor_block>
+                                    @else
+                                      {{ __('Delete') }}
+                                    @endif</button>
                                 </div>
                               </div>
                             </div>
@@ -257,7 +293,11 @@
                 <div class="chat-footer">
                   <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input">
                     <input id="message-to-send" type="text" placeholder="Type message here.." class="message mb-0">
-                    <button class="btn waves-effect waves-light send chat-message-send-btn disabled">Send</button>
+                    <button class="btn waves-effect waves-light send chat-message-send-btn disabled" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Send' contenteditable="true">{{ __('Send') }}</editor_block>
+                      @else
+                        {{ __('Send') }}
+                        @endif</button>
                   </form>
                 </div>
                 <!--/ Chat footer -->
@@ -419,7 +459,7 @@
                 ' <p> ' + $data.message + '</p>' +
                 '</div>' +
                 '  <div class="chat-del-link">' +
-                '<button class="chat-del-link-btn" data-id="' + $data.message_id + '">Удалить</button>' +
+                '<button class="chat-del-link-btn" data-id="' + $data.message_id + '">{{ __('Delete') }}</button>' +
                 '  </div>' +
                 ' </div>' +
                 ' </div>');

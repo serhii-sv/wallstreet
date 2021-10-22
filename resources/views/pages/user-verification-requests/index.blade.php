@@ -28,10 +28,22 @@
                 <tr>
                     <th></th>
                     <th>
-                        <span>Email#</span>
+                        <span>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Email#' contenteditable="true">{{ __('Email#') }}</editor_block>
+                          @else
+                            {{ __('Email#') }}
+                            @endif</span>
                     </th>
-                    <th>Дата</th>
-                    <th>Действия</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
+                      @else
+                        {{ __('Date') }}
+                      @endif</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>
+                      @else
+                        {{ __('Actions') }}
+                      @endif</th>
                 </tr>
                 </thead>
 

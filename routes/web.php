@@ -198,22 +198,23 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
+            Route::get('/users/referral-list/{id}', [UsersController::class, 'userReferralList'])->name('users.referral.list');
 
 
             Route::post('/users/referrals-redistribution/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'referralsRedistribution'])->name('users.referrals-redistribution');
             Route::post('/users/add-referral/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'addReferral'])->name('users.add-referral');
 
-            Route::post('/users/mass-role-change', [\App\Http\Controllers\UsersController::class, 'massRoleChange'])->name('users.mass-role-change');
-            Route::get('/users/activity-by-date', [\App\Http\Controllers\UsersController::class, 'activityByDate'])->name('users.activity-by-date');
+            Route::post('/users/mass-role-change', [UsersController::class, 'massRoleChange'])->name('users.mass-role-change');
+            Route::get('/users/activity-by-date', [UsersController::class, 'activityByDate'])->name('users.activity-by-date');
 
-            Route::resource('/users', \App\Http\Controllers\UsersController::class, ['names' => [
+            Route::resource('/users', UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
             Route::post('/user/wallet/charge/{id}', [UsersController::class, 'userWalletCharge'])->name('user.wallet.charge');
 
             Route::post('/user/requisites/update', [UsersController::class, 'requisitesUpdate'])->name('user.requisites.update');
 
-            Route::get('/show/reftree/{id}', [ReferralController::class, 'show_user_referral_tree'])->name('user.reftree');
+            Route::get('/show/reftree/{id}', [ReferralController::class, 'showUserReferralTree'])->name('user.reftree');
             Route::get('/user/reftree/{id}', [ReferralController::class, 'userReftree'])->name('user.tree.reftree');
            // Route::get('/referrals-tree', [ReferralController::class, 'show_referral_tree'])->name('referrals.tree.index');
         //    Route::get('/referrals-tree/reftree', [ReferralController::class, 'reftree'])->name('referrals.reftree');

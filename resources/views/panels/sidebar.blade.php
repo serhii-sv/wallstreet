@@ -1,7 +1,7 @@
 <aside style="margin-bottom: 20px" class="{{$configData['sidenavMain']}} @if(!empty($configData['activeMenuType'])) {{$configData['activeMenuType']}} @else {{$configData['activeMenuTypeClass']}}@endif @if(($configData['isMenuDark']) === true) {{'sidenav-dark'}} @elseif(($configData['isMenuDark']) === false){{'sidenav-light'}}  @else {{$configData['sidenavMainColor']}}@endif {{ $configData['menuBgColor'] }}">
   <div class="brand-sidebar">
     <h1 class="logo-wrapper">
-      <a class="brand-logo darken-1" href="{{asset('/')}}">
+      <a class="brand-logo darken-1" href="{{asset('/')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         @if(!empty($configData['mainLayoutType']) && isset($configData['mainLayoutType']))
           @if($configData['mainLayoutType']=== 'vertical-modern-menu')
           {{--  <img class="hide-on-med-and-down" src="{{asset($configData['largeScreenLogo'])}}" alt="materialize logo" />
@@ -26,7 +26,11 @@
           @if(!empty ($configData['templateTitle']) && isset($configData['templateTitle']))
             {{$configData['templateTitle']}}
           @else
-            Wallstreet
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Wallstreet' contenteditable="true">{{ __('Wallstreet') }}</editor_block>
+            @else
+              {{ __('Wallstreet') }}
+            @endif
           @endif
         </span>
       </a>
@@ -36,25 +40,41 @@
   <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
     
     <li class="bold ">
-      <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}">
+      <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">dashboard</i>
-        <span class="menu-title" data-i18n="Дашборд">Дашборд</span>
+        <span class="menu-title" data-i18n="Dashboard">@if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name='Dashboard' contenteditable="true">{{ __('Dashboard') }}</editor_block>
+          @else
+            {{ __('Dashboard') }}
+          @endif</span>
       </a>
     </li>
     
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CHAT_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::USERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
       <li class="bold @if(Route::is('notifications.*') || Route::is('referral.tree.*') || Route::is('chat') || Route::is('users.*') || Route::is('verification-requests.*')) active @endif">
-        <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
+        <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)" >
           <i class="material-icons">assignment_ind</i>
-          <span class="menu-title" data-i18n="Пользователи">Пользователи</span>
+          <span class="menu-title" data-i18n="Пользователи">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Users' contenteditable="true">{{ __('Users') }}</editor_block>
+            @else
+              {{ __('Users') }}
+            @endif
+          </span>
         </a>
         <div class="collapsible-body">
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::USERS_INDEX]))
               <li>
-                <a href="{{ route('users.index') }}" class="@if(Route::is('users.*')) active @endif">
+                <a href="{{ route('users.index') }}" class="@if(Route::is('users.*')) active @endif" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">people</i>
-                  <span class="menu-title" data-i18n="Пользователи">Все клиенты</span>
+                  <span class="menu-title" data-i18n="Пользователи">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='All clients' contenteditable="true">{{ __('All clients') }}</editor_block>
+                    @else
+                      {{ __('All clients') }}
+                    @endif
+                  </span>
                   @if($counts['users'])<span class="badge badge pill green float-right mr-3">{{ $counts['users'] }}</span>@endif
                 </a>
               </li>
@@ -69,25 +89,43 @@
             
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
               <li>
-                <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">verified_user</i>
-                  <span class="menu-title" data-i18n="Подтверждение личности">Подтверждение личности</span>
+                  <span class="menu-title" data-i18n="ID confirmation">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='ID confirmation' contenteditable="true">{{ __('ID confirmation') }}</editor_block>
+                    @else
+                      {{ __('ID confirmation') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('notifications.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('notifications*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('notifications.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('notifications.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('notifications*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('notifications.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">notifications</i>
-                  <span class="menu-title" data-i18n="Уведомления">Уведомления</span>
+                  <span class="menu-title" >
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Notifications' contenteditable="true">{{ __('Notifications') }}</editor_block>
+                    @else
+                      {{ __('Notifications') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CHAT_INDEX]))
               <li>
-                <a class="waves-effect waves-cyan {{ (Route::is('chat') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('chat') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('chat') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">chat</i>
-                  <span class="menu-title" data-i18n="Пользователи">Чаты</span>
+                  <span class="menu-title" data-i18n="">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Chat rooms' contenteditable="true">{{ __('Chat rooms') }}</editor_block>
+                    @else
+                      {{ __('Chat rooms') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
@@ -100,58 +138,98 @@
       <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*')  ) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">account_balance</i>
-          <span class="menu-title" data-i18n="Пользователи">Финансы</span>
+          <span class="menu-title" data-i18n="Пользователи">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Finance' contenteditable="true">{{ __('Finance') }}</editor_block>
+            @else
+              {{ __('Finance') }}
+            @endif</span>
         </a>
         <div class="collapsible-body">
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REPLENISHMENTS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('replenishments*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('replenishments.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('replenishments.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('replenishments*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('replenishments.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">forward</i>
-                  <span class="menu-title" data-i18n="Пополнения">Пополнения</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block>
+                    @else
+                      {{ __('Replenishment') }}
+                    @endif
+                  </span>
                   @if($counts['replenishments_amount'])<span class="badge badge pill green float-right mr-3">${{ $counts['replenishments_amount'] }}</span>@endif
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">attach_money</i>
-                  <span class="menu-title" data-i18n="Трпнзакции">Депозиты</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>
+                    @else
+                      {{ __('Deposits') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">monetization_on</i>
-                  <span class="menu-title" data-i18n="Выводы">Выводы</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Withdrawals' contenteditable="true">{{ __('Withdrawals') }}</editor_block>
+                    @else
+                      {{ __('Withdrawals') }}
+                    @endif
+                  </span>
                   @if($counts['withdrawals_amount'])<span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>@endif
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSACTIONS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('transactions*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('transactions.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('transactions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('transactions*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('transactions.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">swap_calls</i>
-                  <span class="menu-title" data-i18n="Трпнзакции">Транзакции</span>
+                  <span class="menu-title" >
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Transaction' contenteditable="true">{{ __('Transaction') }}</editor_block>
+                    @else
+                      {{ __('Transaction') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">autorenew</i>
-                  <span class="menu-title" data-i18n="Обмен валют">Обмен валют</span>
+                  <span class="menu-title" data-i18n="Обмен валют">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block>
+                    @else
+                      {{ __('Currency exchange') }}
+                    @endif
+                    </span>
                   @if($counts['currency_exchange_count'])<span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>@endif
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('currency-rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('currency-rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-rates.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('currency-rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('currency-rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-rates.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">compare_arrows</i>
-                  <span class="menu-title" data-i18n="Курс валют">Курс валют</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Exchange Rates') }}</editor_block>
+                    @else
+                      {{ __('Exchange Rates') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
@@ -164,32 +242,56 @@
       <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*')  || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
-          <span class="menu-title" data-i18n="Пользователи">Маркетинг</span>
+          <span class="menu-title" data-i18n="Пользователи">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Marketing' contenteditable="true">{{ __('Marketing') }}</editor_block>
+            @else
+              {{ __('Marketing') }}
+            @endif
+          </span>
         </a>
         <div class="collapsible-body">
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.referrals') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.referrals') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.referrals') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">blur_linear</i>
-                  <span class="menu-title" data-i18n="Реферальные уровни">Реф уровни</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Referral levels' contenteditable="true">{{ __('Referral levels') }}</editor_block>
+                    @else
+                      {{ __('Referral levels') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
    
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('deposit.bonuses') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('deposit-bonuses.*') || Route::is('deposit.bonuses.*') || Route::is('deposit.bonuses.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposit.bonuses') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('deposit.bonuses') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('deposit-bonuses.*') || Route::is('deposit.bonuses.*') || Route::is('deposit.bonuses.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposit.bonuses') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">new_releases</i>
-                  <span class="menu-title" data-i18n="">Бонусы за оборот депозитов</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Deposit turnover bonuses' contenteditable="true">{{ __('Deposit turnover bonuses') }}</editor_block>
+                    @else
+                      {{ __('Deposit turnover bonuses') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
               @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
                 <li class="bold">
-                  <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rates.index') }}">
+                  <a class="waves-effect waves-cyan {{ (Route::is('rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('rates.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     <i class="material-icons">show_chart</i>
-                    <span class="menu-title" data-i18n="Тарифы">Тарифы</span>
+                    <span class="menu-title">
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Tariffs' contenteditable="true">{{ __('Tariffs') }}</editor_block>
+                      @else
+                        {{ __('Tariffs') }}
+                      @endif
+                    </span>
                   </a>
                 </li>
               @endif
@@ -200,9 +302,15 @@
     
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::KANBAN_INDEX]))
       <li class="bold">
-        <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
+        <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
           <i class="material-icons">developer_board</i>
-          <span class="menu-title" data-i18n="Задачи">Задачи</span>
+          <span class="menu-title">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Tasks' contenteditable="true">{{ __('Tasks') }}</editor_block>
+            @else
+              {{ __('Tasks') }}
+            @endif
+          </span>
           @if($counts['tasks'])<span class="badge badge pill orange float-right mr-3">{{ $counts['tasks'] }}</span>@endif
         </a>
       </li>
@@ -210,57 +318,98 @@
     
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CLOUD_FILES]))
       <li class="bold">
-        <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('cloud_files*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('cloud_files.manager') }}">
+        <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('cloud_files*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('cloud_files.manager') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
           <i class="material-icons">cloud_download</i>
-          <span class="menu-title" data-i18n="Менеджер файлов">Инструменты</span>
+          <span class="menu-title">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Instruments' contenteditable="true">{{ __('Instruments') }}</editor_block>
+            @else
+              {{ __('Instruments') }}
+            @endif
+          </span>
           {{--        <span class="badge badge pill purple float-right mr-3">{{ $counts['files'] }}</span>--}}
         </a>
       </li>
     @endif
     <li class="bold">
-      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us">
+      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">devices</i>
-        <span class="menu-title" data-i18n="Новости">Моб. Приложение</span>
+        <span class="menu-title" data-i18n="Новости">
+          @if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>
+          @else
+            {{ __('Mobile app') }}
+          @endif
+        </span>
       </a>
     </li>
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_PRODUCTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
       <li class="bold @if(Route::is('news-and-products.*') || Route::is('news.*') || Route::is('banners.*') || Route::is('video.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">web</i>
-          <span class="menu-title" data-i18n="Пользователи">Контент</span>
+          <span class="menu-title">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Content' contenteditable="true">{{ __('Content') }}</editor_block>
+            @else
+              {{ __('Content') }}
+            @endif
+          </span>
         </a>
         <div class="collapsible-body">
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_PRODUCTS_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('news-and-products.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! (Route::is('news-and-products*') || Route::is('news.*') || Route::is('products.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('news-and-products.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">list</i>
-                  <span class="menu-title" data-i18n="Новости">Новости/Продукты</span>
+                  <span class="menu-title" >
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Новости/Продукты' contenteditable="true">{{ __('Новости/Продукты') }}</editor_block>
+                    @else
+                      {{ __('Новости/Продукты') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('faq.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('faq*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('faq.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('faq.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('faq*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('faq.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">info</i>
-                  <span class="menu-title" data-i18n="Тех поддержка">Вопрос - ответ</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Question - answer' contenteditable="true">{{ __('Question - answer') }}</editor_block>
+                    @else
+                      {{ __('Question - answer') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
               @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
                 <li class="bold">
-                  <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.banners.all') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.banners.all') }}">
+                  <a class="waves-effect waves-cyan {{ (Route::is('referrals-and-banners.banners.all') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('referrals-and-banners.*') || Route::is('banners.*') || Route::is('referrals.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('referrals-and-banners.banners.all') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     <i class="material-icons">blur_linear</i>
-                    <span class="menu-title" data-i18n="Реферальные уровни/Баннеры">Промо (Баннеры)</span>
+                    <span class="menu-title">
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Promo (Banners)' contenteditable="true">{{ __('Promo (Banners)') }}</editor_block>
+                      @else
+                        {{ __('Promo (Banners)') }}
+                      @endif
+                    </span>
                   </a>
                 </li>
               @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('video.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}"
-                    style="{!! Route::is('video*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('video.index') }}">
+                <a class="waves-effect waves-cyan {{ (Route::is('video.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('video*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('video.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">info</i>
-                  <span class="menu-title" data-i18n="">Видеоролики</span>
+                  <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Videos' contenteditable="true">{{ __('Videos') }}</editor_block>
+                    @else
+                      {{ __('Videos') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
@@ -295,23 +444,41 @@
       <li class="bold @if(Route::is('roles.*') || Route::is('permissions.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
           <i class="material-icons">lock</i>
-          <span class="menu-title" data-i18n="">Доступы</span>
+          <span class="menu-title">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Access' contenteditable="true">{{ __('Access') }}</editor_block>
+            @else
+              {{ __('Access') }}
+            @endif
+          </span>
         </a>
         <div class="collapsible-body">
           <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::ROLES_INDEX]))
               <li>
-                <a href="{{ route('roles.index') }}" class="{{ (Route::is('roles.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}">
+                <a href="{{ route('roles.index') }}" class="{{ (Route::is('roles.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">transfer_within_a_station</i>
-                  <span data-i18n="Second level">Роли</span>
+                  <span data-i18n="Second level">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>
+                    @else
+                      {{ __('Roles') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PERMISSIONS_INDEX]))
               <li>
-                <a href="{{ route('permissions.index') }}" class="{{ (Route::is('permissions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}">
+                <a href="{{ route('permissions.index') }}" class="{{ (Route::is('permissions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">lock_open</i>
-                  <span data-i18n="Second level child">Права</span>
+                  <span data-i18n="Second level child">
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Rights' contenteditable="true">{{ __('Rights') }}</editor_block>
+                    @else
+                      {{ __('Rights') }}
+                    @endif
+                  </span>
                 </a>
               </li>
             @endif
@@ -321,17 +488,29 @@
     @endif
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::BACKUPS_INDEX]))
       <li class="bold">
-        <a class="waves-effect waves-cyan {{ (Route::is('backup.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('backup*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('backup.index') }}">
+        <a class="waves-effect waves-cyan {{ (Route::is('backup.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('backup*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('backup.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
           <i class="material-icons">backup</i>
-          <span class="menu-title" data-i18n="Резервные копии">Резервные копии</span>
+          <span class="menu-title">
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Backups' contenteditable="true">{{ __('Backups') }}</editor_block>
+            @else
+              {{ __('Backups') }}
+            @endif
+          </span>
         </a>
       </li>
     @endif
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::SETTINGS_SWITCH_SITE_STATUS]))
       <li class="bold" style="margin-bottom: 30px">
-        <label class="ml-10">
+        <label class="ml-10" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
           <input type="checkbox" name="disable_client_site" {{ \App\Models\Setting::getValue('disable_client_site') == 'true' ? 'checked' : '' }}/>
-          <span>Отключить сайт</span>
+          <span>
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Disable site' contenteditable="true">{{ __('Disable site') }}</editor_block>
+            @else
+              {{ __('Disable site') }}
+            @endif
+          </span>
         </label>
       </li>
     @endif

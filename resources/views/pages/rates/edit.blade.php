@@ -18,7 +18,8 @@
             <div class="card-title">
               <div class="row">
                 <div class="col s12 m6 l10">
-                  <h4 class="card-title">Редактировать тариф</h4>
+                  <h4 class="card-title">
+                    @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit tariff' contenteditable="true">{{ __('Edit tariff') }}</editor_block>@else {{ __('Edit tariff') }} @endif</h4>
                 </div>
               </div>
             </div>
@@ -27,9 +28,9 @@
                 @csrf
                 <div class="row">
                   <div class="input-field col s12">
-                    <label for="name" class="active">Группа Тарифа *</label>
+                    <label for="name" class="active">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tariff group *' contenteditable="true">{{ __('Tariff group *') }}</editor_block>@else {{ __('Tariff group *') }} @endif</label>
                     <select id="name" name="rate_group_id" data-error=".errorTxt1">
-                      <option value="">Не выбрано</option>
+                      <option value="">{{ __('Not chosen') }}</option>
                       @forelse($rate_groups as $item)
                         <option value="{{ $item->id }}" @if($item->id == $rate->rate_group_id) selected @endif>{{ $item->name }}</option>
                       @empty
@@ -38,12 +39,12 @@
                     <small class="errorTxt1"></small>
                   </div>
                   <div class="input-field col s12">
-                    <label for="name">Имя Тарифа *</label>
+                    <label for="name">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tariff Name *' contenteditable="true">{{ __('Tariff Name *') }}</editor_block>@else {{ __('Tariff Name *') }} @endif</label>
                     <input id="name" name="name" type="text" data-error=".errorTxt1" value="{{ $rate->name }}">
                     <small class="errorTxt1"></small>
                   </div>
                   <div class="input-field col s12">
-                    <label for="min">Минимальный депозит *</label>
+                    <label for="min">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tariff Name *' contenteditable="true">{{ __('Tariff Name *') }}</editor_block>@else {{ __('Tariff Name *') }} @endif</label>
                     <input id="min" type="number" name="min" data-error=".errorTxt2" value="{{ number_format($rate->min) }}">
                     <small class="errorTxt2"></small>
                   </div>

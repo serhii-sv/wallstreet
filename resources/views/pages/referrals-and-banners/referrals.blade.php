@@ -20,19 +20,19 @@
 @section('content')
   <div class="section mt-2 invoice-list-wrapper" id="blog-list">
     <div class="row">
-        <a href="{{ route('referrals.create') }}" class="btn btn-small float-right">Добавить реферальный уровень</a>
+        <a href="{{ route('referrals.create') }}" class="btn btn-small float-right" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add referral level' contenteditable="true">{{ __('Add referral level') }}</editor_block>@else {{ __('Add referral level') }} @endif</a>
         <div class="responsive-table mt-5">
           <table class="table referrals white border-radius-4 pt-1">
             <thead>
               <tr>
                 <th></th>
                 <th>
-                  <span>Уровень</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Level' contenteditable="true">{{ __('Level') }}</editor_block>@else {{ __('Level') }} @endif</span>
                 </th>
-                <th>Процент</th>
-                <th>При пополнении баланса</th>
-                <th>При начислении прибыли</th>
-                <th>Действия</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Percent' contenteditable="true">{{ __('Percent') }}</editor_block>@else {{ __('Percent') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='When replenishing the balance' contenteditable="true">{{ __('When replenishing the balance') }}</editor_block>@else {{ __('When replenishing the balance') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='When calculating profit' contenteditable="true">{{ __('When calculating profit') }}</editor_block>@else {{ __('When calculating profit') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>@else {{ __('Actions') }} @endif</th>
               </tr>
             </thead>
             
@@ -47,12 +47,12 @@
             <thead>
               <tr>
                 <th></th>
-                <th>Пользователь</th>
-                <th>Имя</th>
-                <th>Email</th>
-                <th>Страна</th>
-                <th>Количество рефералов</th>
-                <th>Ссылка</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>@else {{ __('User') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>@else {{ __('Name') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email' contenteditable="true">{{ __('Email') }}</editor_block>@else {{ __('Email') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>@else {{ __('Country') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of referrals' contenteditable="true">{{ __('Number of referrals') }}</editor_block>@else {{ __('Number of referrals') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Link' contenteditable="true">{{ __('Link') }}</editor_block>@else {{ __('Link') }} @endif</th>
               </tr>
             </thead>
             

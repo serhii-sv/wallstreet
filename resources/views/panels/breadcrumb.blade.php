@@ -22,16 +22,48 @@
         <a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!"
           data-target="dropdown1">
           <i class="material-icons hide-on-med-and-up">settings</i>
-          <span class="hide-on-small-onl">Settings</span>
+          <span class="hide-on-small-onl">@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Settings' contenteditable="true">{{ __('Settings') }}</editor_block>
+            @else
+              {{ __('Settings') }}
+              @endif</span>
           <i class="material-icons right">arrow_drop_down</i>
         </a>
         <ul class="dropdown-content" id="dropdown1" tabindex="0">
-          <li tabindex="0"><a class="grey-text text-darken-2" href="{{asset('user-profile-page')}}">Profile<span
-                class="new badge red">2</span></a></li>
-          <li tabindex="0"><a class="grey-text text-darken-2" href="{{asset('app-contacts')}}">Contacts</a></li>
-          <li tabindex="0"><a class="grey-text text-darken-2" href="{{asset('page-faq')}}">FAQ</a></li>
+          <li tabindex="0">
+            <a class="grey-text text-darken-2" href="{{asset('user-profile-page')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Profile' contenteditable="true">{{ __('Profile') }}</editor_block>
+              @else
+                {{ __('Profile') }}
+                @endif
+              <span class="new badge red">2</span>
+            </a>
+          </li>
+          <li tabindex="0">
+            <a class="grey-text text-darken-2" href="{{asset('app-contacts')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Contacts' contenteditable="true">{{ __('Contacts') }}</editor_block>
+              @else
+                {{ __('Contacts') }}
+                @endif
+            </a>
+          </li>
+          <li tabindex="0">
+            <a class="grey-text text-darken-2" href="{{asset('page-faq')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='FAQ' contenteditable="true">{{ __('FAQ') }}</editor_block>
+              @else
+                {{ __('FAQ') }}
+                @endif
+            </a>
+          </li>
           <li class="divider" tabindex="-1"></li>
-          <li tabindex="0"><a class="grey-text text-darken-2" href="{{asset('user-login')}}">Logout</a></li>
+          <li tabindex="0">
+            <a class="grey-text text-darken-2" href="{{asset('user-login')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Logout' contenteditable="true">{{ __('Logout') }}</editor_block>
+              @else
+                {{ __('Logout') }}
+                @endif
+            </a></li>
         </ul>
       </div>
     </div>

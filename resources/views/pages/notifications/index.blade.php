@@ -27,24 +27,44 @@
                 <div class="sidebar-header">
                     <div class="sidebar-details">
                         <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">receipt</i>
-                            Уведомления
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Notifications' contenteditable="true">{{ __('Notifications') }}</editor_block>
+                          @else
+                            {{ __('Notifications') }}
+                          @endif
                         </h5>
                         <div class="mt-3 pt-2">
-                            <p class="m-0 subtitle font-weight-700">Общее количество уведомлений</p>
+                            <p class="m-0 subtitle font-weight-700">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Total number of notifications' contenteditable="true">{{ __('Total number of notifications') }}</editor_block>
+                              @else
+                                {{ __('Total number of notifications') }}
+                              @endif</p>
                             <p class="m-0 text-muted">{{ $notifications_count ?? 0 }}</p>
                             <a class="mt-2 btn waves-effect waves-light gradient-45deg-red-pink"
-                               href="{{ route('notifications.create') }}">Создать</a>
+                               href="{{ route('notifications.create') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Create' contenteditable="true">{{ __('Create') }}</editor_block>
+                              @else
+                                {{ __('Create') }}
+                              @endif</a>
                         </div>
                     </div>
                 </div>
                 <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft delay-1">
                     <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
                         <ul class="contact-list display-grid">
-                            <li class="sidebar-title">Типы</li>
+                            <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Types' contenteditable="true">{{ __('Types') }}</editor_block>
+                              @else
+                                {{ __('Types') }}
+                              @endif</li>
                             <li @if(empty(request()->get('type'))) class="active" @endif>
-                                <a href="{{ route('notifications.index') }}" class="text-sub">
+                                <a href="{{ route('notifications.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                    Все
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                  @else
+                                    {{ __('All') }}
+                                  @endif
                                 </a>
                             </li>
 
@@ -66,8 +86,16 @@
                 <table id="notifications" class="display card card card-default border-radius-6">
                     <thead>
                     <tr>
-                        <th>Название</th>
-                        <th>Дата</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>
+                          @else
+                            {{ __('Name') }}
+                          @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
+                          @else
+                            {{ __('Date') }}
+                          @endif</th>
                     </tr>
                     </thead>
                     <tbody>
