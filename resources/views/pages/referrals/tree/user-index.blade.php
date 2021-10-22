@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title', 'eCommerce Pricing')
+@section('title', 'Список пользователей')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -244,6 +244,6 @@
 
 @section('page-script')
   <script>
-  
+
   </script>
 @endsection

@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title', 'eCommerce Pricing')
+@section('title', '')
 
 {{-- page styles --}}
 @section('page-style')

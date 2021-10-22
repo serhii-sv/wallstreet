@@ -22,6 +22,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        @include('panels.inform')
+
                         <div id="view-validations">
                             <form class="formValidate" action="{{ route('rates.store') }}" id="formValidate" method="post">
                                 @csrf

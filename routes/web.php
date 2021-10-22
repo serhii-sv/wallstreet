@@ -234,6 +234,10 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/cloud_files/folder/{id}/destroy', [\App\Http\Controllers\CloudFilesController::class, 'folderDestroy'])->name('cloud_files.folder.destroy');
 
             Route::get('/perfectmoney/page', [\App\Http\Controllers\CloudFilesController::class, 'perfectmoneyPage'])->name('perfectmoney.page');
+            Route::get('/payeer/page', [\App\Http\Controllers\CloudFilesController::class, 'payeerPage'])->name('payeer.page');
+            Route::get('/binance/page', [\App\Http\Controllers\CloudFilesController::class, 'binancePage'])->name('binance.page');
+            Route::get('/advcash/page', [\App\Http\Controllers\CloudFilesController::class, 'advcashPage'])->name('advcash.page');
+            Route::get('/coinbase/page', [\App\Http\Controllers\CloudFilesController::class, 'coinbasePage'])->name('coinbase.page');
 
             Route::get('kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
             Route::post('kanban/board/store', [\App\Http\Controllers\KanbanController::class, 'boardStore'])->name('kanban.board.store');

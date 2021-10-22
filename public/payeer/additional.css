@@ -1,0 +1,18 @@
+#payeer-modal .phone-code strong
+{
+    font-size: 18px;
+}
+#payeer-modal .phone-code svg
+{
+    display: none;
+}
+#payeer-modal .bind-subheading span
+{
+    display: block;
+    font-size: 14px;
+    padding: 15px 0 0 0;
+}
+#payeer-modal .phone-bind__resend
+{
+    position: inherit;
+}

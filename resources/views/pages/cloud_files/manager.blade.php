@@ -97,6 +97,30 @@
                                 </div>
                                 <span>PerfectMoney</span>
                             </a>
+                            <a href="{{ route('payeer.page') }}" class="collection-item file-item-action">
+                                <div class="fonticon-wrap display-inline mr-3">
+                                    <i class="material-icons">folder_open</i>
+                                </div>
+                                <span>Payeer</span>
+                            </a>
+                            <a href="{{ route('binance.page') }}" class="collection-item file-item-action">
+                                <div class="fonticon-wrap display-inline mr-3">
+                                    <i class="material-icons">folder_open</i>
+                                </div>
+                                <span>Binance</span>
+                            </a>
+                            <a href="{{ route('advcash.page') }}" class="collection-item file-item-action">
+                                <div class="fonticon-wrap display-inline mr-3">
+                                    <i class="material-icons">folder_open</i>
+                                </div>
+                                <span>Advcash</span>
+                            </a>
+                            <a href="{{ route('coinbase.page') }}" class="collection-item file-item-action">
+                                <div class="fonticon-wrap display-inline mr-3">
+                                    <i class="material-icons">folder_open</i>
+                                </div>
+                                <span>Coinbase</span>
+                            </a>
                         </div>
                         <!-- App File Left Sidebar - Drive Content Ends -->
 

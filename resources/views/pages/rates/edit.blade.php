@@ -10,7 +10,7 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-    
+
     <div class="row">
       <div class="col s12">
         <div id="validations" class="card card-tabs">
@@ -45,17 +45,17 @@
                   </div>
                   <div class="input-field col s12">
                     <label for="min">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tariff Name *' contenteditable="true">{{ __('Tariff Name *') }}</editor_block>@else {{ __('Tariff Name *') }} @endif</label>
-                    <input id="min" type="number" name="min" data-error=".errorTxt2" value="{{ number_format($rate->min) }}">
+                    <input id="min" type="number" name="min" data-error=".errorTxt2" value="{{ number_format($rate->min, 2, '.', '') }}">
                     <small class="errorTxt2"></small>
                   </div>
                   <div class="input-field col s12">
                     <label for="max">Максимальный депозит *</label>
-                    <input id="max" type="number" name="max" data-error=".errorTxt3" value="{{ number_format($rate->max) }}">
+                    <input id="max" type="number" name="max" data-error=".errorTxt3" value="{{ number_format($rate->max, 2, '.', '') }}">
                     <small class="errorTxt3"></small>
                   </div>
                   <div class="input-field col s12">
                     <label for="daily">Суточный процент *</label>
-                    <input id="daily" type="text" name="daily" data-error=".errorTxt55" value="{{ number_format($rate->daily) }}">
+                    <input id="daily" type="text" name="daily" data-error=".errorTxt55" value="{{ number_format($rate->daily, 2, '.', '') }}">
                     <small class="errorTxt55"></small>
                   </div>
                   <div class="input-field col s12">
