@@ -79,7 +79,7 @@
         <div class="sidebar-header">
           <div class="sidebar-details">
             <h5 class="m-0 sidebar-title">
-              <i class="material-icons app-header-icon text-top">perm_identity</i> Видеоролики пользователей
+              <i class="material-icons app-header-icon text-top">perm_identity</i> @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User videos' contenteditable="true">{{ __('User videos') }}</editor_block>@else {{ __('User videos') }} @endif
             </h5>
             <div class="mt-10 pt-2">
               {{--              <a href="">Добавить </a>--}}

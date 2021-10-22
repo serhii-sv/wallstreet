@@ -28,7 +28,7 @@
                 <!-- Current Balance -->
                 <div class="card animate fadeLeft">
                     <div class="card-content">
-                        <h6 class="mb-0 mt-0 display-flex justify-content-between">Время активности
+                        <h6 class="mb-0 mt-0 display-flex justify-content-between">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity time' contenteditable="true">{{ __('Activity time') }}</editor_block>@else {{ __('Activity time') }} @endif
                             <i class="material-icons float-right">more_vert</i>
                         </h6>
                         {{--                    <p class="medium-small">Активность за сегодня</p>--}}
@@ -36,14 +36,14 @@
                             <div id="current-balance-donut-chart" class="current-balance-shadow"></div>
                         </div>
                         <h5 class="center-align">{{ $userActivity['time'] }}</h5>
-                        <p class="medium-small center-align">Активность за сегодня</p>
+                        <p class="medium-small center-align">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity today' contenteditable="true">{{ __('Activity today') }}</editor_block>@else {{ __('Activity today') }} @endif</p>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6 l4" style="padding: 8px">
                 <ul id="task-card" class="collection with-header animate fadeLeft">
                     <li class="collection-header cyan">
-                        <h5 class="task-card-title mb-3">Задачи</h5>
+                        <h5 class="task-card-title mb-3">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tasks' contenteditable="true">{{ __('Tasks') }}</editor_block>@else {{ __('Tasks') }} @endif</h5>
                     </li>
                     @foreach(auth()->user()->tasks as $task)
                         <li class="collection-item dismissable">
@@ -66,8 +66,8 @@
                             <label for="task_content">
                                 <input type="text" id="task_content" name="task_content" placeholder="Новая задача" value="{{ old('task_content') }}" />
                                 <span class="width-100">
-                                <button class="btn btn-small">
-                                    <span class="ultra-small">Сохранить</span>
+                                <button class="btn btn-small" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                    <span class="ultra-small">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block>@else {{ __('Save') }} @endif</span>
                                 </button>
                             </span>
                             </label>
@@ -78,102 +78,13 @@
             <div class="col s12">
                 <!-- New kanban board add button -->
                 <button type="button" class="btn waves-effect waves-light mb-1 add-kanban-btn" id="add-kanban">
-                    <i class='material-icons left'>add</i> Добавить новую доску
+                    <i class='material-icons left'>add</i> @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add new board' contenteditable="true">{{ __('Add new board') }}</editor_block>@else {{ __('Add new board') }} @endif
                 </button>
                 <!-- kanban container -->
                 <div id="kanban-app"></div>
             </div>
         </div>
-
-        <!-- User new mail right area -->
-{{--        <div class="kanban-sidebar">--}}
-{{--            <div class="card quill-wrapper">--}}
-{{--                <div class="card-content pt-0">--}}
-{{--                    <div class="card-header display-flex pb-2">--}}
-{{--                        <h3 class="card-title">UI Design</h3>--}}
-{{--                        <div class="close close-icon">--}}
-{{--                            <i class="material-icons">close</i>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="divider"></div>--}}
-{{--                    <!-- form start -->--}}
-{{--                    <form class="edit-kanban-item mt-10 mb-10">--}}
-{{--                        <div class="input-field">--}}
-{{--                            <input type="text" class="edit-kanban-item-title validate" id="edit-item-title" placeholder="kanban Title">--}}
-{{--                            <label for="edit-item-title">Card Title</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="input-field">--}}
-{{--                            <input type="text" class="edit-kanban-item-date datepicker" id="edit-item-date" value="21/08/2019">--}}
-{{--                            <label for="edit-item-date">Due Date</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col s6">--}}
-{{--                                <div class="input-field mt-0">--}}
-{{--                                    <small>Label</small>--}}
-{{--                                    <select class="browser-default">--}}
-{{--                                        <option class="blue-text">Blue</option>--}}
-{{--                                        <option class="red-text">Red</option>--}}
-{{--                                        <option class="green-text">Green</option>--}}
-{{--                                        <option class="cyan-text">Cyan</option>--}}
-{{--                                        <option class="orange-text">Orange </option>--}}
-{{--                                        <option class="blue-grey-text">Blue-grey</option>--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col s6">--}}
-{{--                                <div class="input-field mt-0">--}}
-{{--                                    <small>Member</small>--}}
-{{--                                    <div class="display-flex">--}}
-{{--                                        <div class="avatar ">--}}
-{{--                                            <img src="{{asset('images/avatar/avatar-11.png')}}" class="circle" height="36" width="36"--}}
-{{--                                                 alt="avtar img holder">--}}
-{{--                                        </div>--}}
-{{--                                        <a class="btn-floating btn-small pulse ml-10">--}}
-{{--                                            <i class="material-icons">add</i>--}}
-{{--                                        </a>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="file-field input-field">--}}
-{{--                            <div class="btn btn-file">--}}
-{{--                                <span>File</span>--}}
-{{--                                <input type="file">--}}
-{{--                            </div>--}}
-{{--                            <div class="file-path-wrapper">--}}
-{{--                                <input class="file-path validate" type="text">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <!-- Compose mail Quill editor -->--}}
-{{--                        <div class="input-field">--}}
-{{--                            <span>Comment</span>--}}
-{{--                            <div class="snow-container mt-2">--}}
-{{--                                <div class="compose-editor"></div>--}}
-{{--                                <div class="compose-quill-toolbar">--}}
-{{--                <span class="ql-formats mr-0">--}}
-{{--                  <button class="ql-bold"></button>--}}
-{{--                  <button class="ql-italic"></button>--}}
-{{--                  <button class="ql-underline"></button>--}}
-{{--                  <button class="ql-link"></button>--}}
-{{--                  <button class="ql-image"></button>--}}
-{{--                  <button class="btn btn-small cyan btn-comment waves-effect waves-light ml-25">Comment</button>--}}
-{{--                </span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                    <div class="card-action pl-0 pr-0">--}}
-{{--                        <button type="reset" class="btn-small waves-effect waves-light delete-kanban-item mr-1">--}}
-{{--                            <span>Delete</span>--}}
-{{--                        </button>--}}
-{{--                        <button class="btn-small blue waves-effect waves-light update-kanban-item">--}}
-{{--                            <span>Save</span>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                    <!-- form start end-->--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+      
     </section>
     <!--/ Sample Project kanban -->
 @endsection

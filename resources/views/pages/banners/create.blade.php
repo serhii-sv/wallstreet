@@ -18,7 +18,7 @@
                         <div class="card-title">
                             <div class="row">
                                 <div class="col s12 m6 l10">
-                                    <h4 class="card-title">Добавить банер</h4>
+                                    <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add banner' contenteditable="true">{{ __('Add banner') }}</editor_block>@else {{ __('Add banner') }} @endif</h4>
                                 </div>
                             </div>
                         </div>
@@ -28,13 +28,13 @@
                                 @csrf
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <label for="title">Заголовок*</label>
+                                        <label for="title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Title*' contenteditable="true">{{ __('Title*') }}</editor_block>@else {{ __('Title*') }} @endif</label>
                                         <input id="title" name="title" type="text" data-error=".errorTxt1" value="{{ old('title') }}">
                                     </div>
                                     <div class="input-field col s12 width-100">
-                                        <div class="font-weight-500 mb-2">Размер</div>
+                                        <div class="font-weight-500 mb-2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Size' contenteditable="true">{{ __('Size') }}</editor_block>@else {{ __('Size') }} @endif</div>
                                         <select class="icons m6" name="size">
-                                            <option value="" disabled selected>Выберите размер</option>
+                                            <option value="" disabled selected>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Select size' contenteditable="true">{{ __('Select size') }}</editor_block>@else {{ __('Select size') }} @endif</option>
                                             @foreach(\App\Models\Banner::BANNERS as $banner)
                                                 <option value="{{ $banner['size'] }}" data-icon="{{ asset('/images/banners/' . $banner['image']) }}" class="circle">
                                                     {{ $banner['name'] }} ({{ $banner['size'] }})
@@ -43,12 +43,12 @@
                                         </select>
                                     </div>
                                     <div class="input-field col s12">
-                                        <div class="font-weight-500 mb-2">Картинка</div>
+                                        <div class="font-weight-500 mb-2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Image' contenteditable="true">{{ __('Image') }}</editor_block>@else {{ __('Image') }} @endif</div>
                                         <input type="file" id="input-file-events" class="dropify-event" name="image"/>
                                     </div>
                                     <div class="input-field col s12">
-                                        <button class="btn waves-effect waves-light right submit" type="submit">
-                                            Сохранить
+                                        <button class="btn waves-effect waves-light right submit" type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block>@else {{ __('Save') }} @endif
                                         </button>
                                     </div>
                                 </div>
