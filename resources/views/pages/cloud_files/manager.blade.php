@@ -33,14 +33,14 @@
                     <!-- sidebar close icon ends -->
                     <div class="input-field add-new-file mt-0">
                         <!-- Add File Button -->
-                        <button class="add-file-btn btn btn-block waves-effect waves-light mb-10">
+                        <button class="add-file-btn btn btn-block waves-effect waves-light mb-10" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                             <i class="material-icons">add</i>
-                            <span>Загрузить файл</span>
+                            <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Upload file' contenteditable="true">{{ __('Upload file') }}</editor_block>@else {{ __('Upload file') }} @endif</span>
                         </button>
 
-                        <button class="add-folder btn-small btn-block waves-effect waves-light mb-5">
+                        <button class="add-folder btn-small btn-block waves-effect waves-light mb-5" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                             <i class="material-icons">create_new_folder</i>
-                            <span>Добавить папку</span>
+                            <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add folder' contenteditable="true">{{ __('Add folder') }}</editor_block>@else {{ __('Add folder') }} @endif</span>
                         </button>
 
                         <form id="newFolder" style="display: none" action="{{ route('cloud_files.folder.create') }}" method="post">
@@ -56,8 +56,8 @@
                           </span>
                             </div>
                             <div >
-                                <button class="width-100 btn-small waves-effect">
-                                    Добавить
+                                <button class="width-100 btn-small waves-effect" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif
                                 </button>
                             </div>
                         </form>
@@ -73,13 +73,13 @@
                     </div>
                     <div class="app-file-sidebar-content">
                         <!-- App File Left Sidebar - Drive Content Starts -->
-                        <span class="app-file-label">Файлы</span>
+                        <span class="app-file-label">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Files' contenteditable="true">{{ __('Files') }}</editor_block>@else {{ __('Files') }} @endif</span>
                         <div class="collection file-manager-drive mt-3">
                             <a href="{{ route('cloud_files.manager') }}" class="collection-item file-item-action {{ is_null(request()->folder) ? 'active' : '' }}">
                                 <div class="fonticon-wrap display-inline mr-3">
                                     <i class="material-icons">folder_open</i>
                                 </div>
-                                <span>Все файлы</span>
+                                <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All files' contenteditable="true">{{ __('All files') }}</editor_block>@else {{ __('All files') }} @endif</span>
                                 <span class="chip red lighten-5 float-right red-text">{{ $filesTotalCount }}</span>
                             </a>
                             @foreach($filesByFolders as $item)
@@ -222,20 +222,20 @@
                 <div class="app-file-content">
                     <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center">
                         <div>
-                            <h6 class="font-weight-700 mb-3">Файлы</h6>
+                            <h6 class="font-weight-700 mb-3">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Files' contenteditable="true">{{ __('Files') }}</editor_block>@else {{ __('Files') }} @endif</h6>
                         </div>
                         @if(!is_null( request()->folder))
                             <div>
-                                <a href="{{ route('cloud_files.folder.destroy', request()->folder) }}" class="btn-small remove-folder waves-effect">
+                                <a href="{{ route('cloud_files.folder.destroy', request()->folder) }}" class="btn-small remove-folder waves-effect" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class="material-icons">clear</i>
-                                    Удалить папку
+                                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Delete folder' contenteditable="true">{{ __('Delete folder') }}</editor_block>@else {{ __('Delete folder') }} @endif
                                 </a>
                             </div>
                         @endif
                     </div>
 
                     <!-- App File - Recent Accessed Files Section Starts -->
-                    <span class="app-file-label">Все файлы в облаке</span>
+                    <span class="app-file-label">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All files in the cloud' contenteditable="true">{{ __('All files in the cloud') }}</editor_block>@else {{ __('All files in the cloud') }} @endif</span>
                     <div class="row app-file-recent-access mb-3">
                         @foreach($files as $file)
                             <div class="col xl3 l6 m3 s12">
@@ -252,8 +252,8 @@
                                         </a>
                                         <div class="app-file-recent-details">
                                             <div class="app-file-name font-weight-700">{{ $file->name }}</div>
-                                            <div class="app-file-size">Размер: {{ round($file->size/1024/1024, 4) }} мб.</div>
-                                            <div class="app-file-last-access">Дата создания : {{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</div>
+                                            <div class="app-file-size">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Size' contenteditable="true">{{ __('Size') }}</editor_block>@else {{ __('Size') }} @endif: {{ round($file->size/1024/1024, 4) }} мб.</div>
+                                            <div class="app-file-last-access">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='date of creation' contenteditable="true">{{ __('date of creation') }}</editor_block>@else {{ __('date of creation') }} @endif: {{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -284,9 +284,9 @@
                     <div class="card-content">
                         <ul class="tabs tabs-fixed-width mb-1">
                             <li class="tab mr-1 pr-1">
-                                <a class="active display-flex align-items-center" id="details-tab" href="#details">
+                                <a class="active display-flex align-items-center" id="details-tab" href="#details" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class="material-icons mr-1">content_paste</i>
-                                    <span>Детали файла</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='File details' contenteditable="true">{{ __('File details') }}</editor_block>@else {{ __('File details') }} @endif</span>
                                 </a>
                             </li>
                         </ul>
@@ -294,27 +294,27 @@
                             <div class="details-tab active" id="details">
                                 <div class="display-flex align-items-center flex-column pb-2 pt-4">
                                     <img src="{{asset('images/icon/pdf.png')}}" alt="PDF" height="42" width="35" class="mt-5 mb-5">
-                                    <p class="mt-4">Размер: {{ round($file->size/1024/1024, 4) }} мб.</p>
+                                    <p class="mt-4">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Size' contenteditable="true">{{ __('Size') }}</editor_block>@else {{ __('Size') }} @endif: {{ round($file->size/1024/1024, 4) }} мб.</p>
                                 </div>
                                 <div class="divider mt-5 mb-5"></div>
                                 <div class="pt-6">
-                                    <span class="app-file-label">Информация</span>
+                                    <span class="app-file-label">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Information' contenteditable="true">{{ __('Information') }}</editor_block>@else {{ __('Information') }} @endif</span>
                                     <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Создатель</p>
+                                        <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='The creator' contenteditable="true">{{ __('The creator') }}</editor_block>@else {{ __('The creator') }} @endif</p>
                                         <p class="font-weight-700">
                                             <a href="{{ route('users.show', ['user' => $file->author->id]) }}">{{ $file->author->email }}</a>
                                         </p>
                                     </div>
                                     <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Изменен</p>
+                                        <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Modified' contenteditable="true">{{ __('Modified') }}</editor_block>@else {{ __('Modified') }} @endif</p>
                                         <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->updated_at)->format('d-m-Y H:i') }}</p>
                                     </div>
                                     <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Создан</p>
+                                        <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Created by' contenteditable="true">{{ __('Created by') }}</editor_block>@else {{ __('Created by') }} @endif</p>
                                         <p class="font-weight-700">{{ \Carbon\Carbon::parse($file->created_at)->format('d-m-Y H:i') }}</p>
                                     </div>
                                     <div class="display-flex justify-content-between align-items-center mt-6">
-                                        <p>Последнее открытие</p>
+                                        <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='The last discovery' contenteditable="true">{{ __('The last discovery') }}</editor_block>@else {{ __('The last discovery') }} @endif</p>
                                         <p class="font-weight-700">{{ null !== $file->last_access ? \Carbon\Carbon::parse($file->last_access)->format('d-m-Y H:i') : 'нет' }}</p>
                                     </div>
                                 </div>

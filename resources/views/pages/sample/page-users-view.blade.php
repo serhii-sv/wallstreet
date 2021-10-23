@@ -51,6 +51,7 @@
           </div>
           <div>
             <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
+            <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan">Список рефералов</a>
             <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
           </div>
         </div>

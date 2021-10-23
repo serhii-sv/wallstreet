@@ -1,23 +1,23 @@
 <div class="navbar @if(($configData['isNavbarFixed'])=== true){{'navbar-fixed'}} @endif">
   <nav
-    class="{{$configData['navbarMainClass']}} @if($configData['isNavbarDark']=== true) {{'navbar-dark'}} @elseif($configData['isNavbarDark']=== false) {{'navbar-light'}} @elseif(!empty($configData['navbarBgColor'])) {{$configData['navbarBgColor']}} @else {{$configData['navbarMainColor']}} @endif">
+      class="{{$configData['navbarMainClass']}} @if($configData['isNavbarDark']=== true) {{'navbar-dark'}} @elseif($configData['isNavbarDark']=== false) {{'navbar-light'}} @elseif(!empty($configData['navbarBgColor'])) {{$configData['navbarBgColor']}} @else {{$configData['navbarMainColor']}} @endif">
     <div class="nav-wrapper">
       <div class="header-search-wrapper hide-on-med-and-down" style="{{ $configData['isMenuCollapsed'] ? 'width:calc(100% - 400px)' : '' }}">
         <i class="material-icons">search</i>
         <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
-          data-search="template-list">
+            data-search="template-list">
         <ul class="search-list collection display-none"></ul>
       </div>
       <ul class="navbar-list right">
         <li class="hide-on-med-and-down">
           <span class="badge time">{{ now()->format('d-m-Y H:i') }}</span>
         </li>
-{{--        <li class="dropdown-language">--}}
-{{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
-{{--            data-target="translation-dropdown">--}}
-{{--            <span class="flag-icon flag-icon-gb"></span>--}}
-{{--          </a>--}}
-{{--        </li>--}}
+        {{--        <li class="dropdown-language">--}}
+        {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
+        {{--            data-target="translation-dropdown">--}}
+        {{--            <span class="flag-icon flag-icon-gb"></span>--}}
+        {{--          </a>--}}
+        {{--        </li>--}}
         <li class="hide-on-med-and-down">
           <a class="waves-effect waves-block waves-light toggle-fullscreen" href="">
             <i class="material-icons">settings_overscan</i>
@@ -30,8 +30,9 @@
         </li>
         <li>
           <a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);"
-            data-target="notifications-dropdown">
-            <i class="material-icons">notifications_none @if($counts['notifications'] > 0)<small class="notification-badge">{{ $counts['notifications'] ?? 0 }}</small>@endif</i>
+              data-target="notifications-dropdown">
+            <i class="material-icons">notifications_none @if($counts['notifications'] > 0)
+                <small class="notification-badge">{{ $counts['notifications'] ?? 0 }}</small>@endif</i>
           </a>
         </li>
         <li>
@@ -77,51 +78,84 @@
       <!-- notifications-dropdown-->
       <ul class="dropdown-content" id="notifications-dropdown">
         <li>
-          <h6>NOTIFICATIONS @if($counts['notifications'] > 0) <span class="new badge">{{ $counts['notifications'] ?? 0 }}</span> @endif</h6>
+          <h6>@if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='NOTIFICATIONS' contenteditable="true">{{ __('NOTIFICATIONS') }}</editor_block>
+            @else
+              {{ __('NOTIFICATIONS') }}
+            @endif @if($counts['notifications'] > 0)
+              <span class="new badge">{{ $counts['notifications'] ?? 0 }}</span> @endif</h6>
         </li>
         <li class="divider"></li>
         @forelse($navbar_notifications as $item)
-        <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
-          <a class="black-text" href="" style="display: flex; align-items: flex-start">
-            <span class="material-icons icon-bg-circle red small " style="display: block;">notifications</span>
-            <small style="font-size: 14px; display: block;">
-            {{ $item->notification->text }}
-            </small>
-          </a>
-          <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00" style="margin-left: 30px;top: 0;">
-            @if($item->notification->created_at){{ $item->notification->created_at->diffForHumans() }}@endif
-          </time>
-        </li>
+          <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
+            <a class="black-text" href="" style="display: flex; align-items: flex-start">
+              <span class="material-icons icon-bg-circle red small " style="display: block;">notifications</span>
+              <small style="font-size: 14px; display: block;">
+                {{ $item->notification->text }}
+              </small>
+            </a>
+            <time class="media-meta grey-text darken-2" datetime="2015-06-12T20:50:48+08:00" style="margin-left: 30px;top: 0;">
+              @if($item->notification->created_at){{ $item->notification->created_at->diffForHumans() }}@endif
+            </time>
+          </li>
         @empty
           <li>
-            <a class="black-text" href="">
+            <a class="black-text" href="" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <span class="material-icons icon-bg-circle red small">notifications_none</span>
-              Уведомлений нет!
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='No notifications!' contenteditable="true">{{ __('No notifications!') }}</editor_block>
+              @else
+                {{ __('No notifications!') }}
+              @endif
             </a>
           </li>
         @endforelse
       </ul>
       <!-- profile-dropdown-->
       <style>
-        .dropdown-content{
-            width: 290px !important;
-        }
-        .navbar-list li:first-child {
-            margin-right: 0;
-        }
+          .dropdown-content {
+              width: 290px !important;
+          }
+
+          .navbar-list li:first-child {
+              margin-right: 0;
+          }
       </style>
       <ul class="dropdown-content" id="profile-dropdown">
         <li class="divider"></li>
         <li>
-          <a class="grey-text text-darken-1" href="{{ route('user.lock', Auth::user()) }}">
+          <a class="grey-text text-darken-1" href="{{ route('user.lock', Auth::user()) }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
             <i class="material-icons">lock_outline</i>
-            Заблокировать
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Block' contenteditable="true">{{ __('Block') }}</editor_block>
+            @else
+              {{ __('Block') }}
+            @endif
           </a>
         </li>
+        @if(canEditLang() && checkRequestOnEdit())
+          <li>
+            <a class="grey-text text-darken-1" href="{{ url()->current() }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif >
+              <i class="material-icons ">create</i>
+              <span>{{ __('Default mode') }}</span>
+            </a>
+          </li>
+        @elseif(canEditLang())
+          <li>
+            <a class="grey-text text-darken-1" href="{{ url()->current() . '?edit=true' }}">
+              <i class="material-icons ">create</i>
+              <span>{{ __('Edit text') }}</span>
+            </a>
+          </li>
+        @endif
         <li>
-          <a class="grey-text text-darken-1" href="{{ route('logout') }}">
+          <a class="grey-text text-darken-1" href="{{ route('logout') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
             <i class="material-icons">keyboard_tab</i>
-            Выйти
+            @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='Logout' contenteditable="true">{{ __('Logout') }}</editor_block>
+            @else
+              {{ __('Logout') }}
+            @endif
           </a>
         </li>
       </ul>
@@ -131,7 +165,7 @@
         <form id="navbarForm">
           <div class="input-field search-input-sm">
             <input class="search-box-sm mb-0" type="search" required="" placeholder='Login/Email/Name' id="search"
-              data-search="template-list">
+                data-search="template-list">
             <label class="label-icon" for="search">
               <i class="material-icons search-sm-icon">search</i>
             </label>
@@ -146,8 +180,15 @@
 
 <ul class="display-none" id="default-search-main">
   <li class="auto-suggestion-title">
-    <a class="collection-item" href="#">
-      <h6 class="search-title">Пользователи</h6></a>
+    <a class="collection-item" href="#" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+      <h6 class="search-title">
+        @if(canEditLang() && checkRequestOnEdit())
+          <editor_block data-name='Users' contenteditable="true">{{ __('Users') }}</editor_block>
+        @else
+          {{ __('Users') }}
+        @endif
+      </h6>
+    </a>
   </li>
 </ul>
 {{--<ul class="display-none" id="page-search-title">--}}
@@ -160,7 +201,13 @@
   <li class="auto-suggestion">
     <a class="collection-item display-flex align-items-center" href="#">
       <span class="material-icons">error_outline</span>
-      <span class="member-info">No results found.</span>
+      <span class="member-info">
+        @if(canEditLang() && checkRequestOnEdit())
+          <editor_block data-name='No results found.' contenteditable="true">{{ __('No results found.') }}</editor_block>
+        @else
+          {{ __('No results found.') }}
+        @endif
+      </span>
     </a>
   </li>
 </ul>

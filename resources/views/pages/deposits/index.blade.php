@@ -28,10 +28,18 @@
                     <div class="sidebar-details">
                         <h5 class="m-0 sidebar-title">
                             <i class="material-icons app-header-icon text-top">receipt</i>
-                            Депозиты
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>
+                          @else
+                            {{ __('Deposits') }}
+                          @endif
                         </h5>
                         <div class="mt-10 pt-2">
-                            <p class="m-0 subtitle font-weight-700">Общее количество депозитов</p>
+                            <p class="m-0 subtitle font-weight-700">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Total number of deposits' contenteditable="true">{{ __('Total number of deposits') }}</editor_block>
+                              @else
+                                {{ __('Total number of deposits') }}
+                              @endif</p>
                             <p class="m-0 text-muted">{{ $deposits_count ?? 0 }}</p>
                         </div>
                     </div>
@@ -39,11 +47,20 @@
                 <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft delay-1">
                     <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
                         <ul class="contact-list display-grid">
-                            <li class="sidebar-title">Статус</li>
+                            <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block>
+                              @else
+                                {{ __('Status') }}
+                              @endif</li>
                             <li @if(empty(request()->get('status'))) class="active" @endif>
-                                <a href="{{ route('deposits.index') }}" class="text-sub">
+                                <a href="{{ route('deposits.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+                                >
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                    Все
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                  @else
+                                    {{ __('All') }}
+                                  @endif
                                 </a>
                             </li>
                             @forelse($deposits_status as $key => $status)
@@ -63,11 +80,19 @@
                      style="position:relative !important;">
                     <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
                         <ul class="contact-list display-grid">
-                            <li class="sidebar-title">Тарифные планы</li>
+                            <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Tariff plans' contenteditable="true">{{ __('Tariff plans') }}</editor_block>
+                              @else
+                                {{ __('Tariff plans') }}
+                              @endif</li>
                             <li @if(empty(request()->get('rate'))) class="active" @endif>
-                                <a href="{{ route('deposits.index') }}" class="text-sub">
+                                <a href="{{ route('deposits.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                    Все
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                  @else
+                                    {{ __('All') }}
+                                  @endif
                                 </a>
                             </li>
                             @forelse($deposits_rates as $key => $rate)
@@ -97,12 +122,12 @@
                 <table id="deposits" class="display card card card-default scrollspy border-radius-6">
                     <thead>
                     <tr>
-                        <th>Пользователь</th>
-                        <th>Сумма инвестиций</th>
-                        <th>Начислено</th>
-                        <th>Осталось начислить</th>
-                        <th>Следующее начисление</th>
-                        <th>Дата открытия</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else{{ __('User') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of investment' contenteditable="true">{{ __('Amount of investment') }}</editor_block> @else {{ __('Amount of investment') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Assessed' contenteditable="true">{{ __('Assessed') }}</editor_block> @else {{ __('Assessed') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='It remains to accrue' contenteditable="true">{{ __('It remains to accrue') }}</editor_block> @else {{ __('It remains to accrue') }}@endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Next charge' contenteditable="true">{{ __('Next charge') }}</editor_block> @else {{ __('Next charge') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Opening date' contenteditable="true">{{ __('Opening date') }}</editor_block> @else {{ __('Opening date') }} @endif</th>
                     </tr>
                     </thead>
                     <tbody>

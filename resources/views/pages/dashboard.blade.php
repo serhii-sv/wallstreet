@@ -173,10 +173,22 @@
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeLeft">
               <div class="card-content orange lighten-1 white-text">
-                <p class="card-stats-title"><i class="material-icons">person_outline</i> Новые аккаунты</p>
+                <p class="card-stats-title"><i class="material-icons">person_outline</i> @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='New accounts' contenteditable="true">{{ __('New accounts') }}</editor_block>
+                  @else
+                    {{ __('New accounts') }}
+                  @endif</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ $users['today'] }}</h4>
-                <p>Итого: {{ number_format($users['total'], 0, '.', ',') }}</p>
+                  <p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='In 24 hours' contenteditable="true">{{ __('In 24 hours') }}</editor_block>
+                    @else
+                      {{ __('In 24 hours') }}
+                    @endif:</p> {{ $users['today'] }}</h4>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                  @else
+                    {{ __('Total') }}
+                  @endif: {{ number_format($users['total'], 0, '.', ',') }}</p>
               </div>
               <div class="card-action orange">
                 <div id="clients-bar" class="center-align"></div>
@@ -187,11 +199,23 @@
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeLeft">
               <div class="card-content green lighten-1 white-text">
-                <p class="card-stats-title"><i class="material-icons">attach_money</i>Пополнения</p>
+                <p class="card-stats-title"><i class="material-icons">attach_money</i>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block>
+                  @else
+                    {{ __('Replenishment') }}
+                  @endif</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}
+                  <p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='In 24 hours' contenteditable="true">{{ __('In 24 hours') }}</editor_block>
+                    @else
+                      {{ __('In 24 hours') }}
+                    @endif:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
-                <p>Итого: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                  @else
+                    {{ __('Total') }}
+                  @endif: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
               </div>
               <div class="card-action green ">
                 <div id="sales-compositebar" class="center-align"></div>
@@ -202,11 +226,23 @@
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
               <div class="card-content red accent-2 white-text">
-                <p class="card-stats-title"><i class="material-icons">attach_money</i> Выводы</p>
+                <p class="card-stats-title"><i class="material-icons">attach_money</i> @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Withdrawals' contenteditable="true">{{ __('Withdrawals') }}</editor_block>
+                  @else
+                    {{ __('Withdrawals') }}
+                  @endif</p>
                 <h4 class="card-stats-number white-text">
-                  <p class="no-margin" style="font-size: 14px">За 24 часа:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}
+                  <p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='In 24 hours' contenteditable="true">{{ __('In 24 hours') }}</editor_block>
+                    @else
+                      {{ __('In 24 hours') }}
+                    @endif:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
-                <p>Итого: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                  @else
+                    {{ __('Total') }}
+                  @endif: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
               </div>
               <div class="card-action red">
                 <div id="profit-tristate" class="center-align"></div>
@@ -217,11 +253,23 @@
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
               <div class="card-content cyan  white-text">
-                <p class="card-stats-title"><i class="material-icons">timeline</i> Прибыль</p>
-                <h4 class="card-stats-number white-text"><p class="no-margin" style="font-size: 14px">За 24 часа:</p>
+                <p class="card-stats-title"><i class="material-icons">timeline</i> @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Profit' contenteditable="true">{{ __('Profit') }}</editor_block>
+                  @else
+                    {{ __('Profit') }}
+                  @endif</p>
+                <h4 class="card-stats-number white-text"><p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='In 24 hours' contenteditable="true">{{ __('In 24 hours') }}</editor_block>
+                    @else
+                      {{ __('In 24 hours') }}
+                    @endif:</p>
                   {{ $profit_transactions_for_24h_sum < 0 ? '-' : '' }}
                   ${{ number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',') }}</h4>
-                <p>Сегодня: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
+                <p>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Today' contenteditable="true">{{ __('Today') }}</editor_block>
+                  @else
+                    {{ __('Today') }}
+                  @endif: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
                   ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
               </div>
               <div class="card-action cyan darken-1">
@@ -239,7 +287,11 @@
             <div class="card-move-up waves-effect waves-block waves-light">
               <div class="move-up cyan darken-1">
                 <div>
-                  <span class="chart-title white-text">Статистика</span>
+                  <span class="chart-title white-text">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Statistics' contenteditable="true">{{ __('Statistics') }}</editor_block>
+                    @else
+                      {{ __('Statistics') }}
+                    @endif</span>
                   <div class="chart-revenue cyan darken-2 white-text">
                     <p class="chart-revenue-total week">
                       ${{ $weeks_deposit_revenue  }}</p>
@@ -256,9 +308,17 @@
                   </div>
                   <div class="switch chart-revenue-switch right">
                     <label class="cyan-text text-lighten-5">
-                      Неделя <input type="checkbox" class="chart-revenue-switch-input" />
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='A week' contenteditable="true">{{ __('A week') }}</editor_block>
+                      @else
+                        {{ __('A week') }}
+                      @endif <input type="checkbox" class="chart-revenue-switch-input" />
                       <span class="lever"></span>
-                      Месяц
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Month' contenteditable="true">{{ __('Month') }}</editor_block>
+                        @else
+                          {{ __('Month') }}
+                        @endif
                     </label>
                   </div>
                 </div>
@@ -277,12 +337,20 @@
                   <div class="doughnut-chart-status week">
                     <p class="center-align font-weight-600 mt-4">
                       ${{ $weeks_deposit_revenue ?? 0 }}</p>
-                    <p class="ultra-small center-align">Прибыль</p>
+                    <p class="ultra-small center-align">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Profit' contenteditable="true">{{ __('Profit') }}</editor_block>
+                      @else
+                        {{ __('Profit') }}
+                      @endif</p>
                   </div>
                   <div class="doughnut-chart-status month display-none">
                     <p class="center-align font-weight-600 mt-4">
                       ${{ $month_deposit_revenue ?? 0 }}</p>
-                    <p class="ultra-small center-align">Прибыль</p>
+                    <p class="ultra-small center-align">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Profit' contenteditable="true">{{ __('Profit') }}</editor_block>
+                      @else
+                        {{ __('Profit') }}
+                      @endif</p>
                   </div>
                 </div>
               </div>
@@ -290,11 +358,19 @@
                 <ul class="doughnut-chart-legend">
                   <li class="kitchen ultra-small">
                     <span class="legend-color"></span>
-                    Пополнено
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Replenished' contenteditable="true">{{ __('Replenished') }}</editor_block>
+                    @else
+                      {{ __('Replenished') }}
+                    @endif
                   </li>
                   <li class="mobile ultra-small">
                     <span class="legend-color"></span>
-                    Выведено
+                    @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Withdrawn' contenteditable="true">{{ __('Withdrawn') }}</editor_block>
+                    @else
+                      {{ __('Withdrawn') }}
+                    @endif
                   </li>
                 </ul>
               </div>
@@ -305,16 +381,36 @@
               </div>
             </div>
             <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">Доход по месяцам <i
+                  <span class="card-title grey-text text-darken-4">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Monthly income' contenteditable="true">{{ __('Monthly income') }}</editor_block>
+                    @else
+                      {{ __('Monthly income') }}
+                    @endif <i
                         class="material-icons right">close</i>
                   </span>
               <table class="responsive-table">
                 <thead>
                   <tr>
-                    <th data-field="">id</th>
-                    <th data-field="">Дата</th>
-                    <th data-field="">Пополнено</th>
-                    <th data-field="">Выведено</th>
+                    <th data-field="">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='id' contenteditable="true">{{ __('id') }}</editor_block>
+                      @else
+                        {{ __('id') }}
+                        @endif</th>
+                    <th data-field="">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
+                      @else
+                        {{ __('Date') }}
+                      @endif</th>
+                    <th data-field="">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Replenished' contenteditable="true">{{ __('Replenished') }}</editor_block>
+                      @else
+                        {{ __('Replenished') }}
+                      @endif</th>
+                    <th data-field="">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Withdrawn' contenteditable="true">{{ __('Withdrawn') }}</editor_block>
+                      @else
+                        {{ __('Withdrawn') }}
+                      @endif</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -338,7 +434,11 @@
           <div class="card animate fadeUp">
             <div class="card-move-up teal accent-4 waves-effect waves-block waves-light">
               <div class="move-up">
-                <p class="margin white-text">Популярность по странам</p>
+                <p class="margin white-text">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Popularity by country' contenteditable="true">{{ __('Popularity by country') }}</editor_block>
+                  @else
+                    {{ __('Popularity by country') }}
+                  @endif</p>
                 <canvas id="trending-radar-chart" height="114"></canvas>
               </div>
             </div>
@@ -347,20 +447,39 @@
                 <i class="material-icons activator">done</i>
               </a>
               <div class="line-chart-wrapper">
-                <p class="margin white-text">Популярность по городам</p>
+                <p class="margin white-text">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Popularity by city' contenteditable="true">{{ __('Popularity by city') }}</editor_block>
+                  @else
+                    {{ __('Popularity by city') }}
+                  @endif</p>
                 <canvas id="line-chart" height="113"></canvas>
               </div>
             </div>
             <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">Популярность по странам <i
-                        class="material-icons right">close</i>
+                  <span class="card-title grey-text text-darken-4">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Popularity by country' contenteditable="true">{{ __('Popularity by country') }}</editor_block>
+                    @else
+                      {{ __('Popularity by country') }}
+                    @endif <i class="material-icons right">close</i>
                   </span>
               <table class="responsive-table ">
                 <thead>
                   <tr>
-                    <th data-field="country-name">Страна</th>
-                    <th data-field="item-sold">Количество юзеров</th>
-                    <th data-field="total-profit">Инвестировано, $</th>
+                    <th data-field="country-name">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>
+                      @else
+                        {{ __('Country') }}
+                      @endif</th>
+                    <th data-field="item-sold">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Number of users' contenteditable="true">{{ __('Number of users') }}</editor_block>
+                      @else
+                        {{ __('Number of users') }}
+                      @endif</th>
+                    <th data-field="total-profit">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Invested, $' contenteditable="true">{{ __('Invested, $') }}</editor_block>
+                      @else
+                        {{ __('Invested, $') }}
+                      @endif</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -372,17 +491,33 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="3" style="text-align: center">Пусто</td>
+                      <td colspan="3" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>
+                        @else
+                          {{ __('Empty') }}
+                        @endif</td>
                     </tr>
                   @endforelse
                 </tbody>
               </table>
-                  <span class="card-title grey-text text-darken-4 mt-3">Популярность по браузерам</span>
+                  <span class="card-title grey-text text-darken-4 mt-3">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Popularity by Browser' contenteditable="true">{{ __('Popularity by Browser') }}</editor_block>
+                    @else
+                      {{ __('Popularity by Browser') }}
+                    @endif</span>
               <table class="responsive-table ">
                 <thead>
                   <tr>
-                    <th data-field="country-name">Браузер</th>
-                    <th data-field="item-sold">Количество юзеров</th>
+                    <th data-field="country-name">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Browser' contenteditable="true">{{ __('Browser') }}</editor_block>
+                      @else
+                        {{ __('Browser') }}
+                      @endif</th>
+                    <th data-field="item-sold">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Number of users' contenteditable="true">{{ __('Number of users') }}</editor_block>
+                      @else
+                        {{ __('Number of users') }}
+                      @endif</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -393,7 +528,11 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="2" style="text-align: center">Пусто</td>
+                      <td colspan="2" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>
+                        @else
+                          {{ __('Empty') }}
+                        @endif</td>
                     </tr>
                   @endforelse
                 </tbody>
@@ -410,16 +549,28 @@
         <div class="row">
           <div class="col-12">
             <div class="card-content">
-              <h4 class="card-title mt-2 mb-1" style="text-align: center">Начислить бонус</h4>
+              <h4 class="card-title mt-2 mb-1" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Accrue bonus' contenteditable="true">{{ __('Accrue bonus') }}</editor_block>
+                @else
+                  {{ __('Accrue bonus') }}
+                @endif</h4>
               <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
                 {{ csrf_field() }}
                 
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12">
                     <input class="checkbox-tools" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} id="enter">
-                    <label class="for-checkbox-tools" for="enter">Ввод средств в систему</label>
+                    <label class="for-checkbox-tools" for="enter">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Depositing funds into the system' contenteditable="true">{{ __('Depositing funds into the system') }}</editor_block>
+                      @else
+                        {{ __('Depositing funds into the system') }}
+                      @endif</label>
                     <input class="checkbox-tools" name="type" value="withdraw" type="radio"  id="withdraw" {{ old('type') == 'withdraw' ? 'checked' : '' }}>
-                    <label class="for-checkbox-tools" for="withdraw">Вывод средств</label>
+                    <label class="for-checkbox-tools" for="withdraw">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Withdraw funds' contenteditable="true">{{ __('Withdraw funds') }}</editor_block>
+                      @else
+                        {{ __('Withdraw funds') }}
+                      @endif</label>
                   </div>
                 </div>
                 
@@ -452,9 +603,17 @@
                 <div class="row" style="margin-top:20px; text-align: center;">
                   <div class="col-12">
                   <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
-                  <label class="for-checkbox-tools" for="is_real1">Реал</label>
+                  <label class="for-checkbox-tools" for="is_real1">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Real' contenteditable="true">{{ __('Real') }}</editor_block>
+                    @else
+                      {{ __('Real') }}
+                    @endif</label>
                   <input class="checkbox-tools" name="is_real" value="0" type="radio" id="is_real0" {{ old('is_real') == '0' ? 'checked' : '' }} >
-                  <label class="for-checkbox-tools" for="is_real0">Фейк</label>
+                  <label class="for-checkbox-tools" for="is_real0">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Fake' contenteditable="true">{{ __('Fake') }}</editor_block>
+                    @else
+                      {{ __('Fake') }}
+                    @endif</label>
                   </div>
                 </div>
   
@@ -462,7 +621,7 @@
                   <div class="input-field col s12 text-center">
                     <div >
                       <input id="login" type="text" name="login"
-                          placeholder="Логин, айди, или почта" value="{{ old('login') }}"
+                          placeholder="{{ __('Login, email or id') }}" value="{{ old('login') }}"
                           style="font-weight: bold; text-align: center;width: 320px;">
                     </div>
                   </div>
@@ -470,7 +629,7 @@
                 <div class="row" style=" text-align: center;">
                   <div class="input-field col s12">
                     <div class="text-center">
-                      <input id="amount" type="text" name="amount" placeholder="Сумма" value="{{ old('amount') }}"
+                      <input id="amount" type="text" name="amount" placeholder="{{ __('Amount') }}" value="{{ old('amount') }}"
                           style="font-weight: 500; text-align: center; width: 320px;">
                     </div>
                   </div>
@@ -479,7 +638,11 @@
                 
                 <div class="row" style="text-align: center;">
                   <div class="input-field col s12" style="text-align:center;">
-                    <button class="btn red accent-2 shadow waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action">ОТПРАВИТЬ БОНУС<i class="material-icons right">attach_money</i>
+                    <button class="btn red accent-2 shadow waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Send bonus' contenteditable="true">{{ __('Send bonus') }}</editor_block>
+                      @else
+                        {{ __('Send bonus') }}
+                      @endif<i class="material-icons right">attach_money</i>
                     </button>
                   </div>
                 </div>
@@ -492,15 +655,27 @@
           <div class="col s12 m12 l12 dashboard-operations-wrapper">
             <div class="switch dashboard-operations-switch right">
               <label class="grey-text darken-4">
-                Статистика <input type="checkbox" class="dashboard-operations-switch-input">
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Statistics' contenteditable="true">{{ __('Statistics') }}</editor_block>
+                @else
+                  {{ __('Statistics') }}
+                @endif <input type="checkbox" class="dashboard-operations-switch-input">
                 <span class="lever"></span>
-                Последние операции
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Recent transactions' contenteditable="true">{{ __('Recent transactions') }}</editor_block>
+                  @else
+                    {{ __('Recent transactions') }}
+                  @endif
               </label>
             </div>
             
             <div id="stats-block" class="card card card-default animate fadeUp scrollspy ">
               <div class="card-content">
-                <h4 class="card-title">Статистика</h4>
+                <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Statistics' contenteditable="true">{{ __('Statistics') }}</editor_block>
+                  @else
+                    {{ __('Statistics') }}
+                  @endif</h4>
                 <p class="mb-2"></p>
                 <div class="row">
                   <div class="col s12">
@@ -509,11 +684,31 @@
                     <table class="striped">
                       <thead>
                         <tr>
-                          <th data-field="name">Система</th>
-                          <th data-field="plus">Пополнений</th>
-                          <th data-field="minus">Выплат</th>
-                          <th data-field="sum">Сумма</th>
-                          <th data-field="percent">В процентах</th>
+                          <th data-field="name">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='System' contenteditable="true">{{ __('System') }}</editor_block>
+                            @else
+                              {{ __('System') }}
+                            @endif</th>
+                          <th data-field="plus">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block>
+                            @else
+                              {{ __('Replenishment') }}
+                            @endif</th>
+                          <th data-field="minus">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Payouts' contenteditable="true">{{ __('Payouts') }}</editor_block>
+                            @else
+                              {{ __('Payouts') }}
+                            @endif</th>
+                          <th data-field="sum">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
+                            @else
+                              {{ __('Sum') }}
+                            @endif</th>
+                          <th data-field="percent">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='In percents' contenteditable="true">{{ __('In percents') }}</editor_block>
+                            @else
+                              {{ __('In percents') }}
+                            @endif</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -542,7 +737,11 @@
                           </tr>
                         @empty
                           <tr>
-                            <td colspan="3" style="text-align: center">Пусто</td>
+                            <td colspan="3" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>
+                              @else
+                                {{ __('Empty') }}
+                              @endif</td>
                           </tr>
                         @endforelse
                       </tbody>
@@ -554,16 +753,40 @@
             </div>
             <div id="last-operations-block" class="card subscriber-list-card animate fadeUp display-none">
               <div class="card-content pb-1">
-                <h4 class="card-title mb-0">Последние операции</h4>
+                <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Recent transactions' contenteditable="true">{{ __('Recent transactions') }}</editor_block>
+                  @else
+                    {{ __('Recent transactions') }}
+                  @endif</h4>
               </div>
               <table class="subscription-table responsive-table highlight">
                 <thead>
                   <tr>
-                    <th>Пользователь</th>
-                    <th>Тип</th>
-                    <th>Сумма</th>
-                    <th>Платёжная система</th>
-                    <th>Дата операции</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>
+                      @else
+                        {{ __('User') }}
+                      @endif</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Type of' contenteditable="true">{{ __('Type of') }}</editor_block>
+                      @else
+                        {{ __('Type of') }}
+                      @endif</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
+                      @else
+                        {{ __('Sum') }}
+                      @endif</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
+                      @else
+                        {{ __('Payment system') }}
+                      @endif</th>
+                    <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>
+                      @else
+                        {{ __('Date of operation') }}
+                      @endif</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -593,7 +816,11 @@
           <div class="col s12 m12 l12">
             <div id="striped-table" class="card card card-default scrollspy">
               <div class="card-content">
-                <h4 class="card-title">История входов админов</h4>
+                <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Admin Login History' contenteditable="true">{{ __('Admin Login History') }}</editor_block>
+                  @else
+                    {{ __('Admin Login History') }}
+                  @endif</h4>
                 <p class="mb-2"></p>
                 <div class="row">
                   <div class="col s12">
@@ -602,22 +829,46 @@
                     <table class="striped">
                       <thead>
                         <tr>
-                          <th data-field="id">Пользователь</th>
-                          <th data-field="name">Ip</th>
-                          <th data-field="price">Дата</th>
+                          <th data-field="id">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>
+                            @else
+                              {{ __('User') }}
+                            @endif</th>
+                          <th data-field="name">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='ip' contenteditable="true">{{ __('ip') }}</editor_block>
+                            @else
+                              {{ __('ip') }}
+                            @endif</th>
+                          <th data-field="price">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
+                            @else
+                              {{ __('Date') }}
+                            @endif</th>
                         </tr>
                       </thead>
                       <tbody>
                         @forelse($user_auth_logs as $item)
                           <tr>
-                            <td><b>Имя: </b>{{ $item->user->name ?? '' }}
-                              <br><b>Логин: </b>{{ $item->user->login ?? '' }}</td>
+                            <td><b>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>
+                                @else
+                                  {{ __('Name') }}
+                                @endif: </b>{{ $item->user->name ?? '' }}
+                              <br><b>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block>
+                                @else
+                                  {{ __('Login') }}
+                                @endif: </b>{{ $item->user->login ?? '' }}</td>
                             <td>{{ $item->ip ?? '' }}</td>
                             <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
                           </tr>
                         @empty
                           <tr>
-                            <td colspan="3" style="text-align: center">Пусто</td>
+                            <td colspan="3" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>
+                              @else
+                                {{ __('Empty') }}
+                              @endif</td>
                           </tr>
                         @endforelse
                       </tbody>

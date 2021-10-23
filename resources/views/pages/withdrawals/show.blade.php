@@ -22,13 +22,21 @@
                         <!-- header section -->
                         <div class="row invoice-date-number">
                             <div class="col xl4 s12">
-                                <span class="invoice-number mr-1">Вывод</span>
+                                <span class="invoice-number mr-1">@if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Withdrawal' contenteditable="true">{{ __('Withdrawal') }}</editor_block>
+                                  @else
+                                    {{ __('Withdrawal') }}
+                                  @endif</span>
 {{--                                <span>{{ $transaction->id }}</span>--}}
                             </div>
                             <div class="col xl8 s12">
                                 <div class="invoice-date display-flex align-items-center flex-wrap">
                                     <div class="mr-3">
-                                        <small>Дата:</small>
+                                        <small>@if(canEditLang() && checkRequestOnEdit())
+                                            <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
+                                          @else
+                                            {{ __('Date') }}
+                                          @endif:</small>
                                         <span>{{ $transaction->created_at->format('d-m-Y H:i') }}</span>
                                     </div>
 {{--                                    <div>--}}
@@ -54,28 +62,60 @@
                             <div class="col m6 s12">
 {{--                                <h6 class="invoice-from">Bill From</h6>--}}
                                 <div class="invoice-address">
-                                    <span># Транзакции</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='# Transaction' contenteditable="true">{{ __('# Transaction') }}</editor_block>
+                                      @else
+                                        {{ __('# Transaction') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Тип транзации</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Transaction type' contenteditable="true">{{ __('Transaction type') }}</editor_block>
+                                      @else
+                                        {{ __('Transaction type') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Email пользователя</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='User email' contenteditable="true">{{ __('User email') }}</editor_block>
+                                      @else
+                                        {{ __('User email') }}
+                                        @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Платежная система</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
+                                      @else
+                                        {{ __('Payment system') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Валюта</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Currency' contenteditable="true">{{ __('Currency') }}</editor_block>
+                                      @else
+                                        {{ __('Currency') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Сумма</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
+                                      @else
+                                        {{ __('Sum') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Кошелек</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Wallet' contenteditable="true">{{ __('Wallet') }}</editor_block>
+                                      @else
+                                        {{ __('Wallet') }}
+                                      @endif</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>Сумма в $</span>
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Sum in $' contenteditable="true">{{ __('Sum in $') }}</editor_block>
+                                      @else
+                                        {{ __('Sum in $') }}
+                                      @endif</span>
                                 </div>
                             </div>
                             <div class="col m6 s12">
@@ -85,7 +125,7 @@
                                     <span>{{ $transaction->id }}</span>
                                 </div>
                                 <div class="invoice-address">
-                                    <span>{{ __('locale.' . $transaction->type->name) ?? 'Не указано' }}</span>
+                                    <span>{{ __('locale.' . $transaction->type->name) ?? __('Not indicated') }}</span>
                                 </div>
                                 <div class="invoice-address">
                                     <span><a href="{{ route('users.show', $transaction->user->id) }}">{{ $transaction->user->email }}</a></span>
@@ -211,9 +251,13 @@
                             <form action="{{ route('withdrawals.destroy', $transaction->id) }}" class="display-flex align-items-center justify-content-center" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
+                                <button class="btn waves-effect waves-light display-flex align-items-center justify-content-center" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class="material-icons mr-3">clear</i>
-                                    <span class="text-nowrap">Удалить</span>
+                                    <span class="text-nowrap">@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Delete' contenteditable="true">{{ __('Delete') }}</editor_block>
+                                      @else
+                                        {{ __('Delete') }}
+                                      @endif</span>
                                 </button>
                             </form>
                         </div>

@@ -84,7 +84,7 @@
         <div class="sidebar-header">
           <div class="sidebar-details">
             <h5 class="m-0 sidebar-title">
-              <i class="material-icons app-header-icon text-top">perm_identity</i> Видеоролики пользователей
+              <i class="material-icons app-header-icon text-top">perm_identity</i> @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User videos' contenteditable="true">{{ __('User videos') }}</editor_block>@else {{ __('User videos') }} @endif
             </h5>
             <div class="mt-10 pt-2">
               {{--              <a href="">Добавить </a>--}}
@@ -116,13 +116,13 @@
         <div class="card-header">
           <div class="card-content">
             <div class="user">
-              Логин
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block>@else {{ __('Login') }} @endif
             </div>
             <div class="input">
-              Ссылка
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Link' contenteditable="true">{{ __('Link') }}</editor_block>@else {{ __('Link') }} @endif
             </div>
             <div class="status">
-              Статус
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block>@else {{ __('Status') }} @endif
             </div>
           </div>
         </div>
@@ -143,9 +143,9 @@
                 </div>
                 <div class="status">
                   @if($video->approved)
-                    <span class="badge green darken-3 display-block" style="height: auto;padding: 10px;">Подтверждено</span>
+                    <span class="badge green darken-3 display-block" style="height: auto;padding: 10px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Confirmed' contenteditable="true">{{ __('Confirmed') }}</editor_block>@else {{ __('Confirmed') }} @endif</span>
                   @else
-                    <span class="badge red darken-2 display-block" style="height: auto;padding: 10px;">Не подтверждено</span>
+                    <span class="badge red darken-2 display-block" style="height: auto;padding: 10px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Not confirmed' contenteditable="true">{{ __('Not confirmed') }}</editor_block>@else {{ __('Not confirmed') }} @endif</span>
                   @endif
                 </div>
                 <div class="button-block display-flex justify-content-between">
@@ -168,7 +168,7 @@
               </form>
             @empty
               <div class="card-content pl-0 pb-0 pr-0">
-                Записей нет
+                @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No entries' contenteditable="true">{{ __('No entries') }}</editor_block>@else {{ __('No entries') }} @endif
               </div>
             @endforelse
           </div>
