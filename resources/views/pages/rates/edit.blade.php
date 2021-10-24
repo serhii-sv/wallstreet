@@ -44,7 +44,7 @@
                     <small class="errorTxt1"></small>
                   </div>
                   <div class="input-field col s12">
-                    <label for="min">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Tariff Name *' contenteditable="true">{{ __('Tariff Name *') }}</editor_block>@else {{ __('Tariff Name *') }} @endif</label>
+                    <label for="min">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Minimum deposit *' contenteditable="true">{{ __('Minimum deposit *') }}</editor_block>@else {{ __('Minimum deposit *') }} @endif</label>
                     <input id="min" type="number" name="min" data-error=".errorTxt2" value="{{ number_format($rate->min, 2, '.', '') }}">
                     <small class="errorTxt2"></small>
                   </div>

@@ -123,6 +123,7 @@
                     <thead>
                     <tr>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else{{ __('User') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block> @else{{ __('Login') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of investment' contenteditable="true">{{ __('Amount of investment') }}</editor_block> @else {{ __('Amount of investment') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Assessed' contenteditable="true">{{ __('Assessed') }}</editor_block> @else {{ __('Assessed') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='It remains to accrue' contenteditable="true">{{ __('It remains to accrue') }}</editor_block> @else {{ __('It remains to accrue') }}@endif</th>
