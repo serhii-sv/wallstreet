@@ -38,7 +38,6 @@ class DashboardController extends Controller
      */
     public function index() {
         
-        
         $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
         $id_enter = TransactionType::where('name', 'enter')->first()->id;
         

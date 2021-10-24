@@ -5,6 +5,7 @@ namespace App\Http\ViewComposers;
 
 
 use App\Models\CloudFile;
+use App\Models\Language;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class NavbarComposer
                 'notifications' => \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
             ]);
             $view->with('navbar_notifications', \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->get());
+            $view->with('navbar_languages', Language::all());
         }
         
     }

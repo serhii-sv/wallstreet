@@ -62,7 +62,11 @@ return [
             'bucket' => env('DO_SPACES_BUCKET'),
             'folder' => env('DO_SPACES_FOLDER'),
         ],
-
+        'lang' => [
+            'driver' => 'local',
+            'root' => app('path.resources'). '/lang'
+        ]
+        
     ],
 
     /*

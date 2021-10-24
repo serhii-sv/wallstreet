@@ -19,7 +19,6 @@
     "/css/pages/app-contacts.css": "/css/pages/app-contacts.css",
     "/css/pages/app-chat.css": "/css/pages/app-chat.css",
     "/css/pages/app-calendar.css": "/css/pages/app-calendar.css",
-    "/css/daterangepicker.css": "/css/daterangepicker.css",
     "/css/style-rtl.css": "/css/style-rtl.css",
     "/css/layouts/style-horizontal.css": "/css/layouts/style-horizontal.css",
     "/css/pages/advance-ui-media.css": "/css/pages/advance-ui-media.css",
@@ -144,9 +143,9 @@
     "/js/scripts/user-verification-requests.js": "/js/scripts/user-verification-requests.js",
     "/js/custom/custom-script.js": "/js/custom/custom-script.js",
     "/js/custom/custom-script.min.js": "/js/custom/custom-script.min.js",
+    "/images/.DS_Store": "/images/.DS_Store",
     "/vendors/imagesloaded.pkgd.min.js": "/vendors/imagesloaded.pkgd.min.js",
     "/vendors/jquery-sortable.js": "/vendors/jquery-sortable.js",
-    "/vendors/jquery.nestable": "/vendors/jquery.nestable",
     "/vendors/masonry.pkgd.min.js": "/vendors/masonry.pkgd.min.js",
     "/vendors/vendors-rtl.min.css": "/vendors/vendors-rtl.min.css",
     "/vendors/vendors.min.css": "/vendors/vendors.min.css",
@@ -155,7 +154,6 @@
     "/json/verticalMenu.json": "/json/verticalMenu.json",
     "/js/vendors.min.js": "/js/vendors.min.js",
     "/js/jquery.js": "/js/jquery.js",
-    "/js/daterangepicker.js": "/js/daterangepicker.js",
     "/js/moment.js": "/js/moment.js",
     "/js/bootstrap-colorpicker.min.js": "/js/bootstrap-colorpicker.min.js"
 }

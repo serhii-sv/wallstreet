@@ -57,6 +57,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+    
+        if (!session()->has('lang')) {
+            $lang = Language::where('default', true)->first();
+            if (!empty($lang))
+                session()->put('lang', $lang->code);
+            else
+                session()->put('lang', 'ru');
+        }
+        
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }

@@ -26,16 +26,18 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
-
-
+    
+    Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
 
 
     Route::group(['middleware' => ['auth', 'locked.user', ]], function () {
         Route::get('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
         Route::post('ajax/bin-check', [\App\Http\Controllers\BinCheckController::class, 'ajaxCheck'])->name('ajax.bin.check');
-
+        Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
+        
         Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
+            Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
             Route::post('/ajax/get-user-email', [\App\Http\Controllers\Ajax\SearchUserController::class, 'getUserEmailByAny'])->name('ajax.get.user.email');
             Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
