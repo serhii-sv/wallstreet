@@ -52,16 +52,16 @@
           <table class="table white border-radius-4 pt-1">
             <thead>
               <tr class="border-none">
-                <th rowspan="2" colspan="2">Карьерный статус</th>
-                <th colspan="2">Оборот депозитов</th>
-                <th rowspan="2">Вознаграждение</th>
-                <th rowspan="2">Лидерский бонус</th>
+                <th rowspan="2" colspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Career status' contenteditable="true">{{ __('Career status') }}</editor_block>@else {{ __('Career status') }} @endif</th>
+                <th colspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Deposit turnover' contenteditable="true">{{ __('Deposit turnover') }}</editor_block>@else {{ __('Deposit turnover') }} @endif</th>
+                <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block>@else {{ __('Reward') }} @endif</th>
+                <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Leadership bonus' contenteditable="true">{{ __('Leadership bonus') }}</editor_block>@else {{ __('Leadership bonus') }} @endif</th>
                 <th rowspan="2"></th>
                 <th></th>
               </tr>
               <tr class="border-none">
-                <th>Личный оборот</th>
-                <th>Структурный оборот</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Personal turnover' contenteditable="true">{{ __('Personal turnover') }}</editor_block>@else {{ __('Personal turnover') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Structural turnover' contenteditable="true">{{ __('Structural turnover') }}</editor_block>@else {{ __('Structural turnover') }} @endif</th>
               </tr>
             </thead>
             <tbody>
@@ -117,7 +117,7 @@
                   <input type="text" name="leadership_bonus" value="">
                 </td>
                 <td>
-                  <button class="btn add-data-btn">Добавить</button>
+                  <button class="btn add-data-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif</button>
                 </td>
               </tr>
             </tbody>

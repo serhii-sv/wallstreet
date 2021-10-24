@@ -32,15 +32,16 @@
                 <div class="app-file-content">
                     <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center; width: 100%">
                             <div>
-                                <h6 class="font-weight-700 mb-3">Резервные копии</h6>
+                                <h6 class="font-weight-700 mb-3">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Backups' contenteditable="true">{{ __('Backups') }}</editor_block>@else {{ __('Backups') }} @endif</h6>
                             </div>
                             <div>
-                                <a href="{{ route('backup.backupDB') }}" class="btn btn-small">Создать резервную копию</a>
+                                <a href="{{ route('backup.backupDB') }}" class="btn btn-small" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+                                >@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Create a backup' contenteditable="true">{{ __('Create a backup') }}</editor_block>@else {{ __('Create a backup') }} @endif</a>
                             </div>
                     </div>
 
                     <!-- App File - Recent Accessed Files Section Starts -->
-                    <span class="app-file-label">Все резервные копии</span>
+                    <span class="app-file-label">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All backups' contenteditable="true">{{ __('All backups') }}</editor_block>@else {{ __('All backups') }} @endif</span>
                     <div class="row app-file-recent-access mb-3">
                         @foreach($backups as $backup)
                             <div class="col xl3 l6 m3 s12">
@@ -57,10 +58,10 @@
                                         </a>
                                         <div class="app-file-recent-details">
                                             <div class="app-file-name font-weight-700">{{ last(explode('/', $backup->path)) }}</div>
-                                            <div class="app-file-size">Размер: {{ \App\Models\Backup::formatBytes($backup->size) }} </div>
-                                            <div class="app-file-last-access">Дата создания : {{ \Carbon\Carbon::parse($backup->created_at)->format('d-m-Y H:i') }}</div>
+                                            <div class="app-file-size">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='The size' contenteditable="true">{{ __('The size') }}</editor_block>@else {{ __('The size') }} @endif: {{ \App\Models\Backup::formatBytes($backup->size) }} </div>
+                                            <div class="app-file-last-access">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='date of creation' contenteditable="true">{{ __('date of creation') }}</editor_block>@else {{ __('date of creation') }} @endif : {{ \Carbon\Carbon::parse($backup->created_at)->format('d-m-Y H:i') }}</div>
                                             <div class="display-flex justify-content-center align-items-center">
-                                                <a href="{{ route('backup.destroy', $backup) }}" class="btn btn-small mt-5 delete">Удалить</a>
+                                                <a href="{{ route('backup.destroy', $backup) }}" class="btn btn-small mt-5 delete">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Delete' contenteditable="true">{{ __('Delete') }}</editor_block>@else {{ __('Delete') }} @endif</a>
                                             </div>
                                         </div>
                                     </div>

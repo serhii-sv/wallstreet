@@ -29,13 +29,13 @@
                     <tr>
                         <th></th>
                         <th>
-                            <span>Валюты</span>
+                            <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Currencies' contenteditable="true">{{ __('Currencies') }}</editor_block>@else {{ __('Currencies') }} @endif</span>
                         </th>
-                        <th>Курс</th>
-                        <th>Последнее обновление</th>
-                        <th>Источник данных</th>
-                        <th>Автообновление</th>
-                        <th style="width: 120px !important;">Действия</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Rates' contenteditable="true">{{ __('Rates') }}</editor_block>@else {{ __('Rates') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Last update' contenteditable="true">{{ __('Last update') }}</editor_block>@else {{ __('Last update') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Data source' contenteditable="true">{{ __('Data source') }}</editor_block>@else {{ __('Data source') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Auto update' contenteditable="true">{{ __('Auto update') }}</editor_block>@else {{ __('Auto update') }} @endif</th>
+                        <th style="width: 120px !important;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>@else {{ __('Actions') }} @endif</th>
                         <th></th>
                     </tr>
                     </thead>

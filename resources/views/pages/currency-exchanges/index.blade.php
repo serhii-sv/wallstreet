@@ -31,10 +31,18 @@
           <div class="sidebar-details">
             <h5 class="m-0 sidebar-title">
               <i class="material-icons app-header-icon text-top">receipt</i>
-              Обмен валют
+              @if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block>
+              @else
+                {{ __('Currency exchange') }}
+              @endif
             </h5>
             <div class="mt-10 pt-2">
-              <p class="m-0 subtitle font-weight-700">Общее количество обменов</p>
+              <p class="m-0 subtitle font-weight-700">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Total number of exchanges' contenteditable="true">{{ __('Total number of exchanges') }}</editor_block>
+                @else
+                  {{ __('Total number of exchanges') }}
+                @endif</p>
               <p class="m-0 text-muted">{{ $exchanges_count ?? 0 }}</p>
             </div>
           </div>
@@ -53,11 +61,11 @@
         <table class="display card card card-default scrollspy border-radius-6">
           <thead>
             <tr>
-              <th class="pl-2">Пользователь</th>
-              <th>Сколько внёс</th>
-              <th>Сколько получил</th>
-              <th>Комиссия</th>
-              <th>Дата открытия</th>
+              <th class="pl-2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>@else {{ __('User') }} @endif</th>
+              <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='How much did you contribute' contenteditable="true">{{ __('How much did you contribute') }}</editor_block>@else {{ __('How much did you contribute') }} @endif</th>
+              <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='How much did you get' contenteditable="true">{{ __('How much did you get') }}</editor_block>@else {{ __('How much did you get') }} @endif</th>
+              <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Commission' contenteditable="true">{{ __('Commission') }}</editor_block>@else {{ __('Commission') }} @endif</th>
+              <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Opening date' contenteditable="true">{{ __('Opening date') }}</editor_block>@else {{ __('Opening date') }} @endif</th>
             </tr>
           </thead>
           <tbody>

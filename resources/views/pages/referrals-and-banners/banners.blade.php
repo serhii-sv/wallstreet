@@ -20,18 +20,18 @@
 @section('content')
   <div class="section mt-2 invoice-list-wrapper" id="blog-list">
     <div class="row">
-        <a href="{{ route('banners.create') }}" class="btn btn-small float-right">Добавить банер</a>
+        <a href="{{ route('banners.create') }}" class="btn btn-small float-right">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add banner' contenteditable="true">{{ __('Add banner') }}</editor_block>@else {{ __('Add banner') }} @endif</a>
         <div class="responsive-table mt-5">
           <table class="table banners white border-radius-4 pt-1">
             <thead>
               <tr>
                 <th></th>
                 <th>
-                  <span>Заголовок</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Title' contenteditable="true">{{ __('Title') }}</editor_block>@else {{ __('Title') }} @endif</span>
                 </th>
-                <th>Размер</th>
-                <th>Баннер</th>
-                <th>Действия</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Size' contenteditable="true">{{ __('Size') }}</editor_block>@else {{ __('Size') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Banner' contenteditable="true">{{ __('Banner') }}</editor_block>@else {{ __('Banner') }} @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>@else {{ __('Actions') }} @endif</th>
               </tr>
             </thead>
             

@@ -75,7 +75,7 @@
         <div class="sidebar-header">
           <div class="sidebar-details">
             <h5 class="m-0 sidebar-title">
-              <i class="material-icons app-header-icon text-top">perm_identity</i> Вопросы - ответы
+              <i class="material-icons app-header-icon text-top">perm_identity</i> @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Questions - answers' contenteditable="true">{{ __('Questions - answers') }}</editor_block>@else {{ __('Questions - answers') }} @endif
             </h5>
             <div class="mt-10 pt-2">
               {{--              <a href="">Добавить </a>--}}
@@ -87,10 +87,11 @@
         <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft delay-1">
           <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
             <ul class="contact-list display-grid">
-              <li class="sidebar-title">Языки</li>
+              <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Languages' contenteditable="true">{{ __('Languages') }}</editor_block>@else {{ __('Languages') }} @endif</li>
               <li @if(empty(request()->get('language_id'))) class="active" @endif>
-                <a href="{{ route('faq.index') }}" class="text-sub">
-                  Все
+                <a href="{{ route('faq.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+                >
+                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>@else {{ __('All') }} @endif
                 </a>
               </li>
               @forelse($languages as $language)
@@ -135,7 +136,7 @@
               <input type="text" name="answer" placeholder="Ответ">
             </div>
             <div class="button-block">
-              <button class="btn">Добавить</button>
+              <button class="btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif</button>
             </div>
           </div>
         </form>
@@ -145,13 +146,13 @@
         <div class="card-header">
           <div class="card-content">
             <div class="select">
-              Язык
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Language' contenteditable="true">{{ __('Language') }}</editor_block>@else {{ __('Language') }} @endif
             </div>
             <div class="inputs">
-              Вопрос
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Question' contenteditable="true">{{ __('Question') }}</editor_block>@else {{ __('Question') }} @endif
             </div>
             <div class="inputs">
-              Ответ
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Answer' contenteditable="true">{{ __('Answer') }}</editor_block>@else {{ __('Answer') }} @endif
             </div>
           </div>
         </div>
@@ -163,7 +164,7 @@
                 @csrf
                 <div class="select">
                   <select name="language_id">
-                    <option value="">Не выбрано</option>
+                    <option value="">{{ __('Not chosen') }}</option>
                     @forelse($languages as $item)
                       <option value="{{ $item->id }}" @if($faq->language_id === $item->id) selected="selected" @endif>{{ $item->name }}</option>
                     @empty
@@ -187,7 +188,7 @@
               </form>
             @empty
               <div class="card-content pl-0 pb-0 pr-0">
-                Записей нет
+                {{ __('No entries') }}
               </div>
             @endforelse
           </div>
