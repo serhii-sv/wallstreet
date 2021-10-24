@@ -29,12 +29,12 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <label for="level">Уровень*</label>
-                                        <input id="level" name="level" type="number" data-error=".errorTxt1" value="{{ old('level') }}">
+                                        <input id="level" name="level" type="number" step="any" data-error=".errorTxt1" value="{{ old('level') }}">
                                         <small class="errorTxt1"></small>
                                     </div>
                                     <div class="input-field col s12">
                                         <label for="percent">Процент *</label>
-                                        <input id="percent" type="number" name="percent" data-error=".errorTxt2" value="{{ old('percent') }}">
+                                        <input id="percent" type="number" step="any" name="percent" data-error=".errorTxt2" value="{{ old('percent') }}">
                                         <small class="errorTxt2"></small>
                                     </div>
                                     <div class="col s12">
