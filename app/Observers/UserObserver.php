@@ -93,6 +93,15 @@ class UserObserver
         }
     }
 
+//    /**
+//     * @param User $user
+//     */
+//    public function saved(User $user) {
+//        if (null !== $user->partner_id && $user->isDirty('partner_id')) {
+//            $user->generatePartnerTree($user->partner);
+//        }
+//    }
+
     /**
      * Listen to the User deleting event.
      *
@@ -108,9 +117,9 @@ class UserObserver
 
     public function updated(User $user)
     {
-        if (null !== $user->partner_id) {
-            $user->generatePartnerTree($user->partner);
-        }
+//        if (null !== $user->partner_id) {
+//            $user->generatePartnerTree($user->partner);
+//        }
 
         $this->setSidebarProperties($user);
     }
