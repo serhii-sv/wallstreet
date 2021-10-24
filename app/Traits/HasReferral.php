@@ -255,6 +255,11 @@ trait HasReferral
 
         foreach ($ids as $id) {
             $findRef = User::find($id);
+
+            if ($findRef->my_id == $this->partner_id) {
+                continue;
+            }
+
             $findRef->partner_id = $this->my_id;
             $findRef->save();
         }
