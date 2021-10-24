@@ -42,7 +42,7 @@
     <li class="bold ">
       <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">dashboard</i>
-        <span class="menu-title" data-i18n="Dashboard">@if(canEditLang() && checkRequestOnEdit())
+        <span class="menu-title" >@if(canEditLang() && checkRequestOnEdit())
             <editor_block data-name='Dashboard' contenteditable="true">{{ __('Dashboard') }}</editor_block>
           @else
             {{ __('Dashboard') }}
@@ -54,7 +54,7 @@
       <li class="bold @if(Route::is('notifications.*') || Route::is('referral.tree.*') || Route::is('chat') || Route::is('users.*') || Route::is('verification-requests.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)" >
           <i class="material-icons">assignment_ind</i>
-          <span class="menu-title" data-i18n="Пользователи">
+          <span class="menu-title">
             @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='Users' contenteditable="true">{{ __('Users') }}</editor_block>
             @else
@@ -68,7 +68,7 @@
               <li>
                 <a href="{{ route('users.index') }}" class="@if(Route::is('users.*')) active @endif" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">people</i>
-                  <span class="menu-title" data-i18n="Пользователи">
+                  <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='All clients' contenteditable="true">{{ __('All clients') }}</editor_block>
                     @else
@@ -91,7 +91,7 @@
               <li>
                 <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">verified_user</i>
-                  <span class="menu-title" data-i18n="ID confirmation">
+                  <span class="menu-title" >
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='ID confirmation' contenteditable="true">{{ __('ID confirmation') }}</editor_block>
                     @else
@@ -119,7 +119,7 @@
               <li>
                 <a class="waves-effect waves-cyan {{ (Route::is('chat') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">chat</i>
-                  <span class="menu-title" data-i18n="">
+                  <span class="menu-title" >
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Chat rooms' contenteditable="true">{{ __('Chat rooms') }}</editor_block>
                     @else
@@ -138,7 +138,7 @@
       <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*')  ) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">account_balance</i>
-          <span class="menu-title" data-i18n="Пользователи">@if(canEditLang() && checkRequestOnEdit())
+          <span class="menu-title">@if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='Finance' contenteditable="true">{{ __('Finance') }}</editor_block>
             @else
               {{ __('Finance') }}
@@ -208,7 +208,7 @@
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">autorenew</i>
-                  <span class="menu-title" data-i18n="Обмен валют">
+                  <span class="menu-title" >
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block>
                     @else
@@ -242,7 +242,7 @@
       <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*')  || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
-          <span class="menu-title" data-i18n="Пользователи">
+          <span class="menu-title" >
             @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='Marketing' contenteditable="true">{{ __('Marketing') }}</editor_block>
             @else
@@ -334,7 +334,7 @@
     <li class="bold">
       <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">devices</i>
-        <span class="menu-title" data-i18n="Новости">
+        <span class="menu-title">
           @if(canEditLang() && checkRequestOnEdit())
             <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>
           @else
@@ -458,7 +458,7 @@
               <li>
                 <a href="{{ route('roles.index') }}" class="{{ (Route::is('roles.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">transfer_within_a_station</i>
-                  <span data-i18n="Second level">
+                  <span>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>
                     @else
@@ -472,7 +472,7 @@
               <li>
                 <a href="{{ route('permissions.index') }}" class="{{ (Route::is('permissions.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">lock_open</i>
-                  <span data-i18n="Second level child">
+                  <span>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Rights' contenteditable="true">{{ __('Rights') }}</editor_block>
                     @else

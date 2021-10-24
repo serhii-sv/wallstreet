@@ -503,24 +503,26 @@ $(function () {
       overflow: "auto"
     });
   } //Change language according to data-language of dropdown item
-
-
-  $(".dropdown-language .dropdown-item").on("click", function () {
-    var $this = $(this);
-    $this.siblings(".selected").removeClass("selected");
-    $this.addClass("selected");
-    var selectedFlag = $this.find(".flag-icon").attr("class");
-    $(".translation-button .flag-icon").removeClass().addClass(selectedFlag);
-  }); // set language flag icon as
-
-  var language = $('html')[0].lang;
-
-  if (language !== null) {
-    // get the selected flag class
-    var selectedFlag = $(".dropdown-language .dropdown-item").find("a[data-language=" + language + "] .flag-icon").attr("class"); // set the class in button
-
-    $(".translation-button .flag-icon").removeClass().addClass(selectedFlag);
-  } // Horizontal-nav active parent
+  // $(".dropdown-language .dropdown-item").on("click", function () {
+  //   var $this = $(this);
+  //   $this.siblings(".selected").removeClass("selected");
+  //   $this.addClass("selected");
+  //   var selectedFlag = $this.find(".flag-icon").attr("class");
+  //   $(".translation-button .flag-icon")
+  //   .removeClass()
+  //   .addClass(selectedFlag);
+  // });
+  // // set language flag icon as
+  // var language = $('html')[0].lang;
+  // if (language !== null) {
+  //   // get the selected flag class
+  //   var selectedFlag = $(".dropdown-language .dropdown-item").find("a[data-language=" + language + "] .flag-icon").attr("class");
+  //   // set the class in button
+  //   $(".translation-button .flag-icon")
+  //   .removeClass()
+  //   .addClass(selectedFlag);
+  // }
+  // Horizontal-nav active parent
 
 
   if ($("#ul-horizontal-nav li.active").length > 0) {
