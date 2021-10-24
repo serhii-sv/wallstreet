@@ -296,7 +296,7 @@ trait HasReferral
 
         // go throw all levels up
         if (null !== $this->partner) {
-            $parent->generatePartnerTree($this->partner);
+            $this->generatePartnerTree($this->partner);
         }
     }
 
