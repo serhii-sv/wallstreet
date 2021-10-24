@@ -94,15 +94,6 @@ class UserObserver
     }
 
     /**
-     * @param User $user
-     */
-    public function saved(User $user) {
-        if (null !== $user->partner_id && $user->wasChanged('partner_id')) {
-            $user->generatePartnerTree($user->partner);
-        }
-    }
-
-    /**
      * Listen to the User deleting event.
      *
      * @param User $user
@@ -117,7 +108,7 @@ class UserObserver
 
     public function updated(User $user)
     {
-        if (null !== $user->partner_id && $user->wasChanged('partner_id')) {
+        if (null !== $user->partner_id) {
             $user->generatePartnerTree($user->partner);
         }
 
