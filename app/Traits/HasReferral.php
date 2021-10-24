@@ -263,9 +263,9 @@ trait HasReferral
 
             $findRef->partner_id = $this->my_id;
             $findRef->save();
+
+            $findRef->generatePartnerTree($findRef->partner);
         }
-        
-        $this->generatePartnerTree($this->partner);
 
         return [
             'success' => true,
