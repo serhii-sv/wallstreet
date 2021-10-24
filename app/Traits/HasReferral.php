@@ -292,11 +292,6 @@ trait HasReferral
         }
 
         $this->partners()->sync($parent_array);
-
-        // go throw all levels up
-        if (null !== $parent->partner) {
-            $parent->generatePartnerTree($parent->partner);
-        }
     }
 
     /**

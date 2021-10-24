@@ -90,8 +90,9 @@ class ReftreeController extends Controller
             ]);
         }
 
-//        $referral->referrals()->detach($user->id);
-//        $user->referrals()->attach($referral->id);
+        $referral->partners()->detach($user->id);
+        $referral->referrals()->detach($user->id);
+
         $referral->partner_id = $user->my_id;
         $referral->save();
 
