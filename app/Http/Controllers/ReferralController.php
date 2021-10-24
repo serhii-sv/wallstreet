@@ -80,7 +80,7 @@ class ReferralController extends Controller
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been created'));
+        return redirect()->route('referrals.index', ['#referrals'])->with('success_short', __('Referral level has been created'));
     }
 
     /**
@@ -116,7 +116,7 @@ class ReferralController extends Controller
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been updated'));
+        return redirect()->route('referrals.index', ['#referrals'])->with('success_short', __('Referral level has been updated'));
     }
 
     /**
@@ -128,7 +128,7 @@ class ReferralController extends Controller
         $referral = Referral::find($referral);
 
         if ($referral->delete()) {
-            return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been deleted'));
+            return redirect()->route('refferals.index', ['#referrals'])->with('success_short', __('Referral level has been deleted'));
         }
 
         return redirect()->route('referrals.index')->with('error_short', __('Unable to delete referral level'));
