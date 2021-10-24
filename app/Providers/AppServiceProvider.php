@@ -57,7 +57,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    
         if (!session()->has('lang')) {
             $lang = Language::where('default', true)->first();
             if (!empty($lang))

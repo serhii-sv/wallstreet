@@ -165,7 +165,7 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-    
+
     <div id="chart-dashboard">
       
       <div id="card-stats" class="pt-0">
@@ -280,7 +280,7 @@
           </div>
         </div>
       </div>
-      
+    
       <div class="row mt-1">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">

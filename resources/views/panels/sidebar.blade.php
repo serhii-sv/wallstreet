@@ -43,7 +43,7 @@
       <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">dashboard</i>
         <span class="menu-title" >@if(canEditLang() && checkRequestOnEdit())
-            <editor_block contenteditable="true">{{ __('Dashboard') }}</editor_block>
+            <editor_block data-name='Dashboard' contenteditable="true">{{ __('Dashboard') }}</editor_block>
           @else
             {{ __('Dashboard') }}
           @endif</span>
