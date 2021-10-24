@@ -245,8 +245,6 @@ class Wallet extends Model
                 $percent = Referral::getOnLoad($level);
             } elseif ($type == 'deposit') {
                 $percent = Referral::getOnProfit($level);
-            } elseif ($type == 'task') {
-                $percent = Referral::getOnTask($level);
             } else {
                 $percent = 0;
             }

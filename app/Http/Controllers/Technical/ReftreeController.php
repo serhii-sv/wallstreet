@@ -59,9 +59,11 @@ class ReftreeController extends Controller
         $user = User::findOrFail($id);
 
         if (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $request->new_referral)) {
+            /** @var User $referral */
             $referral = User::where('id', $request->new_referral)
                 ->first();
         } else {
+            /** @var User $referral */
             $referral = User::orWhere('email', $request->new_referral)
                 ->orWhere('login', $request->new_referral)
                 ->first();
