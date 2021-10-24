@@ -440,6 +440,7 @@ class Transaction extends Model
 
     /**
      * @param $sum
+     *
      * @return string
      */
     public static function sidebarIndicatorsFormatting($sum) {
