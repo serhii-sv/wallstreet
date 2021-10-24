@@ -186,9 +186,6 @@ class Helper
             'direction' => $data['direction'],
         ];
          // set default language if session hasn't locale value the set default language
-         if(!session()->has('locale')){
-            app()->setLocale($layoutClasses['defaultLanguage']);
-        }
         return $layoutClasses;
     }
     // updatesPageConfig function override all configuration of custom.php file as page requirements.
