@@ -23,26 +23,44 @@ class SetLang
      */
     public function handle($request, Closure $next)
     {
-        if (isset($_COOKIE['lang']) && !session()->has('lang')) {
-            $checkExists = App\Models\Language::where('code', $_COOKIE['lang'])->get()->count();
-        
-            if ($checkExists == 0) {
-                setcookie('lang', false, time()-3600);
-            }
-        
-            session([
-                'lang' => $_COOKIE['lang']
-            ]);
+        $defaultLang = 'ru';
+    
+        $path = resource_path('lang/' . $defaultLang . '.json');
+    
+        if (!file_exists($path)) {
+            session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
+            $defaultLang = 'en';
         }
     
-        $locale = session('lang', 'cn');
+        if (isset($_COOKIE['language']) && !session()->has('language')) {
+            $_COOKIE['lang']    = preg_replace('/[^A-Za-z]/', '', trim($_COOKIE['lang']));
+            $checkExists        = file_exists(resource_path('lang/'.$_COOKIE['lang'].'.json'));
+        
+            if (false == $checkExists) {
+                setcookie('lang', false, time()-3600);
+            } else {
+                session([
+                    'lang' => $_COOKIE['lang']
+                ]);
+            }
+        }
     
-        if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $locale) {
+        $locale = session('language', $defaultLang);
+    
+        if (!isset($_COOKIE['language']) || $_COOKIE['language'] != $locale) {
             setcookie('lang', $locale, Carbon::now()->addDays(365)->timestamp, '/');
         }
     
         app()->setLocale($locale);
         Carbon::setLocale($locale);
+    
+        // ------
+    
+        /*
+         * Timezone
+         */
+        $timezone = App\Models\Setting::getValue('timezone', 'Europe/Dublin');
+        date_default_timezone_set($timezone);
     
         return $next($request);
     }

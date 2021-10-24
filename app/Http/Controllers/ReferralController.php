@@ -39,7 +39,6 @@ class ReferralController extends Controller
                     'percent' => $referral->percent . '%',
                     'on_load' => $referral->on_load ? 'Да' : 'Нет',
                     'on_profit' => $referral->on_profit ? 'Да' : 'Нет',
-                    'on_task' => $referral->on_task ? 'Да' : 'Нет',
                     'actions' => view('pages.referrals.partials.actions', compact('referral'))->render(),
                 ];
             }
@@ -71,7 +70,6 @@ class ReferralController extends Controller
         $referral = Referral::create($request->except([
             'on_load',
             'on_profit',
-            'on_task',
         ]));
 
         if (!$referral) {
@@ -80,10 +78,9 @@ class ReferralController extends Controller
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
-        $referral->on_task = !empty($request->on_task) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been created'));
+        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been created'));
     }
 
     /**
@@ -109,7 +106,6 @@ class ReferralController extends Controller
         $referral->update($request->except([
             'on_load',
             'on_profit',
-            'on_task',
         ]));
 
         if (!$referral) {
@@ -118,10 +114,9 @@ class ReferralController extends Controller
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
-        $referral->on_task = !empty($request->on_task) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been updated'));
+        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been updated'));
     }
 
     /**
@@ -131,14 +126,14 @@ class ReferralController extends Controller
      */
     public function destroy($referral) {
         $referral = Referral::find($referral);
-        
+
         if ($referral->delete()) {
-            return redirect()->route('referrals-and-banners.index', ['#referrals'])->with('success_short', __('Referral level has been deleted'));
+            return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been deleted'));
         }
-        
+
         return redirect()->route('referrals.index')->with('error_short', __('Unable to delete referral level'));
     }
-    
+
     public function showUserReferralTree($id) {
         $user = User::find($id);
         return view('pages.referrals.tree.user-index',[
@@ -149,7 +144,7 @@ class ReferralController extends Controller
         /** @var \App\Models\User $user */
         $user = User::find($id);
         $children = $this->getChildrens($user, 5);
-        
+
         if (null == $id) {
             throw new \Exception('reftree id is null');
         }
@@ -159,7 +154,7 @@ class ReferralController extends Controller
         }
         return $children['children'][] = $this->getChildrens($user, 7);
     }
-    
+
     private function getChildrens(User $user, $limit = 3) {
         if ($limit === 0) {
             return [];
@@ -167,36 +162,36 @@ class ReferralController extends Controller
         if (empty($user)) {
             return [];
         }
-        
+
         $referrals = [];
         $referrals['name'] = $user->login;
         if (!$user->hasReferrals()) {
             return $referrals;
         }
-        
+
         foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
             $referral = $this->getChildrens($r, $limit - 1);
             $referrals['children'][] = $referral;
         }
         return $referrals;
     }
-    
+
     public function show_referral_tree() {
         return view('pages.referrals.tree.index');
     }
-    
+
     public function show_user_referral_tree($id) {
         $user = User::find($id);
         return view('pages.referrals.tree.user-index',[
             'user' => $user,
         ]);
     }
-    
+
     public function reftree(Request $request) {
         /** @var \App\Models\User $user */
         $user = auth()->user();
         $children = $this->getChildrens($user, 6);
-        
+
         return view('pages.referrals.tree.reftree', [
             'user' => $user,
             'children' => $children,

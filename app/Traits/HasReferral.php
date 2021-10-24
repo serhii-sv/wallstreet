@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\Permission;
 use App\Models\Referral;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 trait HasReferral
 {
@@ -245,16 +246,23 @@ trait HasReferral
         }
         $ids = [];
         $this->referrals()->detach();
+
         foreach ($referrals as $referral) {
             $ids[] = $referral['id'];
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
-//        $this->referrals()->sync($ids);
+        $this->referrals()->sync($ids);
 
         foreach ($ids as $id) {
+            /** @var User $findRef */
             $findRef = User::find($id);
+
+            if ($findRef->my_id == $this->partner_id) {
+                continue;
+            }
+
             $findRef->partner_id = $this->my_id;
             $findRef->save();
         }
