@@ -255,6 +255,7 @@ trait HasReferral
 //        $this->referrals()->sync($ids);
 
         foreach ($ids as $id) {
+            /** @var User $findRef */
             $findRef = User::find($id);
 
             if ($findRef->my_id == $this->partner_id) {
