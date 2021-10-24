@@ -246,13 +246,14 @@ trait HasReferral
         }
         $ids = [];
         $this->referrals()->detach();
+
         foreach ($referrals as $referral) {
             $ids[] = $referral['id'];
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
-//        $this->referrals()->sync($ids);
+        $this->referrals()->sync($ids);
 
         foreach ($ids as $id) {
             /** @var User $findRef */
@@ -264,8 +265,6 @@ trait HasReferral
 
             $findRef->partner_id = $this->my_id;
             $findRef->save();
-
-            $findRef->generatePartnerTree($findRef->partner);
         }
 
         return [
