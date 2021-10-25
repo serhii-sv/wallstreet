@@ -8,7 +8,6 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserSidebarProperties;
-use App\Models\UserWalletDetail;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -124,7 +123,7 @@ class ReplenishmentController extends Controller
      * @throws \Exception
      */
     public function approveManually($transaction, $massMode = false) {
-        /** @var Transaction $transaction */
+       
         $transaction = Transaction::find($transaction);
         
         if ($transaction->isApproved()) {
@@ -139,17 +138,15 @@ class ReplenishmentController extends Controller
         /** @var User $user */
         $user = $wallet->user()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem = $transaction->paymentSystem()->first();
+        $paymentSystem = $wallet->paymentSystem()->first();
         /** @var Currency $currency */
         $currency = $wallet->currency()->first();
-    
-        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $paymentSystem->id)->first();
         
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
             throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
         }
         
-        if ($wallet_detail === null || $wallet_detail->external === null) {
+        if (empty($wallet->external)) {
             if (true === $massMode) {
                 return __('ERROR:') . ' wallet is empty';
             }

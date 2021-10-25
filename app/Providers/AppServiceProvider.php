@@ -14,6 +14,7 @@ use App\Models\Language;
 use App\Models\MailSent;
 use App\Models\News;
 use App\Models\PaymentSystem;
+use App\Models\Permission;
 use App\Models\Rate;
 use App\Models\Referral;
 use App\Models\Reviews;
@@ -69,18 +70,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
         Paginator::defaultView('vendor.pagination.default');
-        Horizon::auth(function ($request) {
-            $user = \Auth::user();
-
-            if (null === $user) {
-                return false;
-            }
-
-            return $user->hasRole([
-                'root',
-            ]);
-        });
-
+        
         /*
          * Base observers
          */
@@ -103,7 +93,7 @@ class AppServiceProvider extends ServiceProvider
         UserSidebarProperties::observe(UserSidebarPropertyObserver::class);
         //Task::observe(TaskObserver::class);
     }
-
+    
     /**
      * Register any application services.
      *

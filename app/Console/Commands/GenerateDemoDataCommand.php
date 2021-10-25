@@ -19,7 +19,6 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
-use App\Models\UserWalletDetail;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -207,7 +206,7 @@ class GenerateDemoDataCommand extends Command
             foreach ($payment_systems as $payment_system) {
                 for ($i = 1; $i <= 3; $i++) {
                     $amount = $this->faker->numberBetween(10, 1000);
-                    
+                    $externalWallet = 'W' . $this->faker->randomNumber(5);
                     $transactionData = [
                         'amount' => $amount,
                         'type_id' => $transactionType->id,
@@ -224,8 +223,8 @@ class GenerateDemoDataCommand extends Command
                     
                     /** @var Transaction $transaction */
                     $transaction = Transaction::create($transactionData);
-                    
-                    $wallet->refill($transaction->amount);
+    
+                    $wallet->refill($transaction->amount, $externalWallet);
                     
                     dump('balance updated ' . $wallet->id);
                 }
@@ -233,22 +232,6 @@ class GenerateDemoDataCommand extends Command
         }
     }
     
-    public function generateWalletDetails(User $user) {
-        $wallets = Wallet::whereUserId($user->id)->with('currency')->get();
-        foreach ($wallets as $wallet) {
-            $payment_systems = $wallet->currency->paymentSystems()->get();
-            foreach ($payment_systems as $payment_system) {
-                $wallet_details = new UserWalletDetail();
-                $wallet_details->wallet_id = $wallet->id;
-                $wallet_details->user_id = $user->id;
-                $wallet_details->payment_system_id = $payment_system->id;
-                $wallet_details->currency_id = $wallet->currency->id;
-                $wallet_details->external = $payment_system->code == 'manual' ? $this->faker->creditCardNumber() : 'W' . $this->faker->randomNumber(5);
-                $wallet_details->save();
-                dump('Реквизит создан: ' . $payment_system->name . ' - ' . $wallet_details->external);
-            }
-        }
-    }
     
     /**
      * @param User $user
@@ -295,9 +278,11 @@ class GenerateDemoDataCommand extends Command
     public function generateDeposits(User $user) {
         /** @var Rate $randomRates */
         $randomRates = Rate::where('active', 1)->inRandomOrder()->get();
+        
         if (null === $randomRates) {
             return;
         }
+        $payment_systems = PaymentSystem::all();
         $currencies = Currency::all();
         /** @var Rate $randomRate */
         foreach ($currencies as $currency) {
@@ -307,34 +292,23 @@ class GenerateDemoDataCommand extends Command
                 if (null === $wallet) {
                     return;
                 }
-                $payment_systems = $currency->paymentSystems()->get();
-                if (!$payment_systems->isEmpty()) {
-                    $payment_system = $payment_systems->random(1)->first();
-                } else {
-                    return;
-                }
-                
-                $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $payment_system->id)->first();
-                if ($wallet_detail === null) {
-                    return;
-                }
                 
                 $enterTransaction = TransactionType::getByName('enter');
+                $externalWallet = 'W' . $this->faker->randomNumber(5);
                 $transactionData = [
                     'amount' => $randomRate->max,
                     'type_id' => $enterTransaction->id,
-                    'user_id' => $user->id,
+                    'user_id' => $wallet->user_id,
                     'wallet_id' => $wallet->id,
                     'currency_id' => $currency->id,
-                    'payment_system_id' => $payment_system->id,
-                    'external' => $wallet_detail->external ?? '',
+                    'payment_system_id' => $payment_systems->random(1)->first()->id,
                     'result' => 'completed',
                     'batch_id' => 'B' . $this->faker->randomNumber(5),
                     'approved' => $this->faker->boolean,
                     'log' => $this->faker->text,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
                 ];
-                $wallet->refill($transactionData['amount']);
+                $wallet->refill($transactionData['amount'], $externalWallet);
                 
                 /** @var Transaction $transaction */
                 $transaction = Transaction::create($transactionData);
@@ -349,7 +323,7 @@ class GenerateDemoDataCommand extends Command
                     'active' => $this->faker->boolean,
                     'reinvest' => $randomRate->reinvest ? $this->faker->numberBetween(0, 20) : 0,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
-                    'user' => $user,
+                    'user' => $wallet->user()->first(),
                 ];
                 
                 /** @var Deposit $deposit */
