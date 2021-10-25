@@ -58,17 +58,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Horizon::auth(function ($request) {
-            /** @var User $user */
-            $user = auth()->user();
-
-            if (null === $user) {
-                return false;
-            }
-
-            return $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first());
-        });
-
         if (!session()->has('lang')) {
             $lang = Language::where('default', true)->first();
             if (!empty($lang))
