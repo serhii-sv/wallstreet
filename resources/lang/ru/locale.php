@@ -1,6 +1,6 @@
 <?php
 return [
-    "Dashboard"=> "Dashboard",
+    "Dashboard"=> "Главная",
     "Modern"=> "Modern",
     "eCommerce"=> "eCommerce",
     "Analytics"=> "Analytics",

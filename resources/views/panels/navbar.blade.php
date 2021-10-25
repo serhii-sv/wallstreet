@@ -12,12 +12,12 @@
         <li class="hide-on-med-and-down">
           <span class="badge time">{{ now()->format('d-m-Y H:i') }}</span>
         </li>
-        {{--        <li class="dropdown-language">--}}
-        {{--          <a class="waves-effect waves-block waves-light translation-button" href="#"--}}
-        {{--            data-target="translation-dropdown">--}}
-        {{--            <span class="flag-icon flag-icon-gb"></span>--}}
-        {{--          </a>--}}
-        {{--        </li>--}}
+        <li class="dropdown-language">
+          <a class="waves-effect waves-block waves-light translation-button" href="#"
+              data-target="translation-dropdown">
+            <span class="flag-icon flag-icon-{{ session()->get('lang') == 'en' ? 'gb' : session()->get('lang') }}"></span>
+          </a>
+        </li>
         <li class="hide-on-med-and-down">
           <a class="waves-effect waves-block waves-light toggle-fullscreen" href="">
             <i class="material-icons">settings_overscan</i>
@@ -50,30 +50,18 @@
       </ul>
       <!-- translation-button-->
       <ul class="dropdown-content" id="translation-dropdown">
-        <li class="dropdown-item">
-          <a class="grey-text text-darken-1" href="{{url('lang/en')}}" data-language="en">
-            <i class="flag-icon flag-icon-gb"></i>
-            English
-          </a>
-        </li>
-        <li class="dropdown-item">
-          <a class="grey-text text-darken-1" href="{{url('lang/fr')}}" data-language="fr">
-            <i class="flag-icon flag-icon-fr"></i>
-            French
-          </a>
-        </li>
-        <li class="dropdown-item">
-          <a class="grey-text text-darken-1" href="{{url('lang/pt')}}" data-language="pt">
-            <i class="flag-icon flag-icon-pt"></i>
-            Portuguese
-          </a>
-        </li>
-        <li class="dropdown-item">
-          <a class="grey-text text-darken-1" href="{{url('lang/de')}}" data-language="de">
-            <i class="flag-icon flag-icon-de"></i>
-            German
-          </a>
-        </li>
+        @foreach($navbar_languages as $lang)
+          <li class="dropdown-item">
+            <a class="grey-text text-darken-1" href="{{ route('set.lang', $lang->code) }}" >
+              @if($lang->code == 'en')
+              <i class="flag-icon flag-icon-gb"></i>
+              @else
+                <i class="flag-icon flag-icon-{{ $lang->code }}"></i>
+              @endif
+              {{ $lang->name }}
+            </a>
+          </li>
+        @endforeach
       </ul>
       <!-- notifications-dropdown-->
       <ul class="dropdown-content" id="notifications-dropdown">
@@ -135,7 +123,7 @@
         </li>
         @if(canEditLang() && checkRequestOnEdit())
           <li>
-            <a class="grey-text text-darken-1" href="{{ url()->current() }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif >
+            <a class="grey-text text-darken-1" href="{{ url()->current() }}" >
               <i class="material-icons ">create</i>
               <span>{{ __('Default mode') }}</span>
             </a>

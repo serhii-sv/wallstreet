@@ -58,9 +58,20 @@
                               <li class="collection-item">@if(canEditLang() && checkRequestOnEdit())
                                   <editor_block data-name='Daily percentage' contenteditable="true">{{ __('Daily percentage') }}</editor_block>@else {{ __('Daily percentage') }} @endif: {{ $rate->daily ? $rate->daily . '%' : __('Absent') }}
                               </li>
-                              <li class="collection-item">{{ $rate->reinvest ? __('Can be reinvested') : __("Can't be reinvested") }}</li>
-                              <li class="collection-item">{{ $rate->upgradable ? __('Upgrade available') : __('Upgrade not available') }}</li>
-                              
+                              <li class="collection-item">
+                                @if($rate->reinvest)
+                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Can be reinvested' contenteditable="true">{{ __('Can be reinvested') }}</editor_block>@else {{ __('Can be reinvested') }} @endif
+                                @else
+                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name="Can't be reinvested" contenteditable="true">{{ __("Can't be reinvested") }}</editor_block>@else {{ __("Can't be reinvested") }} @endif
+                                @endif
+                              </li>
+                              <li class="collection-item">
+                                @if($rate->upgradable)
+                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upgrade available' contenteditable="true">{{ __('Upgrade available') }}</editor_block>@else {{ __('Upgrade available') }} @endif
+                                @else
+                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name="Upgrade not available" contenteditable="true">{{ __("Upgrade not available") }}</editor_block>@else {{ __("Upgrade not available") }} @endif
+                                @endif
+                              </li>
                               @if($rate->overall)
                                 <li class="collection-item">@if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Refund of a deposit' contenteditable="true">{{ __('Refund of a deposit') }}</editor_block>@else {{ __('Refund of a deposit') }} @endif: {{ $rate->overall }}% @if(canEditLang() && checkRequestOnEdit())

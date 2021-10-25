@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class LanguageController
@@ -28,6 +29,7 @@ class LanguageController extends Controller
         session([
             'lang' => $locale
         ]);
+        App::setLocale($locale);
         return back()->with('success', __('The site language has been changed successfully'));
     }
 
