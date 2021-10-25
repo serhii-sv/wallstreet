@@ -232,7 +232,9 @@ class Wallet extends Model
     {
         $level = 0;
 
-        while(true) {
+        $user = $this->user;
+
+        while($level <= 10) {
             $level += 1;
 
             if ($type == 'refill') {
@@ -251,11 +253,13 @@ class Wallet extends Model
 
             $partnerAmount  = $amount * $percent / 100;
             /** @var User $partner */
-            $partner = User::where('my_id', $this->user->partner_id)->first();
+            $partner = User::where('my_id', $user->partner_id)->first();
 
             if (empty($partner)) {
                 break;
             }
+
+            $user = $partner;
 
             if ($partner->partner_level_1 > 0 && $level == 1) {
                 $partnerAmount = $amount * $partner->partner_level_1 / 100;
