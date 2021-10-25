@@ -58,8 +58,8 @@ class SetLang
         /*
          * Timezone
          */
-        $timezone = App\Models\Setting::getValue('timezone', 'Europe/Dublin');
-        date_default_timezone_set($timezone);
+//        $timezone = App\Models\Setting::getValue('timezone', 'Europe/Dublin');
+//        date_default_timezone_set($timezone);
 
         return $next($request);
     }
