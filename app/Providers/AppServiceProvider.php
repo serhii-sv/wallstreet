@@ -70,16 +70,16 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
         Paginator::defaultView('vendor.pagination.default');
-        Horizon::auth(function ($request) {
-            /** @var User $user */
-            $user = \Auth::user();
-
+//        Horizon::auth(function ($request) {
+//            /** @var User $user */
+//            $user = \Auth::user();
+//
 //            if (null === $user) {
 //                return false;
 //            }
-
-            return true; // $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first())
-        });
+//
+//            return $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first());
+//        });
 
         /*
          * Base observers
