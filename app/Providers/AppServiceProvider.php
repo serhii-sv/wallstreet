@@ -64,20 +64,21 @@ class AppServiceProvider extends ServiceProvider
             else
                 session()->put('lang', 'ru');
         }
-        
+
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
         Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
+            /** @var User $user */
             $user = \Auth::user();
 
             if (null === $user) {
                 return false;
             }
 
-            return $user->hasRole([
-                'root',
+            return $user->hasPermissionTo([
+                'dashboard.add_bonus',
             ]);
         });
 
