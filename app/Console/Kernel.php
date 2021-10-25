@@ -48,7 +48,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Logs
-        $schedule->command('log:clear')->daily()->withoutOverlapping();
+        $schedule->command('log:clear', function() {
+            exec('rm -f ' . storage_path('logs/*.log'));
+            exec('rm -f ' . base_path('*.log'));
+
+            $this->comment('Logs have been cleared!');
+
+        })->daily()->withoutOverlapping();
         $schedule->command('make:rate_log')->hourly();
 
         // Jobs
@@ -58,7 +64,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('update:currency_rates')->cron('*/30 * * * *');
-        
+
         $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
 
         // Backups
