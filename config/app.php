@@ -186,6 +186,7 @@ return [
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Hedii\ArtisanLogCleaner\ArtisanLogCleanerServiceProvider::class
     ],
 
     /*

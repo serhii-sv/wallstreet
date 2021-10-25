@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
             else
                 session()->put('lang', 'ru');
         }
-        
+
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }

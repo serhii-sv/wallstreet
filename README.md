@@ -14,7 +14,3 @@ How to install:
 - composer install
 - cp .env.example .env
 - php artisan install
-
-
-postgre: - docker-compose up -d nginx postgres pgadmin php-fpm phpmyadmin workspace redis mailhog memcached
-docker-compose exec workspace bash
