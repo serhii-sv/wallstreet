@@ -99,9 +99,6 @@ class Wallet extends Model
         return $this->hasMany(Deposit::class, 'wallet_id');
     }
 
-    public function details() {
-        return $this->belongsTo(UserWalletDetail::class, 'wallet_id');
-    }
     /**
      * @param $value
      * @return float
@@ -193,13 +190,13 @@ class Wallet extends Model
      * @param $external
      * @throws \Throwable
      */
-    public function refill($amount)
+    public function refill($amount, $external = null)
     {
         $this->balance += $amount;
 
-//        if (!empty($external)) {
-//            $this->external = $external;
-//        }
+        if (!empty($external)) {
+            $this->external = $external;
+        }
 
         $this->save();
 
