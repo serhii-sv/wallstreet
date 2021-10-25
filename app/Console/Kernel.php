@@ -47,22 +47,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('deposits:queue')->everyMinute();
         $schedule->command('make:rate_log')->hourly();
-
-        // Jobs
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
-
-        // Financial
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
-        $schedule->command('deposits:queue')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('update:currency_rates')->cron('*/30 * * * *');
-
         $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
-
-        // Backups
         $schedule->command('backup:clean')->everyTwoHours();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
-
         $schedule->command('log:clear')->daily()->withoutOverlapping();
     }
 

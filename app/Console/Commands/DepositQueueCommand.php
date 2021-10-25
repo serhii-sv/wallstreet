@@ -62,14 +62,14 @@ class DepositQueueCommand extends Command
             $deposit = $queue->deposit()->first();
 
             if ($queue->isTypeAccrue()) {
-                AccrueDeposit::dispatch($deposit, $queue)->delay(now());
+                AccrueDeposit::dispatchSync($deposit, $queue);
                 $this->info('Deposit '.$deposit->id.'. Queue "accrue" sent to work.');
                 $queue->setIsDone()->save();
                 continue;
             }
 
             if ($queue->isTypeClosing()) {
-                CloseDeposit::dispatch($deposit, $queue)->delay(now());
+                CloseDeposit::dispatchSync($deposit, $queue);
                 $this->info('Deposit '.$deposit->id.'. Queue "closing" sent to work.');
                 $queue->setIsDone()->save();
                 continue;
