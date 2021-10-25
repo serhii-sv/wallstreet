@@ -74,9 +74,9 @@ class AppServiceProvider extends ServiceProvider
             /** @var User $user */
             $user = \Auth::user();
 
-            if (null === $user) {
-                return false;
-            }
+//            if (null === $user) {
+//                return false;
+//            }
 
             return true; // $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first())
         });
