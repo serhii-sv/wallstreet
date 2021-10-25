@@ -406,7 +406,9 @@ class Deposit extends Model
         $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
         $this->addBalance($amountReinvest);
 
-        $dividend->update(['approved' => true]);
+        if ($dividend) {
+            $dividend->update(['approved' => true]);
+        }
         // send notification to user
         /*$data = [
             'dividend' => $dividend,
