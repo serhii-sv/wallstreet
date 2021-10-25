@@ -257,7 +257,7 @@ class DashboardController extends Controller
         $transactionType = TransactionType::where('name', $type)->firstOrFail();
         
         /** @var Wallet $wallet */
-        $wallet = $user->wallets()->where('currency_id', $currency->id)->where('payment_system_id', $paymentSystem->id)->first();
+        $wallet = $user->wallets()->where('currency_id', $currency->id)->first();
         
         if (null === $wallet) {
             return back()->with('error', 'Кошелек пользователя не найден')->withInput();
