@@ -10,7 +10,7 @@
       </div>
       <ul class="navbar-list right">
         <li class="hide-on-med-and-down">
-          <span class="badge time">{{ now()->format('d-m-Y H:i') }}</span>
+          <span class="badge time">{{ now()->format('d M H:i') }}</span>
         </li>
         <li class="dropdown-language">
           <a class="waves-effect waves-block waves-light translation-button" href="#"
