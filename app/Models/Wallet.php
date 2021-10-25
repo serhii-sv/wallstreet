@@ -230,17 +230,11 @@ class Wallet extends Model
      */
     public function accrueToPartner($amount, $type)
     {
-        /** @var User $user */
-        $user           = $this->user;
-        $partnerLevels  = $user->getPartnerLevels();
+        $level = 0;
 
-        if (!$partnerLevels) {
-            return 0;
-        }
+        while(true) {
+            $level += 1;
 
-        \Log::error('Found levels: '.print_r($partnerLevels,true));
-
-        foreach ($partnerLevels as $level) {
             if ($type == 'refill') {
                 $percent = Referral::getOnLoad($level);
             } elseif ($type == 'deposit') {
@@ -257,10 +251,10 @@ class Wallet extends Model
 
             $partnerAmount  = $amount * $percent / 100;
             /** @var User $partner */
-            $partner        = $user->getPartnerOnLevel($level);
+            $partner = User::where('my_id', $this->user->partner_id)->first();
 
             if (empty($partner)) {
-                continue;
+                break;
             }
 
             if ($partner->partner_level_1 > 0 && $level == 1) {
