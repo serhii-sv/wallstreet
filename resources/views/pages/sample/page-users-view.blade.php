@@ -44,15 +44,16 @@
               <i class="material-icons">mail_outline</i>
             </a>
             @if(auth()->user()->id !== $user->id)
-              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . \App\Models\User::impersonateTokenGenerate() }}" class="btn-small purple darken-4 ">Залогиниться</a>
+              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . \App\Models\User::impersonateTokenGenerate() }}" class="btn-small purple darken-4 " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Log in' contenteditable="true">{{ __('Log in') }}</editor_block>@else {{ __('Log in') }} @endif</a>
             @endif
-            <a href="{{ route('users.edit', $user) }}" class="btn-small indigo ">Редактировать</a>
-            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan ">Рефералы</a>
+            <a href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
+            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block>@else {{ __('Referrals') }} @endif</a>
           </div>
           <div>
-            <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan">Реферальное дерево</a>
-            <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan">Список рефералов</a>
-            <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey">Транзакции</a>
+            <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block>@else {{ __('Referral tree') }} @endif</a>
+            <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral list' contenteditable="true">{{ __('Referral list') }}</editor_block>@else {{ __('Referral list') }} @endif</a>
+            <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
           </div>
         </div>
       </div>
@@ -66,44 +67,44 @@
             <table class="striped">
               <tbody>
                 <tr>
-                  <td>Upliner:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>@else {{ __('Upliner') }} @endif:</td>
                   <td>
                     @if($user->partner)
-                      <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank">{{ $user->partner->email  ?? '' }}</a>
+                      <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user->partner->email  ?? '' }}</a>
                     @else
-                      No
+                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No' contenteditable="true">{{ __('No') }}</editor_block>@else {{ __('No') }} @endif
                     @endif
                   </td>
                 </tr>
                 <tr>
-                  <td>First upliner:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='First upliner' contenteditable="true">{{ __('First upliner') }}</editor_block>@else {{ __('First upliner') }} @endif:</td>
                   <td>
-                    <a href="{{ route('users.show', $user_first_upliner->id) }}" target="_blank">{{ $user_first_upliner->email  ?? '' }}</a>
+                    <a href="{{ route('users.show', $user_first_upliner->id) }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user_first_upliner->email  ?? '' }}</a>
                   </td>
                 </tr>
                 <tr>
-                  <td>Пароль:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Password' contenteditable="true">{{ __('Password') }}</editor_block>@else {{ __('Password') }} @endif:</td>
                   <td>{{ $user->unhashed_password  ?? '' }}</td>
                 </tr>
                 <tr>
-                  <td>Зарегестрирован:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Registered' contenteditable="true">{{ __('Registered') }}</editor_block>@else {{ __('Registered') }} @endif:</td>
                   <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
                 </tr>
                 <tr>
-                  <td>Последняя активнось:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Last active' contenteditable="true">{{ __('Last active') }}</editor_block>@else {{ __('Last active') }} @endif:</td>
                   <td class="users-view-latest-activity">{{ $user->last_activity_at ?? 'Не авторизовывался' }}</td>
                 </tr>
                 <tr>
-                  <td>Подтверждение почты:</td>
-                  <td class="users-view-verified">@if($user->email_verified_at) Email подтверждён @else Email не подтверждён @endif</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmation' contenteditable="true">{{ __('Email confirmation') }}</editor_block>@else {{ __('Email confirmation') }} @endif:</td>
+                  <td class="users-view-verified">@if($user->email_verified_at) @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmed' contenteditable="true">{{ __('Email confirmed') }}</editor_block>@else {{ __('Email confirmed') }} @endif @else @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email not verified' contenteditable="true">{{ __('Email not verified') }}</editor_block>@else {{ __('Email not verified') }} @endif @endif</td>
                 </tr>
                 <tr>
-                  <td>Роли:</td>
+                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>@else {{ __('Roles') }} @endif:</td>
                   <td class="users-view-role">
                     @forelse($user->roles as $role)
                       <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
                     @empty
-                      <span class="users-view-status chip red lighten-5 red-text">Никаких ролей нет</span>
+                      <span class="users-view-status chip red lighten-5 red-text">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No roles' contenteditable="true">{{ __('No roles') }}</editor_block>@else {{ __('No roles') }} @endif</span>
                     @endforelse
                   </td>
                 </tr>
@@ -151,8 +152,9 @@
                         @csrf
                         <input class="white-text" name="amount" type="text">
                         <div class="mt-1 display-flex align-items-center justify-content-between width-100">
-                          <button class="btn green darken-2 darken-3" name="bonus"  data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-right: 5px;">Бонус</button>
-                          <button class="btn red" name="penalty" data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-left: 5px;">Штраф</button>
+                          <button class="btn green darken-2 darken-3" name="bonus"  data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-right: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Bonus' contenteditable="true">{{ __('Bonus') }}</editor_block>@else {{ __('Bonus') }} @endif</button>
+                          <button class="btn red" name="penalty" data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-left: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Penalty' contenteditable="true">{{ __('Penalty') }}</editor_block>@else {{ __('Penalty') }} @endif</button>
                         </div>
                       </form>
                     </div>
@@ -174,34 +176,34 @@
       <div class="card-content">
         <div class="row indigo lighten-5 border-radius-4 mb-2">
           <div class="col s12 m4 users-view-timeline">
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Баланс аккаунта:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Account balance' contenteditable="true">{{ __('Account balance') }}</editor_block>@else {{ __('Account balance') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($balance_usd, 2, '.', ',') }}$</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма пополнений:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Top-up amount' contenteditable="true">{{ __('Top-up amount') }}</editor_block>@else {{ __('Top-up amount') }} @endif:
               <span class="badge pink" style="font-size: 18px">{{ number_format($stat_deposits, 2, '.', ',') }}$</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма депозитов:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='The amount of deposits' contenteditable="true">{{ __('The amount of deposits') }}</editor_block>@else {{ __('The amount of deposits') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($stat_create_dep, 2, '.', ',') }}$</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма выплат:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of payments' contenteditable="true">{{ __('Amount of payments') }}</editor_block>@else {{ __('Amount of payments') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($stat_withdraws, 2, '.', ',') }}$</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Сумма переводов:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of transfers' contenteditable="true">{{ __('Amount of transfers') }}</editor_block>@else {{ __('Amount of transfers') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($stat_transfer, 2, '.', ',') }}$</span>
             </div>
           </div>
           <div class="col s12 m4 users-view-timeline">
             
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество регистраций:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of registrations' contenteditable="true">{{ __('Number of registrations') }}</editor_block>@else {{ __('Number of registrations') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ $registered_referrals ?? 0 }}</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество активных партнёров:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of active partners' contenteditable="true">{{ __('Number of active partners') }}</editor_block>@else {{ __('Number of active partners') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ $active_referrals ?? 0 }}</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Оборот структуры:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Structure turnover' contenteditable="true">{{ __('Structure turnover') }}</editor_block>@else {{ __('Structure turnover') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($structure_turnover, 2, '.', ',') }}$</span>
             </div>
-            <div class="indigo-text mb-3 " style="font-size: 18px;">Количество переходов по реф. ссылке:
+            <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of clicks by ref. link' contenteditable="true">{{ __('Number of clicks by ref. link') }}</editor_block>@else {{ __('Number of clicks by ref. link') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ $referral_clicks ?? 0 }}</span>
             </div>
           </div>
@@ -259,8 +261,8 @@
                 <div>
                   <li class="collection-item avatar">
                     <i class="material-icons red accent-2 circle">access_time</i>
-                    <h6 class="collection-header m-0">Время активности</h6>
-                    <p>Пользователя @ {{ $user->login }}</p>
+                    <h6 class="collection-header m-0">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity time' contenteditable="true">{{ __('Activity time') }}</editor_block>@else {{ __('Activity time') }} @endif</h6>
+                    <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User @' contenteditable="true">{{ __('User @') }}</editor_block>@else {{ __('User @') }} @endif {{ $user->login }}</p>
                   </li>
                 </div>
                 <div style="margin-top: 15px;margin-right: 15px">
@@ -270,7 +272,7 @@
               <li class="collection-item">
                 <div class="row">
                   <div class="col s7">
-                    <p class="collections-title">Активность за сегодня</p>
+                    <p class="collections-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity today' contenteditable="true">{{ __('Activity today') }}</editor_block>@else {{ __('Activity today') }} @endif</p>
                   </div>
                   <div class="col s2">
                     <span class="task-cat deep-orange accent-2">{{ $userActivityDay['time'] }}</span>
@@ -285,7 +287,7 @@
               <li class="collection-item">
                 <div class="row">
                   <div class="col s7">
-                    <p class="collections-title">Активность за последние 7 дней</p>
+                    <p class="collections-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity in the last 7 days' contenteditable="true">{{ __('Activity in the last 7 days') }}</editor_block>@else {{ __('Activity in the last 7 days') }} @endif</p>
                   </div>
                   <div class="col s2">
                     <span class="task-cat deep-orange accent-2">{{ $userActivityWeek['time'] }}</span>
@@ -300,7 +302,7 @@
               <li class="collection-item">
                 <div class="row">
                   <div class="col s7">
-                    <p class="collections-title">Активность за последние 30 дней</p>
+                    <p class="collections-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Activity in the last 30 days' contenteditable="true">{{ __('Activity in the last 30 days') }}</editor_block>@else {{ __('Activity in the last 30 days') }} @endif</p>
                   </div>
                   <div class="col s2">
                     <span class="task-cat deep-orange accent-2">{{ $userActivityMonth['time'] }}</span>
@@ -319,15 +321,15 @@
               
               <li class="collection-item avatar" style="min-height: auto">
                 <i class="material-icons blue accent-2 circle">computer</i>
-                <h6 class="collection-header m-0">Последние ip адреса</h6>
-                <p>Пользователя @ {{ $user->login }}</p>
+                <h6 class="collection-header m-0">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Latest ip addresses' contenteditable="true">{{ __('Latest ip addresses') }}</editor_block>@else {{ __('Latest ip addresses') }} @endif</h6>
+                <p>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User @' contenteditable="true">{{ __('User @') }}</editor_block>@else {{ __('User @') }} @endif {{ $user->login }}</p>
               </li>
               @foreach($user_auth_logs as $item)
                 <li class="collection-item pt-1 pb-1">
                   <div class="row">
                     <div class="col s12 display-flex justify-content-between">
-                      <span class="task-cat indigo-text darken-4 darken-4">Заходил: {{ $item->created_at->format('d.m.Y H:i:s') }}</span>
-                      <span class="task-cat red accent-2">Ip: {{ $item->ip ?? '' }}</span>
+                      <span class="task-cat indigo-text darken-4 darken-4">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Went in' contenteditable="true">{{ __('Went in') }}</editor_block>@else {{ __('Went in') }} @endif: {{ $item->created_at->format('d.m.Y H:i:s') }}</span>
+                      <span class="task-cat red accent-2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='ip' contenteditable="true">{{ __('ip') }}</editor_block>@else {{ __('ip') }} @endif: {{ $item->ip ?? '' }}</span>
                     </div>
                   </div>
                 </li>

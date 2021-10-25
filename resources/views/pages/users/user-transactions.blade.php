@@ -28,10 +28,10 @@
                 <div class="sidebar-header">
                     <div class="sidebar-details">
                         <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">receipt</i>
-                            Транзакции
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif
                         </h5>
                         <div class="mt-10 pt-2">
-                            <p class="m-0 subtitle font-weight-700">Общее количество транзакций</p>
+                            <p class="m-0 subtitle font-weight-700">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Total number of transactions' contenteditable="true">{{ __('Total number of transactions') }}</editor_block>@else {{ __('Total number of transactions') }} @endif</p>
                             <p class="m-0 text-muted">{{ $transactions_count ?? 0 }}</p>
                         </div>
                     </div>
@@ -39,19 +39,21 @@
                 <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft delay-1">
                     <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
                         <ul class="contact-list display-grid">
-                            <li class="sidebar-title">Типы</li>
+                            <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Types' contenteditable="true">{{ __('Types') }}</editor_block>@else {{ __('Types') }} @endif</li>
                             <li @if(empty(request()->get('type'))) class="active" @endif>
-                                <a href="{{ route('transactions.index') }}" class="text-sub">
+                                <a href="{{ route('transactions.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                    Все
+                                    @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>@else {{ __('All') }} @endif
                                 </a>
                             </li>
                             @forelse($transaction_types as $type)
                                 <li @if(request()->get('type') === $type->id) class="active" @endif>
                                     <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}"
-                                       class="text-sub">
+                                       class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                        {{  __('locale.' . $type->name)}}
+  
+                                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='{{ 'locale.' . $type->name }}' contenteditable="true">{{ __('locale.' . $type->name) }}</editor_block>@else {{  __('locale.' . $type->name)}} @endif
+                                      
                                     </a>
                                 </li>
                             @empty
@@ -76,11 +78,16 @@
                     <thead>
                     <tr>
                         {{--                           <th style=" padding-left: 20px;">Пользователь</th>--}}
-                        <th style="padding-left: 20px;">Тип</th>
-                        <th>Сумма</th>
-                        <th>Платёжная система</th>
-                        <th>Дата операции</th>
-                        <th>Действия</th>
+                        <th style="padding-left: 20px;">
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Type of' contenteditable="true">{{ __('Type of') }}</editor_block>@else {{ __('Type of') }} @endif</th>
+                        <th>
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>@else {{ __('Sum') }} @endif</th>
+                        <th>
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>@else {{ __('Payment system') }} @endif</th>
+                        <th>
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>@else {{ __('Date of operation') }} @endif</th>
+                        <th>
+                          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>@else {{ __('Actions') }} @endif</th>
                     </tr>
                     </thead>
                     <tbody>

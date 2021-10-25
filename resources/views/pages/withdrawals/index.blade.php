@@ -66,7 +66,7 @@
         <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
             <editor_block data-name='Paid' contenteditable="true">{{ __('Paid') }}</editor_block>
           @else
-            {{ __('Text') }}
+            {{ __('Paid') }}
           @endif</span>
       </a>
     </div>

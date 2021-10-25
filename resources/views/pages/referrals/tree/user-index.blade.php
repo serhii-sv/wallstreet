@@ -21,7 +21,8 @@
       <div id="basic-tabs" class="card card card-default scrollspy">
         <div class="card-content">
           <div class="display-flex justify-content-between">
-            <h4 class="card-title">Дерево рефералов пользователя {{ $user->login ?? '' }}</h4>
+            <h4 class="card-title">
+              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User referral tree' contenteditable="true">{{ __('User referral tree') }}</editor_block>@else {{ __('User referral tree') }} @endif {{ $user->login ?? '' }}</h4>
           </div>
           <div class="row">
             <div class="col s12">
