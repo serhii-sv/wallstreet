@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first());
+            return true; // $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first())
         });
 
         /*
