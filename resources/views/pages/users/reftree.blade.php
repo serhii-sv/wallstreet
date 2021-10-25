@@ -35,7 +35,7 @@
                                 <span class="grey-text">@</span>
                                 <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
                             </h6>
-                            <span>ID:</span>
+                            <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='ID' contenteditable="true">{{ __('ID') }}</editor_block>@else {{ __('ID') }} @endif:</span>
                             <span class="users-view-id">{{ $user->id ?? 'Не указан' }}</span>
                         </div>
                     </div>
@@ -44,8 +44,10 @@
                     <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo">
                         <i class="material-icons">mail_outline</i>
                     </a>
-                    <a href="{{ route('users.show', $user) }}" class="btn-small cyan">Профиль</a>
-                    <a href="{{ route('users.edit', $user) }}" class="btn-small indigo">Редактировать</a>
+                    <a href="{{ route('users.show', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Profile' contenteditable="true">{{ __('Profile') }}</editor_block>@else {{ __('Profile') }} @endif</a>
+                    <a href="{{ route('users.edit', $user) }}" class="btn-small indigo" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
                 </div>
             </div>
         </div>
@@ -56,7 +58,11 @@
             <div class="card-content">
                 <div class="card-alert card cyan lighten-5">
                     <div class="card-content cyan-text">
-                        <p>{{ empty($referrals_data['referrals']) ? 'У этого пользователя еще нет ни одного реферала' : 'Для изменения партнера реферала потяните вправо или перенесети на нужный уровень' }}</p>
+                        <p>@if(empty($referrals_data['referrals']))
+                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='This user has no referrals yet.' contenteditable="true">{{ __('This user has no referrals yet.') }}</editor_block>@else {{ __('This user has no referrals yet.') }} @endif
+                             @else
+                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='To change the referral partner, pull to the right or drag to the desired level' contenteditable="true">{{ __('To change the referral partner, pull to the right or drag to the desired level') }}</editor_block>@else {{ __('To change the referral partner, pull to the right or drag to the desired level') }} @endif
+                          @endif</p>
                     </div>
                 </div>
                 <div class="dd" id="nestable">
@@ -75,9 +81,9 @@
 
         <div class="card">
             <div class="card-content">
-                <h6>Добавить реферала пользователю</h6>
+                <h6>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add referral to user' contenteditable="true">{{ __('Add referral to user') }}</editor_block>@else {{ __('Add referral to user') }} @endif</h6>
                 <div style="display: flex;align-items: center;margin-bottom: 10px;">
-                    <div style="width: 50%">Введите логин, имейл или ID пользователя</div>
+                    <div style="width: 50%">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Enter your username, email or user ID' contenteditable="true">{{ __('Enter your username, email or user ID') }}</editor_block>@else {{ __('Enter your username, email or user ID') }} @endif</div>
                 </div>
                 <div style="padding: 10px 0;border-bottom: 1px solid #939393;">
                     <form id="addNewReferral" action="{{ route('users.add-referral', $user) }}" method="post" style="display: flex;align-items: center;">
@@ -92,8 +98,8 @@
                           </span>
                         </div>
                         <div style="width: 15%;margin-left: 25px;">
-                            <button class="width-100 btn waves-effect">
-                                Добавить
+                            <button class="width-100 btn waves-effect" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif
                             </button>
                         </div>
                     </form>

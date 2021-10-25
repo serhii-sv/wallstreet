@@ -20,8 +20,10 @@
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
-        <h5 style="font-weight: bold">User referrals: {{ $user->name }}</h5>
-        <span href="">User login: <a href="{{ route('users.show', $user->id) }}">{{ $user->login }}</a></span>
+        <h5 style="font-weight: bold">
+          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User referrals' contenteditable="true">{{ __('User referrals') }}</editor_block>@else {{ __('User referrals') }} @endif: {{ $user->name }}</h5>
+        <span href="">
+@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User login' contenteditable="true">{{ __('User login') }}</editor_block>@else {{ __('User login') }} @endif: <a href="{{ route('users.show', $user->id) }}">{{ $user->login }}</a></span>
         <table class="table table-bordernone" style="margin-top: 20px;">
           <thead>
             <tr>
