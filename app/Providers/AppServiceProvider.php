@@ -14,6 +14,7 @@ use App\Models\Language;
 use App\Models\MailSent;
 use App\Models\News;
 use App\Models\PaymentSystem;
+use App\Models\Permission;
 use App\Models\Rate;
 use App\Models\Referral;
 use App\Models\Reviews;
@@ -77,9 +78,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->hasPermissionTo([
-                'dashboard.add_bonus',
-            ]);
+            return $user->hasPermissionTo(Permission::where('slug', 'dashboard.add_bonus')->first());
         });
 
         /*
