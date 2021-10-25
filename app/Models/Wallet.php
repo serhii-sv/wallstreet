@@ -246,7 +246,7 @@ class Wallet extends Model
             \Log::info('Level percent '.$percent );
 
             if ($percent <= 0) {
-                continue;
+                break;
             }
 
             $partnerAmount  = $amount * $percent / 100;
