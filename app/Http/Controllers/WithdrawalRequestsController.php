@@ -122,8 +122,6 @@ class WithdrawalRequestsController extends Controller
     public function approveMany(Request $request) {
         $messages = [];
 
-        die(print_r($request->all(),true)); // TODO: tmp
-
         if ($request->type == 'approve') {
             foreach ($request->list as $item) {
                 $messages[] = $this->approve($item, true);
