@@ -141,7 +141,7 @@ class WithdrawalRequestsController extends Controller
             }
         }
 
-        return back()->with('info', __('List of withdrawal requests processed.') . implode(', ', $messages));
+        return back()->with('info', __('List of withdrawal requests processed.') . implode('<hr>', $messages));
     }
 
     /**
