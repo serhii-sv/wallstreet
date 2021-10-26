@@ -263,15 +263,15 @@ class WithdrawalRequestsController extends Controller
 
         $ps = $paymentSystem->getClassName();
 
+        if (empty($ps)) {
+            return back()->with('error', 'Платежная система не поддерживает автоплатежи');
+        }
+
         if (empty($wallet->external)) {
             if (true === $massMode) {
                 return __('ERROR:') . ' wallet is empty';
             }
             return back()->with('error', __('ERROR:') . ' wallet is empty');
-        }
-
-        if (empty($ps)) {
-            return back()->with('error', 'Платежная система не поддерживает автоплатежи');
         }
 
         try {
