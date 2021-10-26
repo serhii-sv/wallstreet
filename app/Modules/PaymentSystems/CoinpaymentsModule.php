@@ -79,7 +79,7 @@ class CoinpaymentsModule
         /** @var User $user */
         $user           = $wallet->user()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem  = PaymentSystem::where('code', 'coinpayments')->first();
         /** @var Currency $currency */
         $currency       = $wallet->currency()->first();
 
