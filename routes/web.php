@@ -7,8 +7,10 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\AccountPanel\ProfileController;
+use App\Http\Controllers\AccountPanel\ReferralsController;
 use App\Http\Controllers\AdminChatController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CurrencyExchangesController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\NotificationsController;
@@ -26,7 +28,7 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
-    
+    Route::get('/banner/{id}', [BannerController::class, 'getBanner'])->name('get.banner');
     Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
 
 
