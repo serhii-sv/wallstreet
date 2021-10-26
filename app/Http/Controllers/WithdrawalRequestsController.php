@@ -127,28 +127,28 @@ class WithdrawalRequestsController extends Controller
                 /** @var Transaction $item */
                 $transaction = Transaction::find($item);
 
-                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approve($item, true);
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').' '.$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approve($item, true);
             }
         } else if ($request->type == 'approveManually') {
             foreach ($request->list as $item) {
                 /** @var Transaction $item */
                 $transaction = Transaction::find($item);
 
-                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approveManually($item, true);
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').' '.$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approveManually($item, true);
             }
         } else if ($request->type == 'reject') {
             foreach ($request->list as $item) {
                 /** @var Transaction $item */
                 $transaction = Transaction::find($item);
 
-                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->reject($item, true);
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').' '.$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->reject($item, true);
             }
         } else if ($request->type == 'destroy') {
             foreach ($request->list as $item) {
                 /** @var Transaction $item */
                 $transaction = Transaction::find($item);
 
-                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->remove($item, true);
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').' '.$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->remove($item, true);
             }
         }
 
@@ -268,6 +268,10 @@ class WithdrawalRequestsController extends Controller
                 return __('ERROR:') . ' wallet is empty';
             }
             return back()->with('error', __('ERROR:') . ' wallet is empty');
+        }
+
+        if (empty($ps)) {
+            return back()->with('error', 'Платежная система не поддерживает автоплатежи');
         }
 
         try {
