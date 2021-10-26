@@ -70,7 +70,7 @@ class DepositController extends Controller
                 $data[] = [
                     'id' => view('pages.deposits.partials.id', compact('deposit'))->render(),
                     'email' => view('pages.deposits.partials.email', compact('deposit'))->render(),
-                    'invested' => "$ " . number_format($deposit->invested, 2, '.', ',') ?? 0 ?? 'Не указано',
+                    'invested' => $deposit->currency->symbol . " " . number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 ?? 'Не указано',
                     'total_assessed' => view('pages.deposits.partials.total-assessed', compact('deposit'))->render(),
                     'remains_to_accrue' => '?',
                     'next_charge' => '?',
@@ -181,10 +181,10 @@ class DepositController extends Controller
                     'msg' => $messages,
                 ]);
             }
-        
+            
             $deposit_bonus = new DepositBonus();
             $deposit_bonus->create($request->post());
-        
+            
             return json_encode([
                 'status' => 'good',
                 'msg' => 'Bonus added!',
@@ -196,7 +196,7 @@ class DepositController extends Controller
     public function deleteBonus(Request $request) {
         $deposit_bonus = DepositBonus::where('id', $request->post('id'))->first();
         $deposit_bonus->delete();
-    
+        
         return json_encode([
             'status' => 'good',
             'msg' => 'Bonus deleted!',

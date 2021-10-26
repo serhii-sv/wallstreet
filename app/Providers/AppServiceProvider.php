@@ -70,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
         Paginator::defaultView('vendor.pagination.default');
-
+        
         /*
          * Base observers
          */
@@ -93,7 +93,7 @@ class AppServiceProvider extends ServiceProvider
         UserSidebarProperties::observe(UserSidebarPropertyObserver::class);
         //Task::observe(TaskObserver::class);
     }
-
+    
     /**
      * Register any application services.
      *
