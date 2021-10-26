@@ -124,20 +124,31 @@ class WithdrawalRequestsController extends Controller
 
         if ($request->type == 'approve') {
             foreach ($request->list as $item) {
-                $messages[] = $this->approve($item, true);
+                /** @var Transaction $item */
+                $transaction = Transaction::find($item);
 
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approve($item, true);
             }
         } else if ($request->type == 'approveManually') {
             foreach ($request->list as $item) {
-                $messages[] = $this->approveManually($item, true);
+                /** @var Transaction $item */
+                $transaction = Transaction::find($item);
+
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->approveManually($item, true);
             }
         } else if ($request->type == 'reject') {
             foreach ($request->list as $item) {
-                $messages[] = $this->reject($item, true);
+                /** @var Transaction $item */
+                $transaction = Transaction::find($item);
+
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->reject($item, true);
             }
         } else if ($request->type == 'destroy') {
             foreach ($request->list as $item) {
-                $messages[] = $this->remove($item, true);
+                /** @var Transaction $item */
+                $transaction = Transaction::find($item);
+
+                $messages[] = number_format($transaction->amount, $transaction->currency->precision, '.', '').$transaction->currency->code.' -> '.$transaction->user->email.' : '.$this->remove($item, true);
             }
         }
 
