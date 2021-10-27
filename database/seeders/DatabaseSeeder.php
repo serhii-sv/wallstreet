@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             DepositBonusSeeder::class,
             RateGroupsSeeder::class,
+            UserSmsSettingsSeeder::class,
         ]);
     }
 }

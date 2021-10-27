@@ -7,13 +7,16 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\AccountPanel\ProfileController;
+use App\Http\Controllers\AccountPanel\ReferralsController;
 use App\Http\Controllers\AdminChatController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CurrencyExchangesController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\RateGroupsController;
 use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\UserPhoneVerificationController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +29,7 @@ Route::group(['middleware' => ['web']], function () {
         'verify' => false,
     ]);
     Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,5');
-    
+    Route::get('/banner/{id}', [BannerController::class, 'getBanner'])->name('get.banner');
     Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
 
 
@@ -178,6 +181,10 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/store', [App\Http\Controllers\RateController::class, 'store'])->name('store');
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
             });
+            
+            Route::get('/user-phone-verification', [UserPhoneVerificationController::class, 'index'])->name('user.phone.verification');
+            Route::post('/user-phone-verification', [UserPhoneVerificationController::class, 'save'])->name('user.phone.verification');
+            
             Route::get('/rate-groups', [RateGroupsController::class, 'index'])->name('rate.groups.index');
             Route::post('/rate-groups/update', [RateGroupsController::class, 'update'])->name('rate.groups.update');
 

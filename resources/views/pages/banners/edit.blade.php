@@ -46,7 +46,7 @@
                                     <div class="input-field col s12">
                                         <div class="font-weight-500 mb-2">Картинка</div>
                                         @if($banner->image)
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" width="300">
+                                        <img style="max-width: 100%" src="{{ route('get.banner', $banner->id) }}" width="300">
                                         @endif
                                         <input type="file" id="input-file-events" class="dropify-event" name="image"/>
                                     </div>

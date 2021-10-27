@@ -53,9 +53,8 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-           /* 'g-recaptcha-response' => config('app.env') == 'production' ? 'required|recaptchav3:login,0.5' : '',*/
-        ], [
-           /* 'recaptchav3' => 'Captcha error! Try again',*/
+            /* 'g-recaptcha-response' => config('app.env') == 'production' ? 'required|recaptchav3:login,0.5' : '',*/
+        ], [/* 'recaptchav3' => 'Captcha error! Try again',*/
         ]);
     }
     
@@ -91,34 +90,39 @@ class LoginController extends Controller
         $browser_version = Parser::browserVersion();
         $device_platform = Parser::platformName();
         $device_stats = DeviceStat::where('browser', $browser)->first();
-        if ($device_stats === null){
+        if ($device_stats === null) {
             $device_stats = new DeviceStat([
                 'browser' => $browser,
                 'count' => 0,
             ]);
         }
         $device_stats->update(['count' => $device_stats->count + 1]);
-        
-        $user_device_count = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->count();
-        if ($user_device_count > 0) {
-            return false;
+    
+        $user_device = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+        if ($user_device !== null) {
+            if ($user_device->ip !== $request->ip()) {
+                $user_device->ip = $request->ip();
+                $user_device->sms_verified = false;
+                $user_device->save();
+            }
+        } else {
+            $user_device = new UserDevice();
+            $user_device->user_id = $user->id;
+            $user_device->ip = $request->ip();
+            $user_device->browser = $browser;
+            $user_device->browser_version = $browser_version;
+            $user_device->device_platform = $device_platform;
+            if (Parser::isMobile()) {
+                $user_device->is_mobile = true;
+            } else if (Parser::isTablet()) {
+                $user_device->is_tablet = true;
+            } else if (Parser::isDesktop()) {
+                $user_device->is_desktop = true;
+            } else if (Parser::is_bot()) {
+                $user_device->is_bot = true;
+            }
+            $user_device->save();
         }
-        $user_device = new UserDevice();
-        $user_device->user_id = $user->id;
-        $user_device->ip = $request->ip();
-        $user_device->browser = $browser;
-        $user_device->browser_version = $browser_version;
-        $user_device->device_platform = $device_platform;
-        if (Parser::isMobile()) {
-            $user_device->is_mobile = true;
-        } else if (Parser::isTablet()) {
-            $user_device->is_tablet = true;
-        } else if (Parser::isDesktop()) {
-            $user_device->is_desktop = true;
-        } else if (Parser::is_bot()) {
-            $user_device->is_bot = true;
-        }
-        $user_device->save();
     }
     
     public function checkForMultiAccounts(Request $request, $user) {

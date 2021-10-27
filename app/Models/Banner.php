@@ -58,6 +58,7 @@ class Banner extends Model
     const SMALL_SQUARE = 'Small Square';
     const SMALL_RECTANGLE = 'Small Rectangle';
     const BUTTON = 'Button';
+    const CUSTOM = 'Custom';
 
     /**
      * Sizes list
@@ -141,6 +142,11 @@ class Banner extends Model
         self::BUTTON => [
             'name' => 'Кнопка',
             'size' => '125×125',
+            'image' => 'BUTTON.jpeg'
+        ],
+        self::CUSTOM => [
+            'name' => 'Авто',
+            'size' => 'Свой размер',
             'image' => 'BUTTON.jpeg'
         ],
     ];
