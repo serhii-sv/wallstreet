@@ -22,7 +22,7 @@
         <div class="card-content">
           <div class="display-flex justify-content-between">
             <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='Tariffs' contenteditable="true">{{ __('Tariffs') }}</editor_block>@else {{ __('Tariffs') }} @endif
+                <editor_block data-name='Phone verification' contenteditable="true">{{ __('Phone verification') }}</editor_block>@else {{ __('Phone verification') }} @endif
             </h4>
           </div>
           <form action="{{ route('user.phone.verification') }}" method="post">
