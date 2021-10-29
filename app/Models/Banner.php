@@ -175,11 +175,17 @@ class Banner extends Model
     }
 
     public function getWidth() {
-        $size = explode('×',$this->size);
-        return $size[0];
+        if(preg_match('/[\d]+x[\d]+/', $this->size)){
+            $size = explode('×',$this->size);
+            return $size[0];
+        }
+        return false;
     }
     public function getHeight() {
-        $size = explode('×',$this->size);
-        return $size[1];
+        if(preg_match('/[\d]+x[\d]+/', $this->size)){
+            $size = explode('×',$this->size);
+            return $size[1];
+        }
+        return false;
     }
 }
