@@ -424,18 +424,6 @@ class RegisterPaymentSystemsCommand extends Command
                 ],
                  'image' => 'american express.jpg',
             ],
-            'ripple' => [
-                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Ripple [yes|no]', 'yes'),
-                'name' => 'Ripple',
-                'currencies' => [
-                    'USD',
-                    'EUR',
-                    'RUB',
-                    'UAH',
-                    'KZT',
-                ],
-                 'image' => 'ripple.jpg',
-            ],
             'otkritie' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Открытие [yes|no]', 'yes'),
                 'name' => 'Открытие',
@@ -473,8 +461,8 @@ class RegisterPaymentSystemsCommand extends Command
                  'image' => 'swift.jpg',
             ],
         ];
-        
-        
+
+
         foreach ($questions as $paymentSystemCode => $data) {
             $this->line('------');
 
