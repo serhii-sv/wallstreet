@@ -68,28 +68,29 @@ class News extends Model
     }
     
     public function getTitle($lang) {
-        $title_list = json_decode($this->title, true);
-        if (array_key_exists($lang, $title_list)){
+        //dd($this->title);
+        $title_list = $this->title;
+        if (array_key_exists($lang, $title_list)) {
             return $title_list[$lang];
-        }else{
+        } else {
             return array_shift($title_list);
         }
     }
     
     public function getShortContent($lang) {
-        $title_list = json_decode($this->short_content, true);
-        if (array_key_exists($lang, $title_list)){
+        $title_list = $this->short_content;
+        if (array_key_exists($lang, $title_list)) {
             return $title_list[$lang];
-        }else{
+        } else {
             return array_shift($title_list);
         }
     }
     
     public function getContent($lang) {
-        $title_list = json_decode($this->content, true);
-        if (array_key_exists($lang, $title_list)){
+        $title_list = $this->content;
+        if (array_key_exists($lang, $title_list)) {
             return $title_list[$lang];
-        }else{
+        } else {
             return array_shift($title_list);
         }
     }

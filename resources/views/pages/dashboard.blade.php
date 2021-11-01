@@ -187,7 +187,7 @@
                 <p>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
                   @else
-                    {{ __('Total') }}
+                    {{ __('Total acc') }}
                   @endif: {{ number_format($users['total'], 0, '.', ',') }}</p>
               </div>
               <div class="card-action orange">
@@ -214,7 +214,7 @@
                 <p>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
                   @else
-                    {{ __('Total') }}
+                    {{ __('Total repl') }}
                   @endif: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
               </div>
               <div class="card-action green ">
