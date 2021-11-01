@@ -275,9 +275,7 @@ trait HasReferral
             $findRef->save();
             $findRef->refresh();
 
-            if (null !== $findRef->partner) {
-                $findRef->generatePartnerTree();
-            }
+//            $findRef->generatePartnerTree();
         }
 
         return [
@@ -289,16 +287,24 @@ trait HasReferral
     /**
      * @param User $parent
      */
-    public function generatePartnerTree($flag=1)
+    public function generatePartnerTree()
     {
-        /** @var User $partners */
-        $partners       = User::where('my_id', $this->partner_id)->get();
-        $parent_array   = [];
+        $parent = $this->partner;
 
-        /** @var User $partner */
+        if (null === $parent) {
+            return;
+        }
+
+        $parent_array = [];
+
+        $partners = $parent->partners()->orderBy('pivot_line','asc')->get();
+        $parent_array[$parent->id] = ['line'=>1];
+
+        $i = 1;
+
         foreach ($partners as $partner) {
-            $parent_array[$partner->id] = ['line' => $flag];
-            $partner->generatePartnerTree($flag++);
+            $i++;
+            $parent_array[$partner->id] = ['line'=>$i];
         }
 
         $this->partners()->sync($parent_array);
