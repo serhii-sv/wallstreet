@@ -254,7 +254,7 @@ trait HasReferral
 
         foreach ($referrals as $referral) {
             if (isset($referral['id'])) {
-                $ids[$referral['id']] = ['line' => $flag];
+                $ids[$referral['id']] = ['line' => 1];
             }
 
 //            $user = User::find($referral['id']);
@@ -273,6 +273,10 @@ trait HasReferral
 
             $findRef->partner_id = $this->my_id;
             $findRef->save();
+
+            if (null !== $findRef->partner) {
+                $findRef->generatePartnerTree($findRef->partner);
+            }
         }
 
         return [
