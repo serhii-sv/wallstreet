@@ -190,14 +190,9 @@ class Wallet extends Model
      * @param $external
      * @throws \Throwable
      */
-    public function refill($amount, $external = null)
+    public function refill($amount)
     {
         $this->balance += $amount;
-
-        if (!empty($external)) {
-            $this->external = $external;
-        }
-
         $this->save();
 
 //        $data = [

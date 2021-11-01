@@ -225,8 +225,8 @@ class GenerateDemoDataCommand extends Command
 
                     /** @var Transaction $transaction */
                     $transaction = Transaction::create($transactionData);
-                    $wallet->refill($transaction->amount, $externalWallet);
-                    
+                    $wallet->refill($transaction->amount);
+
                     dump('balance updated ' . $wallet->id);
                 }
             }
@@ -277,7 +277,7 @@ class GenerateDemoDataCommand extends Command
     public function generateDeposits(User $user) {
         /** @var Rate $randomRates */
         $randomRates = Rate::where('active', 1)->inRandomOrder()->get();
-        
+
         if (null === $randomRates) {
             return;
         }
@@ -306,7 +306,7 @@ class GenerateDemoDataCommand extends Command
                     'log' => $this->faker->text,
                     'created_at' => $this->faker->dateTimeThisMonth()->format('Y-m-d') . ' 12:00:00',
                 ];
-                $wallet->refill($transactionData['amount'], $externalWallet);
+                $wallet->refill($transactionData['amount']);
 
                 /** @var Transaction $transaction */
                 $transaction = Transaction::create($transactionData);
