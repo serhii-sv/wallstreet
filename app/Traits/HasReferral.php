@@ -248,13 +248,17 @@ trait HasReferral
                 'message' => 'Возника ошибка'
             ];
         }
+
         $ids = [];
         $this->referrals()->detach();
 
         foreach ($referrals as $referral) {
-            $ids[$referral['id']] = ['line' => $flag];
-            $user = User::find($referral['id']);
-            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
+            if (isset($referral['id'])) {
+                $ids[$referral['id']] = ['line' => $flag];
+            }
+
+//            $user = User::find($referral['id']);
+//            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
         $this->referrals()->sync($ids);
