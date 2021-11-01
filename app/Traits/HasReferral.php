@@ -301,4 +301,23 @@ trait HasReferral
         return $this->partners()->first();
     }
 
+    public function getChildrens($limit = 7) {
+        if ($limit === 0) {
+            return [];
+        }
+
+        $referrals = [];
+        $referrals['name'] = $this->login;
+
+        if (!$this->hasReferrals()) {
+            return $referrals;
+        }
+
+        foreach ($this->referrals()->wherePivot('line', 1)->get() as $r) {
+            $referral = $this->getChildrens($limit - 1);
+            $referrals['children'][] = $referral;
+        }
+
+        return $referrals;
+    }
 }
