@@ -328,7 +328,7 @@ class UsersController extends Controller
             $upliner = false;
         }
 
-        $referrals = $user->referrals()->wherePivot('line', 1)->get();
+        $referrals = $user->referrals()->wherePivot('line', 2)->get();
 
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $total_referral_invested = 0;
