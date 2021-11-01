@@ -390,11 +390,11 @@
         swal({
           title: "Вы уверены?",
           text: "Пользователю будет начслен бонус!",
-          icon: 'warning',
+          icon: 'success',
           dangerMode: true,
           buttons: {
-            cancel: 'No, Please!',
-            delete: 'Yes, Delete It'
+            cancel: 'Нет',
+            delete: 'Да'
           }
         }).then(function (willDelete) {
           if (willDelete) {
@@ -404,7 +404,7 @@
             });
           } else {
             swal("Правильное решение!", {
-              title: 'Cancelled',
+              title: 'Отмена',
               icon: "error",
             });
           }
@@ -419,8 +419,8 @@
           icon: 'warning',
           dangerMode: true,
           buttons: {
-            cancel: 'No, Please!',
-            delete: 'Yes, Delete It'
+            cancel: 'Нет',
+            delete: 'Да'
           }
         }).then(function (willDelete) {
           if (willDelete) {
@@ -430,7 +430,7 @@
             });
           } else {
             swal("Правильное решение!", {
-              title: 'Cancelled',
+              title: 'Отмена',
               icon: "error",
             });
           }
