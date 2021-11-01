@@ -29,7 +29,9 @@ class CheckPermissions
         $route_name = $request->route()->getName();
         $permission = Permission::where('slug', $route_name)->first();
 
-        die(print_r(ModelHasPermission::where('model_id', auth()->user()->id)->get(),true));
+        if (!auth()->user()->can('home')) {
+            auth()->user()->givePermissionTo('home');
+        }
 
         if (!empty($permission)){
 
