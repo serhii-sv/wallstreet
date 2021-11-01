@@ -46,83 +46,94 @@
 @section('content')
   <div class="section mt-2 invoice-list-wrapper" id="blog-list">
     <div class="row">
-      <div class="col s12 mt-2">
-        
-        <div class="col s12 responsive-table mt-3">
-          <table class="table white border-radius-4 pt-1">
-            <thead>
-              <tr class="border-none">
-                <th rowspan="2" colspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Career status' contenteditable="true">{{ __('Career status') }}</editor_block>@else {{ __('Career status') }} @endif</th>
-                <th colspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Deposit turnover' contenteditable="true">{{ __('Deposit turnover') }}</editor_block>@else {{ __('Deposit turnover') }} @endif</th>
-                <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block>@else {{ __('Reward') }} @endif</th>
-                <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Leadership bonus' contenteditable="true">{{ __('Leadership bonus') }}</editor_block>@else {{ __('Leadership bonus') }} @endif</th>
-                <th rowspan="2"></th>
-                <th></th>
-              </tr>
-              <tr class="border-none">
-                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Personal turnover' contenteditable="true">{{ __('Personal turnover') }}</editor_block>@else {{ __('Personal turnover') }} @endif</th>
-                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Structural turnover' contenteditable="true">{{ __('Structural turnover') }}</editor_block>@else {{ __('Structural turnover') }} @endif</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if($deposit_turnovers)
-                @foreach($deposit_turnovers as $item)
-                  <tr class="bonus-list" data-id="{{ $item->id }}" data-personal-turnover="{{ $item->personal_turnover ?? 0 }}">
-                    <td>
-                      <input type="text" name="status_name" value="{{ $item->status_name ?? '' }}">
-                    </td>
-                    <td>
-                      <input type="text" name="status_stage" value="{{ $item->status_stage ?? '' }}">
-                    </td>
-                    <td>
-                      <input type="text" name="personal_turnover" value="{{ $item->personal_turnover ?? 0 }}">
-                    </td>
-                    <td>
-                      <input type="text" name="total_turnover" value="{{ $item->total_turnover ?? 0 }}">
-                    </td>
-                    <td>
-                      <input type="text" name="reward" value="{{ $item->reward ?? 0 }}">
-                    </td>
-                    <td>
-                      <input type="text" name="leadership_bonus" value="{{ $item->leadership_bonus ?? '' }}">
-                    </td>
-                    <td>
-                      <button class="btn blue darken-3 save-data-btn" data-id="{{ $item->id }}">
-                        <i class="material-icons dp48">save</i>
-                      </button>
-                      <button class="btn delete-data-btn" data-id="{{ $item->id }}">
-                        <i class="material-icons dp48">delete_forever</i>
-                      </button>
-                    </td>
-                  </tr>
-                @endforeach
-              @endif
-              <tr class="new-bonus">
-                <td>
-                  <input type="text" name="status_name" value="">
-                </td>
-                <td>
-                  <input type="text" name="status_stage" value="">
-                </td>
-                <td>
-                  <input type="text" name="personal_turnover" value="">
-                </td>
-                <td>
-                  <input type="text" name="total_turnover" value="">
-                </td>
-                <td>
-                  <input type="text" name="reward" value="">
-                </td>
-                <td>
-                  <input type="text" name="leadership_bonus" value="">
-                </td>
-                <td>
-                  <button class="btn add-data-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="col s12 responsive-table mt-3">
+        <table class="table white border-radius-4 pt-1">
+          <thead>
+            <tr class="border-none">
+              <th rowspan="2" colspan="2">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Career status' contenteditable="true">{{ __('Career status') }}</editor_block>@else {{ __('Career status') }} @endif
+              </th>
+              <th colspan="2">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Deposit turnover' contenteditable="true">{{ __('Deposit turnover') }}</editor_block>@else {{ __('Deposit turnover') }} @endif
+              </th>
+              <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block>@else {{ __('Reward') }} @endif
+              </th>
+              <th rowspan="2">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Leadership bonus' contenteditable="true">{{ __('Leadership bonus') }}</editor_block>@else {{ __('Leadership bonus') }} @endif
+              </th>
+              <th rowspan="2"></th>
+              <th></th>
+            </tr>
+            <tr class="border-none">
+              <th>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Personal turnover' contenteditable="true">{{ __('Personal turnover') }}</editor_block>@else {{ __('Personal turnover') }} @endif
+              </th>
+              <th>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Structural turnover' contenteditable="true">{{ __('Structural turnover') }}</editor_block>@else {{ __('Structural turnover') }} @endif
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @if($deposit_turnovers)
+              @foreach($deposit_turnovers as $item)
+                <tr class="bonus-list" data-id="{{ $item->id }}" data-personal-turnover="{{ $item->personal_turnover ?? 0 }}">
+                  <td>
+                    <input type="text" name="status_name" value="{{ $item->status_name ?? '' }}">
+                  </td>
+                  <td>
+                    <input type="text" name="status_stage" value="{{ $item->status_stage ?? '' }}">
+                  </td>
+                  <td>
+                    <input type="text" name="personal_turnover" value="{{ $item->personal_turnover ?? 0 }}">
+                  </td>
+                  <td>
+                    <input type="text" name="total_turnover" value="{{ $item->total_turnover ?? 0 }}">
+                  </td>
+                  <td>
+                    <input type="text" name="reward" value="{{ $item->reward ?? 0 }}">
+                  </td>
+                  <td>
+                    <input type="text" name="leadership_bonus" value="{{ $item->leadership_bonus ?? '' }}">
+                  </td>
+                  <td>
+                    <button class="btn blue darken-3 save-data-btn" data-id="{{ $item->id }}">
+                      <i class="material-icons dp48">save</i>
+                    </button>
+                    <button class="btn delete-data-btn" data-id="{{ $item->id }}">
+                      <i class="material-icons dp48">delete_forever</i>
+                    </button>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
+            <tr class="new-bonus">
+              <td>
+                <input type="text" name="status_name" value="">
+              </td>
+              <td>
+                <input type="text" name="status_stage" value="">
+              </td>
+              <td>
+                <input type="text" name="personal_turnover" value="">
+              </td>
+              <td>
+                <input type="text" name="total_turnover" value="">
+              </td>
+              <td>
+                <input type="text" name="reward" value="">
+              </td>
+              <td>
+                <input type="text" name="leadership_bonus" value="">
+              </td>
+              <td>
+                <button class="btn add-data-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Add' contenteditable="true">{{ __('Add') }}</editor_block>@else {{ __('Add') }} @endif
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -140,7 +151,7 @@
       var $id, $status_name, $status_stage, $personal_turnover, $total_turnover, $reward, $leadership_bonus;
       $("body").on('click', '.delete-data-btn', function () {
         var $button = $(this);
-    
+        
         swal({
           title: "Ты уверен?",
           text: "Запись будет удалена!",
@@ -153,7 +164,7 @@
           if (willDelete) {
             $button.addClass('disabled');
             $id = $(this).attr('data-id');
-            $("button[data-id='"+$id+"']").addClass('disabled');
+            $("button[data-id='" + $id + "']").addClass('disabled');
             var $url = "{{ route('deposit.bonus.delete') }}";
             $.ajax({
               type: 'post',
@@ -172,7 +183,7 @@
                 })
               }
             });
-           
+            
           }
         });
       });
