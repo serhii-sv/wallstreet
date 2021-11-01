@@ -156,7 +156,7 @@ class ReferralController extends Controller
 
         $children = [];
 
-        return $children['children'][] = $this->getChildrens($user, 7);
+        return $children['children'][] = $user->getChildrens(7);
     }
 
     public function show_referral_tree() {
