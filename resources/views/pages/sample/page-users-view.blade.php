@@ -14,7 +14,7 @@
 
 {{-- page content  --}}
 @section('content')
-  
+
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object start -->
@@ -108,7 +108,7 @@
                     @endforelse
                   </td>
                 </tr>
-              
+
               </tbody>
             </table>
           </div>
@@ -170,7 +170,7 @@
       </div>
     </div>
     <!-- users view card data ends -->
-    
+
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
@@ -193,7 +193,7 @@
             </div>
           </div>
           <div class="col s12 m4 users-view-timeline">
-            
+
             <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of registrations' contenteditable="true">{{ __('Number of registrations') }}</editor_block>@else {{ __('Number of registrations') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ $registered_referrals ?? 0 }}</span>
             </div>
@@ -207,7 +207,7 @@
               <span class="badge pink " style="font-size: 18px">{{ $referral_clicks ?? 0 }}</span>
             </div>
           </div>
-        
+
         </div>
       {{--        <div class="row">--}}
       {{--          <div class="col s12">--}}
@@ -251,7 +251,7 @@
       </div>
     </div>
     <!-- users view card details ends -->
-    
+
     <div class="card">
       <div class="card-content">
         <div class="row">
@@ -318,7 +318,7 @@
           </div>
           <div class="col s12 l4">
             <ul id="issues-collection" class="collection z-depth-1  fadeRight">
-              
+
               <li class="collection-item avatar" style="min-height: auto">
                 <i class="material-icons blue accent-2 circle">computer</i>
                 <h6 class="collection-header m-0">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Latest ip addresses' contenteditable="true">{{ __('Latest ip addresses') }}</editor_block>@else {{ __('Latest ip addresses') }} @endif</h6>
@@ -340,7 +340,7 @@
         <!-- </div> -->
       </div>
     </div>
-  
+
   </div>
   <!-- users view ends -->
 @endsection
@@ -348,7 +348,7 @@
 {{-- page script --}}
 @section('page-script')
   <script src="{{asset('js/scripts/page-account-settings.js')}}"></script>
-  
+
   <script src="{{asset('js/moment.js')}}"></script>
   <script src="{{asset('js/daterangepicker.js')}}"></script>
   <script>
@@ -436,7 +436,7 @@
           }
         });
       });
-  
+
       jQuery.fn.addHidden = function (name, value) {
         return this.each(function () {
           var input = $("<input>").attr("type", "hidden").attr("name", name).val(value);
