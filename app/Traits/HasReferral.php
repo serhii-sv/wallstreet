@@ -314,7 +314,7 @@ trait HasReferral
         }
 
         foreach ($this->referrals()->wherePivot('line', 1)->get() as $r) {
-            $referral = $this->getChildrens($limit - 1);
+            $referral = $r->getChildrens($limit - 1);
             $referrals['children'][] = $referral;
         }
 
