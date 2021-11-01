@@ -68,7 +68,9 @@ class UpdateCurrencyRatesCommand extends Command
             }
 
             if (!isset($response['data'][strtoupper($currency->code)]['quote']['USD']['price'])) {
-                if (strtoupper($currency->code) == 'USD') {
+                if (strtoupper($currency->code) == 'USD'
+                    || strtoupper($currency->code) == 'USDT.TRC20'
+                    || strtoupper($currency->code) == 'USDT.ERC20') {
                     $response['data'][strtoupper($currency->code)]['quote']['USD']['price'] = 1;
                 } else {
                     \Log::error('Can not get rate for ' . $currency->code . ' in USD');
