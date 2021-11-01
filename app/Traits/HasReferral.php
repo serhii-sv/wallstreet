@@ -248,7 +248,7 @@ trait HasReferral
         $this->referrals()->detach();
 
         foreach ($referrals as $referral) {
-            $ids[$referral['id']] = ['line' => $flag];
+            $ids[$referral['id']] = ['line' => 1];
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
