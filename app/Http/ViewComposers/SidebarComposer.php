@@ -26,14 +26,13 @@ class SidebarComposer
     public function compose(View $view)
     {
         $user = auth()->user();
-        if ($user->hasAnyRole(['root', 'admin', 'teamlead']))
-        {
-            $count_users = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','count_users')->firstOrCreate(['sb_prop' => 'count_users']);
-            $withdrawals_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','withdrawals_amount')->firstOrCreate(['sb_prop' => 'withdrawals_amount']);
-            $replenishments_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','replenishments_amount')->firstOrCreate(['sb_prop' => 'replenishments_amount']);
-            $currency_exchange_count = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','currency_exchange_count')->firstOrCreate(['sb_prop' => 'currency_exchange_count']);
-            //$count_tasks = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','tasks')->firstOrCreate(['sb_prop' => 'tasks']);
-        }
+
+        $count_users = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','count_users')->firstOrCreate(['sb_prop' => 'count_users']);
+        $withdrawals_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','withdrawals_amount')->firstOrCreate(['sb_prop' => 'withdrawals_amount']);
+        $replenishments_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','replenishments_amount')->firstOrCreate(['sb_prop' => 'replenishments_amount']);
+        $currency_exchange_count = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','currency_exchange_count')->firstOrCreate(['sb_prop' => 'currency_exchange_count']);
+        //$count_tasks = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','tasks')->firstOrCreate(['sb_prop' => 'tasks']);
+
         $view
             ->with('counts', [
                 'users' => $count_users->sb_val ?? 0,
@@ -50,7 +49,7 @@ class SidebarComposer
                     $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('enter')->id)->sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);
                 }),*/
-                
+
 //                'transactions_amount' => cache()->remember('counts.transactions_amount', now()->addHour(), function() {
 //                    $sum = Transaction::sum('main_currency_amount');
 //                    return Transaction::sidebarIndicatorsFormatting($sum);
@@ -59,7 +58,7 @@ class SidebarComposer
 //                    $sum = Transaction::where('approved', 1)->where('type_id', TransactionType::getByName('create_dep')->id)->sum('main_currency_amount');
 //                    return Transaction::sidebarIndicatorsFormatting($sum);
 //                }),
-                
+
                 'currency_exchange_count' => $currency_exchange_count->sb_val ?? 0,
                 /*cache()->remember('counts.currency_exchange_count', now()->addMinutes(30), function (){
                     return CurrencyExchange::count();
