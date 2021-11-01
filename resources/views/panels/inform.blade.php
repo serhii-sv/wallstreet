@@ -36,7 +36,7 @@
         <div class="card-content white-text">
             <p>
 {{--                <i class="material-icons">check</i>--}}
-                {{ session()->get('info') }}
+                {!! session()->get('info') !!}
             </p>
         </div>
         <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">

@@ -13,7 +13,7 @@
 
 {{-- page content  --}}
 @section('content')
-  
+
   <!-- users view start -->
   <div class="section users-view">
     <!-- users view media object ends -->
@@ -89,10 +89,9 @@
             @endforelse
           </tbody>
         </table>
-        {{ $referrals->links() }}
       </div>
     </div>
-  
+
   </div>
   <!-- users view ends -->
 @endsection

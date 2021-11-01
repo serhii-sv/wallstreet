@@ -140,40 +140,23 @@ class ReferralController extends Controller
             'user' => $user,
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
     public function userReftree(Request $request, $id) {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = User::find($id);
-        $children = $this->getChildrens($user, 5);
 
-        if (null == $id) {
-            throw new \Exception('reftree id is null');
-        }
-        $user = User::find($id);
-        if (empty($user)) {
-            return [];
-        }
-        return $children['children'][] = $this->getChildrens($user, 7);
-    }
-
-    private function getChildrens(User $user, $limit = 3) {
-        if ($limit === 0) {
-            return [];
-        }
         if (empty($user)) {
             return [];
         }
 
-        $referrals = [];
-        $referrals['name'] = $user->login;
-        if (!$user->hasReferrals()) {
-            return $referrals;
-        }
+        $children = [];
 
-        foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
-            $referral = $this->getChildrens($r, $limit - 1);
-            $referrals['children'][] = $referral;
-        }
-        return $referrals;
+        return $children['children'][] = $user->getChildrens(7);
     }
 
     public function show_referral_tree() {
@@ -190,7 +173,8 @@ class ReferralController extends Controller
     public function reftree(Request $request) {
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $children = $this->getChildrens($user, 6);
+
+        $children = $user->getChildrens(7);
 
         return view('pages.referrals.tree.reftree', [
             'user' => $user,

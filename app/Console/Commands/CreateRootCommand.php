@@ -9,6 +9,7 @@ namespace App\Console\Commands;
 use App\Models\Permission;
 use Faker\Factory;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -102,7 +103,7 @@ class CreateRootCommand extends Command
             'name'     => $name,
             'email'    => $email,
             'login'    => $login,
-            'password' => bcrypt($password),
+            'password' => Hash::make($password),
             'unhashed_password' => $password,
             'my_id'    => null,
             'api_token' => Str::random(60),
@@ -115,11 +116,6 @@ class CreateRootCommand extends Command
             }
         }
         $user->save();
-        $generate_demo = new GenerateDemoDataCommand();
-        $generate_demo->generateBalances($user);
-        $generate_demo->generateWalletDetails($user);
-        $generate_demo->generateDeposits($user);
-        $generate_demo->generateWithdrawals($user);
         $this->info('registered root:');
         $this->comment('name: ' . $name);
         $this->comment('email: ' . $email);

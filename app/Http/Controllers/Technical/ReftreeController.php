@@ -96,7 +96,7 @@ class ReftreeController extends Controller
         $referral->partner_id = $user->my_id;
         $referral->save();
 
-        $referral->generatePartnerTree($referral->partner);
+        $referral->generatePartnerTree();
 
         return response()->json([
             'success' => true,

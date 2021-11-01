@@ -52,7 +52,7 @@ class UsersController extends Controller
                 $recordsFiltered = $users->count();
                 $users->limit($request->length)->offset($request->start);
                 $data = [];
-                
+
                 foreach ($users->get() as $user) {
                     $main_user = $user->main_user()->first();
                     $user = $user->user()->first();
@@ -79,19 +79,19 @@ class UsersController extends Controller
                         'color' => $user->roles->first()->color ?? '',
                     ];
                 }
-                
+
             } else {
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
                 })->withCount('referrals')->orderBy($column, $request->order[0]['dir']);
-                
+
                 $recordsFiltered = $users->count();
                 $users->limit($request->length)->offset($request->start);
                 $data = [];
                 foreach ($users->get() as $user) {
                     $ip = $user->ip ?? 'Не указано';
                     if (!Auth::user()->hasRole('root') && $user->hasRole('teamlead')) {
-                    
+
                     } else if ((Auth::user()->hasRole('root') && $user->hasRole('teamlead')) || !$user->hasRole('teamlead')) {
                         $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
                         if ($multi_acc->count() > 0) {
@@ -117,7 +117,7 @@ class UsersController extends Controller
                     }
                 }
             }
-            
+
             return response()->json([
                 'draw' => $request->draw,
                 'recordsTotal' => $users_count,
@@ -130,7 +130,7 @@ class UsersController extends Controller
             return view('pages.sample.app-contacts', compact('users_count', 'roles'));
         }
     }
-    
+
     /**
      * @param Request $request
      * @param string  $id
@@ -138,15 +138,15 @@ class UsersController extends Controller
     public function updateStat(Request $request, string $id) {
         /** @var User $user */
         $user = User::findOrFail($id);
-        
+
         $user->stat_salary_percent = (float)$request->stat['stat_salary_percent'];
         $user->stat_worker_withdraw = (float)$request->stat['stat_worker_withdraw'];
         $user->stat_additional = (string)$request->stat['stat_additional'];
         $user->save();
-        
+
         return redirect()->back();
     }
-    
+
     /**
      * @param RequestBonusUser $request
      *
@@ -167,7 +167,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to accrue bonus'));
     }
-    
+
     /**
      * @param RequestPenaltyUser $request
      *
@@ -177,7 +177,7 @@ class UsersController extends Controller
         /** @var Wallet $wallet */
         $wallet = Wallet::find($request->wallet_id);
         $wallet = $wallet->removeAmount($request->amount);
-        
+
         if ($wallet) {
             // send notification to user
             $data = [
@@ -190,7 +190,7 @@ class UsersController extends Controller
         }
         return back()->with('error', __('Unable to handle penalty'));
     }
-    
+
     /**
      * @param Request $request
      * @param User    $user
@@ -200,7 +200,7 @@ class UsersController extends Controller
     public function show(Request $request, User $user) {
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
-        
+
         $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
@@ -208,33 +208,33 @@ class UsersController extends Controller
         $stat_different = $stat_deposits - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
-        
+
         $user->stat_deposits = $stat_deposits;
         $user->stat_withdraws = $stat_withdraws;
         $user->stat_different = $stat_different;
         $user->stat_salary = $stat_salary;
         $user->stat_left = $stat_left;
         $user->save();
-        
+
         $userActivityDay = ActivityLog::getActivityLog($user, 'day');
         $userActivityWeek = ActivityLog::getActivityLog($user, 'week');
         $userActivityMonth = ActivityLog::getActivityLog($user, 'month');
-        
+
         $deposit_sum = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
-        
+
         $user_auth_logs = UserAuthLog::where('user_id', $user->id)->orderByDesc('created_at')->limit(10)->get();
         $referral_count = cache()->remember('users.referral.count.' . $user->my_id, 30, function () use ($user) {
             return $user->userReferrals->count();
         });
         $referral_clicks = $user->getReferralLinkClickCount();
-        
+
         $referrals_ids = $user->referrals()->distinct('id')->pluck('id')->toArray();
         $structure_turnover = Deposit::whereIn('user_id', $referrals_ids)->where('condition', '!=', 'closed')->sum('invested');
         $registered_referrals = ReferralLinkStat::whereIn('user_id', $referrals_ids)->count();
         $active_referrals = $user->referrals()->distinct('id')->whereHas('deposits', function ($query) {
             $query->where('condition', '!=', 'closed');
         })->count();
-        
+
         return view('pages.sample.page-users-view', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -258,14 +258,14 @@ class UsersController extends Controller
             'wallets' => Wallet::where('user_id', $user->id)->with('currency')->orderBy('currency_id', 'desc')->paginate(6),
         ]);
     }
-    
+
     /**
      * @param User $user
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(User $user) {
-        
+
         $roles = Role::all();
         $permissions = Permission::all();
         $wallets = Wallet::where('user_id', $user->id)->orderBy('currency_id', 'asc')->get();
@@ -276,7 +276,7 @@ class UsersController extends Controller
             'wallets' => $wallets,
         ]);
     }
-    
+
     /**
      * @param Request $request
      * @param User    $user
@@ -317,7 +317,7 @@ class UsersController extends Controller
             return back()->with('error', __('Unable to update user'))->withInput();
         }
     }
-    
+
     public function userReferralList(Request $request, $id) {
         $user = User::find($id);
         if ($user == null){
@@ -327,9 +327,9 @@ class UsersController extends Controller
         if ($upliner === null) {
             $upliner = false;
         }
-        
-        $referrals = $user->referrals()->wherePivot('line', 1)->with('deposits')->paginate(12);
-        
+
+        $referrals = $user->referrals()->wherePivot('line', 1)->get();
+
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $total_referral_invested = 0;
         $total_referral_revenue = 0;
@@ -356,8 +356,8 @@ class UsersController extends Controller
             'total_referral_revenue' => $total_referral_revenue,
         ]);
     }
-    
-    
+
+
     /**
      * @param User $user
      *
@@ -369,7 +369,7 @@ class UsersController extends Controller
         }
         return redirect()->route('admin.users.index')->with('error', __('Unable to delete user'));
     }
-    
+
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -377,14 +377,14 @@ class UsersController extends Controller
         Session::put('locked', true);
         return redirect()->route('user.locked');
     }
-    
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function lockedUser() {
         return view('pages.sample.user-lock-screen');
     }
-    
+
     /**
      * @param Request $request
      *
@@ -405,7 +405,7 @@ class UsersController extends Controller
         }
         return redirect()->back()->withErrors(['Такого пользователя не существует!']);
     }
-    
+
     /**
      * @param Request $request
      *
@@ -416,24 +416,24 @@ class UsersController extends Controller
             $dateFrom,
             $dateTo,
         ] = explode('/', $request->date);
-        
+
         $user = User::findOrFail($request->user_id);
-        
+
         if (!$user) {
             return response()->json([
                 'success' => false,
                 'message' => 'Пользователь не найден.',
             ]);
         }
-        
+
         $userActivity = ActivityLog::getActivityLog($user, null, $dateFrom, $dateTo);
-        
+
         return \response()->json([
             'success' => true,
             'html' => view('pages.partials.user-activity-item', compact('dateFrom', 'dateTo', 'userActivity'))->render(),
         ]);
     }
-    
+
     /**
      * @param Request $request
      *
@@ -441,27 +441,27 @@ class UsersController extends Controller
      */
     public function massRoleChange(Request $request) {
         $users = User::whereIn('id', $request->list)->get();
-        
+
         $role = Role::findOrFail($request->role_id);
-        
+
         foreach ($users as $user) {
             $user->roles()->sync([$role->id]);
         }
-        
+
         return back()->with('success_short', 'Пользователям назначена роль: ' . $role->name);
     }
-    
+
     public function getAvatar($id) {
         $avatar_id = User::findOrFail($id)->avatar;
-        
+
         $file = CloudFile::findOrFail($avatar_id);
         $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
-        
+
         return response($fileFromStorage, 200, [
             'Content-type' => $file->mime,
         ]);
     }
-    
+
     public function requisitesUpdate(Request $request) {
         $this->validate($request, [
             'user_id' => 'required',
@@ -474,9 +474,9 @@ class UsersController extends Controller
         if ($wallet->update($request->all())) {
             return redirect()->back()->with('success', 'Данные кошелька успешно изменены!');
         }
-        
+
     }
-    
+
     public function userWalletCharge(Request $request, $id) {
         $this->validate($request, [
             'amount' => 'required',
