@@ -29,10 +29,6 @@ class CheckPermissions
         $route_name = $request->route()->getName();
         $permission = Permission::where('slug', $route_name)->first();
 
-        if (!auth()->user()->can('home')) {
-            auth()->user()->givePermissionTo('Главная');
-        }
-
         if (!empty($permission)){
 
             if (Auth::check() && Auth::user()->can($permission->name)){
