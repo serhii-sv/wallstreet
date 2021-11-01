@@ -12,15 +12,15 @@ use mysql_xdevapi\Exception;
 
 class PermissionsController extends Controller
 {
-    
+
     public function index() {
         //Auth::user()->givePermissionTo('test', 'test 5');
         return view('pages.sample.app-permissions-list', [
             'permissions' => Permission::orderByDesc('created_at')->get(),
         ]);
     }
-    
-    
+
+
     public function store(Request $request) {
         $request->validate([
             'name' => 'required|unique:roles|max:255',
@@ -28,15 +28,18 @@ class PermissionsController extends Controller
             'name.required' => 'Название права не указано',
             'name.unique' => 'Права должны быть уникальными',
         ]);
-        $role = new Permission($request->except('_token'));
+        $role = new Permission(array_merge($request->except('_token'),
+            [
+                'description' => 'permission description',
+            ]));
         if ($role->save()) {
             return redirect()->back()->with('success', 'Права успешно созданы!');
         } else {
             return redirect()->back()->with('errors', 'Попробуйте заново!');
         }
     }
-    
-    
+
+
     public function update(Request $request, $id) {
         $request->validate([
             'name' => 'required|unique:roles,name,' . $id . '|max:255',
@@ -45,14 +48,14 @@ class PermissionsController extends Controller
             'name.unique' => 'Название прав уже занято',
         ]);
         $role = Permission::findById($id);
-        
+
         if ($role->update($request->except('method', '_token'))) {
             return redirect()->back()->with('success', 'Права успешно обновлены!');
         } else {
             return redirect()->back()->with('errors', 'Ошибка! Попробуйте заново');
         }
     }
-    
+
     public function delete($id) {
         $permission = Permission::where('id', $id)->firstOrFail();
         DB::beginTransaction();
