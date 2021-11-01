@@ -254,7 +254,7 @@ trait HasReferral
         }
 
         $this->referrals()->sync($ids, [
-            'line' => 1,
+            'line' => $flag,
         ]);
 
         foreach ($ids as $id) {
