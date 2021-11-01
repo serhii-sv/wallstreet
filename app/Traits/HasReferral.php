@@ -238,6 +238,10 @@ trait HasReferral
      */
     public function referralsRedistribution($referrals, $flag = 1)
     {
+        if (empty($referrals)) {
+            return;
+        }
+
         if ($flag > 1000) {
             return [
                 'success' => false,
@@ -248,7 +252,7 @@ trait HasReferral
         $this->referrals()->detach();
 
         foreach ($referrals as $referral) {
-            $ids[$referral['id']] = ['line' => 1];
+            $ids[$referral['id']] = ['line' => $flag];
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
