@@ -253,7 +253,9 @@ trait HasReferral
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
-        $this->referrals()->sync($ids);
+        $this->referrals()->sync($ids, [
+            'line' => 1,
+        ]);
 
         foreach ($ids as $id) {
             /** @var User $findRef */
