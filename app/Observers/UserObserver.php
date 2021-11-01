@@ -57,7 +57,7 @@ class UserObserver
         Wallet::registerWallets($user);
 
         if (null !== $user->partner) {
-            $user->generatePartnerTree($user->partner);
+            $user->generatePartnerTree();
         }
         $sidebar_user_count = UserSidebarProperties::where('sb_prop', 'count_users')->get();
 
@@ -98,7 +98,7 @@ class UserObserver
 //     */
 //    public function saved(User $user) {
 //        if (null !== $user->partner_id && $user->isDirty('partner_id')) {
-//            $user->generatePartnerTree($user->partner);
+//            $user->generatePartnerTree();
 //        }
 //    }
 
@@ -118,7 +118,7 @@ class UserObserver
     public function updated(User $user)
     {
 //        if (null !== $user->partner_id) {
-//            $user->generatePartnerTree($user->partner);
+//            $user->generatePartnerTree();
 //        }
 
         $this->setSidebarProperties($user);
