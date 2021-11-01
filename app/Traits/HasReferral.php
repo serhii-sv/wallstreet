@@ -292,7 +292,7 @@ trait HasReferral
     public function generatePartnerTree($flag=1)
     {
         /** @var User $partners */
-        $partners       = User::where('partner_id', $this->my_id)->get();
+        $partners       = User::where('my_id', $this->partner_id)->get();
         $parent_array   = [];
 
         /** @var User $partner */
