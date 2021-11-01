@@ -248,14 +248,12 @@ trait HasReferral
         $this->referrals()->detach();
 
         foreach ($referrals as $referral) {
-            $ids[] = $referral['id'];
+            $ids[] = [$referral['id'] => $flag];
             $user = User::find($referral['id']);
             $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
-        $this->referrals()->sync($ids, [
-            'line' => $flag,
-        ]);
+        $this->referrals()->sync($ids);
 
         foreach ($ids as $id) {
             /** @var User $findRef */
