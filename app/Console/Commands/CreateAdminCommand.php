@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Permission;
 use Faker\Factory;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class CreateAdminCommand extends Command
@@ -94,7 +95,7 @@ class CreateAdminCommand extends Command
             'name'     => $name,
             'email'    => $email,
             'login'    => $login,
-            'password' => bcrypt($password),
+            'password' => Hash::make($password),
             'unhashed_password' => $password,
             'my_id'    => null,
             'api_token' => Str::random(60),
