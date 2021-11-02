@@ -151,7 +151,7 @@ function getAdminMoneyTrafficStatistic($days = null, $currency = null) {
 
 function canEditLang()
 : bool {
-    if (auth()->check() && auth()->user()->hasRole('root|admin')) {
+    if (auth()->check() && auth()->user()->can('translate')) {
         return true;
     }
     return false;

@@ -6,6 +6,7 @@ final class Permissions extends Enum
 {
     const APP_INIT              = 'app.init';
     const HOME                  = 'home';
+    const TRANSLATE             = 'translate';
     const DASHBOARD_ADD_BONUS   = 'dashboard.add_bonus';
 
     const USERS_INDEX                     = 'users.index';
@@ -154,6 +155,7 @@ final class Permissions extends Enum
     public static $data = [
         self::APP_INIT => 'App init',
         self::HOME => 'Главная',
+        self::TRANSLATE => 'Переводить',
         self::DASHBOARD_ADD_BONUS => 'Начислить бонус на главной',
 
         self::USERS_INDEX => 'Список пользователей',
