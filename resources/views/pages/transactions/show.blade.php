@@ -112,10 +112,17 @@
                                 </div>
                                 <div class="invoice-address">
                                     <span>@if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='Sum in $' contenteditable="true">{{ __('Sum in $') }}</editor_block>
-                                      @else
-                                        {{ __('Sum in $') }}
-                                      @endif</span>
+                                            <editor_block data-name='Sum in $' contenteditable="true">{{ __('Sum in $') }}</editor_block>
+                                        @else
+                                            {{ __('Sum in $') }}
+                                        @endif</span>
+                                </div>
+                                <div class="invoice-address">
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                            <editor_block data-name='Is real' contenteditable="true">{{ __('Is real') }}</editor_block>
+                                        @else
+                                            {{ __('Is real') }}
+                                        @endif</span>
                                 </div>
                             </div>
                             <div class="col m6 s12">
@@ -143,6 +150,9 @@
                                 </div>
                                 <div class="invoice-address">
                                     <span>{{ number_format($transaction->main_currency_amount, 2, ',', ' ') }}</span>
+                                </div>
+                                <div class="invoice-address">
+                                    <span>{{ $transaction->is_real == 1 ? 'реал' : 'фейк' }}</span>
                                 </div>
                             </div>
                         </div>
