@@ -90,6 +90,13 @@ class ReftreeController extends Controller
             ]);
         }
 
+        if ($referral->partner_id == $user->my_id || $user->partner_id == $referral->my_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нельзя создавать взаимную связь рефералов, выберите другого пользователя'
+            ]);
+        }
+
         $referral->partners()->detach($user->id);
         $referral->referrals()->detach($user->id);
 
