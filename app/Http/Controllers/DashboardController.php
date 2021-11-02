@@ -210,14 +210,14 @@ class DashboardController extends Controller
                 'today' => $this->users->where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count(),
             ],
             'deposit_total_sum' => Cache::remember('dshb.transactions.enter.total', 60, function () {
-                return Transaction::where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'enter');
                 })->get()->reduce(function ($carry, $item) {
                     return $carry + $item->main_currency_amount;
                 }, 0);
             }),
             'deposit_total_withdraw' => Cache::remember('dshb.transactions.withdraw.total', 60, function () {
-                return Transaction::where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                     $query->where('name', 'withdraw');
                 })->get()->reduce(function ($carry, $item) {
                     return $carry + $item->main_currency_amount;
