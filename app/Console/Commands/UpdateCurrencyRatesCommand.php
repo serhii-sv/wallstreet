@@ -73,6 +73,9 @@ class UpdateCurrencyRatesCommand extends Command
                     || strtoupper($currency->code) == 'USDT.ERC20') {
                     $response['data'][strtoupper($currency->code)]['quote']['USD']['price'] = 1;
                 } else {
+                    if (strtoupper($currency->code) == 'SPRINT') {
+                        continue;
+                    }
                     \Log::error('Can not get rate for ' . $currency->code . ' in USD');
                     continue;
                 }
