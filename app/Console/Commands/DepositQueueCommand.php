@@ -63,6 +63,7 @@ class DepositQueueCommand extends Command
 
             if (null === $deposit) {
                 \Log::error('Queue '.$queue->id.', deposit is null');
+                $queue->setIsDone()->save();
                 continue;
             }
 
