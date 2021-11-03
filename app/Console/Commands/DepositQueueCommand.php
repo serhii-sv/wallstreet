@@ -61,6 +61,11 @@ class DepositQueueCommand extends Command
             /** @var DepositQueue $deposit */
             $deposit = $queue->deposit()->first();
 
+            if (null === $deposit) {
+                \Log::error('Queue '.$queue->id.', deposit is null');
+                continue;
+            }
+
             if ($queue->isTypeAccrue()) {
                 AccrueDeposit::dispatchSync($deposit, $queue);
                 $this->info('Deposit '.$deposit->id.'. Queue "accrue" sent to work.');
