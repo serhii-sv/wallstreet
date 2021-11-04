@@ -34,7 +34,8 @@ class ReftreeController extends Controller
         return view('pages.users.reftree', [
             'referrals_data' => $user->referrals()
                 ->wherePivot('line', 1)
-                ->first(),
+                ->get()
+                ->toArray(),
             'user' => $user,
         ]);
     }
