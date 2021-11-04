@@ -28,11 +28,14 @@ class ReftreeController extends Controller
             throw new \Exception('reftree id is null');
         }
 
+        /** @var User $user */
         $user = User::findOrFail($id);
 
         return view('pages.users.reftree', [
-            'referrals_data' => $user->getAllReferrals(),
-            'user' => $user
+            'referrals_data' => $user->referrals()
+                ->wherePivot('line', 1)
+                ->first(),
+            'user' => $user,
         ]);
     }
 
