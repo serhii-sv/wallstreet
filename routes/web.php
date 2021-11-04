@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
         Route::post('ajax/bin-check', [\App\Http\Controllers\BinCheckController::class, 'ajaxCheck'])->name('ajax.bin.check');
         Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
-        
+
         Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
             Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
@@ -92,12 +92,12 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
             Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
 
+            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class)->except('destroy');
             Route::get('/withdrawals/approve/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approve'])->name('withdrawals.approve');
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
             Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
             Route::get('/withdrawals/destroy/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'destroy'])->name('withdrawals.destroy');
-            Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class)->except('destroy');
 
             Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');
@@ -181,10 +181,10 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('/store', [App\Http\Controllers\RateController::class, 'store'])->name('store');
                 Route::get('/destroy/{id}', [\App\Http\Controllers\RateController::class, 'destroy'])->name('destroy');
             });
-            
+
             Route::get('/user-phone-verification', [UserPhoneVerificationController::class, 'index'])->name('user.phone.verification');
             Route::post('/user-phone-verification', [UserPhoneVerificationController::class, 'save'])->name('user.phone.verification');
-            
+
             Route::get('/rate-groups', [RateGroupsController::class, 'index'])->name('rate.groups.index');
             Route::post('/rate-groups/update', [RateGroupsController::class, 'update'])->name('rate.groups.update');
 
