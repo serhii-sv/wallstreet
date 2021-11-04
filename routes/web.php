@@ -97,7 +97,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/withdrawals/approve-many', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/withdrawals/reject/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'reject'])->name('withdrawals.reject');
             Route::get('/withdrawals/approveManually/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'approveManually'])->name('withdrawals.approveManually');
-            Route::get('/withdrawals/destroy/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'destroy'])->name('withdrawals.destroy');
+            Route::any('/withdrawals/destroy/{id}', [\App\Http\Controllers\WithdrawalRequestsController::class, 'destroy'])->name('withdrawals.destroy');
 
             Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');
