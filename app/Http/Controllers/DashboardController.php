@@ -265,6 +265,10 @@ class DashboardController extends Controller
 
         $amount = abs((float)$request->amount);
 
+        if ($amount <= 0) {
+            return back()->with('error', 'Сумма должна быть больше нуля')->withInput();
+        }
+
         $data = [
             'type_id' => $transactionType->id,
             'user_id' => $user->id,
