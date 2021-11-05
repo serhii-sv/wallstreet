@@ -242,7 +242,7 @@ class DashboardController extends Controller
         })->first();
 
         if (null === $user) {
-            return back()->with('error', 'Пользователь не найден')->withInput();
+            return back()->with('error_short', 'Пользователь не найден')->withInput();
         }
 
         $type = $request->type;
@@ -250,7 +250,7 @@ class DashboardController extends Controller
         $currencyPaymentSystem = $currency->paymentSystems()->where('payment_system_id', $paymentSystem->id)->first();
 
         if (null === $currencyPaymentSystem) {
-            return back()->with('error', 'Эта платежная система не поддерживает валюту ' . $currency->code)->withInput();
+            return back()->with('error_short', 'Эта платежная система не поддерживает валюту ' . $currency->code)->withInput();
         }
 
         /** @var TransactionType $transactionType */
@@ -260,13 +260,13 @@ class DashboardController extends Controller
         $wallet = $user->wallets()->where('currency_id', $currency->id)->first();
 
         if (null === $wallet) {
-            return back()->with('error', 'Кошелек пользователя не найден')->withInput();
+            return back()->with('error_short', 'Кошелек пользователя не найден')->withInput();
         }
 
         $amount = abs((float)$request->amount);
 
         if ($amount <= 0) {
-            return back()->with('error', 'Сумма должна быть больше нуля')->withInput();
+            return back()->with('error_short', 'Сумма должна быть больше нуля')->withInput();
         }
 
         $data = [
@@ -301,7 +301,7 @@ class DashboardController extends Controller
             $wallet->save();
         });
 
-        return back()->with('success', 'Операция успешно проведена');
+        return back()->with('success_short', 'Операция успешно проведена');
     }
 
     public function getMonthPeriod() {
