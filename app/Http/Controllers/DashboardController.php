@@ -263,7 +263,7 @@ class DashboardController extends Controller
             return back()->with('error_short', 'Кошелек пользователя не найден')->withInput();
         }
 
-        $amount = abs((float) round($request->amount, 8));
+        $amount = abs((float) str_replace(',', '.', $request->amount));
 
         if ($amount <= 0) {
             return back()->with('error_short', 'Сумма должна быть больше нуля')->withInput();
