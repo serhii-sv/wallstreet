@@ -281,16 +281,16 @@ class DashboardController extends Controller
             'is_real' => $request->is_real == 1,
         ];
 
-        DB::transaction(function () use ($data, $wallet, $type) {
-            Transaction::create($data);
+        DB::transaction(function () use ($data, $wallet, $type, $amount) {
+            $transaction = Transaction::create($data);
 
             switch ($type) {
                 case "enter":
-                    $wallet->balance += $data['amount'];
+                    $wallet->balance += $transaction->amount;
                     break;
 
                 case "withdraw":
-                    $wallet->balance -= $data['amount'];
+                    $wallet->balance -= $transaction->amount;
                     break;
             }
 
