@@ -482,9 +482,12 @@ class UsersController extends Controller
             'amount' => 'required',
             'action' => 'required',
         ]);
+
+        $amount = abs((float) str_replace(',', '.', $request->amount));
+
         if ($request->post('action') == 'bonus'){
             $wallet = Wallet::find($id);
-            $wallet = $wallet->addBonus($request->get('amount'));
+            $wallet = $wallet->addBonus($amount);
             if ($wallet) {
                 return back()->with('success', __('Bonus accrued'));
             }
@@ -492,7 +495,7 @@ class UsersController extends Controller
         }
         if ($request->post('action') == 'penalty'){
             $wallet = Wallet::find($id);
-            $wallet = $wallet->removeAmount($request->get('amount'));
+            $wallet = $wallet->removeAmount($amount);
             if ($wallet) {
                 return back()->with('success', __('Penalty handled'));
             }
