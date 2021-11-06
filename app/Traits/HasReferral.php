@@ -275,7 +275,7 @@ trait HasReferral
             $findRef->save();
             $findRef->refresh();
 
-            $findRef->generatePartnerTree();
+//            $findRef->generatePartnerTree();
         }
 
         return [
