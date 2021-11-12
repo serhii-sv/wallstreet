@@ -42,11 +42,11 @@ class ReplenishmentController extends Controller
             }
 
             if (!is_null($request->fake)) {
-                $transactions->whereIn('is_real', 0);
+                $transactions->where('is_real', 0);
             }
 
             if (!is_null($request->real)) {
-                $transactions->whereIn('is_real', 1);
+                $transactions->where('is_real', 1);
             }
 
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
