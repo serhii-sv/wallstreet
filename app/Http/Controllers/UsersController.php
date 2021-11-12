@@ -216,7 +216,7 @@ class UsersController extends Controller
         $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
 
-        $stat_different = $stat_deposits - $stat_withdraws;
+        $stat_different = $total_referral_invested - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
@@ -259,7 +259,7 @@ class UsersController extends Controller
             'referral_count' => $referral_count,
             'referral_clicks' => $referral_clicks,
             'user_first_upliner' => $user->firstPartner($user),
-            'stat_deposits' => $stat_deposits,
+            'stat_deposits' => $total_referral_invested,
             'stat_withdraws' => $stat_withdraws,
             'stat_create_dep' => $stat_create_dep,
             'stat_transfer' => $stat_transfer,
