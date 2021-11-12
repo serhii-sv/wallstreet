@@ -26,13 +26,13 @@
     <!-- create invoice button-->
     <!-- Options and filter dropdown button-->
       <div class="invoice-filter-action mr-3">
-          <a href="/?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
+          <a href="/replenishments?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">Реал</span>
           </a>
       </div>
 
       <div class="invoice-filter-action mr-3">
-          <a href="/?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
+          <a href="/replenishments?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">Фейк</span>
           </a>
       </div>
