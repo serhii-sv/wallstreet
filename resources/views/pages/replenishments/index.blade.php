@@ -22,7 +22,7 @@
 @section('content')
   <!-- invoice list -->
   <section class="invoice-list-wrapper section">
-    
+
     <!-- create invoice button-->
     <!-- Options and filter dropdown button-->
     <div class="invoice-filter-action mr-3">
@@ -70,6 +70,16 @@
 {{--        <li>--}}
 {{--          <a href="{{ request()->fullUrlWithQuery(['field' => 'amount', 'order' => 'asc']) }}" class="{{ request()->field == 'amount' && request()->order == 'asc' ? 'active' : '' }}">Сумма по возростанию</a>--}}
 {{--        </li>--}}
+          <li>
+              <a href="{{ request()->fullUrlWithQuery(['fake'=> 1]) }}" class="{{ request()->fake == 1 ? 'active' : '' }}">
+                  Фейк
+              </a>
+          </li>
+          <li>
+              <a href="{{ request()->fullUrlWithQuery(['real'=> 1]) }}" class="{{ request()->real == 1 ? 'active' : '' }}">
+                  Реал
+              </a>
+          </li>
         @forelse($filter_users as $user)
           <li>
             <a href="{{ request()->fullUrlWithQuery(['user'=> $user->id]) }}" class="{{ request()->user == $user->id ? 'active' : '' }}">
@@ -131,9 +141,9 @@
               <th></th>
             </tr>
           </thead>
-          
+
           <tbody>
-          
+
           </tbody>
         </table>
       </form>
