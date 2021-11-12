@@ -347,7 +347,7 @@
                   <div class="col s12 l8">
 
                       <div class="table-responsive">
-                          <form action="{{ route('users.update_sta', ['id' => $user->id]) }}" method="POST">
+                          <form action="{{ route('users.update_stat', ['id' => $user->id]) }}" method="POST">
                               {{ csrf_field() }}
 
                               <table class="table table-custom">
