@@ -235,7 +235,7 @@ class UsersController extends Controller
             $query->where('condition', '!=', 'closed');
         })->count();
 
-        return view('pages.sample.page-users-view', [
+        return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
             'deposit_sum' => $deposit_sum,
