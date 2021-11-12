@@ -144,7 +144,7 @@ class UsersController extends Controller
         $user->stat_additional = (string)$request->stat['stat_additional'];
         $user->save();
 
-        return redirect()->back();
+        return back()->with('success', 'Сохранено');
     }
 
     /**

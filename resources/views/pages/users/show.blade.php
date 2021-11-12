@@ -344,7 +344,7 @@
       <div class="card">
           <div class="card-content">
               <div class="row">
-                  <div class="col s12 l8">
+                  <div class="col s12">
 
                       <div class="table-responsive">
                           <form action="{{ route('users.update_stat', ['id' => $user->id]) }}" method="POST">
