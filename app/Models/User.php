@@ -259,12 +259,17 @@ class User extends Authenticatable
             ->sum('main_currency_amount');
     }
 
-    public function deposit_reward() {
-        $invested = $this->invested();
-        $deposit_bonus = DepositBonus::where('personal_turnover', '<', $invested)->orderByDesc('personal_turnover')->first();
-        if ($deposit_bonus !== null)
-            return $deposit_bonus->reward;
-        return 0;
+    public function referral_accruals(User $user) {
+        $partnerTypeId = TransactionType::getByName('partner')->id;
+
+        $wallets = $this->wallets()
+            ->get()
+            ->pluck('id');
+
+        return $user->transactions()
+            ->where('type_id', $partnerTypeId)
+            ->whereIn('source', $wallets)
+            ->sum('main_currency_amount');
     }
 
     public function deposits_accruals() {

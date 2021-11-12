@@ -205,6 +205,7 @@ class UsersController extends Controller
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
+
         $stat_different = $stat_deposits - $stat_withdraws;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
