@@ -201,7 +201,17 @@ class UsersController extends Controller
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
-        $stat_deposits = $user->transactions()->where('type_id', TransactionType::getByName('enter')->id)->where('approved', 1)->sum('main_currency_amount');
+        $all_referrals = $user->getAllReferralsInArray();
+        $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
+        $total_referral_invested = 0;
+        foreach ($all_referrals as $referral) {
+            $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
+                return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
+            });
+
+            $total_referral_invested += $invested;
+        }
+
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
@@ -210,7 +220,7 @@ class UsersController extends Controller
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
-        $user->stat_deposits = $stat_deposits;
+        $user->stat_deposits = $total_referral_invested;
         $user->stat_withdraws = $stat_withdraws;
         $user->stat_different = $stat_different;
         $user->stat_salary = $stat_salary;
