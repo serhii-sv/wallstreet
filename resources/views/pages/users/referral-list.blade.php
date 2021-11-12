@@ -78,12 +78,12 @@
                               {{ number_format($referral->invested(), 2, '.', ' ') ?? 0 }}$
                             </span>
                 </td>
-                <td class="">
-                  {{ number_format($referral->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
-                </td>
-                <td>
-                  {{ number_format($referral->deposit_reward(), 2, '.', ' ') }}$
-                </td>
+                  <td class="">
+                      {{ number_format($referral->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
+                  </td>
+                  <td>
+                      {{ number_format($referral->referral_accruals($user), 2, '.', ' ') }}$
+                  </td>
               </tr>
             @empty
             @endforelse
