@@ -24,7 +24,12 @@ class ReplenishmentController extends Controller
 
             $transactions = Transaction::select('transactions.*')->with([
                 'user',
-            ])->where('type_id', $transactionWithdrawType->id)->where('approved', $request->only('type') ?? 0);
+            ])->where('type_id', $transactionWithdrawType->id);
+
+            if ($request->has('type')) {
+                $transactions->where('approved', $request->type);
+            }
+
             //->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir'])
             /*
             * Фильтрация, если выбрано
@@ -42,12 +47,10 @@ class ReplenishmentController extends Controller
             }
 
             if (!is_null($request->fake)) {
-                die('1');
                 $transactions->where('is_real', 0);
             }
 
             if (!is_null($request->real)) {
-                die('2');
                 $transactions->where('is_real', 1);
             }
 
