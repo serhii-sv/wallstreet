@@ -345,7 +345,53 @@
           <div class="card-content">
               <div class="row">
                   <div class="col s12 l8">
-                      ....
+
+                      <div class="table-responsive">
+                          <form action="{{ route('users.update_sta', ['id' => $user->id]) }}" method="POST">
+                              {{ csrf_field() }}
+
+                              <table class="table table-custom">
+                                  <thead>
+                                  <tr>
+                                      <th>Логин</th>
+                                      <th>Депы</th>
+                                      <th>Выплаты</th>
+                                      <th>Разница</th>
+                                      <th>ЗП <input type="text" class="form-control" name="stat[stat_salary_percent]" value="{{ number_format($user->stat_salary_percent, 2, '.', '') }}" placeholder="%" style="width:50px;"></th>
+                                      <th>Получил</th>
+                                      <th>Остаток ЗП</th>
+                                      <th>Дополнительно</th>
+                                      <th>Сохранить</th>
+                                  </tr>
+                                  </thead>
+                                  <tfoot>
+                                  <style>
+                                      td.tdinput input {
+                                          width: 100%;
+                                      }
+                                  </style>
+                                  <tr>
+                                      <td class="tdinput">{{ $user->login }}</td>
+                                      <td class="tdinput">{{ $user->stat_deposits }} $</td>
+                                      <td class="tdinput">{{ $user->stat_withdraws }} $</td>
+                                      <td class="tdinput">{{ $user->stat_different }} $</td>
+                                      <td class="tdinput">{{ $user->stat_salary }} $</td>
+                                      <td class="tdinput">
+                                          <input type="text" class="form-control" name="stat[stat_worker_withdraw]" placeholder="выведено $$" value="{{ number_format($user->stat_worker_withdraw, 2, '.', '') }}">
+                                      </td>
+                                      <td class="tdinput">{{ $user->stat_left }} $</td>
+                                      <td class="tdinput">
+                                          <input type="text" class="form-control" name="stat[stat_additional]" placeholder="доп. инфа" value="{{ $user->stat_additional }}">
+                                      </td>
+                                      <td>
+                                          <input type="submit" value="Сохранить данные" class="btn btn-success">
+                                      </td>
+                                  </tr>
+                                  </tfoot>
+                              </table>
+                          </form>
+                      </div>
+
                   </div>
               </div>
           </div>
