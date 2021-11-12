@@ -39,7 +39,6 @@
 
     <div class="invoice-filter-action mr-3">
       <a href="/replenishments?type=0" class="btn {{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light invoice-export border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-        <i class="material-icons">attach_money</i>
         <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
             <editor_block data-name='Unpaid' contenteditable="true">{{ __('Unpaid') }}</editor_block>
           @else
@@ -50,7 +49,6 @@
     <!-- create invoice button-->
       <div class="invoice-create-btn">
           <a href="/replenishments?type=1" class="btn {{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              <i class="material-icons">beenhere</i>
               <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Paid' contenteditable="true">{{ __('Paid') }}</editor_block>
                   @else
