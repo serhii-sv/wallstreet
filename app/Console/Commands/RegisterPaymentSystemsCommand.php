@@ -458,7 +458,15 @@ class RegisterPaymentSystemsCommand extends Command
                     'UAH',
                     'KZT',
                 ],
-                 'image' => 'swift.jpg',
+                'image' => 'swift.jpg',
+            ],
+            'sprint' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Sprint [yes|no]', 'yes'),
+                'name' => 'Sprint',
+                'currencies' => [
+                    'SPRINT',
+                ],
+                'image' => '',
             ],
         ];
 
