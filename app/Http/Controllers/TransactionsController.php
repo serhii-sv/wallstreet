@@ -36,7 +36,7 @@ class TransactionsController extends Controller
             $recordsFiltered = $transactions->count();
             $transactions->limit($request->length)->offset($request->start);
             $data = [];
-            
+
 
             foreach ($transactions->get() as $transaction) {
                 $data[] = [
@@ -83,6 +83,8 @@ class TransactionsController extends Controller
     public function destroy($id)
     {
         $transaction = Transaction::findOrFail($id);
+        \Log::error(auth()->user()->login.' deleted transaction '.$transaction->id.' with type '.$transaction->type->name);
+
         if ($transaction->delete()) {
             return redirect()->to(route('transactions.index'))->with('success_short', 'Транзакция успешно удалена.');
         }
