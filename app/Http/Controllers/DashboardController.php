@@ -260,7 +260,9 @@ class DashboardController extends Controller
         $wallet = $user->wallets()->where('currency_id', $currency->id)->first();
 
         if (null === $wallet) {
-            return back()->with('error_short', 'Кошелек пользователя не найден')->withInput();
+            $wallet = $user->wallets()->create([
+                'currency_id' => $currency->id,
+            ]);
         }
 
         $amount = abs((float) str_replace(',', '.', $request->amount));
