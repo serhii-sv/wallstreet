@@ -56,11 +56,11 @@ class ReplenishmentController extends Controller
 
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
                 $transactions->where(function ($query) use ($request) {
-                    foreach ($request->columns as $column) {
-                        if ($column["searchable"] == "true") {
-                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
-                        }
-                    }
+                    $query->where('id', $request->search['value'])
+                        ->orWhereHas('user', function($q) use($request) {
+                            $q->where('login', 'like', '%'.$request->search['value'].'%')
+                                ->orWhere('email', 'like', '%'.$request->search['value'].'%');
+                        });
                 });
             }
 
