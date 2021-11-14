@@ -1,3 +1,4 @@
-@if($transaction->user->partner)
-  <a href="{{ route('users.show', $transaction->user->partner->id) }}">{{ $transaction->user->partner->login }}</a>
+@php($partner = $transaction->user->partners()->wherePivot('line', 1)->first())
+@if(null !== $partner)
+  <a href="{{ route('users.show', $partner->id) }}">{{ $partner->login }}</a>
 @endif
