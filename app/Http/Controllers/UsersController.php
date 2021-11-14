@@ -222,7 +222,7 @@ class UsersController extends Controller
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
-        $user->stat_deposits = $total_referral_invested;
+        $user->stat_deposits = round($total_referral_invested, 0);
         $user->stat_withdraws = $stat_withdraws;
         $user->stat_different = $stat_different;
         $user->stat_salary = $stat_salary;
