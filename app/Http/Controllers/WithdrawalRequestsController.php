@@ -66,11 +66,11 @@ class WithdrawalRequestsController extends Controller
             }
 
             if (!is_null($request->fake)) {
-                $transactions->where('is_real', 0)->where('approved', 1);
+                $transactions->where('is_real', 0);
             }
 
             if (!is_null($request->real)) {
-                $transactions->where('is_real', 1)->where('approved', 1);
+                $transactions->where('is_real', 1);
             }
 
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
