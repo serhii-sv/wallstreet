@@ -225,10 +225,10 @@ class UsersController extends Controller
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
         $user->stat_deposits = round($total_referral_invested, 0);
-        $user->stat_withdraws = $stat_withdraws;
-        $user->stat_different = $stat_different;
-        $user->stat_salary = $stat_salary;
-        $user->stat_left = $stat_left;
+        $user->stat_withdraws = round($stat_withdraws, 0);
+        $user->stat_different = round($stat_different, 0);
+        $user->stat_salary = round($stat_salary, 0);
+        $user->stat_left = round($stat_left, 0);
         $user->save();
 
         $userActivityDay = ActivityLog::getActivityLog($user, 'day');
