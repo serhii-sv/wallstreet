@@ -485,14 +485,10 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'partner_id', 'my_id')->count() ? true : false;
     }
     public function firstPartner($user) {
-        if ($user->hasPartner()) {
-            $partner = $user->firstPartner($user->partner()->first());
+        $partner = $user->partner()->first();
 
-            if ($partner == 'sprintbank') {
-                return $user;
-            }
-
-            return $partner;
+        if ($user->hasPartner() && $partner->login != 'sprintbank') {
+            return $user->firstPartner($partner);
         } else {
             return $user;
         }
