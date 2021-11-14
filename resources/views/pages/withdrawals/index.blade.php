@@ -48,7 +48,7 @@
   <!-- invoice list -->
   <section class="invoice-list-wrapper section">
 
-      <div class="invoice-filter-action mr-3">
+      <div class="invoice-filter-action mr-3" style="margin-left:3% !important;">
           <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">Реал</span>
           </a>
