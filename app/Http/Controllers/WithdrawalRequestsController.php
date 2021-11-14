@@ -51,18 +51,35 @@ class WithdrawalRequestsController extends Controller
              * Получаем всех рефералов и их транзакции
              */
             if (!is_null($request->user)) {
+                /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-                $referrals = $user->referrals()->where('line','<',2)->distinct('id')->pluck('id')->toArray();
-                $transactions->whereIn('user_id', $referrals);
+
+                $referrals = $user->getAllReferralsInArray();
+
+                $ids = [];
+
+                foreach ($referrals as $referral) {
+                    $ids[] = $referral->id;
+                }
+
+                $transactions->whereIn('user_id', $ids);
+            }
+
+            if (!is_null($request->fake)) {
+                $transactions->where('is_real', 0)->where('approved', 1);
+            }
+
+            if (!is_null($request->real)) {
+                $transactions->where('is_real', 1)->where('approved', 1);
             }
 
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
                 $transactions->where(function ($query) use ($request) {
-                    foreach ($request->columns as $column) {
-                        if ($column["searchable"] == "true") {
-                            $query->orWhere($column["data"], 'like', '%' . $request->search['value'] . '%');
-                        }
-                    }
+                    $query->where('id', $request->search['value'])
+                        ->orWhereHas('user', function($q) use($request) {
+                            $q->where('login', 'like', '%'.$request->search['value'].'%')
+                                ->orWhere('email', 'like', '%'.$request->search['value'].'%');
+                        });
                 });
             }
 

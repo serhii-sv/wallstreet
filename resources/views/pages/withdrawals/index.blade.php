@@ -47,7 +47,19 @@
   </div>
   <!-- invoice list -->
   <section class="invoice-list-wrapper section">
-    
+
+      <div class="invoice-filter-action mr-3">
+          <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
+              <span class="hide-on-small-only">Реал</span>
+          </a>
+      </div>
+
+      <div class="invoice-filter-action mr-3">
+          <a href="/withdrawals?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
+              <span class="hide-on-small-only">Фейк</span>
+          </a>
+      </div>
+
     <!-- create invoice button-->
     <div class="invoice-filter-action mr-2">
       <a href="/withdrawals?type=0" class="btn {{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light invoice-export border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -70,7 +82,7 @@
           @endif</span>
       </a>
     </div>
-    
+
     <div class="invoice-create-btn">
       <a href="/withdrawals?type=2" class="btn {{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">block</i>
@@ -229,10 +241,10 @@
                 classes: 'red'
               });
             }
-            
+
           }
         });
-        
+
       });
     });
   </script>
