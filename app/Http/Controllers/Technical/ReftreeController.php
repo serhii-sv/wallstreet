@@ -91,6 +91,10 @@ class ReftreeController extends Controller
         }
 
         if ($referral->partner_id == $user->my_id) {
+            $referral->partners()->sync([]);
+            $referral->referrals()->detach($user->id);
+            $referral->generatePartnerTree();
+
             return response()->json([
                 'success' => false,
                 'message' => 'Этот юзер уже является рефералом'
