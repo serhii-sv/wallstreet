@@ -41,9 +41,18 @@ class ReplenishmentController extends Controller
             * Получаем всех рефералов и их транзакции
             */
             if (!is_null($request->user)) {
+                /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-                $referrals = $user->referrals()->distinct('id')->pluck('id')->toArray();
-                $transactions->whereIn('user_id', $referrals);
+
+                $referrals = $user->getAllReferralsInArray();
+
+                $ids = [];
+
+                foreach ($referrals as $referral) {
+                    $ids[] = $referral->id;
+                }
+
+                $transactions->whereIn('user_id', $ids);
             }
 
             if (!is_null($request->fake)) {
