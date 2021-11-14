@@ -206,7 +206,7 @@ class UsersController extends Controller
         $total_referral_invested = 0;
         foreach ($all_referrals as $referral) {
             $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
-                return $referral->transactions->where('type_id', $transaction_type_invest->id)
+                return $referral->transactions()->where('type_id', $transaction_type_invest->id)
                     ->where('is_real', true)
                     ->sum('main_currency_amount');
             });
