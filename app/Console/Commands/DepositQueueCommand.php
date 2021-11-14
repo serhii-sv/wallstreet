@@ -62,7 +62,6 @@ class DepositQueueCommand extends Command
             $deposit = $queue->deposit()->first();
 
             if (null === $deposit) {
-                \Log::error('Queue '.$queue->id.', deposit is null');
                 $queue->setIsDone()->save();
                 continue;
             }
