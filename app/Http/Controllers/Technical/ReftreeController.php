@@ -97,7 +97,7 @@ class ReftreeController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Этот юзер уже является рефералом'
+                'message' => 'Этот юзер уже является рефералом. Дерево пересобрано.'
             ]);
         }
 
