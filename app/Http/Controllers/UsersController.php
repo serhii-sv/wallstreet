@@ -205,17 +205,14 @@ class UsersController extends Controller
         $transaction_type_invest = TransactionType::getByName('enter');
         $total_referral_invested = 0;
         foreach ($all_referrals as $referral) {
-//            $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
-//                return $referral->transactions()
-//                    ->where('type_id', $transaction_type_invest->id)
-//                    ->where('is_real', true)
-//                    ->sum('main_currency_amount');
-//            });
+            $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
+                return $referral->transactions()
+                    ->where('type_id', $transaction_type_invest->id)
+                    ->where('is_real', true)
+                    ->sum('main_currency_amount');
+            });
 
-            $total_referral_invested += $referral->transactions()
-                ->where('type_id', $transaction_type_invest->id)
-                ->where('is_real', true)
-                ->sum('main_currency_amount');
+            $total_referral_invested += $invested;
         }
 
         $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 1)->sum('main_currency_amount');
