@@ -209,6 +209,7 @@ class UsersController extends Controller
                 return $referral->transactions()
                     ->where('type_id', $transaction_type_invest->id)
                     ->where('is_real', true)
+                    ->where('approved', true)
                     ->sum('main_currency_amount');
             });
 
