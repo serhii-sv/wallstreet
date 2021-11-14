@@ -127,7 +127,7 @@ class UsersController extends Controller
         } else {
             UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop', 'count_users')->update(['sb_val' => 0]);
             $roles = Role::all();
-            return view('pages.sample.app-contacts', compact('users_count', 'roles'));
+            return view('pages.users.index', compact('users_count', 'roles'));
         }
     }
 
