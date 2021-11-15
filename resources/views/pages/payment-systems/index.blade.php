@@ -26,7 +26,7 @@
                                 <div style="width: 20%;font-weight: 900;">Название</div>
                                 <div style="width: 20%;font-weight: 900;">Код</div>
                                 <div style="width: 20%;font-weight: 900;">Валюты</div>
-                                <div style="width: 20%;font-weight: 900;">Статус</div>
+                                <div style="width: 20%;font-weight: 900;">АПИ</div>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
 {{ $loop->index > 0 ? ', ' : '' }} {{ $currency->code }}
                                         @endforeach
                                     </div>
-                                    <div style="width: 20%;">{{ $paymentSystem->connected == 1 ? 'актив' : '' }}</div>
+                                    <div style="width: 20%;">{{ $paymentSystem->connected == 1 ? 'подключено' : '' }}</div>
                                 </div>
                             @empty
                                 <div>
