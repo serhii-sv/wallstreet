@@ -38,7 +38,11 @@
                                         {{ $paymentSystem->name }}
                                     </div>
                                     <div style="width: 20%;">{{ $paymentSystem->code }}</div>
-                                    <div style="width: 20%;">{{ implode(', ',$paymentSystem->currencies()->get()->pluck('code') ?? []) }}</div>
+                                    <div style="width: 20%;">
+                                        @foreach($paymentSystem->currencies as $currency)
+                                            {{ $loop->index > 0 ? ', ' : '' }} {{ $currency->code }}
+                                        @endforeach
+                                    </div>
                                     <div style="width: 20%;">{{ $paymentSystem->connected == 1 ? 'актив' : '' }}</div>
                                 </div>
                             @empty
