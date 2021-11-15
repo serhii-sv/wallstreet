@@ -277,7 +277,7 @@ class UsersController extends Controller
             'referral_clicks' => $referral_clicks,
             'user_first_upliner' => $user->firstPartner($user),
             'stat_deposits' => $total_referral_invested,
-            'stat_withdraws' => $stat_withdraws,
+            'stat_withdraws' => $total_referral_withdrew,
             'stat_create_dep' => $stat_create_dep,
             'stat_transfer' => $stat_transfer,
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
