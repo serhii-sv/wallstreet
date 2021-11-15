@@ -241,7 +241,7 @@
                 @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PAYMENT_SYSTEMS_INDEX]))
                     <li class="bold">
                         <a class="waves-effect waves-cyan {{ (Route::is('payment_systems.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('payment_systems*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('payment_systems.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                            <i class="material-icons">compare_arrows</i>
+                            <i class="material-icons">monetization_on</i>
                             <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Payment systems') }}</editor_block>
