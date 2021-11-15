@@ -244,7 +244,7 @@
                             <i class="material-icons">monetization_on</i>
                             <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Payment systems') }}</editor_block>
+                                    <editor_block data-name='Payment systems' contenteditable="true">{{ __('Payment systems') }}</editor_block>
                                 @else
                                     {{ __('Payment systems') }}
                                 @endif
