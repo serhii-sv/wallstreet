@@ -203,7 +203,9 @@ class UsersController extends Controller
 
         $all_referrals = $user->getAllReferralsInArray();
         $transaction_type_invest = TransactionType::getByName('enter');
+        $transaction_type_withdrew = TransactionType::getByName('withdraw');
         $total_referral_invested = 0;
+        $total_referral_withdrew = 0;
         foreach ($all_referrals as $referral) {
             $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions()
@@ -214,18 +216,29 @@ class UsersController extends Controller
             });
 
             $total_referral_invested += $invested;
+
+            // ------
+
+            $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
+                return $referral->transactions()
+                    ->where('type_id', $transaction_type_withdrew->id)
+                    ->where('is_real', true)
+                    ->where('approved', 1)
+                    ->sum('main_currency_amount');
+            });
+
+            $total_referral_withdrew += $withdrew;
         }
 
-        $stat_withdraws = $user->transactions()->where('type_id', TransactionType::getByName('withdraw')->id)->where('is_real', true)->where('approved', 1)->sum('main_currency_amount');
         $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
         $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
 
-        $stat_different = $total_referral_invested - $stat_withdraws;
+        $stat_different = $total_referral_invested - $total_referral_withdrew;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
 
         $user->stat_deposits = round($total_referral_invested, 0);
-        $user->stat_withdraws = round($stat_withdraws, 0);
+        $user->stat_withdraws = round($total_referral_withdrew, 0);
         $user->stat_different = round($stat_different, 0);
         $user->stat_salary = round($stat_salary, 0);
         $user->stat_left = round($stat_left, 0);
