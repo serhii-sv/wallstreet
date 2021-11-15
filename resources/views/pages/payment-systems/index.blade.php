@@ -23,10 +23,10 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="display-flex align-items-center" style="padding: 5px;margin-bottom: 10px;">
-                                <div style="width: 20%;font-weight: 900;">Название</div>
-                                <div style="width: 20%;font-weight: 900;">Код</div>
-                                <div style="width: 20%;font-weight: 900;">Валюты</div>
-                                <div style="width: 20%;font-weight: 900;">АПИ</div>
+                                <div style="width: 25%;font-weight: 900;">Название</div>
+                                <div style="width: 25%;font-weight: 900;">Код</div>
+                                <div style="width: 25%;font-weight: 900;">Валюты</div>
+                                <div style="width: 25%;font-weight: 900;">АПИ</div>
                             </div>
                         </div>
                     </div>
@@ -34,16 +34,18 @@
                         <div class="col s12">
                             @forelse($paymentSystems as $paymentSystem)
                                 <div class="display-flex align-items-center" style="padding: 5px;border: 1px solid #f8f8f8;">
-                                    <div style="width: 20%;">
+                                    <div style="width: 25%;">
                                         {{ $paymentSystem->name }}
                                     </div>
-                                    <div style="width: 20%;">{{ $paymentSystem->code }}</div>
-                                    <div style="width: 20%;">
+                                    <div style="width: 25%;">
+                                        <strong>{{ $paymentSystem->code }}</strong>
+                                    </div>
+                                    <div style="width: 25%;">
                                         @foreach($paymentSystem->currencies as $currency)
 {{ $loop->index > 0 ? ', ' : '' }} {{ $currency->code }}
                                         @endforeach
                                     </div>
-                                    <div style="width: 20%;">{{ $paymentSystem->connected == 1 ? 'подключено' : '' }}</div>
+                                    <div style="width: 25%;">{{ $paymentSystem->connected == 1 ? 'подключено' : '' }}</div>
                                 </div>
                             @empty
                                 <div>
