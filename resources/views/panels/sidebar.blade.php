@@ -7,15 +7,15 @@
             {{--  <img class="hide-on-med-and-down" src="{{asset($configData['largeScreenLogo'])}}" alt="materialize logo" />
               <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['smallScreenLogo'])}}"
                   alt="materialize logo" />--}}
-          
+
           @elseif($configData['mainLayoutType']=== 'vertical-menu-nav-dark')
             <img src="{{asset($configData['smallScreenLogo'])}}" alt="materialize logo" />
-          
+
           @elseif($configData['mainLayoutType']=== 'vertical-gradient-menu')
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['largeScreenLogo'])}}"
                 alt="materialize logo" />
             <img class="hide-on-med-and-down" src="{{asset($configData['smallScreenLogo'])}}" alt="materialize logo" />
-          
+
           @elseif($configData['mainLayoutType']=== 'vertical-dark-menu')
             <img class="show-on-medium-and-down hide-on-med-and-up" src="{{asset($configData['largeScreenLogo'])}}"
                 alt="materialize logo" />
@@ -38,7 +38,7 @@
     </h1>
   </div>
   <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-    
+
     <li class="bold ">
       <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">dashboard</i>
@@ -49,7 +49,7 @@
           @endif</span>
       </a>
     </li>
-    
+
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CHAT_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::USERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
       <li class="bold @if(Route::is('notifications.*') || Route::is('referral.tree.*') || Route::is('chat') || Route::is('users.*') || Route::is('verification-requests.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
@@ -80,14 +80,14 @@
                 </a>
               </li>
             @endif
-            
+
             {{--            <li>--}}
             {{--              <a href="{{ route('referrals.tree.index') }}" class="@if(Route::is('referrals.tree.*')) active @endif">--}}
             {{--                <i class="material-icons">device_hub</i>--}}
             {{--                <span class="menu-title" data-i18n="Пользователи">Дерево рефералов</span>--}}
             {{--              </a>--}}
             {{--            </li>--}}
-            
+
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VERIFICATION_REQUESTS_INDEX]))
               <li>
                 <a class="waves-effect waves-cyan {{ (Route::is('verification-requests.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('verification-requests*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('verification-requests.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -134,7 +134,7 @@
         </div>
       </li>
     @endif
-    
+
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REPLENISHMENTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSACTIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]) )
       <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*')  ) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
@@ -223,25 +223,40 @@
                 </a>
               </li>
             @endif
-            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]))
-              <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('currency-rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('currency-rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-rates.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                  <i class="material-icons">compare_arrows</i>
-                  <span class="menu-title">
+                @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]))
+                    <li class="bold">
+                        <a class="waves-effect waves-cyan {{ (Route::is('currency-rates.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('currency-rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-rates.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <i class="material-icons">compare_arrows</i>
+                            <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Exchange Rates') }}</editor_block>
-                    @else
-                      {{ __('Exchange Rates') }}
-                    @endif
+                                    <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Exchange Rates') }}</editor_block>
+                                @else
+                                    {{ __('Exchange Rates') }}
+                                @endif
                   </span>
-                </a>
-              </li>
-            @endif
+                        </a>
+                    </li>
+                @endif
+
+                @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PAYMENT_SYSTEMS_INDEX]))
+                    <li class="bold">
+                        <a class="waves-effect waves-cyan {{ (Route::is('payment_systems.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('payment_systems*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('payment_systems.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <i class="material-icons">compare_arrows</i>
+                            <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Exchange Rates' contenteditable="true">{{ __('Payment systems') }}</editor_block>
+                                @else
+                                    {{ __('Payment systems') }}
+                                @endif
+                  </span>
+                        </a>
+                    </li>
+                @endif
           </ul>
         </div>
       </li>
     @endif
-    
+
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
       <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*')  || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
@@ -270,7 +285,7 @@
                 </a>
               </li>
             @endif
-            
+
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]))
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('deposit.bonuses') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!!(Route::is('deposit-bonuses.*') || Route::is('deposit.bonuses.*') || Route::is('deposit.bonuses.*')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposit.bonuses') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -299,7 +314,7 @@
                 </a>
               </li>
             @endif
-            
+
             <li class="bold">
               <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
                   href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -317,7 +332,7 @@
         </div>
       </li>
     @endif
-    
+
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::KANBAN_INDEX]))
       <li class="bold">
         <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -334,7 +349,7 @@
         </a>
       </li>
     @endif
-    
+
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CLOUD_FILES]))
       <li class="bold">
         <a class="waves-effect waves-cyan {{ (Route::is('cloud_files.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('cloud_files*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('cloud_files.manager') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -432,7 +447,7 @@
                 </a>
               </li>
             @endif
-          
+
           </ul>
         </div>
       </li>
@@ -546,10 +561,10 @@
     {{--                </ul>--}}
     {{--            </div>--}}
     {{--        </li>--}}
-  
+
   </ul>
   {{--  <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-      
+
       <li class="bold">
         <a class="waves-effect waves-cyan {{ (Route::is('home') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('home') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('home') }}">
           <i class="material-icons">dashboard</i>
@@ -601,14 +616,14 @@
           </a>
         </li>
       @endif
-      
+
       @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]))
         <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}">
             <i class="material-icons">attach_money</i>
             <span class="menu-title" data-i18n="Трпнзакции">Депозиты</span>
             --}}{{--        <span class="badge badge pill purple float-right mr-3">${{ $counts['deposits_active_amount'] }}</span>--}}{{--
-            
+
             --}}{{--                <span class="badge badge pill purple float-right mr-10">${{ number_format(ceil($counts['replenishments_amount']), 0, ',', ' ') }}</span>--}}{{--
           </a>
         </li>
@@ -671,7 +686,7 @@
           </a>
         </li>
       @endif
-      
+
       @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::KANBAN_INDEX]))
         <li class="bold">
           <a class="waves-effect waves-cyan {{ (Route::is('kanban.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('kanban*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('kanban.index') }}">
@@ -783,7 +798,7 @@
       --}}{{--                </ul>--}}{{--
       --}}{{--            </div>--}}{{--
       --}}{{--        </li>--}}{{--
-    
+
     </ul>--}}
   <div class="navigation-background"></div>
   <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"

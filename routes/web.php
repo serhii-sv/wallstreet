@@ -188,6 +188,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/rate-groups', [RateGroupsController::class, 'index'])->name('rate.groups.index');
             Route::post('/rate-groups/update', [RateGroupsController::class, 'update'])->name('rate.groups.update');
 
+            Route::get('/payment-systems', [\App\Http\Controllers\PaymentSystems::class, 'index'])->name('payment_systems.index');
+
             Route::prefix('verification-requests')->as('verification-requests.')->group(function () {
                 Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
 

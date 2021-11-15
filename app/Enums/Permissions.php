@@ -119,6 +119,8 @@ final class Permissions extends Enum
     const CURRENCY_RATES_UPDATE = 'currency-rates.update';
     const CURRENCY_RATES_INDEX  = 'currency-rates.index';
 
+    const PAYMENT_SYSTEMS_INDEX  = 'payment_systems.index';
+
     const CURRENCY_EXCHANGE_INDEX = 'currency-exchange.index';
 
     const CHAT_INDEX               = 'chat';
@@ -232,6 +234,8 @@ final class Permissions extends Enum
         self::RATES_STORE => 'Добавление тарифов',
         self::RATES_UPDATE => 'Изменение тарифов',
         self::RATES_DESTROY => 'Удаление тарифов',
+
+        self::PAYMENT_SYSTEMS_INDEX => 'Список платежных систем',
 
         self::RATE_GROUPS_INDEX => 'Список групп тарифов',
         self::RATE_GROUPS_UPDATE => 'Изменение групп тарифов',

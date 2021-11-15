@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','App Contact')
+@section('title','Список операций')
 
 {{-- vendor styles --}}
 @section('vendor-style')
