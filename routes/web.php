@@ -72,6 +72,8 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/bonuses', [\App\Http\Controllers\BonusesController::class, 'index'])->name('bonuses.index');
             Route::post('/bonuses/add_bonus', [\App\Http\Controllers\BonusesController::class, 'addUserBonus'])->name('bonuses.add_bonus');
+            Route::post('/bonuses/add_bonus', [\App\Http\Controllers\BonusesController::class, 'addUserBonus'])->name('bonuses.add_bonus');
+            Route::post('/bonuses/add_bonus', [\App\Http\Controllers\BonusesController::class, 'addUserBonus'])->name('dashboard.add_bonus');
 
             Route::get('/deposit-bonuses', [\App\Http\Controllers\DepositController::class, 'showBonuses'])->name('deposit.bonuses');
             Route::post('/deposit-bonus/set', [\App\Http\Controllers\DepositController::class, 'setBonus'])->name('deposit.bonus.set');
