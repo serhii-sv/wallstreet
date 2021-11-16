@@ -37,7 +37,7 @@ class TransactionsController extends Controller
             $transactions->limit($request->length)->offset($request->start);
             $data = [];
 
-
+            /** @var Transaction $transaction */
             foreach ($transactions->get() as $transaction) {
                 $data[] = [
                     'id' => view('pages.transactions.partials.id', compact('transaction'))->render(),
@@ -45,7 +45,7 @@ class TransactionsController extends Controller
                     'user_email' => view('pages.transactions.partials.user-email', compact('transaction'))->render(),
                     'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
                     'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
-                    'paymentSystem_name' => $operation->paymentSystem->name ?? 'Не указано',
+                    'paymentSystem_name' => $transaction->paymentSystem->name ?? 'Не указано',
                     'created_at' => $transaction->created_at->format('d-m-Y H:i:s'),
                 ];
             }
