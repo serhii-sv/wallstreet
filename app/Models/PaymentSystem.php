@@ -96,9 +96,6 @@ class PaymentSystem extends Model
         $ps = $this;
         cache()->remember('sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($ps) {
             return $ps->transactions()
-                ->where('approved', 1)
-                ->where('is_real', 1)
-                ->where('type_id', TransactionType::getByName('enter')->id)
                 ->sum('main_currency_amount');
         });
     }
