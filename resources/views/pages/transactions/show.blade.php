@@ -124,6 +124,13 @@
                                             {{ __('Is real') }}
                                         @endif</span>
                                 </div>
+                                <div class="invoice-address">
+                                    <span>@if(canEditLang() && checkRequestOnEdit())
+                                            <editor_block data-name='Is approved' contenteditable="true">{{ __('Is approved') }}</editor_block>
+                                        @else
+                                            {{ __('Is approved') }}
+                                        @endif</span>
+                                </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class="divider show-on-small hide-on-med-and-up mb-3"></div>
@@ -153,6 +160,9 @@
                                 </div>
                                 <div class="invoice-address">
                                     <span>{{ $transaction->is_real == 1 ? 'реал' : 'фейк' }}</span>
+                                </div>
+                                <div class="invoice-address">
+                                    <span>{{ $transaction->approved == 1 ? 'да' : 'нет' }}</span>
                                 </div>
                             </div>
                         </div>
