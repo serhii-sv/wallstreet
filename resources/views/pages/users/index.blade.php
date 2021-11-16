@@ -89,14 +89,12 @@
               </li>
               {{--                            @if(auth()->user()->hasRole('root'))--}}
               @forelse($roles as $role)
-                @if(!auth()->user()->hasRole('root') && $role->name == 'teamlead')
-                
-                @elseif((auth()->user()->hasRole('root') && $role->name == 'teamlead') || $role->name != 'teamlead')
+                @if($role->name != "admin" && $role->name != "root")
                   <li @if(request()->get('roles') === $role->name) class="active" @endif>
                     <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" data-role_id="{{ $role->id }}" class="text-sub">
                       <i class=" material-icons small-icons mr-2"
                           style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
-                      {{$role->name}}
+                      {{ $role->name == 'teamlead' ? 'тимлидеры' : $role->name }}
                     </a>
                   </li>
                 @endif
@@ -139,7 +137,7 @@
               {{--                            @if(auth()->user()->hasRole('root'))--}}
               @forelse($roles as $role)
                 @if(!auth()->user()->hasRole('root') && $role->name == 'teamlead')
-                
+
                 @elseif((auth()->user()->hasRole('root') && $role->name == 'teamlead') || $role->name != 'teamlead')
                   <li @if(request()->get('roles') === $role->name) class="active" @endif>
                     <a href="#" data-role_id="{{ $role->id }}" class="text-sub">
@@ -149,7 +147,7 @@
                     </a>
                   </li>
                 @endif
-              
+
               @empty
               @endforelse
               {{--                            @endif--}}
@@ -178,7 +176,7 @@
     </div>
   </div>
   <!-- Sidebar Area Ends -->
-  
+
   <!-- Content Area Starts -->
   <div class="content-area content-right">
     <form id="usersForm" action="{{ route('users.mass-role-change') }}" method="post">
