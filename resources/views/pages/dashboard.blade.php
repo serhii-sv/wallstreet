@@ -482,7 +482,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($payment_system as $item)
+                        @forelse($payment_systems_paginate as $item)
                           <tr>
                             <td>{{ $item->name }}</td>
                             <td class="green-text">
@@ -516,6 +516,7 @@
                         @endforelse
                       </tbody>
                     </table>
+                      {{ $payment_systems_paginate->links() }}
                   </div>
                 </div>
               </div>

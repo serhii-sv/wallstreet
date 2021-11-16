@@ -177,6 +177,9 @@ class DashboardController extends Controller
             }, 0);
         });
 
+        /** @var PaymentSystem $payment_systems */
+        $payment_systems_paginate = PaymentSystem::paginate(10);
+
 
         return view('pages.dashboard', [
             'week_revenue_percent' => $week_revenue_percent,
@@ -200,6 +203,7 @@ class DashboardController extends Controller
             'countries_stat' => $countries_stat,
             'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,
+            'payment_systems_paginate' => $payment_systems_paginate,
             'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
             'withdraw_transactions_for_24h_sum' => $withdraw_transactions_for_24h_sum,
             'profit_transactions_for_24h_sum' => $enter_transactions_for_24h_sum - $withdraw_transactions_for_24h_sum,
