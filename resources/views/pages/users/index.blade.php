@@ -94,7 +94,7 @@
                     <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" data-role_id="{{ $role->id }}" class="text-sub">
                       <i class=" material-icons small-icons mr-2"
                           style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
-                      {{ $role->name == 'teamlead' ? 'тимлидеры' : $role->name }}
+                      {{ $role->name == 'teamlead' ? 'Тимлидеры' : $role->name }}
                     </a>
                   </li>
                 @endif
