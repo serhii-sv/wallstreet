@@ -94,8 +94,8 @@ class PaymentSystem extends Model
 
     public function transactions_enter() {
         $ps = $this;
+        return 666;
         cache()->remember('sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($ps) {
-            return 666;
             return $ps->transactions()
                 ->where('approved', 1)
                 ->where('is_real', true)
