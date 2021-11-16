@@ -210,7 +210,7 @@
       }
 
     $(document).ready(function () {
-        $('.external-block').click(function() {
+        $("body").on('click', '.external-block', function (e) {
             alert('Скопировано: '+$(this).html());
             copyToClipboard($(this).html());
         });
