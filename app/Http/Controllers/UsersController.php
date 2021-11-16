@@ -89,9 +89,7 @@ class UsersController extends Controller
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
                 })->when($imTeamlead, function ($query) use ($filter_role) {
-                    return $query->doesnthave('roles', function($query) {
-                        $query->where('name', 'teamlead');
-                    });
+                    return !$query->role('teamlead');
                 });
 
                 $users = $users->orderBy($column, $request->order[0]['dir']);
