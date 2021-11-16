@@ -93,11 +93,19 @@ class PaymentSystem extends Model
     }
 
     public function transactions_enter() {
-        return $this->hasMany(Transaction::class, 'payment_system_id')->where('is_real', 1)->whereIn('type_id', [TransactionType::where('name', 'enter')->select('id')->get()->toArray()]);
+        return $this->transactions()
+            ->where('approved', 1)
+            ->where('is_real', 1)
+            ->where('type_id', TransactionType::getByName('enter')->id)
+            ->sum('main_currency_amount');
     }
 
     public function transactions_withdraw() {
-        return $this->hasMany(Transaction::class, 'payment_system_id')->where('is_real', 1)->whereIn('type_id', [TransactionType::where('name', 'withdraw')->select('id')->get()->toArray()]);
+        return $this->transactions()
+            ->where('approved', 1)
+            ->where('is_real', 1)
+            ->where('type_id', TransactionType::getByName('withdraw')->id)
+            ->sum('main_currency_amount');
     }
 
    /**
