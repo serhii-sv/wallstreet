@@ -483,14 +483,6 @@
                       </thead>
                       <tbody>
                         @forelse($payment_systems_paginate as $item)
-                            <?php
-                            $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
-                                return $item->transactions_enter()->sum('main_currency_amount');
-                            });
-                            $item->transaction_minus = cache()->remember('dshb.payment_transaction_minus' . $item->id, 60, function () use ($item) {
-                                return $item->transactions_withdraw()->sum('main_currency_amount');
-                            });
-                            ?>
                           <tr>
                             <td>{{ $item->name }}</td>
                             <td class="green-text">
