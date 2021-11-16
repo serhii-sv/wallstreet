@@ -42,6 +42,9 @@ final class Permissions extends Enum
     const DEPOSITS      = 'deposits.index';
     const DEPOSITS_SHOW = 'deposits.show';
 
+    const BONUSES_INDEX = 'bonuses.index';
+    const BONUSES_ADD_BONUS = 'bonuses.add_bonus';
+
     const NOTIFICATIONS_INDEX        = 'notifications.index';
     const NOTIFICATIONS_CREATE       = 'notifications.create';
     const NOTIFICATIONS_STORE        = 'notifications.store';
@@ -192,6 +195,9 @@ final class Permissions extends Enum
 
         self::DEPOSITS => 'Список депозитов',
         self::DEPOSITS_SHOW => 'Просмотр данных депозита',
+
+        self::BONUSES_INDEX => 'Страница бонусов',
+        self::BONUSES_ADD_BONUS => 'Выдача бонусов',
 
         self::NOTIFICATIONS_INDEX => 'Список уведомлений',
         self::NOTIFICATIONS_CREATE => 'Страница создания уведомления',

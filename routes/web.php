@@ -57,7 +57,6 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('/chat/{id?}', [AdminChatController::class, 'chatList'])->name('chat');
 
-            Route::post('/dashboard/user/bonus', [\App\Http\Controllers\DashboardController::class, 'addUserBonus'])->name('dashboard.add_bonus');
           //  Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
             Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');
 
@@ -70,6 +69,9 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);
+
+            Route::get('/bonuses', [\App\Http\Controllers\BonusesController::class, 'index'])->name('bonuses.index');
+            Route::post('/bonuses/add_bonus', [\App\Http\Controllers\BonusesController::class, 'addUserBonus'])->name('bonuses.add_bonus');
 
             Route::get('/deposit-bonuses', [\App\Http\Controllers\DepositController::class, 'showBonuses'])->name('deposit.bonuses');
             Route::post('/deposit-bonus/set', [\App\Http\Controllers\DepositController::class, 'setBonus'])->name('deposit.bonus.set');

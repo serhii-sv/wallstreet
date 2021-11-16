@@ -163,20 +163,34 @@
                 </a>
               </li>
             @endif
-            @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]))
-              <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                  <i class="material-icons">attach_money</i>
-                  <span class="menu-title">
+                @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]))
+                    <li class="bold">
+                        <a class="waves-effect waves-cyan {{ (Route::is('deposits.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('deposits.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <i class="material-icons">attach_money</i>
+                            <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>
-                    @else
-                      {{ __('Deposits') }}
-                    @endif
+                                    <editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>
+                                @else
+                                    {{ __('Deposits') }}
+                                @endif
                   </span>
-                </a>
-              </li>
-            @endif
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::BONUSES_INDEX]))
+                    <li class="bold">
+                        <a class="waves-effect waves-cyan {{ (Route::is('bonuses.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('bonuses.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <i class="material-icons">blur_linear</i>
+                            <span class="menu-title">
+                    @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Bonuses index' contenteditable="true">{{ __('Bonuses index') }}</editor_block>
+                                @else
+                                    {{ __('Bonuses index') }}
+                                @endif
+                  </span>
+                        </a>
+                    </li>
+                @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]))
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('withdrawals.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('withdrawals*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('withdrawals.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
