@@ -575,6 +575,14 @@
                 </div>
 
                 <div class="row" style="text-align: center; margin-top:20px;">
+                    <h3 style="text-align: center;">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Choose currency for bonus' contenteditable="true">{{ __('Choose currency for bonus') }}</editor_block>
+                        @else
+                            {{ __('Choose currency for bonus') }}
+                        @endif
+                    </h3>
+
                   <div class="col-12 ">
                     @foreach($currencies as $currency)
                       @if($loop->index % 7 == 0 && $loop->index > 1)
@@ -591,6 +599,14 @@
 
 
                 <div class="row" style="margin-top:20px; text-align: center;">
+                    <h3 style="text-align: center;">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Choose payment system for bonus' contenteditable="true">{{ __('Choose payment system for bonus') }}</editor_block>
+                        @else
+                            {{ __('Choose payment system for bonus') }}
+                        @endif
+                    </h3>
+
                   @foreach($payment_system as $ps)
                     <input class="checkbox-tools" name="payment_system" value="{{ $ps->id }}" type="radio" id="payment_system-{{ $ps->id }}" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }}>
                     <label class="for-checkbox-tools" for="payment_system-{{ $ps->id }}">
@@ -601,6 +617,14 @@
 
 
                 <div class="row" style="margin-top:20px; text-align: center;">
+                    <h3 style="text-align: center;">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Choose type for bonus' contenteditable="true">{{ __('Choose type for bonus') }}</editor_block>
+                        @else
+                            {{ __('Choose type for bonus') }}
+                        @endif
+                    </h3>
+
                   <div class="col-12">
                   <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
                   <label class="for-checkbox-tools" for="is_real1">@if(canEditLang() && checkRequestOnEdit())
