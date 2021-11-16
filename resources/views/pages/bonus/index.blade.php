@@ -27,7 +27,7 @@
                     @else
                         {{ __('Accrue bonus') }}
                     @endif</h4>
-                <form method="post" class="dashboard-send-bonus-form" action="{{ route('bonus.add_bonus') }}">
+                <form method="post" class="dashboard-send-bonus-form" action="{{ route('bonuses.add_bonus') }}">
                     {{ csrf_field() }}
 
                     <div class="row" style="text-align: center; margin-top:20px;">
