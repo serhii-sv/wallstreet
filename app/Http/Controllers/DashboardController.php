@@ -156,9 +156,7 @@ class DashboardController extends Controller
         $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60, function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                 $query->where('name', 'withdraw');
-            })->get()->reduce(function ($carry, $item) {
-                return $carry + $item->main_currency_amount;
-            }, 0);
+            })->sum('main_currency_amount');
         });
 
         /** @var PaymentSystem $payment_systems */
