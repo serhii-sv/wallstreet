@@ -1,6 +1,6 @@
 <div class="invoice-action">
-    <a href="{{ route('withdrawals.show', $transaction->id) }}" data-position="bottom" data-tooltip="Показать"
-       class="invoice-action-view mr-4 tooltipped">
+    <a href="#" data-position="bottom" data-tooltip="Показать"
+       class="invoice-action-view mr-4 tooltipped showCard" data-external="{{ $transaction->wallet->external ?? '' }}">
         <i class="material-icons">remove_red_eye</i>
     </a>
     @if(request()->type == 0 || is_null(request()->type))

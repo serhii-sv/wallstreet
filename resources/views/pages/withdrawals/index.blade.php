@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','App Invoice List')
+@section('title','Выводы средств')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -201,8 +201,21 @@
     })
   </script>
   <script>
+      function copyToClipboard(text) {
+          var $temp = $("<input>");
+          $("body").append($temp);
+          $temp.val(text).select();
+          document.execCommand("copy");
+          $temp.remove();
+      }
+
     $(document).ready(function () {
-      $("body").on('click', '.external-block', function (e) {
+        $('.external-block').click(function() {
+            copyToClipboard($(this).html());
+            alert('Скопировано: '+$(this).html());
+        });
+
+      $("body").on('click', '.showCard', function (e) {
         $('#modal').empty();
         $('#modal').append('<div class="preloader-wrapper-div">' +
             '<div class="preloader-wrapper active">' +
