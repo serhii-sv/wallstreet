@@ -26,7 +26,7 @@
       </div>
       <ul class="navbar-list right">
         <li class="dropdown-language">
-          <a class="waves-effect waves-block waves-light translation-button" href="javascript:void(0);"
+          <a class="waves-effect waves-block waves-light translation-button"  style="display: inline;" href="javascript:void(0);"
             data-target="translation-dropdown">
             <span class="flag-icon flag-icon-gb"></span>
           </a>
