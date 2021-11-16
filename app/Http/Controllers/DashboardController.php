@@ -152,7 +152,7 @@ class DashboardController extends Controller
         });
 
         /** @var PaymentSystem $payment_systems */
-        $payment_systems_paginate = PaymentSystem::get()->paginate(10);
+        $payment_systems_paginate = PaymentSystem::paginate(10);
 
         $depositTotal = Cache::remember('dshb.transactions.enter.total', 60, function () {
             return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {

@@ -483,6 +483,7 @@
                       </thead>
                       <tbody>
                         @forelse($payment_systems_paginate as $item)
+                            @php($item = \App\Models\PaymentSystem::find($item->id))
                           <tr>
                             <td>{{ $item->name }}</td>
                             <td class="green-text">
