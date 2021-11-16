@@ -575,7 +575,7 @@
                 </div>
 
                 <div class="row" style="text-align: center; margin-top:20px;">
-                    <h3 style="text-align: center;">
+                    <h3 class="card-title mt-2 mb-1" style="text-align: center;">
                         @if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Choose currency for bonus' contenteditable="true">{{ __('Choose currency for bonus') }}</editor_block>
                         @else
@@ -599,7 +599,7 @@
 
 
                 <div class="row" style="margin-top:20px; text-align: center;">
-                    <h3 style="text-align: center;">
+                    <h3 class="card-title mt-2 mb-1" style="text-align: center;">
                         @if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Choose payment system for bonus' contenteditable="true">{{ __('Choose payment system for bonus') }}</editor_block>
                         @else
@@ -617,7 +617,7 @@
 
 
                 <div class="row" style="margin-top:20px; text-align: center;">
-                    <h3 style="text-align: center;">
+                    <h3 class="card-title mt-2 mb-1" style="text-align: center;">
                         @if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Choose type for bonus' contenteditable="true">{{ __('Choose type for bonus') }}</editor_block>
                         @else
