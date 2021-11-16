@@ -13,9 +13,6 @@
 @section('page-style')
     <link rel="stylesheet" type="text/css" href="{{asset('css/pages/pricing.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{asset('css/pages/dashboard-modern.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/pages/intro.css')}}">
-
     <style>
 
         :root {
