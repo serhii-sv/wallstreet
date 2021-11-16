@@ -94,38 +94,35 @@ class UsersController extends Controller
                     });
                 });
 
-                $users = $users->withCount('referrals')->orderBy($column, $request->order[0]['dir']);
+                $users = $users->orderBy($column, $request->order[0]['dir']);
 
                 $recordsFiltered = $users->count();
                 $users->limit($request->length)->offset($request->start);
                 $data = [];
                 foreach ($users->get() as $user) {
                     $ip = $user->ip ?? 'Не указано';
-                    if (!Auth::user()->hasRole('root') && $user->hasRole('teamlead')) {
 
-                    } else if ((Auth::user()->hasRole('root') && $user->hasRole('teamlead')) || !$user->hasRole('teamlead')) {
-                        $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
-                        if ($multi_acc->count() > 0) {
-                            $ip = "<blink>" . $multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>";
-                        }
-                        $data[] = [
-                            'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
-                            'user' => view('pages.users.partials.avatar', compact('user'))->render(),
-                            'login' => view('pages.users.partials.login', compact('user'))->render(),
-                            'name' => view('pages.users.partials.name', compact('user'))->render(),
-                            'email' => view('pages.users.partials.email', compact('user'))->render(),
-                            'referrals_count' => $user->referrals()->distinct('id')->count(),
-                            'partner' => view('pages.users.partials.partner', [
-                                'user' => $user,
-                                'partner' => $user->partner,
-                            ])->render(),
-                            'country' => $user->country ?? 'Не указано',
-                            'city' => $user->city ?? 'Не указано',
-                            'ip' => $ip,
-                            'actions' => view('pages.users.partials.actions', compact('user'))->render(),
-                            'color' => $user->roles->first()->color ?? '',
-                        ];
+                    $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
+                    if ($multi_acc->count() > 0) {
+                        $ip = "<blink>" . $multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>";
                     }
+                    $data[] = [
+                        'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
+                        'user' => view('pages.users.partials.avatar', compact('user'))->render(),
+                        'login' => view('pages.users.partials.login', compact('user'))->render(),
+                        'name' => view('pages.users.partials.name', compact('user'))->render(),
+                        'email' => view('pages.users.partials.email', compact('user'))->render(),
+                        'referrals_count' => $user->referrals()->distinct('id')->count(),
+                        'partner' => view('pages.users.partials.partner', [
+                            'user' => $user,
+                            'partner' => $user->partner,
+                        ])->render(),
+                        'country' => $user->country ?? 'Не указано',
+                        'city' => $user->city ?? 'Не указано',
+                        'ip' => $ip,
+                        'actions' => view('pages.users.partials.actions', compact('user'))->render(),
+                        'color' => $user->roles->first()->color ?? '',
+                    ];
                 }
             }
 
