@@ -74,14 +74,6 @@ class DashboardController extends Controller
 
 
         $payment_system = PaymentSystem::all();
-        foreach ($payment_system as $item) {
-            $item->transaction_sum = cache()->remember('dshb.payment_transactions_sum' . $item->id, 60, function () use ($item) {
-                return $item->transactions_enter()->sum('main_currency_amount');
-            });
-            $item->transaction_minus = cache()->remember('dshb.payment_transaction_minus' . $item->id, 60, function () use ($item) {
-                return $item->transactions_withdraw()->sum('main_currency_amount');
-            });
-        }
 
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
