@@ -88,12 +88,6 @@ class UsersController extends Controller
 
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
-                })->filter(function ($user) use ($imTeamlead) {
-                    if ($imTeamlead && $user->hasRole('teamlead')) {
-                        return false;
-                    }
-
-                    return true;
                 });
 
                 $users = $users->orderBy($column, $request->order[0]['dir']);
@@ -101,7 +95,16 @@ class UsersController extends Controller
                 $recordsFiltered = $users->count();
                 $users->limit($request->length)->offset($request->start);
                 $data = [];
-                foreach ($users->get() as $user) {
+
+                $users = $users->get()->filter(function ($user) use ($imTeamlead) {
+                    if ($imTeamlead && $user->hasRole('teamlead')) {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                foreach ($users as $user) {
                     $ip = $user->ip ?? 'Не указано';
 
                     $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
