@@ -81,9 +81,20 @@ class UsersController extends Controller
                 }
 
             } else {
+                /** @var User $me */
+                $me = auth()->user();
+
+                $imTeamlead = $me->roles()->where('name', 'teamlead')->count() > 0;
+
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
-                })->withCount('referrals')->orderBy($column, $request->order[0]['dir']);
+                })->when($imTeamlead, function ($query) use ($filter_role) {
+                    return $query->hasNot('role', function($query) {
+                        $query->where('name', 'teamlead');
+                    });
+                });
+
+                $users = $users->withCount('referrals')->orderBy($column, $request->order[0]['dir']);
 
                 $recordsFiltered = $users->count();
                 $users->limit($request->length)->offset($request->start);
