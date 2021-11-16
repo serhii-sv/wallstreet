@@ -211,8 +211,8 @@
 
     $(document).ready(function () {
         $('.external-block').click(function() {
-            copyToClipboard($(this).html());
             alert('Скопировано: '+$(this).html());
+            copyToClipboard($(this).html());
         });
 
       $("body").on('click', '.showCard', function (e) {
