@@ -9,10 +9,12 @@ namespace App\Http\Controllers;
 use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\DepositBonus;
+use App\Models\DepositQueue;
 use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +26,7 @@ use Illuminate\Support\Facades\Validator;
  */
 class DepositController extends Controller
 {
-    
+
     /**
      * @param Request $request
      *
@@ -37,9 +39,9 @@ class DepositController extends Controller
             'Закрываются в течении недели' => 'close_during_week',
         ];
         $deposits_count = Deposit::count();
-        
+
         if (request()->ajax()) {
-            
+
             $filter_status = $request->get('status') ? $request->get('status') : false;
             $filter_rates = $request->get('rate') ? $request->get('rate') : false;
             $deposits = Deposit::when($filter_status, function ($query) use ($filter_status) {
@@ -51,7 +53,7 @@ class DepositController extends Controller
             })->when($filter_rates, function ($query) use ($filter_rates) {
                 return $query->where('rate_id', $filter_rates);
             })->orderBy('created_at', 'desc');
-            
+
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
                 $deposits->where(function ($query) use ($request) {
                     foreach ($request->columns as $column) {
@@ -61,23 +63,31 @@ class DepositController extends Controller
                     }
                 });
             }
-            
+
             $recordsFiltered = $deposits->count();
             $deposits->limit($request->length)->offset($request->start);
             $data = [];
-            
+
+            /** @var DepositQueue $deposit */
             foreach ($deposits->get() as $deposit) {
+                $nextDividend = DepositQueue::where('deposit_id', $deposit->id)
+                    ->where('done', 0)
+                    ->where('type', DepositQueue::TYPE_ACCRUE)
+                    ->orderBy('available_at')
+                    ->first();
+
                 $data[] = [
                     'id' => view('pages.deposits.partials.id', compact('deposit'))->render(),
                     'email' => view('pages.deposits.partials.email', compact('deposit'))->render(),
                     'invested' => $deposit->currency->symbol . " " . number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 ?? 'Не указано',
                     'total_assessed' => view('pages.deposits.partials.total-assessed', compact('deposit'))->render(),
-                    'remains_to_accrue' => '?',
-                    'next_charge' => '?',
+                    'next_charge' => null !== $nextDividend
+                        ? Carbon::parse($nextDividend->available_at)->format('d-m-Y H:i')
+                        : 'никогда',
                     'created_at' => $deposit->created_at->format('d-m-Y'),
                 ];
             }
-            
+
             return response()->json([
                 'draw' => $request->draw,
                 'recordsTotal' => $deposits_count,
@@ -92,7 +102,7 @@ class DepositController extends Controller
             ]);
         }
     }
-    
+
     /**
      * @param $id
      *
@@ -102,7 +112,7 @@ class DepositController extends Controller
         $deposit = Deposit::findOrFail($id);
         return view('pages.deposits.show', ['deposit' => $deposit]);
     }
-    
+
     /**
      * @param $id
      *
@@ -115,12 +125,12 @@ class DepositController extends Controller
         }
         return back()->with('error', __('ERROR:') . ' Депозит не была удалена');
     }
-    
+
     public function showBonuses() {
         $deposit_turnovers = DepositBonus::orderBy('personal_turnover', 'asc')->get();
         return view('pages.deposits.bonuses', compact('deposit_turnovers'));
     }
-    
+
     public function setBonus(Request $request) {
         if ($request->ajax()) {
             $data = $request->all();
@@ -131,7 +141,7 @@ class DepositController extends Controller
                 'total_turnover' => 'required|numeric',
                 'reward' => 'required|numeric',
             ];
-            
+
             $id = $request->post('id');
             $validator = Validator::make($data, $rules);
             if ($validator->fails()) {
@@ -146,17 +156,17 @@ class DepositController extends Controller
                     'msg' => $messages,
                 ]);
             }
-            
+
             $deposit_bonus = DepositBonus::where('id', $id)->first();
             $deposit_bonus->update($request->post());
-            
+
             return json_encode([
                 'status' => 'good',
                 'msg' => $request->post('status_name') . ' - ' . $request->post('status_stage') . ' is updated!',
             ]);
         }
     }
-    
+
     public function addBonus(Request $request) {
         if ($request->ajax()) {
             $data = $request->all();
@@ -167,7 +177,7 @@ class DepositController extends Controller
                 'total_turnover' => 'required|numeric',
                 'reward' => 'required|numeric',
             ];
-            
+
             $validator = Validator::make($data, $rules);
             if ($validator->fails()) {
                 $messages = 'Ошибка! Бонус не добавлен! <br>';
@@ -181,10 +191,10 @@ class DepositController extends Controller
                     'msg' => $messages,
                 ]);
             }
-            
+
             $deposit_bonus = new DepositBonus();
             $deposit_bonus->create($request->post());
-            
+
             return json_encode([
                 'status' => 'good',
                 'msg' => 'Bonus added!',
@@ -192,11 +202,11 @@ class DepositController extends Controller
             ]);
         }
     }
-    
+
     public function deleteBonus(Request $request) {
         $deposit_bonus = DepositBonus::where('id', $request->post('id'))->first();
         $deposit_bonus->delete();
-        
+
         return json_encode([
             'status' => 'good',
             'msg' => 'Bonus deleted!',

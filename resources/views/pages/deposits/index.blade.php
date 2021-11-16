@@ -126,7 +126,6 @@
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block> @else{{ __('Login') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of investment' contenteditable="true">{{ __('Amount of investment') }}</editor_block> @else {{ __('Amount of investment') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Assessed' contenteditable="true">{{ __('Assessed') }}</editor_block> @else {{ __('Assessed') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='It remains to accrue' contenteditable="true">{{ __('It remains to accrue') }}</editor_block> @else {{ __('It remains to accrue') }}@endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Next charge' contenteditable="true">{{ __('Next charge') }}</editor_block> @else {{ __('Next charge') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Opening date' contenteditable="true">{{ __('Opening date') }}</editor_block> @else {{ __('Opening date') }} @endif</th>
                     </tr>
