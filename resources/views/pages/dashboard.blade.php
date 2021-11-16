@@ -487,18 +487,18 @@
                             <td>{{ $item->name }}</td>
                             <td class="green-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum, 2), 2, '.',' ') ?? 0 }}
+                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transactions_enter, 2), 2, '.',' ') ?? 0 }}
                             </td>
                             <td class="red-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_minus, 2), 2, '.',' ') ?? 0 }}
+                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transactions_withdraw, 2), 2, '.',' ') ?? 0 }}
                             </td>
                             <td class="blue-grey-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transaction_sum - $item->transaction_minus, 2), 2, '.',' ') ?? 0}}
+                                                        style="font-weight: 900;">$</span>{{ number_format(round($item->transactions_enter - $item->transactions_withdraw, 2), 2, '.',' ') ?? 0}}
                             </td>
-                            <td>@if($item->transaction_sum)
-                                {{ number_format(round( (($item->transaction_sum - $item->transaction_minus) / $item->transaction_sum) * 100, 2), 2, '.',' ')  ?? 0 }}
+                            <td>@if($item->transactions_enter)
+                                {{ number_format(round( (($item->transactions_enter - $item->transactions_withdraw) / $item->transactions_enter) * 100, 2), 2, '.',' ')  ?? 0 }}
                               @else
                                 0
                               @endif
