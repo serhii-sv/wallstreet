@@ -7,10 +7,6 @@
 {{-- vendor styles --}}
 @section('vendor-style')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/animate-css/animate.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/chartist-js/chartist.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/chartist-js/chartist-plugin-tooltip.css')}}">
 @endsection
 
 {{-- page styles --}}
