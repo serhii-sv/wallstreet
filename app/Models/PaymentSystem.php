@@ -94,25 +94,24 @@ class PaymentSystem extends Model
 
     public function transactions_enter() {
         $ps = $this;
-        return 666;
-        cache()->remember('sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($ps) {
+//        cache()->remember('sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($ps) {
             return $ps->transactions()
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('enter')->id)
                 ->sum('main_currency_amount');
-        });
+//        });
     }
 
     public function transactions_withdraw() {
         $ps = $this;
-        cache()->remember('sum_transactions_withdraw.'.$this->id, now()->addMinutes(60), function() use($ps) {
+//        cache()->remember('sum_transactions_withdraw.'.$this->id, now()->addMinutes(60), function() use($ps) {
             return $ps->transactions()
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('withdraw')->id)
                 ->sum('main_currency_amount');
-        });
+//        });
     }
 
    /**
