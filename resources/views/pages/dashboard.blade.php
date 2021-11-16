@@ -152,7 +152,7 @@
             background-color: var(--dark-blue);
             box-shadow: 0 4px 4px rgba(26,53,71,0.25), 0 0 0 1px rgba(26,53,71,0.07);
         }
-    
+
         .checkbox:checked ~ .section .container .row .col-12 p{
             color: var(--dark-blue);
         }*/
@@ -167,7 +167,7 @@
   <div class="section">
 
     <div id="chart-dashboard">
-      
+
       <div id="card-stats" class="pt-0">
         <div class="row">
           <div class="col s12 m6 l6 xl3">
@@ -185,7 +185,7 @@
                       {{ __('In 24 hours') }}
                     @endif:</p> {{ $users['today'] }}</h4>
                 <p>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                    <editor_block data-name='Total acc' contenteditable="true">{{ __('Total acc') }}</editor_block>
                   @else
                     {{ __('Total acc') }}
                   @endif: {{ number_format($users['total'], 0, '.', ',') }}</p>
@@ -194,15 +194,15 @@
                 <div id="clients-bar" class="center-align"></div>
               </div>
             </div>
-          
+
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeLeft">
               <div class="card-content green lighten-1 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block>
+                    <editor_block data-name='Total Replenishment' contenteditable="true">{{ __('Total Replenishment') }}</editor_block>
                   @else
-                    {{ __('Replenishment') }}
+                    {{ __('Total Replenishment') }}
                   @endif</p>
                 <h4 class="card-stats-number white-text">
                   <p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
@@ -212,24 +212,24 @@
                     @endif:</p> ${{ number_format($enter_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
                 <p>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                    <editor_block data-name='Total replenishments' contenteditable="true">{{ __('Total replenishments') }}</editor_block>
                   @else
-                    {{ __('Total replenishment') }}
+                    {{ __('Total replenishments') }}
                   @endif: ${{ number_format($deposit_total_sum, 0, '.', ',') }}</p>
               </div>
               <div class="card-action green ">
                 <div id="sales-compositebar" class="center-align"></div>
               </div>
             </div>
-          
+
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
               <div class="card-content red accent-2 white-text">
                 <p class="card-stats-title"><i class="material-icons">attach_money</i> @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Withdrawals' contenteditable="true">{{ __('Withdrawals') }}</editor_block>
+                    <editor_block data-name='Total Withdrawals' contenteditable="true">{{ __('Total Withdrawals') }}</editor_block>
                   @else
-                    {{ __('Withdrawals') }}
+                    {{ __('Total Withdrawals') }}
                   @endif</p>
                 <h4 class="card-stats-number white-text">
                   <p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
@@ -239,16 +239,16 @@
                     @endif:</p> {{ number_format($withdraw_transactions_for_24h_sum, 0, '.', ',') }}
                 </h4>
                 <p>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block>
+                    <editor_block data-name='Total withdrawals b' contenteditable="true">{{ __('Total withdrawals b') }}</editor_block>
                   @else
-                    {{ __('Total withdrawals') }}
+                    {{ __('Total withdrawals b') }}
                   @endif: {{ number_format($deposit_total_withdraw, 0, '.', ',') }}</p>
               </div>
               <div class="card-action red">
                 <div id="profit-tristate" class="center-align"></div>
               </div>
             </div>
-          
+
           </div>
           <div class="col s12 m6 l6 xl3">
             <div class="card animate fadeRight">
@@ -276,11 +276,11 @@
                 <div id="invoice-line" class="center-align"></div>
               </div>
             </div>
-          
+
           </div>
         </div>
       </div>
-    
+
       <div class="row mt-1">
         <div class="col s12 m8 l8">
           <div class="card animate fadeUp">
@@ -542,8 +542,8 @@
         </div>
       </div>
     </div>
-  
-   
+
+
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="row">
@@ -556,7 +556,7 @@
                 @endif</h4>
               <form method="post" class="dashboard-send-bonus-form" action="{{ route('dashboard.add_bonus') }}">
                 {{ csrf_field() }}
-                
+
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12">
                     <input class="checkbox-tools" name="type" value="enter" type="radio" {{ old('type', 'enter') == 'enter' ? 'checked' : '' }} id="enter">
@@ -573,7 +573,7 @@
                       @endif</label>
                   </div>
                 </div>
-                
+
                 <div class="row" style="text-align: center; margin-top:20px;">
                   <div class="col-12 ">
                     @foreach($currencies as $currency)
@@ -585,11 +585,11 @@
                           {{ $currency->code }}
                         </label>
                     @endforeach
-                   
+
                   </div>
                 </div>
- 
-                
+
+
                 <div class="row" style="margin-top:20px; text-align: center;">
                   @foreach($payment_system as $ps)
                     <input class="checkbox-tools" name="payment_system" value="{{ $ps->id }}" type="radio" id="payment_system-{{ $ps->id }}" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }}>
@@ -598,8 +598,8 @@
                     </label>
                   @endforeach
                 </div>
-                
-                
+
+
                 <div class="row" style="margin-top:20px; text-align: center;">
                   <div class="col-12">
                   <input class="checkbox-tools" name="is_real" value="1" type="radio" id="is_real1" {{ old('is_real', '1') == '1' ? 'checked' : '' }}>
@@ -616,7 +616,7 @@
                     @endif</label>
                   </div>
                 </div>
-  
+
                 <div class="row" style=" text-align: center;">
                   <div class="input-field col s12 text-center">
                     <div >
@@ -634,8 +634,8 @@
                     </div>
                   </div>
                 </div>
-                
-                
+
+
                 <div class="row" style="text-align: center;">
                   <div class="input-field col s12" style="text-align:center;">
                     <button class="btn red accent-2 shadow waves-effect waves-light dashboard-send-bonus-btn" type="submit" name="action" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
@@ -650,7 +650,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col s12 m12 l12 dashboard-operations-wrapper">
             <div class="switch dashboard-operations-switch right">
@@ -668,7 +668,7 @@
                   @endif
               </label>
             </div>
-            
+
             <div id="stats-block" class="card card card-default animate fadeUp scrollspy ">
               <div class="card-content">
                 <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())
@@ -812,7 +812,7 @@
               </table>
             </div>
           </div>
-          
+
           <div class="col s12 m12 l12">
             <div id="striped-table" class="card card card-default scrollspy">
               <div class="card-content">
@@ -882,11 +882,11 @@
         </div>
       </div>
     </div>
-    
-    
+
+
     <div class="row">
       <div class="col s12 m12 l8">
-      
+
       </div>
       <div class="col s12 m12 l12">
         <div class="row">
@@ -931,13 +931,13 @@
                   </button>
                 </div>
               @endif
-            
+
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+
   </div>
 @endsection
 
@@ -954,7 +954,7 @@
 {{-- page scripts --}}
 @section('page-script')
   <script>
-  
+
   </script>
   {{--  <script src="{{asset('js/scripts/dashboard-modern.js')}}"></script>--}}
   {{--  <script src="{{asset('js/scripts/intro.js')}}"></script>--}}
@@ -962,7 +962,7 @@
   {{--  <script src="{{ asset('admin/js/scripts/dashboard-analytics.js') }}"></script>--}}
   <script>
     (function (window, document, $) {
-      
+
       $("#task-card input:checkbox").change(function () {
         $.ajax({
           url: '/tasks/update/' + $(this).attr('id'),
@@ -981,7 +981,7 @@
           }
         })
       });
-      
+
       // Check Uncheck function
       function checkbox_check(el) {
         if (!$(el).is(":checked")) {
@@ -994,11 +994,11 @@
           .css("text-decoration", "line-through"); //or addClass
         }
       }
-      
+
       $("#task-card input:checkbox").each(function () {
         checkbox_check(this);
       });
-      
+
       var revenueLineChartCTX = $("#revenue-line-chart");
       var revenueLineChartOptions = {
         responsive: true,
@@ -1042,7 +1042,7 @@
           ]
         }
       };
-      
+
       var revenueLineChartDataWeek = {
         labels: [@foreach($weeks_period as $key => $item)"{{ $item['start']->format('d M') }}",@endforeach],
         datasets: [
@@ -1113,7 +1113,7 @@
           }
         ]
       };
-      
+
       var revenueLineChartConfigWeek = {
         type: "line",
         options: revenueLineChartOptions,
@@ -1124,11 +1124,11 @@
         options: revenueLineChartOptions,
         data: revenueLineChartDataMonth
       };
-      
+
       /*
    Doughnut Chart Widget
    */
-      
+
       var totalRevenueChartCTX = $("#doughnut-chart");
       var totalRevenueChartOptions = {
         cutoutPercentage: 70,
@@ -1156,7 +1156,7 @@
           }
         ]
       };
-      
+
       var totalRevenueChartConfigWeek = {
         type: "doughnut",
         options: totalRevenueChartOptions,
@@ -1167,8 +1167,8 @@
         options: totalRevenueChartOptions,
         data: totalRevenueChartDataMonth
       };
-      
-      
+
+
       var monthlyRevenueChartCTX = $("#trending-bar-chart");
       var monthlyRevenueChartOptions = {
         responsive: true,
@@ -1240,7 +1240,7 @@
           }
         ]
       };
-      
+
       var monthlyRevenueChartConfigWeek = {
         type: "bar",
         options: monthlyRevenueChartOptions,
@@ -1251,8 +1251,8 @@
         options: monthlyRevenueChartOptions,
         data: monthlyRevenueChartDataMonth
       };
-      
-      
+
+
       var countryStatsChartCTX = $("#trending-radar-chart");
       var countryStatsChartOptions = {
         responsive: true,
@@ -1290,7 +1290,7 @@
             borderWidth: 2,
             pointBorderWidth: 2,
             pointHoverBorderWidth: 4,
-            
+
           }
         ]
       };
@@ -1299,7 +1299,7 @@
         options: countryStatsChartOptions,
         data: countryStatsChartData
       };
-      
+
       var cityStatsChartCTX = $("#line-chart");
       var cityStatsChartOption = {
         responsive: true,
@@ -1367,18 +1367,18 @@
         options: cityStatsChartOption,
         data: cityStatsChartData
       };
-      
+
       window.onload = function () {
-        
+
         var revenueLineChart = new Chart(revenueLineChartCTX, revenueLineChartConfigWeek);
         var monthlyRevenueChart = new Chart(monthlyRevenueChartCTX, monthlyRevenueChartConfigWeek);
         var totalRevenueChart = new Chart(totalRevenueChartCTX, totalRevenueChartConfigWeek);
         var countryStatsChart = new Chart(countryStatsChartCTX, countryStatsChartConfig);
         var cityStatsChart = new Chart(cityStatsChartCTX, cityStatsChartConfig);
-        
-        
+
+
         document.querySelector('.chart-revenue-switch-input').addEventListener('change', function (e) {
-          
+
           if (typeof revenueLineChart != "undefined") {
             if (this.checked == true) {
               revenueLineChart.config = revenueLineChartConfigMonth;
@@ -1403,7 +1403,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.remove('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.add('display-none');
-              
+
               document.querySelector('.chart-revenue-total.month').classList.remove('display-none');
               document.querySelector('.chart-revenue-total.week').classList.add('display-none');
               document.querySelector('.chart-revenue-per.month').classList.remove('display-none');
@@ -1413,7 +1413,7 @@
               totalRevenueChart.update();
               document.querySelector('.doughnut-chart-status.month').classList.add('display-none');
               document.querySelector('.doughnut-chart-status.week').classList.remove('display-none');
-              
+
               document.querySelector('.chart-revenue-total.month').classList.add('display-none');
               document.querySelector('.chart-revenue-total.week').classList.remove('display-none');
               document.querySelector('.chart-revenue-per.month').classList.add('display-none');
@@ -1422,9 +1422,9 @@
           }
         });
       };
-      
+
     })(window, document, jQuery);
-  
+
   </script>
   <script>
     $(document).ready(function () {
@@ -1444,7 +1444,7 @@
           }
         });
       });
-      
+
       $("#clients-bar").sparkline(@json($usersCountPeriod), {
         type: "bar",
         height: "25",
@@ -1454,7 +1454,7 @@
         negBarColor: "#81d4fa",
         zeroColor: "#81d4fa"
       });
-      
+
       $("#sales-compositebar").sparkline(@json($enterTransactionsPeriod), {
         type: "bar",
         barColor: "#F6CAFD",
@@ -1477,7 +1477,7 @@
         spotColor: "#fff3e0",
         spotRadius: 4
       });
-      
+
       $("#profit-tristate").sparkline(@json($withdrawalsPeriod), {
         type: "bar",
         height: "25",
@@ -1487,7 +1487,7 @@
         negBarColor: "#fae681",
         zeroColor: "#fade81"
       });
-      
+
       $("#invoice-line").sparkline(@json($profitPeriod), {
         type: "line",
         width: "100%",
@@ -1521,7 +1521,7 @@
   <script>
     $(document).ready(function (){
       $(".for-checkbox-tools").on('click', function () {
-      
+
       });
     });
   </script>
