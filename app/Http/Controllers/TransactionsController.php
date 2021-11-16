@@ -45,7 +45,7 @@ class TransactionsController extends Controller
                     'user_email' => view('pages.transactions.partials.user-email', compact('transaction'))->render(),
                     'type_name' => __('locale.' . $transaction->type->name) ?? 'Не указано',
                     'amount' => view('pages.transactions.partials.amount', compact('transaction'))->render(),
-                    'paymentSystem_name' => $transaction->paymentSystem->name ?? $transaction->wallet->currency->code,
+                    'paymentSystem_name' => $transaction->paymentSystem->name ?? $transaction->currency->code,
                     'created_at' => $transaction->created_at->format('d-m-Y H:i:s'),
                 ];
             }
