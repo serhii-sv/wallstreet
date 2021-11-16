@@ -491,7 +491,7 @@
                             </td>
                             <td class="red-text">
                                                     <span
-                                                        style="font-weight: 900;">$</span>{{ number_format($item->transactions_enter(), 2) }}
+                                                        style="font-weight: 900;">$</span>{{ number_format($item->transactions_withdraw(), 2) }}
                             </td>
                             <td class="blue-grey-text">
                                                     <span
