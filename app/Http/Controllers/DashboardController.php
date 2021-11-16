@@ -153,14 +153,6 @@ class DashboardController extends Controller
             }, 0);
         });
 
-        $enter_transactions_for_today_sum = Cache::remember('dshb.transactions.enter.for_today', 60, function () {
-            return Transaction::where('created_at', '>=', now()->startOfDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                $query->where('name', 'enter');
-            })->get()->reduce(function ($carry, $item) {
-                return $carry + $item->main_currency_amount;
-            }, 0);
-        });
-
         $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60, function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                 $query->where('name', 'withdraw');
@@ -169,16 +161,24 @@ class DashboardController extends Controller
             }, 0);
         });
 
-        $withdraw_transactions_for_today_sum = Cache::remember('dshb.transactions.withdraw.for_today', 60, function () {
-            return Transaction::where('created_at', '>=', now()->startOfDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                $query->where('name', 'withdraw');
+        /** @var PaymentSystem $payment_systems */
+        $payment_systems_paginate = PaymentSystem::paginate(10);
+
+        $depositTotal = Cache::remember('dshb.transactions.enter.total', 60, function () {
+            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                $query->where('name', 'enter');
             })->get()->reduce(function ($carry, $item) {
                 return $carry + $item->main_currency_amount;
             }, 0);
         });
 
-        /** @var PaymentSystem $payment_systems */
-        $payment_systems_paginate = PaymentSystem::paginate(10);
+        $withdrawTotal = Cache::remember('dshb.transactions.withdraw.total', 60, function () {
+            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                $query->where('name', 'withdraw');
+            })->get()->reduce(function ($carry, $item) {
+                return $carry + $item->main_currency_amount;
+            }, 0);
+        });
 
 
         return view('pages.dashboard', [
@@ -207,26 +207,14 @@ class DashboardController extends Controller
             'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
             'withdraw_transactions_for_24h_sum' => $withdraw_transactions_for_24h_sum,
             'profit_transactions_for_24h_sum' => $enter_transactions_for_24h_sum - $withdraw_transactions_for_24h_sum,
-            'profit_transactions_for_today_sum' => $enter_transactions_for_today_sum - $withdraw_transactions_for_today_sum,
+            'profit_transactions_for_today_sum' => $depositTotal - $withdrawTotal,
             'users' => [
                 'online' => $this->users->where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get(),
                 'total' => $this->users->all()->count(),
                 'today' => $this->users->where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count(),
             ],
-            'deposit_total_sum' => Cache::remember('dshb.transactions.enter.total', 60, function () {
-                return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                    $query->where('name', 'enter');
-                })->get()->reduce(function ($carry, $item) {
-                    return $carry + $item->main_currency_amount;
-                }, 0);
-            }),
-            'deposit_total_withdraw' => Cache::remember('dshb.transactions.withdraw.total', 60, function () {
-                return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                    $query->where('name', 'withdraw');
-                })->get()->reduce(function ($carry, $item) {
-                    return $carry + $item->main_currency_amount;
-                }, 0);
-            }),
+            'deposit_total_sum' => $depositTotal,
+            'deposit_total_withdraw' => $withdrawTotal,
         ]);
     }
 
