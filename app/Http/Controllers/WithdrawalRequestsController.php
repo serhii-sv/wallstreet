@@ -73,6 +73,10 @@ class WithdrawalRequestsController extends Controller
                 $transactions->where('approved', $request->only('type') ?? 0);
             }
 
+            if (($request->has('fake') || $request->has('real')) && $request->has('type')) {
+                $transactions->where('approved', $request->only('type') ?? 0);
+            }
+
             if (isset($request->search['value']) && !is_null($request->search['value'])) {
                 $transactions->where(function ($query) use ($request) {
                     $query->where('id', $request->search['value'])
