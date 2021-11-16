@@ -163,13 +163,13 @@ class DashboardController extends Controller
         $payment_systems_paginate = PaymentSystem::paginate(10);
 
         $depositTotal = Cache::remember('dshb.transactions.enter.total', 60, function () {
-            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {
                 $query->where('name', 'enter');
             })->sum('main_currency_amount');
         });
 
         $withdrawTotal = Cache::remember('dshb.transactions.withdraw.total', 60, function () {
-            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+            return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {
                 $query->where('name', 'withdraw');
             })->sum('main_currency_amount');
         });
