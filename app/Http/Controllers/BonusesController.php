@@ -20,14 +20,14 @@ class BonusesController extends Controller
      */
     public function index(Request $request)
     {
-        /** @var PaymentSystem $payment_system */
-        $payment_system = PaymentSystem::all();
+        /** @var PaymentSystem $payment_systems */
+        $payment_systems = PaymentSystem::all();
 
         /** @var Currency $currencies */
         $currencies = Currency::all();
 
         return view('pages.bonus.index', [
-            'payment_systems' => $payment_system,
+            'payment_systems' => $payment_systems,
             'currencies' => $currencies,
         ]);
     }

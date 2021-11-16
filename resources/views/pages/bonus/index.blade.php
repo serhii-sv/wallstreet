@@ -80,7 +80,7 @@
                             @endif
                         </h4>
 
-                        @foreach($payment_system as $ps)
+                        @foreach($payment_systems as $ps)
                             <input class="checkbox-tools" name="payment_system" value="{{ $ps->id }}" type="radio" id="payment_system-{{ $ps->id }}" {{ old('payment_system', $payment_system[0]->id ?? '') == $ps->id ? 'checked' : '' }}>
                             <label class="for-checkbox-tools" for="payment_system-{{ $ps->id }}">
                                 {{ $ps->name }}
