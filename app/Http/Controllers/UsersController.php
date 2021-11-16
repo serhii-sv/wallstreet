@@ -89,7 +89,7 @@ class UsersController extends Controller
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
                 })->when($imTeamlead, function ($query) use ($filter_role) {
-                    return $query->hasNot('role', function($query) {
+                    return $query->doesnthave('role', function($query) {
                         $query->where('name', 'teamlead');
                     });
                 });
