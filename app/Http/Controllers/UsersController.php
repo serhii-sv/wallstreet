@@ -213,7 +213,7 @@ class UsersController extends Controller
         $total_referral_invested = 0;
         $total_referral_withdrew = 0;
         foreach ($all_referrals as $referral) {
-            $invested = cache()->remember('referrals.total_invested_' . $user->id.$referral->id, 60, function () use ($referral, $transaction_type_invest) {
+            $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions()
                     ->where('type_id', $transaction_type_invest->id)
                     ->where('is_real', true)
@@ -225,7 +225,7 @@ class UsersController extends Controller
 
             // ------
 
-            $withdrew = cache()->remember('referrals.total_withdrew_' . $user->id.$referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
+            $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
                 return $referral->transactions()
                     ->where('type_id', $transaction_type_withdrew->id)
                     ->where('is_real', true)
