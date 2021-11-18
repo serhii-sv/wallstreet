@@ -221,13 +221,13 @@ trait HasReferral
 
         return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th) {
             /** @var User $referrals */
-            $referrals = $th->referrals()->wherePivot('line', 1)->get();
+            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
             $result = [];
 
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
-                    $result[$ref->int_id] = $ref;
+                    $result[$ref->id] = $ref;
                     $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
                 }
             }
