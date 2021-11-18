@@ -217,19 +217,23 @@ trait HasReferral
      */
     public function getAllReferralsInArray()
     {
-        /** @var User $referrals */
-        $referrals = $this->referrals()->wherePivot('line', 1)->get();
+        $th = $this;
 
-        $result = [];
+        return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th) {
+            /** @var User $referrals */
+            $referrals = $th->referrals()->wherePivot('line', 1)->get();
 
-        if (!empty($referrals)) {
-            foreach ($referrals as $ref) {
-                $result[$ref->int_id] = $ref;
-                $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
+            $result = [];
+
+            if (!empty($referrals)) {
+                foreach ($referrals as $ref) {
+                    $result[$ref->int_id] = $ref;
+                    $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
+                }
             }
-        }
 
-        return $result;
+            return $result;
+        });
     }
 
     /**
