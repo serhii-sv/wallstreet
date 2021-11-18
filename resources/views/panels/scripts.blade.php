@@ -36,7 +36,7 @@
       var cityName, country, ip;
       var fillInPage = (function () {
         var updateCityText = function (geoipResponse) {
-          
+
           cityName = geoipResponse.city.names.ru || 'Неизвестный';
           country = geoipResponse.country.names.ru || 'Неизвестная';
           ip = geoipResponse.traits.ip_address || 'ip';
@@ -138,9 +138,9 @@
           this.protocol = '';
           this.domain = '';
           this.params = {};
-          
+
         }
-        
+
         postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
           callbackSuccess = callbackSuccess || function () {
           };
@@ -153,9 +153,9 @@
           method = method || 'POST';
           data = data || {};
           url = url || '';
-          
+
           callbackBefore({}, data);
-          
+
           $.ajax({
             type: method,
             url: url,
@@ -178,7 +178,7 @@
             }
           });
         }
-        
+
         queryAjax(url, data, success, fail, before, after) {
           data = data || {};
           this.postJsonRequestAjax(
@@ -191,11 +191,11 @@
               after
           );
         }
-        
+
         objectMerge(a, b) {
           return Object.assign(a, b);
         }
-        
+
         messageSuccess(mes, data) {
           return {
             error: false,
@@ -203,7 +203,7 @@
             data: data || {}
           };
         }
-        
+
         messageError(mes, data) {
           return {
             error: true,
@@ -212,7 +212,7 @@
           };
         }
       }
-      
+
       $('editor_block')
       .prop('contentEditable', true)
       .focusin(function () {
@@ -220,7 +220,7 @@
       })
       .focusout(function (e) {
         let $this = $(this);
-        
+
         (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
               name: $this.attr('data-name'),
               text: $this.text()
@@ -228,17 +228,35 @@
               console.log('Сохранено!');
               console.log($this.text());
             }, function () {
-            
+
             },
             function () {
               console.log('Сохранение');
             }
         );
       });
-      
+
     });
   </script>
 @endif
+
+<script>
+    $(function() {
+        var marquee = $("#marquee");
+        marquee.css({"overflow": "hidden", "width": "100%"});
+        // оболочка для текста ввиде span (IE не любит дивы с inline-block)
+        marquee.wrapInner("<span>");
+        marquee.find("span").css({ "width": "50%", "display": "inline-block", "text-align":"center" });
+        marquee.append(marquee.find("span").clone()); // тут у нас два span с текстом
+        marquee.wrapInner("<div>");
+        marquee.find("div").css("width", "200%");
+        var reset = function() {
+            $(this).css("margin-left", "0%");
+            $(this).animate({ "margin-left": "-100%" }, 12000, 'linear', reset);
+        };
+        reset.call(marquee.find("div"));
+    });
+</script>
 
 <!-- END THEME  JS-->
 <!-- BEGIN PAGE LEVEL JS-->
