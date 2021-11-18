@@ -28,7 +28,7 @@
             <div id="marquee">
                 <?php
                 $rates = \App\Models\Setting::where('s_key', 'like', '%_to_usd')
-                    ->orderBy('s_val', 'desc')
+                    ->orderBy('s_value', 'desc')
                     ->get()
                     ->each(function($rate) {
                         echo $rate.' | ';
