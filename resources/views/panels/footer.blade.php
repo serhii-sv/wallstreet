@@ -7,9 +7,10 @@
             .string{
                 width:100%;
                 height:30px;
-                margin:60px auto;
+                margin:0 auto;
                 line-height:28px;
                 padding: 0 10px;
+                overflow: hidden;
                 border-radius:4px;
                 box-shadow:0 1px 2px #777;
                 -moz-border-radius:4px;
