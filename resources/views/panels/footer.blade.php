@@ -30,7 +30,7 @@
                 ->orderBy('s_value', 'desc')
                 ->get()
                 ->each(function(\App\Models\Setting $rate) {
-                    echo $rate->s_key.':'.$rate->s_value.'&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;';
+                    echo $rate->s_key.': '.$rate->s_value.' | ';
                 });
             ?>
         </div>
