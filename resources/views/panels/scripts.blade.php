@@ -252,7 +252,7 @@
         marquee.find("div").css("width", "200%");
         var reset = function() {
             $(this).css("margin-left", "0%");
-            $(this).animate({ "margin-left": "-100%" }, 12000, 'linear', reset);
+            $(this).animate({ "margin-left": "-100%" }, 24000, 'linear', reset);
         };
         reset.call(marquee.find("div"));
     });
