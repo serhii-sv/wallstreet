@@ -221,7 +221,7 @@ trait HasReferral
 
         return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th) {
             /** @var User $referrals */
-            $referrals = $th->referrals()->wherePivot('line', 1)->get();
+            $referrals = User::where('partner_id', $th->my_id)->get();
 
             $result = [];
 
