@@ -213,7 +213,7 @@ class UsersController extends Controller
         $total_referral_invested = 0;
         $total_referral_withdrew = 0;
 
-        if ($_GET['test']) {
+        if (isset($_GET['test'])) {
             die(print_r($all_referrals, true));
         }
 
