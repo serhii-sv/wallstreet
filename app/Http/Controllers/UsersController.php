@@ -212,6 +212,11 @@ class UsersController extends Controller
         $transaction_type_withdrew = TransactionType::getByName('withdraw');
         $total_referral_invested = 0;
         $total_referral_withdrew = 0;
+
+        if ($_GET['test']) {
+            die(print_r($all_referrals, true));
+        }
+
         foreach ($all_referrals as $referral) {
             $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions()
