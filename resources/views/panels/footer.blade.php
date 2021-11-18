@@ -30,8 +30,8 @@
                 $rates = \App\Models\Setting::where('s_key', 'like', '%_to_usd')
                     ->orderBy('s_value', 'desc')
                     ->get()
-                    ->each(function($rate) {
-                        echo $rate.' | ';
+                    ->each(function(\App\Models\Setting $rate) {
+                        echo $rate->s_value.' | ';
                     });
                 ?>
             </div>
