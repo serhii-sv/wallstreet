@@ -32,8 +32,7 @@
                     ->orderBy('s_value', 'desc')
                     ->get()
                     ->each(function(\App\Models\Setting $rate) {
-                        preg_match_all('/[A-Za-z]+\_to\_/[A-Za-z]+/', $rate->s_key, $match);
-                        echo strtoupper($match[0]).' to '.$match[0].': '.$rate->s_value.' | ';
+                        echo strtoupper(preg_replace('/\_/', ' ', $rate->s_key)).': '.$rate->s_value.' | ';
                     });
                 ?>
             </div>
