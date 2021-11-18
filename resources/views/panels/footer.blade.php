@@ -5,7 +5,7 @@
     <div class="container">
         <style>
             .string{
-                width:600px;
+                width:100%;
                 height:30px;
                 margin:60px auto;
                 line-height:28px;
@@ -24,15 +24,17 @@
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
             }
         </style>
-        <div id="marquee">
-            <?php
-            $rates = \App\Models\Setting::where('s_key', 'like', '%_to_usd')
-                ->orderBy('s_value', 'desc')
-                ->get()
-                ->each(function(\App\Models\Setting $rate) {
-                    echo $rate->s_key.': '.$rate->s_value.' | ';
-                });
-            ?>
+        <div class="string">
+            <div id="marquee">
+                <?php
+                $rates = \App\Models\Setting::where('s_key', 'like', '%_to_usd')
+                    ->orderBy('s_value', 'desc')
+                    ->get()
+                    ->each(function(\App\Models\Setting $rate) {
+                        echo $rate->s_key.': '.$rate->s_value.' | ';
+                    });
+                ?>
+            </div>
         </div>
     </div>
   </div>
