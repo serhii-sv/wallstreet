@@ -224,12 +224,14 @@
                   @else
                     {{ __('Upliner') }}
                     @endif @endif</th>
+                  @if(request()->get('roles') === 'multi_acc')
                 <th>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='ip' contenteditable="true">{{ __('ip') }}</editor_block>
                   @else
                     {{ __('ip') }}
                   @endif
                 </th>
+                  @endif
                 <th>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>
                   @else

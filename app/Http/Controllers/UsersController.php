@@ -105,12 +105,6 @@ class UsersController extends Controller
                 });
 
                 foreach ($users as $user) {
-                    $ip = $user->ip ?? 'Не указано';
-
-                    $multi_acc = UserMultiAccounts::where('user_id', $user->id)->orWhere('main_user_id', $user->id);
-                    if ($multi_acc->count() > 0) {
-                        $ip = "<blink>" . $multi_acc->first()->ip . "</blink>" ?? "<blink>Не указано</blink>";
-                    }
                     $data[] = [
                         'empty' => is_null($request->first_empty) ? view('pages.users.partials.checkbox', compact('user'))->render() : '',
                         'user' => view('pages.users.partials.avatar', compact('user'))->render(),
@@ -124,7 +118,6 @@ class UsersController extends Controller
                         ])->render(),
                         'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
-                        'ip' => $ip,
                         'actions' => view('pages.users.partials.actions', compact('user'))->render(),
                         'color' => $user->roles->first()->color ?? '',
                     ];
