@@ -263,6 +263,87 @@
   <script>
     $(document).ready(function () {
       $('.tooltipped').tooltip();
+
+        var table = $("#users").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            order: [1, 'desc'],
+            aoColumns: [
+                {
+                    data: 'empty',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'user',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'login',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'email',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'name',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'partner',
+                    searchable: true,
+                    bSortable: true
+                },
+                    @if(request()->get('roles') === 'multi_acc')
+                {
+                    data: 'ip',
+                    searchable: true,
+                    bSortable: true
+                },
+                @endif
+
+                // {
+                //     data: 'country',
+                //     searchable: true,
+                //     bSortable: true
+                // },
+                {
+                    data: 'country',
+                    searchable: false,
+                    bSortable: false
+                },
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {},
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                processing: "Загрузка",
+                paginate: {
+                    previous: "‹",
+                    next: "›",
+                },
+                emptyTable: 'Нет записей'
+            },
+            columnDefs: [
+                {
+                    targets: 0,
+                    className: "control"
+                },
+            ],
+            createdRow: function (row, data, dataIndex) {
+                $(row).css({'color': data.color})
+            }
+        });
     });
   </script>
 @endsection
