@@ -274,9 +274,7 @@ class WithdrawalRequestsController extends Controller
         $currency = $wallet->currency;
 
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem = PaymentSystem::whereHas('currencies', function($q) use($currency) {
-            $q->where('code', $currency->code);
-        })->first();
+        $paymentSystem = $transaction->paymentSystem;
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
             throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
