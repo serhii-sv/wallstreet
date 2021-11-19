@@ -109,12 +109,12 @@ final class Permissions extends Enum
     const BANNERS_DESTROY = 'banners.destroy';
     const BANNERS_UPDATE  = 'banners.update';
 
-    const NEWS_PRODUCTS_INDEX = 'news-and-products.index';
-
+    const NEWS_INDEX = 'news.index';
     const NEWS_DESTROY = 'news.destroy';
     const NEWS_STORE   = 'news.store';
     const NEWS_UPDATE  = 'news.update';
 
+    const PRODUCTS_INDEX   = 'products.index';
     const PRODUCTS_STORE   = 'products.store';
     const PRODUCTS_DESTROY = 'products.destroy';
     const PRODUCTS_UPDATE  = 'products.update';
@@ -250,12 +250,12 @@ final class Permissions extends Enum
         self::VERIFICATION_REQUESTS_SHOW => 'Просмотр заявок на подтверждение личности',
         self::VERIFICATION_REQUESTS_UPDATE => 'Изменеие заявок на подтверждение личности',
 
-        self::NEWS_PRODUCTS_INDEX => 'Раздел новостей и продуктов',
-
+        self::NEWS_INDEX => 'Раздел новостей',
         self::NEWS_DESTROY => 'Удаление новостей',
         self::NEWS_STORE => 'Добавление новостей',
         self::NEWS_UPDATE => 'Изменение новостей',
 
+        self::PRODUCTS_INDEX => 'Раздел продуктов',
         self::PRODUCTS_STORE => 'Добавление продуктов',
         self::PRODUCTS_DESTROY => 'Удаление продуктов',
         self::PRODUCTS_UPDATE => 'Изменение продуктов',

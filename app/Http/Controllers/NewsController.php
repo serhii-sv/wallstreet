@@ -21,9 +21,7 @@ class NewsController extends Controller
     {
         $news = News::orderBy('created_at', 'desc')->paginate(9, '*', 'news_page');
 
-        $products = Product::orderBy('created_at', 'desc')->paginate(9, '*', 'products_page');
-
-        return view('pages.news.index', compact('news', 'products'));
+        return view('pages.news.index', compact('news'));
     }
 
     /**
