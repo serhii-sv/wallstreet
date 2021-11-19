@@ -128,7 +128,7 @@ Route::group(['middleware' => ['web']], function () {
                 });
             });
 
-            Route::get('news-and-products', [\App\Http\Controllers\NewsAndProductController::class, 'index'])->name('news-and-products.index');
+            Route::get('news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
 
             Route::get('/news/{id}/destroy', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('news.destroy');
             Route::resource('/news', \App\Http\Controllers\NewsController::class)->except('destroy', 'index');

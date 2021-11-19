@@ -8,11 +8,24 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Language;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    function index()
+    {
+        $news = News::orderBy('created_at', 'desc')->paginate(9, '*', 'news_page');
+
+        $products = Product::orderBy('created_at', 'desc')->paginate(9, '*', 'products_page');
+
+        return view('pages.news.index', compact('news', 'products'));
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
