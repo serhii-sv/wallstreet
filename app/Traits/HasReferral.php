@@ -202,7 +202,7 @@ trait HasReferral
                 'referrals' => []
             ];
 
-            if ($flag > 1000) {
+            if ($flag > 3) {
                 return $result;
             }
 
