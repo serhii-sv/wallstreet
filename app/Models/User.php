@@ -252,32 +252,71 @@ class User extends Authenticatable
     }
 
     public function invested() {
-        $createDepId = TransactionType::getByName('create_dep')->id;
-
-        return $this->transactions()
-            ->where('type_id', $createDepId)
-            ->sum('main_currency_amount');
+        $th = $this;
+        return cache()->remember('user.total_invested_' . $this->id, now()->addMinutes(60), function () use ($th) {
+            $invested = 0;
+            $usdCurrency = Currency::where('code', 'USD')->first();
+            $th->deposits()
+                ->where('active', 1)
+                ->get()
+                ->each(function (Deposit $deposit) use (&$invested, $usdCurrency) {
+                    $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+                });
+            return $invested;
+        });
     }
 
     public function referral_accruals(User $user) {
-        $partnerTypeId = TransactionType::getByName('partner')->id;
+        return cache()->remember('user.referral_accruals' . $user->id, now()->addMinutes(60), function () use ($user) {
+            $partnerTypeId = TransactionType::getByName('partner')->id;
 
-        $wallets = $this->wallets()
-            ->get()
-            ->pluck('id');
+            $wallets = $this->wallets()
+                ->get()
+                ->pluck('id');
 
-        return $user->transactions()
-            ->where('type_id', $partnerTypeId)
-            ->whereIn('source', $wallets)
-            ->sum('main_currency_amount');
+            return $user->transactions()
+                ->where('type_id', $partnerTypeId)
+                ->whereIn('source', $wallets)
+                ->sum('main_currency_amount');
+        });
     }
 
     public function deposits_accruals() {
-        $dividendTypeId = TransactionType::getByName('dividend')->id;
+        $th = $this;
 
-        return $this->transactions()
-            ->where('type_id', $dividendTypeId)
-            ->sum('main_currency_amount');
+        $dividends = cache()->remember('user.deposit_accruals' . $this->id, now()->addMinutes(60), function () use ($th) {
+            $dividendTypeId = TransactionType::getByName('dividend')->id;
+            $dividends = $th->transactions()
+                ->where('type_id', $dividendTypeId)
+                ->sum('main_currency_amount');
+
+            return $dividends;
+        });
+
+        $reinvestDividends = cache()->remember('user.deposit_reinvests' . $this->id, now()->addMinutes(60), function () use ($th) {
+            $closeDepTypeId = TransactionType::getByName('close_dep')->id;
+            $createDepTypeId = TransactionType::getByName('create_dep')->id;
+            $dividends = 0;
+            $usdCurrency = Currency::where('code', 'USD')->first();
+
+            $th->transactions()
+                ->where('type_id', $closeDepTypeId)
+                ->each(function(Transaction $transaction) use($th, $createDepTypeId, &$dividends, $usdCurrency) {
+                    $investedTransaction = $th->transactions()
+                        ->where('type_id', $createDepTypeId)
+                        ->where('deposit_id', $transaction->deposit_id)
+                        ->first();
+
+                    if (null !== $investedTransaction) {
+                        $diff = $transaction->amount - $investedTransaction->amount;
+                        $dividends += (new Wallet())->convertToCurrency($transaction->currency, $usdCurrency, $diff);
+                    }
+                });
+
+            return $dividends;
+        });
+
+        return $dividends+$reinvestDividends;
     }
 
     /**
