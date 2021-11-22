@@ -166,6 +166,16 @@ class DashboardController extends Controller
             })->sum('main_currency_amount');
         });
 
+        $salaryLeft = 0;
+
+        foreach(User::wherehas('roles', function($q) {
+            $q->where('name', 'teamlead');
+        })->get() as $user) {
+            $salaryLeft += cache()->has('user_salary_left.'.$user->id)
+                ? cache()->get('user_salary_left.'.$user->id)
+                : 0;
+        }
+
 
         return view('pages.dashboard', [
             'week_revenue_percent' => $week_revenue_percent,
@@ -192,8 +202,8 @@ class DashboardController extends Controller
             'payment_systems_paginate' => $payment_systems_paginate,
             'enter_transactions_for_24h_sum' => $enter_transactions_for_24h_sum,
             'withdraw_transactions_for_24h_sum' => $withdraw_transactions_for_24h_sum,
-            'profit_transactions_for_24h_sum' => $enter_transactions_for_24h_sum - $withdraw_transactions_for_24h_sum,
-            'profit_transactions_for_today_sum' => $depositTotal - $withdrawTotal,
+            'profit_total' => $depositTotal - $withdrawTotal,
+            'salaryLeft' => $salaryLeft,
             'users' => [
                 'online' => $this->users->where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get(),
                 'total' => $this->users->all()->count(),

@@ -56,6 +56,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
         $schedule->command('backup:clean')->everyTwoHours();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
+        $schedule->command('cache:helper')->everyMinute();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
     }
 

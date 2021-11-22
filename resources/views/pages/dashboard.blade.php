@@ -138,14 +138,14 @@
                     @else
                       {{ __('In 24 hours') }}
                     @endif:</p>
-                  {{ $profit_transactions_for_24h_sum < 0 ? '-' : '' }}
-                  ${{ number_format(abs($profit_transactions_for_24h_sum), 0, '.', ',') }}</h4>
+                  {{ $profit_total < 0 ? '-' : '' }}
+                    ${{number_format(abs($profit_total), 0, '.', ',')}}</h4>
                 <p>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Today' contenteditable="true">{{ __('Today') }}</editor_block>
                   @else
                     {{ __('Today') }}
-                  @endif: {{$profit_transactions_for_today_sum < 0 ? '-' : ''}}
-                  ${{number_format(abs($profit_transactions_for_today_sum), 0, '.', ',')}}</p>
+                  @endif: {{ $salaryLeft < 0 ? '-' : ''}}
+                  ${{number_format(abs($salaryLeft), 0, '.', ',')}}</p>
               </div>
               <div class="card-action cyan darken-1">
                 <div id="invoice-line" class="center-align"></div>
