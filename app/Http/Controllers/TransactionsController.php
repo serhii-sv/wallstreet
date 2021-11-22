@@ -49,6 +49,7 @@ class TransactionsController extends Controller
                         ? $transaction->paymentSystem->name.' '.$transaction->currency->code
                         : $transaction->currency->code,
                     'created_at' => $transaction->created_at->format('d-m-Y H:i:s'),
+                    'open_operation' => view('pages.transactions.partials.open', compact('transaction'))->render(),
                 ];
             }
 

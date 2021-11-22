@@ -238,11 +238,16 @@ $(document).ready(function () {
           bSortable: false,
           width: '100px'
         },
-        {
-          data: 'created_at',
-          searchable: true,
-          bSortable: false
-        },
+          {
+              data: 'created_at',
+              searchable: true,
+              bSortable: false
+          },
+          {
+              data: 'open_operation',
+              searchable: true,
+              bSortable: false
+          },
       ],
       processing: true,
       serverSide: true,

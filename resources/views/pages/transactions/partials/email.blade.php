@@ -1,2 +1,1 @@
-
-<a class="ml-3" href="{{ route('transactions.show', $transaction->id) }}">{{ $transaction->user->login ?? 'Не указано' }}</a>
+<a class="ml-3" href="{{ route('users.show', $transaction->user_id) }}">{{ $transaction->user->login ?? 'Не указано' }}</a>

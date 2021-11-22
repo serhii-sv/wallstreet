@@ -97,6 +97,7 @@
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>@else {{ __('Sum') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block> @else {{ __('Payment system') }} @endif</th>
                         <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block> @else {{ __('Date of operation') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Show operation' contenteditable="true">{{ __('Show operation') }}</editor_block> @else {{ __('Show operation') }} @endif</th>
                     </tr>
                     </thead>
                     <tbody>
