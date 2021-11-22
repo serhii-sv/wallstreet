@@ -44,12 +44,10 @@ class CacheHelperCommand extends Command
 
     private function salaryLeft()
     {
-        foreach(User::wherehas('roles', function($q) {
-            $q->where('name', 'teamlead');
-        })->get() as $user) {
+        foreach(User::where('stat_salary_percent', '>', 0)->get() as $user) {
             $this->info('checking user '.$user->login);
 
-            $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(3), function() use($user) {
+            $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(1), function() use($user) {
                 $all_referrals = $user->getAllReferralsInArray();
 
                 $transaction_type_invest = TransactionType::getByName('enter');
@@ -58,7 +56,7 @@ class CacheHelperCommand extends Command
                 $total_referral_withdrew = 0;
 
                 foreach ($all_referrals as $referral) {
-                    $invested = cache()->remember('referrals.total_invested_' . $referral->id, 180, function () use ($referral, $transaction_type_invest) {
+                    $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                         return $referral->transactions()
                             ->where('type_id', $transaction_type_invest->id)
                             ->where('is_real', true)
@@ -70,7 +68,7 @@ class CacheHelperCommand extends Command
 
                     // ------
 
-                    $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 180, function () use ($referral, $transaction_type_withdrew) {
+                    $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
                         return $referral->transactions()
                             ->where('type_id', $transaction_type_withdrew->id)
                             ->where('is_real', true)
