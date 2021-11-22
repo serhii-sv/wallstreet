@@ -47,7 +47,9 @@ class CacheHelperCommand extends Command
         foreach(User::wherehas('roles', function($q) {
             $q->where('name', 'teamlead');
         })->get() as $user) {
-            cache()->remember('user_salary_left.'.$user->id, now()->addHours(3), function() use($user) {
+            $this->info('checking user '.$user->login);
+
+            $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(3), function() use($user) {
                 $all_referrals = $user->getAllReferralsInArray();
 
                 $transaction_type_invest = TransactionType::getByName('enter');
@@ -92,6 +94,8 @@ class CacheHelperCommand extends Command
 
                 return $user->stat_left;
             });
+
+            $this->info('left : '.$left);
         }
     }
 }

@@ -171,9 +171,7 @@ class DashboardController extends Controller
         foreach(User::wherehas('roles', function($q) {
             $q->where('name', 'teamlead');
         })->get() as $user) {
-            $salaryLeft += cache()->has('user_salary_left.'.$user->id)
-                ? cache()->get('user_salary_left.'.$user->id)
-                : 0;
+            $salaryLeft += cache()->get('user_salary_left.'.$user->id, 0);
         }
 
 
