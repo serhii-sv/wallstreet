@@ -15,7 +15,7 @@
         <li class="dropdown-language">
           <a class="waves-effect waves-block waves-light translation-button" style="display: inline;" href="#"
               data-target="translation-dropdown">
-            <span class="flag-icon flag-icon-{{ session()->get('lang') == 'en' ? 'gb' : session()->get('lang') }}"></span>
+            <span class="flag-icon flag-icon-{{ session()->get('language') == 'en' ? 'gb' : session()->get('language') }}"></span>
           </a>
         </li>
         <li class="hide-on-med-and-down">
