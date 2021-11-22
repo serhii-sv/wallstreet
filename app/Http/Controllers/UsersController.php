@@ -8,10 +8,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestBonusUser;
+use App\Http\Requests\RequestDashboardBonusUser;
 use App\Http\Requests\RequestPenaltyUser;
 use App\Models\ActivityLog;
 use App\Models\CloudFile;
+use App\Models\Currency;
 use App\Models\Deposit;
+use App\Models\PaymentSystem;
 use App\Models\Permission;
 use App\Models\ReferralLinkStat;
 use App\Models\Transaction;
@@ -25,6 +28,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -294,7 +298,7 @@ class UsersController extends Controller
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
-            'wallets' => Wallet::where('user_id', $user->id)->with('currency')->orderBy('currency_id', 'desc')->paginate(6),
+            'wallets' => Wallet::where('user_id', $user->id)->with('currency')->orderBy('currency_id', 'desc')->paginate(9),
         ]);
     }
 
@@ -516,30 +520,69 @@ class UsersController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     */
     public function userWalletCharge(Request $request, $id) {
-        $this->validate($request, [
-            'amount' => 'required',
-            'action' => 'required',
-        ]);
+        /** @var Wallet $wallet */
+        $wallet = Wallet::findOrFail($id);
+
+        /** @var User $user */
+        $user = $wallet->user;
+
+        /** @var Currency $currency */
+        $currency = $wallet->currency;
+
+        $type = $request->has('enter')
+            ? 'enter'
+            : 'withdraw';
+
+        /** @var TransactionType $transactionType */
+        $transactionType = TransactionType::where('name', $type)->firstOrFail();
 
         $amount = abs((float) str_replace(',', '.', $request->amount));
 
-        if ($request->post('action') == 'bonus'){
-            $wallet = Wallet::find($id);
-            $wallet = $wallet->addBonus($amount);
-            if ($wallet) {
-                return back()->with('success', __('Bonus accrued'));
-            }
-            return back()->with('error', __('Unable to accrue bonus'));
+        if ($amount <= 0) {
+            return back()->with('error_short', 'Сумма должна быть больше нуля')->withInput();
         }
-        if ($request->post('action') == 'penalty'){
-            $wallet = Wallet::find($id);
-            $wallet = $wallet->removeAmount($amount);
-            if ($wallet) {
-                return back()->with('success', __('Penalty handled'));
+
+        /** @var PaymentSystem $paymentSystem */
+        $paymentSystem = PaymentSystem::whereHas('currencies', function($q) use($currency) {
+            $q->where('code', $currency->code);
+        })->first();
+
+        $data = [
+            'type_id' => $transactionType->id,
+            'user_id' => $user->id,
+            'currency_id' => $currency->id,
+            'rate_id' => null,
+            'deposit_id' => null,
+            'wallet_id' => $wallet->id,
+            'payment_system_id' => $paymentSystem->id,
+            'amount' => $amount,
+            'source' => auth()->user()->email,
+            'result' => null,
+            'batch_id' => null,
+            'approved' => 1,
+            'is_real' => $request->is_real == 1,
+        ];
+
+        DB::transaction(function () use ($data, $wallet, $type, $amount) {
+            $transaction = Transaction::create($data);
+
+            switch ($type) {
+                case "enter":
+                    $wallet->balance += $transaction->amount;
+                    break;
+
+                case "withdraw":
+                    $wallet->balance -= $transaction->amount;
+                    break;
             }
-            return back()->with('error', __('Unable to handle penalty'));
-        }
-        return redirect()->back()->with('error', 'Что-то пошло не так!');
+
+            $wallet->save();
+        });
+
+        return back()->with('success_short', 'Операция успешно проведена');
     }
 }

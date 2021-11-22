@@ -34,28 +34,93 @@
                 <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
               </h6>
               <span>ID:</span>
-              <span class="users-view-id">{{ $user->id ?? 'Не указан' }}</span>
+              <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 quick-action-btns display-flex justify-content-end align-items-center display-flex flex-wrap">
+        <div style="width:30%; float:right;">
           <div class="mb-2 width-100 display-flex justify-content-end">
             <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo ">
               <i class="material-icons">mail_outline</i>
             </a>
             @if(auth()->user()->id !== $user->id)
-              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}" class="btn-small purple darken-4 " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Log in' contenteditable="true">{{ __('Log in') }}</editor_block>@else {{ __('Log in') }} @endif</a>
+              <a style="margin-left:20px;" href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}" class="btn-small purple darken-4 " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Log in' contenteditable="true">{{ __('Log in') }}</editor_block>@else {{ __('Log in') }} @endif</a>
             @endif
-            <a href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
-            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block>@else {{ __('Referrals') }} @endif</a>
           </div>
-          <div>
-            <a href="{{ route('user.reftree', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block>@else {{ __('Referral tree') }} @endif</a>
+          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
+            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block>@else {{ __('Referrals') }} @endif</a>
+            <a style="margin-left:20px;" href="{{ route('user.reftree', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block>@else {{ __('Referral tree') }} @endif</a>
+          </div>
+          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
             <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral list' contenteditable="true">{{ __('Referral list') }}</editor_block>@else {{ __('Referral list') }} @endif</a>
-            <a href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
+            <a style="margin-left:20px;" href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
+          </div>
+          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
+              <a href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
           </div>
         </div>
+
+          <div class="row">
+              <div class="col s4">
+                  <table class="striped">
+                      <tbody>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>@else {{ __('Upliner') }} @endif:</td>
+                          <td>
+                              @if($user->partner)
+                                  <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user->partner->email  ?? '' }}</a>
+                              @else
+                                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No' contenteditable="true">{{ __('No') }}</editor_block>@else {{ __('No') }} @endif
+                              @endif
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='First upliner' contenteditable="true">{{ __('First upliner') }}</editor_block>@else {{ __('First upliner') }} @endif:</td>
+                          <td>
+                              <a href="{{ route('users.show', $user_first_upliner->id) }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user_first_upliner->email  ?? '' }}</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Password' contenteditable="true">{{ __('Password') }}</editor_block>@else {{ __('Password') }} @endif:</td>
+                          <td>{{ $user->unhashed_password  ?? '' }}</td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Registered' contenteditable="true">{{ __('Registered') }}</editor_block>@else {{ __('Registered') }} @endif:</td>
+                          <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
+                      </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+              <div class="col s4">
+                  <table class="striped">
+                      <tbody>
+
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Last active' contenteditable="true">{{ __('Last active') }}</editor_block>@else {{ __('Last active') }} @endif:</td>
+                          <td class="users-view-latest-activity">{{ $user->last_activity_at ?? 'Не авторизовывался' }}</td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmation' contenteditable="true">{{ __('Email confirmation') }}</editor_block>@else {{ __('Email confirmation') }} @endif:</td>
+                          <td class="users-view-verified">@if($user->email_verified_at) @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmed' contenteditable="true">{{ __('Email confirmed') }}</editor_block>@else {{ __('Email confirmed') }} @endif @else @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email not verified' contenteditable="true">{{ __('Email not verified') }}</editor_block>@else {{ __('Email not verified') }} @endif @endif</td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>@else {{ __('Roles') }} @endif:</td>
+                          <td class="users-view-role">
+                              @forelse($user->roles as $role)
+                                  <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
+                              @empty
+                                  <span class="users-view-status chip red lighten-5 red-text">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No roles' contenteditable="true">{{ __('No roles') }}</editor_block>@else {{ __('No roles') }} @endif</span>
+                              @endforelse
+                          </td>
+                      </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
       </div>
     </div>
     <!-- users view media object ends -->
@@ -63,56 +128,7 @@
     <div class="card">
       <div class="card-content">
         <div class="row">
-          <div class="col s12 m4">
-            <table class="striped">
-              <tbody>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>@else {{ __('Upliner') }} @endif:</td>
-                  <td>
-                    @if($user->partner)
-                      <a href="{{ $user->partner ? route('users.show', $user->partner->id) : '' }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user->partner->email  ?? '' }}</a>
-                    @else
-                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No' contenteditable="true">{{ __('No') }}</editor_block>@else {{ __('No') }} @endif
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='First upliner' contenteditable="true">{{ __('First upliner') }}</editor_block>@else {{ __('First upliner') }} @endif:</td>
-                  <td>
-                    <a href="{{ route('users.show', $user_first_upliner->id) }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>{{ $user_first_upliner->email  ?? '' }}</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Password' contenteditable="true">{{ __('Password') }}</editor_block>@else {{ __('Password') }} @endif:</td>
-                  <td>{{ $user->unhashed_password  ?? '' }}</td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Registered' contenteditable="true">{{ __('Registered') }}</editor_block>@else {{ __('Registered') }} @endif:</td>
-                  <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Last active' contenteditable="true">{{ __('Last active') }}</editor_block>@else {{ __('Last active') }} @endif:</td>
-                  <td class="users-view-latest-activity">{{ $user->last_activity_at ?? 'Не авторизовывался' }}</td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmation' contenteditable="true">{{ __('Email confirmation') }}</editor_block>@else {{ __('Email confirmation') }} @endif:</td>
-                  <td class="users-view-verified">@if($user->email_verified_at) @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmed' contenteditable="true">{{ __('Email confirmed') }}</editor_block>@else {{ __('Email confirmed') }} @endif @else @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email not verified' contenteditable="true">{{ __('Email not verified') }}</editor_block>@else {{ __('Email not verified') }} @endif @endif</td>
-                </tr>
-                <tr>
-                  <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>@else {{ __('Roles') }} @endif:</td>
-                  <td class="users-view-role">
-                    @forelse($user->roles as $role)
-                      <span class="users-view-status chip green lighten-5 green-text">{{ $role->name ?? ''}}</span>
-                    @empty
-                      <span class="users-view-status chip red lighten-5 red-text">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No roles' contenteditable="true">{{ __('No roles') }}</editor_block>@else {{ __('No roles') }} @endif</span>
-                    @endforelse
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-          <div class="col s12 m8">
+          <div class="col s12">
             {{--            <table class="responsive-table">
                           <thead>
                             <tr>
@@ -137,31 +153,36 @@
                         </table>
                         {{ $user_permissions->appends(request()->except('permissions'))->links() }}--}}
             <div class="row">
-              @forelse($wallets as $wallet)
-                <div class="col s12 m6 l4 card-width">
-                  <div class="card row dark white-text padding-4 mt-5">
-                    <div class="col s4 m4">
-                      <i class="material-icons background-round mt-5 mb-5">attach_money</i>
-                    </div>
-                    <div class="col s8 m8 right-align">
-                      <p>{{ $wallet->currency->name }}</p>
-                      <h5 class="mb-0 white-text"> {{ $wallet->balance }} {{ $wallet->currency->symbol }}</h5>
-                    </div>
-                    <div class="col s12">
-                      <form action="{{ route('user.wallet.charge', $wallet->id) }}" method="post" data-id="{{$wallet->id}}" class="user-charge-form display-flex flex-wrap justify-content-end">
+                @forelse($wallets as $wallet)
+                    <form action="{{ route('user.wallet.charge', $wallet->id) }}" method="post" data-id="{{$wallet->id}}" class="" style="display:inline;">
                         @csrf
-                        <input class="white-text" name="amount" type="text">
-                        <div class="mt-1 display-flex align-items-center justify-content-between width-100">
-                          <button class="btn green darken-2 darken-3" name="bonus"  data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-right: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Bonus' contenteditable="true">{{ __('Bonus') }}</editor_block>@else {{ __('Bonus') }} @endif</button>
-                          <button class="btn red" name="penalty" data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-left: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Penalty' contenteditable="true">{{ __('Penalty') }}</editor_block>@else {{ __('Penalty') }} @endif</button>
+                        <div class="col s12 m6 l4 card-width">
+                            <div class="card row dark white-text padding-4 mt-5">
+                                <div class="col s4 m4">
+                                    <p class="mb-1">
+                                        <label>
+                                            <input type="checkbox" class="filled-in" name="is_real" value="1" checked="checked">
+                                            <span>Реал</span>
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="col s8 m8 right-align">
+                                    <p>{{ $wallet->currency->name }}</p>
+                                    <h5 class="mb-0 white-text"> {{ $wallet->balance }} {{ $wallet->currency->symbol }}</h5>
+                                </div>
+                                <div class="col s12">
+                                    <input class="white-text" name="amount" type="text">
+                                    <div class="mt-1 display-flex align-items-center justify-content-between width-100">
+                                        <button class="btn green darken-2 darken-3" name="enter"  data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-right: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                            @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Bonus' contenteditable="true">{{ __('Bonus') }}</editor_block>@else {{ __('Bonus') }} @endif</button>
+                                        <button class="btn red" name="withdraw" data-id="{{$wallet->id}}" style="width: calc((100% - 10px) / 2); margin-left: 5px;" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Penalty' contenteditable="true">{{ __('Penalty') }}</editor_block>@else {{ __('Penalty') }} @endif</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              @empty
-              @endforelse
+                    </form>
+                @empty
+                @endforelse
               {{--{{ (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : 'dark') }}--}}
             </div>
             {{ $wallets->appends(request()->except('page'))->links() }}
