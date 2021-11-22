@@ -19,7 +19,7 @@ class NavbarComposer
                 'notifications' => \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
             ]);
             $view->with('navbar_notifications', \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->get());
-            $view->with('navbar_languages', Language::whereIn('code', ['ru', 'en']));
+            $view->with('navbar_languages', Language::whereIn('code', ['ru', 'en'])->get());
         }
 
     }
