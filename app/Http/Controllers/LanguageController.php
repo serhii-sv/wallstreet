@@ -27,7 +27,7 @@ class LanguageController extends Controller
         }
 
         session([
-            'lang' => $locale
+            'language' => $locale
         ]);
         App::setLocale($locale);
         return back()->with('success', __('The site language has been changed successfully'));
