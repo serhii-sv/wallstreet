@@ -186,8 +186,13 @@
               {{--{{ (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : 'dark') }}--}}
             </div>
               @if(request()->has('page') && request('page') != 1)
-                    {{ $wallets->appends(request()->except('page'))->links() }}
-              @else
+                  <ul class="pagination">
+
+                      <li>
+                          <a href="{{ route('users.show', ['user' => $user->id]) }}?page=1" rel="prev" aria-label="« Previous">‹</a>
+                      </li>
+
+                  @else
                   <ul class="pagination">
 
                       <li class="disabled" aria-disabled="true" aria-label="« Previous">

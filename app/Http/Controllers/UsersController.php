@@ -296,7 +296,7 @@ class UsersController extends Controller
         }
 
         $wallets = $wallets->orderBy('currency_id', 'desc')
-            ->paginate(6);
+            ->get();
 
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
