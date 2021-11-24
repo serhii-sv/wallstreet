@@ -274,6 +274,32 @@ class UsersController extends Controller
             $query->where('condition', '!=', 'closed');
         })->count();
 
+        /** @var Wallet $wallets */
+        $wallets = Wallet::where('user_id', $user->id)
+            ->with('currency');
+
+        $importantCurrencies = [
+            'USD',
+            'UAH',
+            'KZT',
+            'BTC',
+            'EUR',
+            'RUB',
+        ];
+
+        if (false === request()->has('page')) {
+            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
+                $q->whereIn('code', $importantCurrencies);
+            });
+        } else {
+            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
+                $q->whereNotIn('code', $importantCurrencies);
+            });
+        }
+
+        $wallets = $wallets->orderBy('currency_id', 'desc')
+            ->paginate(6);
+
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -294,7 +320,7 @@ class UsersController extends Controller
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
-            'wallets' => Wallet::where('user_id', $user->id)->with('currency')->orderBy('currency_id', 'desc')->paginate(9),
+            'wallets' => $wallets,
         ]);
     }
 
