@@ -53,7 +53,7 @@ class DashboardController extends Controller
         $prev_weeks_period = $this->getPreviousWeekPeriod();
 
         $prev_week_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_weeks_period['start'], 60, function () use ($prev_weeks_period) {
-            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('created_at', [
+            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_weeks_period['start'],
                 $prev_weeks_period['end'],
             ])->get();
@@ -63,7 +63,7 @@ class DashboardController extends Controller
 
         foreach ($weeks_period as $key => $week) {
             $transactions = cache()->remember('dshb.last_transactions' . $week['start'], 60, function () use ($week) {
-                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('created_at', [
+                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $week['start'],
                     $week['end'],
                 ])->get();
@@ -84,7 +84,7 @@ class DashboardController extends Controller
 
         foreach ($month_period as $key => $month) {
             $transactions = cache()->remember('dshb.last_transactions' . $month['start'], 60, function () use ($month) {
-                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('created_at', [
+                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $month['start'],
                     $month['end'],
                 ])->get();
@@ -93,7 +93,7 @@ class DashboardController extends Controller
             $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
         $prev_month_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_month_period['start'], 60, function () use ($prev_month_period) {
-            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('created_at', [
+            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_month_period['start'],
                 $prev_month_period['end'],
             ])->get();
