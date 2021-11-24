@@ -232,12 +232,12 @@
                   @endif
                 </th>
                   @endif
-                <th>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>
-                  @else
-                    {{ __('Country') }}
-                  @endif
-                </th>
+{{--                <th>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                    <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>--}}
+{{--                  @else--}}
+{{--                    {{ __('Country') }}--}}
+{{--                  @endif--}}
+{{--                </th>--}}
               </tr>
             </thead>
             <tbody>
@@ -316,11 +316,11 @@
                 //     searchable: true,
                 //     bSortable: true
                 // },
-                {
-                    data: 'country',
-                    searchable: false,
-                    bSortable: false
-                },
+                // {
+                //     data: 'country',
+                //     searchable: false,
+                //     bSortable: false
+                // },
             ],
             processing: true,
             serverSide: true,
