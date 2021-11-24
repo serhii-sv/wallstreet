@@ -253,7 +253,6 @@
                               <input type="checkbox" id="selectAllPermissions" />
                               <span>Выбрать все</span>
                           </label>
-                        @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Select' contenteditable="true">{{ __('Select') }}</editor_block>@else {{ __('Select') }} @endif
                       </th>
                     </tr>
                   </thead>
