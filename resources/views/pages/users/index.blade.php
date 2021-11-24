@@ -89,7 +89,7 @@
               </li>
               {{--                            @if(auth()->user()->hasRole('root'))--}}
               @forelse($roles as $role)
-                @if($role->name != "admin" && $role->name != "root")
+                @if($role->name != "admin" && $role->name != "root" && $role->name != "fired")
                   <li @if(request()->get('roles') === $role->name) class="active" @endif>
                     <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" data-role_id="{{ $role->id }}" class="text-sub">
                       <i class=" material-icons small-icons mr-2"
