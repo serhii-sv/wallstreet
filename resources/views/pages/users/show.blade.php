@@ -199,12 +199,12 @@
                           <span>1</span>
                       </li>
                       <li>
-                          <a href="{{ route('users.show', ['id' => $user->id]) }}?page=2">2</a>
+                          <a href="{{ route('users.show', ['user' => $user->id]) }}?page=2">2</a>
                       </li>
 
 
                       <li>
-                          <a href="{{ route('users.show', ['id' => $user->id]) }}?page=2" rel="next" aria-label="Next »">›</a>
+                          <a href="{{ route('users.show', ['user' => $user->id]) }}?page=2" rel="next" aria-label="Next »">›</a>
                       </li>
                   </ul>
               @endif
