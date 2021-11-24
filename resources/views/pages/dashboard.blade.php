@@ -134,16 +134,16 @@
                     {{ __('Profit') }}
                   @endif</p>
                 <h4 class="card-stats-number white-text"><p class="no-margin" style="font-size: 14px">@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='In 24 hours' contenteditable="true">{{ __('In 24 hours') }}</editor_block>
+                      <editor_block data-name='Total profit all time' contenteditable="true">{{ __('Total profit all time') }}</editor_block>
                     @else
-                      {{ __('In 24 hours') }}
+                      {{ __('Total profit all time') }}
                     @endif:</p>
                   {{ $profit_total < 0 ? '-' : '' }}
                     ${{number_format(abs($profit_total), 0, '.', ',')}}</h4>
                 <p>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Today' contenteditable="true">{{ __('Today') }}</editor_block>
+                    <editor_block data-name='Salary left dash' contenteditable="true">{{ __('Salary left dash') }}</editor_block>
                   @else
-                    {{ __('Today') }}
+                    {{ __('Salary left dash') }}
                   @endif: {{ $salaryLeft < 0 ? '-' : ''}}
                   ${{number_format(abs($salaryLeft), 0, '.', ',')}}</p>
               </div>
