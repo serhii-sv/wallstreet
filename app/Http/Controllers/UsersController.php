@@ -292,7 +292,9 @@ class UsersController extends Controller
                 $q->whereIn('code', $importantCurrencies);
             });
         } else {
-            $wallets->whereIn('currency_id', Currency::whereNotIn('code', $importantCurrencies)->get()->pluck('id'));
+            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
+                $q->whereNotIn('code', $importantCurrencies);
+            });
         }
 
         $wallets = $wallets->orderBy('currency_id', 'desc')

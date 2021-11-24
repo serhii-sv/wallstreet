@@ -191,6 +191,12 @@
                       <li>
                           <a href="{{ route('users.show', ['user' => $user->id]) }}?page=1" rel="prev" aria-label="« Previous">‹</a>
                       </li>
+                      <li>
+                          <a href="{{ route('users.show', ['user' => $user->id]) }}?page=1">1</a>
+                      </li>
+                      <li class="active" aria-current="page">
+                          <span>2</span>
+                      </li>
 
                   @else
                   <ul class="pagination">
