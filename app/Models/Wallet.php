@@ -385,6 +385,14 @@ class Wallet extends Model
         }*/
     }
 
+    /**
+     * @param Wallet $wallet_from
+     * @param Wallet $wallet_to
+     * @param float $amount
+     * @param float|int $commission
+     * @return bool
+     * @throws \Exception
+     */
     public function exchangeCurrency(Wallet $wallet_from, Wallet $wallet_to, float $amount, float $commission = 0)
     {
         $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
@@ -415,25 +423,33 @@ class Wallet extends Model
         return true;
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function totalEnter() {
         $wl = $this;
         return cache()->remember('personal_sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($wl) {
-            return $wl->transactions()
+            return round($wl->transactions()
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('enter')->id)
-                ->sum('main_currency_amount');
+                ->sum('amount'), $wl->currency->precision);
         });
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function totalWithdraw() {
         $wl = $this;
         return cache()->remember('personal_sum_transactions_withdraw.'.$this->id, now()->addMinutes(60), function() use($wl) {
-            return $wl->transactions()
+            return round($wl->transactions()
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('withdraw')->id)
-                ->sum('main_currency_amount');
+                ->sum('amount'), $wl->currency->precision);
         });
     }
 }
