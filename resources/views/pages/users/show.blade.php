@@ -185,7 +185,29 @@
                 @endforelse
               {{--{{ (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : 'dark') }}--}}
             </div>
-            {{ $wallets->appends(request()->except('page'))->links() }}
+              @if(!request()->has('page'))
+                    {{ $wallets->appends(request()->except('page'))->links() }}
+              @else
+                  <ul class="pagination">
+
+                      <li class="disabled" aria-disabled="true" aria-label="« Previous">
+                          <span aria-hidden="true">‹</span>
+                      </li>
+
+
+                      <li class="active" aria-current="page">
+                          <span>1</span>
+                      </li>
+                      <li>
+                          <a href="{{ route('users.show', ['id' => $user->id]) }}?page=2">2</a>
+                      </li>
+
+
+                      <li>
+                          <a href="{{ route('users.show', ['id' => $user->id]) }}?page=2" rel="next" aria-label="Next »">›</a>
+                      </li>
+                  </ul>
+              @endif
           </div>
         </div>
       </div>
