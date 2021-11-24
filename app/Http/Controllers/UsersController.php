@@ -287,15 +287,15 @@ class UsersController extends Controller
             'RUB',
         ];
 
-        if (false === request()->has('page') || request('page') == 1) {
-            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
-                $q->whereIn('code', $importantCurrencies);
-            });
-        } else {
-            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
-                $q->whereNotIn('code', $importantCurrencies);
-            });
-        }
+//        if (false === request()->has('page') || request('page') == 1) {
+//            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
+//                $q->whereIn('code', $importantCurrencies);
+//            });
+//        } else {
+//            $wallets->whereHas('currency', function($q) use($importantCurrencies) {
+//                $q->whereNotIn('code', $importantCurrencies);
+//            });
+//        }
 
         $wallets = $wallets->orderBy('currency_id', 'desc')
             ->paginate(6);
