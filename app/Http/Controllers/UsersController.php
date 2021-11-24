@@ -285,6 +285,7 @@ class UsersController extends Controller
             'BTC',
             'EUR',
             'RUB',
+            'BNB',
         ];
 
         if (false === request()->has('page')) {
