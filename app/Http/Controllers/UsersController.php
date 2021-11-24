@@ -334,7 +334,7 @@ class UsersController extends Controller
         $roles = Role::all();
         $permissions = Permission::all();
         $wallets = Wallet::where('user_id', $user->id)->orderBy('currency_id', 'asc')->get();
-        return view('pages.sample.page-users-edit', [
+        return view('pages.users.edit', [
             'roles' => $roles,
             'permissions' => $permissions,
             'user' => $user,

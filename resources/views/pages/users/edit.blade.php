@@ -13,14 +13,14 @@
 {{-- page style --}}
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-account-settings.css')}}">
-  
+
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-users.css')}}">
 @endsection
 
 {{-- page content --}}
 @section('content')
-  
-  
+
+
   <!-- users edit start -->
   <div class="section users-edit users-view">
     <div class="card-panel">
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    
+
     <section class="tabs-vertical mt-1 section">
       <div class="row">
         <div class="col l3 s12">
@@ -168,7 +168,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div id="change-password">
               <div class="card-panel">
                 <div class="row">
@@ -243,12 +243,18 @@
             </div>
             <div id="permissions">
               <div class="card-panel">
-                
+
                 <table class="mt-1">
                   <thead>
                     <tr>
                       <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Rights' contenteditable="true">{{ __('Rights') }}</editor_block>@else {{ __('Rights') }} @endif</th>
-                      <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Select' contenteditable="true">{{ __('Select') }}</editor_block>@else {{ __('Select') }} @endif</th>
+                      <th>
+                          <label>
+                              <input type="checkbox" id="selectAllPermissions" />
+                              <span>Выбрать все</span>
+                          </label>
+                        @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Select' contenteditable="true">{{ __('Select') }}</editor_block>@else {{ __('Select') }} @endif
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -259,7 +265,7 @@
                         </td>
                         <td>
                           <label>
-                            <input type="checkbox" name="permissions[]" value="{{ $permission->name ?? '' }}" @if($user->hasPermissionTo($permission->name)) checked="checked" @endif />
+                            <input type="checkbox" class="choosePermissions" name="permissions[]" value="{{ $permission->name ?? '' }}" @if($user->hasPermissionTo($permission->name)) checked="checked" @endif />
                             <span></span>
                           </label>
                         </td>
@@ -279,11 +285,11 @@
                 </div>
               </div>
             </div>
-          
+
           </form>
-          
+
           <div id="requisites">
-            
+
             <div class="card-panel">
               <div class="row">
                 @forelse($wallets as $wallet)
@@ -306,8 +312,8 @@
                           </button>
                         </div>
                       </div>
-                    
-                    
+
+
                     </form>
                   </div>
                 @empty
@@ -318,7 +324,7 @@
         </div>
       </div>
     </section>
-    
+
   </div>
   <!-- users edit ends -->
 @endsection
@@ -332,7 +338,7 @@
 {{-- page scripts --}}
 @section('page-script')
   <script src="{{asset('js/scripts/page-account-settings.js')}}"></script>
-  
+
   <script src="{{asset('js/scripts/page-users.js')}}"></script>
   <script>
     $("#select-files").on('click', function (e) {
@@ -341,5 +347,12 @@
     $(".form-submit").on('click', function (e) {
       $("#accountForm").submit();
     })
+
+    $(document).ready(function(){
+        $('#selectAllPermissions').click(function() {
+            var checkBoxes = $(".choosePermissions");
+            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+        });
+    });
   </script>
 @endsection
