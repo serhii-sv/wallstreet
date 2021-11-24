@@ -287,7 +287,7 @@ class UsersController extends Controller
             'RUB',
         ];
 
-        if (false === request()->has('page') || request()->has('page') == 1) {
+        if (false === request()->has('page') || request('page') == 1) {
             $wallets->whereHas('currency', function($q) use($importantCurrencies) {
                 $q->whereIn('code', $importantCurrencies);
             });

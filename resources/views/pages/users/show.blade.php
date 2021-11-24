@@ -185,7 +185,7 @@
                 @endforelse
               {{--{{ (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : 'dark') }}--}}
             </div>
-              @if(request()->has('page'))
+              @if(request()->has('page') && request('page') != 1)
                     {{ $wallets->appends(request()->except('page'))->links() }}
               @else
                   <ul class="pagination">
