@@ -47,6 +47,12 @@ $(document).ready(function () {
           searchable: true,
           bSortable: true
         },
+          {
+              data: 'repl_type',
+              searchable: false,
+              bSortable: false,
+              width: '100%'
+          },
         {
           data: 'actions',
           searchable: false,

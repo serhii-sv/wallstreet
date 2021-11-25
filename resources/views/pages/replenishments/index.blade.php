@@ -133,6 +133,11 @@
                 @else
                   {{ __('Date') }}
                 @endif</th>
+                <th>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Repl type' contenteditable="true">{{ __('Repl type') }}</editor_block>
+                    @else
+                        {{ __('Repl type') }}
+                    @endif</th>
               <th>@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>
                 @else
