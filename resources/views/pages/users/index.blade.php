@@ -300,8 +300,8 @@
                 },
                 {
                     data: 'partner',
-                    searchable: true,
-                    bSortable: true
+                    searchable: false,
+                    bSortable: false
                 },
                     @if(request()->get('roles') === 'multi_acc')
                 {
