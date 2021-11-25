@@ -7,8 +7,8 @@
         : null;
     ?>
     <span class="chip {{ null !== $color ? '' : 'orange' }} lighten-5" title="{{ null !== $role ? $role->name : 'без роли' }}" {{ null !== $color ? 'style=background-color:'.$color.';' : '' }}>
-            <a href="{{ route('users.show', $partner->id) }}" {{ null !== $color ? 'style="color:white; font-weight:bold;"' : '' }}>
-                <span class="{{ null !== $color ? 'style="color:white; font-weight:bold;"' : 'orange-text' }}">{{ $partner->login }}</span>
+            <a href="{{ route('users.show', $partner->id) }}">
+                <span class="{{ null !== $color ? '' : 'orange-text' }}" {{ null !== $color ? 'style=color:white; font-weight:bold;' : '' }}>{{ $partner->login }}</span>
             </a>
     </span>
 @endif
