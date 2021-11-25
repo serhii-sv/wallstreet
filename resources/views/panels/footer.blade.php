@@ -1,5 +1,5 @@
 <!-- BEGIN: Footer-->
-<footer style="position: absolute; width:100%;"
+<footer style="position: absolute; width:100%; margin-top:50px;"
   class="{{$configData['mainFooterClass']}} @if($configData['isFooterFixed']=== true){{'footer-fixed'}}@else {{'footer-static'}} @endif @if($configData['isFooterDark']=== true) {{'footer-dark'}} @elseif($configData['isFooterDark']=== false) {{'footer-light'}} @else {{$configData['mainFooterColor']}} @endif">
   <div class="footer-copyright">
     <div class="container">
