@@ -245,16 +245,19 @@
 
                             <div class="row" style=" text-align: center;">
                                 <div class="input-field col s12 text-center">
+                                    <div >
+                                        <input id="login" type="text" name="login"
+                                               placeholder="{{ __('Login, email or id') }}" value="{{ old('login') }}"
+                                               style="font-weight: bold; text-align: center;width: 320px;">
 
-                                  <div class="bonus_search">
-                                  <div class="header-search-wrapper hide-on-med-and-down" style="width:50%; margin-left:25%;">
-                                    <i class="material-icons">search</i>
-                                    <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
-                                        data-search="template-list">
-                                    <ul class="search-list collection display-none"></ul>
-                                  </div>
-                                </div>
-
+                                               <div class="input-field">
+                                                 <select class="select2 browser-default" name="login">
+                                                   @foreach(\App\Models\User::select('login')->get() as $user)
+                                                   <option value="{{ $user->login }}">{{ $user->login }}</option>
+                                                   @endif
+                                                 </select>
+                                               </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" style=" text-align: center;">
@@ -310,6 +313,11 @@
                         $(".dashboard-send-bonus-form").submit();
                     }
                 });
+            });
+
+            $('.select2').select2({
+                dropdownAutoWidth: true,
+                width: '100%'
             });
         });
     </script>

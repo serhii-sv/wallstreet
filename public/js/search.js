@@ -3,16 +3,11 @@ var __webpack_exports__ = {};
 /*!********************************!*\
   !*** ./resources/js/search.js ***!
   \********************************/
-  var searchListLi = $(".nav-wrapper .search-list li"),
-      searchList = $(".nav-wrapper .search-list"),
-      searchSm = $(".nav-wrapper .search-sm"),
-      searchBoxSm = $(".nav-wrapper .search-input-sm .search-box-sm"),
-      searchListSm = $(".nav-wrapper .search-list-sm");
-  var bonusSearchListLi = $(".bonus_search .search-list li"),
-      bonusSearchList = $(".bonus_search .search-list"),
-      bonusSearchSm = $(".bonus_search .search-sm"),
-      bonusSearchBoxSm = $(".bonus_search .search-input-sm .search-box-sm"),
-      bonusSearchListSm = $(".bonus_search .search-list-sm");
+var searchListLi = $(".search-list li"),
+    searchList = $(".search-list"),
+    searchSm = $(".search-sm"),
+    searchBoxSm = $(".search-input-sm .search-box-sm"),
+    searchListSm = $(".search-list-sm");
 $(function () {
   "use strict";
 
@@ -82,7 +77,7 @@ $(function () {
     $(".search-input-sm .search-box-sm, .header-search-input").val("");
   }); // Search filter
 
-  $(".nav-wrapper .header-search-wrapper .header-search-input, .nav-wrapper .search-input-sm .search-box-sm").on("keyup", function (e) {
+  $(".header-search-wrapper .header-search-input, .search-input-sm .search-box-sm").on("keyup", function (e) {
     contentOverlay.addClass("show");
     searchList.removeClass("display-none");
     var $this = $(this);
@@ -139,75 +134,15 @@ $(function () {
     } // for large screen search list
 
 
-
-    $(".bonus_search .header-search-wrapper .header-search-input").on("keyup", function (e) {
-      contentOverlay.addClass("show");
-      bonusSearchList.removeClass("display-none");
-      var $this = $(this);
-
-      if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
-        if (e.keyCode == 27) {
-          contentOverlay.removeClass("show");
-          $this.val("");
-          $this.blur();
-        } // Define variables
-
-
-        var value = $(this).val().toLowerCase(),
-            //get values of inout on keyup
-        liList = $(".bonus_search ul.search-list li"); // get all the list items of the search
-
-        liList.remove(); // If input value is blank
-
-        if (value != "" && value.length > 2) {
-          var $startList = "",
-              $otherList = "",
-              $htmlList = "",
-              $activeItemClass = "",
-              a = 0; // getting json data from file for search results
-
-          $.ajax({
-            url: "/ajax/search-users",
-            method: 'post',
-            data: 'search=' + value,
-            headers: {
-              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function success(data) {
-              var $data = $.parseJSON(data);
-              var $html = $data['html'];
-
-              if ($html == "" && $otherList == "") {
-                $otherList = $(".bonus_search #search-not-found").html();
-              } // var $mainPage = $("#page-search-title").html();
-
-
-              var $mainPage = $(".bonus_search #default-search-main").html();
-              $htmlList = $mainPage.concat($html, $otherList); // merging start with and other list
-
-              $(".bonus_search ul.search-list").html($htmlList); // Appending list to <ul>
-            }
-          });
-        } else {
-          if (contentOverlay.hasClass("show")) {
-            contentOverlay.removeClass("show");
-            bonusSearchList.addClass("display-none");
-          }
-        }
-      } // for large screen search list
-
-
-
-
-    if ($(".bonus_search .header-search-wrapper .current_item").length) {
+    if ($(".header-search-wrapper .current_item").length) {
       searchList.scrollTop(0);
-      searchList.scrollTop($('.bonus_search .search-list .current_item:first').offset().top - searchList.height());
+      searchList.scrollTop($('.search-list .current_item:first').offset().top - searchList.height());
     } // for small screen search list
 
 
-    if ($(".bonus_search .search-input-sm .current_item").length) {
+    if ($(".search-input-sm .current_item").length) {
       searchListSm.scrollTop(0);
-      searchListSm.scrollTop($('.bonus_search .search-list-sm .current_item:first').offset().top - searchListSm.height());
+      searchListSm.scrollTop($('.search-list-sm .current_item:first').offset().top - searchListSm.height());
     }
   }); // small screen search box form submit prevent
 
