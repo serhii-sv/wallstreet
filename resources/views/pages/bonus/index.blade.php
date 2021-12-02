@@ -290,7 +290,7 @@
 
 {{-- vendor scripts --}}
 @section('vendor-script')
-    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
     <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 @endsection
 
