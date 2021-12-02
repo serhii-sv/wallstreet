@@ -300,10 +300,20 @@ class UsersController extends Controller
         $wallets = $wallets->orderBy('currency_id', 'desc')
             ->get();
 
+        // ------
+
         $balance_usd = 0;
 
         foreach ($wallets as $wallet) {
           $balance_usd += $wallet->convertToCurrency($wallet->currency, Currency::where('code', 'USD')->first(), $wallet->balance);
+        }
+
+        // -------
+
+        $stat_deposits = 0;
+
+        foreach ($user->deposits()->where('active', 1)->get() as $deposit) {
+          $stat_deposits += $wallet->convertToCurrency($deposit->currency, Currency::where('code', 'USD')->first(), $deposit->balance);
         }
 
         return view('pages.users.show', [
@@ -319,7 +329,7 @@ class UsersController extends Controller
             'referral_count' => $referral_count,
             'referral_clicks' => $referral_clicks,
             'user_first_upliner' => $user->firstPartner($user),
-            'stat_deposits' => $total_referral_invested,
+            'stat_deposits' => $stat_deposits,
             'stat_withdraws' => $total_referral_withdrew,
             'stat_create_dep' => $stat_create_dep,
             'stat_transfer' => $stat_transfer,
