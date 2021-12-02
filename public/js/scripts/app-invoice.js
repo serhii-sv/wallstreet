@@ -203,7 +203,9 @@ $(document).ready(function () {
 
   if ($('#transactions').length) {
     $("#transactions").DataTable({
-      keepConditions: true,
+      keepConditions: {
+    	   conditions: ['page']
+      },
       paging: true,
       lengthChange: false,
       searching: false,
