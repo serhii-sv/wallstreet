@@ -19,7 +19,7 @@ $(function () {
     .parent("div")
     .removeClass("header-search-wrapper-focus");
   });
-  
+
   //Search box form small screen
   $(".search-button").click(function (e) {
     if (searchSm.is(":hidden")) {
@@ -34,12 +34,12 @@ $(function () {
   $('.search-input-sm').on('click', function () {
     searchBoxSm.focus();
   });
-  
+
   $(".search-sm-close").click(function (e) {
     searchSm.hide();
     searchBoxSm.val("");
   });
-  
+
   // Search scrollbar
   if ($(".search-list").length > 0) {
     var ps_search_nav = new PerfectScrollbar(".search-list", {
@@ -55,11 +55,11 @@ $(function () {
       minScrollbarLength: 20
     });
   }
-  
+
   // Quick search
   //-------------
   var $filename = $(".header-search-wrapper .header-search-input,.search-input-sm .search-box-sm").data("search");
-  
+
   // Navigation Search area Close
   $(".search-sm-close").on("click", function () {
     searchBoxSm.val("");
@@ -70,7 +70,7 @@ $(function () {
       contentOverlay.removeClass("show");
     }
   });
-  
+
   // Navigation Search area Close on click of content overlay
   contentOverlay.on("click", function () {
     searchListLi.remove();
@@ -80,7 +80,7 @@ $(function () {
     searchList.addClass("display-none");
     $(".search-input-sm .search-box-sm, .header-search-input").val("");
   });
-  
+
   // Search filter
   $(".header-search-wrapper .header-search-input, .search-input-sm .search-box-sm").on("keyup", function (e) {
     contentOverlay.addClass("show");
@@ -116,13 +116,13 @@ $(function () {
           success: function (data) {
             var $data = $.parseJSON(data);
             var $html = $data['html'];
-            
+
             if ($html == "" && $otherList == "") {
               $otherList = $("#search-not-found").html();
             }
             // var $mainPage = $("#page-search-title").html();
             var $mainPage = $("#default-search-main").html();
-            
+
             $htmlList = $mainPage.concat($html, $otherList); // merging start with and other list
             $("ul.search-list").html($htmlList); // Appending list to <ul>
           }
@@ -145,7 +145,72 @@ $(function () {
       searchListSm.scrollTop($('.search-list-sm .current_item:first').offset().top - searchListSm.height());
     }
   });
-  
+
+
+  $(".bonus-header-search-wrapper .bonus-header-search-input, .bonus-search-input-sm .bonus-search-box-sm").on("keyup", function (e) {
+    contentOverlay.addClass("show");
+    searchList.removeClass("display-none");
+    var $this = $(this);
+    if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
+      if (e.keyCode == 27) {
+        contentOverlay.removeClass("show");
+        $this.val("");
+        $this.blur();
+      }
+      // Define variables
+      var value = $(this)
+      .val()
+      .toLowerCase(), //get values of inout on keyup
+          liList = $("ul.bonus-search-list li"); // get all the list items of the search
+      liList.remove();
+      // If input value is blank
+      if (value != "" && value.length > 2) {
+        var $startList = "",
+            $otherList = "",
+            $htmlList = "",
+            $activeItemClass = "",
+            a = 0;
+        // getting json data from file for search results
+        $.ajax({
+          url: "/ajax/search-users",
+          method: 'post',
+          data: 'search='+ value,
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function (data) {
+            var $data = $.parseJSON(data);
+            var $html = $data['html'];
+
+            if ($html == "" && $otherList == "") {
+              $otherList = $("#bonus-search-not-found").html();
+            }
+            // var $mainPage = $("#page-search-title").html();
+            var $mainPage = $("#bonus-default-search-main").html();
+
+            $htmlList = $mainPage.concat($html, $otherList); // merging start with and other list
+            $("ul.bonus-search-list").html($htmlList); // Appending list to <ul>
+          }
+        });
+      } else {
+        if (contentOverlay.hasClass("show")) {
+          contentOverlay.removeClass("show");
+          searchList.addClass("display-none");
+        }
+      }
+    }
+    // for large screen search list
+    if ($(".bonus-header-search-wrapper .bonus-current_item").length) {
+      searchList.scrollTop(0);
+      searchList.scrollTop($('.bonus-search-list .bonus-current_item:first').offset().top - searchList.height());
+    }
+    // for small screen search list
+    if ($(".bonus-search-input-sm .bonus-current_item").length) {
+      searchListSm.scrollTop(0);
+      searchListSm.scrollTop($('.bonus-search-list-sm .bonus-current_item:first').offset().top - searchListSm.height());
+    }
+  });
+
   // small screen search box form submit prevent
   $('#navbarForm').on('submit', function (e) {
     e.preventDefault();
@@ -170,10 +235,10 @@ $(function () {
       $(selected_item).trigger("click");
     }
   });
-  
+
   searchList.mouseenter(function () {
-    
-    
+
+
     if ($(".search-list").length > 0) {
       ps_search_nav.update();
     }
