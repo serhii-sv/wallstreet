@@ -246,12 +246,14 @@
                             <div class="row" style=" text-align: center;">
                                 <div class="input-field col s12 text-center">
 
-                                  <div class="bonus-header-search-wrapper hide-on-med-and-down" style="width:50%; margin-left:25%;">
+                                  <div class="bonus_search">
+                                  <div class="header-search-wrapper hide-on-med-and-down" style="width:50%; margin-left:25%;">
                                     <i class="material-icons">search</i>
-                                    <input class="bonus-header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
+                                    <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
                                         data-search="template-list">
-                                    <ul class="bonus-search-list collection display-none"></ul>
+                                    <ul class="search-list collection display-none"></ul>
                                   </div>
+                                </div>
 
                                 </div>
                             </div>
