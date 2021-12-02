@@ -324,6 +324,15 @@ class UsersController extends Controller
           ->where('approved', 1)
           ->sum('main_currency_amount');
 
+        // -------
+
+        $stat_withdraws = $user->transactions()
+          ->where('type_id', TransactionType::getByName('withdraw')->id)
+          ->where('is_real', 1)
+          ->where('approved', 1)
+          ->sum('main_currency_amount');
+
+
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -338,7 +347,7 @@ class UsersController extends Controller
             'referral_clicks' => $referral_clicks,
             'user_first_upliner' => $user->firstPartner($user),
             'stat_deposits' => $stat_deposits,
-            'stat_withdraws' => $total_referral_withdrew,
+            'stat_withdraws' => $stat_withdraws,
             'stat_transfer' => $stat_transfer,
             'stat_topup' => $stat_topup,
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
