@@ -241,9 +241,6 @@ class UsersController extends Controller
             $total_referral_withdrew += $withdrew;
         }
 
-        $stat_create_dep = $user->transactions()->where('type_id', TransactionType::getByName('create_dep')->id)->where('approved', 1)->sum('main_currency_amount');
-        $stat_transfer = $user->transactions()->where('type_id', TransactionType::getByName('transfer_out')->id)->where('approved', 1)->sum('main_currency_amount');
-
         $stat_different = $total_referral_invested - $total_referral_withdrew;
         $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
         $stat_left = $stat_salary - $user->stat_worker_withdraw;
@@ -329,6 +326,13 @@ class UsersController extends Controller
         $stat_withdraws = $user->transactions()
           ->where('type_id', TransactionType::getByName('withdraw')->id)
           ->where('is_real', 1)
+          ->where('approved', 1)
+          ->sum('main_currency_amount');
+
+        // --------
+
+        $stat_transfer = $user->transactions()
+          ->where('type_id', TransactionType::getByName('transfer_out')->id)
           ->where('approved', 1)
           ->sum('main_currency_amount');
 
