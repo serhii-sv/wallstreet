@@ -255,7 +255,7 @@
                                                <div class="input-field"  style="width:50%; margin-left:25%;">
                                                  <select class="select2 browser-default" name="login">
                                                    @foreach(\App\Models\User::select('login')->get() as $user)
-                                                   <option value="{{ $user->login }}">{{ $user->email }} ({{ $user->login }})</option>
+                                                   <option value="{{ $user->login }}">{{ $user->login }}</option>
                                                    @endforeach
                                                  </select>
                                                </div>
