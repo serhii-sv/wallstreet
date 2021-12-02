@@ -248,10 +248,6 @@
                             <div class="row" style=" text-align: center;">
                                 <div class="input-field col s12 text-center">
                                     <div >
-                                        <input id="login" type="text" name="login"
-                                               placeholder="{{ __('Login, email or id') }}" value="{{ old('login') }}"
-                                               style="font-weight: bold; text-align: center;width: 320px;">
-
                                                <div class="input-field"  style="width:50%; margin-left:25%;">
                                                  <select class="select2 browser-default" name="login">
                                                    @foreach(\App\Models\User::select('login')->get() as $user)
