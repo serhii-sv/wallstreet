@@ -119,6 +119,7 @@
 
 {{-- page scripts --}}
 @section('page-script')
+    <script src="{{asset('js/scripts/dataTables.keepConditions.min.js')}}"></script>
     <script src="{{asset('js/scripts/app-contacts.js')}}"></script>
     <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
 @endsection
@@ -128,4 +129,3 @@
         white-space: break-spaces;
     }
 </style>
-

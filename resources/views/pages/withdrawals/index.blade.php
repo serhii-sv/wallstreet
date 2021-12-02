@@ -189,6 +189,7 @@
 
 {{-- page scripts --}}
 @section('page-script')
+  <script src="{{asset('js/scripts/dataTables.keepConditions.min.js')}}"></script>
   <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
   <script src="{{asset('js/plugins.js')}}"></script>
   <script>
