@@ -5,7 +5,7 @@ $(document).ready(function () {
   /* init data table */
   if ($(".invoice-data-table").length) {
     var dataListView = $(".invoice-data-table").DataTable({
-      keepConditions: true,
+      // keepConditions: true,
       paging: true,
       lengthChange: false,
       // "searching": false,
