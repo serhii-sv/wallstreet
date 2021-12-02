@@ -6,6 +6,8 @@
 
 {{-- vendor styles --}}
 @section('vendor-style')
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/select2/select2-materialize.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert/sweetalert.css')}}">
 
     <style>
@@ -251,7 +253,7 @@
                                                style="font-weight: bold; text-align: center;width: 320px;">
 
                                                <div class="input-field">
-                                                 <select class="select2 browser-default" name="login">
+                                                 <select class="select2 browser-default" name="login" style="width:50%; margin-left:25%;">
                                                    @foreach(\App\Models\User::select('login')->get() as $user)
                                                    <option value="{{ $user->login }}">{{ $user->login }}</option>
                                                    @endforeach
@@ -293,6 +295,7 @@
 {{-- vendor scripts --}}
 @section('vendor-script')
     <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
 @endsection
 
 @section('page-script')
