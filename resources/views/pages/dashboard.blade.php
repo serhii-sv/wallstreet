@@ -218,7 +218,7 @@
                         {{ __('Profit') }}
                       @endif</p>
                   </div> -->
-                  <div class="doughnut-chart-status month display-none">
+                  <!-- <div class="doughnut-chart-status month display-none">
                     <p class="center-align font-weight-600 mt-4">
                       ${{ $month_deposit_revenue ?? 0 }}</p>
                     <p class="ultra-small center-align">@if(canEditLang() && checkRequestOnEdit())
@@ -226,7 +226,7 @@
                       @else
                         {{ __('Profit') }}
                       @endif</p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col s12 m2 l2">
