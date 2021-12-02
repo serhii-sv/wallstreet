@@ -17,7 +17,7 @@
         <a href="{{ route('withdrawals.approveFake', $transaction->id) }}"
            data-action_type="approve_fake" data-position="bottom" data-tooltip="Подтвердить фейк"
            class="invoice-action-view mr-4 tooltipped">
-            <i class="material-icons">check</i>
+            <i class="material-icons">timeline</i>
         </a>
         <a href="{{ route('withdrawals.reject', $transaction->id) }}"
            data-action_type="reject" data-position="bottom" data-tooltip="Отменить с возвратом на баланс"
