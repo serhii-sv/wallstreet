@@ -245,11 +245,14 @@
 
                             <div class="row" style=" text-align: center;">
                                 <div class="input-field col s12 text-center">
-                                    <div >
-                                        <input id="login" type="text" name="login"
-                                               placeholder="{{ __('Login, email or id') }}" value="{{ old('login') }}"
-                                               style="font-weight: bold; text-align: center;width: 320px;">
-                                    </div>
+
+                                  <div class="header-search-wrapper hide-on-med-and-down">
+                                    <i class="material-icons">search</i>
+                                    <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
+                                        data-search="template-list">
+                                    <ul class="search-list collection display-none"></ul>
+                                  </div>
+
                                 </div>
                             </div>
                             <div class="row" style=" text-align: center;">
