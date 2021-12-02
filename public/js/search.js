@@ -3,11 +3,16 @@ var __webpack_exports__ = {};
 /*!********************************!*\
   !*** ./resources/js/search.js ***!
   \********************************/
-var searchListLi = $(".search-list li"),
-    searchList = $(".search-list"),
-    searchSm = $(".search-sm"),
-    searchBoxSm = $(".search-input-sm .search-box-sm"),
-    searchListSm = $(".search-list-sm");
+  var searchListLi = $(".nav-wrapper .search-list li"),
+      searchList = $(".nav-wrapper .search-list"),
+      searchSm = $(".nav-wrapper .search-sm"),
+      searchBoxSm = $(".nav-wrapper .search-input-sm .search-box-sm"),
+      searchListSm = $(".nav-wrapper .search-list-sm");
+  var bonusSearchListLi = $(".bonus_search .search-list li"),
+      bonusSearchList = $(".bonus_search .search-list"),
+      bonusSearchSm = $(".bonus_search .search-sm"),
+      bonusSearchBoxSm = $(".bonus_search .search-input-sm .search-box-sm"),
+      bonusSearchListSm = $(".bonus_search .search-list-sm");
 $(function () {
   "use strict";
 
@@ -137,7 +142,7 @@ $(function () {
 
     $(".bonus_search .header-search-wrapper .header-search-input").on("keyup", function (e) {
       contentOverlay.addClass("show");
-      searchList.removeClass("display-none");
+      bonusSearchList.removeClass("display-none");
       var $this = $(this);
 
       if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
@@ -186,7 +191,7 @@ $(function () {
         } else {
           if (contentOverlay.hasClass("show")) {
             contentOverlay.removeClass("show");
-            searchList.addClass("display-none");
+            bonusSearchList.addClass("display-none");
           }
         }
       } // for large screen search list
