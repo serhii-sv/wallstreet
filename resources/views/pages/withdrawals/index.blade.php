@@ -109,7 +109,7 @@
         @forelse($filter_users as $user)
         <li>
           <a href="{{ request()->fullUrlWithQuery(['user'=> $user->id]) }}" class="{{ request()->user == $user->id ? 'active' : '' }}">
-            {{ $user->name }}
+            {{ $user->login }}
           </a>
         </li>
         @empty
