@@ -234,10 +234,10 @@
               <span class="badge pink " style="font-size: 18px">{{ number_format($balance_usd, 2, '.', ',') }}$</span>
             </div>
             <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Top-up amount' contenteditable="true">{{ __('Top-up amount') }}</editor_block>@else {{ __('Top-up amount') }} @endif:
-              <span class="badge pink" style="font-size: 18px">{{ number_format($stat_deposits, 2, '.', ',') }}$</span>
+              <span class="badge pink" style="font-size: 18px">{{ number_format($stat_topup, 2, '.', ',') }}$</span>
             </div>
             <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='The amount of deposits' contenteditable="true">{{ __('The amount of deposits') }}</editor_block>@else {{ __('The amount of deposits') }} @endif:
-              <span class="badge pink " style="font-size: 18px">{{ number_format($stat_create_dep, 2, '.', ',') }}$</span>
+              <span class="badge pink " style="font-size: 18px">{{ number_format($stat_deposits, 2, '.', ',') }}$</span>
             </div>
             <div class="indigo-text mb-3 " style="font-size: 18px;">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Amount of payments' contenteditable="true">{{ __('Amount of payments') }}</editor_block>@else {{ __('Amount of payments') }} @endif:
               <span class="badge pink " style="font-size: 18px">{{ number_format($stat_withdraws, 2, '.', ',') }}$</span>

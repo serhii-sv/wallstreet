@@ -316,6 +316,14 @@ class UsersController extends Controller
           $stat_deposits += $wallet->convertToCurrency($deposit->currency, Currency::where('code', 'USD')->first(), $deposit->balance);
         }
 
+        // -------
+
+        $stat_topup = $user->transactions()
+          ->where('type_id', TransactionType::getByName('enter')->id)
+          ->where('is_real', 1)
+          ->where('approved', 1)
+          ->sum('main_currency_amount');
+
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -331,8 +339,8 @@ class UsersController extends Controller
             'user_first_upliner' => $user->firstPartner($user),
             'stat_deposits' => $stat_deposits,
             'stat_withdraws' => $total_referral_withdrew,
-            'stat_create_dep' => $stat_create_dep,
             'stat_transfer' => $stat_transfer,
+            'stat_topup' => $stat_topup,
             'structure_turnover' => $structure_turnover ? $structure_turnover : 0,
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
