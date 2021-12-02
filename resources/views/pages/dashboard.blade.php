@@ -209,7 +209,7 @@
               <div class="col s12 m3 l3">
                 <div id="doughnut-chart-wrapper">
                   <canvas id="doughnut-chart" height="200"></canvas>
-                  <div class="doughnut-chart-status week">
+                  <!-- <div class="doughnut-chart-status week">
                     <p class="center-align font-weight-600 mt-4">
                       ${{ $weeks_deposit_revenue ?? 0 }}</p>
                     <p class="ultra-small center-align">@if(canEditLang() && checkRequestOnEdit())
@@ -217,7 +217,7 @@
                       @else
                         {{ __('Profit') }}
                       @endif</p>
-                  </div>
+                  </div> -->
                   <div class="doughnut-chart-status month display-none">
                     <p class="center-align font-weight-600 mt-4">
                       ${{ $month_deposit_revenue ?? 0 }}</p>
