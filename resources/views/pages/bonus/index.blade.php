@@ -252,8 +252,8 @@
                                                placeholder="{{ __('Login, email or id') }}" value="{{ old('login') }}"
                                                style="font-weight: bold; text-align: center;width: 320px;">
 
-                                               <div class="input-field">
-                                                 <select class="select2 browser-default" name="login" style="width:50%; margin-left:25%;">
+                                               <div class="input-field"  style="width:50%; margin-left:25%;">>
+                                                 <select class="select2 browser-default" name="login"
                                                    @foreach(\App\Models\User::select('login')->get() as $user)
                                                    <option value="{{ $user->login }}">{{ $user->login }}</option>
                                                    @endforeach
@@ -295,7 +295,7 @@
 {{-- vendor scripts --}}
 @section('vendor-script')
     <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
-    <script src="{{asset('vendors/select2/select2.full.min.js')}}"></script>
+    <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
 @endsection
 
 @section('page-script')
