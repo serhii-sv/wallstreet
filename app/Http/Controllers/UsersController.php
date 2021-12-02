@@ -300,11 +300,17 @@ class UsersController extends Controller
         $wallets = $wallets->orderBy('currency_id', 'desc')
             ->get();
 
+        $balance_usd = 0;
+
+        foreach ($wallets as $wallet) {
+          $balance_usd += $wallet->convertToCurrency($wallet->currency, Currency::where('code', 'USD')->first(), $wallet->balance);
+        }
+
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
             'deposit_sum' => $deposit_sum,
-            'balance_usd' => $user->wallets()->sum('main_currency_amount'),
+            'balance_usd' => $balance_usd,
             'userActivityDay' => $userActivityDay,
             'userActivityWeek' => $userActivityWeek,
             'userActivityMonth' => $userActivityMonth,
