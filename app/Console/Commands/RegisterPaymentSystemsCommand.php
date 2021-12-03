@@ -468,6 +468,14 @@ class RegisterPaymentSystemsCommand extends Command
                 ],
                 'image' => '',
             ],
+            'amir' => [
+                'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Amir [yes|no]', 'yes'),
+                'name' => 'Amir',
+                'currencies' => [
+                    'USD',
+                ],
+                'image' => 'amir.png',
+            ],
         ];
 
 
