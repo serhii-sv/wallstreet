@@ -184,7 +184,7 @@
   <script src="{{asset('vendors/data-tables/js/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
   <script src="{{asset('vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js')}}"></script>
-  
+  <script src="{{asset('vendors/data-tables/js/datatables.checkboxes.min.js')}}"></script>
 @endsection
 
 {{-- page scripts --}}
