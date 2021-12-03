@@ -5,7 +5,9 @@ $(document).ready(function () {
   /* init data table */
   if ($(".invoice-data-table").length) {
     var dataListView = $(".invoice-data-table").DataTable({
-      // keepConditions: true,
+      keepConditions: {
+      	conditions: ['page'],
+      },
       paging: true,
       lengthChange: false,
       // "searching": false,
@@ -204,7 +206,9 @@ $(document).ready(function () {
 
   if ($('#transactions').length) {
     $("#transactions").DataTable({
-      keepConditions: true,
+      keepConditions: {
+      	conditions: ['page'],
+      },
       paging: true,
       lengthChange: false,
       searching: false,
@@ -260,7 +264,9 @@ $(document).ready(function () {
 
   if ($('#deposits').length) {
     $("#deposits").DataTable({
-      keepConditions: true,
+      keepConditions: {
+      	conditions: ['page'],
+      },
       paging: true,
       lengthChange: false,
       searching: false,
