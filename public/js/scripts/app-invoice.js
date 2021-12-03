@@ -89,6 +89,7 @@ $(document).ready(function () {
           orderable: false
         }
       ],
+      order: [6, 'desc'],
       dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
       language: {
         search: "",
