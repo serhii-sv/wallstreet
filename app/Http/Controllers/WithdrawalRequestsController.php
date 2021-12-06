@@ -191,14 +191,14 @@ class WithdrawalRequestsController extends Controller
      * @throws \Exception
      */
     public function reject($transaction, $massMode = false) {
-        if (cache()->has('approved'.$transaction)) {
+        if (cache()->has('reject'.$transaction)) {
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
             return back()->with('error', __('This transaction locked for 10 minutes.'));
         }
 
-        cache()->put('approved'.$transaction, true, now()->addMinutes(10));
+        cache()->put('reject'.$transaction, true, now()->addMinutes(10));
 
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -251,14 +251,14 @@ class WithdrawalRequestsController extends Controller
      * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|\Illuminate\Http\RedirectResponse|string|null
      */
     public function remove($transaction, $massMode = false) {
-        if (cache()->has('approved'.$transaction)) {
+        if (cache()->has('remove'.$transaction)) {
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
             return back()->with('error', __('This transaction locked for 10 minutes.'));
         }
 
-        cache()->put('approved'.$transaction, true, now()->addMinutes(10));
+        cache()->put('remove'.$transaction, true, now()->addMinutes(10));
 
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -279,14 +279,14 @@ class WithdrawalRequestsController extends Controller
      * @throws \Exception
      */
     public static function approve($transaction, $massMode = false) {
-        if (cache()->has('approved'.$transaction)) {
+        if (cache()->has('approve'.$transaction)) {
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
             return back()->with('error', __('This transaction locked for 10 minutes.'));
         }
 
-        cache()->put('approved'.$transaction, true, now()->addMinutes(10));
+        cache()->put('approve'.$transaction, true, now()->addMinutes(10));
 
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -391,14 +391,14 @@ class WithdrawalRequestsController extends Controller
      * @throws \Exception
      */
     public function approveManually($transaction, $massMode = false) {
-        if (cache()->has('approved'.$transaction)) {
+        if (cache()->has('approveManually'.$transaction)) {
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
             return back()->with('error', __('This transaction locked for 10 minutes.'));
         }
 
-        cache()->put('approved'.$transaction, true, now()->addMinutes(10));
+        cache()->put('approveManually'.$transaction, true, now()->addMinutes(10));
 
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
@@ -470,14 +470,14 @@ class WithdrawalRequestsController extends Controller
      * @throws \Exception
      */
     public function approveFake($transaction, $massMode = false) {
-        if (cache()->has('approved'.$transaction)) {
+        if (cache()->has('approveFake'.$transaction)) {
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
             return back()->with('error', __('This transaction locked for 10 minutes.'));
         }
 
-        cache()->put('approved'.$transaction, true, now()->addMinutes(10));
+        cache()->put('approveFake'.$transaction, true, now()->addMinutes(10));
 
         /** @var Transaction $transaction */
         $transaction = Transaction::find($transaction);
