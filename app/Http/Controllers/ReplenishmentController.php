@@ -30,7 +30,6 @@ class ReplenishmentController extends Controller
                 $transactions->where('approved', $request->type);
             }
 
-            //->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir'])
             /*
             * Фильтрация, если выбрано
             */
