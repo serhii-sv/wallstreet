@@ -35,6 +35,11 @@ $(document).ready(function () {
           searchable: false,
           bSortable: false
         },
+          {
+              data: 'teamlead',
+              searchable: false,
+              bSortable: false
+          },
         {
           data: 'partner',
           searchable: false,
