@@ -272,7 +272,7 @@
     @endif
 
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
-      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses')  || Route::is('referrals.*') || Route::is('rates.*') || Route::is('user.phone.verification')) active @endif">
+      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses')  || Route::is('referrals.*') || Route::is('rates.*') || Route::is('user.phone.verification') || Route::is('referrals-and-banners.referrals')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
           <span class="menu-title">
