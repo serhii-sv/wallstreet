@@ -28,10 +28,11 @@ class SidebarComposer
         $user = auth()->user();
 
         $count_users = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','count_users')->firstOrCreate(['sb_prop' => 'count_users']);
-        $withdrawals_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','withdrawals_amount')->firstOrCreate(['sb_prop' => 'withdrawals_amount']);
+//        $withdrawals_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','withdrawals_amount')->firstOrCreate(['sb_prop' => 'withdrawals_amount']);
         $replenishments_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','replenishments_amount')->firstOrCreate(['sb_prop' => 'replenishments_amount']);
         $currency_exchange_count = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','currency_exchange_count')->firstOrCreate(['sb_prop' => 'currency_exchange_count']);
         //$count_tasks = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','tasks')->firstOrCreate(['sb_prop' => 'tasks']);
+        $withdrawals_amount = Transaction::where('type_id', TransactionType::getByName('withdraw'))->where('approved', 0)->where('is_real', 1)->sum('main_currency_amount');
 
         $view
             ->with('counts', [
@@ -39,7 +40,7 @@ class SidebarComposer
 //                'files' => cache()->remember('counts.files', now()->addHour(), function() {
 //                    return CloudFile::count();
 //                }),
-                'withdrawals_amount' => $withdrawals_amount != null ? Transaction::sidebarIndicatorsFormatting($withdrawals_amount->sb_val) : 0,
+                'withdrawals_amount' => $withdrawals_amount != null ? Transaction::sidebarIndicatorsFormatting($withdrawals_amount) : 0,
                     /*cache()->remember('counts.withdrawals_amount', now()->addHour(), function() {
                     $sum = Transaction::where('approved', 0)->where('type_id', TransactionType::getByName('withdraw')->id)->sum('main_currency_amount');
                     return Transaction::sidebarIndicatorsFormatting($sum);

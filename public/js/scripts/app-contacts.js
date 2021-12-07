@@ -23,11 +23,6 @@ $(document).ready(function () {
     }
   })
 
-  $('.new-role-selection a').click(function () {
-    $('#usersForm input[name="role_id"]').val($(this).data('role_id'));
-    $('#usersForm').submit()
-  })
-
     if (window.location.pathname !== '/users') {
         var table = $("#users").DataTable({
             paging: true,
@@ -79,11 +74,11 @@ $(document).ready(function () {
                 //     searchable: true,
                 //     bSortable: true
                 // },
-                {
-                    data: 'country',
-                    searchable: false,
-                    bSortable: false
-                },
+                // {
+                //   data: 'country',
+                //   searchable: false,
+                //   bSortable: false
+                // },
             ],
             processing: true,
             serverSide: true,
@@ -108,7 +103,6 @@ $(document).ready(function () {
             }
         });
     }
-
   // Custom search
   function filterGlobal() {
     table.search($("#global_filter").val(), $("#global_regex").prop("checked"), $("#global_smart").prop("checked")).draw();
@@ -169,13 +163,13 @@ $(document).ready(function () {
     $tr.remove();
   });
 
-  $("#contact-sidenav li").on("click", function () {
-    var $this = $(this);
-    if (!$this.hasClass("sidebar-title")) {
-      $("li").removeClass("active");
-      $this.addClass("active");
-    }
-  });
+  // $("#contact-sidenav li").on("click", function () {
+  //   var $this = $(this);
+  //   if (!$this.hasClass("sidebar-title")) {
+  //     $("li").removeClass("active");
+  //     $this.addClass("active");
+  //   }
+  // });
 
   // Modals Popup
   $(".modal").modal();

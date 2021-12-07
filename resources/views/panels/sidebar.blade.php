@@ -203,7 +203,8 @@
                     @endif
                   </span>
                   @if($counts['withdrawals_amount'])
-                    <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>@endif
+                    <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
+                    @endif
                 </a>
               </li>
             @endif

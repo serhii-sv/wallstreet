@@ -88,22 +88,25 @@
           <div class="sidebar-list-padding app-sidebar " id="contact-sidenav">
             <ul class="contact-list display-grid">
               <li class="sidebar-title">@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Languages' contenteditable="true">{{ __('Languages') }}</editor_block>@else {{ __('Languages') }} @endif</li>
-              <li @if(empty(request()->get('language_id'))) class="active" @endif>
-                <a href="{{ route('faq.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
-                >
-                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>@else {{ __('All') }} @endif
+                <a href="{{ route('faq.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <li @if(empty(request()->get('language_id'))) class="active" style="color: #fff" @endif>
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                        @else
+                            {{ __('All') }}
+                        @endif
+                    </li>
                 </a>
-              </li>
-              @forelse($languages as $language)
-                <li @if(request()->get('language_id') === $language->id) class="active" @endif>
-                  <a href="{{ route('faq.index', array_add(request()->except('page', 'language_id'),'language_id', $language->id) ) }}" data-role_id="{{ $language->id }}" class="text-sub">
-                    {{ $language->name }}
-                  </a>
-                </li>
-              @empty
-              @endforelse
+                @forelse($languages as $language)
+                    <a href="{{ route('faq.index', array_add(request()->except('page', 'language_id'),'language_id', $language->id) ) }}" data-role_id="{{ $language->id }}" class="text-sub">
+                        <li @if(request()->get('language_id') === $language->id) class="active" style="color: #fff" @endif>
+                            {{ $language->name }}
+                        </li>
+                    </a>
+                @empty
+                @endforelse
             </ul>
-          
+
           </div>
         </div>
         <a href="#" data-target="contact-sidenav" class="sidenav-trigger hide-on-large-only">

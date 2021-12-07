@@ -50,24 +50,25 @@
                               @else
                                 {{ __('Types') }}
                               @endif</li>
-                            <li @if(empty(request()->get('type'))) class="active" @endif>
-                                <a href="{{ route('transactions.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <a href="{{ route('transactions.index') }}" class="text-sub"
+                               @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                <li @if(empty(request()->get('type'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                  @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
-                                  @else
-                                    {{ __('All') }}
-                                  @endif
-                                </a>
-                            </li>
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                    @else
+                                        {{ __('All') }}
+                                    @endif
+                                </li>
+                            </a>
                             @forelse($transaction_types as $type)
-                                <li @if(request()->get('type') === $type->id) class="active" @endif>
-                                    <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}"
-                                       class="text-sub">
+                                <a href="{{ route('transactions.index', array_add(request()->except('page', 'type'),'type', $type->id) ) }}"
+                                   class="text-sub">
+                                    <li @if(request()->get('type') === $type->id) class="active" style="color: #fff" @endif>
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
                                         {{  __('locale.' . $type->name)}}
-                                    </a>
-                                </li>
+                                    </li>
+                                </a>
                             @empty
                             @endforelse
                         </ul>
