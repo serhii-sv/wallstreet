@@ -10,6 +10,18 @@
   <link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/page-users.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker.css')}}">
+    <style>
+        .colorpicker-container {
+            position: relative;
+        }
+        .colorpicker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
 @endsection
 
 {{-- page content  --}}
@@ -116,7 +128,29 @@
                               @endforelse
                           </td>
                       </tr>
+                      @php($role = $user->roles()->first())
+                      @if($role !== null)
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Role color' contenteditable="true">{{ __('Role color') }}</editor_block>@else {{ __('Role color') }} @endif:</td>
+                          <td class="users-view-role">
+                              <div>
+                                  <div style="display: flex;align-items: center;width: 100%;">
+                                      <i class="material-icons small-icons mr-2" style="{{ 'color:'. ($role->color ?? '') }};">
+                                          fiber_manual_record
+                                      </i>
 
+                                      <input class="color_picker" type="text"
+                                             name="color"
+                                             value="{{ $role->color ?? '' }}"
+                                             placeholder="{{ $role->color ?? 'Без цвета' }}"
+                                             autocomplete="off">
+
+                                  </div>
+                                  <div class="colorpicker-container"></div>
+                              </div>
+                          </td>
+                      </tr>
+                        @endif
                       </tbody>
                   </table>
               </div>
@@ -495,6 +529,45 @@
   </script>
   <script>
     $(document).ready(function () {
+        $('.color_picker').colorpicker({
+            container: '.colorpicker-container',
+        });
+        $('.color_picker').colorpicker().on('changeColor.colorpicker', function (event) {
+            $('.material-icons').css('color', event.color.toHex())
+        });
+        let requestCount = 0;
+        $('.color_picker').colorpicker().on('hidePicker.colorpicker', function (event) {
+            requestCount++;
+            if(requestCount > 1) {
+                requestCount = 0;
+                return false;
+            }
+            console.log('aaaaaa')
+            @if($role !== null)
+            $.ajax({
+                url: '{{ route('roles.updateColor', $role) }}',
+                method: 'post',
+                data: {
+                    name: '{{ $role->name ?? null }}',
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    color: event.color.toHex()
+                },
+                success: (response) => {
+                    if (response.success) {
+                        M.toast({
+                            html: response.message,
+                            classes: 'green'
+                        })
+                    } else {
+                        M.toast({
+                            html: response.message,
+                            classes: 'red'
+                        })
+                    }
+                }
+            })
+            @endif
+        });
       $('.btn[name="bonus"]').click(function (e) {
         e.preventDefault();
         var $id = $(this).attr('data-id');

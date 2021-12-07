@@ -81,6 +81,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/deposit-bonus/delete', [\App\Http\Controllers\DepositController::class, 'deleteBonus'])->name('deposit.bonus.delete');
 
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
+            Route::post('/roles/{id}', [\App\Http\Controllers\RolesController::class, 'updateColor'])->name('roles.updateColor');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
 
             Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
