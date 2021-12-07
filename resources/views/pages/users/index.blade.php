@@ -263,7 +263,6 @@
   <script>
     $(document).ready(function () {
       $('.tooltipped').tooltip();
-
         var table = $("#users").DataTable({
             paging: true,
             lengthChange: false,

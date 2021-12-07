@@ -6,112 +6,114 @@ $(document).ready(function () {
   var calcDataTableHeight = function () {
     return $(window).height() - 380 + "px";
   };
-  
+
   $(document).on('click', 'thead .select-checkbox.dt-checkboxes', function () {
     $('tbody .select-checkbox').map((index, checkbox) => {
       $(checkbox).prop('checked', $(this).prop('checked'))
     })
   })
-  
+
   $(document).on('click', '.select-checkbox.dt-checkboxes', function () {
     let wrap = $('.new-role-selection');
-    
+
     if ($('tbody .select-checkbox.dt-checkboxes:checked').length) {
       wrap.addClass('display-grid').removeClass('display-none')
     } else {
       wrap.addClass('display-none').removeClass('display-grid')
     }
   })
-  
+
   $('.new-role-selection a').click(function () {
     $('#usersForm input[name="role_id"]').val($(this).data('role_id'));
     $('#usersForm').submit()
   })
-  
-  var table = $("#users").DataTable({
-    paging: true,
-    lengthChange: false,
-    searching: false,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    order: [1, 'desc'],
-    aoColumns: [
-      {
-        data: 'empty',
-        searchable: false,
-        bSortable: false
-      },
-      {
-        data: 'user',
-        searchable: false,
-        bSortable: false
-      },
-      {
-        data: 'login',
-        searchable: true,
-        bSortable: true
-      },
-      {
-        data: 'email',
-        searchable: true,
-        bSortable: true
-      },
-      {
-        data: 'name',
-        searchable: true,
-        bSortable: true
-      },
-      {
-        data: 'partner',
-        searchable: true,
-        bSortable: true
-      },
-      {
-        data: 'ip',
-        searchable: true,
-        bSortable: true
-      },
-      
-      // {
-      //     data: 'country',
-      //     searchable: true,
-      //     bSortable: true
-      // },
-      {
-        data: 'country',
-        searchable: false,
-        bSortable: false
-      },
-    ],
-    processing: true,
-    serverSide: true,
-    ajax: {},
-    dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
-    language: {
-      processing: "Загрузка",
-      paginate: {
-        previous: "‹",
-        next: "›",
-      },
-      emptyTable: 'Нет записей'
-    },
-    columnDefs: [
-      {
-        targets: 0,
-        className: "control"
-      },
-    ],
-    createdRow: function (row, data, dataIndex) {
-      $(row).css({'color': data.color})
+
+    if (window.location.pathname !== '/users') {
+        var table = $("#users").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            order: [1, 'desc'],
+            aoColumns: [
+                {
+                    data: 'empty',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'user',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'login',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'email',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'name',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'partner',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'ip',
+                    searchable: true,
+                    bSortable: true
+                },
+
+                // {
+                //     data: 'country',
+                //     searchable: true,
+                //     bSortable: true
+                // },
+                {
+                    data: 'country',
+                    searchable: false,
+                    bSortable: false
+                },
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {},
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                processing: "Загрузка",
+                paginate: {
+                    previous: "‹",
+                    next: "›",
+                },
+                emptyTable: 'Нет записей'
+            },
+            columnDefs: [
+                {
+                    targets: 0,
+                    className: "control"
+                },
+            ],
+            createdRow: function (row, data, dataIndex) {
+                $(row).css({'color': data.color})
+            }
+        });
     }
-  });
-  
+
   // Custom search
   function filterGlobal() {
     table.search($("#global_filter").val(), $("#global_regex").prop("checked"), $("#global_smart").prop("checked")).draw();
   }
-  
+
   function filterColumn(i) {
     table
     .column(i)
@@ -122,11 +124,11 @@ $(document).ready(function () {
     )
     .draw();
   }
-  
+
   $("input#global_filter").on("keyup click", function () {
     filterGlobal();
   });
-  
+
   $("input.column_filter").on("keyup click", function () {
     filterColumn(
         $(this)
@@ -134,20 +136,20 @@ $(document).ready(function () {
         .attr("data-column")
     );
   });
-  
+
   //  Notifications & messages scrollable
   if ($("#sidebar-list").length > 0) {
     var ps_sidebar_list = new PerfectScrollbar("#sidebar-list", {
       theme: "dark"
     });
   }
-  
+
   // Favorite star click
   $(".app-page .favorite i").on("click", function (e) {
     e.preventDefault();
     $(this).toggleClass("amber-text");
   });
-  
+
   //Toggle class of sidenav
   $("#contact-sidenav").sidenav({
     onOpenStart: function () {
@@ -157,7 +159,7 @@ $(document).ready(function () {
       $("#sidebar-list").removeClass("sidebar-show");
     }
   });
-  
+
   //Remove Row for datatable in responsive
   $(document).on("click", ".app-page i.delete", function () {
     var $tr = $(this).closest("tr");
@@ -166,7 +168,7 @@ $(document).ready(function () {
     }
     $tr.remove();
   });
-  
+
   $("#contact-sidenav li").on("click", function () {
     var $this = $(this);
     if (!$this.hasClass("sidebar-title")) {
@@ -174,15 +176,15 @@ $(document).ready(function () {
       $this.addClass("active");
     }
   });
-  
+
   // Modals Popup
   $(".modal").modal();
-  
+
   // Close other sidenav on click of any sidenav
   if ($(window).width() > 900) {
     $("#contact-sidenav").removeClass("sidenav");
   }
-  
+
   // contact-overlay and sidebar hide
   // --------------------------------------------
   var contactOverlay = $(".contact-overlay"),
@@ -204,7 +206,7 @@ $(document).ready(function () {
     contactOverlay.removeClass("show");
     contactComposeSidebar.removeClass("show");
   });
-  
+
   $(".dataTables_scrollBody tr").on("click", function () {
     updatecontact.removeClass("display-none");
     addcontact.addClass("display-none");
@@ -222,14 +224,14 @@ $(document).ready(function () {
   }).on("click", ".checkbox-label,.favorite,.delete", function (e) {
     e.stopPropagation();
   })
-  
+
   if (contactComposeSidebar.length > 0) {
     var ps_compose_sidebar = new PerfectScrollbar(".contact-compose-sidebar", {
       theme: "dark",
       wheelPropagation: false
     });
   }
-  
+
   // for rtl
   if ($("html[data-textdirection='rtl']").length > 0) {
     // Toggle class of sidenav
@@ -263,11 +265,11 @@ function toggle(source) {
 
 $(window).on("resize", function () {
   resizetable();
-  
+
   if ($(window).width() > 899) {
     $("#contact-sidenav").removeClass("sidenav");
   }
-  
+
   if ($(window).width() < 900) {
     $("#contact-sidenav").addClass("sidenav");
   }
