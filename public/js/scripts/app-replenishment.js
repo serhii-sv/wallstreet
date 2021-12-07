@@ -62,6 +62,12 @@ $(document).ready(function () {
               bSortable: false,
               width: '100%'
           },
+          {
+              data: 'replenished',
+              searchable: false,
+              bSortable: false,
+              width: '100%'
+          },
         {
           data: 'actions',
           searchable: false,

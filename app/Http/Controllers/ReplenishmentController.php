@@ -86,6 +86,7 @@ class ReplenishmentController extends Controller
                     'teamlead' => view('pages.replenishments.partials.teamlead', compact('transaction'))->render(),
                     'partner' => view('pages.replenishments.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.replenishments.partials.amount', compact('transaction'))->render(),
+                    'replenished' => view('pages.replenishments.partials.replenished', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
                     'approved' => view('pages.replenishments.partials.transaction-status', compact('transaction'))->render(),
                     'repl_type' => view('pages.replenishments.partials.repl_type', compact('transaction'))->render(),
