@@ -1,13 +1,10 @@
 $(document).ready(function () {
   /********Invoice List ********/
   /* --------------------------- */
-
+  
   /* init data table */
   if ($(".invoice-data-table").length) {
     var dataListView = $(".invoice-data-table").DataTable({
-      keepConditions: {
-      	conditions: ['page'],
-      },
       paging: true,
       lengthChange: false,
       // "searching": false,
@@ -114,27 +111,27 @@ $(document).ready(function () {
         }
       }
     });
-
+    
     // To append actions dropdown inside action-btn div
     var invoiceFilterAction = $(".invoice-filter-action");
     var invoiceCreateBtn = $(".invoice-create-btn");
     var filterButton = $(".filter-btn");
     $(".action-btns").append(invoiceFilterAction, invoiceCreateBtn);
     $(".dataTables_filter label").append(filterButton);
-
+    
     // $('.search').click(() => {
     //     let query = $('.invoice-list-wrapper input[type="search"]').val();
     //     if (query.length > 2) {
     //         location.href = '/withdrawals?email=' + query
     //     }
     // })
-
+    
     $(document).on('click', '.dt-checkboxes-select-all', function () {
       $('tbody .select-checkbox').map((index, checkbox) => {
         $(checkbox).prop('checked', $(this).find('input[type="checkbox"]').prop('checked'))
       })
     })
-
+    
     $(document).on('click', '.invoice-action-view:not(:first-child)', function () {
       swal({
         title: "Вы уверены?",
@@ -169,11 +166,11 @@ $(document).ready(function () {
       return false;
     })
   }
-
+  
   $('.tabs a').click(function () {
     window.location.replace($(this).attr('href'))
   })
-
+  
   $(document).on('click', '#deleteTransaction button', function () {
     swal({
       title: "Вы уверены что хотите удалить эти данные?",
@@ -202,12 +199,9 @@ $(document).ready(function () {
     })
     return false;
   })
-
+  
   if ($('#transactions').length) {
     $("#transactions").DataTable({
-      keepConditions: {
-      	conditions: ['page'],
-      },
       paging: true,
       lengthChange: false,
       searching: false,
@@ -244,16 +238,11 @@ $(document).ready(function () {
           bSortable: false,
           width: '100px'
         },
-          {
-              data: 'created_at',
-              searchable: true,
-              bSortable: false
-          },
-          {
-              data: 'open_operation',
-              searchable: true,
-              bSortable: false
-          },
+        {
+          data: 'created_at',
+          searchable: true,
+          bSortable: false
+        },
       ],
       processing: true,
       serverSide: true,
@@ -268,14 +257,11 @@ $(document).ready(function () {
         emptyTable: 'Нет записей'
       }
     });
-
+    
   }
-
+  
   if ($('#deposits').length) {
     $("#deposits").DataTable({
-      keepConditions: {
-      	conditions: ['page'],
-      },
       paging: true,
       lengthChange: false,
       searching: false,
@@ -306,6 +292,11 @@ $(document).ready(function () {
           bSortable: false
         },
         {
+          data: 'remains_to_accrue',
+          searchable: true,
+          bSortable: false
+        },
+        {
           data: 'next_charge',
           searchable: true,
           bSortable: false
@@ -329,12 +320,12 @@ $(document).ready(function () {
         emptyTable: 'Нет записей'
       }
     });
-
+    
   }
-
+  
   /* Invoice edit */
   /* ------------*/
-
+  
   /* form repeater jquery */
   var uniqueId = 1;
   if ($(".invoice-item-repeater").length) {
@@ -418,7 +409,7 @@ $(document).ready(function () {
       closeOnClick: false
     });
   })
-
+  
   if ($(".invoice-print").length > 0) {
     $(".invoice-print").on("click", function () {
       window.print();
