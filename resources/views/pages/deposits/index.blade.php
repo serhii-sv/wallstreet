@@ -52,7 +52,7 @@
                               @else
                                 {{ __('Status') }}
                               @endif</li>
-                            <a href="{{ route('deposits.index') }}" class="text-sub"
+                            <a href="{{ route('deposits.index', request()->has('user_id') ? ['user_id' => request()->user_id] : []) }}" class="text-sub"
                                @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                 <li @if(empty(request()->get('status'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
@@ -84,7 +84,7 @@
                               @else
                                 {{ __('Tariff plans') }}
                               @endif</li>
-                            <a href="{{ route('deposits.index') }}" class="text-sub"
+                            <a href="{{ route('deposits.index', request()->has('user_id') ? ['user_id' => request()->user_id] : []) }}" class="text-sub"
                                @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                                 <li @if(empty(request()->get('rate'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>

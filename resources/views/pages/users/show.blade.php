@@ -56,7 +56,8 @@
             <a style="margin-left:20px;" href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
           </div>
           <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
-              <a href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <a href="{{ route('deposits.index', ['user_id' => $user->id]) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>@else {{ __('Deposits') }} @endif</a>
+              <a style="margin-left:20px;" href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
           </div>
         </div>
