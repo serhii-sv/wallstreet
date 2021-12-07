@@ -116,6 +116,14 @@
                     {{ __('Login#') }}
                     @endif</span>
               </th>
+                <th>
+                <span>
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Teamlead' contenteditable="true">{{ __('Teamlead') }}</editor_block>
+                    @else
+                        {{ __('Teamlead') }}
+                    @endif</span>
+                </th>
               <th>
                 <span>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>
