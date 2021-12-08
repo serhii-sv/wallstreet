@@ -85,6 +85,16 @@ class RolesController extends Controller
         ]);
         $role = Role::findById($id);
         if($role->is_fixed){
+            if ($request->color != $role->color) {
+                $role->color = $request->color;
+                $role->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Цвет успешно изменен!'
+                ]);
+            }
+
             return response()->json([
                 'success' => false,
                 'message' => 'Эту роль нельзя изменять!'
