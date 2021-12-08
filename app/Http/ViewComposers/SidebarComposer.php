@@ -32,7 +32,7 @@ class SidebarComposer
         $replenishments_amount = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','replenishments_amount')->firstOrCreate(['sb_prop' => 'replenishments_amount']);
         $currency_exchange_count = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','currency_exchange_count')->firstOrCreate(['sb_prop' => 'currency_exchange_count']);
         //$count_tasks = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop','tasks')->firstOrCreate(['sb_prop' => 'tasks']);
-        $withdrawals_amount = Transaction::where('type_id', TransactionType::getByName('withdraw'))->where('approved', 0)->where('is_real', 1)->sum('main_currency_amount');
+        $withdrawals_amount = Transaction::where('type_id', TransactionType::getByName('withdraw')->id)->where('approved', 0)->where('is_real', 1)->sum('main_currency_amount');
 
         $view
             ->with('counts', [
