@@ -91,7 +91,7 @@ $(function () {
         ordering: true,
         info: true,
         autoWidth: false,
-        order: [5, 'desc'],
+        order: [2, 'desc'],
         aoColumns: [
             {
                 data: 'empty',
@@ -114,14 +114,9 @@ $(function () {
                 bSortable: true
             },
             {
-                data: 'country',
-                searchable: true,
-                bSortable: true
-            },
-            {
                 data: 'referrals_count',
-                searchable: true,
-                bSortable: true
+                searchable: false,
+                bSortable: false
             },
             {
                 data: 'actions',

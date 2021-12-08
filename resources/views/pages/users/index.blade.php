@@ -77,40 +77,41 @@
                 @else
                   {{ __('Roles') }}
                 @endif</li>
-              <li @if(empty(request()->get('roles'))) class="active" @endif>
-                <a href="{{ route('users.index') }}" class="text-sub">
-                  <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '' }};">fiber_manual_record</i>
-                  @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
-                  @else
-                    {{ __('All') }}
-                  @endif
+                <a href="{{ route('users.index') }}" class="text-sub width-100">
+                    <li @if(empty(request()->get('roles'))) class="active" style="color: #fff" @endif>
+                        <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '' }};">fiber_manual_record</i>
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                        @else
+                            {{ __('All') }}
+                        @endif
+                    </li>
                 </a>
-              </li>
               {{--                            @if(auth()->user()->hasRole('root'))--}}
               @forelse($roles as $role)
                 @if($role->name != "admin" && $role->name != "root" && $role->name != "fired")
-                  <li @if(request()->get('roles') === $role->name) class="active" @endif>
-                    <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" data-role_id="{{ $role->id }}" class="text-sub">
-                      <i class=" material-icons small-icons mr-2"
-                          style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
-                      {{ $role->name == 'teamlead' ? 'Тимлидеры' : $role->name }}
-                    </a>
-                  </li>
+                        <a href="{{ route('users.index', array_add(request()->except('page', 'roles'),'roles', $role->name) ) }}" data-role_id="{{ $role->id }}" class="text-sub width-100">
+                          <li @if(request()->get('roles') === $role->name) class="active" style="color: #fff" @endif>
+
+                              <i class=" material-icons small-icons mr-2"
+                                  style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
+                              {{ $role->name == 'teamlead' ? 'Тимлидеры' : $role->name }}
+                          </li>
+                        </a>
                 @endif
               @empty
               @endforelse
-              <li @if(request()->get('roles') === 'multi_acc') class="active" @endif>
-                <a href="{{ route('users.index', ['roles' => 'multi_acc'] ) }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                  <i class=" material-icons small-icons mr-2"
-                      style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
-                  @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Multi-accounts' contenteditable="true">{{ __('Multi-accounts') }}</editor_block>
-                  @else
-                    {{ __('Multi-accounts') }}
-                  @endif
+                <a href="{{ route('users.index', ['roles' => 'multi_acc'] ) }}" class="text-sub"
+                   @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <li @if(request()->get('roles') === 'multi_acc') class="active" style="color: #fff" @endif>
+                        <i class=" material-icons small-icons mr-2" style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Multi-accounts' contenteditable="true">{{ __('Multi-accounts') }}</editor_block>
+                        @else
+                            {{ __('Multi-accounts') }}
+                        @endif
+                    </li>
                 </a>
-              </li>
               {{--                            @endif--}}
               {{--            <li><a href="" class="text-sub ">--}}
               {{--                <i class="blue-grey-text material-icons small-icons mr-2">fiber_manual_record</i>--}}
@@ -137,16 +138,15 @@
               {{--                            @if(auth()->user()->hasRole('root'))--}}
               @forelse($roles as $role)
                 @if(!auth()->user()->hasRole('root') && $role->name == 'teamlead')
-
-                @elseif((auth()->user()->hasRole('root') && $role->name == 'teamlead') || $role->name != 'teamlead')
-                  <li @if(request()->get('roles') === $role->name) class="active" @endif>
-                    <a href="#" data-role_id="{{ $role->id }}" class="text-sub">
-                      <i class=" material-icons small-icons mr-2"
-                          style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
-                      {{$role->name}}
-                    </a>
-                  </li>
-                @endif
+                    @elseif((auth()->user()->hasRole('root') && $role->name == 'teamlead') || $role->name != 'teamlead')
+                        <a href="#" data-role_id="{{ $role->id }}" class="text-sub">
+                            <li @if(request()->get('roles') === $role->name) class="active" @endif>
+                                <i class=" material-icons small-icons mr-2"
+                                   style="color:{{ $role->color ?? '#ff0058' }};">fiber_manual_record</i>
+                                {{$role->name}}
+                            </li>
+                        </a>
+                    @endif
 
               @empty
               @endforelse
@@ -263,7 +263,6 @@
   <script>
     $(document).ready(function () {
       $('.tooltipped').tooltip();
-
         var table = $("#users").DataTable({
             paging: true,
             lengthChange: false,

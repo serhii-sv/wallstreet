@@ -57,16 +57,18 @@
                               @else
                                 {{ __('Types') }}
                               @endif</li>
-                            <li @if(empty(request()->get('type'))) class="active" @endif>
-                                <a href="{{ route('notifications.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <a href="{{ route('notifications.index') }}" class="text-sub"
+                               @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                <li @if(empty(request()->get('type'))) class="active" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                  @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
-                                  @else
-                                    {{ __('All') }}
-                                  @endif
-                                </a>
-                            </li>
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='All'
+                                                      contenteditable="true">{{ __('All') }}</editor_block>
+                                    @else
+                                        {{ __('All') }}
+                                    @endif
+                                </li>
+                            </a>
 
                         </ul>
                     </div>

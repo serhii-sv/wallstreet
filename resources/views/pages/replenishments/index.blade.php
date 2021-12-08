@@ -146,6 +146,14 @@
                     @else
                         {{ __('Repl type') }}
                     @endif</th>
+                <th>
+                <span>
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Replenished' contenteditable="true">{{ __('Replenished') }}</editor_block>
+                    @else
+                        {{ __('Replenished') }}
+                    @endif</span>
+                </th>
               <th>@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>
                 @else

@@ -120,6 +120,7 @@ class UsersController extends Controller
                             'user' => $user,
                             'partner' => $user->partner,
                         ])->render(),
+                        'ip' => null,
 //                        'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
                         'actions' => view('pages.users.partials.actions', compact('user'))->render(),

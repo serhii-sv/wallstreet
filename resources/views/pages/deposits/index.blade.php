@@ -52,25 +52,24 @@
                               @else
                                 {{ __('Status') }}
                               @endif</li>
-                            <li @if(empty(request()->get('status'))) class="active" @endif>
-                                <a href="{{ route('deposits.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
-                                >
+                            <a href="{{ route('deposits.index', request()->has('user_id') ? ['user_id' => request()->user_id] : []) }}" class="text-sub"
+                               @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                <li @if(empty(request()->get('status'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                  @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
-                                  @else
-                                    {{ __('All') }}
-                                  @endif
-                                </a>
-                            </li>
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                    @else
+                                        {{ __('All') }}
+                                    @endif
+                                </li>
+                            </a>
                             @forelse($deposits_status as $key => $status)
-                                <li @if(request()->get('status') === $status) class="active" @endif>
-                                    <a href="{{ route('deposits.index', array_add(request()->except('page', 'status'),'status', $status ) ) }}"
-                                       class="text-sub">
+                                <a href="{{ route('deposits.index', array_add(request()->except('page', 'status'),'status', $status ) ) }}" class="text-sub">
+                                    <li @if(request()->get('status') === $status) class="active" style="color: #fff" @endif>
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
                                         {{ $key }}
-                                    </a>
-                                </li>
+                                    </li>
+                                </a>
                             @empty
                             @endforelse
                         </ul>
@@ -85,24 +84,25 @@
                               @else
                                 {{ __('Tariff plans') }}
                               @endif</li>
-                            <li @if(empty(request()->get('rate'))) class="active" @endif>
-                                <a href="{{ route('deposits.index') }}" class="text-sub" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                            <a href="{{ route('deposits.index', request()->has('user_id') ? ['user_id' => request()->user_id] : []) }}" class="text-sub"
+                               @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                <li @if(empty(request()->get('rate'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
-                                  @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
-                                  @else
-                                    {{ __('All') }}
-                                  @endif
-                                </a>
-                            </li>
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='All' contenteditable="true">{{ __('All') }}</editor_block>
+                                    @else
+                                        {{ __('All') }}
+                                    @endif
+                                </li>
+                            </a>
                             @forelse($deposits_rates as $key => $rate)
-                                <li @if(request()->get('rate') === $rate->id) class="active" @endif>
-                                    <a href="{{ route('deposits.index', array_add(request()->except('page', 'rate'),'rate', $rate->id ) ) }}"
-                                       class="text-sub">
+                                <a href="{{ route('deposits.index', array_add(request()->except('page', 'rate'),'rate', $rate->id ) ) }}"
+                                   class="text-sub">
+                                    <li @if(request()->get('rate') === $rate->id) class="active" style="color: #fff" @endif>
                                         <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
                                         {{ $rate->name }}
-                                    </a>
-                                </li>
+                                    </li>
+                                </a>
                             @empty
                             @endforelse
                         </ul>
