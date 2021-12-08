@@ -136,7 +136,7 @@
     @endif
 
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REPLENISHMENTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSITS]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::WITHDRAWALS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSACTIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_RATES_INDEX]) )
-      <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*')  ) active @endif">
+      <li class="bold @if(Route::is('replenishments.*') || Route::is('deposits.*') || Route::is('withdrawals.*') ||  Route::is('transactions.*') || Route::is('currency-exchange.*') || Route::is('currency-rates.*') || Route::is('bonuses.*') || Route::is('currency-exchange') || Route::is('payment_systems.*')  ) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">account_balance</i>
           <span class="menu-title">@if(canEditLang() && checkRequestOnEdit())
@@ -203,7 +203,8 @@
                     @endif
                   </span>
                   @if($counts['withdrawals_amount'])
-                    <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>@endif
+                    <span class="badge badge pill red float-right mr-3">${{ $counts['withdrawals_amount'] }}</span>
+                    @endif
                 </a>
               </li>
             @endif
@@ -223,7 +224,7 @@
             @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::CURRENCY_EXCHANGE_INDEX]))
               <li class="bold">
-                <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a class="waves-effect waves-cyan {{ (Route::is('currency-exchange') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('deposits*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('currency-exchange') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i class="material-icons">autorenew</i>
                   <span class="menu-title">
                     @if(canEditLang() && checkRequestOnEdit())
@@ -272,7 +273,7 @@
     @endif
 
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NOTIFICATIONS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::DEPOSIT_BONUSES]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::RATES_INDEX]))
-      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses') || Route::is('referrals-and-banners.*')  || Route::is('referrals.*') || Route::is('rates.*')) active @endif">
+      <li class="bold @if(Route::is('notifications.*') || Route::is('deposit.bonuses')  || Route::is('referrals.*') || Route::is('rates.*') || Route::is('user.phone.verification') || Route::is('referrals-and-banners.referrals')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">trending_up</i>
           <span class="menu-title">
@@ -330,7 +331,7 @@
             @endif
 
             <li class="bold">
-              <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
+              <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
                   href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                 <i class="material-icons">show_chart</i>
                 <span class="menu-title">
@@ -379,20 +380,20 @@
         </a>
       </li>
     @endif
-    <li class="bold">
-      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-        <i class="material-icons">devices</i>
-        <span class="menu-title">
-          @if(canEditLang() && checkRequestOnEdit())
-            <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>
-          @else
-            {{ __('Mobile app') }}
-          @endif
-        </span>
-      </a>
-    </li>
+{{--    <li class="bold">--}}
+{{--      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>--}}
+{{--        <i class="material-icons">devices</i>--}}
+{{--        <span class="menu-title">--}}
+{{--          @if(canEditLang() && checkRequestOnEdit())--}}
+{{--            <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>--}}
+{{--          @else--}}
+{{--            {{ __('Mobile app') }}--}}
+{{--          @endif--}}
+{{--        </span>--}}
+{{--      </a>--}}
+{{--    </li>--}}
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PRODUCTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
-      <li class="bold @if(Route::is('news.*') || Route::is('news.*') || Route::is('banners.*') || Route::is('video.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*')) active @endif">
+      <li class="bold @if(Route::is('news.*') || Route::is('news.*') || Route::is('banners.*') || Route::is('video.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*') || Route::is('referrals-and-banners.banners.all')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
           <i class="material-icons">web</i>
           <span class="menu-title">

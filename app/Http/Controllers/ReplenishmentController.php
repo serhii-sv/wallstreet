@@ -30,7 +30,6 @@ class ReplenishmentController extends Controller
                 $transactions->where('approved', $request->type);
             }
 
-            //->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir'])
             /*
             * Фильтрация, если выбрано
             */
@@ -84,8 +83,10 @@ class ReplenishmentController extends Controller
                     'id' => $transaction->id,
                     'email' => view('pages.replenishments.partials.user-item', compact('transaction'))->render(),
                     'login' => view('pages.replenishments.partials.login', compact('transaction'))->render(),
+                    'teamlead' => view('pages.replenishments.partials.teamlead', compact('transaction'))->render(),
                     'partner' => view('pages.replenishments.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.replenishments.partials.amount', compact('transaction'))->render(),
+                    'replenished' => view('pages.replenishments.partials.replenished', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
                     'approved' => view('pages.replenishments.partials.transaction-status', compact('transaction'))->render(),
                     'repl_type' => view('pages.replenishments.partials.repl_type', compact('transaction'))->render(),

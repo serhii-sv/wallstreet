@@ -23,11 +23,86 @@ $(document).ready(function () {
     }
   })
 
-  $('.new-role-selection a').click(function () {
-    $('#usersForm input[name="role_id"]').val($(this).data('role_id'));
-    $('#usersForm').submit()
-  });
+    if (window.location.pathname !== '/users') {
+        var table = $("#users").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            order: [1, 'desc'],
+            aoColumns: [
+                {
+                    data: 'empty',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'user',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'login',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'email',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'name',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'partner',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
+                    data: 'ip',
+                    searchable: true,
+                    bSortable: true
+                },
 
+                // {
+                //     data: 'country',
+                //     searchable: true,
+                //     bSortable: true
+                // },
+                // {
+                //   data: 'country',
+                //   searchable: false,
+                //   bSortable: false
+                // },
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {},
+            dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
+            language: {
+                processing: "Загрузка",
+                paginate: {
+                    previous: "‹",
+                    next: "›",
+                },
+                emptyTable: 'Нет записей'
+            },
+            columnDefs: [
+                {
+                    targets: 0,
+                    className: "control"
+                },
+            ],
+            createdRow: function (row, data, dataIndex) {
+                $(row).css({'color': data.color})
+            }
+        });
+    }
   // Custom search
   function filterGlobal() {
     table.search($("#global_filter").val(), $("#global_regex").prop("checked"), $("#global_smart").prop("checked")).draw();
@@ -88,13 +163,13 @@ $(document).ready(function () {
     $tr.remove();
   });
 
-  $("#contact-sidenav li").on("click", function () {
-    var $this = $(this);
-    if (!$this.hasClass("sidebar-title")) {
-      $("li").removeClass("active");
-      $this.addClass("active");
-    }
-  });
+  // $("#contact-sidenav li").on("click", function () {
+  //   var $this = $(this);
+  //   if (!$this.hasClass("sidebar-title")) {
+  //     $("li").removeClass("active");
+  //     $this.addClass("active");
+  //   }
+  // });
 
   // Modals Popup
   $(".modal").modal();

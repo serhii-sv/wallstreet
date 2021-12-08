@@ -35,13 +35,13 @@
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Actions' contenteditable="true">{{ __('Actions') }}</editor_block>@else {{ __('Actions') }} @endif</th>
               </tr>
             </thead>
-            
+
             <tbody>
-            
+
             </tbody>
           </table>
         </div>
-        
+
         <div class="responsive-table mt-5">
           <table id="users" class="table white border-radius-4 pt-1">
             <thead>
@@ -50,14 +50,14 @@
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>@else {{ __('User') }} @endif</th>
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>@else {{ __('Name') }} @endif</th>
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email' contenteditable="true">{{ __('Email') }}</editor_block>@else {{ __('Email') }} @endif</th>
-                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>@else {{ __('Country') }} @endif</th>
+{{--                <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block>@else {{ __('Country') }} @endif</th>--}}
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Number of referrals' contenteditable="true">{{ __('Number of referrals') }}</editor_block>@else {{ __('Number of referrals') }} @endif</th>
                 <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Link' contenteditable="true">{{ __('Link') }}</editor_block>@else {{ __('Link') }} @endif</th>
               </tr>
             </thead>
-            
+
             <tbody>
-            
+
             </tbody>
           </table>
         </div>
