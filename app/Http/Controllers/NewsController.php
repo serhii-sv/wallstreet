@@ -71,7 +71,7 @@ class NewsController extends Controller
         }
 
         if ($item) {
-            return redirect(route('news-and-products.index', ['#news']))->with('success_short', 'Новость создана');
+            return redirect(route('news.index', ['#news']))->with('success_short', 'Новость создана');
         }
 
         return back()->with('error_short', 'Новость не создана')->withInput();
@@ -132,7 +132,7 @@ class NewsController extends Controller
         }
 
         if ($item) {
-            return redirect(route('news-and-products.index', ['#news']))->with('success_short', 'Новость обновлена');
+            return redirect(route('news.index', ['#news']))->with('success_short', 'Новость обновлена');
         }
 
         return back()->with('error_short', 'Новость не обновлена')->withInput();
@@ -146,7 +146,7 @@ class NewsController extends Controller
     {
         $item = News::findOrFail($id);
         if ($item->delete()) {
-            return redirect()->route('news-and-products.index', ['#news'])->with('success', __('Новость удалена'));
+            return redirect()->route('news.index', ['#news'])->with('success', __('Новость удалена'));
         }
         return back()->with('error', __('Новочть не удалена'));
     }
