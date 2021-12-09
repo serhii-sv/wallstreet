@@ -7,10 +7,27 @@
 {{-- page style --}}
 @section('page-style')
 <link rel="stylesheet" type="text/css" href="{{asset('css/pages/login.css')}}">
+    <style>
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        .login-card {
+            z-index: 1;
+        }
+    </style>
 @endsection
 
 {{-- page content --}}
 @section('content')
+    <video autoplay muted loop id="myVideo">
+        <source src="{{ asset('intro.mp4') }}" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
 <div id="login-page" class="row">
   <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
 
