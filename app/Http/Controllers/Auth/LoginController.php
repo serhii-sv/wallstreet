@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeviceStat;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserDevice;
@@ -27,16 +28,16 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
+
     use AuthenticatesUsers;
-    
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -45,7 +46,7 @@ class LoginController extends Controller
     public function __construct() {
         $this->middleware(['guest'])->except('logout');
     }
-    
+
     /**
      * @param Request $request
      */
@@ -57,18 +58,21 @@ class LoginController extends Controller
         ], [/* 'recaptchav3' => 'Captcha error! Try again',*/
         ]);
     }
-    
+
     /**
      * @param Request $request
      * @param         $user
      */
     protected function authenticated(Request $request, $user) {
         //
+        if ($user->hasRole((Role::findByName('fired')->name ?? null), 'web')) {
+            $this->logout($request);
+        }
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
     }
-    
+
     /**
      * @param $request
      * @param $user
@@ -82,9 +86,9 @@ class LoginController extends Controller
             'root',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
-        
+
     }
-    
+
     public function createUserAuthDevice(Request $request, $user) {
         $browser = Parser::browserFamily();
         $browser_version = Parser::browserVersion();
@@ -97,7 +101,7 @@ class LoginController extends Controller
             ]);
         }
         $device_stats->update(['count' => $device_stats->count + 1]);
-    
+
         $user_device = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
         if ($user_device !== null) {
             if ($user_device->ip !== $request->ip()) {
@@ -124,7 +128,7 @@ class LoginController extends Controller
             $user_device->save();
         }
     }
-    
+
     public function checkForMultiAccounts(Request $request, $user) {
         $current_ip = $request->ip();
         $main_user = User::where('ip', $current_ip)->where('id', '!=', $user->id)->first();
@@ -135,7 +139,7 @@ class LoginController extends Controller
             $this->createMultiAccountRecord($user, $main_user_log->user_id, $current_ip);
         }
     }
-    
+
     /**
      * @return string
      */
@@ -144,7 +148,7 @@ class LoginController extends Controller
         request()->merge([$field => request()->email]);
         return $field;
     }
-    
+
     public function createMultiAccountRecord($user, $main_user, $ip) {
         if (!(UserMultiAccounts::where('user_id', $user->id)->where('main_user_id', $main_user)->count() > 0)) {
             $multi_acc = new UserMultiAccounts();
