@@ -28,6 +28,9 @@
             .tables {
                 width: 100% !important;
             }
+            .user-email {
+                margin-left: unset !important;
+            }
         }
         @media only screen and (max-width: 1300px) and (min-width: 601px){
             .buttons-block {
@@ -50,7 +53,7 @@
     <div class="card-panel">
       @include('panels.inform')
       <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m8">
           <div class="display-flex media">
             <a href="#" class="avatar">
               <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle"
@@ -62,8 +65,16 @@
                 <span class="grey-text">@</span>
                 <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
               </h6>
-              <span>ID:</span>
-              <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
+                <div class="row">
+                    <div class="col s12 m2">
+                        <span>ID:</span>
+                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
+                    </div>
+                    <div class="col s12 m10 user-email" style="margin-left: -30px">
+                        <span>Email:</span>
+                        <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
