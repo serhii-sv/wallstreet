@@ -104,7 +104,7 @@ class WithdrawalRequestsController extends Controller
                     'approved' => view('pages.withdrawals.partials.external', compact('transaction'))->render(),
                     'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',
-                    'color' => $transaction->user->roles->first()->color ?? '',
+                    'color' => $transaction->user->getRoleColor() ?? '',
                 ];
             }
 

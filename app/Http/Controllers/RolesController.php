@@ -64,37 +64,6 @@ class RolesController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function updateColor(Request $request, $id) {
-        $request->validate([
-            'color' => 'required',
-        ], [
-            'color.required' => 'Укажите цвет роли',
-        ]);
-        $role = Role::findById($id);
-        if($role->is_fixed){
-            return response()->json([
-                'success' => false,
-                'message' => 'Эту роль нельзя изменять!'
-            ]);
-        }
-        if ($role->update($request->except('method', '_token'))) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Роль успешно обновлена!'
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ошибка! Попробуйте заново'
-            ]);
-        }
-    }
-
-    /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */

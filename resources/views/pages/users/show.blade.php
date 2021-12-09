@@ -156,20 +156,21 @@
                           </td>
                       </tr>
                       @php($role = $user->roles()->first())
+                      @php($role_color = $user->getRoleColor())
                       @if($role !== null)
                       <tr>
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Role color' contenteditable="true">{{ __('Role color') }}</editor_block>@else {{ __('Role color') }} @endif:</td>
                           <td class="users-view-role">
                               <div>
                                   <div style="display: flex;align-items: center;width: 100%;">
-                                      <i class="material-icons small-icons mr-2" style="{{ 'color:'. ($role->color ?? '') }};">
+                                      <i class="material-icons small-icons mr-2" style="{{ 'color:'. ($role_color ?? '') }};">
                                           fiber_manual_record
                                       </i>
 
                                       <input class="color_picker" type="text"
                                              name="color"
-                                             value="{{ $role->color ?? '' }}"
-                                             placeholder="{{ $role->color ?? 'Без цвета' }}"
+                                             value="{{ $role_color ?? '' }}"
+                                             placeholder="{{ $role_color ?? 'Без цвета' }}"
                                              autocomplete="off">
 
                                   </div>
@@ -560,7 +561,7 @@
             container: '.colorpicker-container',
         });
         $('.color_picker').colorpicker().on('changeColor.colorpicker', function (event) {
-            $('.material-icons').css('color', event.color.toHex())
+            $('.tables .material-icons').css('color', event.color.toHex())
         });
         let requestCount = 0;
         $('.color_picker').colorpicker().on('hidePicker.colorpicker', function (event) {
@@ -571,12 +572,11 @@
             }
             @if($role !== null)
             $.ajax({
-                url: '{{ route('roles.updateColor', $role) }}',
+                url: '{{ route('users.roles.updateColor', $user) }}',
                 method: 'post',
                 data: {
-                    name: '{{ $role->name ?? null }}',
                     _token: $('meta[name="csrf-token"]').attr('content'),
-                    color: event.color.toHex()
+                    role_color: event.color.toHex()
                 },
                 success: (response) => {
                     if (response.success) {

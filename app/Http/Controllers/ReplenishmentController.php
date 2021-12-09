@@ -79,7 +79,6 @@ class ReplenishmentController extends Controller
             foreach ($transactions->get() as $transaction) {
                 $data[] = [
                     'empty' => '',
-                    'empty2' => '',
                     'id' => $transaction->id,
                     'email' => view('pages.replenishments.partials.user-item', compact('transaction'))->render(),
                     'login' => view('pages.replenishments.partials.login', compact('transaction'))->render(),
@@ -92,7 +91,7 @@ class ReplenishmentController extends Controller
                     'repl_type' => view('pages.replenishments.partials.repl_type', compact('transaction'))->render(),
                     'actions' => view('pages.replenishments.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',
-                    'color' => $transaction->user->roles->first()->color ?? '',
+                    'color' => $transaction->user->getRoleColor() ?? '',
                 ];
             }
 

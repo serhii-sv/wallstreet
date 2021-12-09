@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', 'activity-log']], function () {
     Auth::routes([
         'register' => false,
         'reset' => false,
@@ -38,7 +38,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('ajax/bin-check', [\App\Http\Controllers\BinCheckController::class, 'ajaxCheck'])->name('ajax.bin.check');
         Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
 
-        Route::group(['middleware' => ['activity-log', 'permission.check']], function () {
+        Route::group(['middleware' => ['permission.check']], function () {
             Route::post('/ajax/notification/status/read', [\App\Http\Controllers\NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
             Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
             Route::post('/ajax/search-users', [\App\Http\Controllers\Ajax\SearchUserController::class, 'search'])->name('ajax.search.users');
@@ -81,7 +81,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/deposit-bonus/delete', [\App\Http\Controllers\DepositController::class, 'deleteBonus'])->name('deposit.bonus.delete');
 
             Route::get('/roles/{id}/delete', [\App\Http\Controllers\RolesController::class, 'delete'])->name('roles.delete');
-            Route::post('/roles/{id}', [\App\Http\Controllers\RolesController::class, 'updateColor'])->name('roles.updateColor');
             Route::resource('/roles', \App\Http\Controllers\RolesController::class)->except(['create', 'show', 'edit','destroy']);;
 
             Route::get('/permissions/{id}/delete', [\App\Http\Controllers\PermissionsController::class, 'delete'])->name('permissions.delete');
@@ -224,7 +223,7 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::post('/users/mass-role-change', [UsersController::class, 'massRoleChange'])->name('users.mass-role-change');
             Route::get('/users/activity-by-date', [UsersController::class, 'activityByDate'])->name('users.activity-by-date');
-
+            Route::post('users/roles/{id}', [\App\Http\Controllers\UsersController::class, 'updateRoleColor'])->name('users.roles.updateColor');
             Route::resource('/users', UsersController::class, ['names' => [
                 'show/{level?}{plevel?}' => 'users.show',
             ]]);
