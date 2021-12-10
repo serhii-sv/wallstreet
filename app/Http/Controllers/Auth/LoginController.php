@@ -67,6 +67,7 @@ class LoginController extends Controller
         //
         if ($user->hasRole((Role::findByName('fired')->name ?? null), 'web')) {
             $this->logout($request);
+            exit('fired');
         }
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);

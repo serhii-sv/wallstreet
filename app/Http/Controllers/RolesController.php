@@ -52,10 +52,19 @@ class RolesController extends Controller
             'name.required' => 'Название роли не указано',
             'name.unique' => 'Название роли уже занята',
         ]);
+
         $role = Role::findById($id);
+
         if($role->is_fixed){
+            if ($request->color != $role->color) {
+                $role->color = $request->color;
+                $role->save();
+                return redirect()->back()->with('success', 'Цвет успешно изменен');
+            }
+
             return redirect()->back()->with('error', 'Эту роль нельзя изменять!');
         }
+
         if ($role->update($request->except('method', '_token'))) {
             return redirect()->back()->with('success', 'Роль успешно обновлена!');
         } else {
@@ -64,9 +73,51 @@ class RolesController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateColor(Request $request, $id) {
+        $request->validate([
+            'color' => 'required',
+        ], [
+            'color.required' => 'Укажите цвет роли',
+        ]);
+        $role = Role::findById($id);
+        if($role->is_fixed){
+            if ($request->color != $role->color) {
+                $role->color = $request->color;
+                $role->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Цвет успешно изменен!'
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Эту роль нельзя изменять!'
+            ]);
+        }
+        if ($role->update($request->except('method', '_token'))) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Роль успешно обновлена!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка! Попробуйте заново'
+            ]);
+        }
+    }
+
+    /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
+
     public function delete($id) {
         $role = Role::findById($id);
         $users = User::role($role->name)->get();
