@@ -36,6 +36,11 @@ $(document).ready(function () {
                     bSortable: false
                 },
                 {
+                    data: 'teamlead',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
                     data: 'partner',
                     searchable: false,
                     bSortable: false

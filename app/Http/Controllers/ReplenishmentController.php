@@ -87,7 +87,7 @@ class ReplenishmentController extends Controller
                     'amount' => view('pages.replenishments.partials.amount', compact('transaction'))->render(),
                     'replenished' => view('pages.replenishments.partials.replenished', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
-                    'approved' => view('pages.replenishments.partials.transaction-status', compact('transaction'))->render(),
+//                    'approved' => view('pages.replenishments.partials.transaction-status', compact('transaction'))->render(),
                     'repl_type' => view('pages.replenishments.partials.repl_type', compact('transaction'))->render(),
                     'actions' => view('pages.replenishments.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',

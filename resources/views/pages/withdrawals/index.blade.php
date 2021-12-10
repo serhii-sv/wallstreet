@@ -22,6 +22,10 @@
         justify-content: center;
         align-items: center;
     }
+    .invoice-list-wrapper .responsive-table .top .action-filters .dataTables_filter {
+        width: 90% !important;
+        float: left;
+    }
   </style>
 @endsection
 
@@ -50,13 +54,21 @@
 
       <div class="invoice-filter-action mr-3" style="margin-left:3% !important;">
           <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
-              <span class="hide-on-small-only">Реал</span>
+              <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Paid' contenteditable="true">{{ __('Real') }}</editor_block>
+                  @else
+                      <span class="hide-on-small-only">{{ __('Real') }}</span>
+                  @endif</span>
           </a>
       </div>
 
       <div class="invoice-filter-action mr-3">
           <a href="/withdrawals?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
-              <span class="hide-on-small-only">Фейк</span>
+              <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Paid' contenteditable="true">{{ __('Fake') }}</editor_block>
+                  @else
+                      <span class="hide-on-small-only">{{ __('Fake') }}</span>
+                  @endif</span>
           </a>
       </div>
 
@@ -142,6 +154,13 @@
                     {{ __('Login#') }}
                     @endif</span>
               </th>
+                <th>
+                <span>@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Teamlead' contenteditable="true">{{ __('Teamlead') }}</editor_block>
+                    @else
+                        {{ __('Teamlead') }}
+                    @endif</span>
+                </th>
               <th>
                 <span>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>

@@ -36,6 +36,11 @@ $(document).ready(function () {
                     bSortable: false
                 },
                 {
+                    data: 'teamlead',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
                     data: 'partner',
                     searchable: false,
                     bSortable: false
@@ -51,7 +56,12 @@ $(document).ready(function () {
                     bSortable: true
                 },
                 {
-                    data: 'approved',
+                    data: 'repl_type',
+                    searchable: false,
+                    bSortable: true
+                },
+                {
+                    data: 'replenished',
                     searchable: false,
                     bSortable: true
                 },
