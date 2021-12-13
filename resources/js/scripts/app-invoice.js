@@ -30,11 +30,11 @@ $(document).ready(function () {
                     searchable: false,
                     bSortable: false
                 },
-                {
-                    data: 'login',
-                    searchable: false,
-                    bSortable: false
-                },
+                // {
+                //     data: 'login',
+                //     searchable: false,
+                //     bSortable: false
+                // },
                 {
                     data: 'teamlead',
                     searchable: false,
