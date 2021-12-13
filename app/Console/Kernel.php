@@ -6,6 +6,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CalculateReferralsTotalInvestedAndPersonalTurnover;
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\CryptoCurrencyRateLog;
@@ -37,6 +38,7 @@ class Kernel extends ConsoleKernel
         DepositQueueCommand::class,
         CryptoCurrencyRateLog::class,
         SetRateNonFixedCurrency::class,
+        CalculateReferralsTotalInvestedAndPersonalTurnover::class
     ];
 
     /**
@@ -58,6 +60,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
+        $schedule->command('calculate:invested-total-and-turnover')->hourly();
     }
 
     /**

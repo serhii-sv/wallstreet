@@ -21,6 +21,26 @@
             right: 0;
             bottom: 0;
         }
+        @media only screen and (max-width: 601px)  {
+            .row .display-flex.justify-content-end {
+                justify-content: center;
+            }
+            .tables {
+                width: 100% !important;
+            }
+            .user-email {
+                margin-left: unset !important;
+            }
+        }
+        @media only screen and (max-width: 1300px) and (min-width: 601px){
+            .buttons-block {
+                float: none !important;
+            }
+
+            .tables {
+                width: 50% !important;
+            }
+        }
     </style>
 @endsection
 
@@ -33,7 +53,7 @@
     <div class="card-panel">
       @include('panels.inform')
       <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m8">
           <div class="display-flex media">
             <a href="#" class="avatar">
               <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle"
@@ -45,37 +65,44 @@
                 <span class="grey-text">@</span>
                 <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
               </h6>
-              <span>ID:</span>
-              <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
+                <div class="row">
+                    <div class="col s12 m2">
+                        <span>ID:</span>
+                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
+                    </div>
+                    <div class="col s12 m10 user-email" style="margin-left: -30px">
+                        <span>Email:</span>
+                        <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
-        <div style="width:30%; float:right;">
-          <div class="mb-2 width-100 display-flex justify-content-end">
-            <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo ">
-              <i class="material-icons">mail_outline</i>
-            </a>
-            @if(auth()->user()->id !== $user->id)
-              <a style="margin-left:20px;" href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}" class="btn-small purple darken-4 " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Log in' contenteditable="true">{{ __('Log in') }}</editor_block>@else {{ __('Log in') }} @endif</a>
-            @endif
+          <div class="col s12 m4 mb-2 buttons-block" style="float: right">
+              <div class="mb-2 width-100 display-flex justify-content-end">
+                  <a href="mailto:{{ $user->email }}" class="btn-small btn-light-indigo ">
+                      <i class="material-icons">mail_outline</i>
+                  </a>
+                  @if(auth()->user()->id !== $user->id)
+                      <a style="margin-left:20px;" href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}" class="btn-small purple darken-4 " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Log in' contenteditable="true">{{ __('Log in') }}</editor_block>@else {{ __('Log in') }} @endif</a>
+                  @endif
+              </div>
+              <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
+                  <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block>@else {{ __('Referrals') }} @endif</a>
+                  <a style="margin-left:20px;" href="{{ route('user.reftree', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block>@else {{ __('Referral tree') }} @endif</a>
+              </div>
+              <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
+                  <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral list' contenteditable="true">{{ __('Referral list') }}</editor_block>@else {{ __('Referral list') }} @endif</a>
+                  <a style="margin-left:20px;" href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
+              </div>
+              <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
+                  <a href="{{ route('deposits.index', ['user_id' => $user->id]) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>@else {{ __('Deposits') }} @endif</a>
+                  <a style="margin-left:20px;" href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
+              </div>
           </div>
-          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
-            <a href="{{ route('users.reftree', $user) }}" class="btn-small cyan " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block>@else {{ __('Referrals') }} @endif</a>
-            <a style="margin-left:20px;" href="{{ route('user.reftree', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block>@else {{ __('Referral tree') }} @endif</a>
-          </div>
-          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
-            <a href="{{ route('users.referral.list', $user) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Referral list' contenteditable="true">{{ __('Referral list') }}</editor_block>@else {{ __('Referral list') }} @endif</a>
-            <a style="margin-left:20px;" href="{{ route('user-transactions.index', $user) }}" class="btn-small grey" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block>@else {{ __('Transactions') }} @endif</a>
-          </div>
-          <div style="margin-top:20px;" class="mb-2 width-100 display-flex justify-content-end">
-              <a href="{{ route('deposits.index', ['user_id' => $user->id]) }}" class="btn-small cyan" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Deposits' contenteditable="true">{{ __('Deposits') }}</editor_block>@else {{ __('Deposits') }} @endif</a>
-              <a style="margin-left:20px;" href="{{ route('users.edit', $user) }}" class="btn-small indigo " @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                  @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Edit' contenteditable="true">{{ __('Edit') }}</editor_block>@else {{ __('Edit') }} @endif</a>
-          </div>
-        </div>
-
-          <div class="row">
-              <div class="col s4">
+{{--          <div class="row">--}}
+              <div class="col s12 m4 tables">
                   <table class="striped">
                       <tbody>
                       <tr>
@@ -106,7 +133,7 @@
                       </tbody>
                   </table>
               </div>
-              <div class="col s4">
+              <div class="col s12 m4 tables">
                   <table class="striped">
                       <tbody>
 
@@ -129,20 +156,21 @@
                           </td>
                       </tr>
                       @php($role = $user->roles()->first())
+                      @php($role_color = $user->getRoleColor())
                       @if($role !== null)
                       <tr>
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Role color' contenteditable="true">{{ __('Role color') }}</editor_block>@else {{ __('Role color') }} @endif:</td>
                           <td class="users-view-role">
                               <div>
                                   <div style="display: flex;align-items: center;width: 100%;">
-                                      <i class="material-icons small-icons mr-2" style="{{ 'color:'. ($role->color ?? '') }};">
+                                      <i class="material-icons small-icons mr-2" style="{{ 'color:'. ($role_color ?? '') }};">
                                           fiber_manual_record
                                       </i>
 
                                       <input class="color_picker" type="text"
                                              name="color"
-                                             value="{{ $role->color ?? '' }}"
-                                             placeholder="{{ $role->color ?? 'Без цвета' }}"
+                                             value="{{ $role_color ?? '' }}"
+                                             placeholder="{{ $role_color ?? 'Без цвета' }}"
                                              autocomplete="off">
 
                                   </div>
@@ -153,7 +181,7 @@
                         @endif
                       </tbody>
                   </table>
-              </div>
+{{--              </div>--}}
           </div>
 
       </div>
@@ -533,7 +561,7 @@
             container: '.colorpicker-container',
         });
         $('.color_picker').colorpicker().on('changeColor.colorpicker', function (event) {
-            $('.material-icons').css('color', event.color.toHex())
+            $('.tables .material-icons').css('color', event.color.toHex())
         });
         let requestCount = 0;
         $('.color_picker').colorpicker().on('hidePicker.colorpicker', function (event) {
@@ -542,15 +570,13 @@
                 requestCount = 0;
                 return false;
             }
-            console.log('aaaaaa')
             @if($role !== null)
             $.ajax({
-                url: '{{ route('roles.updateColor', $role) }}',
+                url: '{{ route('users.roles.updateColor', $user) }}',
                 method: 'post',
                 data: {
-                    name: '{{ $role->name ?? null }}',
                     _token: $('meta[name="csrf-token"]').attr('content'),
-                    color: event.color.toHex()
+                    role_color: event.color.toHex()
                 },
                 success: (response) => {
                     if (response.success) {

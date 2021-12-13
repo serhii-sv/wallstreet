@@ -59,7 +59,7 @@
                               @endif</li>
                             <a href="{{ route('notifications.index') }}" class="text-sub"
                                @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                                <li @if(empty(request()->get('type'))) class="active" @endif>
+                                <li @if(empty(request()->get('type'))) class="active" style="color: #fff" @endif>
                                     <i class=" material-icons small-icons mr-2">fiber_manual_record</i>
                                     @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='All'

@@ -98,13 +98,14 @@ class WithdrawalRequestsController extends Controller
                     'id' => $transaction->id,
                     'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
                     'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
+                    'teamlead' => view('pages.withdrawals.partials.teamlead', compact('transaction'))->render(),
                     'partner' => view('pages.withdrawals.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
                     'approved' => view('pages.withdrawals.partials.external', compact('transaction'))->render(),
                     'actions' => view('pages.withdrawals.partials.actions', compact('transaction'))->render(),
                     'empty3' => '',
-                    'color' => $transaction->user->roles->first()->color ?? '',
+                    'color' => $transaction->user->getRoleColor() ?? '',
                 ];
             }
 

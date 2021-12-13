@@ -80,7 +80,7 @@ class UsersController extends Controller
                         'city' => $user->city ?? 'Не указано',
                         'ip' => $ip,
                         'actions' => view('pages.users.partials.actions', compact('user'))->render(),
-                        'color' => $user->roles->first()->color ?? '',
+                        'color' => $user->getRoleColor() ?? '',
                     ];
                 }
 
@@ -124,7 +124,7 @@ class UsersController extends Controller
 //                        'country' => $user->country ?? 'Не указано',
                         'city' => $user->city ?? 'Не указано',
                         'actions' => view('pages.users.partials.actions', compact('user'))->render(),
-                        'color' => $user->roles->first()->color ?? '',
+                        'color' => $user->getRoleColor() ?? '',
                     ];
                 }
             }
@@ -421,6 +421,12 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Exception
+     */
     public function userReferralList(Request $request, $id) {
         $user = User::find($id);
         if ($user == null){
@@ -554,6 +560,11 @@ class UsersController extends Controller
         return back()->with('success_short', 'Пользователям назначена роль: ' . $role->name);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function getAvatar($id) {
         $avatar_id = User::findOrFail($id)->avatar;
 
@@ -565,6 +576,11 @@ class UsersController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|void
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function requisitesUpdate(Request $request) {
         $this->validate($request, [
             'user_id' => 'required',
@@ -644,5 +660,30 @@ class UsersController extends Controller
         });
 
         return back()->with('success_short', 'Операция успешно проведена');
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateRoleColor(Request $request, $id) {
+        $request->validate([
+            'role_color' => 'required',
+        ], [
+            'role_color.required' => 'Укажите цвет роли',
+        ]);
+        $user = User::findOrFail($id);
+        if ($user->update($request->except('method', '_token'))) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Цвет роли успешно обновлена!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка! Попробуйте заново'
+            ]);
+        }
     }
 }

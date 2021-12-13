@@ -35,7 +35,6 @@ $(document).ready(function () {
                     searchable: false,
                     bSortable: false
                 },
-
                 {
                     data: 'teamlead',
                     searchable: false,
@@ -59,14 +58,12 @@ $(document).ready(function () {
                 {
                     data: 'repl_type',
                     searchable: false,
-                    bSortable: false,
-                    width: '100%'
+                    bSortable: true
                 },
                 {
                     data: 'replenished',
                     searchable: false,
-                    bSortable: false,
-                    width: '100%'
+                    bSortable: true
                 },
                 {
                     data: 'actions',
@@ -104,7 +101,7 @@ $(document).ready(function () {
                     orderable: false
                 }
             ],
-            order: [4, 'asc'],
+            order: [6, 'desc'],
             dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
             language: {
                 search: "",
@@ -142,7 +139,7 @@ $(document).ready(function () {
         //     }
         // })
 
-        $(document).on('click', '.dt-checkboxes-select-all', function() {
+        $(document).on('click', '.dt-checkboxes-select-all', function () {
             $('tbody .select-checkbox').map((index, checkbox) => {
                 $(checkbox).prop('checked', $(this).find('input[type="checkbox"]').prop('checked'))
             })
@@ -228,10 +225,15 @@ $(document).ready(function () {
             pageLength: 15,
             info: true,
             autoWidth: false,
-            order: [4, 'asc'],
+            order: [5, 'desc'],
             aoColumns: [
                 {
-                    data: 'user_email',
+                    data: 'id',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'email',
                     searchable: true,
                     bSortable: false
                 },
@@ -254,6 +256,11 @@ $(document).ready(function () {
                 },
                 {
                     data: 'created_at',
+                    searchable: true,
+                    bSortable: false
+                },
+                {
+                    data: 'open_operation',
                     searchable: true,
                     bSortable: false
                 },
@@ -286,10 +293,15 @@ $(document).ready(function () {
             pageLength: 15,
             info: true,
             autoWidth: false,
-            order: [5, 'asc'],
+            order: [5, 'desc'],
             aoColumns: [
                 {
-                    data: 'user_email',
+                    data: 'id',
+                    searchable: false,
+                    bSortable: false
+                },
+                {
+                    data: 'email',
                     searchable: true,
                     bSortable: false
                 },

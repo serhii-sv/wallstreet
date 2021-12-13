@@ -24,6 +24,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $name
  * @property string $email
  * @property string $login
+ * @property string|null $role_color
  * @property string|null $partner_id
  * @property string|null $phone
  * @property string|null $skype
@@ -218,6 +219,9 @@ class User extends Authenticatable
         'index',
         'phone_verified',
         'auth_with_phone',
+        'role_color',
+        'referrals_invested_total',
+        'personal_turnover'
     ];
 
     /**
@@ -538,5 +542,21 @@ class User extends Authenticatable
     public function loginSecurity()
     {
         return $this->hasOne(LoginSecurity::class, 'user_id');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRoleColor()
+    {
+        if ($this->role_color) {
+            return $this->role_color;
+        }
+        $role = $this->roles()->first();
+
+        if ($role !== null) {
+            return $role->color;
+        }
+        return null;
     }
 }

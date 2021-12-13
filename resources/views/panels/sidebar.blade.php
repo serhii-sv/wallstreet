@@ -233,8 +233,8 @@
                       {{ __('Currency exchange') }}
                     @endif
                     </span>
-                  @if($counts['currency_exchange_count'])
-                    <span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>@endif
+{{--                  @if($counts['currency_exchange_count'])--}}
+{{--                    <span class="badge badge pill purple float-right mr-3">{{ $counts['currency_exchange_count'] }}</span>@endif--}}
                 </a>
               </li>
             @endif
