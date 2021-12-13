@@ -70,7 +70,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
             $user->update([
                 'referrals_invested_total' => $total_referral_invested,
                 'personal_turnover' => $personal_turnover,
-                'referrals_count' => $referrals_count
+                'total_referrals_count' => $referrals_count
             ]);
         }
         return Command::SUCCESS;
