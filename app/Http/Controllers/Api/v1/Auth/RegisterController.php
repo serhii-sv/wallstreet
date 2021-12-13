@@ -151,6 +151,8 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        \Log::critical(print_r($request->all(),true));
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
