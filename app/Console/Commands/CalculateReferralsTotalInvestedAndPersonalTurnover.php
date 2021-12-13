@@ -46,6 +46,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
         foreach (User::all() as $user) {
             $all_referrals = $user->getAllReferralsInArray();
             $total_referral_invested = 0;
+            $referrals_count = 0;
             foreach ($all_referrals as $referral) {
                 $referral
                     ->deposits()
@@ -54,6 +55,10 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
                     ->each(function (Deposit $deposit) use (&$total_referral_invested, $usdCurrency) {
                         $total_referral_invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
                     });
+
+                $referrals_count += $referral->deposits()
+                    ->where('active', 1)
+                    ->count() > 0 ? 1 : 0;
             }
             $personal_turnover = 0;
             $user->deposits()
@@ -64,7 +69,8 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
                 });
             $user->update([
                 'referrals_invested_total' => $total_referral_invested,
-                'personal_turnover' => $personal_turnover
+                'personal_turnover' => $personal_turnover,
+                'referrals_count' => $referrals_count
             ]);
         }
         return Command::SUCCESS;
