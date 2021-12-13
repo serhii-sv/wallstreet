@@ -47,13 +47,12 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
             $all_referrals = $user->getAllReferralsInArray();
             $total_referral_invested = 0;
             foreach ($all_referrals as $referral) {
-                $invested = 0;
                 $referral
                     ->deposits()
                     ->where('active', 1)
                     ->get()
-                    ->each(function (Deposit $deposit) use (&$invested, $usdCurrency) {
-                        $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+                    ->each(function (Deposit $deposit) use (&$total_referral_invested, $usdCurrency) {
+                        $total_referral_invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
                     });
             }
             $personal_turnover = 0;
