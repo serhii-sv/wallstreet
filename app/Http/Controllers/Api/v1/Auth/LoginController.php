@@ -65,6 +65,8 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
+        \Log::critical(print_r($request->all(),true));
+
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string'
