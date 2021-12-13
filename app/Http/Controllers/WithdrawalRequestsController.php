@@ -97,7 +97,7 @@ class WithdrawalRequestsController extends Controller
                     'empty2' => '',
                     'id' => $transaction->id,
                     'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
-                    'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
+//                    'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
                     'teamlead' => view('pages.withdrawals.partials.teamlead', compact('transaction'))->render(),
                     'partner' => view('pages.withdrawals.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),

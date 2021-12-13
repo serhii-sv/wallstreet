@@ -147,13 +147,13 @@
                     {{ __('Email#') }}
                     @endif</span>
               </th>
-              <th>
-                <span>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Login#' contenteditable="true">{{ __('Login#') }}</editor_block>
-                  @else
-                    {{ __('Login#') }}
-                    @endif</span>
-              </th>
+{{--              <th>--}}
+{{--                <span>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                    <editor_block data-name='Login#' contenteditable="true">{{ __('Login#') }}</editor_block>--}}
+{{--                  @else--}}
+{{--                    {{ __('Login#') }}--}}
+{{--                    @endif</span>--}}
+{{--              </th>--}}
                 <th>
                 <span>@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Teamlead' contenteditable="true">{{ __('Teamlead') }}</editor_block>
