@@ -16,6 +16,7 @@ use App\Console\Commands\InstallScriptCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
+use App\Console\Commands\SetUserDocumentVerified;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -36,7 +37,8 @@ class Kernel extends ConsoleKernel
         CheckPaymentSystemsConnectionsCommand::class,
         DepositQueueCommand::class,
         CryptoCurrencyRateLog::class,
-        SetRateNonFixedCurrency::class
+        SetRateNonFixedCurrency::class,
+        SetUserDocumentVerified::class
     ];
 
     /**
@@ -58,6 +60,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
+        $schedule->command('user-documents:set-verified')->everyMinute();
     }
 
     /**
