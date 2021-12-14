@@ -72,7 +72,7 @@ function getAdminDepositsSumClosingAtDate($date = null, $limit = 100)
         return [];
     }
 
-    return cache()->tags('depositsSumClosingAtDate')->remember('a.depositsSumClosingAtDate.' . $date . '.limit-' . $limit, getCacheALifetime('depositsSumClosingAtDate'), function () use ($date, $limit) {
+    return cache()->remember('a.depositsSumClosingAtDate.' . $date . '.limit-' . $limit, getCacheALifetime('depositsSumClosingAtDate'), function () use ($date, $limit) {
         $depositsAtDate = \App\Models\Deposit::where('datetime_closing', 'like', \Carbon\Carbon::parse($date)->toDateString() . '%');
         $closingDeposits = [];
         $closingDepositsSum = [];
@@ -124,7 +124,7 @@ function getAdminMoneyTrafficStatistic($days = null, $currency = null) {
         return [];
     }
 
-    return cache()->tags('moneyTrafficStatistic')->remember('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency, getCacheALifetime('moneyTrafficStatistic'), function () use ($days, $currency) {
+    return cache()->remember('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency, getCacheALifetime('moneyTrafficStatistic'), function () use ($days, $currency) {
         $daysArray = [];
         $currency = \App\Models\Currency::where('code', $currency)->first();
         $typeEnter = \App\Models\TransactionType::getByName('enter');
@@ -136,7 +136,7 @@ function getAdminMoneyTrafficStatistic($days = null, $currency = null) {
 
         for ($i = $days; $i > 0; $i--) {
             $day = \Carbon\Carbon::now()->subDays($i);
-            $daysArray[$day->format('Y-m-d')] = cache()->tags('moneyTrafficStatistic.specificDay')->rememberForever('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency . '.date-' . $day->toFormattedDateString(), function () use ($days, $currency, $typeEnter, $typeWithdraw, $day) {
+            $daysArray[$day->format('Y-m-d')] = cache()->rememberForever('a.moneyTrafficStatistic.days-' . $days . '.currency-' . $currency . '.date-' . $day->toFormattedDateString(), function () use ($days, $currency, $typeEnter, $typeWithdraw, $day) {
                 $enter = \App\Models\Transaction::where('currency_id', $currency->id)->where('type_id', $typeEnter->id)->where('created_at', '>=', $day->format('Y-m-d') . ' 00:00:01')->where('created_at', '<=', $day->format('Y-m-d') . ' 23:59:59')->sum('amount');
                 $withdrew = \App\Models\Transaction::where('currency_id', $currency->id)->where('type_id', $typeWithdraw->id)->where('created_at', '>=', $day->format('Y-m-d') . ' 00:00:01')->where('created_at', '<=', $day->format('Y-m-d') . ' 23:59:59')->sum('amount');
                 return [
@@ -225,7 +225,7 @@ function checkRequestOnEdit() : bool {
  */
 function getTotalAccounts(\Carbon\Carbon $date = null): int
 {
-    return cache()->tags('totalAccounts')->remember('i.totalAccounts.date-' . $date, now()->addHour(), function () use ($date) {
+    return cache()->remember('i.totalAccounts.date-' . $date, now()->addHour(), function () use ($date) {
         if (null !== $date) {
             return \App\Models\User::where('created_at', '<=', $date->format('Y-m-d') . '00:00:01')
                 ->where('created_at', '>=', $date->format('Y-m-d') . '23:59:29')
@@ -253,7 +253,7 @@ function getClosedDepositsCount(\Carbon\Carbon $date = null): int
  */
 function getDepositsCount($active = null, \Carbon\Carbon $date = null): int
 {
-    return cache()->tags('depositsCount')->remember('depositsCount.' . ($active ? $active : 'd') . '.date-' . $date, now()->addHour(), function () use ($active, $date) {
+    return cache()->remember('depositsCount.' . ($active ? $active : 'd') . '.date-' . $date, now()->addHour(), function () use ($active, $date) {
         $deposits = \App\Models\Deposit::select('*');
 
         if (null != $active) {
