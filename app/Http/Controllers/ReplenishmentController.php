@@ -81,7 +81,7 @@ class ReplenishmentController extends Controller
                     'empty' => '',
                     'id' => $transaction->id,
                     'email' => view('pages.replenishments.partials.user-item', compact('transaction'))->render(),
-                    'login' => view('pages.replenishments.partials.login', compact('transaction'))->render(),
+//                    'login' => view('pages.replenishments.partials.login', compact('transaction'))->render(),
                     'teamlead' => view('pages.replenishments.partials.teamlead', compact('transaction'))->render(),
                     'partner' => view('pages.replenishments.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.replenishments.partials.amount', compact('transaction'))->render(),
