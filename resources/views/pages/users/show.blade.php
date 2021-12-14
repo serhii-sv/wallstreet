@@ -55,27 +55,28 @@
       <div class="row">
         <div class="col s12 m8">
           <div class="display-flex media">
-            <a href="#" class="avatar">
-              <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle"
-                  height="64" width="64">
-            </a>
-            <div class="media-body">
-              <h6 class="media-heading">
-                <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
-                <span class="grey-text">@</span>
-                <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
-              </h6>
-                <div class="row">
-                    <div class="col s12 m2">
-                        <span>ID:</span>
-                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
-                    </div>
-                    <div class="col s12 m10 user-email" style="margin-left: -30px">
-                        <span>Email:</span>
-                        <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
-                    </div>
-                </div>
-            </div>
+              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}">
+                  <div class="avatar">
+                      <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle" height="64" width="64">
+                  </div>
+                  <div class="media-body width-50">
+                      <h6 class="media-heading">
+                          <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
+                          <span class="grey-text">@</span>
+                          <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
+                      </h6>
+                      <div class="row">
+                          {{--                    <div class="col s12 m2">--}}
+                          {{--                        <span>ID:</span>--}}
+                          {{--                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>--}}
+                          {{--                    </div>--}}
+                          <div class="col s12 m10">
+                              <span>Email:</span>
+                              <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                          </div>
+                      </div>
+                  </div>
+              </a>
           </div>
         </div>
           <div class="col s12 m4 mb-2 buttons-block" style="float: right">
