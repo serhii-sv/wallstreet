@@ -8,6 +8,7 @@ use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserAuthLog;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
