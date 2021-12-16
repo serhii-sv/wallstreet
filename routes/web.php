@@ -93,7 +93,7 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
 
             Route::post('/replenishments/approve-many', [\App\Http\Controllers\ReplenishmentController::class, 'approveMany'])->name('withdrawals.approve-many');
             Route::get('/replenishments/approveManually/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'approveManually'])->name('replenishments.approveManually');
-            Route::get('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
+            Route::any('/replenishments/destroy/{id}', [\App\Http\Controllers\ReplenishmentController::class, 'destroy'])->name('replenishments.destroy');
             Route::resource('/replenishments', \App\Http\Controllers\ReplenishmentController::class)->except('destroy');
 
             Route::resource('/withdrawals', \App\Http\Controllers\WithdrawalRequestsController::class)->except('destroy');
