@@ -224,7 +224,7 @@ trait HasReferral
     /**
      * @return array
      */
-    public function getAllReferralsInArray($level=1, $max=10)
+    public function getAllReferralsInArray($level=1, $max=9)
     {
         $th = $this;
 

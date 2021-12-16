@@ -48,7 +48,7 @@ class CacheHelperCommand extends Command
             $this->info('checking user '.$user->login);
 
             $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(1), function() use($user) {
-                $all_referrals = $user->getAllReferralsInArray();
+                $all_referrals = $user->getAllReferralsInArray(1, 1000);
 
                 $transaction_type_invest = TransactionType::getByName('enter');
                 $transaction_type_withdrew = TransactionType::getByName('withdraw');

@@ -212,7 +212,7 @@ class UsersController extends Controller
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
-        $all_referrals = $user->getAllReferralsInArray(1, 10000);
+        $all_referrals = $user->getAllReferralsInArray(1, 1000);
         $transaction_type_invest = TransactionType::getByName('enter');
         $transaction_type_withdrew = TransactionType::getByName('withdraw');
         $total_referral_invested = 0;
