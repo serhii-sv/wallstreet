@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeviceStat;
+use App\Models\Notification;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserAuthLog;
@@ -68,6 +69,18 @@ class LoginController extends Controller
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
+        $this->sendLoginNotification($request, $user);
+    }
+
+    protected function sendLoginNotification($request, $user)
+    {
+        $notification_data = [
+            'notification_name' => 'Реинвестирование по депозиту',
+            'user' => $user,
+            'ip' => $request->ip(),
+        ];
+
+        Notification::sendNotification($notification_data, 'new_login');
     }
 
     /**

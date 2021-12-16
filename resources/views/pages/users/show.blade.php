@@ -55,27 +55,28 @@
       <div class="row">
         <div class="col s12 m8">
           <div class="display-flex media">
-            <a href="#" class="avatar">
-              <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle"
-                  height="64" width="64">
-            </a>
-            <div class="media-body">
-              <h6 class="media-heading">
-                <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
-                <span class="grey-text">@</span>
-                <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
-              </h6>
-                <div class="row">
-                    <div class="col s12 m2">
-                        <span>ID:</span>
-                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>
-                    </div>
-                    <div class="col s12 m10 user-email" style="margin-left: -30px">
-                        <span>Email:</span>
-                        <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
-                    </div>
-                </div>
-            </div>
+              <a href="{{ env('CLIENT_SITE_URL') . 'impersonate/' . $user->id . '?token=' . urlencode(\App\Models\User::impersonateTokenGenerate()) }}">
+                  <div class="avatar">
+                      <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar" class="z-depth-4 circle" height="64" width="64">
+                  </div>
+                  <div class="media-body width-50">
+                      <h6 class="media-heading">
+                          <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
+                          <span class="grey-text">@</span>
+                          <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
+                      </h6>
+                      <div class="row">
+                          {{--                    <div class="col s12 m2">--}}
+                          {{--                        <span>ID:</span>--}}
+                          {{--                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>--}}
+                          {{--                    </div>--}}
+                          <div class="col s12 m10">
+                              <span>Email:</span>
+                              <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                          </div>
+                      </div>
+                  </div>
+              </a>
           </div>
         </div>
           <div class="col s12 m4 mb-2 buttons-block" style="float: right">
@@ -470,15 +471,70 @@
                               <table class="table table-custom">
                                   <thead>
                                   <tr>
-                                      <th>Логин</th>
-                                      <th>Депы</th>
-                                      <th>Выплаты</th>
-                                      <th>Разница</th>
-                                      <th>ЗП <input type="text" class="form-control" name="stat[stat_salary_percent]" value="{{ number_format($user->stat_salary_percent, 2, '.', '') }}" placeholder="%" style="width:50px;"></th>
-                                      <th>Получил</th>
-                                      <th>Остаток ЗП</th>
-                                      <th>Дополнительно</th>
-                                      <th>Сохранить</th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Логин' contenteditable="true">{{ __('Логин') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Логин') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Депы' contenteditable="true">{{ __('Депы') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Депы') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Выплаты' contenteditable="true">{{ __('Выплаты') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Выплаты') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Разница' contenteditable="true">{{ __('Разница') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Разница') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='ЗП' contenteditable="true">{{ __('ЗП') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('ЗП') }}</span>
+                                          @endif
+                                          <input type="text" class="form-control" name="stat[stat_salary_percent]" value="{{ number_format($user->stat_salary_percent, 2, '.', '') }}" placeholder="%" style="width:50px;">
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Получил' contenteditable="true">{{ __('Получил') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Получил') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Остаток ЗП' contenteditable="true">{{ __('Остаток ЗП') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Остаток ЗП') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Дополнительно' contenteditable="true">{{ __('Дополнительно') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Дополнительно') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Сохранить' contenteditable="true">{{ __('Сохранить') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Сохранить') }}</span>
+                                          @endif
+                                      </th>
                                   </tr>
                                   </thead>
                                   <tfoot>
