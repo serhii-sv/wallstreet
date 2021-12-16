@@ -49,47 +49,56 @@ class DashboardComposer
                 ->orderBy('last_activity_at', 'desc')
                 ->get());
 
-        $fromDate = strtotime('- 22 day');
-        $usersCounts = [];
-        $enterTransactions = [];
-        $withdrawals = [];
-        $profit = [];
-        while (true) {
-            $fromDate = strtotime(date('Y-m-d', $fromDate) . ' + 1 day');
+        $data = cache()->remember('dshb.dashboard_composer_data', now()->addHours(3), function () {
 
-            if ($fromDate > date('U')) {
-                break;
+            $fromDate = strtotime('- 22 day');
+            $usersCounts = [];
+            $enterTransactions = [];
+            $withdrawals = [];
+            $profit = [];
+            while (true) {
+                $fromDate = strtotime(date('Y-m-d', $fromDate) . ' + 1 day');
+
+                if ($fromDate > date('U')) {
+                    break;
+                }
+
+                $date = date('Y-m-d', $fromDate);
+
+                $usersCounts[$date] = User::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->count();
+
+                $enterTransactions[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->where('approved', '=', 1)->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'enter');
+                    })->get()->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+
+                $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                        $query->where('name', 'withdraw');
+                    })->get()->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+
+                $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
             }
+            return [
+                'usersCounts' => $usersCounts,
+                'enterTransactions' => $enterTransactions,
+                'withdrawals' => $withdrawals,
+                'profit' => $profit
+            ];
+        });
 
-            $date = date('Y-m-d', $fromDate);
-
-            $usersCounts[$date] = User::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->count();
-
-            $enterTransactions[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->where('approved', '=', 1)->whereNotNull('payment_system_id')
-                ->whereHas('type', function ($query) {
-                    $query->where('name', 'enter');
-                })->get()->reduce(function ($carry, $item) {
-                    return $carry + $item->main_currency_amount;
-                }, 0);
-
-            $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                $query->where('name', 'withdraw');
-            })->get()->reduce(function ($carry, $item) {
-                return $carry + $item->main_currency_amount;
-            }, 0);
-
-            $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
-        }
-
-        $view->with('usersCountPeriod', array_values($usersCounts));
-        $view->with('enterTransactionsPeriod', array_values($enterTransactions));
-        $view->with('withdrawalsPeriod', array_values($withdrawals));
-        $view->with('profitPeriod', array_values($profit));
+        $view->with('usersCountPeriod', array_values($data['usersCounts']));
+        $view->with('enterTransactionsPeriod', array_values($data['enterTransactions']));
+        $view->with('withdrawalsPeriod', array_values($data['withdrawals']));
+        $view->with('profitPeriod', array_values($data['profit']));
     }
 }
