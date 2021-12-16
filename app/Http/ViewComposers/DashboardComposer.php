@@ -13,7 +13,7 @@ class DashboardComposer
      *
      * @var User
      */
-    protected $users;
+//    protected $users;
 
     /**
      * Create a new profile composer.
@@ -22,9 +22,9 @@ class DashboardComposer
      *
      * @return void
      */
-    public function __construct(User $users)
+    public function __construct()
     {
-        $this->users = $users;
+//        $this->users = $users;
     }
 
     /**
@@ -36,18 +36,22 @@ class DashboardComposer
      */
     public function compose(View $view)
     {
-        $view->with('admins', $this->users
-            ->whereHas('roles', function ($query) {
+        $view->with('admins', cache()->remember('dshb.admin_users', now()->addHours(3), function () {
+            return User::whereHas('roles', function ($query) {
                 $query->where(function ($query) {
                     $query->where('roles.name', '=', 'root');
                     $query->orWhere('roles.name', '=', 'admin');
                 });
             })
-            ->orderBy('last_activity_at', 'desc')
-            ->get())
-            ->with('online_users', $this->users->doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
                 ->orderBy('last_activity_at', 'desc')
-                ->get());
+                ->get();
+        }));
+
+        $view->with('online_users', cache()->remember('dshb.online_users', now()->addHours(3), function () {
+            return User::doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
+                ->orderBy('last_activity_at', 'desc')
+                ->get();
+        }));
 
         $data = cache()->remember('dshb.dashboard_composer_data', now()->addHours(3), function () {
 
