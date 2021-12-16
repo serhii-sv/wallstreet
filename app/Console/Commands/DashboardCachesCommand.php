@@ -18,7 +18,7 @@ class DashboardCachesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'dashboard:cache';
+    protected $signature = 'cache:dashboard';
 
     /**
      * The console command description.
