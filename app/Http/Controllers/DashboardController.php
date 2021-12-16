@@ -6,31 +6,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Permissions;
-use App\Http\Requests\RequestDashboardBonusUser;
 use App\Models\Currency;
 use App\Models\DeviceStat;
-use App\Models\ExchangeRateLog;
 use App\Models\PaymentSystem;
-use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\UserAuthLog;
-use App\Models\UserSidebarProperties;
-use App\Models\UserThemeSetting;
-use App\Models\Wallet;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 
 class DashboardController extends Controller
 {
-    protected $users;
-
-    public function __construct(User $users) {
-
-        $this->users = $users;
+    public function __construct()
+    {
+        // ...
     }
 
     /**
@@ -238,9 +228,9 @@ class DashboardController extends Controller
             'profit_total' => $depositTotal - $withdrawTotal,
             'salaryLeft' => $salaryLeft,
             'users' => [
-                'online' => $this->users->where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get(),
-                'total' => $this->users->all()->count(),
-                'today' => $this->users->where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count(),
+                'online' => User::where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get(),
+                'total' => User::all()->count(),
+                'today' => User::where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count(),
             ],
             'deposit_total_sum' => $depositTotal,
             'deposit_total_withdraw' => $withdrawTotal,

@@ -58,7 +58,7 @@ class DashboardCachesCommand extends Command
         $month_period_enter_transactions = [];
         $month_period_withdraw_transactions = [];
 
-        $dashboardController = new DashboardController(User::get());
+        $dashboardController = new DashboardController();
 
         cache()->forget('dshb.month_period');
         $month_period = cache()->remember('dshb.month_period', now()->addHours(3), function () use ($dashboardController) {
