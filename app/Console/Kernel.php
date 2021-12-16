@@ -9,6 +9,7 @@ namespace App\Console;
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\CryptoCurrencyRateLog;
+use App\Console\Commands\DashboardCachesCommand;
 use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Console\Commands\CreateRootCommand;
@@ -38,7 +39,8 @@ class Kernel extends ConsoleKernel
         DepositQueueCommand::class,
         CryptoCurrencyRateLog::class,
         SetRateNonFixedCurrency::class,
-        SetUserDocumentVerified::class
+        SetUserDocumentVerified::class,
+        DashboardCachesCommand::class,
     ];
 
     /**
@@ -59,6 +61,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->everyTwoHours();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
+        $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
     }
