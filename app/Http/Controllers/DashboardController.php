@@ -38,31 +38,52 @@ class DashboardController extends Controller
      */
     public function index() {
 
-        $id_withdraw = TransactionType::where('name', 'withdraw')->first()->id;
-        $id_enter = TransactionType::where('name', 'enter')->first()->id;
+        $id_withdraw = cache()->remember('dshb.id_withdraw', now()->addHours(3), function () {
+            return TransactionType::where('name', 'withdraw')->first()->id;
+        });
+
+        $id_enter = cache()->remember('dshb.id_enter', now()->addHours(3), function () {
+            return TransactionType::where('name', 'enter')->first()->id;
+        });
 
         $weeks_period_enter_transactions = [];
         $weeks_period_withdraw_transactions = [];
         $month_period_enter_transactions = [];
         $month_period_withdraw_transactions = [];
 
-        $month_period = $this->getMonthPeriod();
-        $weeks_period = $this->getWeeksPeriod();
+        $dashboardController = $this;
 
-        $prev_month_period = $this->getPreviousMonthPeriod();
-        $prev_weeks_period = $this->getPreviousWeekPeriod();
+        $month_period = cache()->remember('dshb.month_period', now()->addHours(3), function () use ($dashboardController) {
+            return $dashboardController->getMonthPeriod();
+        });
+        $weeks_period = cache()->remember('dshb.weeks_period', now()->addHours(3), function () use ($dashboardController) {
+            return $dashboardController->getWeeksPeriod();
+        });
 
-        $prev_week_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_weeks_period['start'], 60, function () use ($prev_weeks_period) {
+        $prev_month_period = cache()->remember('dshb.prev_month_period', now()->addHours(3), function () use ($dashboardController) {
+            return $dashboardController->getPreviousMonthPeriod();
+        });
+
+        $prev_weeks_period = cache()->remember('dshb.prev_weeks_period', now()->addHours(3), function () use ($dashboardController) {
+            return $dashboardController->getPreviousWeekPeriod();
+        });
+
+        $prev_week_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_weeks_period['start'], now()->addHours(3), function () use ($prev_weeks_period) {
             return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_weeks_period['start'],
                 $prev_weeks_period['end'],
             ])->get();
         });
-        $weeks_previous_period_enter_transactions = $prev_week_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-        $weeks_previous_period_withdraw_transactions = $prev_week_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
 
-        foreach ($weeks_period as $key => $week) {
-            $transactions = cache()->remember('dshb.last_transactions' . $week['start'], 60, function () use ($week) {
+        $weeks_previous_period_enter_transactions = cache()->remember('dshb.weeks_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_week_transactions, $id_enter) {
+            return $prev_week_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
+        });
+        $weeks_previous_period_withdraw_transactions = cache()->remember('dshb.weeks_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_week_transactions, $id_withdraw) {
+            return $prev_week_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+        });
+
+        foreach ($weeks_period as $week) {
+            $transactions = cache()->remember('dshb.last_transactions' . $week['start'], now()->addHours(3), function () use ($week) {
                 return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $week['start'],
                     $week['end'],
@@ -73,7 +94,9 @@ class DashboardController extends Controller
         }
 
 
-        $payment_system = PaymentSystem::all();
+        $payment_system = cache()->remember('dshb.payment_systems', now()->addHours(3), function () {
+            return PaymentSystem::all();
+        });
 
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
         $weeks_total_withdraw = array_sum($weeks_period_withdraw_transactions);
@@ -83,7 +106,7 @@ class DashboardController extends Controller
         $week_revenue_percent = number_format(($curr_to_prev_week / (!$weeks_deposit_revenue ? 1 : $weeks_deposit_revenue ?? 1)) * 100, 2, '.', ',');
 
         foreach ($month_period as $key => $month) {
-            $transactions = cache()->remember('dshb.last_transactions' . $month['start'], 60, function () use ($month) {
+            $transactions = cache()->remember('dshb.last_transactions' . $month['start'], now()->addHours(3), function () use ($month) {
                 return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $month['start'],
                     $month['end'],
@@ -92,52 +115,69 @@ class DashboardController extends Controller
             $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         }
-        $prev_month_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_month_period['start'], 60, function () use ($prev_month_period) {
+        $prev_month_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_month_period['start'], now()->addHours(3), function () use ($prev_month_period) {
             return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_month_period['start'],
                 $prev_month_period['end'],
             ])->get();
         });
 
-        $month_previous_period_enter_transactions = $prev_month_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-        $month_previous_period_withdraw_transactions = $prev_month_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+        $month_previous_period_enter_transactions = cache()->remember('dshb.month_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_month_transactions, $id_enter) {
+            return $prev_month_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
+        });
+        $month_previous_period_withdraw_transactions = cache()->remember('dshb.month_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_month_transactions, $id_withdraw) {
+            return $prev_month_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+        });
 
         $month_total_enter = array_sum($month_period_enter_transactions);
         $month_total_withdraw = array_sum($month_period_withdraw_transactions);
         $month_deposit_revenue = $month_total_enter - $month_total_withdraw;
         $count_countries = 5;
         $count_cities = 10;
-        $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
+        $countries_stat = cache()->remember('dshb.countries_stat_all', now()->addHours(3), function () {
+            return User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
+        });
 
         $curr_to_prev_month = $month_previous_period_enter_transactions - $month_previous_period_withdraw_transactions;
         $month_revenue_percent = number_format(($curr_to_prev_month / ($month_deposit_revenue ? $month_deposit_revenue : 1)) * 100, 2, '.', ',');
 
         $countries_stat->map(function ($country) use ($id_enter) {
-            $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, 60, function () use ($country) {
+            $country->count = cache()->remember('dshb.countries_stat_count_' . $country->name, now()->addHours(3), function () use ($country) {
                 return User::where('country', $country->name)->count();
             });
         });
-        $countries_stat = $countries_stat->sortByDesc('count')->take($count_countries);
+
+        $countries_stat = cache()->remember('dshb.countries_stat', now()->addHours(3), function () use ($countries_stat, $count_countries) {
+            return $countries_stat->sortByDesc('count')->take($count_countries);
+        });
+
         $countries_stat->map(function ($country) use ($id_enter) {
             $country->invested = 0;
             User::where('country', $country->name)->get()->map(function ($user) use ($country, $id_enter) {
-                $country->invested += cache()->remember('dshb.countries_stat_invested_' . $user->id, 60, function () use ($country, $id_enter, $user) {
+                $country->invested += cache()->remember('dshb.countries_stat_invested_' . $user->id, now()->addHours(3), function () use ($country, $id_enter, $user) {
                     return $user->transactions()->where('is_real', 1)->where('type_id', $id_enter)->sum('main_currency_amount');
                 });
             });
         });
 
-        $device_stat = DeviceStat::orderBy('count', 'desc')->limit(5)->get();
+        $device_stat = cache()->remember('dshb.device_stat', now()->addHours(3), function () {
+            return DeviceStat::orderBy('count', 'desc')->limit(5)->get();
+        });
 
-        $cities_stat = User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
+        $cities_stat = cache()->remember('dshb.cities_stat_all', now()->addHours(3), function () {
+            return User::where('city', '!=', null)->select(['city as name'])->groupBy(['city'])->get();
+        });
         $cities_stat->map(function ($city) use ($id_enter) {
-            $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, 60, function () use ($city) {
+            $city->count = cache()->remember('dshb.city_stat_count_' . $city->name, now()->addHours(3), function () use ($city) {
                 return User::where('city', $city->name)->count();
             });
         });
-        $cities_stat = $cities_stat->sortByDesc('count')->take($count_cities);
 
-        $enter_transactions_for_24h_sum = Cache::remember('dshb.transactions.enter.for_24h', 60, function () {
+        $cities_stat = cache()->remember('dshb.cities_stat', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+            return $cities_stat->sortByDesc('count')->take($count_cities);
+        });
+
+        $enter_transactions_for_24h_sum = Cache::remember('dshb.transactions.enter.for_24h', now()->addHours(3), function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                 $query->where('name', 'enter');
             })->get()->reduce(function ($carry, $item) {
@@ -145,33 +185,30 @@ class DashboardController extends Controller
             }, 0);
         });
 
-        $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', 60, function () {
+        $withdraw_transactions_for_24h_sum = Cache::remember('dshb.transactions.withdraw.for_24h', now()->addHours(3), function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                 $query->where('name', 'withdraw');
             })->sum('main_currency_amount');
         });
 
         /** @var PaymentSystem $payment_systems */
-        $payment_systems_paginate = PaymentSystem::paginate(10);
+        $payment_systems_paginate = cache()->remember('dshb.payment_systems', now()->addHours(3), function () {
+            return PaymentSystem::paginate(10);
+        });
 
-        $depositTotal = Cache::remember('dshb.transactions.enter.total', 60, function () {
+        $depositTotal = Cache::remember('dshb.transactions.enter.total', now()->addHours(3), function () {
             return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {
                 $query->where('name', 'enter');
             })->sum('main_currency_amount');
         });
 
-        $withdrawTotal = Cache::remember('dshb.transactions.withdraw.total', 60, function () {
+        $withdrawTotal = Cache::remember('dshb.transactions.withdraw.total', now()->addHours(3), function () {
             return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {
                 $query->where('name', 'withdraw');
             })->sum('main_currency_amount');
         });
 
-        $salaryLeft = 0;
-
-        foreach(User::where('stat_salary_percent', '>', 0)->get() as $user) {
-            $salaryLeft += cache()->get('user_salary_left.'.$user->id, 0);
-        }
-
+        $salaryLeft = \cache()->has('total_users_salary_left') ? cache()->get('total_users_salary_left') : 0;
 
         return view('pages.dashboard', [
             'week_revenue_percent' => $week_revenue_percent,
@@ -191,7 +228,7 @@ class DashboardController extends Controller
             'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
             'currencies' => Currency::all(),
             'payment_system' => $payment_system,
-            'user_auth_logs' => UserAuthLog::where('is_admin', true)->orderByDesc('created_at')->limit(5)->get(),
+            'user_auth_logs' => UserAuthLog::where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get(),
             'countries_stat' => $countries_stat,
             'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,
