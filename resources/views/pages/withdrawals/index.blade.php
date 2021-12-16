@@ -54,20 +54,22 @@
 
       <div class="invoice-filter-action mr-3" style="margin-left:3% !important;">
           <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
-              <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='Paid' contenteditable="true">{{ __('Real') }}</editor_block>
+              <span class="hide-on-small-only">
+                  @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Real' contenteditable="true">{{ __('Real') }}</editor_block>
                   @else
                       <span class="hide-on-small-only">{{ __('Real') }}</span>
-                  @endif</span>
+                  @endif
+              </span>
           </a>
       </div>
 
       <div class="invoice-filter-action mr-3">
           <a href="/withdrawals?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='Paid' contenteditable="true">{{ __('Fake') }}</editor_block>
+                      <editor_block data-name='Fake' contenteditable="true">{{ __('Fake') }}</editor_block>
                   @else
-                      <span class="hide-on-small-only">{{ __('Fake') }}</span>
+                      {{ __('Fake') }}
                   @endif</span>
           </a>
       </div>
@@ -161,13 +163,13 @@
                         {{ __('Teamlead') }}
                     @endif</span>
                 </th>
-              <th>
-                <span>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>
-                  @else
-                    {{ __('Upliner') }}
-                    @endif</span>
-              </th>
+{{--              <th>--}}
+{{--                <span>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                    <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>--}}
+{{--                  @else--}}
+{{--                    {{ __('Upliner') }}--}}
+{{--                    @endif</span>--}}
+{{--              </th>--}}
               <th>@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
                 @else

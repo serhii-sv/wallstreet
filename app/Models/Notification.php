@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use HasFactory;
-    
+
     private $types = [
         1 => [
             'name' => 'Email',
@@ -54,6 +54,9 @@ class Notification extends Model
         'new_message' => [
             'view' => 'notifications.new_message',
         ],
+        'new_login' => [
+            'view' => 'notifications.new_login',
+        ],
         'new_referral' => [
             'view' => 'notifications.new_referral',
         ],
@@ -70,13 +73,13 @@ class Notification extends Model
             'view' => 'notifications.new_reinvest',
         ],
     ];
-    
+
     protected $guarded = ['_token'];
-    
+
     public function getTypes():array {
         return $this->types;
     }
-    
+
     public static function sendNotification($data, $notification_type) {
         $notification_in = new self();
         $notification_in->name = $data['notification_name'];

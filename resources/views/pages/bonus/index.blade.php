@@ -250,6 +250,7 @@
                                     <div >
                                                <div class="input-field"  style="width:50%; margin-left:25%;">
                                                  <select class="select2 browser-default" name="login">
+                                                     <option selected disabled value="">Выберите пользователя</option>
                                                    @foreach(\App\Models\User::select('login')->get() as $user)
                                                    <option value="{{ $user->login }}">{{ $user->login }}</option>
                                                    @endforeach

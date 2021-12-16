@@ -266,7 +266,7 @@ class UsersController extends Controller
         $referral_clicks = $user->getReferralLinkClickCount();
 
         $referrals_ids = $user->referrals()->distinct('id')->pluck('id')->toArray();
-        $structure_turnover = Deposit::whereIn('user_id', $referrals_ids)->where('condition', '!=', 'closed')->sum('invested');
+        $structure_turnover = $user->referrals_invested_total;
         $registered_referrals = ReferralLinkStat::whereIn('user_id', $referrals_ids)->count();
         $active_referrals = $user->referrals()->distinct('id')->whereHas('deposits', function ($query) {
             $query->where('condition', '!=', 'closed');

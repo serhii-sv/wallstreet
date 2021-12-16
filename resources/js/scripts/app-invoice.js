@@ -40,11 +40,11 @@ $(document).ready(function () {
                     searchable: false,
                     bSortable: false
                 },
-                {
-                    data: 'partner',
-                    searchable: false,
-                    bSortable: false
-                },
+                // {
+                //     data: 'partner',
+                //     searchable: false,
+                //     bSortable: false
+                // },
                 {
                     data: 'amount',
                     searchable: false,
