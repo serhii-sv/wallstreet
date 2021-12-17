@@ -9,6 +9,7 @@ namespace App\Providers;
 use App\Models\CloudFile;
 use App\Models\Currency;
 use App\Models\Deposit;
+use App\Models\ExchangeRateLog;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\MailSent;
@@ -29,6 +30,7 @@ use App\Models\Wallet;
 use App\Observers\CloudFileObserver;
 use App\Observers\CurrencyObserver;
 use App\Observers\DepositObserver;
+use App\Observers\ExchangeRateLogObserver;
 use App\Observers\FaqObserver;
 use App\Observers\LanguageObserver;
 use App\Observers\NewsObserver;
@@ -70,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
         Paginator::defaultView('vendor.pagination.default');
-        
+
         /*
          * Base observers
          */
@@ -86,6 +88,7 @@ class AppServiceProvider extends ServiceProvider
         Reviews::observe(ReviewsObserver::class);
         Setting::observe(SettingObserver::class);
         Transaction::observe(TransactionObserver::class);
+        ExchangeRateLog::observe(ExchangeRateLogObserver::class);
         TransactionType::observe(TransactionTypeObserver::class);
         User::observe(UserObserver::class);
         \App\User::observe(UserObserver::class);
@@ -93,7 +96,7 @@ class AppServiceProvider extends ServiceProvider
         UserSidebarProperties::observe(UserSidebarPropertyObserver::class);
         //Task::observe(TaskObserver::class);
     }
-    
+
     /**
      * Register any application services.
      *
