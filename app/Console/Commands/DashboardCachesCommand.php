@@ -3,11 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\DashboardController;
+use App\Models\Currency;
 use App\Models\DeviceStat;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserAuthLog;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
@@ -278,7 +280,7 @@ class DashboardCachesCommand extends Command
         });
 
         cache()->forget('dshb.admin_users');
-        cache()->remember('dshb.admin_users', now()->addHours(3), function () {
+        cache()->remember('dshb.admin_users', now()->addMinutes(1), function () {
             return User::whereHas('roles', function ($query) {
                 $query->where(function ($query) {
                     $query->where('roles.name', '=', 'root');
@@ -289,17 +291,44 @@ class DashboardCachesCommand extends Command
                 ->get();
         });
 
+        cache()->forget('dshb.online_users');
+        cache()->remember('dshb.online_users', now()->addMinutes(1), function () {
+            return User::doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
+                ->orderBy('last_activity_at', 'desc')
+                ->get();
+        });
+
         cache()->forget('dshb.users_online');
-        cache()->remember('dshb.users_online', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+        cache()->remember('dshb.users_online', now()->addMinutes(1), function () use ($cities_stat, $count_cities) {
             return User::where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get();
         });
         cache()->forget('dshb.users_total');
-        cache()->remember('dshb.users_total', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+        cache()->remember('dshb.users_total', now()->addMinutes(1), function () use ($cities_stat, $count_cities) {
             return User::count();
         });
-        cache()->forget('dshb.today');
-        cache()->remember('dshb.today', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+        cache()->forget('dshb.users_today');
+        cache()->remember('dshb.users_today', now()->addMinutes(1), function () use ($cities_stat, $count_cities) {
             return User::where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count();
+        });
+
+        cache()->forget('dshb.last_operations');
+        cache()->remember('dshb.last_operations', now()->addMinutes(1), function () {
+            return Transaction::with('user')->orderByDesc('created_at')->limit(10)->get();
+        });
+
+        cache()->forget('dshb.currencies');
+        cache()->remember('dshb.currencies', now()->addHours(3), function () {
+            return Currency::all();
+        });
+
+        cache()->forget('dshb.user_auth_logs');
+        cache()->remember('dshb.user_auth_logs', now()->addMinutes(1), function () {
+            return UserAuthLog::with('user')->where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get();
+        });
+
+        cache()->forget('dshb.payment_systems');
+        Cache::remember('dshb.payment_systems', now()->addHours(3), function () {
+            return PaymentSystem::paginate(10);
         });
     }
 }

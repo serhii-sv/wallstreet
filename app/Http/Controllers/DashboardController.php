@@ -192,7 +192,9 @@ class DashboardController extends Controller
         });
 
         /** @var PaymentSystem $payment_systems */
-        $payment_systems_paginate = PaymentSystem::paginate(10);
+        $payment_systems_paginate = Cache::remember('dshb.payment_systems', now()->addHours(3), function () {
+            return PaymentSystem::paginate(10);
+        });
 
         $depositTotal = Cache::remember('dshb.transactions.enter.total', now()->addHours(3), function () {
             return Transaction::where('approved', '=', 1)->where('is_real', true)->whereHas('type', function ($query) {
@@ -223,10 +225,16 @@ class DashboardController extends Controller
             'weeks_total_withdraw' => $weeks_total_withdraw,
             'weeks_period' => $weeks_period,
             'month_period' => $month_period,
-            'last_operations' => Transaction::orderByDesc('created_at')->limit(10)->get(),
-            'currencies' => Currency::all(),
+            'last_operations' => cache()->remember('dshb.last_operations', now()->addMinutes(5), function () {
+                return Transaction::with('user')->orderByDesc('created_at')->limit(10)->get();
+            }),
+            'currencies' => cache()->remember('dshb.currencies', now()->addHours(3), function () {
+                return Currency::all();
+            }),
             'payment_system' => $payment_system,
-            'user_auth_logs' => UserAuthLog::where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get(),
+            'user_auth_logs' => cache()->remember('dshb.user_auth_logs', now()->addMinutes(5), function () {
+                return UserAuthLog::with('user')->where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get();
+            }),
             'countries_stat' => $countries_stat,
             'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,
@@ -236,13 +244,13 @@ class DashboardController extends Controller
             'profit_total' => $depositTotal - $withdrawTotal,
             'salaryLeft' => $salaryLeft,
             'users' => [
-                'online' => cache()->remember('dshb.users_online', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                'online' => cache()->remember('dshb.users_online', now()->addMinutes(5), function () {
                     return User::where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get();
                 }),
-                'total' => cache()->remember('dshb.users_total', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                'total' => cache()->remember('dshb.users_total', now()->addMinutes(5), function () {
                     return User::count();
                 }),
-                'today' => cache()->remember('dshb.users_today', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                'today' => cache()->remember('dshb.users_today', now()->addMinutes(5), function () {
                     return User::where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count();
                 }),
             ],
