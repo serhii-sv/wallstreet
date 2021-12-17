@@ -13,7 +13,7 @@ class DashboardComposer
      *
      * @var User
      */
-    protected $users;
+//    protected $users;
 
     /**
      * Create a new profile composer.
@@ -22,9 +22,9 @@ class DashboardComposer
      *
      * @return void
      */
-    public function __construct(User $users)
+    public function __construct()
     {
-        $this->users = $users;
+//        $this->users = $users;
     }
 
     /**
@@ -36,60 +36,73 @@ class DashboardComposer
      */
     public function compose(View $view)
     {
-        $view->with('admins', $this->users
-            ->whereHas('roles', function ($query) {
+        $view->with('admins', cache()->remember('dshb.admin_users', now()->addMinutes(5), function () {
+            return User::whereHas('roles', function ($query) {
                 $query->where(function ($query) {
                     $query->where('roles.name', '=', 'root');
                     $query->orWhere('roles.name', '=', 'admin');
                 });
             })
-            ->orderBy('last_activity_at', 'desc')
-            ->get())
-            ->with('online_users', $this->users->doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
                 ->orderBy('last_activity_at', 'desc')
-                ->get());
+                ->get();
+        }));
 
-        $fromDate = strtotime('- 22 day');
-        $usersCounts = [];
-        $enterTransactions = [];
-        $withdrawals = [];
-        $profit = [];
-        while (true) {
-            $fromDate = strtotime(date('Y-m-d', $fromDate) . ' + 1 day');
+        $view->with('online_users', cache()->remember('dshb.online_users', now()->addMinutes(5), function () {
+            return User::doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
+                ->orderBy('last_activity_at', 'desc')
+                ->get();
+        }));
 
-            if ($fromDate > date('U')) {
-                break;
+        $data = cache()->remember('dshb.dashboard_composer_data', now()->addHours(3), function () {
+
+            $fromDate = strtotime('- 22 day');
+            $usersCounts = [];
+            $enterTransactions = [];
+            $withdrawals = [];
+            $profit = [];
+            while (true) {
+                $fromDate = strtotime(date('Y-m-d', $fromDate) . ' + 1 day');
+
+                if ($fromDate > date('U')) {
+                    break;
+                }
+
+                $date = date('Y-m-d', $fromDate);
+
+                $usersCounts[$date] = User::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->count();
+
+                $enterTransactions[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->where('approved', '=', 1)->whereNotNull('payment_system_id')
+                    ->whereHas('type', function ($query) {
+                        $query->where('name', 'enter');
+                    })->get()->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+
+                $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
+                    ->where('created_at', '<=', $date . ' 23:59:59')
+                    ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
+                        $query->where('name', 'withdraw');
+                    })->get()->reduce(function ($carry, $item) {
+                        return $carry + $item->main_currency_amount;
+                    }, 0);
+
+                $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
             }
+            return [
+                'usersCounts' => $usersCounts,
+                'enterTransactions' => $enterTransactions,
+                'withdrawals' => $withdrawals,
+                'profit' => $profit
+            ];
+        });
 
-            $date = date('Y-m-d', $fromDate);
-
-            $usersCounts[$date] = User::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->count();
-
-            $enterTransactions[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->where('approved', '=', 1)->whereNotNull('payment_system_id')
-                ->whereHas('type', function ($query) {
-                    $query->where('name', 'enter');
-                })->get()->reduce(function ($carry, $item) {
-                    return $carry + $item->main_currency_amount;
-                }, 0);
-
-            $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
-                ->where('created_at', '<=', $date . ' 23:59:59')
-                ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
-                $query->where('name', 'withdraw');
-            })->get()->reduce(function ($carry, $item) {
-                return $carry + $item->main_currency_amount;
-            }, 0);
-
-            $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
-        }
-
-        $view->with('usersCountPeriod', array_values($usersCounts));
-        $view->with('enterTransactionsPeriod', array_values($enterTransactions));
-        $view->with('withdrawalsPeriod', array_values($withdrawals));
-        $view->with('profitPeriod', array_values($profit));
+        $view->with('usersCountPeriod', array_values($data['usersCounts']));
+        $view->with('enterTransactionsPeriod', array_values($data['enterTransactions']));
+        $view->with('withdrawalsPeriod', array_values($data['withdrawals']));
+        $view->with('profitPeriod', array_values($data['profit']));
     }
 }
