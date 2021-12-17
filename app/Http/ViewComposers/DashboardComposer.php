@@ -36,7 +36,7 @@ class DashboardComposer
      */
     public function compose(View $view)
     {
-        $view->with('admins', cache()->remember('dshb.admin_users', now()->addHours(3), function () {
+        $view->with('admins', cache()->remember('dshb.admin_users', now()->addMinutes(5), function () {
             return User::whereHas('roles', function ($query) {
                 $query->where(function ($query) {
                     $query->where('roles.name', '=', 'root');
@@ -47,7 +47,7 @@ class DashboardComposer
                 ->get();
         }));
 
-        $view->with('online_users', cache()->remember('dshb.online_users', now()->addHours(3), function () {
+        $view->with('online_users', cache()->remember('dshb.online_users', now()->addMinutes(5), function () {
             return User::doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
                 ->orderBy('last_activity_at', 'desc')
                 ->get();

@@ -49,9 +49,22 @@ class UserDepositBonus extends Model
     public static function setUserBonuses($user, $userDepositBonusesExists = true): void
     {
         $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
-            ->where('total_turnover', '<=', $user->referrals_invested_total)
+            ->orWhere('total_turnover', '<=', $user->referrals_invested_total)
             ->orderBy('personal_turnover', 'desc')
             ->first();
+
+        $personalIsLower = $user->personal_turnover <= $bonus->personal_turn_over;
+        $totalIsLower = $user->referrals_invested_total <= $bonus->total_turnover;
+
+        if ($personalIsLower && !$totalIsLower) {
+            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        } else if (!$personalIsLower && $totalIsLower) {
+            $bonus = DepositBonus::where('total_turnover', '<=', $user->referrals_invested_total)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        }
 
         $userPreviousBonus = $user->userDepositBonuses()->orderBy('personal_turnover', 'desc')->first();
 
@@ -99,11 +112,14 @@ class UserDepositBonus extends Model
      */
     public static function userHasBonus($user, $bonus)
     {
-        return (bool)$user->userDepositBonuses()->where('deposit_bonus_id', $bonus->id)
-            ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
-            ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
-            ->orWhere('deposit_bonus_reward', $bonus->revard)
-            ->count();
+        if (!is_null($bonus)) {
+            return (bool)$user->userDepositBonuses()->where('deposit_bonus_id', $bonus->id)
+                ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
+                ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
+                ->orWhere('deposit_bonus_reward', $bonus->revard)
+                ->count();
+        }
+        return false;
     }
 
     /**
@@ -112,14 +128,17 @@ class UserDepositBonus extends Model
      */
     public static function addBonusToUserWallet($user, $amount)
     {
-        $wallet = $user->wallets()
-            ->where('currency_id', Currency::whereCode('SPRINT')->first()->id ?? null)
-            ->first();
+        \Log::critical('add bonus for ' . $user->login . ' ' . $user->email . ' ' . $amount . ' sprint');
+        return true;
 
-        if (!is_null($wallet)) {
-            $wallet->refill($amount);
-            return true;
-        }
-        return false;
+//        $wallet = $user->wallets()
+//            ->where('currency_id', Currency::whereCode('SPRINT')->first()->id ?? null)
+//            ->first();
+//
+//        if (!is_null($wallet)) {
+//            $wallet->refill($amount);
+//            return true;
+//        }
+//        return false;
     }
 }
