@@ -236,9 +236,15 @@ class DashboardController extends Controller
             'profit_total' => $depositTotal - $withdrawTotal,
             'salaryLeft' => $salaryLeft,
             'users' => [
-                'online' => User::where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get(),
-                'total' => User::count(),
-                'today' => User::where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count(),
+                'online' => cache()->remember('dshb.users_online', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                    return User::where('last_activity_at', '>', now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->format('Y-m-d H:i:s'))->get();
+                }),
+                'total' => cache()->remember('dshb.users_total', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                    return User::count();
+                }),
+                'today' => cache()->remember('dshb.users_today', now()->addHours(3), function () use ($cities_stat, $count_cities) {
+                    return User::where('created_at', '>', now()->subDay()->format('Y-m-d H:i:s'))->get()->count();
+                }),
             ],
             'deposit_total_sum' => $depositTotal,
             'deposit_total_withdraw' => $withdrawTotal,
