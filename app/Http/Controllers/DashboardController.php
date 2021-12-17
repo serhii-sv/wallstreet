@@ -89,7 +89,7 @@ class DashboardController extends Controller
 
 
         $payment_system = cache()->remember('dshb.payment_systems', now()->addHours(3), function () {
-            return PaymentSystem::all();
+            return PaymentSystem::paginate(10);
         });
 
         $weeks_total_enter = array_sum($weeks_period_enter_transactions);
