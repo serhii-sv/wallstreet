@@ -53,6 +53,8 @@ class Kernel extends ConsoleKernel
     {
 //        $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
 
+        \Log::error('scheduler run');
+
         $schedule->command('make:rate_log')->hourly();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
@@ -64,6 +66,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
+
+        \Log::error('scheduler finish');
     }
 
     /**
