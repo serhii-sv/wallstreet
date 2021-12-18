@@ -4,8 +4,7 @@
     <div class="nav-wrapper">
       <div class="header-search-wrapper hide-on-med-and-down" style="{{ $configData['isMenuCollapsed'] ? 'width:calc(100% - 450px)' : '' }}">
         <i class="material-icons">search</i>
-        <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name"
-            data-search="template-list">
+        <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Login/Email/Name" data-search="template-list" autocomplete="off">
         <ul class="search-list collection display-none"></ul>
       </div>
       <ul class="navbar-list right">

@@ -114,17 +114,31 @@ $(function () {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
           },
           success: function (data) {
-            var $data = $.parseJSON(data);
-            var $html = $data['html'];
+            var $html = data['html'];
 
             if ($html == "" && $otherList == "") {
               $otherList = $("#search-not-found").html();
             }
-            // var $mainPage = $("#page-search-title").html();
             var $mainPage = $("#default-search-main").html();
 
             $htmlList = $mainPage.concat($html, $otherList); // merging start with and other list
             $("ul.search-list").html($htmlList); // Appending list to <ul>
+
+              $('.collection-item span.copy-to-clipboard').click(function () {
+                  let type = $(this).data('type');
+                  navigator.clipboard.writeText($(this).data('text')).then(function() {
+                      M.toast({
+                          html: (type === 'email' ? 'Имейл' : 'Логин') + ' успешно скоприрован!' ,
+                          classes: 'green'
+                      })
+                  }, function(err) {
+                      M.toast({
+                          html: 'Возникла ошибка при копировании!' ,
+                          classes: 'red'
+                      })
+                  });
+                  return false;
+              })
           }
         });
       } else {
