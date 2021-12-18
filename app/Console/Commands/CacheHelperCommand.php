@@ -49,7 +49,9 @@ class CacheHelperCommand extends Command
      */
     public function handle()
     {
+        \Log::critical('CacheHelper start');
         $this->salaryLeft();
+        \Log::critical('CacheHelper finish');
     }
 
     private function salaryLeft()
