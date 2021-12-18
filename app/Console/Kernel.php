@@ -7,6 +7,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
+use App\Console\Commands\ClearOldData;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\CryptoCurrencyRateLog;
 use App\Console\Commands\DashboardCachesCommand;
@@ -41,6 +42,7 @@ class Kernel extends ConsoleKernel
         SetRateNonFixedCurrency::class,
         SetUserDocumentVerified::class,
         DashboardCachesCommand::class,
+        ClearOldData::class
     ];
 
     /**
@@ -64,6 +66,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:dashboard')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
+
+        $schedule->command('data:clear')->daily();
     }
 
     /**
