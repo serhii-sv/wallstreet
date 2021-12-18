@@ -51,8 +51,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        \Log::error('scheduler run');
-
         $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
         $schedule->command('make:rate_log')->hourly();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
@@ -65,8 +63,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
-
-        \Log::error('scheduler finish');
     }
 
     /**

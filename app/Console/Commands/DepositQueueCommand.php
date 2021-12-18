@@ -46,8 +46,6 @@ class DepositQueueCommand extends Command
      */
     public function handle()
     {
-        \Log::critical('Deposit queue start');
-
         /** @var DepositQueue $queues */
         $queues = DepositQueue::where('available_at', '<=', now()->toDateTimeString())
             ->where('done', 0)
@@ -82,7 +80,5 @@ class DepositQueueCommand extends Command
                 continue;
             }
         }
-
-        \Log::critical('Deposit queue finish');
     }
 }

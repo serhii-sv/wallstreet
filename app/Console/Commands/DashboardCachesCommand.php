@@ -46,8 +46,6 @@ class DashboardCachesCommand extends Command
      */
     public function handle()
     {
-        \Log::critical('Dashboard caches start');
-
 //        cache()->forget('dshb.id_withdraw');
         $id_withdraw = cache()->remember('dshb.id_withdraw', now()->addHours(3), function () {
             return TransactionType::where('name', 'withdraw')->first()->id;
@@ -332,7 +330,5 @@ class DashboardCachesCommand extends Command
         Cache::remember('dshb.payment_systems', now()->addHours(3), function () {
             return PaymentSystem::paginate(10);
         });
-
-        \Log::critical('Dashboard caches finish');
     }
 }
