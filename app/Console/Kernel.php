@@ -51,7 +51,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
+//        $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
 
 //        $schedule->command('make:rate_log')->hourly();
 //        $schedule->command('horizon:snapshot')->everyFiveMinutes();
