@@ -50,7 +50,7 @@ class ClearOldData extends Command
         UserPhoneMessages::where('created_at', '<=', now()->subMonths())->delete();
         DepositQueue::where('done', 1)->where('created_at', '<=', now()->subWeeks())->delete();
 
-        $notifications = Notification::where('created_at', '<=', now()->subMonths());
+        $notifications = Notification::where('created_at', '<=', now()->subWeeks());
 
         NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->delete();
 
