@@ -78,20 +78,17 @@ class DashboardComposer
                     ->where('approved', '=', 1)->whereNotNull('payment_system_id')
                     ->whereHas('type', function ($query) {
                         $query->where('name', 'enter');
-                    })->get()->reduce(function ($carry, $item) {
-                        return $carry + $item->main_currency_amount;
-                    }, 0);
+                    })->sum('main_currency_amount');
 
                 $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
                     ->where('created_at', '<=', $date . ' 23:59:59')
                     ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                         $query->where('name', 'withdraw');
-                    })->get()->reduce(function ($carry, $item) {
-                        return $carry + $item->main_currency_amount;
-                    }, 0);
+                    })->sum('main_currency_amount');
 
                 $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
             }
+
             return [
                 'usersCounts' => $usersCounts,
                 'enterTransactions' => $enterTransactions,
