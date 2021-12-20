@@ -568,4 +568,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserDepositBonus::class);
     }
+
+    public function userCurrentRank()
+    {
+        return $this->userDepositBonuses()->orderBy('created_at', 'desc')->first();
+    }
 }

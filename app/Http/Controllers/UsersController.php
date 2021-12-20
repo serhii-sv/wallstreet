@@ -339,7 +339,6 @@ class UsersController extends Controller
           ->where('approved', 1)
           ->sum('main_currency_amount');
 
-
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -361,7 +360,8 @@ class UsersController extends Controller
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
             'wallets' => $wallets,
-            'last_operations' => $last_operations
+            'last_operations' => $last_operations,
+            'user_current_rank' => $user->userCurrentRank()->depositBonus ?? null
         ]);
     }
 
