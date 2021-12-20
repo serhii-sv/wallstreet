@@ -272,6 +272,8 @@ class UsersController extends Controller
             $query->where('condition', '!=', 'closed');
         })->count();
 
+        $last_operations = $user->transactions()->orderByDesc('created_at')->limit(5)->get();
+
         /** @var Wallet $wallets */
         $wallets = Wallet::where('user_id', $user->id)
             ->with('currency');
@@ -359,6 +361,7 @@ class UsersController extends Controller
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
             'wallets' => $wallets,
+            'last_operations' => $last_operations
         ]);
     }
 

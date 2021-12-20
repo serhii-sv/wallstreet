@@ -1,1 +1,1 @@
-<span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, $transaction->currency->precision, ',', ' ') }} (${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span>
+<span class="invoice-amount">{{ $transaction->currency->symbol }}{{ number_format($transaction->amount, $transaction->currency->precision, ',', ' ') }} (<span style="color: green">${{ number_format($transaction->main_currency_amount, 2, '.', ',') }})</span></span>

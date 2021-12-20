@@ -78,69 +78,73 @@ class DashboardCachesCommand extends Command
         $prev_weeks_period = cache()->remember('dshb.prev_weeks_period', now()->addHours(3), function () use ($dashboardController) {
             return $dashboardController->getPreviousWeekPeriod();
         });
-//        cache()->forget('dshb.last_prev_transactions');
-        $prev_week_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_weeks_period['start'], now()->addHours(3), function () use ($prev_weeks_period) {
+
+//        cache()->forget('dshb.weeks_previous_period_enter_transactions');
+//        cache()->forget('dshb.weeks_previous_period_withdraw_transactions');
+
+        cache()->remember('dshb.weeks_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_weeks_period, $id_enter) {
             return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_weeks_period['start'],
                 $prev_weeks_period['end'],
-            ])->get();
+            ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
         });
-
-//        cache()->forget('dshb.weeks_previous_period_enter_transactions');
-        cache()->remember('dshb.weeks_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_week_transactions, $id_enter) {
-            return $prev_week_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-        });
-//        cache()->forget('dshb.weeks_previous_period_withdraw_transactions');
-        cache()->remember('dshb.weeks_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_week_transactions, $id_withdraw) {
-            return $prev_week_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+        cache()->remember('dshb.weeks_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_weeks_period, $id_withdraw) {
+            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
+                $prev_weeks_period['start'],
+                $prev_weeks_period['end'],
+            ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         });
 
         foreach ($weeks_period as $week) {
-//            cache()->forget('dshb.last_transactions' . $week['start']);
-            $transactions = cache()->remember('dshb.last_transactions_week_' . $week['start'], now()->addHours(3), function () use ($week) {
+//            cache()->forget('dshb.main_currency_amount_enter_week_' . $week['start']);
+//            cache()->forget('dshb.main_currency_amount_withdraw_week_' . $week['start']);
+
+            $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_enter_week_' . $week['start'], now()->addHours(3), function () use ($week, $id_enter) {
                 return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $week['start'],
                     $week['end'],
-                ])->get();
+                ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             });
-            $weeks_period_enter_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_enter_week_' . $week['start'], now()->addHours(3), function () use ($transactions, $id_enter) {
-                return $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-            });
-            $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_withdraw_week_' . $week['start'], now()->addHours(3), function () use ($transactions, $id_withdraw) {
-                return $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+            $weeks_period_withdraw_transactions[$week['start']->format('d M') . '-' . $week['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_withdraw_week_' . $week['start'], now()->addHours(3), function () use ($week, $id_withdraw) {
+                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
+                    $week['start'],
+                    $week['end'],
+                ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
             });
         }
 
         foreach ($month_period as $key => $month) {
-//            cache()->forget('dshb.last_transactions');
-            $transactions = cache()->remember('dshb.last_transactions_month_' . $month['start'], now()->addHours(3), function () use ($month) {
+//            cache()->forget('dshb.main_currency_amount_enter_month_' . $month['start']);
+//            cache()->forget('dshb.main_currency_amount_withdraw_month_' . $month['start']);
+
+            $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_enter_month_' . $month['start'], now()->addHours(3), function () use ($month, $id_enter) {
                 return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                     $month['start'],
                     $month['end'],
-                ])->get();
+                ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             });
-            $month_period_enter_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_enter_month_' . $month['start'], now()->addHours(3), function () use ($transactions, $id_enter) {
-                return $transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-            });
-            $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_withdraw_month_' . $month['start'], now()->addHours(3), function () use ($transactions, $id_withdraw) {
-                return $transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+            $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_withdraw_month_' . $month['start'], now()->addHours(3), function () use ($month, $id_withdraw) {
+                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
+                    $month['start'],
+                    $month['end'],
+                ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
             });
         }
-//        cache()->forget('dshb.last_prev_transactions');
-        $prev_month_transactions = cache()->remember('dshb.last_prev_transactions' . $prev_month_period['start'], now()->addHours(3), function () use ($prev_month_period) {
+
+//        cache()->forget('dshb.month_previous_period_enter_transactions');
+//        cache()->forget('dshb.month_previous_period_withdraw_transactions');
+
+        cache()->remember('dshb.month_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_month_period, $id_enter) {
             return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
                 $prev_month_period['start'],
                 $prev_month_period['end'],
-            ])->get();
+            ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
         });
-
-//        cache()->forget('dshb.month_previous_period_enter_transactions');
-        cache()->remember('dshb.month_previous_period_enter_transactions', now()->addHours(3), function () use ($prev_month_transactions, $id_enter) {
-            return $prev_month_transactions->where('type_id', '=', $id_enter)->sum('main_currency_amount');
-        });
-//        cache()->forget('dshb.month_previous_period_withdraw_transactions');
-        cache()->remember('dshb.month_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_month_transactions, $id_withdraw) {
-            return $prev_month_transactions->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
+        cache()->remember('dshb.month_previous_period_withdraw_transactions', now()->addHours(3), function () use ($prev_month_period, $id_withdraw) {
+            return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
+                $prev_month_period['start'],
+                $prev_month_period['end'],
+            ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
         });
 
         $count_countries = 5;
@@ -199,9 +203,7 @@ class DashboardCachesCommand extends Command
         Cache::remember('dshb.transactions.enter.for_24h', now()->addHours(3), function () {
             return Transaction::where('created_at', '>=', now()->subDay()->format('Y-m-d H:i:s'))->where('approved', '=', 1)->where('is_real', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                 $query->where('name', 'enter');
-            })->get()->reduce(function ($carry, $item) {
-                return $carry + $item->main_currency_amount;
-            }, 0);
+            })->sum('main_currency_amount');
         });
 
 //        cache()->forget('dshb.transactions.withdraw.for_24h');
@@ -257,17 +259,13 @@ class DashboardCachesCommand extends Command
                     ->where('approved', '=', 1)->whereNotNull('payment_system_id')
                     ->whereHas('type', function ($query) {
                         $query->where('name', 'enter');
-                    })->get()->reduce(function ($carry, $item) {
-                        return $carry + $item->main_currency_amount;
-                    }, 0);
+                    })->sum('main_currency_amount');
 
                 $withdrawals[$date] = Transaction::where('created_at', '>=', $date . ' 00:00:00')
                     ->where('created_at', '<=', $date . ' 23:59:59')
                     ->where('approved', '=', 1)->whereNotNull('payment_system_id')->whereHas('type', function ($query) {
                         $query->where('name', 'withdraw');
-                    })->get()->reduce(function ($carry, $item) {
-                        return $carry + $item->main_currency_amount;
-                    }, 0);
+                    })->sum('main_currency_amount');
 
                 $profit[$date] = $enterTransactions[$date] - $withdrawals[$date];
             }

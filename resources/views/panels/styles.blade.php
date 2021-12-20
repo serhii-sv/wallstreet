@@ -29,4 +29,28 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/laravel-custom.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/custom/custom.css')}}">
 <script src="{{asset('vendors/sweetalert/sweetalert.min.js')}}"></script>
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        background-color: #3f51b5;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        position: absolute;
+        z-index: 1;
+        top: -45px;
+        width: 150px;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
 <!-- END: Custom CSS-->
