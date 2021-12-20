@@ -49,7 +49,7 @@ class Setting extends Model
      */
     public static function getValue(string $key, $default='')
     {
-        return cache()->rememberForever('model_setting_' . $key, function () use ($key, $default) {
+        return cache()->remember('model_setting_' . $key, now()->addHours(6), function () use ($key, $default) {
             $row = self::where('s_key', $key)->first();
 
             if (null === $row) {
