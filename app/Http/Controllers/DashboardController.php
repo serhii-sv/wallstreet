@@ -27,7 +27,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        return redirect('/users');
+//        return redirect('/users');
 
         $id_withdraw = cache()->remember('dshb.id_withdraw', now()->addHours(3), function () {
             return TransactionType::where('name', 'withdraw')->first()->id;
