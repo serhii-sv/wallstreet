@@ -128,6 +128,55 @@
             })
             return false;
         })
+
+        $('input[name="enable_snow"]').change(function () {
+            let checkboxChecked = $(this).prop('checked');
+            swal({
+                title: "Вы уверены?",
+                // text: "You will not be able to recover this imaginary file!",
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: "Отменить",
+                        value: null,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Подтвердить",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: true
+                    }
+                }
+            }).then((result) => {
+                if (result) {
+                    $.ajax({
+                        url: '/settings/enable-snow',
+                        method: 'post',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            enable_snow: checkboxChecked
+                        },
+                        success: (response) => {
+                            M.toast({
+                                html: response.message,
+                                classes: response.success ? 'green' : 'red'
+                            })
+
+                            if (!response.success) {
+                                $(this).prop('checked', !checkboxChecked)
+                            }
+                        }
+                    })
+                } else {
+                    $(this).prop('checked', !checkboxChecked)
+                }
+            })
+            return false;
+        })
     })
 </script>
 @if(canEditLang() && checkRequestOnEdit())

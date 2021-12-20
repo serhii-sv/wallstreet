@@ -569,6 +569,9 @@ class User extends Authenticatable
         return $this->hasMany(UserDepositBonus::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     */
     public function userCurrentRank()
     {
         return $this->userDepositBonuses()->orderBy('created_at', 'desc')->first();
