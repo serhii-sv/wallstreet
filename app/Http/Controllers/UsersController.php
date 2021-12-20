@@ -689,4 +689,21 @@ class UsersController extends Controller
             ]);
         }
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function disable2fa($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->loginSecurity()->first()->update([
+            'google2fa_enable' => false
+        ])) {
+            return back()->with('success_short', 'Операция успешно проведена');
+        }
+
+        return back()->with('error_short', 'Операция не проведена');
+    }
 }

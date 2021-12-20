@@ -214,6 +214,8 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
                 Route::get('/{user_id}/destroy/{transaction_id}', [\App\Http\Controllers\UserTransactionController::class, 'destroy'])->name('destroy');
             });
 
+            Route::get('/users/2fa/{id}', [UsersController::class, 'disable2fa'])->name('users.2fa');
+
             Route::get('/users/reftree/{id}', [\App\Http\Controllers\Technical\ReftreeController::class, 'show'])->name('users.reftree');
             Route::get('/users/referral-list/{id}', [UsersController::class, 'userReferralList'])->name('users.referral.list');
 
