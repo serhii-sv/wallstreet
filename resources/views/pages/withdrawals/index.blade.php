@@ -163,13 +163,13 @@
                         {{ __('Teamlead') }}
                     @endif</span>
                 </th>
-{{--              <th>--}}
-{{--                <span>@if(canEditLang() && checkRequestOnEdit())--}}
-{{--                    <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>--}}
-{{--                  @else--}}
-{{--                    {{ __('Upliner') }}--}}
-{{--                    @endif</span>--}}
-{{--              </th>--}}
+              <th>
+                <span>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block>
+                  @else
+                    {{ __('Upliner') }}
+                    @endif</span>
+              </th>
               <th>@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
                 @else
@@ -210,6 +210,9 @@
 
 {{-- page scripts --}}
 @section('page-script')
+    <script>
+        let currentTablePage = '{{ old('page') }}'
+    </script>
   <script src="{{asset('js/scripts/dataTables.keepConditions.min.js')}}"></script>
   <script src="{{asset('js/scripts/app-invoice.js')}}"></script>
   <script src="{{asset('js/plugins.js')}}"></script>

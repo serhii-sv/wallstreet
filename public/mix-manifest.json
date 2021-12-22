@@ -143,6 +143,7 @@
     "/js/scripts/user-verification-requests.js": "/js/scripts/user-verification-requests.js",
     "/js/custom/custom-script.js": "/js/custom/custom-script.js",
     "/js/custom/custom-script.min.js": "/js/custom/custom-script.min.js",
+    "/images/scroll.png": "/images/scroll.png",
     "/vendors/imagesloaded.pkgd.min.js": "/vendors/imagesloaded.pkgd.min.js",
     "/vendors/jquery-sortable.js": "/vendors/jquery-sortable.js",
     "/vendors/jquery.nestable": "/vendors/jquery.nestable",
