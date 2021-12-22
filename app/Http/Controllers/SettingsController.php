@@ -66,4 +66,23 @@ class SettingsController extends Controller
             'message' => 'Статус клиентского сайта не изменен'
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function enableSnow(Request $request)
+    {
+        $result = Setting::setValue('enable_snow', $request->enable_snow);
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Снег включен'
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Снег выключен'
+        ]);
+    }
 }

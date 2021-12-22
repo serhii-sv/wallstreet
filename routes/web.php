@@ -66,6 +66,7 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
             Route::get('/settings/switch_site_status', [\App\Http\Controllers\SettingsController::class, 'switchSiteStatus'])->name('settings.switchSiteStatus');
             Route::post('/settings/change-many', [\App\Http\Controllers\SettingsController::class, 'changeMany'])->name('settings.change-many');
             Route::post('/settings/change-client-site-status', [\App\Http\Controllers\SettingsController::class, 'clientSite'])->name('settings.change-client-site-status');
+            Route::post('/settings/enable-snow', [\App\Http\Controllers\SettingsController::class, 'enableSnow'])->name('settings.enable-snow');
 
             Route::resource('/deposits', \App\Http\Controllers\DepositController::class);
             Route::resource('/transactions', \App\Http\Controllers\TransactionsController::class);

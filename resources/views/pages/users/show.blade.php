@@ -130,7 +130,10 @@
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Registered' contenteditable="true">{{ __('Registered') }}</editor_block>@else {{ __('Registered') }} @endif:</td>
                           <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
                       </tr>
-
+                          <tr>
+                              <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Ранг' contenteditable="true">{{ __('Ранг') }}</editor_block>@else {{ __('Ранг') }} @endif:</td>
+                              <td><b>{{ $user_current_rank ? $user_current_rank->status_stage . ' ' . $user_current_rank->status_name  : 'Отсутствует' }}</b></td>
+                          </tr>
                       </tbody>
                   </table>
               </div>
