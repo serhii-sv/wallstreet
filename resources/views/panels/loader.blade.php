@@ -5,7 +5,7 @@
         top: 0px;
         width: 100%;
         height: 100%;
-        z-index: 9999;
+        z-index: 99999;
         background: rgba(164, 180, 203, 0.95);
 
         display: flex;
@@ -73,7 +73,7 @@
         }
     }
 </style>
-<div class="box">
+<div class="box loader-box">
     <div id="loader-1"></div>
 </div>
 
