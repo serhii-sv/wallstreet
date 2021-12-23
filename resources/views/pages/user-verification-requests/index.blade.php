@@ -22,6 +22,22 @@
 @section('content')
     <!-- invoice list -->
     <section class="invoice-list-wrapper section">
+{{--        <div class="row">--}}
+{{--            <div class="col s12">--}}
+{{--                <div class="card">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <div class="row">--}}
+{{--                            <div class="col s6 l12">--}}
+
+{{--                            </div>--}}
+{{--                            <div class="col s6 l12">--}}
+
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="responsive-table">
             <table class="table verification-requests white border-radius-4 pt-1">
                 <thead>
