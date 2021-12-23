@@ -78,52 +78,63 @@ class ActivityLog extends Model
      * @param null $to
      * @return array
      */
-    public static function getActivityLog($user = null, $period = null, $from = null, $to = null)
+    public static function getActivityLog($user = null, $period = null, $from = null, $to = null, $update_cache = false)
     {
         $user = $user ?? auth()->user();
 
-        if (!is_null($from) && !is_null($to)) {
-
-            $from = Carbon::parse($from);
-            $to = $to !== 'Invalid date' ? Carbon::parse($to) : $from->format('Y-m-d 23:59:59');
-
-            $activities = $user->activities()
-                ->where('created_at', '>=', $from)
-                ->where('created_at', '<=', $to )
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else {
-            if (is_null($period) || $period == 'day') {
-                $fromDate = date('Y-m-d 00:00:00');
-            } else {
-                $fromDate = date('Y-m-d 00:00:00', strtotime('- 1 ' . $period));
-            }
-
-            $activities = $user->activities()
-                ->where('created_at', '>=', $fromDate)
-                ->orderBy('created_at', 'desc')
-                ->get();
+        if ($update_cache) {
+            cache()->forget('user_activity.' . $period . '.' . $user->id);
         }
 
-        $activityTime = 0;
+        $data = cache()->remember('user_activity.' . $period . '.' . $user->id, now()->addHours(3), function () use ($from, $to, $user, $period) {
+            if (!is_null($from) && !is_null($to)) {
 
-        foreach ($activities as $key => $activity) {
-            if (isset($activities[$key + 1])) {
-                $diff = $activity->created_at->diffInSeconds($activities[$key + 1]->created_at);
+                $from = Carbon::parse($from);
+                $to = $to !== 'Invalid date' ? Carbon::parse($to) : $from->format('Y-m-d 23:59:59');
 
-                if ($diff <= 300) {
-                    $activityTime += $diff;
+                $activities = $user->activities()
+                    ->where('created_at', '>=', $from)
+                    ->where('created_at', '<=', $to )
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } else {
+                if (is_null($period) || $period == 'day') {
+                    $fromDate = date('Y-m-d 00:00:00');
+                } else {
+                    $fromDate = date('Y-m-d 00:00:00', strtotime('- 1 ' . $period));
+                }
+
+                $activities = $user->activities()
+                    ->where('created_at', '>=', $fromDate)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
+
+            $activityTime = 0;
+
+            foreach ($activities as $key => $activity) {
+                if (isset($activities[$key + 1])) {
+                    $diff = $activity->created_at->diffInSeconds($activities[$key + 1]->created_at);
+
+                    if ($diff <= 300) {
+                        $activityTime += $diff;
+                    }
                 }
             }
-        }
 
-        $dtF = new \DateTime('@0');
-        $dtT = new \DateTime("@$activityTime");
-        list($days, $hours, $minutes) = explode(',', $dtF->diff($dtT)->format('%a,%h,%i'));
+            $dtF = new \DateTime('@0');
+            $dtT = new \DateTime("@$activityTime");
+            list($days, $hours, $minutes) = explode(',', $dtF->diff($dtT)->format('%a,%h,%i'));
+
+            return [
+                'time' => (($days * 24) + $hours) . ' ч ' . $minutes . ' м',
+                'percentage' => self::getTimePercentage($activityTime, $period)
+            ];
+        });
 
         return [
-            'time' => (($days * 24) + $hours) . ' ч ' . $minutes . ' м',
-            'percentage' => self::getTimePercentage($activityTime, $period)
+            'time' => $data['time'],
+            'percentage' => $data['percentage']
         ];
     }
 

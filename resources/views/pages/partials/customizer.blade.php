@@ -81,7 +81,8 @@
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'purple' ? 'selected' : '' }} purple" data-color="purple"></span>
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'pink' ? 'selected' : '' }} pink" data-color="pink"></span>
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'deep-purple' ? 'selected' : '' }} deep-purple" data-color="deep-purple"></span>
-                  <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'dark' ? 'selected' : '' }} dark" data-color="dark"></span>
+                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'white' ? 'selected' : '' }} white" data-color="white" style="border: 1px solid rgb(0 0 0 / 20%)"></span>
+                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'dark' ? 'selected' : '' }} dark" data-color="dark"></span>
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'teal' ? 'selected' : '' }} teal" data-color="teal"></span>
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'light-blue' ? 'selected' : '' }} light-blue" data-color="light-blue"></span>
                   <span class="menu-bg-color-option {{ ($themeSettings['menu-bg-color'] ?? null) == 'amber darken-3' ? 'selected' : '' }} amber darken-3" data-color="amber darken-3"></span>

@@ -19,6 +19,7 @@ use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
 use App\Console\Commands\SetUserDocumentVerified;
+use App\Console\Commands\UserProfileCaches;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -42,7 +43,8 @@ class Kernel extends ConsoleKernel
         SetRateNonFixedCurrency::class,
         SetUserDocumentVerified::class,
         DashboardCachesCommand::class,
-        ClearOldData::class
+        ClearOldData::class,
+        UserProfileCaches::class
     ];
 
     /**
@@ -67,6 +69,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('user-documents:set-verified')->everyMinute();
 
         $schedule->command('data:clear')->daily();
+
+        $schedule->command('profile-cache:set')->everyMinute()->withoutOverlapping();
     }
 
     /**
