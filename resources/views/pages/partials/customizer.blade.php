@@ -13,6 +13,31 @@
          <h6 class="mt-6">Опции меню</h6>
          <hr class="customize-devider" />
          <div class="menu-options-form row">
+             <div class="input-field col s12 navbar-color mb-0">
+                 <p class="mt-0">Цвет панели навигации</p>
+                 <div class="gradient-color center-align">
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-indigo-blue' ? 'selected' : '' }} gradient-45deg-indigo-blue" data-color="gradient-45deg-indigo-blue"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-deep-orange' ? 'selected' : '' }} gradient-45deg-purple-deep-orange" data-color="gradient-45deg-purple-deep-orange"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-light-blue-cyan' ? 'selected' : '' }} gradient-45deg-light-blue-cyan" data-color="gradient-45deg-light-blue-cyan"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-amber' ? 'selected' : '' }} gradient-45deg-purple-amber" data-color="gradient-45deg-purple-amber"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-deep-purple' ? 'selected' : '' }} gradient-45deg-purple-deep-purple" data-color="gradient-45deg-purple-deep-purple"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-deep-orange-orange' ? 'selected' : '' }} gradient-45deg-deep-orange-orange" data-color="gradient-45deg-deep-orange-orange"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-green-teal' ? 'selected' : '' }} gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-indigo-light-blue' ? 'selected' : '' }} gradient-45deg-indigo-light-blue" data-color="gradient-45deg-indigo-light-blue"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-red-pink' ? 'selected' : '' }} gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
+                 </div>
+                 <div class="solid-color center-align">
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'red' ? 'selected' : '' }} red" data-color="red"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'purple' ? 'selected' : '' }} purple" data-color="purple"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'pink' ? 'selected' : '' }} pink" data-color="pink"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'deep-purple' ? 'selected' : '' }} deep-purple" data-color="deep-purple"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'dark' ? 'selected' : '' }} dark" data-color="dark"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'teal' ? 'selected' : '' }} teal" data-color="teal"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'light-blue' ? 'selected' : '' }} light-blue" data-color="light-blue"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'amber darken-3' ? 'selected' : '' }} amber darken-3" data-color="amber darken-3"></span>
+                     <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'brown darken-2' ? 'selected' : '' }} brown darken-2" data-color="brown darken-2"></span>
+                 </div>
+             </div>
             <div class="input-field col s12 menu-color mb-0">
                <p class="mt-0">Цвет меню</p>
                <div class="gradient-color center-align">
@@ -103,31 +128,6 @@
       <h6 class="mt-6">Параметры навигационной панели</h6>
       <hr class="customize-devider" />
       <div class="navbar-options row">
-         <div class="input-field col s12 navbar-color mb-0">
-            <p class="mt-0">Цвет панели навигации</p>
-            <div class="gradient-color center-align">
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-indigo-blue' ? 'selected' : '' }} gradient-45deg-indigo-blue" data-color="gradient-45deg-indigo-blue"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-deep-orange' ? 'selected' : '' }} gradient-45deg-purple-deep-orange" data-color="gradient-45deg-purple-deep-orange"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-light-blue-cyan' ? 'selected' : '' }} gradient-45deg-light-blue-cyan" data-color="gradient-45deg-light-blue-cyan"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-amber' ? 'selected' : '' }} gradient-45deg-purple-amber" data-color="gradient-45deg-purple-amber"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-purple-deep-purple' ? 'selected' : '' }} gradient-45deg-purple-deep-purple" data-color="gradient-45deg-purple-deep-purple"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-deep-orange-orange' ? 'selected' : '' }} gradient-45deg-deep-orange-orange" data-color="gradient-45deg-deep-orange-orange"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-green-teal' ? 'selected' : '' }} gradient-45deg-green-teal" data-color="gradient-45deg-green-teal"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-indigo-light-blue' ? 'selected' : '' }} gradient-45deg-indigo-light-blue" data-color="gradient-45deg-indigo-light-blue"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'gradient-45deg-red-pink' ? 'selected' : '' }} gradient-45deg-red-pink" data-color="gradient-45deg-red-pink"></span>
-            </div>
-            <div class="solid-color center-align">
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'red' ? 'selected' : '' }} red" data-color="red"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'purple' ? 'selected' : '' }} purple" data-color="purple"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'pink' ? 'selected' : '' }} pink" data-color="pink"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'deep-purple' ? 'selected' : '' }} deep-purple" data-color="deep-purple"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'dark' ? 'selected' : '' }} dark" data-color="dark"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'teal' ? 'selected' : '' }} teal" data-color="teal"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'light-blue' ? 'selected' : '' }} light-blue" data-color="light-blue"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'amber darken-3' ? 'selected' : '' }} amber darken-3" data-color="amber darken-3"></span>
-               <span class="navbar-color-option {{ ($themeSettings['navbar-color'] ?? null) == 'brown darken-2' ? 'selected' : '' }} brown darken-2" data-color="brown darken-2"></span>
-            </div>
-         </div>
          <div class="input-field col s12">
             <div class="switch">
                Темная панель навигации
