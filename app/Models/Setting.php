@@ -42,22 +42,38 @@ class Setting extends Model
         'is_fixed'
     ];
 
+
     /**
      * @param string $key
-     * @return string|null
+     * @param string $default
+     * @param false $force
+     * @return mixed
      * @throws \Exception
      */
-    public static function getValue(string $key, $default='')
+    public static function getValue(string $key, $default='', $force = false)
     {
+        if ($force) {
+            return self::settingValue($key, $default);
+        }
         return cache()->remember('model_setting_' . $key, now()->addHours(6), function () use ($key, $default) {
-            $row = self::where('s_key', $key)->first();
-
-            if (null === $row) {
-                return $default;
-            }
-
-            return $row->s_value;
+            return self::settingValue($key, $default);
         });
+    }
+
+    /**
+     * @param $key
+     * @param $default
+     * @return mixed
+     */
+    private static function settingValue($key, $default)
+    {
+        $row = self::where('s_key', $key)->first();
+
+        if (null === $row) {
+            return $default;
+        }
+
+        return $row->s_value;
     }
 
     /**

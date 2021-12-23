@@ -339,7 +339,6 @@ class UsersController extends Controller
           ->where('approved', 1)
           ->sum('main_currency_amount');
 
-
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -361,7 +360,8 @@ class UsersController extends Controller
             'registered_referrals' => $registered_referrals,
             'active_referrals' => $active_referrals,
             'wallets' => $wallets,
-            'last_operations' => $last_operations
+            'last_operations' => $last_operations,
+            'user_current_rank' => $user->userCurrentRank()->depositBonus ?? null
         ]);
     }
 
@@ -688,5 +688,22 @@ class UsersController extends Controller
                 'message' => 'Ошибка! Попробуйте заново'
             ]);
         }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function disable2fa($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->loginSecurity()->first()->update([
+            'google2fa_enable' => false
+        ])) {
+            return back()->with('success_short', 'Операция успешно проведена');
+        }
+
+        return back()->with('error_short', 'Операция не проведена');
     }
 }

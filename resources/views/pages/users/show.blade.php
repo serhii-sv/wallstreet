@@ -130,7 +130,10 @@
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Registered' contenteditable="true">{{ __('Registered') }}</editor_block>@else {{ __('Registered') }} @endif:</td>
                           <td>{{ $user->created_at->format('Y-m-d H:i:s') ?? '' }}</td>
                       </tr>
-
+                          <tr>
+                              <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Ранг' contenteditable="true">{{ __('Ранг') }}</editor_block>@else {{ __('Ранг') }} @endif:</td>
+                              <td><b>{{ $user_current_rank ? $user_current_rank->status_stage . ' ' . $user_current_rank->status_name  : 'Отсутствует' }}</b></td>
+                          </tr>
                       </tbody>
                   </table>
               </div>
@@ -145,6 +148,33 @@
                       <tr>
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmation' contenteditable="true">{{ __('Email confirmation') }}</editor_block>@else {{ __('Email confirmation') }} @endif:</td>
                           <td class="users-view-verified">@if($user->email_verified_at) @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email confirmed' contenteditable="true">{{ __('Email confirmed') }}</editor_block>@else {{ __('Email confirmed') }} @endif @else @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Email not verified' contenteditable="true">{{ __('Email not verified') }}</editor_block>@else {{ __('Email not verified') }} @endif @endif</td>
+                      </tr>
+                      <tr>
+                          <td>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Email confirmation' contenteditable="true">
+                                      {{ __('2-х Факторная') }}
+                                  </editor_block>
+                              @else
+                                  {{ __('2-х Факторная') }}
+                              @endif:</td>
+                          <td class="users-view-2fa">
+                              <div class="display-flex justify-content-center align-items-center">
+                                  @if($user->loginSecurity()->first()->google2fa_enable ?? null)
+                                      <div class="mr-4">Да</div>
+                                      (<a href="{{ route('users.2fa', $user) }}">
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Email confirmed' contenteditable="true">
+                                                  {{ __('Отключить') }}
+                                              </editor_block>
+                                          @else
+                                              {{ __('Отключить') }}
+                                          @endif
+                                      </a>)
+                                  @else
+                                      Нет
+                                  @endif
+                              </div>
+                          </td>
                       </tr>
                       <tr>
                           <td>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Roles' contenteditable="true">{{ __('Roles') }}</editor_block>@else {{ __('Roles') }} @endif:</td>

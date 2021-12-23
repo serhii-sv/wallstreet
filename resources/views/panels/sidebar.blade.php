@@ -564,9 +564,9 @@
       </li>
     @endif
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::SETTINGS_SWITCH_SITE_STATUS]))
-      <li class="bold" style="margin-bottom: 30px">
+      <li class="bold">
         <label class="ml-10" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-          <input type="checkbox" name="disable_client_site" {{ \App\Models\Setting::getValue('disable_client_site') == 'true' ? 'checked' : '' }}/>
+          <input type="checkbox" name="disable_client_site" {{ \App\Models\Setting::getValue('disable_client_site', '', true) == 'true' ? 'checked' : '' }}/>
           <span>
             @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='Disable site' contenteditable="true">{{ __('Disable site') }}</editor_block>
@@ -576,6 +576,18 @@
           </span>
         </label>
       </li>
+          <li class="bold" style="margin-bottom: 30px">
+              <label class="ml-10" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <input type="checkbox" name="enable_snow" {{ \App\Models\Setting::getValue('enable_snow', '', true) == 'true' ? 'checked' : '' }}/>
+                  <span>
+            @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Снег на сайте' contenteditable="true">{{ __('Снег на сайте') }}</editor_block>
+                      @else
+                          {{ __('Снег на сайте') }}
+                      @endif
+          </span>
+              </label>
+          </li>
     @endif
     {{--   DROPDOWN     --}}
     {{--        <li class="active bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">settings_input_svideo</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge pill orange float-right mr-10">3</span></a>--}}

@@ -24,7 +24,7 @@
    .sideNav-lock {
       .header-search-wrapper {
          margin:10px auto 0 $sidenav-width + 10;
-        width: calc(100% - 690px);
+        width: calc(100% - 750px);
       }
    }
    input.header-search-input {
@@ -102,7 +102,7 @@
    .notification-button {
       line-height: 1;
    }
-   
+
    .notification-badge {
       font-family: $title;
       position: relative;
@@ -239,7 +239,7 @@
       padding: 0 8px 0 15px;
    }
 }
-// search list 
+// search list
 .search-list{
    position: absolute;
    top: 100%;
@@ -358,7 +358,7 @@ nav.display-none.search-sm{
          }
       }
    }
-      
+
    .notification-button {
       i {
          position: relative;
