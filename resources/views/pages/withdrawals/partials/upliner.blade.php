@@ -1,4 +1,4 @@
-@php($partner = $transaction->user->firstPartner($transaction->user))
+@php($partner = $transaction->user->partner)
 @if(null !== $partner)
     <a href="{{ route('users.show', $partner->id) }}">
         {{ $partner->login }}
