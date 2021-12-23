@@ -62,33 +62,33 @@ class GenerateDemoDataCommand extends Command
      * @throws \Exception
      */
     public function handle() {
-//        $this->comment('Reg program creating');
-//        $this->generateReferralLevels();
-//
-//        $this->comment('Rates creating');
-//        $this->generateRates();
-//
-//        $this->comment('Settings creating');
-//        $this->generateSettings();
-//
-//        try {
-//            $this->comment('Rates');
-//            $this->call('update:currency_rates');
-//        } catch (\Exception $e) {
-//            $this->warn('can not update currency rates');
-//        }
+        $this->comment('Reg program creating');
+        $this->generateReferralLevels();
+
+        $this->comment('Rates creating');
+        $this->generateRates();
+
+        $this->comment('Settings creating');
+        $this->generateSettings();
+
+        try {
+            $this->comment('Rates');
+            $this->call('update:currency_rates');
+        } catch (\Exception $e) {
+            $this->warn('can not update currency rates');
+        }
 
         $this->comment('Users creating');
         $this->generateUsers();
 
-//        $this->comment('News creating');
-//        $this->generateNews();
-//
-//        $this->comment('FAQ creating');
-//        $this->generateFaq();
-//
-//        $this->comment('Sprint Token rate change creating');
-//        $this->generateSprintTokenRateLog();
+        $this->comment('News creating');
+        $this->generateNews();
+
+        $this->comment('FAQ creating');
+        $this->generateFaq();
+
+        $this->comment('Sprint Token rate change creating');
+        $this->generateSprintTokenRateLog();
     }
 
     public function generateReferralLevels() {
@@ -154,7 +154,7 @@ class GenerateDemoDataCommand extends Command
     }
 
     public function generateUsers() {
-        for ($usersCount = 1; $usersCount <= 10000; $usersCount++) {
+        for ($usersCount = 1; $usersCount <= 15; $usersCount++) {
             $partner = User::inRandomOrder()->limit(1)->first();
 
             $newUser = [

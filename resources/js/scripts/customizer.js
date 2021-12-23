@@ -260,6 +260,7 @@ function saveThemeSettings() {
         navBarDark = navDarkCheckbox.prop('checked')
     }
 
+    $('.loader-box').show();
     $.ajax({
         url: '/theme-settings',
         method: 'post',
@@ -277,10 +278,16 @@ function saveThemeSettings() {
             'footer-fixed': $('.footer-fixed-checkbox').prop('checked'),
         },
         success: (response) => {
-            M.toast({
-                html: response.message,
-                classes: response.success ? 'green' : 'red'
-            })
+            setTimeout(() => {
+                $('.loader-box').hide();
+                M.toast({
+                    html: response.message,
+                    classes: response.success ? 'green' : 'red'
+                })
+            }, 1000)
+        },
+        error: (error) => {
+            $('.loader-box').hide();
         }
     })
 }

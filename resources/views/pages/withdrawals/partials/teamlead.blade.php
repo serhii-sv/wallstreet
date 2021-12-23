@@ -10,13 +10,3 @@
             </a>
     </span>
 @endif
-@php($partner = $transaction->user->partner)
-@if(null !== $partner)
-    <?php
-    $role = $partner->roles()->first();
-    ?>
-    <br>
-    <a class="ml-5" href="{{ route('users.show', $partner->id) }}">
-        {{ $partner->login }}
-    </a>
-@endif

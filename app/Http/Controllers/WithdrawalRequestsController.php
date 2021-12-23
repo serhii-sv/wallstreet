@@ -17,6 +17,7 @@ use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Class WithdrawalRequestsController
@@ -99,7 +100,7 @@ class WithdrawalRequestsController extends Controller
                     'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
 //                    'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
                     'teamlead' => view('pages.withdrawals.partials.teamlead', compact('transaction'))->render(),
-//                    'partner' => view('pages.withdrawals.partials.upliner', compact('transaction'))->render(),
+                    'partner' => view('pages.withdrawals.partials.upliner', compact('transaction'))->render(),
                     'amount' => view('pages.withdrawals.partials.amount', compact('transaction'))->render(),
                     'created_at' => $transaction->created_at->format('d-m-Y H:i'),
                     'approved' => view('pages.withdrawals.partials.external', compact('transaction'))->render(),
@@ -181,7 +182,7 @@ class WithdrawalRequestsController extends Controller
             }
         }
 
-        return back()->with('info', __('List of withdrawal requests processed.') .'<hr>'. implode('<hr>', $messages));
+        return back()->with('info', __('List of withdrawal requests processed.') .'<hr>'. implode('<hr>', $messages))->withInput(\request()->all());
     }
 
     /**
@@ -196,7 +197,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'));
+            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
         }
 
         cache()->put('reject'.$transaction, true, now()->addMinutes(10));
@@ -208,7 +209,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -242,7 +243,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return __('Request rejected');
         }
-        return back()->with('success', __('Request rejected'));
+        return back()->with('success', __('Request rejected'))->withInput(\request()->all());
     }
 
     /**
@@ -256,7 +257,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'));
+            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
         }
 
         cache()->put('remove'.$transaction, true, now()->addMinutes(10));
@@ -269,7 +270,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return __('Вывод удален');
         }
-        return back()->with('success', __('Вывод удален'));
+        return back()->with('success', __('Вывод удален'))->withInput(\request()->all());
     }
 
     /**
@@ -284,7 +285,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'));
+            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
         }
 
         cache()->put('approve'.$transaction, true, now()->addMinutes(10));
@@ -296,7 +297,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -321,14 +322,14 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return 'Платежная система не поддерживает автоплатежи';
             }
-            return back()->with('error_short', 'Платежная система не поддерживает автоплатежи');
+            return back()->with('error_short', 'Платежная система не поддерживает автоплатежи')->withInput(\request()->all());
         }
 
         if (empty($wallet->external)) {
             if (true === $massMode) {
                 return __('ERROR:') . ' wallet is empty';
             }
-            return back()->with('error', __('ERROR:') . ' wallet is empty');
+            return back()->with('error', __('ERROR:') . ' wallet is empty')->withInput(\request()->all());
         }
 
         try {
@@ -337,7 +338,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('ERROR:').' ' . $e->getMessage();
             }
-            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage());
+            return back()->with('error_short', __('ERROR:').' ' . $e->getMessage())->withInput(\request()->all());
         }
 
         if (empty($batchId)) {
@@ -346,7 +347,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __($batchErr);
             }
-            return back()->with('error_short', __($batchErr));
+            return back()->with('error_short', __($batchErr))->withInput(\request()->all());
         }
 
 
@@ -381,7 +382,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet');
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet'));
+        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet'))->withInput(\request()->all());
     }
 
     /**
@@ -396,7 +397,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'));
+            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
         }
 
         cache()->put('approveManually'.$transaction, true, now()->addMinutes(10));
@@ -408,7 +409,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -460,7 +461,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return $transaction->amount . $currency->symbol . ' - ' . __('Request approved.');
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved.'));
+        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved.'))->withInput(\request()->all());
     }
 
     /**
@@ -475,7 +476,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This transaction locked for 10 minutes.');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'));
+            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
         }
 
         cache()->put('approveFake'.$transaction, true, now()->addMinutes(10));
@@ -487,7 +488,7 @@ class WithdrawalRequestsController extends Controller
             if (true === $massMode) {
                 return __('This request already processed.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -540,7 +541,7 @@ class WithdrawalRequestsController extends Controller
         if (true === $massMode) {
             return $transaction->amount . $currency->symbol . ' - ' . __('Fake request approved.');
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Fake request approved.'));
+        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Fake request approved.'))->withInput(\request()->all());
     }
 
     /**
@@ -553,6 +554,6 @@ class WithdrawalRequestsController extends Controller
         if ($transaction->delete()) {
             return redirect()->to(route('withdrawals.index'));
         }
-        return back()->with('error', __('ERROR:') . ' Вывод не был удален');
+        return back()->with('error', __('ERROR:') . ' Вывод не был удален')->withInput(\request()->all());
     }
 }

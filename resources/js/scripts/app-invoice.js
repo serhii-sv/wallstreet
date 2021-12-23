@@ -40,11 +40,11 @@ $(document).ready(function () {
                     searchable: false,
                     bSortable: false
                 },
-                // {
-                //     data: 'partner',
-                //     searchable: false,
-                //     bSortable: false
-                // },
+                {
+                    data: 'partner',
+                    searchable: false,
+                    bSortable: false
+                },
                 {
                     data: 'amount',
                     searchable: false,
@@ -120,6 +120,10 @@ $(document).ready(function () {
             }
         });
 
+        if (currentTablePage) {
+            location.href = location.href + '#DataTables_Table_0=p' + currentTablePage;
+        }
+
         // To append actions dropdown inside action-btn div
         var invoiceFilterAction = $(".invoice-filter-action");
         var invoiceCreateBtn = $(".invoice-create-btn");
@@ -167,7 +171,7 @@ $(document).ready(function () {
                         $('input[name="type"]').val($(this).data('action_type'))
                         $('#transactionsForm').submit();
                     } else {
-                        window.location.replace($(this).attr('href'))
+                        window.location.replace($(this).attr('href') + '?page=' + dataListView.page.info().page)
                     }
                 }
             })
