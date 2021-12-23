@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\ActivityLog;
 use App\Models\DepositQueue;
+use App\Models\HttpLog;
 use App\Models\Notification;
 use App\Models\NotificationUser;
 use App\Models\UserAuthLog;
@@ -55,6 +56,8 @@ class ClearOldData extends Command
         NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->delete();
 
         $notifications->delete();
+
+        HttpLog::where('created_at', '<=', now()->subWeeks())->delete();
 
         return Command::SUCCESS;
     }
