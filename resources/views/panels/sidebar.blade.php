@@ -1,4 +1,20 @@
-<aside style="margin-bottom: 20px" class="{{$configData['sidenavMain']}} @if(!empty($configData['activeMenuType'])) {{$configData['activeMenuType']}} @else {{$configData['activeMenuTypeClass']}}@endif @if(($configData['isMenuDark']) === true) {{'sidenav-dark'}} @elseif(($configData['isMenuDark']) === false){{'sidenav-light'}}  @else {{$configData['sidenavMainColor']}}@endif {{ $configData['menuBgColor'] }}">
+<style>
+    aside.white .logo-text, aside.white .brand-sidebar i.material-icons, aside.white ul.sidenav li a:not(.active) {
+        color: rgba(0, 0, 0, .87) !important
+    }
+
+    aside.white ul.sidenav li a:not(.active) i.material-icons {
+        color: rgba(0, 0, 0, .54);
+    }
+
+    aside.white .brand-sidebar {
+        box-shadow: 0 4px 7px 0 rgb(0 0 0 / 20%)
+    }
+    .brand-logo {
+        margin-top: 10px !important;
+    }
+</style>
+<aside style="margin-bottom: 20px;" class="{{$configData['sidenavMain']}} @if(!empty($configData['activeMenuType'])) {{$configData['activeMenuType']}} @else {{$configData['activeMenuTypeClass']}}@endif @if(($configData['isMenuDark']) === true) {{'sidenav-dark'}} @elseif(($configData['isMenuDark']) === false){{'sidenav-light'}}  @else {{$configData['sidenavMainColor']}}@endif {{ $configData['menuBgColor'] }}">
   <div class="brand-sidebar">
     <h1 class="logo-wrapper">
       <a class="brand-logo darken-1" href="{{asset('/')}}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
