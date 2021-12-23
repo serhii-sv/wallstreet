@@ -31,7 +31,9 @@ class ReftreeController extends Controller
         $user = User::findOrFail($id);
 
         return view('pages.users.reftree', [
-            'referrals_data' => $user->getAllReferrals(),
+            'referrals_data' => cache()->remember('user.users_referrals_'. $user->id, now()->addHours(3), function () use ($user) {
+                return $user->getAllReferrals();
+            }),
             'user' => $user
         ]);
     }

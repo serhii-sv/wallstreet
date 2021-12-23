@@ -439,19 +439,21 @@ class UsersController extends Controller
             $upliner = false;
         }
 
-        $referrals = $user->referrals()->wherePivot('line', 1)->get();
+        $referrals = \cache()->remember('user.referrals_first_line_' . $user->id, now()->addHours(3), function () use ($user) {
+            return $user->referrals()->wherePivot('line', 1)->get();
+        });
 
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $total_referral_invested = 0;
         $total_referral_revenue = 0;
         foreach ($referrals as $referral) {
-            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
+            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, now()->addHours(3), function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
             });
-            $reff_invested = cache()->remember('referral.invested_' . $referral->id, 60, function () use ($referral) {
+            $reff_invested = cache()->remember('referral.invested_' . $referral->id, now()->addHours(3), function () use ($referral) {
                 return $referral->deposits()->sum('invested');
             });
-            $diff = cache()->remember('referral.invested_diff' . $referral->id, 60, function () use ($referral, $reff_invested) {
+            $diff = cache()->remember('referral.invested_diff' . $referral->id, now()->addHours(3), function () use ($referral, $reff_invested) {
                 return $referral->deposits()->sum('balance') - $reff_invested;
             });
             if ($diff > 0) {
