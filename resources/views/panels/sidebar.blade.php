@@ -345,20 +345,6 @@
                 </a>
               </li>
             @endif
-
-            <li class="bold">
-              <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
-                  href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                <i class="material-icons">show_chart</i>
-                <span class="menu-title">
-                      @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Sms' contenteditable="true">{{ __('Sms') }}</editor_block>
-                  @else
-                    {{ __('Sms') }}
-                  @endif
-                    </span>
-              </a>
-            </li>
           </ul>
         </div>
       </li>
@@ -396,6 +382,19 @@
         </a>
       </li>
     @endif
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('user.phone.verification') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
+             href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i class="material-icons">sms</i>
+              <span class="menu-title">
+                      @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Sms' contenteditable="true">{{ __('Sms') }}</editor_block>
+                  @else
+                      {{ __('Sms') }}
+                  @endif
+                    </span>
+          </a>
+      </li>
     <li class="bold">
       <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprint-bank.com" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
         <i class="material-icons">devices</i>
