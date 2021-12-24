@@ -584,72 +584,72 @@
             </div>
           </div>
 
-          <div class="col s12 m12 l12">
-            <div id="striped-table" class="card card card-default scrollspy">
-              <div class="card-content">
-                <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Admin Login History' contenteditable="true">{{ __('Admin Login History') }}</editor_block>
-                  @else
-                    {{ __('Admin Login History') }}
-                  @endif</h4>
-                <p class="mb-2"></p>
-                <div class="row">
-                  <div class="col s12">
-                  </div>
-                  <div class="col s12">
-                    <table class="striped">
-                      <thead>
-                        <tr>
-                          <th data-field="id">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>
-                            @else
-                              {{ __('User') }}
-                            @endif</th>
-                          <th data-field="name">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='ip' contenteditable="true">{{ __('ip') }}</editor_block>
-                            @else
-                              {{ __('ip') }}
-                            @endif</th>
-                          <th data-field="price">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>
-                            @else
-                              {{ __('Date') }}
-                            @endif</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @forelse($user_auth_logs as $item)
-                          <tr>
-                            <td><b>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>
-                                @else
-                                  {{ __('Name') }}
-                                @endif: </b>{{ $item->user->name ?? '' }}
-                              <br><b>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block>
-                                @else
-                                  {{ __('Login') }}
-                                @endif: </b>{{ $item->user->login ?? '' }}</td>
-                            <td>{{ $item->ip ?? '' }}</td>
-                            <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>
-                          </tr>
-                        @empty
-                          <tr>
-                            <td colspan="3" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>
-                              @else
-                                {{ __('Empty') }}
-                              @endif</td>
-                          </tr>
-                        @endforelse
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              {{--                    </div>--}}
-            </div>
-          </div>
+{{--          <div class="col s12 m12 l12">--}}
+{{--            <div id="striped-table" class="card card card-default scrollspy">--}}
+{{--              <div class="card-content">--}}
+{{--                <h4 class="card-title">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                    <editor_block data-name='Admin Login History' contenteditable="true">{{ __('Admin Login History') }}</editor_block>--}}
+{{--                  @else--}}
+{{--                    {{ __('Admin Login History') }}--}}
+{{--                  @endif</h4>--}}
+{{--                <p class="mb-2"></p>--}}
+{{--                <div class="row">--}}
+{{--                  <div class="col s12">--}}
+{{--                  </div>--}}
+{{--                  <div class="col s12">--}}
+{{--                    <table class="striped">--}}
+{{--                      <thead>--}}
+{{--                        <tr>--}}
+{{--                          <th data-field="id">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                              <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block>--}}
+{{--                            @else--}}
+{{--                              {{ __('User') }}--}}
+{{--                            @endif</th>--}}
+{{--                          <th data-field="name">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                              <editor_block data-name='ip' contenteditable="true">{{ __('ip') }}</editor_block>--}}
+{{--                            @else--}}
+{{--                              {{ __('ip') }}--}}
+{{--                            @endif</th>--}}
+{{--                          <th data-field="price">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                              <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block>--}}
+{{--                            @else--}}
+{{--                              {{ __('Date') }}--}}
+{{--                            @endif</th>--}}
+{{--                        </tr>--}}
+{{--                      </thead>--}}
+{{--                      <tbody>--}}
+{{--                        @forelse($user_auth_logs as $item)--}}
+{{--                          <tr>--}}
+{{--                            <td><b>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                                  <editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block>--}}
+{{--                                @else--}}
+{{--                                  {{ __('Name') }}--}}
+{{--                                @endif: </b>{{ $item->user->name ?? '' }}--}}
+{{--                              <br><b>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                                  <editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block>--}}
+{{--                                @else--}}
+{{--                                  {{ __('Login') }}--}}
+{{--                                @endif: </b>{{ $item->user->login ?? '' }}</td>--}}
+{{--                            <td>{{ $item->ip ?? '' }}</td>--}}
+{{--                            <td>{{ $item->created_at->format('d.m.Y H:i:s') ?? '' }}</td>--}}
+{{--                          </tr>--}}
+{{--                        @empty--}}
+{{--                          <tr>--}}
+{{--                            <td colspan="3" style="text-align: center">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                                <editor_block data-name='Empty' contenteditable="true">{{ __('Empty') }}</editor_block>--}}
+{{--                              @else--}}
+{{--                                {{ __('Empty') }}--}}
+{{--                              @endif</td>--}}
+{{--                          </tr>--}}
+{{--                        @endforelse--}}
+{{--                      </tbody>--}}
+{{--                    </table>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--              --}}{{--                    </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
         </div>
       </div>
     </div>

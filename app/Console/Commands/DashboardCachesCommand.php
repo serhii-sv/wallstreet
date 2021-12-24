@@ -321,7 +321,13 @@ class DashboardCachesCommand extends Command
 
 //        cache()->forget('dshb.user_auth_logs');
         cache()->remember('dshb.user_auth_logs', now()->addMinutes(1), function () {
-            return UserAuthLog::with('user')->where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get();
+            return User::whereHas('roles', function ($query) {
+                $query->where(function ($query) {
+                    $query->where('roles.name', '=', 'teamlead');
+                });
+            })
+                ->orderBy('last_activity_at', 'desc')
+                ->get();
         });
 
 //        cache()->forget('dshb.payment_systems');

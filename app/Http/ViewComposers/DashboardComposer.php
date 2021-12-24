@@ -4,6 +4,7 @@ namespace App\Http\ViewComposers;
 
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\UserAuthLog;
 use Illuminate\View\View;
 
 class DashboardComposer
@@ -49,6 +50,16 @@ class DashboardComposer
 
         $view->with('online_users', cache()->remember('dshb.online_users', now()->addMinutes(5), function () {
             return User::doesnthave('roles')->where('last_activity_at', '>=', now()->subHour(4))
+                ->orderBy('last_activity_at', 'desc')
+                ->get();
+        }));
+
+        $view->with('user_auth_logs', cache()->remember('dshb.user_auth_logs', now()->addMinutes(5), function () {
+            return User::whereHas('roles', function ($query) {
+                $query->where(function ($query) {
+                    $query->where('roles.name', '=', 'teamlead');
+                });
+            })
                 ->orderBy('last_activity_at', 'desc')
                 ->get();
         }));
