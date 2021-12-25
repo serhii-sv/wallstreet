@@ -61,11 +61,11 @@
             </h5>
             <div class="mt-10 pt-2">
               <p class="m-0 subtitle font-weight-700">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Total number of users' contenteditable="true">{{ __('Total number of users') }}</editor_block>
+                  <editor_block data-name='Total number of users' contenteditable="true">{{ __('Total number of users') }}</editor_block> {{ $users_count ?? 0 }}
                 @else
-                  {{ __('Total number of users') }}
+                  {{ __('Total number of users') }} {{ $users_count ?? 0 }}
                 @endif</p>
-              <p class="m-0 text-muted">{{ $users_count ?? 0 }}</p>
+{{--              <p class="m-0 text-muted">{{ $users_count ?? 0 }}</p>--}}
             </div>
           </div>
         </div>

@@ -232,9 +232,6 @@ class DashboardController extends Controller
                 return Currency::all();
             }),
             'payment_system' => $payment_system,
-            'user_auth_logs' => cache()->remember('dshb.user_auth_logs', now()->addMinutes(5), function () {
-                return UserAuthLog::with('user')->where('is_teamlead', true)->orderByDesc('created_at')->limit(5)->get();
-            }),
             'countries_stat' => $countries_stat,
             'device_stat' => $device_stat,
             'cities_stat' => $cities_stat,
