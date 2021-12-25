@@ -59,7 +59,7 @@ class CacheHelperCommand extends Command
         foreach(User::where('stat_salary_percent', '>', 0)->get() as $user) {
             $this->info('checking user '.$user->login);
 
-            $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(1), function() use($user) {
+            $left = cache()->remember('user_salary_left.'.$user->id, now()->addMinutes(30), function() use($user) {
                 $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
                     return $user->getAllReferralsInArray(1, 1000);
                 });
