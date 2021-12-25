@@ -22,12 +22,17 @@
                     <span>Пользователи</span>
                   </a>
                 </li>
+                  <li class="tab col s4 p-0">
+                      <a href="#teamleads">
+                          <span>Тимлиды</span>
+                      </a>
+                  </li>
            {{--     <li class="tab col s4 p-0">
                   <a href="#settings">
                     <span>Settings</span>
                   </a>
                 </li>--}}
-              
+
               </ul>
             </div>
           </div>
@@ -231,7 +236,7 @@
                 @foreach($online_users as $user)
                   <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
                       data-target="slide-out-chat">
-                    
+
                 <span class="avatar-status {{$user->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50">
                   <img src="{{ asset('images/avatar/user.svg') }}" alt="avatar" />
                   <i></i>
@@ -495,7 +500,31 @@
                </div>--}}
           </div>
         </div>
-        
+          <div id="teamleads" class="col s12">
+              <div id="messages" class="col s12 pb-0">
+                  <div class="collection border-none mb-0">
+                      <p class="mt-5 mb-0 ml-5 font-weight-900">Недавно заходили</p>
+                      <ul class="collection right-sidebar-chat p-0 mb-0">
+                          @foreach($user_auth_logs as $user)
+                              <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
+                                  data-target="slide-out-chat">
+
+                <span class="avatar-status {{$user->lastActivity['is_online'] ? "avatar-online" : "avatar-off"}} avatar-50">
+                  <img src="{{ asset('images/avatar/user.svg') }}" alt="avatar" />
+                  <i></i>
+                </span>
+                                  <div class="user-content">
+                                      <h6 class="line-height-0">{{$user->shortName}}</h6>
+                                      <p class="medium-small blue-grey-text text-lighten-3 pt-3">{{$user->email}}</p>
+                                  </div>
+                                  <span class="secondary-content medium-small">{{$user->lastActivity['last_seen']}}</span>
+                              </li>
+                          @endforeach
+                      </ul>
+                  </div>
+              </div>
+          </div>
+
        {{-- <div id="settings" class="col s12">
           <p class="setting-header mt-8 mb-3 ml-5 font-weight-900">GENERAL SETTINGS</p>
           <ul class="collection border-none">
@@ -628,7 +657,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Slide Out Chat -->
   <ul id="slide-out-chat" class="sidenav slide-out-right-sidenav-chat">
     <li class="center-align pt-2 pb-2 sidenav-close chat-head">
@@ -662,11 +691,11 @@
             <p class="medium-small">Materialize admin is the responsive materializecss admin template.</p>
           </div>
         </li>
-        
+
         <li class="collection-item display-grid width-100 center-align">
           <p>8:20 a.m.</p>
         </li>
-        
+
         <li class="collection-item display-flex avatar pl-5 pb-0" data-target="slide-out-chat">
           <span class="avatar-status avatar-online avatar-50"><img src="{{asset('images/avatar/avatar-7.png')}}"
                 alt="avatar" />
@@ -688,11 +717,11 @@
             <p class="medium-small">How can I purchase it?</p>
           </div>
         </li>
-        
+
         <li class="collection-item display-grid width-100 center-align">
           <p>9:00 a.m.</p>
         </li>
-        
+
         <li class="collection-item display-flex avatar justify-content-end pl-5 pb-0" data-target="slide-out-chat">
           <div class="user-content speech-bubble-right">
             <p class="medium-small">From ThemeForest.</p>

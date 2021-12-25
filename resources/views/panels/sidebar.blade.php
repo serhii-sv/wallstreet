@@ -345,20 +345,6 @@
                 </a>
               </li>
             @endif
-
-            <li class="bold">
-              <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('rates*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
-                  href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                <i class="material-icons">show_chart</i>
-                <span class="menu-title">
-                      @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Sms' contenteditable="true">{{ __('Sms') }}</editor_block>
-                  @else
-                    {{ __('Sms') }}
-                  @endif
-                    </span>
-              </a>
-            </li>
           </ul>
         </div>
       </li>
@@ -396,18 +382,31 @@
         </a>
       </li>
     @endif
-{{--    <li class="bold">--}}
-{{--      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprintbank.us" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>--}}
-{{--        <i class="material-icons">devices</i>--}}
-{{--        <span class="menu-title">--}}
-{{--          @if(canEditLang() && checkRequestOnEdit())--}}
-{{--            <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>--}}
-{{--          @else--}}
-{{--            {{ __('Mobile app') }}--}}
-{{--          @endif--}}
-{{--        </span>--}}
-{{--      </a>--}}
-{{--    </li>--}}
+      <li class="bold">
+          <a class="waves-effect waves-cyan {{ (Route::is('user.phone.verification') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('user.phone.verification') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
+             href="{{ route('user.phone.verification') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i class="material-icons">sms</i>
+              <span class="menu-title">
+                      @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Sms' contenteditable="true">{{ __('Sms') }}</editor_block>
+                  @else
+                      {{ __('Sms') }}
+                  @endif
+                    </span>
+          </a>
+      </li>
+    <li class="bold">
+      <a class="waves-effect waves-cyan " target="_blank" style="{!! isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="https://quasar.sprint-bank.com" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+        <i class="material-icons">devices</i>
+        <span class="menu-title">
+          @if(canEditLang() && checkRequestOnEdit())
+            <editor_block data-name='Mobile app' contenteditable="true">{{ __('Mobile app') }}</editor_block>
+          @else
+            {{ __('Mobile app') }}
+          @endif
+        </span>
+      </a>
+    </li>
     @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::NEWS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::PRODUCTS_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::FAQ_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]) || auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::REFERRALS_BANNERS_INDEX]))
       <li class="bold @if(Route::is('news.*') || Route::is('news.*') || Route::is('banners.*') || Route::is('video.*') || Route::is('products.*') || Route::is('banners.*') || Route::is('referrals.*') || Route::is('faq.*') || Route::is('referrals-and-banners.banners.all')) active @endif">
         <a class="collapsible-header waves-effect waves-cyan " style="{!! Route::is('users*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="JavaScript:void(0)">
