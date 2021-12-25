@@ -34,16 +34,17 @@ class TransactionTypesSeeder extends Seeder
             'close_dep',
             'penalty',
             'reinvest',
+            'rank_bonus',
         ];
-        
+
         foreach ($transactionTypes as $type) {
             $searchType = TransactionType::where('name', $type)->count();
-            
+
             if ($searchType > 0) {
                 echo "Transaction type '" . $type . "' already registered.\n";
                 continue;
             }
-            
+
             if ($type == 'transfer_out' || $type == 'exchange_out' || $type == 'withdraw'){
                 TransactionType::create([
                     'name' => $type,
