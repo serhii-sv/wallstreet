@@ -50,6 +50,7 @@ class CacheHelperCommand extends Command
     public function handle()
     {
         $this->salaryLeft();
+        $this->referralsCache();
     }
 
     private function salaryLeft()
@@ -59,7 +60,9 @@ class CacheHelperCommand extends Command
             $this->info('checking user '.$user->login);
 
             $left = cache()->remember('user_salary_left.'.$user->id, now()->addHours(1), function() use($user) {
-                $all_referrals = $user->getAllReferralsInArray(1, 1000);
+                $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
+                    return $user->getAllReferralsInArray(1, 1000);
+                });
 
                 $transaction_type_invest = TransactionType::getByName('enter');
                 $transaction_type_withdrew = TransactionType::getByName('withdraw');
@@ -112,5 +115,17 @@ class CacheHelperCommand extends Command
         cache()->remember('total_users_salary_left', now()->addHours(1), function() use($total_users_salary_left) {
             return $total_users_salary_left;
         });
+    }
+
+    private function referralsCache()
+    {
+        /** @var User $user */
+        foreach (\App\User::get() as $user) {
+            $this->info('cache for '.$user->login);
+
+            cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
+                return $user->getAllReferralsInArray(1, 1000);
+            });
+        }
     }
 }
