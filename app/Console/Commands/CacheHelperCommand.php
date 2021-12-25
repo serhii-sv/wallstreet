@@ -120,7 +120,7 @@ class CacheHelperCommand extends Command
     private function referralsCache()
     {
         /** @var User $user */
-        foreach (\App\User::get() as $user) {
+        foreach (\App\User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
             $this->info('cache for '.$user->login);
 
             cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
