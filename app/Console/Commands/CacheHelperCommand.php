@@ -19,7 +19,7 @@ class CacheHelperCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cache:helper';
+    protected $signature = 'cache:helper {login?}';
 
     /**
      * The console command description.
@@ -55,8 +55,17 @@ class CacheHelperCommand extends Command
 
     private function salaryLeft()
     {
+        $login = $this->argument('login');
+        $users = User::where('stat_salary_percent', '>', 0);
+
+        if (!empty($login)) {
+            $users = $users->where('login', $login);
+        }
+
+        $users = $users->get();
+
         $total_users_salary_left = 0;
-        foreach(User::where('stat_salary_percent', '>', 0)->get() as $user) {
+        foreach($users as $user) {
             $this->info('checking user '.$user->login);
 
             $left = cache()->remember('user_salary_left.'.$user->id, now()->addMinutes(30), function() use($user) {
