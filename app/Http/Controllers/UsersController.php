@@ -212,46 +212,6 @@ class UsersController extends Controller
         $level = $request->has('level') ? $request->level : 1;
         $plevel = $request->has('plevel') ? $request->plevel : 1;
 
-        $all_referrals = cache()->remember('user.referrals_' . $user->id, now()->addHours(3), function () use ($user) {
-            return $user->getAllReferralsInArray(1, 1000);
-        });
-        $transaction_type_invest = TransactionType::getByName('enter');
-        $transaction_type_withdrew = TransactionType::getByName('withdraw');
-        $total_referral_invested = 0;
-        $total_referral_withdrew = 0;
-
-        $referralIds = collect($all_referrals)->pluck('id')->toArray();
-
-        $invested = cache()->remember('referrals.total_invested_' . $user->id, now()->addHours(3), function () use ($transaction_type_invest, $referralIds) {
-            return Transaction::whereIn('user_id', $referralIds)->where('type_id', $transaction_type_invest->id)
-                ->where('is_real', true)
-                ->where('approved', true)
-                ->sum('main_currency_amount');
-        });
-
-        $withdrew = cache()->remember('referrals.total_withdrew_' . $user->id, now()->addHours(3), function () use ($transaction_type_withdrew, $referralIds) {
-            return Transaction::whereIn('user_id', $referralIds)
-                ->where('type_id', $transaction_type_withdrew->id)
-                ->where('is_real', true)
-                ->where('approved', 1)
-                ->sum('main_currency_amount');
-        });
-
-        $total_referral_withdrew += $withdrew;
-
-        $total_referral_invested += $invested;
-
-        $stat_different = $total_referral_invested - $total_referral_withdrew;
-        $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
-        $stat_left = $stat_salary - $user->stat_worker_withdraw;
-
-        $user->stat_deposits = round($total_referral_invested, 0);
-        $user->stat_withdraws = round($total_referral_withdrew, 0);
-        $user->stat_different = round($stat_different, 0);
-        $user->stat_salary = round($stat_salary, 0);
-        $user->stat_left = round($stat_left, 0);
-        $user->save();
-
         $userActivityDay = ActivityLog::getActivityLog($user, 'day');
         $userActivityWeek = ActivityLog::getActivityLog($user, 'week');
         $userActivityMonth = ActivityLog::getActivityLog($user, 'month');
