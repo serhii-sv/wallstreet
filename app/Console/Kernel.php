@@ -6,6 +6,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CalculateSalaryCommand;
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\ClearOldData;
 use App\Console\Commands\CreateAdminCommand;
@@ -44,7 +45,8 @@ class Kernel extends ConsoleKernel
         SetUserDocumentVerified::class,
         DashboardCachesCommand::class,
         ClearOldData::class,
-        UserProfileCaches::class
+        UserProfileCaches::class,
+        CalculateSalaryCommand::class,
     ];
 
     /**
@@ -63,7 +65,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
         $schedule->command('backup:clean')->everyTwoHours();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
-//        $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
+        $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
+        $schedule->command('calculate:salaries')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
