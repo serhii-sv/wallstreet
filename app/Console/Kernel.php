@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->everyTwoHours();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
-//        $schedule->command('calculate:salaries')->everyThirtyMinutes()->withoutOverlapping();
+        $schedule->command('calculate:salaries')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute();
