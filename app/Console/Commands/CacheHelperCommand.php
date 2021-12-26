@@ -82,6 +82,8 @@ class CacheHelperCommand extends Command
                 $total_referral_withdrew = 0;
 
                 foreach ($all_referrals as $referral) {
+                    $this->info('check referral '.$referral->login);
+
                     $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                         return $referral->transactions()
                             ->where('type_id', $transaction_type_invest->id)
