@@ -323,7 +323,7 @@ class Deposit extends Model
             return false;
         }
 
-        $time = Carbon::parse($this->created_at);
+        $time = Carbon::parse($this->updated_at);
 
         try {
             for ($i = 1; $i <= $rate->duration; $i++) {
