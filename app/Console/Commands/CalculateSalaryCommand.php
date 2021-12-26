@@ -54,11 +54,9 @@ class CalculateSalaryCommand extends Command
         foreach($users as $user) {
             $this->info('checking user '.$user->login);
 
-//            $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
-//                return $user->getAllReferralsInArray(1, 1000);
-//            });
-
-            $all_referrals = $user->getAllReferralsInArray(1, 1000);
+            $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
+                return $user->getAllReferralsInArray(1, 1000);
+            });
 
             $transaction_type_invest = TransactionType::getByName('enter');
             $transaction_type_withdrew = TransactionType::getByName('withdraw');
