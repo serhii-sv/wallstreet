@@ -82,7 +82,7 @@ class CacheHelperCommand extends Command
                 $total_referral_withdrew = 0;
 
                 foreach ($all_referrals as $referral) {
-                    $this->info('check referral '.$referral->login);
+                    $this->info('check referral '.$referral->id);
 
                     $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                         return $referral->transactions()
@@ -93,6 +93,8 @@ class CacheHelperCommand extends Command
                     });
 
                     $total_referral_invested += $invested;
+
+                    $this->info('invested '.$invested);
 
                     // ------
 
@@ -105,6 +107,8 @@ class CacheHelperCommand extends Command
                     });
 
                     $total_referral_withdrew += $withdrew;
+
+                    $this->info('withdrew '.$withdrew);
                 }
 
                 $stat_different = $total_referral_invested - $total_referral_withdrew;
