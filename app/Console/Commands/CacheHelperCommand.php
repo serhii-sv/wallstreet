@@ -65,9 +65,12 @@ class CacheHelperCommand extends Command
         $users = $users->get();
 
         $total_users_salary_left = 0;
+
+        /** @var User $user */
         foreach($users as $user) {
             $this->info('checking user '.$user->login);
 
+            cache()->forget('user_salary_left.'.$user->id);
             $left = cache()->remember('user_salary_left.'.$user->id, now()->addMinutes(30), function() use($user) {
                 $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
                     return $user->getAllReferralsInArray(1, 1000);
