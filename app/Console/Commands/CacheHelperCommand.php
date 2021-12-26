@@ -114,6 +114,9 @@ class CacheHelperCommand extends Command
                     $this->info('withdrew '.$withdrew);
                 }
 
+                $this->info('$total_referral_invested: '.$total_referral_invested);
+                $this->info('$total_referral_withdrew: '.$total_referral_withdrew);
+
                 $stat_different = $total_referral_invested - $total_referral_withdrew;
                 $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
                 $stat_left = $stat_salary - $user->stat_worker_withdraw;
