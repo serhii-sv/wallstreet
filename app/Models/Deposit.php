@@ -426,7 +426,7 @@ class Deposit extends Model
      */
     public function close($var) {
         if (!$this->active) {
-            throw new \Exception("failed close due deposit already closed ".$thid->id);
+            throw new \Exception("failed close due deposit already closed ".$this->id);
         }
 
         /** @var Wallet $wallet */
