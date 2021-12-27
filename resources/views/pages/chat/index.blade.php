@@ -74,7 +74,7 @@
 
 {{-- page content --}}
 @section('content')
-  
+
   <div class="chat-application">
     <div class="chat-content-head">
       <div class="header-details">
@@ -93,7 +93,7 @@
             <i class="material-icons">menu</i>
           </a>
           <!--/ Sidebar menu for small screen -->
-          
+
           <div class="card card card-default scrollspy border-radius-6 fixed-width">
             <div class="card-content chat-content p-0">
               <!-- Sidebar Area -->
@@ -115,7 +115,7 @@
                           </div>
                         </div>
                         <!--/ Sidebar Header -->
-                        
+
                         <!-- Sidebar Content List -->
                         <div class="sidebar-content sidebar-chat ps ps--active-y">
                           <div class="chat-list chat-user-list">
@@ -181,7 +181,7 @@
                                 </a>
                               @endforeach
                             @endif
-                          
+
                           </div>
                           <div class="no-data-found">
                             <h6 class="center">@if(canEditLang() && checkRequestOnEdit())
@@ -198,7 +198,7 @@
                 </div>
               </div>
               <!--/ Sidebar Area -->
-              
+
               <!-- Content Area -->
               <div class="chat-content-area animate fadeUp">
                 <!-- Chat header -->
@@ -239,7 +239,7 @@
                   </div>
                 </div>
                 <!--/ Chat header -->
-                
+
                 <!-- Chat content area -->
                 <div class="chat-area ps ps--active-y">
                   <div class="chats">
@@ -282,13 +282,13 @@
                           @endif
                         @endforeach
                       @endif
-                    
+
                     </div>
                   </div>
-                
+
                 </div>
                 <!--/ Chat content area -->
-                
+
                 <!-- Chat footer <-->
                 <div class="chat-footer">
                   <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input">
@@ -328,11 +328,11 @@
             scrollTo = $('.chat-area > .chats');
         container.scrollTop(scrollTo.prop('scrollHeight'));
       }
-      
+
       scrollChat();
-      
+
       var users_count;
-      
+
       Pusher.logToConsole = true;
       @if($chat)
       Echo.join('chat.{{ $chat->id }}')
@@ -340,10 +340,10 @@
         $(".chat-message-send-btn").removeClass('disabled');
       })
       .joining((user) => {
-      
+
       })
       .leaving((user) => {
-      
+
       })
       .listen('AdminChat', function ($data) {
         console.log($data);
@@ -353,7 +353,7 @@
         }
         if ($data.type == 'message') {
           var $message_id = $data.message_id;
-  
+
           if (!($data.user_id == "{{ auth()->user()->id }}")) {
             var $options = {
               method: "post",
@@ -365,7 +365,7 @@
             }
             window.axios($options);
           }
-  
+
           $(".chat-message-send-btn").removeClass('disabled');
           if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
             $(".chat-wrapper").append('<div class="chat chat-right" data-id="' + $data.message_id + '">' +
@@ -401,7 +401,7 @@
         }
       });
       @endif
-      
+
       Echo.join('chat')
       .here((users) => {
         $(".chat-message-send-btn").removeClass('disabled');
@@ -431,7 +431,7 @@
         }
         if ($data.type == 'message') {
           var $message_id = $data.message_id;
-          
+
           if (!($data.user_id == "{{ auth()->user()->id }}")) {
             var $options = {
               method: "post",
@@ -443,10 +443,10 @@
             }
             window.axios($options);
           }
-          
-          
+
+
           $(".chat-message-send-btn").removeClass('disabled');
-          
+
           if ($data.user_id == "{{ auth()->user()->id }}") {
             $(".chat-wrapper").append('<div class="chat chat-right" data-id="' + $data.message_id + '">' +
                 '<div class="chat-avatar">' +

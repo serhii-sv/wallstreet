@@ -31,7 +31,7 @@ class AdminChatController extends Controller
             }
         }
         $myAvatar = Auth()->user()->avatar ? route('user.get.avatar', auth()->user()->id) : asset('images/user.png');
-        
+
         if ($id === null) {
             $chat = false;
             $messages = AdminCommonChatMessage::orderBy('created_at', 'asc')->paginate(200);
@@ -53,7 +53,7 @@ class AdminChatController extends Controller
                 }
             }
         }
-        
+
         return view('pages.chat.index', [
             'messages' => $messages,
             'myAvatar' => $myAvatar,
@@ -62,7 +62,7 @@ class AdminChatController extends Controller
             'companion' => $companion,
         ]);
     }
-    
+
     public function sendCommonMessage(Request $request) {
         if ($request->post('type') == 'message') {
             $permission = Permission::where('slug', 'chat.send.message')->first();
@@ -93,7 +93,7 @@ class AdminChatController extends Controller
             }
         }
     }
-    
+
     public function readCommonChatMessage(Request $request) {
         $user_id = $request->post('user_id');
         $message_id = $request->post('message_id');
@@ -104,7 +104,7 @@ class AdminChatController extends Controller
         }
         return 'not upd';
     }
-    
+
     public function sendMessage(Request $request) {
         if ($request->post('type') == 'message') {
             $chat_id = $request->post('chat_id');
@@ -122,11 +122,11 @@ class AdminChatController extends Controller
                 } else {
                     $message = false;
                 }
-                
+
             }
         }
     }
-    
+
     public function readMessage(Request $request) {
         $user_id = $request->post('user_id');
         $message_id = $request->post('message_id');
@@ -137,7 +137,7 @@ class AdminChatController extends Controller
         }
         return 'not upd';
     }
-    
+
     public function deleteCommonMessage(Request $request) {
         $message_id = $request->post('id');
         $user_id = $request->post('user_id');
@@ -149,7 +149,7 @@ class AdminChatController extends Controller
             return 'deleted';
         }
     }
-    
+
     public function deleteMessage(Request $request) {
         $message_id = $request->post('id');
         $user_id = $request->post('user_id');
@@ -161,27 +161,27 @@ class AdminChatController extends Controller
             return 'deleted';
         }
     }
-    
+
     public function chatList($chat_id = null) {
-     
-        $chat_list = Chat::paginate(10);
+
+        $chat_list = Chat::whereHas('chatMessages')->paginate(10);
         if ($chat_id !== null && Uuid::isValid($chat_id)) {
             $chat = Chat::where('id', $chat_id)->first();
-            
+
             if ($chat->checkUser(Auth::user()->id)) {
                 if ($chat->getUnreadMessagesCount(Auth::user()->id) > 0) {
                     foreach ($chat->getUnreadMessages(Auth::user()->id) as $item) {
                         $item->update(['is_read' => true]);
                     }
                 }
-               
+
                 $chat_messages = ChatMessage::where('chat_id', $chat->id)->orderBy('created_at', 'asc')->limit(250)->get();
             } else {
                 $chat = false;
                 $chat_messages = false;
             }
         } else {
-          
+
             $chat = false;
             $chat_messages = false;
         }
@@ -192,5 +192,16 @@ class AdminChatController extends Controller
             'chat' => $chat,
             'chat_list' => $chat_list,
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function crateChat($id)
+    {
+        $user = User::findOrFail($id);
+
+        return redirect(route('chat', $user->getReferralChatId()));
     }
 }
