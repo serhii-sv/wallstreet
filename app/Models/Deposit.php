@@ -431,7 +431,7 @@ class Deposit extends Model
      * @throws \Exception
      */
     public function close($var) {
-        if ($this->condition != 'onwork' || !$this->active) {
+        if (!$this->active) {
             throw new \Exception("failed close");
         }
 
