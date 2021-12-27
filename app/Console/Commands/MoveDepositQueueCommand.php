@@ -53,7 +53,7 @@ class MoveDepositQueueCommand extends Command
 
         /** @var DepositQueue $queue */
         foreach ($depositQueue as $queue) {
-            $availableAt = Carbon::parse($queue->available_at)->addDays($days);
+            $availableAt = Carbon::parse($queue->available_at)->addDays($days)->toDateTimeString();
             $queue->available_at = $availableAt;
             $queue->save();
             $this->info('queue '.$queue->id.' updated to date '.$queue->available_at);
