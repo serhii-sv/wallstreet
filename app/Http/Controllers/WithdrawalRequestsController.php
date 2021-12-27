@@ -55,8 +55,8 @@ class WithdrawalRequestsController extends Controller
                 /** @var User $user */
                 $user = User::where('id', $request->user)->first();
 
-                $referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
-                    return $user->getAllReferralsInArray(1, 1000);
+                $referrals = cache()->remember('user.referrals_1' . $user->id, 180, function () use ($user) {
+                    return $user->getAllReferralsInArray(1, 1);
                 });
 
                 $ids = [];

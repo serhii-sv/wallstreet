@@ -16,6 +16,7 @@ use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Console\Commands\CreateRootCommand;
 use App\Console\Commands\InstallScriptCommand;
+use App\Console\Commands\MoveDepositQueueCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
@@ -47,6 +48,7 @@ class Kernel extends ConsoleKernel
         ClearOldData::class,
         UserProfileCaches::class,
         CalculateSalaryCommand::class,
+        MoveDepositQueueCommand::class,
     ];
 
     /**

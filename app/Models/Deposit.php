@@ -360,12 +360,6 @@ class Deposit extends Model
             $this->update(['condition' => 'onwork']);
         }
 
-        $countTransactions = Transaction::where('deposit_id', $this->id)->where('approved', true)->count() - 1; // минус 1 это открытие
-
-        if ($this->duration < $countTransactions || $this->condition != 'onwork') {
-            throw new \Exception("error status deposit!");
-        }
-
         /** @var Wallet $wallet */
         $wallet = $this->wallet()->first();
 
@@ -431,8 +425,8 @@ class Deposit extends Model
      * @throws \Exception
      */
     public function close($var) {
-        if ($this->condition != 'onwork' || !$this->active) {
-            throw new \Exception("failed close");
+        if (!$this->active) {
+            throw new \Exception("failed close due deposit already closed ".$this->id);
         }
 
         /** @var Wallet $wallet */
