@@ -381,6 +381,9 @@ trait HasReferral
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        if ($chat->id === 0) {
+            $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
+        }
         return $chat->id;
     }
 
@@ -391,6 +394,9 @@ trait HasReferral
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        if ($chat->id === 0) {
+            $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
+        }
         return $chat;
     }
 
@@ -401,6 +407,9 @@ trait HasReferral
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        if ($chat->id === 0) {
+            $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
+        }
         return $chat->id;
     }
 
@@ -411,6 +420,9 @@ trait HasReferral
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        if ($chat->id === 0) {
+            $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
+        }
         return $chat;
     }
 

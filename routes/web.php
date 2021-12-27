@@ -55,6 +55,7 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
             Route::post('/chat/delete-message', [AdminChatController::class, 'deleteMessage'])->name('chat.delete.message');*/
             Route::get('/user/avatar/{id}', [UsersController::class, 'getAvatar'])->name('user.get.avatar');
 
+            Route::get('/chat/create/{id}', [AdminChatController::class, 'crateChat'])->name('chat.crate');
             Route::get('/chat/{id?}', [AdminChatController::class, 'chatList'])->name('chat');
 
           //  Route::get('/impersonate/{id}', [\App\Http\Controllers\ImpersonateController::class, 'impersonate'])->name('impersonate');

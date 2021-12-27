@@ -659,9 +659,15 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if ($user->loginSecurity()->first()->update([
-            'google2fa_enable' => false
-        ])) {
+        $loginSecurity = $user->loginSecurity()->first();
+
+        $loginSecurityUpdate = true;
+
+        if ($loginSecurity) {
+            $loginSecurityUpdate = $loginSecurity->update(['google2fa_enable' => false]);
+        }
+
+        if ($loginSecurityUpdate && $user->update(['auth_with_phone' => 0])) {
             return back()->with('success_short', 'Операция успешно проведена');
         }
 

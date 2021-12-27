@@ -74,7 +74,7 @@
 
 {{-- page content --}}
 @section('content')
-  
+
   <div class="chat-application">
     <div class="chat-content-head">
       <div class="header-details">
@@ -89,7 +89,7 @@
             <i class="material-icons">menu</i>
           </a>
           <!--/ Sidebar menu for small screen -->
-          
+
           <div class="card card card-default scrollspy border-radius-6 fixed-width">
             <div class="card-content chat-content p-0">
               <!-- Sidebar Area -->
@@ -111,38 +111,38 @@
                           </div>
                         </div>
                         <!--/ Sidebar Header -->
-                        
+
                         <!-- Sidebar Content List -->
                         <div class="sidebar-content sidebar-chat ps ps--active-y">
                           <div class="chat-list chat-user-list">
-                            
+
                             @if(!empty($chat_list))
                               @foreach($chat_list as $chat_el)
                                 <a href="{{ route('chat', $chat_el->id) }}" class="chat-user animate fadeUp delay-1 @if($chat_id && $chat_id == $chat_el->id) active @endif">
                                   <div class="user-section">
                                     <div class="row valign-wrapper">
                                       <div class="col s3 media-image online pr-0 " style="position:relative;">
-                                        <img src="{{ $chat_el->user_partner()->first()->avatar ? route('user.get.avatar', $chat_el->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="height: 40px;width: 40px;">
-                                        <div class="status-circle {{ $chat_el->user_partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                                        <img src="{{ $chat_el->userPartner()->first()->avatar ? route('user.get.avatar', $chat_el->userPartner()->first()->id) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="height: 40px;width: 40px;">
+                                        <div class="status-circle {{ $chat_el->userPartner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                                       </div>
                                       <div class="col s9 pl-0 pr-0">
-                                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat_el->user_partner()->first()->login ?? '' }}</p>
-                                        <p class="m-0 info-text">Last seen: {{ $chat_el->user_partner()->first()->getLastActivityAttribute()['last_seen'] }}</p>
+                                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat_el->userPartner()->first()->login ?? '' }}</p>
+                                        <p class="m-0 info-text">Last seen: {{ $chat_el->userPartner()->first()->getLastActivityAttribute()['last_seen'] }}</p>
                                       </div>
                                     </div>
                                     <div class="row valign-wrapper">
                                       <div class="col s3 media-image online pr-0 " style="position:relative;">
-                                        <img src="{{ $chat_el->user_referral()->first()->avatar ? route('user.get.avatar', $chat_el->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="height: 40px;width: 40px;">
-                                        <div class="status-circle {{ $chat_el->user_referral()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                                        <img src="{{ $chat_el->userReferral()->first()->avatar ? route('user.get.avatar', $chat_el->userReferral()->first()->id) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="height: 40px;width: 40px;">
+                                        <div class="status-circle {{ $chat_el->userReferral()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                                       </div>
                                       <div class="col s9 pl-0 pr-0">
-                                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat_el->user_referral()->first()->login ?? '' }}</p>
-                                        <p class="m-0 info-text">Last seen: {{ $chat_el->user_referral()->first()->getLastActivityAttribute()['last_seen'] }}</p>
+                                        <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat_el->userReferral()->first()->login ?? '' }}</p>
+                                        <p class="m-0 info-text">Last seen: {{ $chat_el->userReferral()->first()->getLastActivityAttribute()['last_seen'] }}</p>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="info-section justify-content-center" data-id="{{ $chat_el->user_partner()->first()->id }}">
-                                    
+                                  <div class="info-section justify-content-center" data-id="{{ $chat_el->userPartner()->first()->id }}">
+
                                     {{--                                   <span class="badge badge  red " style="border-radius: 25px">--}}
                                     {{--                                  {{ $user->getUnreadChatMessagesCount($user->getChatId()) > 0 ? '+' .  $user->getUnreadChatMessagesCount($user->getChatId()) : '' }}--}}
                                     {{--                                </span>--}}
@@ -150,7 +150,7 @@
                                 </a>
                               @endforeach
                             @endif
-                          
+
                           </div>
                           <div class="no-data-found">
                             <h6 class="center">No Results Found</h6>
@@ -163,7 +163,7 @@
                 </div>
               </div>
               <!--/ Sidebar Area -->
-              
+
               <!-- Content Area -->
               <div class="chat-content-area animate fadeUp">
                 <!-- Chat header -->
@@ -173,24 +173,24 @@
                       <div class="col s6">
                         <div class="row">
                           <div class="col  media-image online pr-0" style="position:relative;">
-                            <img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="width:48px; height:48px">
-                            <div class="status-circle {{ $chat->user_partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                            <img src="{{ $chat->userPartner()->first()->avatar ? route('user.get.avatar', $chat->userPartner()->first()) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="width:48px; height:48px">
+                            <div class="status-circle {{ $chat->userPartner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           </div>
                           <div class="col ">
-                            <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat->user_partner()->first()->name ?? '' }} ({{ $chat->user_partner()->first()->login ?? '' }})</p>
-                            <p class="m-0 chat-text truncate">Last seen: {{ $chat->user_partner()->first()->getLastActivityAttribute()['last_seen'] }}</p>
+                            <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat->userPartner()->first()->name ?? '' }} ({{ $chat->userPartner()->first()->login ?? '' }})</p>
+                            <p class="m-0 chat-text truncate">Last seen: {{ $chat->userPartner()->first()->getLastActivityAttribute()['last_seen'] }}</p>
                           </div>
                         </div>
                       </div>
                       <div class="col s6 ">
                         <div class="row display-flex justify-content-end">
                           <div class="col media-image online pr-0" style="position:relative;">
-                            <img src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="width:48px; height:48px">
-                            <div class="status-circle {{ $chat->user_referral()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                            <img src="{{ $chat->userReferral()->first()->avatar ? route('user.get.avatar', $chat->userReferral()->first()) : asset('images/avatar/user.svg') }}" alt="" class="circle z-depth-2 responsive-img" style="width:48px; height:48px">
+                            <div class="status-circle {{ $chat->userReferral()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           </div>
                           <div class="col">
-                            <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat->user_referral()->first()->name ?? '' }} ({{ $chat->user_referral()->first()->login ?? '' }})</p>
-                            <p class="m-0 chat-text truncate">Last seen: {{ $chat->user_referral()->first()->getLastActivityAttribute()['last_seen'] }}</p>
+                            <p class="m-0 blue-grey-text text-darken-4 font-weight-700">{{ $chat->userReferral()->first()->name ?? '' }} ({{ $chat->userReferral()->first()->login ?? '' }})</p>
+                            <p class="m-0 chat-text truncate">Last seen: {{ $chat->userReferral()->first()->getLastActivityAttribute()['last_seen'] }}</p>
                           </div>
                         </div>
                       </div>
@@ -205,18 +205,18 @@
                   </div>
                 </div>
                 <!--/ Chat header -->
-                
+
                 <!-- Chat content area -->
                 <div class="chat-area ps ps--active-y">
                   <div class="chats">
                     <div class="chats chat-wrapper">
                       @if(!empty($messages) && $chat)
                         @foreach($messages as $message)
-                          @if($message->user_id == $chat->user_partner()->first()->id)
+                          @if($message->user_id == $chat->userPartner()->first()->id)
                             <div class="chat" data-id="{{ $message->id }}">
                               <div class="chat-avatar">
                                 <a class="avatar">
-                                  <img src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
+                                  <img src="{{ $chat->userReferral()->first()->avatar ? route('user.get.avatar', $chat->userReferral()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
                                 </a>
                               </div>
                               <div class="chat-body">
@@ -229,7 +229,7 @@
                             <div class="chat chat-right" data-id="{{ $message->id }}">
                               <div class="chat-avatar">
                                 <a class="avatar">
-                                  <img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
+                                  <img src="{{ $chat->userPartner()->first()->avatar ? route('user.get.avatar', $chat->userPartner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">
                                 </a>
                               </div>
                               <div class="chat-body">
@@ -241,13 +241,13 @@
                           @endif
                         @endforeach
                       @endif
-                    
+
                     </div>
                   </div>
-                
+
                 </div>
                 <!--/ Chat content area -->
-                
+
                 <!-- Chat footer <-->
                 <div class="chat-footer">
                   <form onsubmit="enter_chat();" action="javascript:void(0);" class="chat-input">
@@ -259,7 +259,7 @@
               </div>
               <!--/ Content Area -->
             </div>
-      
+
           </div>
           <div class="pb-2">
             {{ $chat_list->links() }}
@@ -287,24 +287,24 @@
             scrollTo = $('.chat-area > .chats');
         container.scrollTop(scrollTo.prop('scrollHeight'));
       }
-      
+
       scrollChat();
-      
+
       var users_count;
-      
+
       Pusher.logToConsole = true;
-      
+
       @if($chat)
       window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
         var $data = data;
         var $message_id = $data.message_id;
-        
-        
-        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ $chat->user_partner()->first()->id }}") {
+
+
+        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ $chat->userPartner()->first()->id }}") {
           $(".chat-wrapper").append('<div class="chat">' +
               '<div class="chat-avatar">' +
               ' <a class="avatar">' +
-              '<img src="{{ $chat->user_referral()->first()->avatar ? route('user.get.avatar', $chat->user_referral()->first()->id) : asset('images/avatar/user.svg') }} " class="circle" alt="avatar">' +
+              '<img src="{{ $chat->userReferral()->first()->avatar ? route('user.get.avatar', $chat->userReferral()->first()->id) : asset('images/avatar/user.svg') }} " class="circle" alt="avatar">' +
               '</a>' +
               '</div>' +
               '<div class="chat-body">' +
@@ -317,7 +317,7 @@
           $(".chat-wrapper").append('<div class="chat chat-right" data-id="' + $data.message_id + '">' +
               '<div class="chat-avatar">' +
               ' <a class="avatar">' +
-              '<img src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">' +
+              '<img src="{{ $chat->userPartner()->first()->avatar ? route('user.get.avatar', $chat->userPartner()->first()->id) : asset('images/avatar/user.svg') }}" class="circle" alt="avatar">' +
               '</a>' +
               '</div>' +
               '<div class="chat-body">' +
@@ -327,7 +327,7 @@
               ' </div>' +
               ' </div>');
         }
-        
+
         {{--  $(".chat-msg-list").append('<li>' +--}}
         {{--      '<div class="message my-message mb-0">' +--}}
         {{--      '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $chat->user_partner()->first()->avatar ? route('user.get.avatar', $chat->user_partner()->first()->id) : asset('images/avatar/user.svg') }}" alt="">' +--}}
