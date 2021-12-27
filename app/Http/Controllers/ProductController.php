@@ -62,7 +62,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт добавлен');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт добавлен');
         }
 
         return back()->with('error_short', 'Продукт не добавлен');
@@ -106,7 +106,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт обновлен');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт обновлен');
         }
 
         return back()->with('error_short', 'Продукт не обновлен');
@@ -131,7 +131,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         if ($product->delete()) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт удален');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт удален');
         }
         return back()->with('error_short', 'Продукт не удален');
     }
