@@ -31,7 +31,7 @@
     <li class="auto-suggestion">
         <a class="collection-item display-flex align-items-center" href="#">
             <span class="material-icons">error_outline</span>
-            <span class="member-info">No results found.</span>
+            <span class="member-info">Результаты не найдены</span>
         </a>
     </li>
 @endforelse

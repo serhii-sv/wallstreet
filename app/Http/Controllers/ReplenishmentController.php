@@ -137,7 +137,7 @@ class ReplenishmentController extends Controller
             }
         }
 
-        return back()->with('info', __('List of withdrawal requests processed.') . implode(', ', $messages));
+        return back()->with('info', __('Список обработанных запросов на вывод.') . implode(', ', $messages));
     }
 
     /**
@@ -153,9 +153,9 @@ class ReplenishmentController extends Controller
 
         if ($transaction->isApproved()) {
             if (true === $massMode) {
-                return __('This request already processed.');
+                return __('Этот запрос уже обработан.');
             }
-            return back()->with('error', __('This request already processed.'));
+            return back()->with('error', __('Этот запрос уже обработан.'));
         }
 
         /** @var Wallet $wallet */
@@ -168,14 +168,14 @@ class ReplenishmentController extends Controller
         $currency = $wallet->currency()->first();
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
-            throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
+            throw new \Exception('Кошелек, пользователь, платежная система или валюта не найдены для подтверждения вывода.');
         }
 
         if (empty($wallet->external)) {
             if (true === $massMode) {
-                return __('ERROR:') . ' wallet is empty';
+                return __('ERROR:') . ' кошелек пустой';
             }
-            return back()->with('error', __('ERROR:') . ' wallet is empty');
+            return back()->with('error', __('ERROR:') . ' кошелек пустой');
         }
 
         $transaction->update([
@@ -201,9 +201,9 @@ class ReplenishmentController extends Controller
         }
 
         if (true === $massMode) {
-            return $transaction->amount . $currency->symbol . ' - ' . __('Request approved.');
+            return __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно пополнена!");
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved.'));
+        return back()->with('success', __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно пополнена!"));
     }
 
     /**

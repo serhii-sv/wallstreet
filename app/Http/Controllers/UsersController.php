@@ -174,9 +174,9 @@ class UsersController extends Controller
                 'balance' => $wallet->balance,
             ];
             //            $wallet->user->sendNotification('bonus_accrued', $data);
-            return back()->with('success', __('Bonus accrued'));
+            return back()->with('success', __('Бонус начислен'));
         }
-        return back()->with('error', __('Unable to accrue bonus'));
+        return back()->with('error', __('Невозможно получить бонус'));
     }
 
     /**
@@ -197,9 +197,9 @@ class UsersController extends Controller
                 'balance' => $wallet->balance,
             ];
             //            $wallet->user->sendNotification('penalty_accrued', $data);
-            return back()->with('success', __('Penalty handled'));
+            return back()->with('success', __('Штраф начислен'));
         }
-        return back()->with('error', __('Unable to handle penalty'));
+        return back()->with('error', __('Невозможно начислить штраф'));
     }
 
     /**

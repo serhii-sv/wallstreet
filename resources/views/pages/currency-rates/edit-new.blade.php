@@ -146,7 +146,7 @@
 {{-- page content --}}
 @section('content')
   <div class="section">
-    
+
     <div class="row">
       <div class="col s12">
         <div id="validations" class="card card-tabs">
@@ -187,7 +187,7 @@
                       <span class="ml-1"></span>
                     </label>
                   </div>
-                
+
                 </div>
                 <div class="row not-fixed-block display-none mt-3">
                   <div class="col s12 mb-1">
@@ -210,19 +210,19 @@
                   </div>
                   <div class="input-field col s12">
                     <label for="date_start">Дата. Начало</label>
-                    <input class="datepicker" id="date_start" name="date_start" type="text" value="{{ $exchange_rate ? $exchange_rate->date_start->format('d.m.Y') ?? '' : '' }}">
+                    <input class="datepicker" id="date_start" name="date_start" type="text" value="{{ $exchange_rate && $exchange_rate->date_start ? $exchange_rate->date_start->format('d.m.Y') ?? '' : '' }}">
                   </div>
                   <div class="input-field col s12">
                     <label for="time_start">Время. Начало</label>
-                    <input class="timepicker" id="time_start" name="time_start" type="text" value="{{ $exchange_rate ? $exchange_rate->date_start->format('H:i') ?? '': '' }}">
+                    <input class="timepicker" id="time_start" name="time_start" type="text" value="{{ $exchange_rate && $exchange_rate->date_start ? $exchange_rate->date_start->format('H:i') ?? '': '' }}">
                   </div>
                   <div class="input-field col s12">
                     <label for="date_end">Дата. Конец</label>
-                    <input class="datepicker" id="date_end" name="date_end" type="text" value="{{ $exchange_rate ? $exchange_rate->date_end->format('d.m.Y') ?? '' : '' }}">
+                    <input class="datepicker" id="date_end" name="date_end" type="text" value="{{ $exchange_rate && $exchange_rate->date_end ? $exchange_rate->date_end->format('d.m.Y') ?? '' : '' }}">
                   </div>
                   <div class="input-field col s12">
                     <label for="time_end">Время. Конец</label>
-                    <input class="timepicker" id="time_end" name="time_end" type="text" value="{{ $exchange_rate ? $exchange_rate->date_end->format('H:i') ?? '' : '' }}">
+                    <input class="timepicker" id="time_end" name="time_end" type="text" value="{{ $exchange_rate && $exchange_rate->date_end ? $exchange_rate->date_end->format('H:i') ?? '' : '' }}">
                   </div>
                 </div>
                 <div class="row">
@@ -254,7 +254,7 @@
           $(".not-fixed-block").addClass('display-none');
         }
       }
-  
+
       $('.datepicker').datepicker({
         minDate: new Date(),
         format: 'dd.mm.yyyy',

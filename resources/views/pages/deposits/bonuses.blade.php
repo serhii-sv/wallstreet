@@ -151,7 +151,7 @@
       var $id, $status_name, $status_stage, $personal_turnover, $total_turnover, $reward, $leadership_bonus;
       $("body").on('click', '.delete-data-btn', function () {
         var $button = $(this);
-        
+
         swal({
           title: "Ты уверен?",
           text: "Запись будет удалена!",
@@ -183,11 +183,11 @@
                 })
               }
             });
-            
+
           }
         });
       });
-      
+
       $("body").on('click', '.add-data-btn', function () {
         var $button = $(this);
         if (!$button.hasClass('disabled')) {
@@ -216,7 +216,7 @@
                 $(".new-bonus").find("input[name='total_turnover']").val('');
                 $(".new-bonus").find("input[name='reward']").val('');
                 $(".new-bonus").find("input[name='leadership_bonus']").val('');
-                
+
                 $(".bonus-list").each(function (i, el) {
                   if (parseInt($(el).attr('data-personal-turnover')) > $personal_turnover) {
                     $(el).before('<tr class="new-bonus" data-id="' + data.id + '" data-personal-turnover="' + $personal_turnover + '">' +
@@ -250,7 +250,7 @@
                     return false;
                   }
                 })
-                
+
                 M.toast({
                   html: data.msg,
                   classes: data.status === 'good' ? 'green' : 'red'
@@ -260,14 +260,14 @@
           } else if (!($status_name.length > 0) || !($status_stage.length > 0)) {
             $button.removeClass('disabled');
             M.toast({
-              html: 'Status name and Status stage is required',
+              html: 'Требуется название статуса и стадия статуса',
               classes: 'red'
             })
           }
         }
       });
-      
-      
+
+
       $("body").on('click', '.save-data-btn', function () {
         var $button = $(this);
         if (!$button.hasClass('disabled')) {
@@ -279,7 +279,7 @@
           $total_turnover = $("tr[data-id='" + $id + "']").find("input[name='total_turnover']").val();
           $reward = $("tr[data-id='" + $id + "']").find("input[name='reward']").val();
           $leadership_bonus = $("tr[data-id='" + $id + "']").find("input[name='leadership_bonus']").val();
-          
+
           if ($status_name.length > 0 && $status_stage.length > 0) {
             var $url = "{{ route('deposit.bonus.set') }}";
             $.ajax({
@@ -292,7 +292,7 @@
               success: function (data) {
                 $button.removeClass('disabled');
                 data = $.parseJSON(data);
-                
+
                 M.toast({
                   html: data.msg,
                   classes: data.status === 'good' ? 'green' : 'red'

@@ -200,7 +200,7 @@ class DepositController extends Controller
 
             return json_encode([
                 'status' => 'good',
-                'msg' => 'Bonus added!',
+                'msg' => 'Бонус добавлен!',
                 'id' => $deposit_bonus->id,
             ]);
         }
@@ -212,7 +212,7 @@ class DepositController extends Controller
 
         return json_encode([
             'status' => 'good',
-            'msg' => 'Bonus deleted!',
+            'msg' => 'Бонус удален!',
         ]);
     }
 }

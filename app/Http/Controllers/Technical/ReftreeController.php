@@ -25,7 +25,7 @@ class ReftreeController extends Controller
     public function show($id = null)
     {
         if (null == $id) {
-            throw new \Exception('reftree id is null');
+            throw new \Exception('Пользователь не найден');
         }
 
         $user = User::findOrFail($id);

@@ -61,11 +61,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="input-field col s12 width-100">
-                                                    <div class="font-weight-500 mb-2"></div>
+                                                    <div class="font-weight-500 mb-2">Краткое описание</div>
                                                     <textarea id="editor_short_description" name="short_description" class="materialize-textarea">{{ old('short_description') }}</textarea>
                                                 </div>
                                                 <div class="input-field col s12 width-100">
-                                                    <div class="font-weight-500 mb-2">Контент</div>
+                                                    <div class="font-weight-500 mb-2">Описание</div>
                                                     <textarea id="editor_description" name="description" class="materialize-textarea">{{ old('description') }}</textarea>
                                                 </div>
                                                 <div class="input-field col s12">
