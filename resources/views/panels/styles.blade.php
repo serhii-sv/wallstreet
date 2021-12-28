@@ -47,6 +47,8 @@
         z-index: 1;
         top: -45px;
         width: 150px;
+
+        cursor: pointer;
     }
 
     .tooltip:hover .tooltiptext {

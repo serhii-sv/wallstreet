@@ -144,6 +144,21 @@ $(document).ready(function () {
             })
         })
 
+        $(document).on('click', '.section span.copy-to-clipboard', function () {
+            navigator.clipboard.writeText($(this).data('text')).then(function() {
+                M.toast({
+                    html: 'Успешно скоприровано!',
+                    classes: 'green'
+                })
+            }, function(err) {
+                M.toast({
+                    html: 'Возникла ошибка при копировании!',
+                    classes: 'red'
+                })
+            });
+            return false;
+        })
+
         $(document).on('click', '.invoice-action-view:not(:first-child)', function () {
             swal({
                 title: "Вы уверены?",

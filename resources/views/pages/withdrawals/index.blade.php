@@ -26,6 +26,10 @@
         width: 90% !important;
         float: left;
     }
+
+    .tooltip .tooltiptext {
+        top: -65px !important;
+    }
   </style>
 @endsection
 
