@@ -24,7 +24,7 @@
 
 {{-- page content --}}
 @section('content')
-    <video autoplay muted loop id="myVideo">
+    <video autoplay muted id="myVideo">
         <source src="{{ asset('intro.mp4') }}" type="video/mp4">
         Your browser does not support HTML5 video.
     </video>

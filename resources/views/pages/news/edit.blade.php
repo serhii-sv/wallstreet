@@ -32,7 +32,7 @@
                                         @csrf
                                         <div class="row" id="main-view">
                                             <div class="col s12">
-                                                <ul class="tabs tab-demo z-depth-1">
+                                                <ul class="tabs tab-demo z-depth-1 tabs-fixed-width">
                                                     @foreach($languages as $language)
                                                         <li class="tab col m3"><a class="{{ !$loop->index ? 'active' : '' }}" href="#lang_{{ $language->code }}">{{ $language->original_name }}</a></li>
                                                     @endforeach
