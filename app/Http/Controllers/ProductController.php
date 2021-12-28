@@ -41,7 +41,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'in_stock' => 'required|numeric|min:0',
             'active' => 'in:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $product = Product::create($request->except(['_token']));
@@ -85,7 +85,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'in_stock' => 'required|numeric|min:0',
             'active' => 'in:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|string|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $product->update($request->except(['_token']));
