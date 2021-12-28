@@ -99,6 +99,7 @@ class WithdrawalRequestsController extends Controller
                     'empty' => '',
                     'empty2' => '',
                     'id' => $transaction->id,
+                    'request_id' => view('pages.withdrawals.partials.request-id', compact('transaction'))->render(),
                     'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
 //                    'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
                     'teamlead' => view('pages.withdrawals.partials.teamlead', compact('transaction'))->render(),

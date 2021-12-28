@@ -26,6 +26,11 @@ $(document).ready(function () {
                     bSortable: true
                 },
                 {
+                    data: 'request_id',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
                     data: 'email',
                     searchable: false,
                     bSortable: false
@@ -96,7 +101,7 @@ $(document).ready(function () {
                     orderable: false
                 }
             ],
-            order: [6, 'desc'],
+            order: [7, 'desc'],
             dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
             language: {
                 search: "",
