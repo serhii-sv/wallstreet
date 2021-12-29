@@ -162,7 +162,7 @@
                               @endif:</td>
                           <td class="users-view-2fa">
                               <div class="display-flex justify-content-center align-items-center">
-                                  @if(($user->loginSecurity()->first()->google2fa_enable ?? null) || $user->auth_with_phon)
+                                  @if(($user->loginSecurity()->first()->google2fa_enable ?? null) || $user->auth_with_phone)
                                       <div class="mr-4">Да</div>
                                       (<a href="{{ route('users.2fa', $user) }}">
                                           @if(canEditLang() && checkRequestOnEdit())
