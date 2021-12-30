@@ -44,10 +44,10 @@ class LanguagesController extends Controller
         $createLang = Language::create($request->all());
 
         if (!$createLang) {
-            return back()->with('error', __('Unable to create language'))->withInput();
+            return back()->with('error', __('Невозможно добавить язык'))->withInput();
         }
 
-        return back()->with('success', __('Language has been created'));
+        return back()->with('success', __('Язык успешно добавлен'));
     }
 
     /**
@@ -69,7 +69,7 @@ class LanguagesController extends Controller
      */
     public function update(Request $request, Language $lang) {
         if ($lang->default) {
-            return back()->with('error', __('It is forbidden to change the default language'))->withInput();
+            return back()->with('error', __('Запрещено мзменять язык по умолчанию'))->withInput();
         }
 
         $update = $lang->update($request->all());
@@ -83,10 +83,10 @@ class LanguagesController extends Controller
         }
 
         if (!$update) {
-            return back()->with('error', __('Unable to update language'))->withInput();
+            return back()->with('error', __('Невозможно изменять язык'))->withInput();
         }
 
-        return back()->with('success', 'Language has been updated');
+        return back()->with('success', 'Язык успешно изменен');
     }
 
     /**
@@ -98,14 +98,14 @@ class LanguagesController extends Controller
         $lang = Language::find($lang);
 
         if ($lang->default) {
-            return back()->with('error', __('It is forbidden to change the default language\''))->withInput();
+            return back()->with('error', __('Запрещено мзменять язык по умолчанию'))->withInput();
         }
 
         if ($lang->delete()) {
-            return redirect()->route('admin.langs.index')->with('success', __('Language has been deleted'));
+            return redirect()->route('admin.langs.index')->with('success', __('Узык удален'));
         }
 
-        return redirect()->route('admin.langs.index')->with('error', __('Unable to delete language'));
+        return redirect()->route('admin.langs.index')->with('error', __('Невозможно удалить язык'));
     }
 
 }

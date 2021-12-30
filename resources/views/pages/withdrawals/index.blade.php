@@ -26,6 +26,10 @@
         width: 90% !important;
         float: left;
     }
+
+    .tooltip .tooltiptext {
+        top: -65px !important;
+    }
   </style>
 @endsection
 
@@ -140,8 +144,16 @@
             <tr>
               <!-- data table responsive icons -->
               <th></th>
-              <!-- data table checkbox -->
               <th></th>
+              <!-- data table checkbox -->
+                <th>
+                <span>
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='№ заявки' contenteditable="true">{{ __('№ заявки') }}</editor_block>
+                    @else
+                        {{ __('№ заявки') }}
+                    @endif</span>
+                </th>
               <th>
                 <span>@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Email#' contenteditable="true">{{ __('Email#') }}</editor_block>

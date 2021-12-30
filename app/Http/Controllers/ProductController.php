@@ -41,7 +41,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'in_stock' => 'required|numeric|min:0',
             'active' => 'in:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $product = Product::create($request->except(['_token']));
@@ -62,7 +62,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт добавлен');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт добавлен');
         }
 
         return back()->with('error_short', 'Продукт не добавлен');
@@ -85,7 +85,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'in_stock' => 'required|numeric|min:0',
             'active' => 'in:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|string|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $product->update($request->except(['_token']));
@@ -106,7 +106,7 @@ class ProductController extends Controller
         }
 
         if ($product) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт обновлен');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт обновлен');
         }
 
         return back()->with('error_short', 'Продукт не обновлен');
@@ -131,7 +131,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         if ($product->delete()) {
-            return redirect()->to(route('news.index', ['#products']))->with('success_short', 'Продукт удален');
+            return redirect()->to(route('products.index'))->with('success_short', 'Продукт удален');
         }
         return back()->with('error_short', 'Продукт не удален');
     }

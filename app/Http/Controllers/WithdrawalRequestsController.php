@@ -99,6 +99,7 @@ class WithdrawalRequestsController extends Controller
                     'empty' => '',
                     'empty2' => '',
                     'id' => $transaction->id,
+                    'request_id' => view('pages.withdrawals.partials.request-id', compact('transaction'))->render(),
                     'email' => view('pages.withdrawals.partials.user-item', compact('transaction'))->render(),
 //                    'login' => view('pages.withdrawals.partials.login', compact('transaction'))->render(),
                     'teamlead' => view('pages.withdrawals.partials.teamlead', compact('transaction'))->render(),
@@ -184,7 +185,7 @@ class WithdrawalRequestsController extends Controller
             }
         }
 
-        return back()->with('info', __('List of withdrawal requests processed.') .'<hr>'. implode('<hr>', $messages))->withInput(\request()->all());
+        return back()->with('info', __('Список обработанных запросов на вывод.') .'<hr>'. implode('<hr>', $messages))->withInput(\request()->all());
     }
 
     /**
@@ -197,9 +198,9 @@ class WithdrawalRequestsController extends Controller
     public function reject($transaction, $massMode = false) {
         if (cache()->has('reject'.$transaction)) {
             if (true === $massMode) {
-                return __('This transaction locked for 1 minutes.');
+                return __('Эта транзакция заблокирована на 1 минуту');
             }
-            return back()->with('error', __('This transaction locked for 10 minutes.'))->withInput(\request()->all());
+            return back()->with('error', __('Эта транзакция заблокирована на 10 минут.'))->withInput(\request()->all());
         }
 
         cache()->put('reject'.$transaction, true, now()->addMinutes(1));
@@ -209,9 +210,9 @@ class WithdrawalRequestsController extends Controller
 
         if ($transaction->isApproved()) {
             if (true === $massMode) {
-                return __('This request already processed.');
+                return __('Этот запрос уже обработан.');
             }
-            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
+            return back()->with('error', __('Этот запрос уже обработан.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -223,7 +224,7 @@ class WithdrawalRequestsController extends Controller
         $amount = $transaction->amount;
 
         if (null === $wallet || null === $user || null === $currency) {
-            throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal reject.');
+            throw new \Exception('Кошелек, пользователь, платежная система или валюта не найдены для отклонения вывода.');
         }
 
         $wallet->returnFromRejectedWithdrawal($transaction);
@@ -243,9 +244,9 @@ class WithdrawalRequestsController extends Controller
         //        $user->sendNotification('rejected_withdrawal', $data);
 
         if (true === $massMode) {
-            return __('Request rejected');
+            return __('Запрос отклонен');
         }
-        return back()->with('success', __('Request rejected'))->withInput(\request()->all());
+        return back()->with('success', __('Запрос отклонен'))->withInput(\request()->all());
     }
 
     /**
@@ -257,9 +258,9 @@ class WithdrawalRequestsController extends Controller
     public function remove($transaction, $massMode = false) {
         if (cache()->has('remove'.$transaction)) {
             if (true === $massMode) {
-                return __('This transaction locked for 1 minutes.');
+                return __('Эта транзакция заблокирована на 1 минуту');
             }
-            return back()->with('error', __('This transaction locked for 1 minutes.'))->withInput(\request()->all());
+            return back()->with('error', __('Эта транзакция заблокирована на 1 минуту'))->withInput(\request()->all());
         }
 
         cache()->put('remove'.$transaction, true, now()->addMinutes(1));
@@ -285,9 +286,9 @@ class WithdrawalRequestsController extends Controller
     public static function approve($transaction, $massMode = false) {
         if (cache()->has('approve'.$transaction)) {
             if (true === $massMode) {
-                return __('This transaction locked for 1 minutes.');
+                return __('Эта транзакция заблокирована на 1 минуту');
             }
-            return back()->with('error', __('This transaction locked for 1 minutes.'))->withInput(\request()->all());
+            return back()->with('error', __('Эта транзакция заблокирована на 1 минуту'))->withInput(\request()->all());
         }
 
         cache()->put('approve'.$transaction, true, now()->addMinutes(1));
@@ -297,9 +298,9 @@ class WithdrawalRequestsController extends Controller
 
         if ($transaction->isApproved()) {
             if (true === $massMode) {
-                return __('This request already processed.');
+                return __('Этот запрос уже обработан.');
             }
-            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
+            return back()->with('error', __('Этот запрос уже обработан.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -315,7 +316,7 @@ class WithdrawalRequestsController extends Controller
         $paymentSystem = $transaction->paymentSystem;
 
         if (null === $wallet || null === $user || null === $paymentSystem || null === $currency) {
-            throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
+            throw new \Exception('Кошелек, пользователь, платежная система или валюта не найдены для отклонения вывода');
         }
 
         $ps = $paymentSystem->getClassName();
@@ -329,9 +330,9 @@ class WithdrawalRequestsController extends Controller
 
         if (empty($wallet->external)) {
             if (true === $massMode) {
-                return __('ERROR:') . ' wallet is empty';
+                return __('ERROR:') . ' кошелек пуст';
             }
-            return back()->with('error', __('ERROR:') . ' wallet is empty')->withInput(\request()->all());
+            return back()->with('error', __('ERROR:') . ' кошелек пуст')->withInput(\request()->all());
         }
 
         try {
@@ -344,7 +345,7 @@ class WithdrawalRequestsController extends Controller
         }
 
         if (empty($batchId)) {
-            $batchErr = __('Unable to approve request, payment system transfer is failed ..');
+            $batchErr = __('Не удалось подтвердить запрос, перевод платежной системы не выполнен...');
 
             if (true === $massMode) {
                 return __($batchErr);
@@ -382,9 +383,9 @@ class WithdrawalRequestsController extends Controller
         }
 
         if (true === $massMode) {
-            return $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet');
+            return __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно выплачена!");
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved, money transferred to user wallet'))->withInput(\request()->all());
+        return back()->with('success', __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно выплачена!"))->withInput(\request()->all());
     }
 
     /**
@@ -397,9 +398,9 @@ class WithdrawalRequestsController extends Controller
     public function approveManually($transaction, $massMode = false) {
         if (cache()->has('approveManually'.$transaction)) {
             if (true === $massMode) {
-                return __('This transaction locked for 1 minutes.');
+                return __('Эта транзакция заблокирована на 1 минуту');
             }
-            return back()->with('error', __('This transaction locked for 1 minutes.'))->withInput(\request()->all());
+            return back()->with('error', __('Эта транзакция заблокирована на 1 минуту'))->withInput(\request()->all());
         }
 
         cache()->put('approveManually'.$transaction, true, now()->addMinutes(1));
@@ -409,9 +410,9 @@ class WithdrawalRequestsController extends Controller
 
         if ($transaction->isApproved()) {
             if (true === $massMode) {
-                return __('This request already processed.');
+                return __('Этот запрос уже обработан.');
             }
-            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
+            return back()->with('error', __('Этот запрос уже обработан.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -422,7 +423,7 @@ class WithdrawalRequestsController extends Controller
         $currency = $wallet->currency()->first();
 
         if (null === $wallet || null === $user || null === $currency) {
-            throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
+            throw new \Exception('Кошелек, пользователь, платежная система или валюта не найдены для отклонения вывода');
         }
 
 //        if (empty($wallet->external)) {
@@ -461,9 +462,9 @@ class WithdrawalRequestsController extends Controller
 //        }
 
         if (true === $massMode) {
-            return $transaction->amount . $currency->symbol . ' - ' . __('Request approved.');
+            return __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно выплачена!");
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Request approved.'))->withInput(\request()->all());
+        return back()->with('success', __("Сумма {$transaction->amount}{$currency->symbol} пользователю {$user->login} успешно выплачена!"))->withInput(\request()->all());
     }
 
     /**
@@ -476,9 +477,9 @@ class WithdrawalRequestsController extends Controller
     public function approveFake($transaction, $massMode = false) {
         if (cache()->has('approveFake'.$transaction)) {
             if (true === $massMode) {
-                return __('This transaction locked for 1 minutes.');
+                return __('Эта транзакция заблокирована на 1 минуту');
             }
-            return back()->with('error', __('This transaction locked for 1 minutes.'))->withInput(\request()->all());
+            return back()->with('error', __('Эта транзакция заблокирована на 1 минуту'))->withInput(\request()->all());
         }
 
         cache()->put('approveFake'.$transaction, true, now()->addMinutes(1));
@@ -488,9 +489,9 @@ class WithdrawalRequestsController extends Controller
 
         if ($transaction->isApproved()) {
             if (true === $massMode) {
-                return __('This request already processed.');
+                return __('Этот запрос уже обработан.');
             }
-            return back()->with('error', __('This request already processed.'))->withInput(\request()->all());
+            return back()->with('error', __('Этот запрос уже обработан.'))->withInput(\request()->all());
         }
 
         /** @var Wallet $wallet */
@@ -501,7 +502,7 @@ class WithdrawalRequestsController extends Controller
         $currency = $wallet->currency()->first();
 
         if (null === $wallet || null === $user || null === $currency) {
-            throw new \Exception('Wallet, user, payment system or currency is not found for withdrawal approve.');
+            throw new \Exception('Кошелек, пользователь, платежная система или валюта не найдены для отклонения вывода');
         }
 
 //        if (empty($wallet->external)) {
@@ -541,9 +542,9 @@ class WithdrawalRequestsController extends Controller
 //        }
 
         if (true === $massMode) {
-            return $transaction->amount . $currency->symbol . ' - ' . __('Fake request approved.');
+            return $transaction->amount . $currency->symbol . ' - ' . __('Поддельный запрос одобрен.');
         }
-        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Fake request approved.'))->withInput(\request()->all());
+        return back()->with('success', $transaction->amount . $currency->symbol . ' - ' . __('Поддельный запрос одобрен.'))->withInput(\request()->all());
     }
 
     /**

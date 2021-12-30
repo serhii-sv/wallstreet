@@ -73,14 +73,14 @@ class ReferralController extends Controller
         ]));
 
         if (!$referral) {
-            return back()->with('error_short', __('Unable to create referral level'))->withInput($request->input());
+            return back()->with('error_short', __('Невозможно создать реферальный уровень'))->withInput($request->input());
         }
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been created'));
+        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Реферальный уровень создан'));
     }
 
     /**
@@ -109,14 +109,14 @@ class ReferralController extends Controller
         ]));
 
         if (!$referral) {
-            return back()->with('error_short', __('Unable to update referral level'))->withInput($request->input());
+            return back()->with('error_short', __('Невозможно обновить реферальный уровень'))->withInput($request->input());
         }
 
         $referral->on_load = !empty($request->on_load) ? 1 : 0;
         $referral->on_profit = !empty($request->on_profit) ? 1 : 0;
         $referral->save();
 
-        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been updated'));
+        return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Уровень рефералов обновлен'));
     }
 
     /**
@@ -128,10 +128,10 @@ class ReferralController extends Controller
         $referral = Referral::find($referral);
 
         if ($referral->delete()) {
-            return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Referral level has been deleted'));
+            return redirect()->route('referrals-and-banners.referrals', ['#referrals'])->with('success_short', __('Уровень реферала удален'));
         }
 
-        return redirect()->route('referrals.index')->with('error_short', __('Unable to delete referral level'));
+        return redirect()->route('referrals.index')->with('error_short', __('Невозможно удалить реферальный уровень'));
     }
 
     public function showUserReferralTree($id) {
@@ -156,7 +156,7 @@ class ReferralController extends Controller
 
         $children = [];
 
-        return $children['children'][] = $user->getChildrens(7);
+        return $children['children'][] = $user->getChildrens(2);
     }
 
     public function show_referral_tree() {

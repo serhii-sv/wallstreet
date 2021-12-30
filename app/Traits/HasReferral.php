@@ -351,27 +351,15 @@ trait HasReferral
     }
 
     public function getChildrens($limit = 7) {
-        $th = $this;
+        $referrals = [];
+        $referrals['name'] = $this->login;
+        $referrals['children'] = $this->referrals()
+            ->select('login as name')
+            ->wherePivot('line', 1)
+            ->get()
+            ->toArray();
 
-        return cache()->remember('referrals_childrens.'.$th->id, now()->addMinutes(60), function() use($th, $limit) {
-            if ($limit === 0) {
-                return [];
-            }
-
-            $referrals = [];
-            $referrals['name'] = $th->login;
-
-            if (!$th->hasReferrals()) {
-                return $referrals;
-            }
-
-            foreach ($th->referrals()->wherePivot('line', 1)->get() as $r) {
-                $referral = $r->getChildrens($limit - 1);
-                $referrals['children'][] = $referral;
-            }
-
-            return $referrals;
-        });
+        return $referrals;
     }
 
     public function getReferralChatId() {

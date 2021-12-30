@@ -26,6 +26,11 @@ $(document).ready(function () {
                     bSortable: true
                 },
                 {
+                    data: 'request_id',
+                    searchable: true,
+                    bSortable: true
+                },
+                {
                     data: 'email',
                     searchable: false,
                     bSortable: false
@@ -96,7 +101,7 @@ $(document).ready(function () {
                     orderable: false
                 }
             ],
-            order: [6, 'desc'],
+            order: [7, 'desc'],
             dom: '<"top display-flex  mb-2"<"action-filters"f><"actions action-btns display-flex align-items-center">><"clear">rt<"bottom"p>',
             language: {
                 search: "",
@@ -142,6 +147,21 @@ $(document).ready(function () {
             $('tbody .select-checkbox').map((index, checkbox) => {
                 $(checkbox).prop('checked', $(this).find('input[type="checkbox"]').prop('checked'))
             })
+        })
+
+        $(document).on('click', '.section span.copy-to-clipboard', function () {
+            navigator.clipboard.writeText($(this).data('text')).then(function() {
+                M.toast({
+                    html: 'Успешно скоприровано!',
+                    classes: 'green'
+                })
+            }, function(err) {
+                M.toast({
+                    html: 'Возникла ошибка при копировании!',
+                    classes: 'red'
+                })
+            });
+            return false;
         })
 
         $(document).on('click', '.invoice-action-view:not(:first-child)', function () {

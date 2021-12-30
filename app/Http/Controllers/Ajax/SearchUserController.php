@@ -8,7 +8,11 @@ use App\Http\Controllers\Controller;
 
 class SearchUserController extends Controller
 {
-    //
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function search(Request $request) {
         $search = $request->post('search');
         $users = [];
@@ -22,6 +26,10 @@ class SearchUserController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return false|string
+     */
     public function getUserEmailByAny(Request $request) {
         if ($request->post('q'))
         {

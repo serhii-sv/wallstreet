@@ -23,14 +23,14 @@ class LanguageController extends Controller
         $checkExists = Language::where('code', $locale)->get()->count();
 
         if ($checkExists == 0) {
-            return back()->with('error', __('Language code error'));
+            return back()->with('error', __('Язык не найден'));
         }
 
         session([
             'language' => $locale
         ]);
         App::setLocale($locale);
-        return back()->with('success', __('The site language has been changed successfully'));
+        return back()->with('success', __('Язык изменен успешно'));
     }
 
 }
