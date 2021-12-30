@@ -108,7 +108,7 @@ class CreateRootCommand extends Command
             'my_id'    => null,
             'api_token' => Str::random(60),
         ]);
-        $user->assignRole('admin');
+//        $user->assignRole('admin');
         $permissions = Permission::all();
         if (!empty($permissions)){
             foreach ($permissions as $permission) {
