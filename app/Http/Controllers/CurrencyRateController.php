@@ -18,11 +18,11 @@ class CurrencyRateController extends Controller
     public function index(Request $request) {
         if (request()->ajax()) {
             $rates = Setting::where('s_key', 'like', '%_to_%');
-            
+
             $recordsFiltered = $rates->count();
             $rates->limit($request->length)->offset($request->start);
             $data = [];
-            
+
             foreach ($rates->get() as $rate) {
                 $data[] = [
                     'empty' => '',
@@ -34,7 +34,7 @@ class CurrencyRateController extends Controller
                     'actions' => view('pages.currency-rates.partials.actions', compact('rate'))->render(),
                 ];
             }
-            
+
             return response()->json([
                 'draw' => $request->draw,
                 'recordsTotal' => $rates->count(),
@@ -45,7 +45,7 @@ class CurrencyRateController extends Controller
             return view('pages.currency-rates.index');
         }
     }
-    
+
     /**
      * @param $id
      *
@@ -61,7 +61,7 @@ class CurrencyRateController extends Controller
         $exchange_rate = ExchangeRate::where('rate_id', $rate->id)->first();
         return view('pages.currency-rates.edit-new', compact('rate', 'exchange_rate'));
     }
-    
+
     public function update(Request $request, $id) {
         if ($request->post('is_fixed')) {
             $request->validate([
@@ -77,12 +77,12 @@ class CurrencyRateController extends Controller
                 'max_rate' => 'required_if:is_random,1',
             ]);
         }
-        
+
         $rate = Setting::findOrFail($id);
         if (!$request->post('is_fixed')) {
             if ($request->post('is_random')){
-                $min_rate = $request->post('min_rate');
-                $max_rate = $request->post('max_rate');
+                $min_rate = $request->post('min_rate') ?? 0;
+                $max_rate = $request->post('max_rate') ?? 0;
             }
             if ($request->post('date_start')){
                 $date_start = strtotime($request->post('date_start') . $request->post('time_start'));
@@ -102,8 +102,8 @@ class CurrencyRateController extends Controller
                     'rate_id' => $rate->id,
                     'rate' => $request->post('rate'),
                     'is_random' => $request->post('is_random'),
-                    'min_rate' => $min_rate ?? null,
-                    'max_rate' => $max_rate ?? null,
+                    'min_rate' => $min_rate ?? 0,
+                    'max_rate' => $max_rate ?? 0,
                     'date_start' => $date_start,
                     'date_end' => $date_end,
                 ]);
@@ -112,8 +112,8 @@ class CurrencyRateController extends Controller
                 $exchange_rate->update([
                     'rate' => $request->post('rate'),
                     'is_random' => $request->post('is_random'),
-                    'min_rate' => $min_rate ?? null,
-                    'max_rate' => $max_rate ?? null,
+                    'min_rate' => $min_rate ?? 0,
+                    'max_rate' => $max_rate ?? 0,
                     'date_start' => $date_start,
                     'date_end' => $date_end,
                 ]);
@@ -135,10 +135,10 @@ class CurrencyRateController extends Controller
                 return redirect()->back()->with('success', 'Изменения усшено внесены!');
             }
         }
-        
+
         return redirect()->back()->with('error', 'Ошибка!')->withInput();
     }
-    
+
     /**
      * @param Request $request
      * @param         $id

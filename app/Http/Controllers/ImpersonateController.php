@@ -25,7 +25,7 @@ class ImpersonateController extends Controller
         $user = User::find($id);
 
         if (null == $user) {
-            return back()->with('error', __('User not found'))->withInput();
+            return back()->with('error', __('Пользователь не найден'))->withInput();
         }
 
         Auth::user()->impersonate($user);

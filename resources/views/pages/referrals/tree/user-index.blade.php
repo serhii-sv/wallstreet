@@ -103,7 +103,6 @@
             })
 
             function initTree(_width, _height) {
-                console.log(_width, _height)
                 var margin = {top: 10, right: 10, bottom: 10, left: 10},
                     width = _width - margin.right - margin.left,
                     height = _height - margin.top - margin.bottom;
@@ -197,7 +196,10 @@
                     nodeUpdate.select("circle")
                         .attr("r", 4.5)
                         .style("fill", function (d) {
-                            return d._children ? "lightsteelblue" : "#fff";
+                            if (d.without_childrens !== undefined) {
+                                return !d.without_childrens ? 'red' : 'lightsteelblue';
+                            }
+                            return d.children ? "lightsteelblue" : "#fff";
                         });
 
                     nodeUpdate.select("text")
@@ -254,14 +256,22 @@
 
                 // Toggle children on click.
                 function click(d) {
-                    if (d.children) {
-                        d._children = d.children;
-                        d.children = null;
+                    if (!d._children && !d.children) {
+                        $.get('/user/reftree/' + d.pivot.user_id).then( (response) => {
+                            d.children = response.children
+                            d.without_childrens = Boolean(response.children.length)
+                            update(d);
+                        })
                     } else {
-                        d.children = d._children;
-                        d._children = null;
+                        if (d.children) {
+                            d._children = d.children;
+                            d.children = null;
+                        } else {
+                            d.children = d._children;
+                            d._children = null;
+                        }
+                        update(d);
                     }
-                    update(d);
                 }
 
             }
