@@ -54,5 +54,17 @@
     .tooltip:hover .tooltiptext {
         visibility: visible;
     }
+
+    html::-webkit-scrollbar {
+        width: 16px;
+    }
+    html::-webkit-scrollbar-track {
+        background: 0 0;
+        padding: 0 6px;
+    }
+    html::-webkit-scrollbar-thumb {
+        background: url(/images/scroll.png) center no-repeat;
+        background-size: contain;
+    }
 </style>
 <!-- END: Custom CSS-->
