@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Transaction;
+use App\Models\TransactionType;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -41,6 +42,7 @@ class TransactionTeamleaderCommand extends Command
     {
         /** @var Transaction $transactions */
         $transactions = Transaction::whereNull('teamleader')
+            ->where('type_id', TransactionType::getByName('withdraw')->id)
             ->orderBy('created_at', 'desc')
             ->get();
 
