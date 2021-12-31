@@ -74,7 +74,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute()->withoutOverlapping();
-        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
+//        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
 
         $schedule->command('data:clear')->daily()->withoutOverlapping();
 
