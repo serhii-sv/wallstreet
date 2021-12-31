@@ -68,3 +68,13 @@ Keep your token secure and store it safely, it can be used by anyone to control 
 
 > Обязательным условием является то, что домен обязательно должен работать по протоколу `https`
 
+
+<div style="background: rgba(255,165,0,0.14); padding: 15px">
+    <div>
+        Для работы нотификаций через чат бот в системе нужно настроить работу очередей и запустить их командой:
+    </div>
+    <div>
+        <b>php artisan queue:work</b>
+    </div>
+</div>
+

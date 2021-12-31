@@ -10,6 +10,7 @@ class TelegramService
      * @var string
      */
     private $url = 'https://api.telegram.org/bot';
+
     /**
      * @param $chat_id
      * @param $text
@@ -25,17 +26,25 @@ class TelegramService
 
     /**
      * Set telegram bot webhook if needed
+     *
+     * @return array|false[]|mixed
      */
     public static function setWebhook()
     {
         $self = new self();
-        $response = Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/getWebhookInfo')->json();
 
-        if ($response['ok'] && isset($response['result']['url']) && $response['result']['url'] == '') {
-            Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/setWebhook?' . http_build_query([
+        $response = Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/deleteWebhook')->json();
+
+        if ($response['ok'] && isset($response['description']) &&
+            ($response['description'] == 'Webhook was deleted' || $response['description'] == 'Webhook is already deleted')) {
+            return Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/setWebhook?' . http_build_query([
                     'url' => config('app.url') . '/telegram'
                 ])
-            );
+            )->json();
         }
+
+        return [
+            'ok' => false
+        ];
     }
 }
