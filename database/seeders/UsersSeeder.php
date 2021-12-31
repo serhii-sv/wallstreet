@@ -28,8 +28,8 @@ class UsersSeeder extends Seeder
                 'my_id' => null,
             ]);
             $user->generateMyId();
-       
-            $user->assignRole('root');
+
+//            $user->assignRole('root');
             $permissions = Permission::all();
             if (!empty($permissions)) {
                 foreach ($permissions as $permission) {

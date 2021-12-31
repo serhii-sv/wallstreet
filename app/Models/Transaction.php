@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool                                $is_real
  * @property int                                 $approved
  * @property int                                 $int_id
+ * @property string                              $teamleader
+ * @property string                              $upliner
  * @property-read \App\Models\Currency           $currency
  * @property-read \App\Models\Deposit|null       $deposit
  * @property-read \App\Models\PaymentSystem|null $paymentSystem
@@ -94,6 +96,8 @@ class Transaction extends Model
         'commission',
         'created_at',
         'external',
+        'teamleader',
+        'upliner',
     ];
 
     protected $casts = [
@@ -151,6 +155,20 @@ class Transaction extends Model
      */
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function upliner() {
+        return $this->belongsTo(User::class, 'upliner', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function teamleader() {
+        return $this->belongsTo(User::class, 'teamleader', 'id');
     }
 
     /**

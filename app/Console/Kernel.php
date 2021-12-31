@@ -21,6 +21,7 @@ use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
 use App\Console\Commands\SetUserDocumentVerified;
+use App\Console\Commands\TransactionTeamleaderCommand;
 use App\Console\Commands\UserProfileCaches;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -49,6 +50,7 @@ class Kernel extends ConsoleKernel
         UserProfileCaches::class,
         CalculateSalaryCommand::class,
         MoveDepositQueueCommand::class,
+        TransactionTeamleaderCommand::class,
     ];
 
     /**
@@ -60,20 +62,21 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
-        $schedule->command('make:rate_log')->hourly();
+        $schedule->command('make:rate_log')->hourly()->withoutOverlapping();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
-        $schedule->command('update:currency_rates')->hourly();
+        $schedule->command('update:currency_rates')->hourly()->withoutOverlapping();
         $schedule->command('update:non_fixed_currency_rates')->cron('*/10 * * * *');
-        $schedule->command('backup:clean')->everyTwoHours();
+        $schedule->command('backup:clean')->everyTwoHours()->withoutOverlapping();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
         $schedule->command('calculate:salaries')->hourly()->withoutOverlapping();
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
-        $schedule->command('user-documents:set-verified')->everyMinute();
+        $schedule->command('user-documents:set-verified')->everyMinute()->withoutOverlapping();
+        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
 
-        $schedule->command('data:clear')->daily();
+        $schedule->command('data:clear')->daily()->withoutOverlapping();
 
         $schedule->command('profile-cache:set')->everyMinute()->withoutOverlapping();
     }

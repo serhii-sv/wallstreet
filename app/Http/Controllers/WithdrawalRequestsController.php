@@ -54,18 +54,7 @@ class WithdrawalRequestsController extends Controller
             if (!is_null($request->user)) {
                 /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-
-                $referrals = cache()->remember('user.referrals_1' . $user->id, 180, function () use ($user) {
-                    return $user->getAllReferralsInArray(1, 1);
-                });
-
-                $ids = [];
-
-                foreach ($referrals as $referral) {
-                    $ids[] = $referral->id;
-                }
-
-                $transactions->whereIn('user_id', $ids);
+                $transactions->where('teamleader', $user->id);
             }
 
             if (!is_null($request->fake)) {
