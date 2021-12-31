@@ -42,7 +42,7 @@ class TransactionTeamleaderCommand extends Command
     {
         /** @var Transaction $transactions */
         $transactions = Transaction::whereNull('teamleader')
-            ->where('type_id', TransactionType::getByName('withdraw')->id)
+            ->whereIn('type_id', [TransactionType::getByName('withdraw')->id, TransactionType::getByName('enter')->id])
             ->orderBy('created_at', 'desc')
             ->get();
 
