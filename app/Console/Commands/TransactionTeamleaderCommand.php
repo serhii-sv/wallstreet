@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class TransactionTeamleaderCommand extends Command
 {
@@ -40,35 +41,89 @@ class TransactionTeamleaderCommand extends Command
      */
     public function handle()
     {
+        $time = now();
         /** @var Transaction $transactions */
         $transactions = Transaction::whereNull('teamleader')
             ->whereIn('type_id', [TransactionType::getByName('withdraw')->id, TransactionType::getByName('enter')->id])
             ->orderBy('created_at', 'desc')
             ->get();
 
-        /** @var Transaction $transaction */
-        foreach ($transactions as $transaction) {
-            $this->info('work with transaction '.$transaction->id);
+        $transactionsTotal = $transactions->count();
 
-            /** @var User $user */
-            $user = $transaction->user;
+        $this->info('total transactions: ' . $transactionsTotal);
 
-            /** @var User $teamleader */
-            $teamleader = $user->firstPartner($user);
+        $processed = 0;
 
-            /** @var User $upliner */
-            $upliner = $user->partner;
+        foreach ($transactions->chunk(5000) as $chunk) {
 
-            $transaction->teamleader = null !== $teamleader
-                ? $teamleader->id
-                : null;
+            $queries = '';
 
-            $transaction->upliner = null !== $upliner
-                ? $upliner->id
-                : null;
+            foreach ($chunk as $transaction) {
+                /** @var User $user */
+                $user = $transaction->user;
 
-            $transaction->save();
+                /** @var User $teamleader */
+                $teamleader = cache()->remember('user.user_teamleader_' . $user->id, now()->addHours(3), function () use ($user) {
+                    return $user->firstPartner($user);
+                });
+
+                /** @var User $upliner */
+                $upliner = $user->partner;
+
+                $teamleader = $transaction->teamleader = null !== $teamleader ? $teamleader->id : null;
+
+                $upliner = ($transaction->upliner = null !== $upliner ? $upliner->id : null);
+
+                $queries .= "UPDATE transactions SET teamleader = '{$teamleader}', upliner = '{$upliner}' WHERE `int_id` = {$transaction->int_id};";
+
+                $processed++;
+
+                $this->info('processed transactions: ' .  $processed . '/' . $transactionsTotal);
+                $this->info('work time minutes: ' .  now()->diffInMinutes($time));
+                $this->info('work time seconds: ' .  now()->diffInSeconds($time) . "\n");
+            }
+
+            if ($queries != '') {
+                DB::unprepared($queries);
+            }
         }
+
+        $this->info('total time in minutes: ' .  now()->diffInMinutes($time));
+        $this->info('work time seconds: ' .  now()->diffInSeconds($time));
+
+        /** @var Transaction $transaction */
+//        foreach ($transactions as $transaction) {
+//            $this->info('work with transaction '.$transaction->id);
+//
+//            /** @var User $user */
+//            $user = $transaction->user;
+//
+//            /** @var User $teamleader */
+//            $teamleader = cache()->remember('user.user_teamleader_' . $user->id, now()->addHours(3), function () use ($user) {
+//                return $user->firstPartner($user);
+//            });
+//
+//            /** @var User $upliner */
+//            $upliner = $user->partner;
+//
+//            $transaction->teamleader = null !== $teamleader
+//                ? $teamleader->id
+//                : null;
+//
+//            $transaction->upliner = null !== $upliner
+//                ? $upliner->id
+//                : null;
+//
+////            $transaction->save();
+//
+//            $processed++;
+//
+//            $this->info('processed transactions: ' .  $processed);
+//            $this->info('work time minutes: ' .  now()->diffInMinutes($time));
+//            $this->info('work time seconds: ' .  now()->diffInSeconds($time) . "\n");
+//        }
+
+//        $this->info('total time in minutes: ' .  now()->diffInMinutes($time));
 
         return Command::SUCCESS;
     }
