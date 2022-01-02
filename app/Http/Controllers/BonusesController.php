@@ -93,6 +93,8 @@ class BonusesController extends Controller
             'is_real' => $request->is_real == 1,
         ];
 
+        $transactionTypeString = '';
+
         DB::transaction(function () use ($data, $wallet, $type, $amount) {
             $transaction = Transaction::create($data);
 
@@ -109,6 +111,16 @@ class BonusesController extends Controller
             $wallet->save();
         });
 
-        return back()->with('success_short', 'Операция успешно проведена');
+        switch ($type) {
+            case "enter":
+                $transactionTypeString = 'бонус';
+                break;
+
+            case "withdraw":
+                $transactionTypeString = 'вывод';
+                break;
+        }
+
+        return back()->with('success_short', 'Пользователю ' . $user->login . ' добавлен ' . $transactionTypeString . ' на сумму ' . $currency->symbol . $amount . ' через платежную систему ' . $currencyPaymentSystem->name . '. Тип операции: ' . ($request->is_real == 1 ? 'Реальный' : 'Фейковый'));
     }
 }
