@@ -33,14 +33,17 @@ class TelegramService
     {
         $self = new self();
 
-        $response = Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/deleteWebhook')->json();
+        $deleteUrl = $self->url . env('TELEGRAM_BOT_TOKEN') . '/deleteWebhook';
+        \Log::critical($deleteUrl);
+        $response = Http::get($deleteUrl)->json();
 
         if ($response['ok'] && isset($response['description']) &&
             ($response['description'] == 'Webhook was deleted' || $response['description'] == 'Webhook is already deleted')) {
-            return Http::get($self->url . env('TELEGRAM_BOT_TOKEN') . '/setWebhook?' . http_build_query([
+            $url = $self->url . env('TELEGRAM_BOT_TOKEN') . '/setWebhook?' . http_build_query([
                     'url' => config('app.url') . '/telegram'
-                ])
-            )->json();
+                ]);
+            \Log::critical($url);
+            return Http::get($url)->json();
         }
 
         return [
