@@ -154,12 +154,13 @@
                       </tr>
                       <tr>
                           <td>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Email confirmation' contenteditable="true">
+                                  <editor_block data-name='2-х Факторная' contenteditable="true">
                                       {{ __('2-х Факторная') }}
                                   </editor_block>
                               @else
                                   {{ __('2-х Факторная') }}
-                              @endif:</td>
+                              @endif:
+                          </td>
                           <td class="users-view-2fa">
                               <div class="display-flex justify-content-center align-items-center">
                                   @if(($user->loginSecurity()->first()->google2fa_enable ?? null) || $user->auth_with_phone)

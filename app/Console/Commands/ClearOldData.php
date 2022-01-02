@@ -59,6 +59,13 @@ class ClearOldData extends Command
 
         HttpLog::where('created_at', '<=', now()->subWeeks())->delete();
 
+        $notifications = Notification::where('name', 'Реинвестирование по депозиту')
+            ->orWhere('name', 'Начисления по депозиту')->delete();
+
+        NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->delete();
+
+        $notifications->delete();
+
         return Command::SUCCESS;
     }
 }
