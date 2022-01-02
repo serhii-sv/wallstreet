@@ -22,7 +22,6 @@ use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
 use App\Console\Commands\SetUserDocumentVerified;
 use App\Console\Commands\TransactionTeamleaderCommand;
-use App\Console\Commands\UserProfileCaches;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -47,7 +46,6 @@ class Kernel extends ConsoleKernel
         SetUserDocumentVerified::class,
         DashboardCachesCommand::class,
         ClearOldData::class,
-        UserProfileCaches::class,
         CalculateSalaryCommand::class,
         MoveDepositQueueCommand::class,
         TransactionTeamleaderCommand::class,
