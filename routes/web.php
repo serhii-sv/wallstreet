@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['web', 'activity-log']], function () {
+    Route::post('/telegram', [\App\Http\Controllers\TelegramController::class, 'index'])->name('telegram');
     Auth::routes([
         'register' => false,
         'reset' => false,
