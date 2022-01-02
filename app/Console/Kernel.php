@@ -75,8 +75,6 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
 
         $schedule->command('data:clear')->daily()->withoutOverlapping();
-
-        $schedule->command('profile-cache:set')->everyMinute()->withoutOverlapping();
     }
 
     /**
