@@ -160,14 +160,14 @@ class Transaction extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function upliner() {
+    public function _upliner() {
         return $this->belongsTo(User::class, 'upliner', 'id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function teamleader() {
+    public function _teamleader() {
         return $this->belongsTo(User::class, 'teamleader', 'id');
     }
 
