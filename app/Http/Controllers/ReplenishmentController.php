@@ -42,7 +42,7 @@ class ReplenishmentController extends Controller
             if (!is_null($request->user)) {
                 /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-                $transactions->whereIn('teamleader', $user->id);
+                $transactions->where('teamleader', $user->id);
             }
 
             if (!is_null($request->fake)) {
