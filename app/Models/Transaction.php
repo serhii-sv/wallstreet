@@ -36,6 +36,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                 $int_id
  * @property string                              $teamleader
  * @property string                              $upliner
+ * @property boolean                             $dont_stat
+ * @property boolean                             $dont_stat_checked
  * @property-read \App\Models\Currency           $currency
  * @property-read \App\Models\Deposit|null       $deposit
  * @property-read \App\Models\PaymentSystem|null $paymentSystem
@@ -98,10 +100,14 @@ class Transaction extends Model
         'external',
         'teamleader',
         'upliner',
+        'dont_stat',
+        'dont_stat_checked',
     ];
 
     protected $casts = [
-        'is_real' => 'boolean',
+        'is_real'           => 'boolean',
+        'dont_stat'         => 'boolean',
+        'dont_stat_checked' => 'boolean',
     ];
 
     public const TRANSACTION_APPROVED = 1;
