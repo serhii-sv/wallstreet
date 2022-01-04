@@ -378,6 +378,18 @@ class UsersController extends Controller
                 $user->syncRoles($request->roles);
                 $user->permissions()->detach();
                 $user->givePermissionsFromRole($request->roles);
+
+                if ($request->roles[0] == 'Конвершн') {
+                    DB::table('transactions')->where('user_id', $user->id)->update([
+                        'dont_stat_checked' => 1,
+                        'dont_stat' => 1,
+                    ]);
+                } else {
+                    DB::table('transactions')->where('user_id', $user->id)->update([
+                        'dont_stat_checked' => 0,
+                        'dont_stat' => 0,
+                    ]);
+                }
             }
 
             if ($request->roles[0] == $oldRole) {
