@@ -371,15 +371,16 @@ class UsersController extends Controller
                     return back()->with('error', __('Password mismatch'))->withInput();
                 }
             }
+
+            $oldRole = $user->roles()->first()->name ?? '';
+
             if ($request->roles) {
                 $user->syncRoles($request->roles);
                 $user->permissions()->detach();
                 $user->givePermissionsFromRole($request->roles);
             }
 
-            die($request->roles[0].'/'.$user->roles()->first()->name);
-
-            if ($request->roles[0] ?? '' == $user->roles()->first()->name ?? '') {
+            if ($request->roles[0] ?? '' == $oldRole) {
                 if ($request->permissions) {
                     $user->syncPermissions($request->permissions);
                 }
