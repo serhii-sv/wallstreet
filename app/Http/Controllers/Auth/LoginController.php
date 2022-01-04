@@ -75,7 +75,7 @@ class LoginController extends Controller
     protected function sendLoginNotification($request, $user)
     {
         $notification_data = [
-            'notification_name' => 'Реинвестирование по депозиту',
+            'notification_name' => 'Авторизация',
             'user' => $user,
             'ip' => $request->ip(),
         ];

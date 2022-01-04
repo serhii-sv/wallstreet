@@ -45,7 +45,7 @@ class NewWithdrawalRequest extends Notification
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()
-            ->content('Пользователь ' . $this->transaction->user->login . ' оставил заявку №' .
+            ->content('Пользователь ' . $this->transaction->user->login . ' (тимлидер: ' . ($this->transaction->_teamleader->login ?? 'Не указан') . ') оставил заявку №' .
                 $this->transaction->int_id .  ' на вывод средств на сумму: ' . $this->transaction->currency->symbol . $this->transaction->amount)
             ->button('Список заявок на выводов', url('/withdrawals'));
     }

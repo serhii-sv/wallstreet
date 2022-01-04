@@ -379,26 +379,26 @@ class Deposit extends Model
 
         if ($dividend && $amountToWallet > 0) {
             $amount = abs($dividend->amount);
-            if ($amount > 0) {
-                $notification_data = [
-                    'notification_name' => 'Начисления по депозиту',
-                    'user' => $user,
-                    'deposit' => $this,
-                    'amount' => $amount . $wallet->currency->symbol,
-                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
-                ];
-                Notification::sendNotification($notification_data, 'new_charge');
-            }
-            if ($amountReinvest > 0) {
-                $notification_data = [
-                    'notification_name' => 'Реинвестирование по депозиту',
-                    'user' => $user,
-                    'deposit' => $this,
-                    'amount' => $amountReinvest . $wallet->currency->symbol,
-                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
-                ];
-                Notification::sendNotification($notification_data, 'new_reinvest');
-            }
+//            if ($amount > 0) {
+//                $notification_data = [
+//                    'notification_name' => 'Начисления по депозиту',
+//                    'user' => $user,
+//                    'deposit' => $this,
+//                    'amount' => $amount . $wallet->currency->symbol,
+//                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+//                ];
+//                Notification::sendNotification($notification_data, 'new_charge');
+//            }
+//            if ($amountReinvest > 0) {
+//                $notification_data = [
+//                    'notification_name' => 'Реинвестирование по депозиту',
+//                    'user' => $user,
+//                    'deposit' => $this,
+//                    'amount' => $amountReinvest . $wallet->currency->symbol,
+//                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+//                ];
+//                Notification::sendNotification($notification_data, 'new_reinvest');
+//            }
 
         }
         $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
