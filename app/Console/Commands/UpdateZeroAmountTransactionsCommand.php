@@ -31,6 +31,7 @@ class UpdateZeroAmountTransactionsCommand extends Command
         /** @var TransactionType $transactions */
         $transactions = Transaction::where('main_currency_amount', 0)
             ->where('amount', '>', 0)
+            ->orderBy('amount', 'desc')
             ->get();
 
         /** @var Currency $usd */

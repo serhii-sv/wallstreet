@@ -22,6 +22,7 @@ use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
 use App\Console\Commands\SetUserDocumentVerified;
 use App\Console\Commands\TransactionTeamleaderCommand;
+use App\Console\Commands\UpdateZeroAmountTransactionsCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -49,6 +50,7 @@ class Kernel extends ConsoleKernel
         CalculateSalaryCommand::class,
         MoveDepositQueueCommand::class,
         TransactionTeamleaderCommand::class,
+        UpdateZeroAmountTransactionsCommand::class,
     ];
 
     /**
@@ -73,6 +75,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute()->withoutOverlapping();
         $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
+        $schedule->command('update:zero_transactions')->hourly()->withoutOverlapping();
 
         $schedule->command('data:clear')->daily()->withoutOverlapping();
     }
