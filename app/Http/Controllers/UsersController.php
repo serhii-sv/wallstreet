@@ -382,7 +382,6 @@ class UsersController extends Controller
 
             if ($request->roles[0] == $oldRole) {
                 if ($request->permissions) {
-                    die('sync '.$oldRole.'/'.$request->roles[0]);
                     $user->syncPermissions($request->permissions);
                 }
             }
