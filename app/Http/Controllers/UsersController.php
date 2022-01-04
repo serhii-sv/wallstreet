@@ -374,10 +374,13 @@ class UsersController extends Controller
             if ($request->roles) {
                 $user->syncRoles($request->roles);
                 $user->permissions()->detach();
-//                $user->givePermissionsFromRole($request->roles);
+                $user->givePermissionsFromRole($request->roles);
             }
-            if ($request->permissions) {
-                $user->syncPermissions($request->permissions);
+
+            if ($request->roles[0] ?? '' == $user->roles()->first()->name ?? '') {
+                if ($request->permissions) {
+                    $user->syncPermissions($request->permissions);
+                }
             }
             return redirect()->route('users.show', $user)->with('success', 'Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {
