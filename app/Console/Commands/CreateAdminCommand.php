@@ -100,7 +100,7 @@ class CreateAdminCommand extends Command
             'my_id'    => null,
             'api_token' => Str::random(60),
         ]);
-        $user->assignRole('admin');
+        $user->assignRole('Фаундер');
         $permissions = Permission::all();
         if (!empty($permissions)){
             foreach ($permissions as $permission) {

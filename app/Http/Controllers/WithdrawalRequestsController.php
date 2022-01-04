@@ -110,7 +110,7 @@ class WithdrawalRequestsController extends Controller
             ]);
         } else {
             $filter_users = User::whereHas("roles", function ($q) {
-                $q->where("name", "root")->orWhere("name", "teamlead");
+                $q->where("name", "Фаундер")->orWhere("name", "Тимлидер");
             })->orderBy('int_id', 'asc')->get();
             UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','withdrawals_amount')->update(['sb_val' => 0]);
             return view('pages.withdrawals.index', compact('filter_users'));

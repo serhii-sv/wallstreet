@@ -1,1 +1,1 @@
-<a href="{{ route('users.show', $user) }}">{{ $user->email ?? 'Не указано' }}</a>
+<a href="{{ route('users.show', $user) }}" style="color:{{ $user->getRoleColor() }};">{{ $user->email ?? 'Не указано' }}</a>

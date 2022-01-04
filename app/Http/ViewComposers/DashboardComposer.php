@@ -57,7 +57,7 @@ class DashboardComposer
         $view->with('user_auth_logs', cache()->remember('dshb.user_auth_logs', now()->addMinutes(5), function () {
             return User::whereHas('roles', function ($query) {
                 $query->where(function ($query) {
-                    $query->where('roles.name', '=', 'teamlead');
+                    $query->where('roles.name', '=', 'Тимлидер');
                 });
             })
                 ->orderBy('last_activity_at', 'desc')

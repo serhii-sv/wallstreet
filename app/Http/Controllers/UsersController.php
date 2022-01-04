@@ -88,7 +88,7 @@ class UsersController extends Controller
                 /** @var User $me */
                 $me = auth()->user();
 
-                $imTeamlead = $me->roles()->where('name', 'teamlead')->count() > 0;
+                $imTeamlead = $me->roles()->where('name', 'Тимлидер')->count() > 0;
 
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
@@ -101,7 +101,7 @@ class UsersController extends Controller
                 $data = [];
 
                 $users = $users->get()->filter(function ($user) use ($imTeamlead) {
-                    if ($imTeamlead && $user->hasRole('teamlead')) {
+                    if ($imTeamlead && $user->hasRole('Тимлидер')) {
                         return false;
                     }
 
@@ -371,11 +371,31 @@ class UsersController extends Controller
                     return back()->with('error', __('Password mismatch'))->withInput();
                 }
             }
+
+            $oldRole = $user->roles()->first()->name ?? '';
+
             if ($request->roles) {
                 $user->syncRoles($request->roles);
+                $user->permissions()->detach();
+                $user->givePermissionsFromRole($request->roles);
+
+                if ($request->roles[0] == 'Конвершн') {
+                    DB::table('transactions')->where('user_id', $user->id)->update([
+                        'dont_stat_checked' => 1,
+                        'dont_stat' => 1,
+                    ]);
+                } else {
+                    DB::table('transactions')->where('user_id', $user->id)->update([
+                        'dont_stat_checked' => 0,
+                        'dont_stat' => 0,
+                    ]);
+                }
             }
-            if ($request->permissions) {
-                $user->syncPermissions($request->permissions);
+
+            if ($request->roles[0] == $oldRole) {
+                if ($request->permissions) {
+                    $user->syncPermissions($request->permissions);
+                }
             }
             return redirect()->route('users.show', $user)->with('success', 'Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {
