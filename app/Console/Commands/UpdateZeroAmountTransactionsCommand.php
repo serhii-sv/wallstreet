@@ -40,7 +40,8 @@ class UpdateZeroAmountTransactionsCommand extends Command
         foreach ($transactions as $transaction) {
             $this->info('work with transaction '.$transaction->id.', amount '.$transaction->amount);
 
-            $transaction->main_currency_amount = $transaction->convertToCurrency($transaction->currency, $usd, $transaction->amount);
+            $newAmount = $transaction->convertToCurrency($transaction->currency, $usd, $transaction->amount);
+            $transaction->main_currency_amount = $newAmount == 0 ? 0.01 : $newAmount;
             $transaction->save();
 
             $this->info('new amount '.$transaction->main_currency_amount);
