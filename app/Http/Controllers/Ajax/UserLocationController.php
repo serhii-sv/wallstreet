@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\DB;
 class UserLocationController extends Controller
 {
     //
-    
+
   /*  public function setUserLocationInfo(Request $request) {
         $country = $request->post('country');
         $city = $request->post('city');
         $ip = $request->post('ip');
         DB::beginTransaction();
-        
+
         try {
             if ($country && $city && $ip) {
                 if (Auth::user()->update([
@@ -46,21 +46,21 @@ class UserLocationController extends Controller
             'msg' => 'Some problems!',
         ]);
     }*/
-    
+
     public function setUserGeoipInfo(Request $request) {
         $country = $request->post('country');
         $city = $request->post('city');
         $ip = $request->post('ip');
         DB::beginTransaction();
-        
+
         try {
             if ($country && $city && $ip) {
                 $user = Auth::user();
                 $user_geoip = new UserGeoip($request->all());
                 $user_geoip->user_id = $user->id;
                 $user_geoip->is_admin = $user->hasRole([
-                    'root',
-                    'admin',
+                    'Фаундер',
+                    'Тимлидер',
                 ]);
                 if ($user_geoip->save()) {
                     $user->update([

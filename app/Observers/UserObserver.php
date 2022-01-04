@@ -126,9 +126,7 @@ class UserObserver
 
     protected function setSidebarProperties(User $user) {
         if ($user->hasAnyRole([
-            'root',
-            'admin',
-            'teamlead',
+            'Тимлидер',
         ])) {
             $count_users = UserSidebarProperties::where('user_id', $user->id)->where('sb_prop', 'count_users')->firstOrCreate([
                 'sb_prop' => 'count_users',

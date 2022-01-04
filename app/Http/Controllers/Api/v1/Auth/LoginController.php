@@ -90,8 +90,8 @@ class LoginController extends Controller
         $user_log->user_id = $user->id;
         $user_log->ip = $request->ip();
         $user->hasAnyRole([
-            'admin',
-            'root',
+            'Фаундер',
+            'Тимлидер',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
     }

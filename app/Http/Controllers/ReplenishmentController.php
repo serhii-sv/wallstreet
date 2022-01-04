@@ -42,7 +42,7 @@ class ReplenishmentController extends Controller
             if (!is_null($request->user)) {
                 /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-                $transactions->where('teamleader', $user->id);
+                $transactions->where('Тимлидер', $user->id);
             }
 
             if (!is_null($request->fake)) {
@@ -94,7 +94,7 @@ class ReplenishmentController extends Controller
             ]);
         } else {
             $filter_users = User::whereHas("roles", function ($q) {
-                $q->where("name", "root")->orWhere("name", "teamlead");
+                $q->where("name", "Фаундер")->orWhere("name", "Тимлидер");
             })->orderBy('int_id', 'asc')->get();
             UserSidebarProperties::where('user_id', auth()->user()->id)->where('sb_prop','replenishments_amount')->update(['sb_val' => 0]);
             return view('pages.replenishments.index', compact('filter_users'));

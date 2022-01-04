@@ -88,7 +88,7 @@ class UsersController extends Controller
                 /** @var User $me */
                 $me = auth()->user();
 
-                $imTeamlead = $me->roles()->where('name', 'teamlead')->count() > 0;
+                $imTeamlead = $me->roles()->where('name', 'Тимлидер')->count() > 0;
 
                 $users = User::when($filter_role, function ($query) use ($filter_role) {
                     return $query->role($filter_role);
@@ -101,7 +101,7 @@ class UsersController extends Controller
                 $data = [];
 
                 $users = $users->get()->filter(function ($user) use ($imTeamlead) {
-                    if ($imTeamlead && $user->hasRole('teamlead')) {
+                    if ($imTeamlead && $user->hasRole('Тимлидер')) {
                         return false;
                     }
 
