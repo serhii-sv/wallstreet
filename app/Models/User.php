@@ -584,4 +584,23 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'user_products', 'user_id', 'product_id');
     }
+
+    /**
+     * @param array|null $roles
+     */
+    public function givePermissionsFromRole(array $roles=[])
+    {
+        foreach ($roles as $role) {
+            // ----------
+            if ($role == 'Фаундер' || $role == 'Тимлидер') {
+                $permissions = Permission::all();
+                if (!empty($permissions)){
+                    foreach ($permissions as $permission) {
+                        $this->givePermissionTo($permission->name);
+                    }
+                }
+            }
+            // ----------
+        }
+    }
 }

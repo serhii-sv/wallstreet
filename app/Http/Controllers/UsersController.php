@@ -373,6 +373,7 @@ class UsersController extends Controller
             }
             if ($request->roles) {
                 $user->syncRoles($request->roles);
+                $user->givePermissionsFromRole($request->roles);
             }
             if ($request->permissions) {
                 $user->syncPermissions($request->permissions);
