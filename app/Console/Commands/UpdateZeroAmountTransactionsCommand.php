@@ -29,7 +29,9 @@ class UpdateZeroAmountTransactionsCommand extends Command
     public function handle()
     {
         /** @var TransactionType $transactions */
-        $transactions = Transaction::where('main_currency_amount', 0)->get();
+        $transactions = Transaction::where('main_currency_amount', 0)
+            ->where('amount', '>', 0)
+            ->get();
 
         /** @var Currency $usd */
         $usd = Currency::where('code', 'USD')->first();
