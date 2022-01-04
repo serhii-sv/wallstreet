@@ -380,7 +380,7 @@ class UsersController extends Controller
                 $user->givePermissionsFromRole($request->roles);
             }
 
-            if ($request->roles[0] ?? '' == $oldRole) {
+            if ($request->roles[0] == $oldRole) {
                 if ($request->permissions) {
                     die('sync '.$oldRole.'/'.$request->roles[0]);
                     $user->syncPermissions($request->permissions);
