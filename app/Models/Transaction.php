@@ -533,6 +533,7 @@ class Transaction extends Model
             'user_id' => $toUser->id,
             'currency_id' => $to_user_wallet->currency->id,
             'wallet_id' => $to_user_wallet->id,
+            'source' => $fromUser->email,
             'amount' => $amount,
             'approved' => true,
         ]);
