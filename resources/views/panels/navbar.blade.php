@@ -74,6 +74,11 @@
         </li>
         <li class="divider"></li>
         @forelse($navbar_notifications as $item)
+            <?php
+            if ( $item->notification == null ) {
+                continue;
+            }
+            ?>
           <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
             <a class="black-text" href="" style="display: flex; align-items: flex-start">
               <span class="material-icons icon-bg-circle red small " style="display: block;">notifications</span>
