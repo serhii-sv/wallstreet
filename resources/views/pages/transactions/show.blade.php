@@ -173,7 +173,10 @@
                                 </div>
                                 <div class="invoice-address">
                                     <?php
-                                    $sourceUser = \App\Models\User::find($transaction->source);
+                                    $sourceUser = \App\Models\User::where('email', $transaction->source)
+                                        ->orWhere('login', $transaction->source)
+                                        ->orWhere('id', $transaction->source)
+                                        ->first();
                                     ?>
                                     <span>{{ null !== $sourceUser ? $sourceUser->email : '..' }}</span>
                                 </div>
