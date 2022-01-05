@@ -60,23 +60,20 @@ class TelegramController extends Controller
      */
     public function runAuth($chat_id, $text)
     {
-        if (strlen($text) > 10) {
+        list($email, $password) = explode('::', $text);
 
-            list($email, $password) = explode('::', $text);
-
-            if (!$this->attemptLogin(new Request(['email' => $email, 'password' => $password]))) {
-                $this->telegramService->sendMessage($chat_id, 'Неверное имя пользователя или пароль.');
-            }
-
-            $user = $this->guard()->user();
-
-            TelegramChat::create([
-                'user_id' => $user->id,
-                'chat_id' => $chat_id,
-                'active' => true
-            ]);
-
-            $this->telegramService->sendMessage($chat_id, ' Авторизация прошла успешно! Ожидайте уведомления из системы...');
+        if (!$this->attemptLogin(new Request(['email' => $email, 'password' => $password]))) {
+            $this->telegramService->sendMessage($chat_id, 'Неверное имя пользователя или пароль.');
         }
+
+        $user = $this->guard()->user();
+
+        TelegramChat::create([
+            'user_id' => $user->id,
+            'chat_id' => $chat_id,
+            'active' => true
+        ]);
+
+        $this->telegramService->sendMessage($chat_id, ' Авторизация прошла успешно! Ожидайте уведомления из системы...');
     }
 }
