@@ -42,7 +42,7 @@ class CleanPartnerTransactionsCommand extends Command
     {
         DB::table('transactions')
             ->where('type_id', TransactionType::getByName('partner')->id)
-            ->where('created_at', '<=', now()->subDays(7))
+            ->where('created_at', '<=', now()->subDays(3))
             ->delete();
 
         return Command::SUCCESS;
