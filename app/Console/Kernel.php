@@ -8,6 +8,7 @@ namespace App\Console;
 
 use App\Console\Commands\CalculateSalaryCommand;
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
+use App\Console\Commands\CleanPartnerTransactionsCommand;
 use App\Console\Commands\ClearOldData;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\CryptoCurrencyRateLog;
@@ -53,6 +54,7 @@ class Kernel extends ConsoleKernel
         TransactionTeamleaderCommand::class,
         UpdateZeroAmountTransactionsCommand::class,
         TransactionDontCountCommand::class,
+        CleanPartnerTransactionsCommand::class,
     ];
 
     /**
@@ -79,6 +81,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
         $schedule->command('update:zero_transactions')->hourly()->withoutOverlapping();
         $schedule->command('transactions:dont_count')->everyMinute()->withoutOverlapping();
+        $schedule->command('clean:partner_transactions')->everyMinute()->withoutOverlapping();
 
         $schedule->command('data:clear')->daily()->withoutOverlapping();
     }
