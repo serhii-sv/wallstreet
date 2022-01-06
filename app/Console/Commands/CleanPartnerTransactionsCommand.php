@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class CleanPartnerTransactionsCommand extends Command
 {
@@ -39,16 +40,10 @@ class CleanPartnerTransactionsCommand extends Command
      */
     public function handle()
     {
-        /** @var Transaction $transactions */
-        $transactions = Transaction::where('created_at', '<=', now()->subDays(7))
+        DB::table('transactions')
             ->where('type_id', TransactionType::getByName('partner')->id)
-            ->get();
-
-        /** @var Transaction $transaction */
-        foreach ($transactions as $transaction) {
-            $this->info('transaction '.$transaction->id.' deleted');
-            $transaction->delete();
-        }
+            ->where('created_at', '<=', now()->subDays(7))
+            ->delete();
 
         return Command::SUCCESS;
     }
