@@ -356,7 +356,7 @@ class Deposit extends Model
         }
 
         // проверяем статус депозита и оплату
-        if ($this->condition == 'create' && $this->investTransaction()->approved) {
+        if ($this->condition == 'create') {
             $this->update(['condition' => 'onwork']);
         }
 
