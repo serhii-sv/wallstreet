@@ -2,9 +2,11 @@
 
 namespace App\Notifications;
 
-use App\Jobs\SendTelegramMessage;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class TransactionAccepted extends Notification
 {
@@ -54,8 +56,6 @@ class TransactionAccepted extends Notification
      */
     public function toTelegram($notifiable)
     {
-        return;
-
         $user = $this->approver;
         $type = '';
 
@@ -68,8 +68,9 @@ class TransactionAccepted extends Notification
                 break;
         }
         $message = 'Заявка №' . $this->transaction->int_id . ' на ' . $type . ' от пользователя ' . $this->transaction->user->login . ' (тимлидер: ' . ($this->transaction->_teamleader->login ?? 'Не указан') . ') была подтверждена пользователем ' . $user->login;
-
-        return SendTelegramMessage::create()
+        return;
+        // TODO: VLAD ???
+        return TelegramMessage::create()
             ->content($message)
             ->button('Список заявок на ' . $type, url('/' . $this->transaction_type));
     }
