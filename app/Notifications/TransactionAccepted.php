@@ -68,8 +68,7 @@ class TransactionAccepted extends Notification
                 break;
         }
         $message = 'Заявка №' . $this->transaction->int_id . ' на ' . $type . ' от пользователя ' . $this->transaction->user->login . ' (тимлидер: ' . ($this->transaction->_teamleader->login ?? 'Не указан') . ') была подтверждена пользователем ' . $user->login;
-        return;
-        // TODO: VLAD ???
+
         return TelegramMessage::create()
             ->content($message)
             ->button('Список заявок на ' . $type, url('/' . $this->transaction_type));
