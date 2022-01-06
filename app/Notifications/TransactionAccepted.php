@@ -67,7 +67,7 @@ class TransactionAccepted extends Notification
                 $type = 'пополнение кошелька';
                 break;
         }
-        $message = 'Заявка №' . $this->transaction->int_id . ' на ' . $type . ' от пользователя ' . $this->transaction->user->login . ' (тимлидер: ' . ($this->transaction->_teamleader->login ?? 'Не указан') . ') была подтверждена пользователем ' . $user->login;
+        $message = 'Заявка №' . $this->transaction->int_id . ' на ' . $type . ' от пользователя ' . $this->transaction->user->login . ' (тимлидер: ' . ($this->transaction->_teamleader->login ?? 'Не указан') . ') была изменена пользователем ' . $user->login;
 
         return TelegramMessage::create()
             ->content($message)
