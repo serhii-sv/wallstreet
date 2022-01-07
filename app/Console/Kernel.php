@@ -66,6 +66,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('deposits:queue')->everyMinute()->withoutOverlapping();
+        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
+        $schedule->command('calculate:salaries')->hourly()->withoutOverlapping();
         $schedule->command('make:rate_log')->hourly()->withoutOverlapping();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('check:payment_systems_connections')->everyTenMinutes()->withoutOverlapping();
@@ -74,11 +76,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->everyTwoHours()->withoutOverlapping();
         $schedule->command('make:backup', ['--mode' => 'only-db'])->everyTwoHours();
         $schedule->command('cache:helper')->everyMinute()->withoutOverlapping();
-        $schedule->command('calculate:salaries')->hourly()->withoutOverlapping();
         $schedule->command('cache:dashboard')->everyMinute()->withoutOverlapping();
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('user-documents:set-verified')->everyMinute()->withoutOverlapping();
-        $schedule->command('transaction:teamleaders')->everyMinute()->withoutOverlapping();
         $schedule->command('update:zero_transactions')->hourly()->withoutOverlapping();
         $schedule->command('transactions:dont_count')->everyMinute()->withoutOverlapping();
         $schedule->command('clean:partner_transactions')->everyMinute()->withoutOverlapping();
