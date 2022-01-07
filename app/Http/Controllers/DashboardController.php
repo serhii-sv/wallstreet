@@ -63,7 +63,7 @@ class DashboardController extends Controller
             return Transaction::where('approved', 1)
                 ->where('dont_stat', false)
                 ->where('is_real', 1)
-                ->whereBetween('updated_at', [
+                ->whereBetween('created_at', [
                 $prev_weeks_period['start'],
                 $prev_weeks_period['end'],
             ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
@@ -72,7 +72,7 @@ class DashboardController extends Controller
             return Transaction::where('approved', 1)
                 ->where('dont_stat', false)
                 ->where('is_real', 1)
-                ->whereBetween('updated_at', [
+                ->whereBetween('created_at', [
                 $prev_weeks_period['start'],
                 $prev_weeks_period['end'],
             ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
@@ -83,7 +83,7 @@ class DashboardController extends Controller
                 return Transaction::where('approved', 1)
                     ->where('dont_stat', false)
                     ->where('is_real', 1)
-                    ->whereBetween('updated_at', [
+                    ->whereBetween('created_at', [
                     $week['start'],
                     $week['end'],
                 ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
@@ -92,7 +92,7 @@ class DashboardController extends Controller
                 return Transaction::where('approved', 1)
                     ->where('dont_stat', false)
                     ->where('is_real', 1)
-                    ->whereBetween('updated_at', [
+                    ->whereBetween('created_at', [
                     $week['start'],
                     $week['end'],
                 ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
@@ -116,13 +116,13 @@ class DashboardController extends Controller
                 return Transaction::where('approved', 1)
                     ->where('dont_stat', false)
                     ->where('is_real', 1)
-                    ->whereBetween('updated_at', [
+                    ->whereBetween('created_at', [
                     $month['start'],
                     $month['end'],
                 ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
             });
             $month_period_withdraw_transactions[$month['start']->format('d M') . '-' . $month['end']->format('d M')] = cache()->remember('dshb.main_currency_amount_withdraw_month_' . $month['start'], now()->addHours(3), function () use ($month, $id_withdraw) {
-                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('updated_at', [
+                return Transaction::where('approved', 1)->where('is_real', 1)->whereBetween('created_at', [
                     $month['start'],
                     $month['end'],
                 ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
@@ -133,7 +133,7 @@ class DashboardController extends Controller
             return Transaction::where('approved', 1)
                 ->where('dont_stat', false)
                 ->where('is_real', 1)
-                ->whereBetween('updated_at', [
+                ->whereBetween('created_at', [
                 $prev_month_period['start'],
                 $prev_month_period['end'],
             ])->where('type_id', '=', $id_enter)->sum('main_currency_amount');
@@ -142,7 +142,7 @@ class DashboardController extends Controller
             return Transaction::where('approved', 1)
                 ->where('dont_stat', false)
                 ->where('is_real', 1)
-                ->whereBetween('updated_at', [
+                ->whereBetween('created_at', [
                 $prev_month_period['start'],
                 $prev_month_period['end'],
             ])->where('type_id', '=', $id_withdraw)->sum('main_currency_amount');
