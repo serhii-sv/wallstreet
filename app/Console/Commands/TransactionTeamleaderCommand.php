@@ -54,7 +54,7 @@ class TransactionTeamleaderCommand extends Command
 
         $processed = 0;
 
-        foreach ($transactions->chunk(100) as $chunk) {
+        foreach ($transactions->chunk(5000) as $chunk) {
 
             $queries = '';
 
@@ -84,6 +84,7 @@ class TransactionTeamleaderCommand extends Command
             }
 
             if ($queries != '') {
+                die($queries);
                 DB::unprepared($queries);
             }
         }
