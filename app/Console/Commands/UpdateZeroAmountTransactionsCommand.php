@@ -27,7 +27,7 @@ class UpdateZeroAmountTransactionsCommand extends Command
      * @throws \GuzzleHttp\Exception\GuzzleException|\Exception
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         /** @var TransactionType $transactions */
         $transactions = Transaction::where('main_currency_amount', 0)
             ->where('amount', '>', 0)

@@ -39,7 +39,7 @@ class RateLogGenerate extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $this->comment('Crypto currency rate demo data generation started');
         $start = Carbon::now();
         $faker = Factory::create();

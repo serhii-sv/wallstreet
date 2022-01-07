@@ -39,7 +39,7 @@ class TransactionDontCountCommand extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         /** @var Transaction $transactions */
         $transactions = Transaction::where('dont_stat_checked', false)
             ->orderBy('amount', 'desc')

@@ -16,14 +16,14 @@ class SetRateNonFixedCurrency extends Command
      * @var string
      */
     protected $signature = 'update:non_fixed_currency_rates';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Command description';
-    
+
     /**
      * Create a new command instance.
      *
@@ -32,16 +32,16 @@ class SetRateNonFixedCurrency extends Command
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle() {
+    public function handle() {\Log::critical(self::class);
         $exchange_rates = ExchangeRate::all();
         if ($exchange_rates->count() > 0) {
-            
+
             foreach ($exchange_rates as $exchange_rate) {
                 $currency_rate = Setting::find($exchange_rate->rate_id);
                 $fixed_rate = $exchange_rate->rate;
@@ -56,7 +56,7 @@ class SetRateNonFixedCurrency extends Command
                     } else {
                         $rate = $exchange_rate->rate;
                     }
-                    
+
                     $rate_log_data = [
                         'rate_id' => $currency_rate->id,
                         'old_rate' => $currency_rate->s_value,
@@ -93,7 +93,7 @@ class SetRateNonFixedCurrency extends Command
                     }
                 }
             }
-            
+
         }
     }
 }

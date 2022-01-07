@@ -37,7 +37,7 @@ class SetTelegramWebhook extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $result = TelegramService::setWebhook();
         $this->info($result['description']  ?? 'Ошибка установки вебхука');
         return Command::SUCCESS;

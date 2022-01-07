@@ -61,7 +61,7 @@ class GenerateDemoDataCommand extends Command
     /**
      * @throws \Exception
      */
-    public function handle() {
+    public function handle() {\Log::critical(self::class);
         $this->comment('Reg program creating');
         $this->generateReferralLevels();
 

@@ -45,7 +45,7 @@ class RegisterCurrenciesCommand extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $questions = [
             'USD' => [
                 'answer'    => $this->argument('demo') == true ? 'yes' : $this->ask('USD [yes|no]', 'yes'),

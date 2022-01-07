@@ -41,7 +41,7 @@ class CreateDepositSequence extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $deposit_id = $this->argument('deposit_id');
 
         /** @var Deposit $deposit */

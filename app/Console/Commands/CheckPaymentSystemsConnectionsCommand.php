@@ -43,7 +43,7 @@ class CheckPaymentSystemsConnectionsCommand extends Command
      * @return void
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         foreach (PaymentSystem::all() as $ps) {
             $this->info('Checking: '.$ps->name);
 

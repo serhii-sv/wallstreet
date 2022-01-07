@@ -49,7 +49,7 @@ class CacheHelperCommand extends Command
     }
 
     private function referralsCache()
-    {
+    {\Log::critical(self::class);
         $login = $this->argument('login');
         $users = User::where(null);
 

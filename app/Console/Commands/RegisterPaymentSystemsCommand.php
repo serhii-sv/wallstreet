@@ -46,7 +46,7 @@ class RegisterPaymentSystemsCommand extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $questions = [
             'perfectmoney' => [
                 'answer' => $this->argument('demo') == true ? 'yes' : $this->ask('Perfect Money [yes|no]', 'yes'),

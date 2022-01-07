@@ -48,7 +48,7 @@ class CreateRootCommand extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $this->line('------');
 
         $faker = Factory::create();

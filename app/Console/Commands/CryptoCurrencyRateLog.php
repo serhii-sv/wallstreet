@@ -38,7 +38,7 @@ class CryptoCurrencyRateLog extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         $rates = Setting::where('s_key', 'like', '%_to_%')->get();
 
         foreach ($rates as $rate) {

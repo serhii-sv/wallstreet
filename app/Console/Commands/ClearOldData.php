@@ -44,7 +44,7 @@ class ClearOldData extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         ActivityLog::where('created_at', '<=', now()->subMonths())->delete();
         UserAuthLog::where('created_at', '<=', now()->subMonths())->delete();
         UserGeoip::where('created_at', '<=', now()->subMonths())->delete();

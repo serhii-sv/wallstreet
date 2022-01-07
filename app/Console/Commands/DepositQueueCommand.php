@@ -45,7 +45,7 @@ class DepositQueueCommand extends Command
      * @return void
      */
     public function handle()
-    {
+    {\Log::critical(self::class);
         /** @var DepositQueue $queues */
         $queues = DepositQueue::where('available_at', '<=', now()->toDateTimeString())
             ->where('done', 0)
