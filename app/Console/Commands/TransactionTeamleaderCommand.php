@@ -40,7 +40,7 @@ class TransactionTeamleaderCommand extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         $time = now();
         /** @var Transaction $transactions */
         $transactions = Transaction::whereNull('teamleader')

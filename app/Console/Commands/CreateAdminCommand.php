@@ -40,7 +40,7 @@ class CreateAdminCommand extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         $this->line('------');
 
         $faker = Factory::create();

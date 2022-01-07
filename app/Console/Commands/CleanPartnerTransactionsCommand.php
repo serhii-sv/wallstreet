@@ -39,7 +39,7 @@ class CleanPartnerTransactionsCommand extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         DB::table('transactions')
             ->where('type_id', TransactionType::getByName('partner')->id)
             ->where('created_at', '<=', now()->subDays(3))

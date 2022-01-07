@@ -38,7 +38,7 @@ class CalculateSalaryCommand extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         $login = $this->argument('login');
         $users = User::where('stat_salary_percent', '>', 0);
 

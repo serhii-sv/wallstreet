@@ -41,7 +41,7 @@ class UpdateCurrencyRatesCommand extends Command
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException|\Exception
      */
-    public function handle() {\Log::critical(self::class);
+    public function handle() {
         // FIAT: USD, EUR, RUR
         // CRYPTO: BTC, LTC, ETH
 

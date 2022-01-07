@@ -38,7 +38,7 @@ class Backup extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         switch ($this->option('mode')) {
             case 'only-files':
                 Artisan::call('backup:run', ['--only-files' => true]);

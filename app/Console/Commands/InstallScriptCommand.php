@@ -44,7 +44,7 @@ class InstallScriptCommand extends Command
      * @return mixed
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         $this->info('Clear cache:');
         $this->call('cache:clear');
 

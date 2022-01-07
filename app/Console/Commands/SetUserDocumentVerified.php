@@ -38,7 +38,7 @@ class SetUserDocumentVerified extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         UserVerification::where('created_at', '<=', Carbon::now()->subHours(5))
             ->where('accepted', 0)
             ->update([

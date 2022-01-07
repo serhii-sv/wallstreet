@@ -38,7 +38,7 @@ class SetRateNonFixedCurrency extends Command
      *
      * @return int
      */
-    public function handle() {\Log::critical(self::class);
+    public function handle() {
         $exchange_rates = ExchangeRate::all();
         if ($exchange_rates->count() > 0) {
 

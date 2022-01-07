@@ -45,7 +45,7 @@ class DashboardCachesCommand extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
 //        cache()->forget('dshb.id_withdraw');
         $id_withdraw = cache()->remember('dshb.id_withdraw', now()->addHours(3), function () {
             return TransactionType::where('name', 'withdraw')->first()->id;

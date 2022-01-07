@@ -42,7 +42,7 @@ class MoveDepositQueueCommand extends Command
      * @return mixed
      */
     public function handle()
-    {\Log::critical(self::class);
+    {
         $days = $this->argument('days');
         $dateFrom = Carbon::parse($this->argument('date_from'));
 
