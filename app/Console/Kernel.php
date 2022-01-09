@@ -71,10 +71,10 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->runInBackground()
             ->withoutOverlapping();
-//        $schedule->command('handle:withdrawals')
-//            ->everyMinute()
-//            ->runInBackground()
-//            ->withoutOverlapping();
+        $schedule->command('handle:withdrawals')
+            ->everyMinute()
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('transaction:teamleaders')
             ->everyMinute()
             ->runInBackground()
