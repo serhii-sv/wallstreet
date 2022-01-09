@@ -16,6 +16,7 @@ use App\Console\Commands\DashboardCachesCommand;
 use App\Console\Commands\DepositQueueCommand;
 use App\Console\Commands\GenerateDemoDataCommand;
 use App\Console\Commands\CreateRootCommand;
+use App\Console\Commands\HandleWithdrawalCommand;
 use App\Console\Commands\InstallScriptCommand;
 use App\Console\Commands\MoveDepositQueueCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
@@ -55,6 +56,7 @@ class Kernel extends ConsoleKernel
         UpdateZeroAmountTransactionsCommand::class,
         TransactionDontCountCommand::class,
         CleanPartnerTransactionsCommand::class,
+        HandleWithdrawalCommand::class,
     ];
 
     /**
@@ -69,6 +71,10 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->runInBackground()
             ->withoutOverlapping();
+//        $schedule->command('handle:withdrawals')
+//            ->everyMinute()
+//            ->runInBackground()
+//            ->withoutOverlapping();
         $schedule->command('transaction:teamleaders')
             ->everyMinute()
             ->runInBackground()

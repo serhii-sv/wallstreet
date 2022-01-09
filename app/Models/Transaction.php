@@ -38,6 +38,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                              $upliner
  * @property boolean                             $dont_stat
  * @property boolean                             $dont_stat_checked
+ * @property string                              $withdraw_action
+ * @property boolean                             $withdraw_waiting
+ * @property boolean                             $withdraw_finish
+ * @property string                              $withdraw_reason
  * @property-read \App\Models\Currency           $currency
  * @property-read \App\Models\Deposit|null       $deposit
  * @property-read \App\Models\PaymentSystem|null $paymentSystem
@@ -102,12 +106,17 @@ class Transaction extends Model
         'upliner',
         'dont_stat',
         'dont_stat_checked',
+        'withdraw_action',
+        'withdraw_waiting',
+        'withdraw_finish',
     ];
 
     protected $casts = [
         'is_real'           => 'boolean',
         'dont_stat'         => 'boolean',
         'dont_stat_checked' => 'boolean',
+        'withdraw_waiting'  => 'boolean',
+        'withdraw_finish'   => 'boolean',
     ];
 
     public const TRANSACTION_APPROVED = 1;
