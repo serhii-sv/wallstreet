@@ -17,7 +17,7 @@ class TransactionQueue extends Migration
             $table->string('withdraw_action')->nullable();
             $table->boolean('withdraw_waiting')->default(false);
             $table->boolean('withdraw_finish')->default(false);
-            $table->boolean('withdraw_reason')->default(false);
+            $table->string('withdraw_reason')->default(false);
         });
     }
 
