@@ -33,6 +33,7 @@ class WithdrawalRequestsController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse
      */
     public function index(Request $request) {
+        die('приходите через пару часов');
         if (request()->ajax()) {
             $transactionWithdrawType = TransactionType::getByName('withdraw');
 
