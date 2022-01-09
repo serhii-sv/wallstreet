@@ -43,6 +43,7 @@ class HandleWithdrawalCommand extends Command
     {
         /** @var Transaction $transactions */
         $transactions = Transaction::where('withdraw_waiting', true)
+            ->where('withdraw_finish', false)
             ->orderBy('created_at')
             ->get();
 
