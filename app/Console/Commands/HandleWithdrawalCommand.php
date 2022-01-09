@@ -76,7 +76,10 @@ class HandleWithdrawalCommand extends Command
         /** @var Wallet $wallet */
         $wallet = $transaction->wallet()->first();
         $wallet->returnFromRejectedWithdrawal($transaction);
-        $transaction->update(['approved' => Transaction::TRANSACTION_REJECTED]);
+        $transaction->update([
+            'approved' => Transaction::TRANSACTION_REJECTED,
+            'withdraw_finish' => true,
+        ]);
     }
 
     /**
