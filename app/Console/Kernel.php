@@ -120,10 +120,10 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->runInBackground()
             ->withoutOverlapping();
-        $schedule->command('user-documents:set-verified')
-            ->everyMinute()
-            ->runInBackground()
-            ->withoutOverlapping();
+//        $schedule->command('user-documents:set-verified')
+//            ->everyMinute()
+//            ->runInBackground()
+//            ->withoutOverlapping();
         $schedule->command('update:zero_transactions')
             ->hourly()
             ->runInBackground()
