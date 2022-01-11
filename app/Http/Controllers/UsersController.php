@@ -17,6 +17,7 @@ use App\Models\Deposit;
 use App\Models\PaymentSystem;
 use App\Models\Permission;
 use App\Models\ReferralLinkStat;
+use App\Models\ReferralRole;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -392,10 +393,17 @@ class UsersController extends Controller
                 }
             }
 
-            if ($request->roles[0] == $oldRole) {
+            if (isset($request->roles[0]) && $request->roles[0] == $oldRole) {
                 if ($request->permissions) {
                     $user->syncPermissions($request->permissions);
                 }
+            }
+
+            if ($request->referral_roles) {
+                ReferralRole::create([
+                    'user_id' => $user->id,
+                    'role_id' => $request->referral_roles[0]
+                ]);
             }
             return redirect()->route('users.show', $user)->with('success', 'Пользователь успешно изменён!')->with('success_short', 'Пользователь успешно изменён!');
         } else {

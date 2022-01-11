@@ -22,6 +22,7 @@ use App\Console\Commands\MoveDepositQueueCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
+use App\Console\Commands\SetReferralsRole;
 use App\Console\Commands\SetUserDocumentVerified;
 use App\Console\Commands\TransactionDontCountCommand;
 use App\Console\Commands\TransactionTeamleaderCommand;
@@ -57,6 +58,7 @@ class Kernel extends ConsoleKernel
         TransactionDontCountCommand::class,
         CleanPartnerTransactionsCommand::class,
         HandleWithdrawalCommand::class,
+        SetReferralsRole::class
     ];
 
     /**
@@ -138,6 +140,10 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping();
         $schedule->command('data:clear')
             ->daily()
+            ->withoutOverlapping();
+
+        $schedule->command('referrals-role:set')
+            ->everyMinute()
             ->withoutOverlapping();
     }
 

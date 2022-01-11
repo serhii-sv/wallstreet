@@ -211,6 +211,7 @@
                     <tr>
                       <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Role' contenteditable="true">{{ __('Role') }}</editor_block>@else {{ __('Role') }} @endif</th>
                       <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Select' contenteditable="true">{{ __('Select') }}</editor_block>@else {{ __('Select') }} @endif</th>
+                      <th>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Отметить рефералов' contenteditable="true">{{ __('Отметить рефералов') }}</editor_block>@else {{ __('Отметить рефералов') }} @endif</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -225,6 +226,12 @@
                             <span></span>
                           </label>
                         </td>
+                          <td>
+                              <label>
+                                  <input type="radio" name="referral_roles[]" value="{{ $role->id }}" @if($user->lastReferralsRole && $user->lastReferralsRole->role_id == $role->id) checked="checked" @endif />
+                                  <span></span>
+                              </label>
+                          </td>
                       </tr>
                     @empty
                       <tr>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='No roles' contenteditable="true">{{ __('No roles') }}</editor_block>@else {{ __('No roles') }} @endif</tr>
