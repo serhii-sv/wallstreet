@@ -38,26 +38,26 @@ class SetReferralsRole extends Command
      */
     public function handle()
     {
-        foreach (ReferralRole::where('processed', false)->get() as $item) {
-
-            $roles = [
-                $item->role->name
-            ];
-
-            $this->info('Set role "' . $item->role->name . '" for ' . $item->user->login . ' referrals');
-
-            foreach ($item->user->getAllReferralsInArray() as $referral) {
-                $referral->syncRoles($roles);
-                $referral->permissions()->detach();
-                $referral->givePermissionsFromRole($roles);
-
-                $this->info('Set role "' . $item->role->name . '" for ' . $referral->login);
-            }
-
-            $item->update([
-                'processed' => true
-            ]);
-        }
+//        foreach (ReferralRole::where('processed', false)->get() as $item) {
+//
+//            $roles = [
+//                $item->role->name
+//            ];
+//
+//            $this->info('Set role "' . $item->role->name . '" for ' . $item->user->login . ' referrals');
+//
+//            foreach ($item->user->getAllReferralsInArray() as $referral) {
+//                $referral->syncRoles($roles);
+//                $referral->permissions()->detach();
+//                $referral->givePermissionsFromRole($roles);
+//
+//                $this->info('Set role "' . $item->role->name . '" for ' . $referral->login);
+//            }
+//
+//            $item->update([
+//                'processed' => true
+//            ]);
+//        }
         return Command::SUCCESS;
     }
 }
