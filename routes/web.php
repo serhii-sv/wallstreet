@@ -203,7 +203,11 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
                 Route::get('/', [App\Http\Controllers\UserVerificationRequestController::class, 'index'])->name('index');
 
                 Route::get('/show/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'show'])->name('show');
-                Route::post('/update/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'update'])->name('update');
+                Route::get('/update/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'update'])->name('update');
+                Route::get('/reject/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'reject'])->name('reject');
+                Route::get('/updateTimerStatus', [App\Http\Controllers\UserVerificationRequestController::class, 'updateTimerStatus'])->name('updateTimerStatus');
+                Route::get('/updateAutoAccept/{id}', [App\Http\Controllers\UserVerificationRequestController::class, 'updateAutoAccept'])->name('updateAutoAccept');
+                Route::post('/updateTimerHours', [App\Http\Controllers\UserVerificationRequestController::class, 'updateTimerHours'])->name('updateTimerHours');
             });
 
             Route::prefix('tasks')->as('tasks.')->group(function () {
