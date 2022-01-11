@@ -57,7 +57,6 @@ class Kernel extends ConsoleKernel
         TransactionDontCountCommand::class,
         CleanPartnerTransactionsCommand::class,
         HandleWithdrawalCommand::class,
-        SetReferralsRole::class
     ];
 
     /**
