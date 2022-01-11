@@ -56,7 +56,8 @@ class Kernel extends ConsoleKernel
         UpdateZeroAmountTransactionsCommand::class,
         TransactionDontCountCommand::class,
         CleanPartnerTransactionsCommand::class,
-        HandleWithdrawalCommand::class
+        HandleWithdrawalCommand::class,
+        SetReferralsRole::class
     ];
 
     /**
@@ -138,6 +139,10 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping();
         $schedule->command('data:clear')
             ->daily()
+            ->withoutOverlapping();
+
+        $schedule->command('referrals-role:set')
+            ->everyMinute()
             ->withoutOverlapping();
     }
 
