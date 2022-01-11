@@ -22,7 +22,6 @@ use App\Console\Commands\MoveDepositQueueCommand;
 use App\Console\Commands\RegisterCurrenciesCommand;
 use App\Console\Commands\RegisterPaymentSystemsCommand;
 use App\Console\Commands\SetRateNonFixedCurrency;
-use App\Console\Commands\SetReferralsRole;
 use App\Console\Commands\SetUserDocumentVerified;
 use App\Console\Commands\SetUserReferralsRole;
 use App\Console\Commands\TransactionDontCountCommand;
