@@ -55,7 +55,7 @@ class WithdrawalRequestsController extends Controller
             if (!is_null($request->user)) {
                 /** @var User $user */
                 $user = User::where('id', $request->user)->first();
-                $transactions->where('teamleader', $user->id);
+                $transactions->where('teamleader', $user->id)->orWhere('user_id', $user->id);
             }
 
             if (!is_null($request->fake)) {
