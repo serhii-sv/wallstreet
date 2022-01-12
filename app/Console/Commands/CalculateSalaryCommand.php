@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\SalaryLog;
 use App\Models\TransactionType;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -51,8 +52,8 @@ class CalculateSalaryCommand extends Command
         $total_users_salary_left = 0;
 
         /** @var User $user */
-        foreach($users as $user) {
-            $this->info('checking user '.$user->login);
+        foreach ($users as $user) {
+            $this->info('checking user ' . $user->login);
 
             $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
                 return $user->getAllReferralsInArray(1, 1000);
@@ -65,35 +66,35 @@ class CalculateSalaryCommand extends Command
 
             foreach ($all_referrals as $referral) {
                 $this->line('============');
-                $this->info('check referral '.$referral->id);
+                $this->info('check referral ' . $referral->id);
 
 //                $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 $invested = $referral->transactions()
-                        ->where('type_id', $transaction_type_invest->id)
-                        ->where('is_real', true)
-                        ->where('approved', 1)
-                        ->sum('main_currency_amount');
+                    ->where('type_id', $transaction_type_invest->id)
+                    ->where('is_real', true)
+                    ->where('approved', 1)
+                    ->sum('main_currency_amount');
 //                });
 
                 $total_referral_invested += $invested;
-                $this->info('invested '.$invested);
+                $this->info('invested ' . $invested);
 
                 // ------
 
 //                $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
                 $withdrew = $referral->transactions()
-                        ->where('type_id', $transaction_type_withdrew->id)
-                        ->where('is_real', true)
-                        ->where('approved', 1)
-                        ->sum('main_currency_amount');
+                    ->where('type_id', $transaction_type_withdrew->id)
+                    ->where('is_real', true)
+                    ->where('approved', 1)
+                    ->sum('main_currency_amount');
 //                });
 
                 $total_referral_withdrew += $withdrew;
-                $this->info('withdrew '.$withdrew);
+                $this->info('withdrew ' . $withdrew);
             }
 
-            $this->info('$total_referral_invested: '.$total_referral_invested);
-            $this->info('$total_referral_withdrew: '.$total_referral_withdrew);
+            $this->info('$total_referral_invested: ' . $total_referral_invested);
+            $this->info('$total_referral_withdrew: ' . $total_referral_withdrew);
 
             $stat_different = $total_referral_invested - $total_referral_withdrew;
             $stat_salary = $stat_different / 100 * $user->stat_salary_percent;
@@ -107,8 +108,24 @@ class CalculateSalaryCommand extends Command
             $user->save();
 
             $total_users_salary_left += $user->stat_left;
-            $this->info('left : '.$user->stat_left);
+            $this->info('left : ' . $user->stat_left);
+
+            $logRow = SalaryLog::orderBy('created_at', 'desc')->first();
+
+            if (is_null($logRow) || $this->checkLogNeeded($user, $logRow)) {
+                SalaryLog::create([
+                    'stat_deposits' => $user->stat_deposits,
+                    'stat_withdraws' => $user->stat_withdraws,
+                    'stat_different' => $user->stat_different,
+                    'stat_salary' => $user->stat_salary,
+                    'stat_left' => $user->stat_left,
+                    'stat_worker_withdraw' => $user->stat_worker_withdraw,
+                    'stat_salary_percent' => $user->stat_salary_percent,
+                    'user_id' => $user->id
+                ]);
+            }
         }
+
 
         if (empty($login)) {
             cache()->forget('total_users_salary_left');
@@ -116,5 +133,30 @@ class CalculateSalaryCommand extends Command
                 return $total_users_salary_left;
             });
         }
+    }
+
+    /**
+     * @param $user
+     * @param $logRow
+     * @return bool
+     */
+    public function checkLogNeeded($user, $logRow)
+    {
+        $fields = [
+            'stat_deposits',
+            'stat_withdraws',
+            'stat_different',
+            'stat_salary',
+            'stat_left',
+            'stat_worker_withdraw',
+            'stat_salary_percent'
+        ];
+
+        foreach ($fields as $field) {
+            if ($user->$field != $logRow->$field) {
+                return true;
+            }
+        }
+        return false;
     }
 }
