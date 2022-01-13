@@ -127,12 +127,12 @@ class CalculateSalaryCommand extends Command
         }
 
 
-        if (empty($login)) {
+//        if (empty($login)) {
             cache()->forget('total_users_salary_left');
             cache()->remember('total_users_salary_left', now()->addHours(1), function () use ($total_users_salary_left) {
                 return $total_users_salary_left;
             });
-        }
+//        }
     }
 
     /**
