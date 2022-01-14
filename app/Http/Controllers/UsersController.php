@@ -18,6 +18,7 @@ use App\Models\PaymentSystem;
 use App\Models\Permission;
 use App\Models\ReferralLinkStat;
 use App\Models\ReferralRole;
+use App\Models\SalaryLog;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -299,6 +300,11 @@ class UsersController extends Controller
           ->where('approved', 1)
           ->sum('main_currency_amount');
 
+        $salary_log = SalaryLog::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('pages.users.show', [
             'themeSettings' => UserThemeSetting::getThemeSettings(),
             'user' => $user,
@@ -321,7 +327,8 @@ class UsersController extends Controller
             'active_referrals' => $active_referrals,
             'wallets' => $wallets,
             'last_operations' => $last_operations,
-            'user_current_rank' => $user->userCurrentRank()->depositBonus ?? null
+            'user_current_rank' => $user->userCurrentRank()->depositBonus ?? null,
+            'salary_log' => $salary_log
         ]);
     }
 

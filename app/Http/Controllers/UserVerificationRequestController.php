@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\UserVerification;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UserVerificationRequestController extends Controller
     public function index(Request $request)
     {
         if (request()->ajax()) {
-            $verificationRequests = UserVerification::where('accepted', false)
+            $verificationRequests = UserVerification::where('accepted', false)->where('rejected', false)
                 ->orderBy($request->columns[$request->order[0]['column']]['data'], $request->order[0]['dir']);
 
             $recordsFiltered = $verificationRequests->count();
@@ -25,6 +26,8 @@ class UserVerificationRequestController extends Controller
                 $data[] = [
                     'empty' => '',
                     'email' => $verificationRequest->user->email,
+                    'timer_buttons' => view('pages.user-verification-requests.partials.timer_buttons', compact('verificationRequest'))->render(),
+                    'timer_left' => view('pages.user-verification-requests.partials.timer_left', compact('verificationRequest'))->render(),
                     'created_at' => $verificationRequest->created_at->format('d-m-Y H:i'),
                     'actions' => view('pages.user-verification-requests.partials.actions', compact('verificationRequest'))->render()
                 ];
@@ -72,5 +75,75 @@ class UserVerificationRequestController extends Controller
         }
 
         return back()->with('error_short', 'Заявка не подтверждена');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function reject($id)
+    {
+        $verificationRequest = UserVerification::findOrFail($id);
+
+        $request_updated = $verificationRequest->update([
+            'rejected' => true,
+        ]);
+
+        if ($request_updated) {
+            return redirect(route('verification-requests.index'))->with('success_short', 'Заявка отклонена');
+        }
+
+        return back()->with('error_short', 'Заявка не отклонена');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateTimerStatus(Request $request)
+    {
+        try {
+            Setting::setValue('autoaccept_documents_timer_enablde', $request->timer);
+            return back()->with('success_short', $request->timer == 'on' ? 'Таймер включен' : 'Таймер отключен');
+        } catch (\Exception $exception) {
+            return back()->with('error_short', 'Действие невозможно');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateTimerHours(Request $request)
+    {
+        try {
+            Setting::setValue('autoaccept_documents_timer_hours', $request->hours);
+            return response()->json([
+                'success' => true,
+                'message' => 'Количество часов обновлено до: ' . $request->hours
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Действие невозможно'
+            ]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAutoAccept(Request $request, $id)
+    {
+        $verificationRequest = UserVerification::findOrFail($id);
+
+        if ($verificationRequest->update([
+            'autoaccept' => $request->timer == 'on'
+        ])) {
+            return back()->with('success_short', $request->timer == 'on' ? 'Таймер включен' : 'Таймер отключен');
+        }
+        return back()->with('error_short', 'Действие невозможно');
     }
 }

@@ -40,11 +40,15 @@ class SetUserDocumentVerified extends Command
     public function handle()
     {
         die();
-        UserVerification::where('created_at', '<=', Carbon::now()->subHours(5))
-            ->where('accepted', 0)
-            ->update([
-                'accepted' => 1
-            ]);
+        if (Setting::getValue('autoaccept_documents_timer_enablde', 'off', true) == 'on') {
+            UserVerification::where('created_at', '<=', Carbon::now()->subHours(Setting::getValue('autoaccept_documents_timer_hours', 5, true)))
+                ->where('accepted', 0)
+                ->where('autoaccept', 1)
+                ->update([
+                    'accepted' => 1
+                ]);
+        }
+
         return Command::SUCCESS;
     }
 }

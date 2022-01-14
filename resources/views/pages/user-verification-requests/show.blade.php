@@ -26,7 +26,7 @@
                             @include('panels.inform')
                             <div class="card">
                                 <div class="card-content">
-                                    <form class="formValidate" action="{{ route('verification-requests.update', $verificationRequest) }}" id="formValidate" method="post">
+                                    <form class="formValidate" action="{{ route('verification-requests.update', $verificationRequest) }}" id="formValidate" method="get">
                                         @csrf
                                         <div class="row">
                                             <div class="col s12">
@@ -169,6 +169,7 @@
                                         <div class="row">
                                             <div class="col s12">
                                                 <button class="btn waves-effect waves-light right submit" type="submit">Подтвердить</button>
+                                                <a href="{{ route('verification-requests.reject', $verificationRequest) }}" class="btn waves-effect waves-light right grey mr-2" type="submit">Отменить</a>
                                             </div>
                                         </div>
                                     </form>

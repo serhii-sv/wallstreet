@@ -1,4 +1,9 @@
 <!-- START RIGHT SIDEBAR NAV -->
+<style>
+    #slide-out-right.sidenav #messages {
+        height: unset;
+    }
+</style>
 <aside id="right-sidebar-nav">
   <div id="slide-out-right" class="slide-out-right-sidenav sidenav rightside-navigation">
     <div class="row">
@@ -231,7 +236,7 @@
         <div id="activity" class="col s12">
           <div id="messages" class="col s12 pb-0">
             <div class="collection border-none mb-0">
-              <p class="mt-5 mb-0 ml-5 font-weight-900">Недавно заходили</p>
+              <p class="mt-1 mb-0 ml-5 font-weight-900">Недавно заходили</p>
               <ul class="collection right-sidebar-chat p-0 mb-0">
                 @foreach($online_users as $user)
                   <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
@@ -503,7 +508,7 @@
           <div id="teamleads" class="col s12">
               <div id="messages" class="col s12 pb-0">
                   <div class="collection border-none mb-0">
-                      <p class="mt-5 mb-0 ml-5 font-weight-900">Недавно заходили</p>
+                      <p class="mt-1 mb-0 ml-5 font-weight-900">Недавно заходили</p>
                       <ul class="collection right-sidebar-chat p-0 mb-0">
                           @foreach($user_auth_logs as $user)
                               <li class="collection-item right-sidebar-chat-item sidenav-trigger display-flex avatar pl-5 pb-0"
