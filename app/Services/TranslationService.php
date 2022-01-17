@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Storage;
 
 class TranslationService
 {
+
     /**
      * @return array|mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getClientTranslations()
     {
@@ -35,14 +37,14 @@ class TranslationService
         foreach ($translations as $lang => $translation) {
             foreach ($translation as $name => $value) {
                 if (Storage::disk('client_lang')->exists($lang . '.json')) {
-                    $translations = json_decode(Storage::disk('lang')->get($lang . '.json'), true);
+                    $translations = json_decode(Storage::disk('client_lang')->get($lang . '.json'), true);
                 } else {
                     $translations = [];
                 }
 
                 // check lang_manual file
                 if (Storage::disk('client_lang')->exists($lang . '_manual.json')) {
-                    $manual = json_decode(Storage::disk('lang')->get($lang . '_manual.json'), true);
+                    $manual = json_decode(Storage::disk('client_lang')->get($lang . '_manual.json'), true);
                     if ((array_key_exists($name, $translations) && $value == $translations[$name]) || $value == $name) {
                         unset($manual[$name]);
                     } else {

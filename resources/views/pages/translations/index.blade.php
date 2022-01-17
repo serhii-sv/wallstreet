@@ -36,6 +36,13 @@
         <div class="card-content">
             <h6>
                 @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='Переводы' contenteditable="true">{{ __('Переводы') }}</editor_block>@else {{ __('Переводы') }} @endif
+                    <a href="{{ route('translations.translate-all') }}" class="btn float-right grey ml-2">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Скачать переводы' contenteditable="true">{{ __('Перевести все') }}</editor_block>
+                        @else
+                            {{ __('Перевести все') }}
+                        @endif
+                    </a>
                 <a href="{{ route('translations.download') }}" class="btn float-right">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Скачать переводы' contenteditable="true">{{ __('Скачать переводы') }}</editor_block>
@@ -59,7 +66,7 @@
                             <div class="col s12 mt-4">
                                 <ul class="tabs tab-demo z-depth-1">
                                     @foreach($languages as $language)
-                                        <li class="tab"><a href="#{{$key}}{{ $language->code }}">{{ $language->name }}</a></li>
+                                        <li class="tab"><a href="#{{$key}}_{{ $language->code }}">{{ $language->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

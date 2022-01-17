@@ -12,6 +12,7 @@ use App\Models\Language;
 use App\Services\TranslationService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Stichoza\GoogleTranslate\GoogleTranslate;
@@ -187,5 +188,14 @@ class TplTranslationsController extends Controller
         $zip->close();
 
         return response()->download(public_path($fileName))->deleteFileAfterSend(true);
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function translateAll()
+    {
+        Artisan::call('translate:files');
+        return back()->with('success_short', 'Процесс перевода запущен');
     }
 }
