@@ -9,8 +9,10 @@ namespace App\Http\Controllers;
 use App\Models\TplDefaultLang;
 use App\Models\TplTranslation;
 use App\Models\Language;
+use App\Services\TranslationService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
@@ -23,32 +25,43 @@ class TplTranslationsController extends Controller
 {
     /**
      * @param Request $request
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function index(Request $request) {
-        $lang = Language::getDefault()->code;
+    public function index(Request $request)
+    {
+        $translationService = new TranslationService();
 
-        $texts = Storage::disk('lang')->exists($lang . '.json') ? json_decode(Storage::disk('lang')->get($lang . '.json'), true) : [];
-        $category = 'customer';
+        $translations = [];
 
-        //        if (!empty($request->category)) {
-        //            $texts = $texts->where('category', $request->category);
-        //            $category = $request->category;
-        //        }
-        //$texts = $texts->orderBy('text')->get();
+        $languages = Language::all();
 
-        return view('admin.langs.translations.index', [
-            'texts' => $texts,
-            'lang' => $lang,
-            'category' => $category,
-        ]);
+        $translationKeys = [];
+
+        $translationsFor = ['admin' => 'Админка', 'client' => 'Клиентский сайт'];
+
+        $clientTranslations = $translationService->getClientTranslations();
+
+        $translations['client'] = $clientTranslations['translations'];
+
+        $translationKeys['client'] = $clientTranslations['translationKeys'];
+        $translationKeys['admin'] = [];
+
+        foreach ($languages as $language) {
+            $translations['admin'][$language->code] = Storage::disk('lang')->exists($language->code . '.json') ? json_decode(Storage::disk('lang')->get($language->code . '.json'), true) : [];
+            $translationKeys['admin'] = array_merge($translationKeys['admin'], array_keys($translations['admin'][$language->code]));
+        }
+
+        $translationKeys['admin'] = array_unique($translationKeys['admin']);
+
+        return view('pages.translations.index', compact('translations', 'languages', 'translationKeys', 'translationsFor'));
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create() {
+    public function create()
+    {
         return view('admin.langs.translations.create');
     }
 
@@ -57,7 +70,8 @@ class TplTranslationsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $languages = Language::all();
         $text = $languages->mapWithKeys(function ($lang) use ($request) {
             return [$lang->code => $request->input('text_' . $lang->code)];
@@ -83,7 +97,8 @@ class TplTranslationsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($key) {
+    public function edit($key)
+    {
         $languages = Language::all();
 
         $data = $languages->mapWithKeys(function ($lang) use ($key) {
@@ -109,7 +124,8 @@ class TplTranslationsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $key) {
+    public function update(Request $request, $key)
+    {
         $languages = Language::all();
         $text = $languages->mapWithKeys(function ($lang) use ($request) {
             return [$lang->code => $request->input('text_' . $lang->code)];
@@ -131,7 +147,8 @@ class TplTranslationsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($key) {
+    public function destroy($key)
+    {
         $languages = Language::all();
         $languages = $languages->map(function ($lang) {
             return $lang->code;
@@ -139,12 +156,36 @@ class TplTranslationsController extends Controller
         $languages->each(function ($lang) use ($key) {
             if (Storage::disk('lang')->exists($lang . '.json')) {
                 $translations = json_decode(Storage::disk('lang')->get($lang . '.json'), true);
-                if (array_key_exists($key, $translations)){
+                if (array_key_exists($key, $translations)) {
                     unset($translations[$key]);
                     Storage::disk('lang')->put($lang . '.json', json_encode($translations));
                 }
             }
         });
         return back()->with('success', 'Translation has been deleted');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download()
+    {
+        $zip = new \ZipArchive();
+        $fileName = 'translations-' . now()->format('U') . '.zip';
+        if ($zip->open(public_path($fileName), \ZipArchive::CREATE) == TRUE) {
+            foreach (['admin', 'client'] as $site) {
+                $files = File::files(resource_path($site == 'client' ? 'lang/client_lang' : 'lang'));
+
+                foreach ($files as $key => $value) {
+                    $relativeName = basename($value);
+                    $zip->addFile($value, ($site == 'client' ? 'client' : 'admin') . '/' . $relativeName);
+                }
+            }
+
+        }
+
+        $zip->close();
+
+        return response()->download(public_path($fileName))->deleteFileAfterSend(true);
     }
 }
