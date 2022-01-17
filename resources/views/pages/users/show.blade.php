@@ -223,6 +223,64 @@
     </div>
     <!-- users view media object ends -->
     <!-- users view card data start -->
+      <div class="row">
+          <div class="col s12 m12 l12">
+              <div id="last-operations-block" class="card subscriber-list-card animate fadeUp">
+                  <div class="card-content pb-1">
+                      <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Recent transactions' contenteditable="true">{{ __('Recent transactions') }}</editor_block>
+                          @else
+                              {{ __('Recent transactions') }}
+                          @endif</h4>
+                  </div>
+                  <table class="subscription-table responsive-table highlight ml-2" style="width: 95%">
+                      <thead>
+                      <tr>
+                          <th>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Type of' contenteditable="true">{{ __('Type of') }}</editor_block>
+                              @else
+                                  {{ __('Type of') }}
+                              @endif</th>
+                          <th>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
+                              @else
+                                  {{ __('Sum') }}
+                              @endif</th>
+                          <th>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
+                              @else
+                                  {{ __('Payment system') }}
+                              @endif</th>
+                          <th>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>
+                              @else
+                                  {{ __('Date of operation') }}
+                              @endif</th>
+                          <th></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      @if(isset($last_operations) && !empty($last_operations))
+                          @foreach($last_operations as $operation)
+                              <tr>
+                                  <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
+                                  <td>
+                                        <span
+                                            class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+                                  </td>
+                                  <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
+                                  <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
+                                  <td class="center-align">
+                                      <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
+                                  </td>
+                              </tr>
+                          @endforeach
+                      @endif
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
     <div class="card">
       <div class="card-content">
         <div class="row">
@@ -603,61 +661,57 @@
               </div>
           </div>
       </div>
-      <div class="row">
-          <div class="col s12 m12 l12">
-              <div id="last-operations-block" class="card subscriber-list-card animate fadeUp">
-                  <div class="card-content pb-1">
-                      <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Recent transactions' contenteditable="true">{{ __('Recent transactions') }}</editor_block>
-                          @else
-                              {{ __('Recent transactions') }}
-                          @endif</h4>
+      <div class="card">
+          <div class="card-header" style="padding: 20px">
+              @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Последние 5 операций' contenteditable="true">{{ __('Последние 5 операций') }}</editor_block>
+              @else
+                  <span class="hide-on-small-only">{{ __('Последние 5 операций') }}</span>
+              @endif
+          </div>
+          <div class="card-content">
+              <div class="row">
+                  <div class="col s12">
+                      <div class="table-responsive">
+                              <table class="table table-custom">
+                                  <thead>
+                                  <tr>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Депы' contenteditable="true">{{ __('Депы') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Депы') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Выплаты' contenteditable="true">{{ __('Выплаты') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('Выплаты') }}</span>
+                                          @endif
+                                      </th>
+                                      <th>
+                                          @if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='ЗП' contenteditable="true">{{ __('ЗП') }}</editor_block>
+                                          @else
+                                              <span class="hide-on-small-only">{{ __('ЗП') }}</span>
+                                          @endif
+                                      </th>
+                                  </tr>
+                                  </thead>
+                                  <tfoot>
+                                  @foreach($salary_log as $item)
+                                      <tr>
+                                          <td class="tdinput">{{ $item->stat_deposits }} $</td>
+                                          <td class="tdinput">{{ $item->stat_withdraws }} $</td>
+                                          <td class="tdinput">{{ $item->stat_salary }} $</td>
+                                      </tr>
+                                  @endforeach
+                                  </tfoot>
+                              </table>
+                      </div>
+
                   </div>
-                  <table class="subscription-table responsive-table highlight ml-2" style="width: 95%">
-                      <thead>
-                      <tr>
-                          <th>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Type of' contenteditable="true">{{ __('Type of') }}</editor_block>
-                              @else
-                                  {{ __('Type of') }}
-                              @endif</th>
-                          <th>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Sum' contenteditable="true">{{ __('Sum') }}</editor_block>
-                              @else
-                                  {{ __('Sum') }}
-                              @endif</th>
-                          <th>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
-                              @else
-                                  {{ __('Payment system') }}
-                              @endif</th>
-                          <th>@if(canEditLang() && checkRequestOnEdit())
-                                  <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>
-                              @else
-                                  {{ __('Date of operation') }}
-                              @endif</th>
-                          <th></th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      @if(isset($last_operations) && !empty($last_operations))
-                          @foreach($last_operations as $operation)
-                              <tr>
-                                  <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
-                                  <td>
-                                        <span
-                                            class="badge  green-text  lighten-5 text-accent-4">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
-                                  </td>
-                                  <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
-                                  <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
-                                  <td class="center-align">
-                                      <a href="{{ route('transactions.show', $operation->id) }}">Open</a>
-                                  </td>
-                              </tr>
-                          @endforeach
-                      @endif
-                      </tbody>
-                  </table>
               </div>
           </div>
       </div>

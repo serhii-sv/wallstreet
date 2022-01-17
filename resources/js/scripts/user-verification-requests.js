@@ -6,7 +6,7 @@ $(function () {
         ordering: true,
         info: true,
         autoWidth: false,
-        order: [2, 'desc'],
+        order: [3, 'desc'],
         aoColumns: [
             {
                 data: 'empty',
@@ -19,9 +19,19 @@ $(function () {
                 bSortable: false
             },
             {
+                data: 'timer_buttons',
+                searchable: false,
+                bSortable: false
+            },
+            {
                 data: 'created_at',
                 searchable: true,
                 bSortable: true
+            },
+            {
+                data: 'timer_left',
+                searchable: false,
+                bSortable: false
             },
             {
                 data: 'actions',
