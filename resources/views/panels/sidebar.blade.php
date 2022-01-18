@@ -477,6 +477,23 @@
                 </a>
               </li>
             @endif
+                  @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::TRANSLATE]))
+                      <li class="bold">
+                          <a class="waves-effect waves-cyan {{ (Route::is('tpl_texts.index') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}"
+                             style="{!!(Route::is('tpl_texts.index')) && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}"
+                             href="{{ route('tpl_texts.index') }}"
+                             @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                              <i class="material-icons">blur_linear</i>
+                              <span class="menu-title">
+                      @if(canEditLang() && checkRequestOnEdit())
+                                      <editor_block data-name='Переводы' contenteditable="true">{{ __('Переводы') }}</editor_block>
+                                  @else
+                                      {{ __('Переводы') }}
+                                  @endif
+                    </span>
+                          </a>
+                      </li>
+                  @endif
             @if(auth()->user()->hasPermissionTo(\App\Enums\Permissions::$data[\App\Enums\Permissions::VIDEO_INDEX]))
               <li class="bold">
                 <a class="waves-effect waves-cyan {{ (Route::is('video.*') ? 'active ' .  (isset($themeSettings['menu-color']) ? $themeSettings['menu-color'] .  ' sidenav-gradient' : '') : '') }}" style="{!! Route::is('video*') && isset($themeSettings['menu-color']) ? 'background:none;box-shadow:none' : '' !!}" href="{{ route('video.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>

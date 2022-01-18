@@ -110,6 +110,9 @@ Route::group(['middleware' => ['web', 'activity-log']], function () {
             Route::resource('/langs', \App\Http\Controllers\LanguagesController::class);
             Route::get('/langs/destroy/{id}', [\App\Http\Controllers\LanguagesController::class, 'destroy'])->name('langs.destroy');
 
+            Route::get('/translations/download', [\App\Http\Controllers\TplTranslationsController::class, 'download'])->name('translations.download');
+            Route::get('/translations/translate-all', [\App\Http\Controllers\TplTranslationsController::class, 'translateAll'])->name('translations.translate-all');
+
             Route::resource('/translations', \App\Http\Controllers\TplTranslationsController::class, [
                 'names' => [
                     'index' => 'tpl_texts.index',

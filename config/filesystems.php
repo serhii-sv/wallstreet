@@ -65,8 +65,12 @@ return [
         'lang' => [
             'driver' => 'local',
             'root' => app('path.resources'). '/lang'
+        ],
+        'client_lang' => [
+            'driver' => 'local',
+            'root' => app('path.resources'). '/lang/client_lang'
         ]
-        
+
     ],
 
     /*

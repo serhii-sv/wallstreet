@@ -272,6 +272,7 @@
 
         (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
               name: $this.attr('data-name'),
+                locale_name: $this.attr('data-locale_name'),
               text: $this.text()
             }, function (data, dataRaw) {
               console.log('Сохранено!');
