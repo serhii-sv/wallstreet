@@ -29,14 +29,22 @@
                                  class="z-depth-4 circle"
                                  height="64" width="64">
                         </a>
-                        <div class="media-body">
+                        <div class="media-body width-50">
                             <h6 class="media-heading">
                                 <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
                                 <span class="grey-text">@</span>
                                 <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
                             </h6>
-                            <span>@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='ID' contenteditable="true">{{ __('ID') }}</editor_block>@else {{ __('ID') }} @endif:</span>
-                            <span class="users-view-id">{{ $user->id ?? 'Не указан' }}</span>
+                            <div class="row">
+                                {{--                    <div class="col s12 m2">--}}
+                                {{--                        <span>ID:</span>--}}
+                                {{--                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>--}}
+                                {{--                    </div>--}}
+                                <div class="col s12 m12">
+                                    <span>Email:</span>
+                                    <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

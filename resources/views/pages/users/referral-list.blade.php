@@ -20,10 +20,35 @@
     <!-- users view card details start -->
     <div class="card">
       <div class="card-content">
-        <h5 style="font-weight: bold">
-          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User referrals' contenteditable="true">{{ __('User referrals') }}</editor_block>@else {{ __('User referrals') }} @endif: {{ $user->name }}</h5>
+{{--        <h5 style="font-weight: bold">--}}
+{{--          @if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User referrals' contenteditable="true">{{ __('User referrals') }}</editor_block>@else {{ __('User referrals') }} @endif: {{ $user->name }}</h5>--}}
         <span href="">
-@if(canEditLang() && checkRequestOnEdit())<editor_block data-name='User login' contenteditable="true">{{ __('User login') }}</editor_block>@else {{ __('User login') }} @endif: <a href="{{ route('users.show', $user->id) }}">{{ $user->login }}</a></span>
+<div class="col s12 m6">
+                    <div class="display-flex media">
+                        <a href="#" class="avatar">
+                            <img src="{{asset('images/avatar/user.svg')}}" alt="users view avatar"
+                                 class="z-depth-4 circle"
+                                 height="64" width="64">
+                        </a>
+                        <div class="media-body width-50">
+                            <h6 class="media-heading">
+                                <span class="users-view-name">{{ $user->name ?? 'Не указано' }}</span>
+                                <span class="grey-text">@</span>
+                                <span class="users-view-username grey-text">{{ $user->login ?? 'Не указан' }}</span>
+                            </h6>
+                            <div class="row">
+                                {{--                    <div class="col s12 m2">--}}
+                                {{--                        <span>ID:</span>--}}
+                                {{--                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>--}}
+                                {{--                    </div>--}}
+                                <div class="col s12 m12">
+                                    <span>Email:</span>
+                                    <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>        </span>
         <table class="table table-bordernone" style="margin-top: 20px;">
           <thead>
             <tr>
@@ -89,6 +114,7 @@
             @endforelse
           </tbody>
         </table>
+          {{ $referrals->links() }}
       </div>
     </div>
 

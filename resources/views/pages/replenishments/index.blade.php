@@ -16,6 +16,27 @@
 {{-- page styles --}}
 @section('page-style')
   <link rel="stylesheet" type="text/css" href="{{asset('css/pages/app-invoice.css')}}">
+    <style>
+        @media only screen and (max-width: 600px) {
+            #DataTables_Table_0_wrapper .top.display-flex {
+                display: grid !important;
+            }
+            #DataTables_Table_0_wrapper .action-btns {
+                margin-top: 20px;
+            }
+            .hide-on-small-and-down, .hide-on-small-only {
+                display: block!important;
+            }
+            #DataTables_Table_0_wrapper .action-btns {
+                display: grid;
+                grid-template-columns: 100px 100px 100px;
+            }
+
+            #DataTables_Table_0_wrapper .action-btns .invoice-filter-action {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 @endsection
 
 {{-- page content --}}
