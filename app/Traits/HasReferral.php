@@ -227,10 +227,11 @@ trait HasReferral
             return;
         }
 
-        $referrals = $this->userReferrals();
-
         if (!empty($params)) {
-            $referrals = $referrals->select($params);
+            $referrals = User::select($params)
+                    ->where('partner_id', $this->my_id);
+        } else {
+            $referrals = User::where('partner_id', $this->my_id);
         }
 
         $referrals = $referrals->get();
