@@ -244,7 +244,6 @@ trait HasReferral
                     $result[$ref->id] = $ref;
 
                     if (!isset($checkArr[$ref->id])) {
-                        echo $level;
                         $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $checkArr), $result);
                     } else {
                         continue;
