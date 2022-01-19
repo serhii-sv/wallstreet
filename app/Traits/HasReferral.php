@@ -248,7 +248,6 @@ trait HasReferral
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-                    echo $ref->id.'/'.$level;
                     $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $params), $result);
                 }
             }
