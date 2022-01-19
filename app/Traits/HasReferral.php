@@ -226,34 +226,27 @@ trait HasReferral
      */
     public function getAllReferralsInArray($level=1, $max=9, $params=[])
     {
-        $th = $this;
-
         if ($level > $max) {
             return [];
         }
 
-        // TODO: problems with cash here
-//        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addMinutes(60), function() use($th, $level, $max) {
-            if (!empty($params)) {
-                $referrals = User::select($params)
-                    ->where('partner_id', $th->my_id);
-            } else {
-                $referrals = User::where('partner_id', $th->my_id);
-            }
+        if (!empty($params)) {
+            $referrals = User::select($params)
+                ->where('partner_id', $this->my_id);
+        } else {
+            $referrals = User::where('partner_id', $this->my_id);
+        }
 
-            $referrals = $referrals->get();
+        $referrals = $referrals->get();
+        $result = [];
 
-            $result = [];
+        foreach ($referrals as $ref) {
+            $result[$ref->id] = $ref;
+            echo $level."\r\n";
+            $result = array_merge($result, $ref->getAllReferralsInArray($level+1, $max, $params));
+        }
 
-            if (!empty($referrals)) {
-                foreach ($referrals as $ref) {
-                    $result[$ref->id] = $ref;
-                    $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $params), $result);
-                }
-            }
-
-            return $result;
-//        });
+        return $result;
     }
 
     /**
