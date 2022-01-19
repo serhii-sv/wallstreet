@@ -224,7 +224,7 @@ trait HasReferral
     /**
      * @return array
      */
-    public function getAllReferralsInArray($level=1, $max=9)
+    public function getAllReferralsInArray($level=1, $max=9, $checkArr=[])
     {
         $th = $this;
 
@@ -242,7 +242,12 @@ trait HasReferral
                 /** @var User $ref */
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-                    $result = array_merge($ref->getAllReferralsInArray($level+1, $max), $result);
+
+                    if (!isset($checkArr[$ref->id])) {
+                        $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $checkArr), $result);
+                    }
+
+                    $checkArr[$ref->id] = true;
                 }
             }
 
