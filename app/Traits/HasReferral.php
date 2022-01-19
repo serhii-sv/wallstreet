@@ -250,7 +250,7 @@ trait HasReferral
                     $result[$ref->id] = $ref;
 
                     if (!array_key_exists($ref->id, $ids)) {
-                        $result = array_merge_recursive($ref->getAllReferralsInArray($level + 1, $max, $ids), $result);
+                        $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $ids), $result);
                     }
 
                     $ids[$ref->id] = true;
