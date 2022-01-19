@@ -221,13 +221,10 @@ trait HasReferral
         });
     }
 
-    /**
-     * @return array
-     */
-    public function getAllReferralsInArray($level=1, $max=9, $params=[])
+    public function getAllReferralsInArray($level=1, $max=9, &$all_referrals=[], $params=[])
     {
         if ($level > $max) {
-            return [];
+            return;
         }
 
         if (!empty($params)) {
@@ -238,16 +235,12 @@ trait HasReferral
         }
 
         $referrals = $referrals->get();
-        $result = [];
 
         foreach ($referrals as $ref) {
-            $result[$ref->id] = $ref;
+            $all_referrals[$ref->id] = $ref;
             echo $level."\r\n";
-
-            $result = array_merge($result, $ref->getAllReferralsInArray($level+1, $max, $params));
+            $ref->getAllReferralsInArray($level+1, $max, $all_referrals, $params);
         }
-
-        return $result;
     }
 
     /**
