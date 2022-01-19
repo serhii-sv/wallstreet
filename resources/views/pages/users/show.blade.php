@@ -70,7 +70,7 @@
                           {{--                        <span>ID:</span>--}}
                           {{--                        <span class="users-view-id">{{ $user->int_id ?? 'Не указан' }}</span>--}}
                           {{--                    </div>--}}
-                          <div class="col s12 m10">
+                          <div class="col s12 m12">
                               <span>Email:</span>
                               <span class="users-view-id">@if($user->email) <a href="mailto:{{$user->email}}">{{ $user->email }}</a> @else Не указан @endif</span>
                           </div>

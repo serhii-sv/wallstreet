@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CollectionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestBonusUser;
 use App\Http\Requests\RequestDashboardBonusUser;
@@ -28,6 +29,7 @@ use App\Models\UserSidebarProperties;
 use App\Models\UserThemeSetting;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -434,8 +436,8 @@ class UsersController extends Controller
             $upliner = false;
         }
 
-        $referrals = \cache()->remember('user.referrals_first_line_' . $user->id, now()->addHours(3), function () use ($user) {
-            return $user->referrals()->wherePivot('line', 1)->get();
+        $referrals = \cache()->remember('user.referrals_' . $user->id, now()->addHours(3), function () use ($user) {
+            return $user->getAllReferralsInArray(1, 1000);
         });
 
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
@@ -455,6 +457,9 @@ class UsersController extends Controller
                 $total_referral_revenue += $diff;
             }
         }
+
+        $referrals = CollectionHelper::paginate($referrals, 10);
+
         return view('pages.users.referral-list',[
             'referrals' => $referrals,
             'total_referral_invested' => $total_referral_invested,
