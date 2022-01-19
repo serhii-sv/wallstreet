@@ -70,6 +70,7 @@ class CalculateSalaryCommand extends Command
 
             foreach ($all_referrals as $referral) {
                 if (is_array($referral)) {
+                    die(print_r($referral,true));
                     continue;
                 }
 
