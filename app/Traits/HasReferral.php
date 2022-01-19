@@ -224,7 +224,7 @@ trait HasReferral
     /**
      * @return array
      */
-    public function getAllReferralsInArray($level=1, $max=9, $ids=[])
+    public function getAllReferralsInArray($level=1, $max=9, $ids=[], $params=[])
     {
         $th = $this;
 
@@ -234,8 +234,14 @@ trait HasReferral
 
         // TODO: problems with cash here
 //        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addMinutes(60), function() use($th, $level, $max) {
-            /** @var User $referrals */
-            $referrals = $th->referrals()->wherePivot('line', 1)->get();
+            if (!empty($params)) {
+                $referrals = User::select($params)
+                    ->where('partner_id', $th->my_id);
+            } else {
+                $referrals = User::where('partner_id', $th->my_id);
+            }
+
+            $referrals = $referrals->get();
 
             $result = [];
 
