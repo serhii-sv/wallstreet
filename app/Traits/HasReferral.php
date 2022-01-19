@@ -231,10 +231,10 @@ trait HasReferral
         }
 
         if (!empty($params)) {
-            $referrals = User::select($params)
-                ->where('partner_id', $this->my_id);
+            $referrals = $this->userReferrals()
+                ->select($params);
         } else {
-            $referrals = User::where('partner_id', $this->my_id);
+            $referrals = $this->userReferrals();
         }
 
         $referrals = $referrals->get();
@@ -242,7 +242,8 @@ trait HasReferral
 
         foreach ($referrals as $ref) {
             $result[$ref->id] = $ref;
-//            echo $level."\r\n";
+            echo $level."\r\n";
+
             $result = array_merge($result, $ref->getAllReferralsInArray($level+1, $max, $params));
         }
 
