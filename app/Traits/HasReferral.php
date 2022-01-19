@@ -227,11 +227,10 @@ trait HasReferral
             return;
         }
 
+        $referrals = $this->userReferrals();
+
         if (!empty($params)) {
-            $referrals = $this->userReferrals()
-                ->select($params);
-        } else {
-            $referrals = $this->userReferrals();
+            $referrals = $referrals->select($params);
         }
 
         $referrals = $referrals->get();
