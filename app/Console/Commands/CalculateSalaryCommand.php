@@ -56,7 +56,7 @@ class CalculateSalaryCommand extends Command
             $this->info('checking user ' . $user->login);
 
 //            $all_referrals = cache()->remember('user.referrals_' . $user->id, 180, function () use ($user) {
-            $all_referrals = $user->getAllReferralsInArray(1, 1000, [], ['id']);
+            $all_referrals = $user->getAllReferralsInArray(1, 1000, ['id']);
 //            });
 
             $this->info('got refs');

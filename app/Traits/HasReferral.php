@@ -224,7 +224,7 @@ trait HasReferral
     /**
      * @return array
      */
-    public function getAllReferralsInArray($level=1, $max=9, $ids=[], $params=[])
+    public function getAllReferralsInArray($level=1, $max=9, $params=[])
     {
         $th = $this;
 
@@ -248,12 +248,7 @@ trait HasReferral
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-
-                    if (!array_key_exists($ref->id, $ids)) {
-                        $result = array_merge($ref->getAllReferralsInArray($level + 1, $max, $ids), $result);
-                    }
-
-                    $ids[$ref->id] = true;
+                    $result = array_merge($ref->getAllReferralsInArray($level + 1, $max), $result);
                 }
             }
 
