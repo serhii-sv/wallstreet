@@ -437,7 +437,7 @@ class UsersController extends Controller
         }
 
         $referrals = \cache()->remember('user.referrals_' . $user->id, now()->addHours(3), function () use ($user) {
-            return $user->getAllReferralsInArray(1, 1000);
+            return $user->getAllReferralsInArray(1, 50);
         });
 
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();

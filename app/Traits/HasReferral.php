@@ -221,26 +221,33 @@ trait HasReferral
         });
     }
 
-    public function getAllReferralsInArray($level=1, $max=9, &$all_referrals=[], $params=[])
+    /**
+     * @return array
+     */
+    public function getAllReferralsInArray($level=1, $max=9)
     {
+        $th = $this;
+
         if ($level > $max) {
-            return;
+            return [];
         }
 
-        if (!empty($params)) {
-            $referrals = User::select($params)
-                    ->where('partner_id', $this->my_id);
-        } else {
-            $referrals = User::where('partner_id', $this->my_id);
-        }
+        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addHours(6), function() use($th, $level, $max) {
+            /** @var User $referrals */
+            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
-        $referrals = $referrals->get();
+            $result = [];
 
-        foreach ($referrals as $ref) {
-            $all_referrals[$ref->id] = $ref;
-            echo $level."\r\n";
-            $ref->getAllReferralsInArray($level+1, $max, $all_referrals, $params);
-        }
+            if (!empty($referrals)) {
+                /** @var User $ref */
+                foreach ($referrals as $ref) {
+                    $result[$ref->id] = $ref;
+                    $result = array_merge($ref->getAllReferralsInArray($level+1, $max), $result);
+                }
+            }
+
+            return $result;
+        });
     }
 
     /**
