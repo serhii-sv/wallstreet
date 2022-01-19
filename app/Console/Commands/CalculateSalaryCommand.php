@@ -69,11 +69,6 @@ class CalculateSalaryCommand extends Command
             $this->info('referrals '.count($all_referrals));
 
             foreach ($all_referrals as $referral) {
-                if (is_array($referral)) {
-                    die(print_r($referral,true));
-                    continue;
-                }
-
                 $this->line('============');
                 $this->info('check referral ' . $referral->id);
 
