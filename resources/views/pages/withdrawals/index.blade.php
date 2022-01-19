@@ -30,6 +30,25 @@
     .tooltip .tooltiptext {
         top: -65px !important;
     }
+    @media only screen and (max-width: 600px) {
+        #DataTables_Table_0_wrapper .top.display-flex {
+            display: grid !important;
+        }
+        #DataTables_Table_0_wrapper .action-btns {
+            margin-top: 20px;
+        }
+        .hide-on-small-and-down, .hide-on-small-only {
+             display: block!important;
+        }
+        #DataTables_Table_0_wrapper .action-btns {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+        }
+
+        #DataTables_Table_0_wrapper .action-btns .invoice-filter-action {
+            margin-bottom: 20px;
+        }
+    }
   </style>
 @endsection
 
@@ -55,9 +74,10 @@
   </div>
   <!-- invoice list -->
   <section class="invoice-list-wrapper section">
-
-      <div class="invoice-filter-action mr-3" style="margin-left:3% !important;">
-          <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
+      <div class="row">
+          <div class="col s4 m4">
+              <div class="invoice-filter-action mr-3" style="margin-left:3% !important;">
+                  <a href="/withdrawals?real=1" class="btn {{ request()->real == 1 ? 'active' : '' }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">
                   @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Real' contenteditable="true">{{ __('Real') }}</editor_block>
@@ -65,52 +85,57 @@
                       <span class="hide-on-small-only">{{ __('Real') }}</span>
                   @endif
               </span>
-          </a>
-      </div>
+                  </a>
+              </div>
 
-      <div class="invoice-filter-action mr-3">
-          <a href="/withdrawals?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
+              <div class="invoice-filter-action mr-3">
+                  <a href="/withdrawals?fake=1" class="btn {{ request()->fake == 1 }} waves-effect waves-light invoice-export border-round z-depth-4">
               <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Fake' contenteditable="true">{{ __('Fake') }}</editor_block>
                   @else
                       {{ __('Fake') }}
                   @endif</span>
-          </a>
+                  </a>
+              </div>
+          </div>
+          <div class="col s4 m4">
+              <div class="invoice-filter-action mr-2">
+                  <a href="/withdrawals?type=0" class="btn {{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light invoice-export border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      {{--        <i class="material-icons">attach_money</i>--}}
+                      <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Unpaid' contenteditable="true">{{ __('Unpaid') }}</editor_block>
+                          @else
+                              {{ __('Unpaid') }}
+                          @endif</span>
+                  </a>
+              </div>
+              <!-- create invoice button-->
+              <div class="invoice-create-btn mr-2">
+                  <a href="/withdrawals?type=1" class="btn {{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      {{--        <i class="material-icons">beenhere</i>--}}
+                      <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Paid' contenteditable="true">{{ __('Paid') }}</editor_block>
+                          @else
+                              {{ __('Paid') }}
+                          @endif</span>
+                  </a>
+              </div>
+          </div>
+          <div class="col s4 m4">
+              <div class="invoice-create-btn">
+                  <a href="/withdrawals?type=2" class="btn {{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                      {{--        <i class="material-icons">block</i>--}}
+                      <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Canceled' contenteditable="true">{{ __('Canceled') }}</editor_block>
+                          @else
+                              {{ __('Canceled') }}
+                          @endif</span>
+                  </a>
+              </div>
+          </div>
       </div>
 
     <!-- create invoice button-->
-    <div class="invoice-filter-action mr-2">
-      <a href="/withdrawals?type=0" class="btn {{ request()->type == 0 || is_null(request()->type) ? 'active' : ''}} waves-effect waves-light invoice-export border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-{{--        <i class="material-icons">attach_money</i>--}}
-        <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
-            <editor_block data-name='Unpaid' contenteditable="true">{{ __('Unpaid') }}</editor_block>
-          @else
-            {{ __('Unpaid') }}
-          @endif</span>
-      </a>
-    </div>
-    <!-- create invoice button-->
-    <div class="invoice-create-btn mr-2">
-      <a href="/withdrawals?type=1" class="btn {{ request()->type == 1 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-{{--        <i class="material-icons">beenhere</i>--}}
-        <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
-            <editor_block data-name='Paid' contenteditable="true">{{ __('Paid') }}</editor_block>
-          @else
-            {{ __('Paid') }}
-          @endif</span>
-      </a>
-    </div>
-
-    <div class="invoice-create-btn">
-      <a href="/withdrawals?type=2" class="btn {{ request()->type == 2 ? 'active' : ''}} waves-effect waves-light invoice-create border-round z-depth-4" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-{{--        <i class="material-icons">block</i>--}}
-        <span class="hide-on-small-only">@if(canEditLang() && checkRequestOnEdit())
-            <editor_block data-name='Canceled' contenteditable="true">{{ __('Canceled') }}</editor_block>
-          @else
-            {{ __('Canceled') }}
-          @endif</span>
-      </a>
-    </div>
     <!-- Options and filter dropdown button-->
     <div class="filter-btn">
       <!-- Dropdown Trigger -->

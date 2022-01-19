@@ -78,7 +78,12 @@
 </div>
 
 <script>
+    window.addEventListener("load", function(event) {
+        $('.box').hide()
+    });
     $(function () {
-        $('.box').hide();
+        setTimeout(function () {
+            $('.box').hide()
+        }, 4000)
     })
 </script>
