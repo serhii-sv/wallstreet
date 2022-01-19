@@ -59,35 +59,39 @@ class CalculateSalaryCommand extends Command
                 return $user->getAllReferralsInArray(1, 1000);
             });
 
+            $this->info('got refs');
+
             $transaction_type_invest = TransactionType::getByName('enter');
             $transaction_type_withdrew = TransactionType::getByName('withdraw');
             $total_referral_invested = 0;
             $total_referral_withdrew = 0;
 
+            $this->info('referrals '.count($all_referrals));
+
             foreach ($all_referrals as $referral) {
                 $this->line('============');
                 $this->info('check referral ' . $referral->id);
 
-//                $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
-                $invested = $referral->transactions()
-                    ->where('type_id', $transaction_type_invest->id)
-                    ->where('is_real', true)
-                    ->where('approved', 1)
-                    ->sum('main_currency_amount');
-//                });
+                $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
+                    return $referral->transactions()
+                        ->where('type_id', $transaction_type_invest->id)
+                        ->where('is_real', true)
+                        ->where('approved', 1)
+                        ->sum('main_currency_amount');
+                });
 
                 $total_referral_invested += $invested;
                 $this->info('invested ' . $invested);
 
                 // ------
 
-//                $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
-                $withdrew = $referral->transactions()
-                    ->where('type_id', $transaction_type_withdrew->id)
-                    ->where('is_real', true)
-                    ->where('approved', 1)
-                    ->sum('main_currency_amount');
-//                });
+                $withdrew = cache()->remember('referrals.total_withdrew_' . $referral->id, 60, function () use ($referral, $transaction_type_withdrew) {
+                    return $referral->transactions()
+                        ->where('type_id', $transaction_type_withdrew->id)
+                        ->where('is_real', true)
+                        ->where('approved', 1)
+                        ->sum('main_currency_amount');
+                });
 
                 $total_referral_withdrew += $withdrew;
                 $this->info('withdrew ' . $withdrew);
@@ -127,12 +131,12 @@ class CalculateSalaryCommand extends Command
         }
 
 
-//        if (empty($login)) {
+        if (empty($login)) {
             cache()->forget('total_users_salary_left');
             cache()->remember('total_users_salary_left', now()->addHours(1), function () use ($total_users_salary_left) {
                 return $total_users_salary_left;
             });
-//        }
+        }
     }
 
     /**
