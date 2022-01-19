@@ -247,6 +247,7 @@ trait HasReferral
 
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
+                    die(print_r($ref,true));
                     $result[$ref->id] = $ref;
 
                     if (!array_key_exists($ref->id, $ids)) {
