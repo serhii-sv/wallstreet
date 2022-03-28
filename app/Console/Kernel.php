@@ -97,7 +97,7 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
             ->withoutOverlapping();
         $schedule->command('update:currency_rates')
-            ->hourly()
+            ->twiceDaily()
             ->runInBackground()
             ->withoutOverlapping();
         $schedule->command('update:non_fixed_currency_rates')
