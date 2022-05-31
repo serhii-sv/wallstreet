@@ -71,64 +71,80 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('deposits:queue')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('handle:withdrawals')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('transaction:teamleaders')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('calculate:salaries')
             ->hourly()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('make:rate_log')
             ->hourly()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes()
             ->runInBackground();
         $schedule->command('check:payment_systems_connections')
             ->everyTenMinutes()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('update:currency_rates')
             ->twiceDaily()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('update:non_fixed_currency_rates')
             ->runInBackground()
             ->cron('*/10 * * * *');
         $schedule->command('backup:clean')
             ->everyTwoHours()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('make:backup', ['--mode' => 'only-db'])
             ->runInBackground()
             ->everyTwoHours();
         $schedule->command('cache:helper')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('cache:dashboard')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('log:clear')
             ->daily()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
 //        $schedule->command('user-documents:set-verified')
 //            ->everyMinute()
 //            ->runInBackground()
 //            ->withoutOverlapping();
         $schedule->command('update:zero_transactions')
             ->hourly()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('transactions:dont_count')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('clean:partner_transactions')
             ->everyMinute()
-            ->runInBackground();
+            ->runInBackground()
+            ->withoutOverlapping();
         $schedule->command('data:clear')
-            ->daily();
+            ->daily()
+            ->withoutOverlapping();
 
         $schedule->command('referrals:set-role')
-            ->daily();
+            ->daily()
+            ->withoutOverlapping();
     }
 
     /**
